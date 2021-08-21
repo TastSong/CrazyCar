@@ -1,18 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
+
+public enum ServerType {
+    Local = 0,
+    Remote
+}
+
 
 public class NetworkController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public static NetworkController manager = null; 
+    public ServerType serverType;
+    public string HttpBaseUrl {
+        get {
+            return Util.GetServerBaseUrl(serverType);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Awake() {
+        if (manager == null) {
+            DontDestroyOnLoad(gameObject);
+            manager = this;
+        } else if (manager != this) {
+            Destroy(gameObject);
+        }
     }
 }

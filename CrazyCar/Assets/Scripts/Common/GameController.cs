@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TinyMessenger;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameController manager = null;
+    public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Awake() {
+        if (manager == null) {
+            DontDestroyOnLoad(gameObject);
+            manager = this;
+        } else if (manager != this)
+        {
+            Destroy(gameObject);
+        }
     }
 }

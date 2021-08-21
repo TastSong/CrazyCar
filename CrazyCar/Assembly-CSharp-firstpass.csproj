@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D86AB141-3B3E-DDD5-26F4-7B4763B32020}</ProjectGuid>
+    <ProjectGuid>{BACD5749-7577-1797-45ED-E2D3F564A7C9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -48,7 +48,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
     <UnityProjectGeneratorVersion>4.9.1.0</UnityProjectGeneratorVersion>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.14f1c1</UnityVersion>
   </PropertyGroup>
@@ -64,14 +64,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Common\GameController.cs" />
-    <Compile Include="Assets\Scripts\Common\NetworkController.cs" />
-    <Compile Include="Assets\Scripts\Common\Util.cs" />
-    <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
-    <Compile Include="Assets\Scripts\TinyMessage\CustomTinyMsg.cs" />
-    <Compile Include="Assets\Scripts\TinyMessenger.cs" />
-    <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
-    <Compile Include="Assets\Scripts\UI\RegisterUI.cs" />
+    <Compile Include="Assets\Plugins\LitJson\IJsonWrapper.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonData.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonException.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonMapper.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonMockWrapper.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonReader.cs" />
+    <Compile Include="Assets\Plugins\LitJson\JsonWriter.cs" />
+    <Compile Include="Assets\Plugins\LitJson\Lexer.cs" />
+    <Compile Include="Assets\Plugins\LitJson\ParserToken.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Program Files/Unity/Hub/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -628,12 +629,7 @@
       <HintPath>F:/Github/CrazyCar-master/CrazyCar/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{BACD5749-7577-1797-45ED-E2D3F564A7C9}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
