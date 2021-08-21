@@ -18,7 +18,7 @@ namespace Utils {
     }
 
     public static class RequestUrl {
-        public static string loginUrl = "/api/account/v1/login";
+        public static string loginUrl = "Login";
     }
 
 
@@ -28,11 +28,11 @@ namespace Utils {
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {
                 case ServerType.Local:
-                    return "http://district.match.wyh.wonlap.cn";
+                    return "http://localhost:8080/CrazyCarServer/";
                 case ServerType.Remote:
-                    return "http://out.magene.wnx.fun:9081";
+                    return "http://139.9.103.145/CrazyCarServer/";
                 default:
-                    return "http://match-rfs.onelap.com";
+                    return "http://localhost:8080/CrazyCarServer/";
             }
         }
 

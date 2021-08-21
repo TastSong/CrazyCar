@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class LoginUI : MonoBehaviour
-{
+public class LoginUI : MonoBehaviour {
     public InputField userNameInput;
     public InputField passwordInput;
     public Button loginBtn;
@@ -25,9 +24,10 @@ public class LoginUI : MonoBehaviour
             w.WriteObjectEnd();
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-            Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl, bytes, (data) => {
-                Debug.Log(data.ToJson());
-            });
+            StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
+                bytes, (data) => {
+                    Debug.Log(data.ToJson());
+                }));
         });
     }
 }
