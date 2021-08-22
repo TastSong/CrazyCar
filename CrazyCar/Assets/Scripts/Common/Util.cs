@@ -19,6 +19,7 @@ namespace Utils {
 
     public static class RequestUrl {
         public static string loginUrl = "Login";
+        public static string registerUrl = "Register";
     }
 
 

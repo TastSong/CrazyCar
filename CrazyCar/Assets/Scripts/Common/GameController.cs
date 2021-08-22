@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using TinyMessenger;
 using UnityEngine;
+using Utils;
 
 public class GameController : MonoBehaviour
 {
     public static GameController manager = null;
     public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
+    public WarningAlert warningAlert;
 
     private void Awake() {
         if (manager == null) {
@@ -16,5 +18,9 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start() {
+        warningAlert.gameObject.SetActiveFast(false);
     }
 }

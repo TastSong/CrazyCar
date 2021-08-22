@@ -2,6 +2,7 @@ package com.CrazyCarServer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ public class Util {
 		static final String PASS = "164728";
 
 		public static String ExecuteSelect(String sql) {
+			System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
 			try {
@@ -25,11 +27,11 @@ public class Util {
 				Class.forName(JDBC_DRIVER);
 
 				// 打开链接
-				System.out.println("连接数据库...");
+				//System.out.println("连接数据库...");
 				conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
 				// 执行查询
-				System.out.println(" 实例化Statement对象...");
+				//System.out.println(" 实例化Statement对象...");
 				stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 				String resultStr = null;
@@ -37,11 +39,11 @@ public class Util {
 				while (rs.next()) {
 					// 通过字段检索
 					resultStr = rs.getString("user_password");
-					System.out.println("user_password: " + resultStr);
+					System.out.println("ExecuteSelect : user_password = " + resultStr);
 				}
 				// 完成后关闭
-				System.out.println(" 完成后关闭");
-				//rs.close();
+				System.out.println("ExecuteSelect  Finish");
+				rs.close();
 				stmt.close();
 				conn.close();
 				return resultStr;
@@ -64,13 +66,45 @@ public class Util {
 						conn.close();
 				} catch (SQLException se) {
 					se.printStackTrace();
-
 				}
-
 			}
 
 			System.out.println("Goodbye!");
 			return null;
+		}
+		
+		public static void ExecuteInsert(String sql) {
+			Connection conn = null;
+			System.out.println("ExecuteInsert sql = " + sql);	
+			try {
+				// 注册 JDBC 驱动
+				Class.forName(JDBC_DRIVER);
+				conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+				PreparedStatement pst = conn.prepareStatement(sql);
+	            pst.executeUpdate();
+				System.out.println(" ExecuteInsert Finish " + pst);
+				conn.close();
+				return;
+			} catch (SQLException se) {
+				// 处理 JDBC 错误
+				se.printStackTrace();
+			} catch (Exception e) {
+				// 处理 Class.forName 错误
+				e.printStackTrace();
+				return;
+			} finally {
+				// 关闭资源
+				try {
+					if (conn != null)
+						conn.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			System.out.println("Goodbye!");
+			return;
 		}
 	}
 }

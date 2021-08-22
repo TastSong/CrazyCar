@@ -14,6 +14,11 @@ public class LoginUI : MonoBehaviour {
 
     private void Start() {
         loginBtn.onClick.AddListener(() => {
+            if (userNameInput.text == "" || passwordInput.text == "") {
+                GameController.manager.warningAlert.Show("请输入内容");
+                return;
+            }
+
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -27,7 +32,21 @@ public class LoginUI : MonoBehaviour {
             StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
                 bytes, (data) => {
                     Debug.Log(data.ToJson());
+                    int code = (int)data["code"];
+                    if (code == 200) {
+                        GameController.manager.warningAlert.Show("登录成功");
+                    } else if (code == 423) {
+                        GameController.manager.warningAlert.Show("密码错误");
+                    } else if (code == 404) {
+                        GameController.manager.warningAlert.Show("用户未注册");
+                    } else {
+                        GameController.manager.warningAlert.Show("未知错误");
+                    }
                 }));
+        });
+
+        registerBtn.onClick.AddListener(() => {
+            GameController.manager.tinyMsgHub.Publish(new RegisterUIMessage());
         });
     }
 }

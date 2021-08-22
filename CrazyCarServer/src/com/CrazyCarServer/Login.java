@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		System.out.println("读取请求内容.");
+		//System.out.println("读取请求内容.");
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
 		String line = null;
 		StringBuilder sb = new StringBuilder();
@@ -43,14 +43,15 @@ public class Login extends HttpServlet {
 		}
 		System.out.println(sb.toString());
 		
-		System.out.println("开始回复消息.");
+		//System.out.println("开始回复消息.");
 		PrintWriter out = response.getWriter();		
 		//JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
 		JSONObject json = JSONObject.parseObject(sb.toString());
-		if(!sb.toString().isEmpty() && json.containsKey("UserName")){
-			System.out.println(json.getString("UserName"));
-			if (IsRight(json.getString("UserName"), json.getString("Password"))){
+		if(!sb.toString().isEmpty() && json.containsKey("UserName") && json.containsKey("Password") && 
+				IsExistUser(json.getString("UserName"))){
+			//System.out.println(json.getString("UserName"));
+			if (IsPasswordRight(json.getString("UserName"), json.getString("Password"))){
 		        jsonObject.put("code", 200);
 			} else{
 		        jsonObject.put("code", 423);
@@ -66,13 +67,24 @@ public class Login extends HttpServlet {
 		out.close();
 	}
 	
-	private boolean IsRight(String userName, String password){
+	private boolean IsPasswordRight(String userName, String password){
 		String sql = "select user_password from all_user where user_name = "
 				+ "\"" + userName + "\";";
 		System.out.println(sql);
 		String rs = Util.JDBC.ExecuteSelect(sql);
-		System.out.println("sql执行完成");
-        return rs.equals(password);		
+		if (rs == null){
+			return false;
+		} else{
+	        return rs.equals(password);	
+		}	
+	}
+	
+	private boolean IsExistUser(String userName){
+		String sql = "select user_password from all_user where user_name = "
+				+ "\"" + userName + "\";";
+		System.out.println(sql);
+		String rs = Util.JDBC.ExecuteSelect(sql);
+        return rs != null;		
 	}
 
 	/**
