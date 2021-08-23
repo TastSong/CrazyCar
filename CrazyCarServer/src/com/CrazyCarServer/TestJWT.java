@@ -49,16 +49,20 @@ public class TestJWT extends HttpServlet {
         int jwtTimeToLive = 800000;
 
         String jwt = JWTDemo.createJWT(
-                jwtId, // claim = jti
-                jwtIssuer, // claim = iss
-                jwtSubject, // claim = sub
-                jwtTimeToLive // used to calculate expiration (claim = exp)
+                jwtId, // claim = jti 唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
+                jwtIssuer, // claim = iss  签发者
+                jwtSubject, // claim = sub 所面向的用户
+                jwtTimeToLive // used to calculate expiration (claim = exp) 过期时间，这个过期时间必须要大于签发时间
         );
         
         System.out.println("jwt = \"" + jwt.toString() + "\"");
-
         Claims claims = JWTDemo.decodeJWT(jwt);
-        System.out.println("claims = " + claims.toString());
+        if (claims == null){
+            System.out.println("Token 过期");
+        } else{
+            System.out.println("claims = " + claims.toString());
+        }
+
 
     }
 
