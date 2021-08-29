@@ -30,9 +30,7 @@ public class LoginUI : MonoBehaviour {
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
-                bytes, (data) => {
-                    Debug.Log(data.ToJson());
-                    int code = (int)data["code"];
+                bytes, (data) => { },(code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show("登录成功");
                     } else if (code == 423) {

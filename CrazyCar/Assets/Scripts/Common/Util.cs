@@ -299,7 +299,7 @@ namespace Utils {
             }
         }
 #endif
-        public static IEnumerator POSTHTTP(string url, byte[] data = null, Action<JsonData> finishCallback = null) {
+        public static IEnumerator POSTHTTP(string url, byte[] data = null, Action<JsonData> fatchData = null, Action<int> code = null) {
             UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             if (data != null) {
                 request.uploadHandler = new UploadHandlerRaw(data);
@@ -315,9 +315,11 @@ namespace Utils {
             } else {
                 byte[] results = request.downloadHandler.data;
                 string s = Encoding.UTF8.GetString(results);
+                Debug.Log(s);
                 JsonData d = JsonMapper.ToObject(s);
 
-                finishCallback?.Invoke(d);
+                fatchData?.Invoke(d["data"]);
+                code?.Invoke((int)d["code"]);
             }
         }
     }

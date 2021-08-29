@@ -7,7 +7,8 @@ using UnityEngine;
 using Utils;
 
 public enum UIPageType {
-    HomePage = 0
+    HomePageUI = 0,
+    AvatarUI
 }
 
 public class UIManager : MonoBehaviour {
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour {
         if (pagesDict.ContainsKey(type)) {
             pagesDict[type].SetActiveFast(true);
         } else {
-            // FindPage
+            // FindPage]
             string pageUrl = GetPageUrlByType(type);
             GameObject page = Instantiate(Resources.Load<GameObject>(pageUrl));
             page.transform.SetParent(transform, false);
@@ -94,11 +95,11 @@ public class UIManager : MonoBehaviour {
     public bool IsHomePage() {
         bool isHomePage = true;
         pagesDict.ToList().ForEach(delegate (KeyValuePair<UIPageType, GameObject> pair) {
-            if (pair.Value != null && pair.Key != UIPageType.HomePage && pair.Value.activeSelf) {
+            if (pair.Value != null && pair.Key != UIPageType.HomePageUI && pair.Value.activeSelf) {
                 isHomePage = false;
             }
         });
-        return isHomePage && pagesDict[UIPageType.HomePage] != null;
+        return isHomePage && pagesDict[UIPageType.HomePageUI] != null;
     }
 
     // 查找Resources中的路径

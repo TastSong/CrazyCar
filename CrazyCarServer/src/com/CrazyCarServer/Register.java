@@ -61,6 +61,7 @@ public class Register extends HttpServlet {
 		} else{
 			jsonObject.put("code", 425);
 		}
+		jsonObject.put("data", "");
 		
         //jsonArray.add(jsonObject);
 	    //String jsonOutput = jsonArray.toJSONString();
