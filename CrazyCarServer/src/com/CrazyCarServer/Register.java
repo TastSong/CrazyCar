@@ -79,9 +79,15 @@ public class Register extends HttpServlet {
 	}
 	
 	private void RegisterUser(String userName, String password){
-		String sql = "insert into all_user ( user_name, user_password, login_time ) values" +
-                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + ");";
-		System.out.println(sql);
+		int defaultAid = 1;
+		String sql = "insert into all_user ( user_name, user_password, login_time, aid ) values" +
+                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + "," + defaultAid +  ");";
+		Util.JDBC.ExecuteInsert(sql);
+		sql = "select user_id from all_user where user_name = "
+				+ "\"" + userName + "\";";
+		int uid = Util.JDBC.ExecuteSelectInt(sql, "user_id"); 
+		sql = "insert into avatar_index ( aid, user_id ) values" +
+                "(" + defaultAid + "," + uid +  ");";
 		Util.JDBC.ExecuteInsert(sql);
 		return;
 	}
@@ -89,8 +95,7 @@ public class Register extends HttpServlet {
 	private boolean IsExistUser(String userName){
 		String sql = "select user_password from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		System.out.println(sql);
-		String rs = Util.JDBC.ExecuteSelect(sql);
+		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
         return rs != null;		
 	}
 }

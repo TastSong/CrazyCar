@@ -71,8 +71,7 @@ public class Login extends HttpServlet {
 	private boolean IsPasswordRight(String userName, String password){
 		String sql = "select user_password from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		System.out.println(sql);
-		String rs = Util.JDBC.ExecuteSelect(sql);
+		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
 		if (rs == null){
 			return false;
 		} else{
@@ -83,8 +82,7 @@ public class Login extends HttpServlet {
 	private boolean IsExistUser(String userName){
 		String sql = "select user_password from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		System.out.println(sql);
-		String rs = Util.JDBC.ExecuteSelect(sql);
+		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
         return rs != null;		
 	}
 

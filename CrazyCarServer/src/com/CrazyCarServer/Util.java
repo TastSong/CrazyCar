@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
 	public static class JDBC{
@@ -18,10 +20,11 @@ public class Util {
 		static final String USER = "root";
 		static final String PASS = "164728";
 
-		public static String ExecuteSelect(String sql) {
+		public static String ExecuteSelectString(String sql, String key) {
 			System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
+			String resultStr = null;
 			try {
 				// 注册 JDBC 驱动
 				Class.forName(JDBC_DRIVER);
@@ -34,12 +37,12 @@ public class Util {
 				//System.out.println(" 实例化Statement对象...");
 				stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
-				String resultStr = null;
+
 				// 展开结果集数据库
 				while (rs.next()) {
 					// 通过字段检索
-					resultStr = rs.getString("user_password");
-					System.out.println("ExecuteSelect : user_password = " + resultStr);
+					resultStr = rs.getString(key);
+					System.out.println("ExecuteSelect : " + key + " = " + resultStr);
 				}
 				// 完成后关闭
 				System.out.println("ExecuteSelect  Finish");
@@ -53,7 +56,7 @@ public class Util {
 			} catch (Exception e) {
 				// 处理 Class.forName 错误
 				e.printStackTrace();
-				return null;
+				return resultStr;
 			} finally {
 				// 关闭资源
 				try {
@@ -70,7 +73,119 @@ public class Util {
 			}
 
 			System.out.println("Goodbye!");
-			return null;
+			return resultStr;
+		}
+		
+		public static int ExecuteSelectInt(String sql, String key) {
+			System.out.println("ExecuteSelect sql = " + sql);
+			Connection conn = null;
+			Statement stmt = null;
+			int resultInt = -1;
+			try {
+				// 注册 JDBC 驱动
+				Class.forName(JDBC_DRIVER);
+
+				// 打开链接
+				//System.out.println("连接数据库...");
+				conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+				// 执行查询
+				//System.out.println(" 实例化Statement对象...");
+				stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+
+				// 展开结果集数据库
+				while (rs.next()) {
+					// 通过字段检索
+					resultInt = rs.getInt(key);
+					System.out.println("ExecuteSelect : " + key + " = " + resultInt);
+				}
+				// 完成后关闭
+				System.out.println("ExecuteSelect  Finish");
+				rs.close();
+				stmt.close();
+				conn.close();
+				return resultInt;
+			} catch (SQLException se) {
+				// 处理 JDBC 错误
+				se.printStackTrace();
+			} catch (Exception e) {
+				// 处理 Class.forName 错误
+				e.printStackTrace();
+				return resultInt;
+			} finally {
+				// 关闭资源
+				try {
+					if (stmt != null)
+						stmt.close();
+				} catch (SQLException se2) {
+				} // 什么都不做
+				try {
+					if (conn != null)
+						conn.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			System.out.println("Goodbye!");
+			return resultInt;
+		}
+		
+		public static List<Integer> ExecuteSelectAllInt(String sql, String key) {
+			System.out.println("ExecuteSelect sql = " + sql);
+			Connection conn = null;
+			Statement stmt = null;
+			List<Integer> resultList = new ArrayList<Integer>();
+			try {
+				// 注册 JDBC 驱动
+				Class.forName(JDBC_DRIVER);
+
+				// 打开链接
+				//System.out.println("连接数据库...");
+				conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+				// 执行查询
+				//System.out.println(" 实例化Statement对象...");
+				stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+
+				// 展开结果集数据库
+				while (rs.next()) {
+					// 通过字段检索
+					resultList.add(rs.getInt(key));
+					System.out.println("ExecuteSelect : " + key + " = " + rs.getInt(key));
+				}
+				// 完成后关闭
+				System.out.println("ExecuteSelect  Finish");
+				rs.close();
+				stmt.close();
+				conn.close();
+				return resultList;
+			} catch (SQLException se) {
+				// 处理 JDBC 错误
+				se.printStackTrace();
+			} catch (Exception e) {
+				// 处理 Class.forName 错误
+				e.printStackTrace();
+				return resultList;
+			} finally {
+				// 关闭资源
+				try {
+					if (stmt != null)
+						stmt.close();
+				} catch (SQLException se2) {
+				} // 什么都不做
+				try {
+					if (conn != null)
+						conn.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			System.out.println("Goodbye!");
+			return resultList;
 		}
 		
 		public static void ExecuteInsert(String sql) {

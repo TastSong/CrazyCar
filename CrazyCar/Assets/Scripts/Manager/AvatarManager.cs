@@ -11,11 +11,11 @@ public class AvatarInfo {
 }
 
 public class AvatarManager {
-    public string curAid;
+    public int curAid;
     public Dictionary<int, AvatarInfo> avatarDic = new Dictionary<int, AvatarInfo>();
 
     public void ParseAvatarRes(JsonData jsonData, Util.NoneParamFunction success = null) {
-        curAid = (string)jsonData["current_aid"];
+        curAid = (int)jsonData["current_aid"];
         JsonData data = jsonData["avatars"];
         for (int i = 0; i < data.Count; i++) {
             AvatarInfo info = new AvatarInfo();
@@ -24,5 +24,6 @@ public class AvatarManager {
             info.isHas = (bool)data[i]["is_has"];
             avatarDic[info.aid] = info;
         }
+        success?.Invoke();
     }
 }

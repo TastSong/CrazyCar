@@ -9,12 +9,20 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
     public Image avatarImage;
     public Image lockImage;
 
+    private AvatarInfo avatarInfo; 
+
     public void OnPointerClick(PointerEventData eventData) {
-        Debug.Log("点击头像");
+        if (avatarInfo.isHas) {
+            Debug.Log("点击头像 = " + avatarInfo.aid);
+            GameController.manager.tinyMsgHub.Publish(new AvatarUIMessage(avatarInfo.aid));
+        } else {
+            GameController.manager.warningAlert.Show("未拥有");
+        }
     }
 
-    public void SetContent(int aid, bool isHava) {
-        lockImage.gameObject.SetActiveFast(!isHava);
-        avatarImage.sprite = Resources.Load<Sprite>("Avatar/" + aid.ToString());
+    public void SetContent(AvatarInfo info) {
+        avatarInfo = info;
+        avatarImage.sprite = Resources.Load<Sprite>("Avatar/" + avatarInfo.aid.ToString());
+        lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 }

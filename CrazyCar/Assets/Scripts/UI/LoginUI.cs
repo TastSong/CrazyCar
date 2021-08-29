@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
 
@@ -33,6 +34,8 @@ public class LoginUI : MonoBehaviour {
                 bytes, (data) => { },(code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show("登录成功");
+                        GameController.manager.userName = userNameInput.text;
+                        SceneManager.LoadScene(1);
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("密码错误");
                     } else if (code == 404) {

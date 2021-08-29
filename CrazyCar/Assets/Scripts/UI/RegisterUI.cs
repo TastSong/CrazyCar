@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TinyMessenger;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
 
@@ -39,6 +40,8 @@ public class RegisterUI : MonoBehaviour
                 bytes, (data) => { }, (code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show("注册成功");
+                        GameController.manager.userName = userNameInput.text;
+                        SceneManager.LoadScene(1);
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("用户已注册");
                     } else if (code == 425) {

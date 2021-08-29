@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
     public static GameController manager = null;
     public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
     public WarningAlert warningAlert;
+    public string userName = "tast";
+
+    public AvatarManager avatarManager = new AvatarManager();
 
     private void Awake() {
         if (manager == null) {
