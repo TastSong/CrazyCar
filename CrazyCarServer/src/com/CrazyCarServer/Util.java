@@ -1,5 +1,6 @@
 package com.CrazyCarServer;
 
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,7 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 public class Util {
 	public static class JDBC{
@@ -88,8 +98,6 @@ public class Util {
 				// 打开链接
 				//System.out.println("连接数据库...");
 				conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-				// 执行查询
 				//System.out.println(" 实例化Statement对象...");
 				stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
@@ -221,5 +229,90 @@ public class Util {
 			System.out.println("Goodbye!");
 			return;
 		}
+	}
+	
+	public static class JWT {
+
+	    // The secret key. This should be in a property file NOT under source
+	    // control and not hard coded in real life. We're putting it here for
+	    // simplicity.
+	    private static String SECRET_KEY = "oeRaQQ7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w";
+
+	    //Sample method to construct a JWT
+	    private static String createJWT(String id, String issuer, String subject, long ttlMillis) {
+
+	        //The JWT signature algorithm we will be using to sign the token
+	        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+	        long nowMillis = System.currentTimeMillis();
+	        Date now = new Date(nowMillis);
+
+	        //We will sign our JWT with our ApiKey secret
+	        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
+	        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+
+	        //Let's set the JWT Claims
+	        JwtBuilder builder = Jwts.builder().setId(id)
+	                .setIssuedAt(now)
+	                .setSubject(subject)
+	                .setIssuer(issuer)
+	                .signWith(signatureAlgorithm, signingKey);
+
+	        //if it has been specified, let's add the expiration
+	        if (ttlMillis >= 0) {
+	            long expMillis = nowMillis + ttlMillis;
+	            Date exp = new Date(expMillis);
+	            builder.setExpiration(exp);
+	        }
+
+	        //Builds the JWT and serializes it to a compact, URL-safe string
+	        return builder.compact();
+	    }
+
+	    private static Claims decodeJWT(String jwt) {
+
+	        //This line will throw an exception if it is not a signed JWS (as expected)
+	    	Claims claims = null;
+	    	
+	    	try {
+	    		claims = Jwts.parser()
+	                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+	                    .parseClaimsJws(jwt).getBody();
+	    	} catch (Exception e) {
+				e.printStackTrace();
+			}
+	        
+	        return claims;
+	    } 
+	    
+	    public static String createJWTById(String id) {
+
+	        String jwtId = id;
+	        String jwtIssuer = "TastSong";
+	        String jwtSubject = "CrazyCar";
+	        int jwtTimeToLive = 6000000;
+
+	        String jwt = Util.JWT.createJWT(
+	                jwtId, // claim = jti 唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
+	                jwtIssuer, // claim = iss  签发者
+	                jwtSubject, // claim = sub 所面向的用户
+	                jwtTimeToLive // used to calculate expiration (claim = exp) 过期时间，这个过期时间必须要大于签发时间
+	        );
+	        
+	        System.out.println("createAndDecodeJWT jwt = \"" + jwt.toString() + "\"");
+	        return jwt;
+	    }
+	    
+	    public static boolean isLegalJWT(String jwt) {	        	        
+	        System.out.println("isLegalJWT jwt = \"" + jwt.toString() + "\"");
+	        Claims claims = Util.JWT.decodeJWT(jwt);
+	        if (claims == null){
+	            System.out.println("Token 过期");
+	            return false;
+	        } else{
+	            System.out.println("claims = " + claims.toString());
+	            return true;
+	        }
+	    }
 	}
 }
