@@ -36,10 +36,10 @@ public class RegisterUI : MonoBehaviour
             w.WriteObjectEnd();
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-            StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
-                bytes, (data) => {
+            StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
+                data : bytes, fatchData : (data) => {
                     GameController.manager.loginManager.ParseLoginData(data);
-                }, (code) => {
+                }, code : (code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show(text : "注册成功", callback : () => {
                             SceneManager.LoadScene(1);

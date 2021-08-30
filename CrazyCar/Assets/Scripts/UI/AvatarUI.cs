@@ -28,7 +28,7 @@ public class AvatarUI : MonoBehaviour {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
-            data : bytes,
+            data : bytes, token : GameController.manager.token,
             fatchData : (data) => {
                 GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
             }));

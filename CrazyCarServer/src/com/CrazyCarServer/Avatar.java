@@ -38,7 +38,12 @@ public class Avatar extends HttpServlet {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		System.out.println("Avatar ...");
+		System.out.println("Avatar ...");	
+		if (!Util.JWT.isLegalJWT(request.getHeader("Authorization"))){
+			System.out.println("illegal JWT");
+			return;
+		}
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
 		String line = null;
 		StringBuilder sb = new StringBuilder();

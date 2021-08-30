@@ -30,10 +30,10 @@ public class LoginUI : MonoBehaviour {
             w.WriteObjectEnd();
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-            StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
-                bytes, (data) => {
+            StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
+                data : bytes, fatchData : (data) => {
                     GameController.manager.loginManager.ParseLoginData(data);
-                },(code) => {
+                }, code : (code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
                             SceneManager.LoadScene(1);

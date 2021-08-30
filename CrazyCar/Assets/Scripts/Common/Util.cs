@@ -299,7 +299,7 @@ namespace Utils {
             }
         }
 #endif
-        public static IEnumerator POSTHTTP(string url, byte[] data = null, Action<JsonData> fatchData = null, Action<int> code = null) {
+        public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> fatchData = null, Action<int> code = null) {
             UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             if (data != null) {
                 request.uploadHandler = new UploadHandlerRaw(data);
@@ -307,6 +307,10 @@ namespace Utils {
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             request.SetRequestHeader("Accept", "application/json");
+            if (!string.IsNullOrEmpty(token)) {
+                Debug.Log("+++ token " + token);
+                request.SetRequestHeader("Authorization", token);
+            }
 
             yield return request.SendWebRequest();
 
