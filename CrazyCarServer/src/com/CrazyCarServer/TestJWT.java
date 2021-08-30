@@ -27,7 +27,7 @@ public class TestJWT extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String jwt = Util.JWT.createJWTById("tast");
+		String jwt = Util.JWT.createJWTById(1);
 		Util.JWT.isLegalJWT(jwt);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

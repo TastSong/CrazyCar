@@ -57,7 +57,7 @@ public class Register extends HttpServlet {
 				if (IsExistUser(getJB.getString("UserName"))){				
 			        outJB.put("code", 200);
 			        String userName = getJB.getString("UserName");
-			        token = Util.JWT.createJWTById(userName);
+			        token = Util.JWT.createJWTById(Util.GetIdByName(userName, "user_id"));
 			        userInfoJB.put("name", getJB.getString("UserName"));
 			        userInfoJB.put("uid", Util.GetIdByName(userName, "user_id"));
 			        userInfoJB.put("aid", Util.GetIdByName(userName, "aid"));

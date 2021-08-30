@@ -285,9 +285,9 @@ public class Util {
 	        return claims;
 	    } 
 	    
-	    public static String createJWTById(String id) {
+	    public static String createJWTById(int id) {
 
-	        String jwtId = id;
+	        String jwtId = Integer.toString(id);
 	        String jwtIssuer = "TastSong";
 	        String jwtSubject = "CrazyCar";
 	        int jwtTimeToLive = 6000000;
@@ -311,7 +311,20 @@ public class Util {
 	            return false;
 	        } else{
 	            System.out.println("claims = " + claims.toString());
+	            System.out.println("claims getId = " + claims.getId());
 	            return true;
+	        }
+	    }
+	    
+	    public static int getJWTId(String jwt) {	        	        
+	        System.out.println("getJWTId jwt = \"" + jwt.toString() + "\"");
+	        int id = -1;
+	        Claims claims = Util.JWT.decodeJWT(jwt);
+	        if (claims == null){
+	            System.out.println("Token ¹ýÆÚ");
+	            return id;
+	        } else{
+	            return Integer.parseInt(claims.getId());
 	        }
 	    }
 	}

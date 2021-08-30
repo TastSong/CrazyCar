@@ -1,8 +1,6 @@
 package com.CrazyCarServer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class Avatar extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    private int user_id = 0;
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -38,26 +36,15 @@ public class Avatar extends HttpServlet {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		System.out.println("Avatar ...");	
-		if (!Util.JWT.isLegalJWT(request.getHeader("Authorization"))){
+		System.out.println("Avatar ...");
+	    int userId = 0;
+		String token = request.getHeader("Authorization");
+		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
-		}
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-		String line = null;
-		StringBuilder sb = new StringBuilder();
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
-		}
-		System.out.println(sb.toString());
-		JSONObject json = JSONObject.parseObject(sb.toString());
-		String userName = null;
-		if(!sb.toString().isEmpty() && json.containsKey("UserName")){
-			userName = json.getString("UserName");
-		} else {
-			return;
-		}
+		} else{
+			userId = Util.JWT.getJWTId(token);
+		}			
 	
 		PrintWriter out = response.getWriter();	
 		
@@ -65,14 +52,13 @@ public class Avatar extends HttpServlet {
 		jsonObject.put("code", 200);
 		
         JSONObject jbData = new JSONObject();        
-        jbData.put("current_aid", Util.GetIdByName(userName, "aid"));
+        jbData.put("current_aid", GetCurAid(userId));
         
 		JSONArray jsonArray = new JSONArray();
 		List<Integer> allAid = GetAllAvatarID();
-		user_id = Util.GetIdByName(userName, "user_id");
 		for (int i = 0; i < allAid.size(); i++){
 			JSONObject jbItem = new JSONObject();
-			jbItem.put("is_has", IshasAvatar(allAid.get(i)));
+			jbItem.put("is_has", IshasAvatar(allAid.get(i), userId));
 			jbItem.put("aid", allAid.get(i));
 			jbItem.put("name", GetAvatarName(allAid.get(i)));
 			jsonArray.add(jbItem);
@@ -87,14 +73,20 @@ public class Avatar extends HttpServlet {
 		out.close();
 	}	
 	
+	private int GetCurAid(int uid) {
+		String sql = "select aid from all_user where user_id = "
+				+  uid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, "aid");
+	}
+	
 	private List<Integer> GetAllAvatarID(){
 		String sql = "select aid from avatar_name;";
 		return Util.JDBC.ExecuteSelectAllInt(sql, "aid");
 	}
 	
-	private boolean IshasAvatar(int aid){
+	private boolean IshasAvatar(int aid, int uid){
 		String sql = "select aid from avatar_index where aid = "
-				+  aid + " and " + " user_id = " + user_id + ";";
+				+  aid + " and " + " user_id = " + uid + ";";
 		return Util.JDBC.ExecuteSelectInt(sql, "aid") != -1;
 	}
 	
