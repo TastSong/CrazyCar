@@ -21,6 +21,11 @@ namespace Utils {
         public static string loginUrl = "Login";
         public static string registerUrl = "Register";
         public static string avatarUrl = "Avatar";
+        public static string changeAvatarUrl = "ChangeAvatar";
+    }
+
+    public static class LocalUrl {
+        public static string avatarUrl = "Avatar/";
     }
 
 

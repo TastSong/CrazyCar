@@ -1,5 +1,8 @@
 package com.CrazyCarServer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +15,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
+
+import com.alibaba.fastjson.JSONObject;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -306,11 +313,10 @@ public class Util {
 	    public static boolean isLegalJWT(String jwt) {	        	        
 	        System.out.println("isLegalJWT jwt = \"" + jwt.toString() + "\"");
 	        Claims claims = Util.JWT.decodeJWT(jwt);
-	        if (claims == null){
+	        if (claims == null || claims.isEmpty()){
 	            System.out.println("Token 过期");
 	            return false;
 	        } else{
-	            System.out.println("claims = " + claims.toString());
 	            System.out.println("claims getId = " + claims.getId());
 	            return true;
 	        }
@@ -320,7 +326,7 @@ public class Util {
 	        System.out.println("getJWTId jwt = \"" + jwt.toString() + "\"");
 	        int id = -1;
 	        Claims claims = Util.JWT.decodeJWT(jwt);
-	        if (claims == null){
+	        if (claims == null || claims.isEmpty()){
 	            System.out.println("Token 过期");
 	            return id;
 	        } else{
@@ -333,5 +339,16 @@ public class Util {
 		String sql = "select " + id + " from all_user where user_name = "
 				+ "\"" + userName + "\";";
 		return Util.JDBC.ExecuteSelectInt(sql, id);
+	}
+	
+	public static JSONObject getMsgData(HttpServletRequest request) throws ServletException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+		System.out.println(sb.toString());
+		return JSONObject.parseObject(sb.toString());
 	}
 }

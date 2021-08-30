@@ -1,8 +1,6 @@
 package com.CrazyCarServer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -34,22 +32,12 @@ public class Register extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-		String line = null;
-		StringBuilder sb = new StringBuilder();
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
-		}
-		System.out.println(sb.toString());
-		JSONObject getJB = JSONObject.parseObject(sb.toString());
-		
+		JSONObject getJB = Util.getMsgData(request);		
 		PrintWriter out = response.getWriter();		
-		//JSONArray jsonArray = new JSONArray();
         JSONObject outJB = new JSONObject();
         JSONObject userInfoJB = new JSONObject();
         String token = null;
-		if(!sb.toString().isEmpty() && getJB.containsKey("UserName") && getJB.containsKey("Password")){
-			//System.out.println(json.getString("UserName"));
+		if(getJB != null && getJB.containsKey("UserName") && getJB.containsKey("Password")){
 			if (IsExistUser(getJB.getString("UserName"))){				
 		        outJB.put("code", 423);
 			} else{

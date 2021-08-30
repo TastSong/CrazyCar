@@ -27,18 +27,18 @@ CREATE TABLE IF NOT EXISTS `avatar_index`(
    `user_id` int NOT NULL,
    PRIMARY KEY ( `id` )
    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-   INSERT INTO avatar_index ( aid, user_id )
-                       VALUES
-                       ( 0, 1 );
-   INSERT INTO avatar_index ( aid, user_id )
-                       VALUES
-                       ( 2, 1 );
-   INSERT INTO avatar_index ( aid, user_id )
-                       VALUES
-                       ( 4, 1 );
-    INSERT INTO avatar_index ( aid, user_id )
-                       VALUES
-                       ( 8, 1 );     
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 0, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 2, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 4, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 8, 1 );     
 select aid from avatar_index where aid = 0 and user_id = 1;
 select * from avatar_index;   
 /*avatar_name*/
@@ -92,4 +92,5 @@ INSERT INTO avatar_name ( aid, avatar_name )
 				   ( 13, "Avatar13" );                       
 select * from avatar_name;                    
 
-
+select * from all_user;   
+update all_user set aid = 2 where user_id = 1;
