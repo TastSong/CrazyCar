@@ -23,7 +23,7 @@ public class AvatarUI : MonoBehaviour {
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("UserName");
-        w.Write(GameController.manager.userName);
+        w.Write(GameController.manager.userInfo.name);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());

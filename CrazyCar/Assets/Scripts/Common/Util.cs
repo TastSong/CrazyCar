@@ -318,8 +318,10 @@ namespace Utils {
                 Debug.Log(s);
                 JsonData d = JsonMapper.ToObject(s);
 
-                fatchData?.Invoke(d["data"]);
                 code?.Invoke((int)d["code"]);
+                if ((int)d["code"] == 200) {
+                    fatchData?.Invoke(d["data"]);
+                }
             }
         }
     }

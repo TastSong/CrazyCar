@@ -42,28 +42,37 @@ public class Login extends HttpServlet {
 			sb.append(line);
 		}
 		System.out.println(sb.toString());
+		JSONObject getJB = JSONObject.parseObject(sb.toString());
 		
 		//System.out.println("开始回复消息.");
 		PrintWriter out = response.getWriter();		
-		//JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-		JSONObject json = JSONObject.parseObject(sb.toString());
-		if(!sb.toString().isEmpty() && json.containsKey("UserName") && json.containsKey("Password") && 
-				IsExistUser(json.getString("UserName"))){
-			//System.out.println(json.getString("UserName"));
-			if (IsPasswordRight(json.getString("UserName"), json.getString("Password"))){
-		        jsonObject.put("code", 200);
+        JSONObject outJB = new JSONObject();
+        JSONObject userInfoJB = new JSONObject();
+        String token = null;
+		if(!sb.toString().isEmpty() && getJB.containsKey("UserName") && getJB.containsKey("Password") && 
+				IsExistUser(getJB.getString("UserName"))){
+			String userName = getJB.getString("UserName");
+			if (IsPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))){
+		        outJB.put("code", 200);
+		        token = Util.JWT.createJWTById(userName);
+		        userInfoJB.put("name", getJB.getString("UserName"));
+		        userInfoJB.put("uid", Util.GetIdByName(userName, "user_id"));
+		        userInfoJB.put("aid", Util.GetIdByName(userName, "aid"));
 			} else{
-		        jsonObject.put("code", 423);
+		        outJB.put("code", 423);
 			}
 		} else{
-			jsonObject.put("code", 404);
+			outJB.put("code", 404);
 		}
-		jsonObject.put("data", "");
+		JSONObject jb = new JSONObject();
+		jb.put("user_info", userInfoJB);
+		JSONObject dataJB = new JSONObject();
+		dataJB.put("user_info", userInfoJB);
+		dataJB.put("token", token);
+
+		outJB.put("data", dataJB);
 		
-        //jsonArray.add(jsonObject);
-	    //String jsonOutput = jsonArray.toJSONString();
-		out.println(jsonObject.toString());	
+		out.println(outJB.toString());	
 		out.flush();
 		out.close();
 	}
@@ -85,6 +94,7 @@ public class Login extends HttpServlet {
 		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
         return rs != null;		
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

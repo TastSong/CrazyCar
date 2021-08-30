@@ -37,11 +37,13 @@ public class RegisterUI : MonoBehaviour
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
-                bytes, (data) => { }, (code) => {
+                bytes, (data) => {
+                    GameController.manager.loginManager.ParseLoginData(data);
+                }, (code) => {
                     if (code == 200) {
-                        GameController.manager.warningAlert.Show("注册成功");
-                        GameController.manager.userName = userNameInput.text;
-                        SceneManager.LoadScene(1);
+                        GameController.manager.warningAlert.Show(text : "注册成功", callback : () => {
+                            SceneManager.LoadScene(1);
+                        });
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("用户已注册");
                     } else if (code == 425) {

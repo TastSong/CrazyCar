@@ -60,11 +60,11 @@ public class Avatar extends HttpServlet {
 		jsonObject.put("code", 200);
 		
         JSONObject jbData = new JSONObject();        
-        jbData.put("current_aid", GetCurId(userName, "aid"));
+        jbData.put("current_aid", Util.GetIdByName(userName, "aid"));
         
 		JSONArray jsonArray = new JSONArray();
 		List<Integer> allAid = GetAllAvatarID();
-		user_id = GetCurId(userName, "user_id");
+		user_id = Util.GetIdByName(userName, "user_id");
 		for (int i = 0; i < allAid.size(); i++){
 			JSONObject jbItem = new JSONObject();
 			jbItem.put("is_has", IshasAvatar(allAid.get(i)));
@@ -80,13 +80,7 @@ public class Avatar extends HttpServlet {
 		out.println(jsonObject.toString());	
 		out.flush();
 		out.close();
-	}
-	
-	private int GetCurId(String userName, String id){
-		String sql = "select " + id + " from all_user where user_name = "
-				+ "\"" + userName + "\";";
-		return Util.JDBC.ExecuteSelectInt(sql, id);
-	}
+	}	
 	
 	private List<Integer> GetAllAvatarID(){
 		String sql = "select aid from avatar_name;";

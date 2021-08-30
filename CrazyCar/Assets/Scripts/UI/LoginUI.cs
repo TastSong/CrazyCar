@@ -31,11 +31,13 @@ public class LoginUI : MonoBehaviour {
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
-                bytes, (data) => { },(code) => {
+                bytes, (data) => {
+                    GameController.manager.loginManager.ParseLoginData(data);
+                },(code) => {
                     if (code == 200) {
-                        GameController.manager.warningAlert.Show("登录成功");
-                        GameController.manager.userName = userNameInput.text;
-                        SceneManager.LoadScene(1);
+                        GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
+                            SceneManager.LoadScene(1);
+                        });
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("密码错误");
                     } else if (code == 404) {

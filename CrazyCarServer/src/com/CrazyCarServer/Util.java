@@ -315,4 +315,10 @@ public class Util {
 	        }
 	    }
 	}
+	
+	public static int GetIdByName(String userName, String id){
+		String sql = "select " + id + " from all_user where user_name = "
+				+ "\"" + userName + "\";";
+		return Util.JDBC.ExecuteSelectInt(sql, id);
+	}
 }

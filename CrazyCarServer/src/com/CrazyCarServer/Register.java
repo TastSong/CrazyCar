@@ -41,31 +41,42 @@ public class Register extends HttpServlet {
 			sb.append(line);
 		}
 		System.out.println(sb.toString());
+		JSONObject getJB = JSONObject.parseObject(sb.toString());
 		
 		PrintWriter out = response.getWriter();		
 		//JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-		JSONObject json = JSONObject.parseObject(sb.toString());
-		if(!sb.toString().isEmpty() && json.containsKey("UserName") && json.containsKey("Password")){
+        JSONObject outJB = new JSONObject();
+        JSONObject userInfoJB = new JSONObject();
+        String token = null;
+		if(!sb.toString().isEmpty() && getJB.containsKey("UserName") && getJB.containsKey("Password")){
 			//System.out.println(json.getString("UserName"));
-			if (IsExistUser(json.getString("UserName"))){				
-		        jsonObject.put("code", 423);
+			if (IsExistUser(getJB.getString("UserName"))){				
+		        outJB.put("code", 423);
 			} else{
-				RegisterUser(json.getString("UserName"), json.getString("Password"));
-				if (IsExistUser(json.getString("UserName"))){				
-			        jsonObject.put("code", 200);
+				RegisterUser(getJB.getString("UserName"), getJB.getString("Password"));
+				if (IsExistUser(getJB.getString("UserName"))){				
+			        outJB.put("code", 200);
+			        String userName = getJB.getString("UserName");
+			        token = Util.JWT.createJWTById(userName);
+			        userInfoJB.put("name", getJB.getString("UserName"));
+			        userInfoJB.put("uid", Util.GetIdByName(userName, "user_id"));
+			        userInfoJB.put("aid", Util.GetIdByName(userName, "aid"));
 				} else{
-			        jsonObject.put("code", 425);
+			        outJB.put("code", 425);
 				}
 			}
 		} else{
-			jsonObject.put("code", 425);
+			outJB.put("code", 425);
 		}
-		jsonObject.put("data", "");
-		
-        //jsonArray.add(jsonObject);
-	    //String jsonOutput = jsonArray.toJSONString();
-		out.println(jsonObject.toString());	
+		JSONObject jb = new JSONObject();
+		jb.put("user_info", userInfoJB);
+		JSONObject dataJB = new JSONObject();
+		dataJB.put("user_info", userInfoJB);
+		dataJB.put("token", token);
+
+		outJB.put("data", dataJB);
+
+		out.println(outJB.toString());	
 		out.flush();
 		out.close();
 	}
@@ -86,6 +97,7 @@ public class Register extends HttpServlet {
 		sql = "select user_id from all_user where user_name = "
 				+ "\"" + userName + "\";";
 		int uid = Util.JDBC.ExecuteSelectInt(sql, "user_id"); 
+		//≤Â»Îƒ¨»œÕ∑œÒ
 		sql = "insert into avatar_index ( aid, user_id ) values" +
                 "(" + defaultAid + "," + uid +  ");";
 		Util.JDBC.ExecuteInsert(sql);
