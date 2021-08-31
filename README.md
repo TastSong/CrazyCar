@@ -100,3 +100,93 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ### 一、EasyRoads3D
 
+1. 使用的版本是V3.1.9pro版本，free版本不能用代码获取路线数据
+
+2. 右键 ->  3D Object -> EasyRoads3D -> New Road Network
+
+3. 在Road Network物体上选择`“＋”`进行新建路
+
+4. 通过 `Shift` + 左键进行路线编辑
+
+5. 新建空物体物体 `RouteNet`，并在它下面建立空子物体`Line0001`，分别赋值脚本`RouteNet.cs`以及`CatmullRomSpline.cs`，并给两个脚本赋值上相关引用和初始值
+
+   内容为：
+
+   ```c#
+   using System.Collections.Generic;
+   using UnityEngine;
+   
+   public class RouteNet : MonoBehaviour
+   {
+       [SerializeField] public CatmullRomSpline[] allRoutes;
+   }
+   ```
+
+   ```c#
+   using System.Collections.Generic;
+   using UnityEngine;
+   
+   public partial class CatmullRomSpline : MonoBehaviour
+   {
+       public string __roadName;
+       public int resolution;
+       public List<Vector3> positions;
+   }
+   ```
+
+6. 新建编辑器脚本，并放入`Editor`文件夹
+
+   ```c#
+   using UnityEditor;
+   using UnityEngine;
+   using EasyRoads3Dv3;
+   using System.Collections.Generic;
+   
+   [CustomEditor(typeof(RouteNet))]
+   public class RouteNetEditor : Editor
+   {
+   
+       private RouteNet rNet;
+   
+       public ERRoad markers;
+   
+       public override void OnInspectorGUI() {
+           rNet = target as RouteNet;
+           base.OnInspectorGUI();
+   
+           EditorGUI.BeginChangeCheck();
+   
+           if (GUILayout.Button("BuildAllRoute")) {
+               Undo.RecordObject(target, "BuildAllRoute");
+   
+               ERRoadNetwork net = new ERRoadNetwork();
+               foreach (var r in rNet.allRoutes) {
+                   Debug.Log("Road Name : " + r.__roadName + " Points Count " + r.positions.Count);
+                   markers = net.GetRoadByName(r.__roadName);
+                   if (markers == null) {
+                       Debug.LogError("NO SUCH ROAD.....CANCELED......");
+                       continue;
+                   }
+   
+                   r.resolution = 50;
+                   Vector3[] arr = markers.GetSplinePointsCenter();
+                   r.positions = new List<Vector3>(arr);
+                   for (int i = 0; i < r.positions.Count; i++) {
+                       //Debug.Log(r.positions[i]);
+                   }
+               }
+               EditorUtility.SetDirty(target);
+           }
+       }
+   }
+   ```
+
+7. 此时在`RouteNet`物体上的脚本出现`BuildAllRoute`按钮，点击按钮就能获取相关路线的数据
+
+### 二、JWT身份验证
+
+1. 基本原理 [五分钟带你了解啥是JWT - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/86937325) 
+2. `Unity`将`Token`放入`Authorization`部分，代码 ： `request.SetRequestHeader("Authorization", token);`
+3. 后台通过 `request.getHeader("Authorization");`获取`Token`
+4. 后台生成的`Token`中的`Id`部分为用户`Id`
+

@@ -1146,8 +1146,8 @@ MonoBehaviour:
     isRoadShape: 0
   - roadTypeName: Default Road 1
     id: 0
-    timestamp: 1450386558.4872544
-    roadWidth: 5
+    timestamp: 1630403425.124632
+    roadWidth: 10
     faceDistance: 4
     angleTreshold: 45
     uvTiling: 1
@@ -1159,38 +1159,44 @@ MonoBehaviour:
     roadShapeDataActive: 0
     roadShapeData:
       nodes: []
-      hardEdge: 
+      hardEdge: 0000
       priorityNodeIndexLeft: 0
-      priorityNodeIndexRight: 0
+      priorityNodeIndexRight: 1
       nodesV3: []
       lanes: []
-      leftLanes: 0
-      rightLanes: 0
-      symmetrical: 0
+      leftLanes: -1
+      rightLanes: -1
+      symmetrical: 1
       leftSidewalkOffset: 0
       rightSidewalkOffset: 0
-      outerLaneMarkingLeftIndex: 0
+      outerLaneMarkingLeftIndex: -1
       includeOuterlaneLeftInShape: 0
       includeOuterlaneRightInShape: 0
-      outerLaneMarkingRightIndex: 0
-      outerOuterLaneMarkingLeftIndex: 0
-      outerOuterLaneMarkingRightIndex: 0
+      outerLaneMarkingRightIndex: -1
+      outerOuterLaneMarkingLeftIndex: -1
+      outerOuterLaneMarkingRightIndex: -1
       selectedNode: 0
       selectedLaneNode: 0
       isSymmetrical: 0
-      isset: 0
+      isset: 1
     minSpeed: 45
     maxSpeed: 55
     speedLimit: 50
-    roadShape: []
+    roadShape:
+    - {x: 5, y: 0}
+    - {x: -5, y: 0}
     roadShapeExt: []
     roadShapeExt2: []
     doConnectionTri: 
     doConnectionTriExt: 
-    roadShapeUVs: []
+    roadShapeUVs:
+    - 0
+    - 1
     roadShapeExtUVs: []
     roadShapeExtUVs2: []
-    roadShapeUVs2: []
+    roadShapeUVs2:
+    - 0
+    - 1
     preserveUVs: 0
     hardEdge: 
     roadShapeVecsString: 
@@ -1200,14 +1206,13 @@ MonoBehaviour:
     sidewalkWidth: 2
     roadMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c, type: 2}
     roadMaterials: []
-    roadPhysicsMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c,
-      type: 2}
+    roadPhysicsMaterial: {fileID: 0}
     roadPhysicsMaterials: []
     connectionMaterial: {fileID: 2100000, guid: 3c555588afad81d428ad1704d5d015a7,
       type: 2}
     isSideObject: 0
     isCustomRoad: 0
-    subSegments: 0
+    subSegments: 1
     soData: []
     soDataExt: []
     soDataLog: []
@@ -1219,8 +1224,8 @@ MonoBehaviour:
     expandLevel: 1
     smoothLevel: 1
     splatOpacity: 0.75
-    followTerrainContours: 0
-    terrainContoursOffset: 0
+    followTerrainContours: 1
+    terrainContoursOffset: 10
     terrainDeformation: 1
     defaultIndent: 3
     defaultSurrounding: 3
@@ -1443,6 +1448,226 @@ MonoBehaviour:
       active: 0
     - id: 1590656145.8709755
       active: 0
+    layer: 0
+    isStatic: 1
+    tag: 
+    splatMapActive: 0
+    splatIndex: 0
+    expandLevel: 1
+    smoothLevel: 1
+    splatOpacity: 0.75
+    followTerrainContours: 0
+    terrainContoursOffset: 0
+    terrainDeformation: 1
+    defaultIndent: 3
+    defaultSurrounding: 3
+    castShadow: 0
+    randomnessFlag: 0
+    randomYPosition: 0
+    randomMinYPosition: 0
+    randomMaxYPosition: 0
+    minRandomYPositionDistance: 0
+    maxRandomYPositionDistance: 0
+    randomMinRotation: 0
+    randomMaxRotation: 0
+    minRandomRotationDistance: 0
+    maxRandomRotationDistance: 0
+    vegetationStudioMaskLineActive: 0
+    vegetationStudioGrassPerimeter: 0
+    vegetationStudioPlantPerimeter: 0
+    vegetationStudioTreePerimeter: 0
+    vegetationStudioObjectPerimeter: 0
+    vegetationStudioLargeObjectPerimeter: 0
+    vegetationStudioBiomeMaskActive: 0
+    vegetationStudioBiomeMaskDistance: 0
+    vegetationStudioBiomeMaskBlendDistance: 0
+    vegetationStudioBiomeMaskNoiseScale: 0
+    decalPresets: []
+    decalClassPresets: []
+    defaultRamp: 0
+    extrusionType: 0
+    extrusionDistance: 0
+    fixedDistance: 0
+    connectionAngle: 0
+    connectionRadius: 0
+    isRoadShape: 0
+  - roadTypeName: Default Road 1
+    id: 1630397739.3916266
+    timestamp: 1450386558.4872544
+    roadWidth: 5
+    faceDistance: 4
+    angleTreshold: 45
+    uvTiling: 1
+    uv4Type: 0
+    type: 0
+    detailDistance: 50
+    planarUVs: 0
+    outerIndent: 0
+    roadShapeDataActive: 0
+    roadShapeData:
+      nodes: []
+      hardEdge: 
+      priorityNodeIndexLeft: 0
+      priorityNodeIndexRight: 0
+      nodesV3: []
+      lanes: []
+      leftLanes: 0
+      rightLanes: 0
+      symmetrical: 0
+      leftSidewalkOffset: 0
+      rightSidewalkOffset: 0
+      outerLaneMarkingLeftIndex: 0
+      includeOuterlaneLeftInShape: 0
+      includeOuterlaneRightInShape: 0
+      outerLaneMarkingRightIndex: 0
+      outerOuterLaneMarkingLeftIndex: 0
+      outerOuterLaneMarkingRightIndex: 0
+      selectedNode: 0
+      selectedLaneNode: 0
+      isSymmetrical: 0
+      isset: 0
+    minSpeed: 45
+    maxSpeed: 55
+    speedLimit: 50
+    roadShape: []
+    roadShapeExt: []
+    roadShapeExt2: []
+    doConnectionTri: 
+    doConnectionTriExt: 
+    roadShapeUVs: []
+    roadShapeExtUVs: []
+    roadShapeExtUVs2: []
+    roadShapeUVs2: []
+    preserveUVs: 0
+    hardEdge: 
+    roadShapeVecsString: 
+    defaultSidewalk: 0
+    sidewalks: 0
+    sidewalkHeight: 0.2
+    sidewalkWidth: 2
+    roadMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c, type: 2}
+    roadMaterials: []
+    roadPhysicsMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c,
+      type: 2}
+    roadPhysicsMaterials: []
+    connectionMaterial: {fileID: 2100000, guid: 3c555588afad81d428ad1704d5d015a7,
+      type: 2}
+    isSideObject: 0
+    isCustomRoad: 0
+    subSegments: 0
+    soData: []
+    soDataExt: []
+    soDataLog: []
+    layer: 0
+    isStatic: 1
+    tag: 
+    splatMapActive: 0
+    splatIndex: 0
+    expandLevel: 1
+    smoothLevel: 1
+    splatOpacity: 0.75
+    followTerrainContours: 0
+    terrainContoursOffset: 0
+    terrainDeformation: 1
+    defaultIndent: 3
+    defaultSurrounding: 3
+    castShadow: 0
+    randomnessFlag: 0
+    randomYPosition: 0
+    randomMinYPosition: 0
+    randomMaxYPosition: 0
+    minRandomYPositionDistance: 0
+    maxRandomYPositionDistance: 0
+    randomMinRotation: 0
+    randomMaxRotation: 0
+    minRandomRotationDistance: 0
+    maxRandomRotationDistance: 0
+    vegetationStudioMaskLineActive: 0
+    vegetationStudioGrassPerimeter: 0
+    vegetationStudioPlantPerimeter: 0
+    vegetationStudioTreePerimeter: 0
+    vegetationStudioObjectPerimeter: 0
+    vegetationStudioLargeObjectPerimeter: 0
+    vegetationStudioBiomeMaskActive: 0
+    vegetationStudioBiomeMaskDistance: 0
+    vegetationStudioBiomeMaskBlendDistance: 0
+    vegetationStudioBiomeMaskNoiseScale: 0
+    decalPresets: []
+    decalClassPresets: []
+    defaultRamp: 0
+    extrusionType: 0
+    extrusionDistance: 0
+    fixedDistance: 0
+    connectionAngle: 0
+    connectionRadius: 0
+    isRoadShape: 0
+  - roadTypeName: Default Road 1
+    id: 1630391923.8034358
+    timestamp: 1450386558.4872544
+    roadWidth: 5
+    faceDistance: 4
+    angleTreshold: 45
+    uvTiling: 1
+    uv4Type: 0
+    type: 0
+    detailDistance: 50
+    planarUVs: 0
+    outerIndent: 0
+    roadShapeDataActive: 0
+    roadShapeData:
+      nodes: []
+      hardEdge: 
+      priorityNodeIndexLeft: 0
+      priorityNodeIndexRight: 0
+      nodesV3: []
+      lanes: []
+      leftLanes: 0
+      rightLanes: 0
+      symmetrical: 0
+      leftSidewalkOffset: 0
+      rightSidewalkOffset: 0
+      outerLaneMarkingLeftIndex: 0
+      includeOuterlaneLeftInShape: 0
+      includeOuterlaneRightInShape: 0
+      outerLaneMarkingRightIndex: 0
+      outerOuterLaneMarkingLeftIndex: 0
+      outerOuterLaneMarkingRightIndex: 0
+      selectedNode: 0
+      selectedLaneNode: 0
+      isSymmetrical: 0
+      isset: 0
+    minSpeed: 45
+    maxSpeed: 55
+    speedLimit: 50
+    roadShape: []
+    roadShapeExt: []
+    roadShapeExt2: []
+    doConnectionTri: 
+    doConnectionTriExt: 
+    roadShapeUVs: []
+    roadShapeExtUVs: []
+    roadShapeExtUVs2: []
+    roadShapeUVs2: []
+    preserveUVs: 0
+    hardEdge: 
+    roadShapeVecsString: 
+    defaultSidewalk: 0
+    sidewalks: 0
+    sidewalkHeight: 0.2
+    sidewalkWidth: 2
+    roadMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c, type: 2}
+    roadMaterials: []
+    roadPhysicsMaterial: {fileID: 2100000, guid: f182e2714eb8a714a99ed091081ce16c,
+      type: 2}
+    roadPhysicsMaterials: []
+    connectionMaterial: {fileID: 2100000, guid: 3c555588afad81d428ad1704d5d015a7,
+      type: 2}
+    isSideObject: 0
+    isCustomRoad: 0
+    subSegments: 0
+    soData: []
+    soDataExt: []
+    soDataLog: []
     layer: 0
     isStatic: 1
     tag: 
