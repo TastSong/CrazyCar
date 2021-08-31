@@ -1,0 +1,277 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="ERRoadNetwork.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="ERRoadType.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2" class="style1"><p>&nbsp;</p>
+	      <p class="header1" style="color:#000">ERRoad<hr>
+	      <p class="header2">Description</p>
+	      <p>This is the base class for an EasyRoads3D road object</p>
+	      <p>&nbsp;</p>
+	      <p class="header2">Constructors</p>
+	      <p>...</p>
+	      <p>&nbsp;</p>
+	      <p class="header2"><strong>Functions</strong></p>
+	      <p>&nbsp;</p>
+	      <p class="styleAPI">public void <span class="styleAPIBold">AddMarker</span>(Vector3 position)</p>
+<p class="styleAPIText">Adds a new marker </p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">AddMarkers</span>(Vector3[] pos)</p>
+<p class="styleAPIText">Adds new markers according an array of Vector3 positions</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <strong>AttachToEnd</strong>(ERConnection sourceConnection, int connectionIndex)</p>
+<p class="styleAPI"><span class="styleAPIText">Instantiates and connects a new  ERConnection object according the <span class="styleAPIValue">sourceConnection</span> </span><span class="styleAPIValue"></span> to the connection <span class="styleAPIValue">connectionIndex</span> at the end of the road. Returns null in the case a connection is already connected to the end or when <span class="styleAPIValue"><span class="styleAPIValue">sourceConnection</span></span> is not a valid connection object.</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public  ERConnection <strong>AttachToStart</strong>(ERConnection sourceConnection, int connectionIndex)</p>
+<p class="styleAPI"><span class="styleAPIText">Instantiates and connects a new  ERConnection object according the  </span><span class="styleAPIValue">sourceConnection</span> to the connection <span class="styleAPIValue">connectionIndex</span> at the start of the road. Returns null in the case the new connection object could not be created because a connection is already connected to the start or when <span class="styleAPIValue">sourceConnection</span> is not a valid connection object.</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">ClosedTrack</span>(bool value)</p>
+<p class="styleAPIText">Activate/deactivate closed track.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">IsClosedTrack</span>()</p>
+<p class="styleAPIText">Returns the current status of closed track.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public bool <strong>ConnectToEnd</strong>(ERConnection connectionObject, int connectionIndex)</p>
+<p class="styleAPI"><span class="styleAPIText">Connects the already exisiting ERConnection </span><span class="styleAPIValue">connectionObject</span> to the connection <span class="styleAPIValue">connectionIndex</span> at the end of the road. Returns false in the case a connection is already connected to the start or when <span class="styleAPIValue">connectionObject</span> is not a valid connection object.</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public bool <strong>ConnectToStart</strong>(ERConnection connectionObject, int connectionIndex)</p>
+<p class="styleAPI"><span class="styleAPIText">Connects the already exisiting ERConnection </span><span class="styleAPIValue">connectionObject</span> to the connection <span class="styleAPIValue">connectionIndex</span> at the start of the road. Returns false in the case a connection is already connected to the start or when <span class="styleAPIValue">connectionObject</span> is not a valid connection object.</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">DeleteMarker</span>(int index)</p>
+<p class="styleAPIText">Deleted the marker at the passed <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">FollowTerrainContours</span>(bool value)</p>
+<p class="styleAPIText">Adjust the shape of the road to the terrain shape. The terrain will still be adjusted according the indent and surrounding values.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">FollowTerrainContours</span>(int&nbsp;markerIndex, bool value)</p>
+<p class="styleAPIText">Adjusts the status of &quot;Follow Terrain Contours&quot; for the passed marker index.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">Destroy</span>()</p>
+<p class="styleAPIText">Removes the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+
+<p class="styleAPI">public float <span class="styleAPIBold">GetAngleThreshold</span>()</p>
+<p class="styleAPIText">Returns the Angle Threshold of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERConnection <span class="styleAPIBold">GetConnectionAtEnd</span>()</p>
+<p><span class="styleAPIText">Returns the crossing/connection  at the end of the road</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <span class="styleAPIBold">GetConnectionAtEnd</span>(out int index)</p>
+<p><span class="styleAPIText">Returns the crossing/connection  at the end of the road, <span class="styleAPIValue">index</span> holds the connection index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <span class="styleAPIBold">GetConnectionAtStart</span>()</p>
+<p class="styleAPIText">Returns the crossing/connection  at the start of the road</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <span class="styleAPIBold">GetConnectionAtStart</span>(out int index)</p>
+<p><span class="styleAPIText">Returns the crossing/connection  at the start of the road, <span class="styleAPIValue">index</span> holds the connection index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">GetDistance</span>()</p>
+<p class="styleAPIText">Returns the distance of the road object</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public float<span class="styleAPIBold"> GetDistance</span>(int markerIndex)</p>
+<p class="styleAPIText">Returns the distance of the section at <span class="styleAPIValue">markerIndex</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3 <span class="styleAPIBold">GetMarkerCount</span>()</p>
+<p class="styleAPIText">Returns the total number of markers<span class="styleAPIValue"></span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3 <span class="styleAPIBold">GetMarkerPosition</span>(int index)</p>
+<p class="styleAPIText">Returns the position of the marker at <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3[] <span class="styleAPIBold">GetMarkerPositions</span>()</p>
+<p class="styleAPIText">Returns all marker positions</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public string <span class="styleAPIBold">GetName</span>()</p>
+<p class="styleAPIText">Returns the name of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public Vector3 <span class="styleAPIBold">GetPosition</span>(float value, ref int currentElement)</p>
+<p>Returns the center position of the road at distance <span class="styleAPIValue">value</span>. <span class="styleAPIValue">currentElement</span> can be used for performance optimization.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3 <span class="styleAPIBold">GetMarkerTilting</span>(int index)</p>
+<p class="styleAPIText">Returns the tilting value of the marker at <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3 <span class="styleAPIBold">GetMarkerTiltingCenter</span>(int index)</p>
+<p class="styleAPIText">Returns the tilting center of the marker at <span class="styleAPIValue">index</span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">GetResolution</span>()</p>
+<p class="styleAPIText">Returns the resolution of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoadType <span class="styleAPIBold">GetRoadType</span>()</p>
+<p class="styleAPIText">Returns the road type </p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3[] <span class="styleAPIBold">GetSplinePointsCenter</span>()</p>
+<p class="styleAPIText">Returns pre-sampled positions at the center of the road</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3[] <span class="styleAPIBold">GetSplinePointsRightSide</span>()</p>
+<p class="styleAPIText">Returns pre-sampled positions at the right side of the road</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3[] <span class="styleAPIBold">GetSplinePointsLeftSide</span>()</p>
+<p class="styleAPIText">Returns pre-sampled positions at the left side of the road</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public Vector3[] <span class="styleAPIBold">GetSplineStrength</span>(int index)</p>
+<p class="styleAPIText">Returns  the spline strength of the marker at <span class="styleAPIValue">index</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public Color <span class="styleAPIBold">GetVertexColor</span>(int index)</p>
+<p class="styleAPIText">Returns the vertex color of the marker at <span class="styleAPIValue">index</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">GetWidth</span>()</p>
+<p class="styleAPIText">Returns the width of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">InsertConnector</span>(ERConnection connectionObject, int index, int connectionIndex1, int connectionIndex2, out ERRoad road)</p>
+
+<p class="styleAPIText">Splits the road in two sections and Inserts the source <span class="styleAPIValue">connectionObject</span> at  marker <span class="styleAPIValue">index</span> to <span class="styleAPIValue">connectionIndex1</span> and connects the second section to <span class="styleAPIValue">connectionIndex2</span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">InsertMarker</span>(Vector3 pos)</p>
+
+<p class="styleAPIText">Inserts a new marker before the selected marker</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">InsertMarkerAt</span>(Vector3 pos, int index)</p>
+<p class="styleAPIText">Inserts a new marker before the passed <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">InsertIConnector</span>(int index, string connectionName, out ERConnection connection)</p>
+<p class="styleAPIText">Inserts an I Connector at marker <span class="styleAPIValue">index</span>. <span class="styleAPIValue">connectionName</span> will be assigned as the connection name and the new connection object will be assigned to <span class="styleAPIValue">connection</span>. If this index is not at the start or end of the road, the road object will be cut and the newly created road will be returned.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">InsertIConnector</span>(int index)</p>
+<p class="styleAPIText">Inserts an I Connector at marker <span class="styleAPIValue">index</span>. If this index is not at the start or end of the road, the road object will be cut and the newly created road will be returned.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">IsSideObject</span>(bool value)</p>
+<p class="styleAPIText">Marks the road object as a side object, no road mesh will be created</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">IsStatic</span>(bool value)</p>
+<p class="styleAPIText">Marks the road object as static/none static</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">FollowTerrainContourThreshold</span>(float value)</p>
+<p class="styleAPIText">The contour threshold <span class="styleAPIValue">value</span> controls the smoothness, how accurately the road should follow the terrain slopes</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetIndent</span>( float value, int index)</p>
+<p class="styleAPIText">This will set the indent value on both the left and right side of the road for the marker at <span class="styleAPIValue">index</span>. The value will be adjusted and returned should the passed value be lower then the minimum required indent value.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetIndent</span>( float value, int index, ERRoadSide type)</p>
+<p class="styleAPIText">This will set the <a href="general_settings.html#defaultIndent" class="link">indent</a> value  marker at <span class="styleAPIValue">index</span> on the left side (ERRoadSide.Left), on the right side (ERRoadSide.Both) or on both sides (ERRoadSide.Both). The value will be adjusted and returned should the passed value be lower then the minimum required indent value.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetIndentAlignment</span>(ERIndentAlignment value, int index, ERRoadSide type)</p>
+<p class="styleAPIText">This will set the alignment of the indent position marker at <span class="styleAPIValue">index</span>. By default the <a href="general_settings.html#defaultIndent" class="link">indent</a> position is aligned with the road (ERIndentAlignment.Road). Other options are the terrain height at the indent position (ERIndentAlignment.Terrain) or the terrain height at the <a href="general_settings.html#defaultSurrounding" class="link">surrounding</a> poisition (ERIndentAlignment.Surrounding). This can be set for the left side of the road (ERRoadSide.Left), the right side (ERRoadSide.Right) or both sides ((ERRoadSide.Both).</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetLayer</span>(int index)</p>
+<p class="styleAPIText">Sets the layer of the road game object to <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public bool <span class="styleAPIBold">SetMarkerControlType</span>(int index, ERMarkerControlType type)</p>
+<p class="styleAPIText">Sets the ERMarkerControlType <span class="styleAPIValue">type</span> for the marker at <span class="styleAPIValue">index.</span> Enum options are: Spline, StraightXZ, StraightXZY, Circular</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMarkerPosition</span>(int index, Vector3 position)</p>
+<p class="styleAPIText">This will update the marker position at <span class="styleAPIValue">index</span> to <span class="styleAPIValue">position</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMarkerPositions</span>(Vector3[] positions)</p>
+<p><span class="styleAPIText">This will update all marker positions provided that the </span>passed array length matches the markers length</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMarkerPositions</span>(Vector3[] positions, int index)</p>
+<p><span class="styleAPIText">This will update all marker positions corresponding to the passed array length </span>starting at <span class="styleAPIValue">index</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMarkerTilting</span>(float value, int index)</p>
+<p><span class="styleAPIText">This will set the tilting level of the marker </span>at <span class="styleAPIValue">index</span>. <span class="styleAPIValue">Value</span> represents the tilting angle</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMarkerTiltingCenter</span>(float value, int index)</p>
+<p><span class="styleAPIText">This will set the tilting center of the marker </span>at <span class="styleAPIValue">index</span>. <span class="styleAPIValue">value</span> represents the position between the left and the right side of the road (0..1)</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMaterial</span>(Material mat)</p>
+<p class="styleAPIText">This will assign the passed material to the road. It is recommended to use road types which includes the road material</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetMeshCollider</span>(bool value)</p>
+<p class="styleAPIText">Adds or removes the mesh collider</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetName</span>(string name)</p>
+<p class="styleAPIText">Updates the name of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetResolution</span>(float res)</p>
+<p class="styleAPIText">Set the resolution of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetSideObjectOffset</span>(SideObject obj, int index, OffsetPosition position, float value)</p>
+<p class="styleAPIText">This will start / end the side object <span class="styleAPIValue">obj</span> at marker <span class="styleAPIValue">index</span> at  <span class="styleAPIValue">position</span> (OffsetPosition.Start or OffsetPosition.End) according the passed <span class="styleAPIValue">value</span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetSurrounding</span>(float value, int index)</p>
+<p class="styleAPIText">This will set the <a href="general_settings.html#defaultSurrounding" class="link">surrounding</a> value on both the left and right side of the road for the marker at <span class="styleAPIValue">index</span>. </p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">SetSurrounding</span>(float value, int index, ERRoadSide type)</p>
+<p class="styleAPIText">This will set the <a href="general_settings.html#defaultSurrounding" class="link">surrounding</a> value  marker at <span class="styleAPIValue">index</span> on the left side (ERRoadSide.Left), on the right side (ERRoadSide.Both) or on both sides (ERRoadSide.Both). </p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetAngleThreshold</span>(float res)</p>
+<p class="styleAPIText">Set the Angle Threshold of the road object</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <strong>SetRoadType</strong>(ERRoadType   rt)</p>
+<p class="styleAPIText">This will update the full road to match the passed road type</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetSplatmap</span>(bool active)</p>
+<p class="styleAPIText">This will blend the road shape in the terrain splatmap</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetSplatmap</span>(bool active, int splatIndex , int expand, int smoothLevel, float opacity)</p>
+<p><span class="styleAPIText">This will blend the road shape in the terrain splatmap</span>. Additionally the splatmap parameters will be passed for the terrain splat texture index, width expansion, smooth level and opacity </p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetSplineStrength</span>(int index, float strength)</p>
+<p class="styleAPIText">Sets the spline strength of the marker at <span class="styleAPIValue">index</span>.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetTerrainDeformation</span>(bool value)</p>
+<p class="styleAPIText">Toggles on/off terrain deformation for this road according the passed <span class="styleAPIValue">value</span>.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetTerrainDeformation</span>(int markerIndex, bool value)</p>
+<p class="styleAPIText">Toggles on/off terrain deformation for <span class="styleAPIValue">markerIndex</span>. This requires Refresh()</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetWidth</span>(float width)</p>
+<p class="styleAPIText">Sets the width of the road object. It is recommended to use road types which includes the width.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetVertexColor</span>(int index, Color color)</p>
+<p class="styleAPIText">Sets the vertex color of the marker at <span class="styleAPIValue">index</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SideObjectSetActive</span>(SideObject obj, bool value)</p>
+<p class="styleAPIText">This activates / deactivates side object <span class="styleAPIValue">obj</span>, on this road according  <span class="styleAPIValue">value</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SideObjectMarkerSetActive</span>(SideObject obj, int markerIndex, bool value)</p>
+<p class="styleAPIText">This activates / deactivates side object <span class="styleAPIValue">obj</span>, on this road for the marker at <span class="styleAPIValue">markerIndex</span> according  <span class="styleAPIValue">value</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SideObjectMarkerSetActive</span>(SideObject obj, int[] markerIndexes, bool value)</p>
+<p class="styleAPIText">This activates / deactivates side object <span class="styleAPIValue">obj</span>, on this road for all markers in the array <span class="styleAPIValue">markerIndexes</span> according  <span class="styleAPIValue">value</span>.</p>
+<p>&nbsp;</p><p class="styleAPI">public void <span class="styleAPIBold">SnapToTerrain</span>(bool value)</p>
+<p class="styleAPIText">When active, road vertices will snap to the terrain. No terrain deformation will take place for this road object.</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SnapToTerrain</span>(bool value, float value)</p>
+<p><span class="styleAPIText">When active, road vertices will snap to the terrain with an offset <span class="styleAPIValue">value</span>. No terrain deformation will take place for this road object.</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">SplitRoad</span>(int markerIndex)</p>
+<p><span class="styleAPIText">This will split the road at <span class="styleAPIValue">markerIndexes</span> and return the newly created ERRoad object.</span></p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <strong>UnConnectEnd</strong>()</p>
+<p class="styleAPI"><span class="styleAPIText">Removes the connection at the end of the road object.</span></p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public void <strong>UnConnectStart</strong>()</p>
+<p class="styleAPI"><span class="styleAPIText">Removes the connection at the start of the road object.</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="ERRoadNetwork.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="ERRoadType.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

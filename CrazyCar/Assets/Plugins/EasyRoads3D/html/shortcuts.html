@@ -1,0 +1,181 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12" style="padding: 0px"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="padding: 0px;background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right" style="padding: 0px"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td style="padding: 0px"><a href="materials.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right" style="padding: 0px"><a href="troubleshooting.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom" style="padding: 0px"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right" style="padding: 0px">&nbsp;</td>
+      </tr>
+<style>
+td{padding: 10px 0px}
+</style>
+	  <tr>
+	    <td colspan="2"><p class="style1">&nbsp;</p>
+	      <p class="header1" style="color:#000">Shortcuts, Hotkeys &amp; Scene Operations<hr>
+	      <p class="style21">&nbsp;</p>
+          <p class="style1"><span class="header2" style="color:#000">HOTKEYS</span></p>
+          <p class="style1"><span class="style21">Scene<a name="download" id="download"></a></span> </p>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="style1">
+            <tr>
+              <td width="150">M</td>
+              <td>Free Move handle, for road markers and crossings. Recommended when moving markers and the road is set to follow the terrain contours</td>
+            </tr>
+            <tr>
+              <td>W</td>
+              <td>Position handle for road markers and crossings. Pressing W again will switch between path forward and horizontal orientation of the position handle</td>
+            </tr>
+            <tr>
+              <td>E</td>
+              <td>Rotation handle for crossings, tilting control for selected road markers</td>
+            </tr>
+            <tr>
+              <td valign="top">CTRL + H</td>
+              <td>Toggle On/Off the display of slider handles for side object start / end offsets and sideways distance. Note that start / end offset handles are only displayed when active for the selected marker (start offset handle when the first marker is selected or the previous marker is inactive, end offset handle when the last marker is selected or the next marker is inactive). The sideways distance slider handle will only be displayed when the Side Object has a Sideways Distance value on at least one of the markers and the respective sphere handle is selected in Scene View. These values can also be set in the Inspector</td>
+            </tr>
+            <tr>
+              <td>Shift + Click</td>
+              <td>Instantiate the selected crossing / connection in the scene</td>
+            </tr>
+            <tr>
+              <td>F</td>
+              <td>Zoom in to the selected road marker, or to the mouse position when no marker is selected</td>
+            </tr>
+            <tr>
+              <td valign="top">CTRL + Alt + Click</td>
+              <td>Selects the clicked terrain as the active terrain when the middle mountain tab is active. Only this the terrain will be flattened when switching to Build Mode which can be useful to speed up the process time during testing. Clicking the same terrain once again will set the selection back to &quot;All Terrains&quot;</td>
+            </tr>
+            <tr>
+              <td>Shift + Z</td>
+              <td>Select all markers of the selected road. If currently two markers are selected all markers between those two will be selected</td>
+            </tr>
+            <tr>
+              <td>P</td>
+              <td>This will connect a new instance of the last instantiated crossing object to the selected marker (first or last marker of a road)</td>
+            </tr>
+            <tr>
+              <td>O</td>
+              <td>This will attach the next matching connection on the crossing prefab attached to the selected marker</td>
+            </tr>
+            <tr>
+              <td>Space</td>
+              <td>Toggles On/Off the display of the SceneView road, indent and surrounding highlight surfaces. This is useful to quickly get a clear view of the road and side objects without having to deactive these highlight surfaces in General Settings &gt; Scene Settings</td>
+            </tr>
+            <tr>
+              <td>Shift + L</td>
+              <td>Shortcut for: General Settings &gt; Scene Settings &gt; Exclude Locked Objects</td>
+            </tr>
+           
+          </table>
+          <p class="style1">&nbsp;</p>
+          <p class="style1"><span class="style21">Roads<a name="download" id="download2"></a></span></p>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="style1">
+            <tr>
+              <td width="150">SHIFT + Click</td>
+              <td>Add Markers</td>
+            </tr>
+            <tr>
+              <td valign="top">SHIFT + Click Marker</td>
+              <td>Select multiple markers</td>
+            </tr>
+            <tr>
+              <td valign="top">CTRL + Click </td>
+              <td>This will start a new marker from the selected marker (first or last), this is useful for sci fi type of roads, bridges, etc. where the marker should not snap to the ground</td>
+            </tr>
+            <tr>
+              <td>I</td>
+              <td>Insert Markers</td>
+            </tr>
+            <tr>
+              <td valign="top">SHIFT + Click + Drag</td>
+              <td>Snap the marker to the terrain height while moving the marker position</td>
+            </tr>
+            <tr>
+              <td>SHIFT + R</td>
+              <td>Removes the selected marker or selected crossing prefab</td>
+            </tr>
+            <tr>
+              <td>SHIFT + U</td>
+              <td>Disconnects the road from a connection if the selected marker is connected to a crossing prefab</td>
+            </tr>
+            <tr>
+              <td>SHIFT + J</td>
+              <td>Joins two selected roads in one single road if the road types match. If only one road and marker is selected SHIFT + J  will split the road in two roads</td>
+            </tr>
+            <tr>
+              <td>N</td>
+              <td>Toggles On/Off road shape node selection for the selected marker. After selecting one of the shape nodes you can change the shape both in Scene View as in the Inspector. Holding Shift while moving the position handle will update all shape nodes on the outer side of the  selected none</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>Toggles On/Off side object node selection for the selected marker for Shape type of side objects. After selecting one of the shape nodes you can change the shape both in Scene View as in the Inspector. Holding Shift while moving the position handle will update all shape nodes on the outer side of the selected none</td>
+            </tr>
+             <tr>
+              <td>Shift</td>
+              <td>Holding down the Shift key while moving a marker will keep the marker snapped to the terrain. When pressing the Shift key first the center of the gizmo changes to a flat square. This means the marker will move relative to the direction the Scene View Camera is facing. This generally works better when keeping the marker snapped to the terrain</td>
+            </tr>
+             <tr>
+               <td>CTRL + SHIFT + M</td>
+               <td>Snap all markers to the terrain height at the specific marker position</td>
+             </tr>
+             <tr>
+               <td>CTRL  + M</td>
+               <td>Snap  the selected road marker to the terrain height at that position</td>
+             </tr>
+             <tr>
+               <td>Keypad Plus</td>
+               <td>Selects the next marker</td>
+             </tr>
+             <tr>
+               <td>Keypad Minus</td>
+               <td>Selects the previous marker</td>
+             </tr>
+          </table>
+          <p class="style1"></p>
+          <p class="style21">Side Object Shape Editor Window</p>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" class="style1">
+            <tr>
+              <td width="150">CTRL + Click</td>
+              <td>Insert nodes</td>
+            </tr>
+            <tr>
+              <td>DEL</td>
+              <td>Delete selected nodes</td>
+            </tr>
+          </table>
+          <p class="style1"></p>
+          <p class="style1">&nbsp;</p>
+          <p class="style1"><span class="header2" style="color:#000">SCENE OPERATIONS</span></p>
+          <p class="style21">&nbsp;</p>
+          <p class="style21">Deselect a connection prefab</p>
+          <p class="style1">Click on an empty area in the scene. All general road and connection handles will be activated</p>
+          <p class="style1">&nbsp;</p>
+          <p class="style21">Join Two roads</p>
+<p class="style1">select the outer markers that should connect by holding Shift and click the marker. When two markers of different road objects but of the same roads object type are selected, a button &quot;Join Selected Roads&quot; is displayed in the Inspector.</p>
+<p class="style1">&nbsp;</p>
+        <p class="style1">&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="materials.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="troubleshooting.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

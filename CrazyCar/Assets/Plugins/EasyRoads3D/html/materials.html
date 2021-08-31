@@ -1,0 +1,61 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="terrain_control.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="shortcuts.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2"><p class="style1">&nbsp;</p>
+	      <p class="header1" style="color:#000">Materials &amp; Shaders<hr>
+	      <p class="style21">&nbsp;</p>
+	      <p class="style1">Since ordinary ordinary game ob jects are used with a mesh renderer component, you can use your own materials and shaders or the Unity shaders.</p>
+	      <p class="style1">The package does come with a set of shaders taking advantage of  the various UV controls for roads and side objects. For roads you can set additional  uv data on the uv4 channel. For the shape type of side object you can set vertex colors and also additional uv data on the uv4 channel.</p>
+	      <p class="style1">The shaders in the package are example of how you use this data in shaders. </p>
+	      <p>&nbsp;</p>
+	      <p class="style1"><span class="header2" style="color:#000">SHADERS</span>          </p>
+	      <ul>
+            <li><span class="propertyStyle">EasyRoads3D - Unity 5 Standard:</span> <span class="style1">This is a copy of the Unity Standard shader using an offset as a way to deal with z-fighting. Offsets also prevent the road from disappearing in the terrain further away from the cam when the terrains LOD system kicks in.</span></li>
+            <li><span class="propertyStyle">ER Dual Blend UV1:</span> <span class="style1">Click this button to switch back to Edit Mode</span>.</li>
+            <li><span class="propertyStyle">ER Blend UV4:</span> <span class="style1">This is very similar as below but cutout instead of decal:blend</span>.</li>
+            <li><span class="propertyStyle">ER Dual Road Blend:</span> <span class="style1">I Connector</span>.</li>
+            <li><span class="propertyStyle">ER Road Decal Splat Blend:</span> <span class="style1">Blends additional textures with the main texture using a control texture and UV4 detail data</span>.</li>
+            <li><span class="propertyStyle">ER Road Detail: </span><span class="style1">Blends a detail texture with the main texture using UV4 detail data</span>.</li>
+            <li><span class="propertyStyle">ER Road Transparency:</span> <span class="style1">Full transparency supporting shadows based on decal blend. The shadows are projected in a similar way as they would have done on the terrain below the road</span>.</li>
+            <li><span class="propertyStyle">Misc / ER Race Track:</span> <span class="style1">This blends a second texture with the main texture using uv4 data and it also blends a smoothness texture. This can be used to define the perfect racing line on a racre track</span>.</li>
+            <li><span class="propertyStyle">Misc / ER Road Splat 4 UV4:</span> <span class="style1">This shader blends the track texture with the simulated  terrain textures and terrain splatmap. It can be used on a terrain mesh overlay with more geometry detail.</span></li>
+            <li><span class="propertyStyle">Terrain / ER Terrain Mask: </span><span class="style1">This is for objects used as terrain masks</span>.</li>
+            <li><span class="propertyStyle">Terrain / ER Custom Terrain:</span> <span class="style1">This is a slightly modified version of the Unity terrain shader supporting holes using a mask object</span>.</li>
+            <li><span class="propertyStyle">Tesselation / ER Terrain Mesh Tesselation:</span><span class="style1">This shader blends two textures with the simulated  terrain textures and terrain splatmap. Tesselation is used on the two textures. It can be used on a terrain mesh overlay like the rock wall in the demo project.</span></li>
+          </ul>
+			</p>
+          <p class="style21">&nbsp;</p>
+<p class="style1">&nbsp;</p>
+        <p class="style1">&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="terrain_control.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="shortcuts.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

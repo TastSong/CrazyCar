@@ -1,0 +1,342 @@
+<html>
+<head>
+<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+<!-- Copyright 2000, 2001, 2002, 2003 Macromedia, Inc. All rights reserved. -->
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="toolbar.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="scene.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2" class="style1"><p>&nbsp;</p>
+	      <p class="header1" style="color:#000">General Settings<hr>
+	      <p class="style8"><span class="header2">INTRODUCTION</span><span class="style21"><a name="introduction" id="introduction"></a></span></p>
+	      <p>The General Settings tab <img src="../images/generalSettings_tab.jpg" alt="" width="53" height="29" style="vertical-align:middle"> includes a set of options to improve the scene workflow, control the terrain object(s) and also allows you to auto generate road networks by importing OSM or KML road data.</p>
+	      <p><img src="../images/general_settings.jpg" width="417" height="377"> </p>
+	      <p>&nbsp;</p>
+	      <p><span class="header2"><strong>SCENE</strong> SETTINGS</span><span class="style21"><a name="sceneSettings" id="introduction2"></a></span></p>
+	      <p><img src="../images/scene_settings.jpg" width="493" height="840"></p>
+	      <ul>
+	        <li><a name="defaultIndent" id="defaultIndent"></a><span class="propertyStyle">Default Indent:</span> This gives control over the terrain deformation. The default values are  based on the terrains heightmapscale to ensure accurate terrain flattening according the road and crossings shapes. Optionally these values can be increased these here. The Indent value represents the distance from the edge of the roads outwards to the terrain point that should be leveled at the same height of the road at that point to guarantee most optimal terrain deformation results. This value can be tweaked per marker but can never be lower then the Scene Min Indent value. Different default indent values can also be set per road type.</li>
+	        <li><a name="defaultSurrounding" id="defaultSurrounding"></a><span class="propertyStyle">Default Surrounding:</span> The default surrounding value represents the distance over which the height of the terrain at the  Indent position will be leveled with the current terrain height.</li>
+	        <li><span class="propertyStyle">Max Indent/Surrounding:</span> This  value will be used as the max for the indent / surrounding slider controls for the selected marker.</li>
+	        <li><span class="propertyStyle">EasyRoads3D Layer:</span> by default EasyRoads3D uses layer 31 for background operations, optionally this can be changed here.</li>
+	        <li><span class="propertyStyle">Build Side Objects in Edit Mode:</span> You can switch this off if you prefer to build the actual side object game objects only in <a href="terrain_control.html" class="link">Build Mode</a>.</li>
+	        <li><span class="propertyStyle">Use Light Probs:</span> This will toggle on Use Light Pobes in the Mesh Renderer of the generated road.</li>
+	        <li><span class="propertyStyle">Enable Back to Edit Mode without Terrain Restore.</span> This is added upon request, when switching back to Edit Mode the terrain will not be restored to its original state before switching to Build mode. Please be careful with this!<br>
+	          <br>
+	        </li>
+	        <li><span class="propertyStyle">Highlight Selected Road:</span> This will highlight the selected road. This can be useful to visualize the road in hilly areas in Edit Mode when part of the road is covered by terrain.</li>
+	        <li><span class="propertyStyle">Highlight Indent Area:</span> This will highlight the Indent area, the terrain area that will be leveled at the same height as the road.</li>
+	        <li><span class="propertyStyle">Highlight Surround Area:</span>  This will highlight the terrain area over which the heights will be leveled gradually from the road height to the original terrain height.</li>
+	        <li>	          <span class="propertyStyle">Hide White Surfaces:</span> This will hide the white surfaces surrounding the road and connection objects. Depending on the road shader these white surfaces may render through the road. This can be adjusted by reducing the Offset values towards 0 on the material in /Assets/EasyRoads3D/Resources/Materials/surfaceMaterial</li>
+	        <li><span class="propertyStyle">Enable Side Object Handles:</span> This will display handles in scene view to control for example the Start and End offsets for side objects. The H key can be used for this as well.</li>
+	        <li><strong class="propertyStyle">Display Critical Areas: </strong>The unity terrain object stores Terrain height data in decimals between 0 and 1. Therefore it is not possible to apply negative height values. Parts that are nearby or below the 0 value will be displayed with red handles. This can be used to quickly double check these critical areas and to make sure the terrain does not break through the roads.</li>
+	        <li><span class="propertyStyle">Only Display Markers Selected Road:</span> only the blue markers of the selected road will be displayed when a road objectis selected.</li>
+	        <li><span class="propertyStyle">Marker Handle Size:</span> This controls the size of the blue marker handles in Scene View.</li>
+	        <li><span class="propertyStyle">Marker Display Distance:</span> This controls the max distance for which handles will be displayed.</li>
+	        <li><span class="propertyStyle">Exclude Locked Objects:</span> When toggled on, no marker handles will be displayed for <a href="scene.html#lockedObject" class="link">objects that are locked</a>. </li>
+	        <li><span class="propertyStyle">Mesh Terrain: </span>Alternatively you can use a Mesh terrain instead of the Unity terrain object. Mesh terrains will not be deformed 
+            according the road shape.</li>
+	        <li><span class="propertyStyle">Global Grid <span class="style21">[Pro]</span>:</span> This is currently being implemented upon request. When active road markers and connection prefabs will snap to the global grid (and in the future also additonal local grids). This can be useful for city environments.
+              <ul><li><span class="propertyStyle">
+	          Grid Size:</span> The cell size</li>
+  <li><span class="propertyStyle">Grid Rotation:</span> The global rotation</li>
+  <li><span class="propertyStyle">Grid Color:</span> The color of the outlines<br>
+  </li>
+</ul>
+	          <br>
+	        </li>
+	        <li><span class="propertyStyle">Refresh Road Network:</span> This will rebuild and clean up the road network. <br>
+            </li>
+          </ul>
+	      <p><strong class="header2">ROAD TYPES <span class="style21">[Pro]</span></strong><span class="style21"><a name="roadtypes" id="addmarkers4"></a></span></p>
+	      <p><img src="../images/roadTypes.jpg" width="426" height="1219"></p>
+	      <p>Especially when building complex road networks with different road types  it is recommended to setup road presets before actually building your roads in the scene. These presets will be available when <a href="toolbar.html#addroad" class="link">adding a new road</a> to the scene or when setting up crossing / connection objects and is an easy way to make sure road types look the same and match with the associated crossing types. You can also link road presets to <a href="#importData" class="link">OSM road types</a>.</p>
+	      <p>Most of the properties refer to the same properties as for<a href="scene.html" class="link"> road objects in the scene</a>. The other controls are explained below.</p>
+	      <ul>
+	        <li><span class="propertyStyle">Add New Road Type: </span>This button will create a new road type. It will be selected automatically, you can set the road type name, with and material</li>
+	        <li><span class="propertyStyle">Add Project Road Types:</span> Scene road types are also stored in the list of project road types. This way you can reuse road types across scenes. This button will display all project road types. Those road types already available in the scene will be disabled. This button will be disabled If all project road types are already available in the scene</li>
+	        <li><span class="propertyStyle">Manage Project Road Types:</span> This will list all project road types and allows you to remove old, unused road types. Note that removed road types will added again if they still exist in a scene!</li>
+	        <li><span class="propertyStyle">Import Road Types:</span> This will open a window to import road types from another project [<a href="http://unityterraintools.com/tutorials/so_import_export.php" class="link"><strong>website tutorial</strong></a>]</li>
+	        <li><span class="propertyStyle">Export Road Types:</span> This will open a window to export road types so they can be used in another project [<a href="http://unityterraintools.com/tutorials/so_import_export.php" class="link"><strong>website tutorial</strong></a>]<br>
+	          <br>
+            </li>
+	        <li><span class="propertyStyle">Road Types: </span>This dropdown will list all the scene road types</li>
+	        <li><span class="propertyStyle">Road Name:</span> The name of the selected road type in the dropdown</li>
+	        <li><span class="propertyStyle">Resolution:</span> The geometry resolution in meters</li>
+	        <li><strong class="propertyStyle">Angle Threshold:</strong> This can be used to optimize the road geometry while still maintaining detail is bends. Try values around 5 and increase the road resolution to 10 or 20. The vertex / triangle count will drop significantly</li>
+	        <li><span class="propertyStyle">Bumpiness Y Offset:</span> The smoothness level of the road controllable through Min Max values</li>
+	        <li><span class="propertyStyle">Bumpiness Distance:</span>The distance controlable through Min Max values</li>
+	        <li><span class="propertyStyle">Random Tilting Angles:</span>Adds additional tilting to the road controllable through Min Max values</li>
+	        <li><span class="propertyStyle">Tilting Distance:</span>The distance over which the tilting takes place</li>
+	        <li>Follow terrain Contours: The road will auto adjust to the terrain shape, this will greatly speed up the workflow as less markers will be required</li>
+	        <li>Contour Threshold: The lower values the more the road will match the terrain shape, use higher values for roads like motorways</li>
+	        <li><span class="propertyStyle">Layer:</span> the default layer for this road type</li>
+	        <li><span class="propertyStyle">Cast Shadows:</span> The object will cast shadows</li>
+	        <li><span class="propertyStyle">Road Width:</span> The width
+	      of the road</li>
+	        <li><span class="propertyStyle">Sub Segments:</span> This controls sub division. Note that dynamic built-in crossings do not yet support sub segments. In order to use this within the road network oads with sub segments can be attached to an <a href="scene.html#IConnector" class="link">I Connector</a>, the road on the other end of the I Connector can be attached to built-in crossings</li>
+	        <li><span class="propertyStyle">UV Tiling:</span> The tile size of the used texture</li>
+	        <li>Additional UV Data: Optionally more UV data can be stored in UV4, this can be data matching the terrain bounds or additional detail based on a specified distance. This distance will be recalculated based on the road distance in order to clamp these UVs just like with the main UVs</li>
+	        <li><span class="propertyStyle">Road Material: </span>The road material. The dropdown lists all materials in /EasyRoads3D/Resources/Materials/Roads and can be used to quickly assign another material</li>
+	        <li><span class="propertyStyle">Connection Material: </span>This refers to the connection on dynamic connection objects. When <a href="#conSettings" class="link">selecting this road type for that particular connection</a> the connection material will auto update</li>
+	        <li><span class="propertyStyle"><a name="newConnectionPrefab" id="newConnectionPrefab"></a>Create New Connection Prefab:</span> This will auto generate a new dynamic prefab for the selected road type</li>
+	        <li><span class="propertyStyle">Terrain Deformation:</span> This can be used to turn off terrain deformation for this particular road, for instance road types used as bridge segments</li>
+	        <li><span class="propertyStyle">Default Indent:</span> The <a href="#defaultIndent" class="link">default indent</a> distance for this road type</li>
+	        <li><span class="propertyStyle">Default Surrounding:</span> The <a href="#defaultSurrounding" class="link">default surrounding</a> distance for this road type</li>
+	        <li><span class="propertyStyle"><a name="startEndDecals"></a>Start / End Decals: </span>Here we can add prefabs that will be auto inserted randomly at the start and end of the road. The randomly selected decal can always be update manually in the main <a href="scene.html#startEndDecals" class="link">road settings</a> of the selected road</li>
+	        <li><span class="propertyStyle">Add Decal Object:</span> After dropping a prefab in this slot additional options will appear<br>
+	          <span class="propertyStyle">- Priority:</span> This can be used to have certain decals appear more often then other decals<br>
+	          <span class="propertyStyle">- Scale:</span> Decals will be rescaled relative to the road width, the scale can be used to scale the decal relative to this width<br>
+	          <span class="propertyStyle">- Road Section Width:</span> this is by default the road width, custom prefabs however can have the sidewalks as part of the shape. In that case the actual road width can be entered here <br>
+	          <span class="propertyStyle">- Height Offset: </span>The distance of the prefab above the road<br>
+	          <br>
+            </li>
+	        <li><span class="propertyStyle">Terrain Splatmap Settings: </span>these settings are related to blending the road shape in the terrain splatmap </li>
+	        <li><span class="propertyStyle">Activate:</span> This will activate terrain splatmap blending for this road</li>
+	        <li><span class="propertyStyle">Splatmap Texture:</span> This will list all the availabe terrain splat map textures. Select which texture you want to use</li>
+	        <li><span class="propertyStyle">Expand:</span> This will increase the size of the road shape</li>
+	        <li><span class="propertyStyle">Smooth Level:</span> This will gradually blend the selected texture with the original terrain splatmap</li>
+	        <li><span class="propertyStyle">Opacity:</span> Use this to set the strength of the road shape in the terrain splatmap<br>
+	          <br>
+	        </li>
+	        <li><span class="propertyStyle">Is Side Object:</span> When toggled on no actual road mesh will be created. This sort of &quot;road&quot; types can be used to create other ready-to-use objects like fences based on side objects by activating the specific side object for this &quot;road&quot; type (see further below).</li>
+	        <li><span class="propertyStyle">Active Side Objects:</span><span class="style1"> This will list all scene side objects. Those that are activated will be activated automatically when creating a scene instance of this road type</span><br>
+	          <br>
+            </li>
+	        <li><span class="propertyStyle">Create Snap Connector:</span> This will create a snap copnnector prefab in /Assets/EasyRoads3D/prefab sources/snap connectors/. Snap Connector prefabs can be attached to any other prefab in the scene. Roads / side objects of this type can be attached quickly to these prefabs or new roads / side objects can be pulled out from the prefabs. Think of . Like a central wall post where multiple wall side objects can connect to. Add  snap connectors with the specific wall side object auto activated to the wall post prefab. In the scene new walls can be pulled out, existing walls  can be attached quickly to the pillar exactly aligned with the center al wall post. Or for roads, imagine buildings, houses  with driveways, attach a snap connector to the garage door, snap the driveway  road object and it will align instantly with the garage door.</li>
+	        <li><span class="propertyStyle">Update Scene Instances: </span>This will update all road instances in the scene and crossings that match this road type</li>
+	        <li><span class="propertyStyle">Delete Selected Road Type: </span>This will remove the selected road type from the scene<br>
+            </li>
+	      </ul>
+<p>&nbsp;</p>
+	      <p><strong class="header2">CROSSING / CONNECTION PREFABS</strong><span class="style21"> [Pro]<a name="sceneprefabs" id="addmarkers2"></a></span></p>
+<p><img src="../images/crossingPrefabs.jpg" width="425" height="426"></p>
+<p>EasyRoads3D supports two systems to create crossings, often referred to as &quot;connection prefabs&quot; because these type of objects do not necessarily have to be crossings, but can also, for example, be mesh based crosswalk prefabs. The main system is the <a href="#dynamiccrossings" class="link">dynamic prefabs system</a>, these are built-in customizable connection prefabs. The second, very powerful system, is the <a href="#customcrossings" class="link">custom mesh prefab system</a> with which you can turn your own models into connection prefabs. You can use this to further customize your road networks whilst still taking advantage of the EasyRoads3D scene workflow.</p>
+<p><strong>DYNAMIC CROSSING PREFABS<a name="dynamiccrossings" id="customcrossings2"></a></strong></p>
+<p>The dynamic crossing system currently supports creating new standard X , T crossings and roundabout prefabs. This is especially useful when you have many similar types of crossings in the scene. By creating a prefab first, the prefab can be reused  in the scene without having to customize it each time. It is still possible to create variations of an instance of this prefab in the scene.<br>
+  <br>
+  These dynamic prefabs will be stored in:</p>
+<p>/Assets/EasyRoads3D/Resources/dynamic prefabs</p>
+<p>Dynamic X and T connection prefabs for newly created road types can be  created automatically from the <a href="#newConnectionPrefab" class="link">road types section</a> , or in this section:</p>
+<p>1) Enter a name for the new crossing prefab in the &quot;New Prefab Name&quot; textfield.</p>
+<p>2) 
+  Select from the dropdown what type of crossing preset you want to create, crossing or roundabout. You can also create a new prefab from an already existing prefab by selecting this existing prefab from the <strong>Create Copy of</strong> dropdown. This is useful to quickly create prefabs with variations.</p>
+<p>3) Click the <strong>Create</strong> resp. <strong>Create New Prefab</strong> (in case you create a copy of an existing prefab) button. This will create the new prefab in the above mentioned folder</p>
+<p>At this stage the new prefab can be edited:</p>
+<p>1) For Unity 2018.3 and newer versions, the newly created prefab can now be customized through the Unity the prefab editor system introduced in Unity 2018.3. For Unity 2018.2 and earlier versions, hold the SHIFT key and click in the scene. The newly created prefab will be instantiated in the scene as a child of <strong>Temp Crossing prefabs</strong> because we are only temporarily instantiating it in the scene to customize it. </p>
+<p>2) Use the Inspector and scene controls to customize the new crossing prefab, see just below</p>
+<p>3) Make sure to click the <strong>Save Changes</strong> button to update the prefab. But only do this for new prefabs, NOT for instances already used in the scene!</p>
+<p><strong><br>
+  NOTE:</strong> Dynamic X and T connection prefabs for newly created road types can be  created automatically from the <a href="#newConnectionPrefab" class="link">road types section</a>.</p>
+	      <p>&nbsp;</p>
+<p><strong>Customizing Crossings:</strong><span class="style21"><a name="customizingCrossings" id="addmarkers5"></a></span></p>
+	      <p><img src="../images/CrossingsInspector.jpg" width="414" height="361"></p>
+	      <p>After instantiating new crossing prefabs in the scene you will see the following Inspector:</p>
+	      <p><span class="propertyStyle">Name / Update Prefab Name:</span> You can use this to change the prefab name<br>
+	        <span class="propertyStyle">Save Changes:</span> Use this to regularly save the changes to the prefab<br>
+          <span class="propertyStyle">Exit Prefab Editor:</span> Click this button once you are finished customizing the prefab. It will save the final changes and remove the prefab from the scene. You can now start using it by <a href="intersections.html#create" class="link">connecting it to an existing road or by adding it directly to the road network</a>.<br>
+          <span class="propertyStyle">Save as New Prefab:</span> This will allow you to quickly generate variations of an already customized crossing prefab. </p>
+	      <p><strong><br>
+          Copy from existing prefab</strong><span class="style21"><a name="copyFrom" id="addmarkers10"></a></span></p>
+	      <p><img src="../images/copyFromExisiting.jpg" width="415" height="134"></p>
+	      <p>Use this if you want to create a new prefab based on one of the prefabs that come with EasyRoads3D or based on a crossing prefab you already created before<br>
+	      </p>
+	      <p><strong>General Settings</strong><span class="style21"><a name="generalCrossingSettings" id="addmarkers8"></a></span></p>
+	      <p><img src="../images/generalCrossingSettings.jpg" width="411" height="156"></p>
+	      <p><span class="propertyStyle">Crossing Layout:</span> This controls the geometry structure and style of the crossing. At this moment only X Shape is implemented. Other options will follow.<br>
+            <span class="propertyStyle">T Crossing:</span> This will create a T shape crossing<br>
+          <span class="propertyStyle">Swap Crossing:</span> With this button you can control whether the other road connects to left or right side<br>
+          <span class="propertyStyle">Rounded Corners:</span> at this moment only rounded corners are supported </p>
+	      <p><br>
+          <strong>Connection Settings</strong><span class="style21"><a name="conSettings" id="addmarkers9"></a></span></p>
+	      <p><img src="../images/connectionSettings.jpg" width="412" height="194"></p>
+	      <p>Connection settings refer to the road characteristics at each side of the crossing / connection which can all have their own specific characteristics.</p>
+	      <p><span class="propertyStyle">Connection Setup:</span> This dropdown includes three options. <strong>Uniform Connections</strong>, the selected road settings will be applied to all four connections. <strong>Uniform Opposite Connections</strong>, the front and back connections share the same settings and the left and right connections share the same settings. <strong>Unique Connection</strong>, each connection will have its own specific settings.</p>
+	      <p><span class="propertyStyle">Select Road Preset:</span> This is where road presets come in useful. Simply select one of the available road presets to set the connection info. Also with regard to future features it is strongley recommended to use this workflow instead of manually  adjusting individually settings such as the width here below. Of course you can still do this for a specific road in the scene that will not be reused elsewhere. Creating a new road type only for a single road is not necessary and wouldn't be  efficient.</p>
+	      <p><span class="propertyStyle">Connection Width:</span> this will be the width of the connection. It will be inherited from the selected road type but could be customized for a single crossing in the scene that will look different.</p>
+	      <p><span class="propertyStyle">Connection Material:</span> the material used on this crossing connection geometry</p>
+	      <p><span class="propertyStyle">Road Material:</span> The material that will be assigned to roads attached to this connection<br>
+          </p>
+	      <p><strong>Corner Settings</strong><span class="style21"><a name="cornerSettings" id="addmarkers11"></a></span></p>
+	      <p><img src="../images/crossingCornerSettings.jpg" width="411" height="574"></p>
+	      <p>[add scene view image visualizing the above properties]</p>
+	      <p>Each corner of a crossing can have its own properties both for the road corner shape as for sidewalks.</p>
+	      <p class="underlined">Corner Settings</p>
+	      <p><span class="propertyStyle">Uniform Corners:</span> when checked corner changes will be applied to all crossing corners.</p>
+	      <p><span class="propertyStyle">Select Corner preset:</span> You can store corner settings further below in the Inspector. Currently saved settings will be displayed here. This can be used to quickly assign the same corner settings to other corners across all crossing / connection prefabs. Simply selected the wanted preset from the dropdown.</p>
+	      <p><span class="propertyStyle">Radius:</span> The size of the rounded corner</p>
+	      <p><span class="propertyStyle">Start Angle:</span> This option is enabled when the second road is snapped to the main road (like a dirt road to an asphalt road). This way you can create flexible non 90 degree roundings.</p>
+	      <p><span class="propertyStyle">Rounding Segments:</span> Use this to get the desired geometry resolution for the rounding</p>
+	      <p>Inner Segment Distance: This controls the distance of the inner row road vertices and depends on the nature of your road texture, the thickness of markings or other design elements at the sides of the roads that need to be preserved.</p>
+	      <p><span class="propertyStyle">Corner Preset Name:</span> As mentioned you can assign presets to a corner. Here you can enter the preset name if you want to store the current settings as a new preset</p>
+	      <p><span class="propertyStyle">Save as Corner Preset:</span> Click this button to store the current corner settings as a new preset after entering a name	      </p>
+	      <p>&nbsp;</p>
+	      <p class="underlined">Sidewalk Settings<span class="style21"><a name="sidewalks" id="addmarkers7"></a></span></p>
+	      <p><span class="propertyStyle">Select Sidewalk Preset:</span> Just like with crossing corners, you can create presets from the current sidewalk settings. This can be used to quickly assign the same sidewalk settings to other sidewalks across all crossing / connection prefabs. Simply select the required preset from the dropdown.</p>
+	      <p><span class="propertyStyle">Sidewalk Width:</span> The full width of the sidewalk</p>
+	      <p><span class="propertyStyle">Curb Height:</span> The height of the sidewalk</p>
+	      <p><span class="propertyStyle">Curb Width:</span> In order to accurately assign UVs in corner roundings additional vertices will be generated. The width of the curb depends on your sidewalk texture. You can manually adjust the UVs further below through the Sidewalk UV Editor explained further below</p>
+	      <p><span class="propertyStyle">Beveled Curb:</span> This will generate more complex geometry for the sidewalk</p>
+	      <p><strong>Bevel Height:</strong> The height of the additional segment. Keeping this at 0 will create a diagonally shaped sidewalk</p>
+	      <p><span class="propertyStyle">Bevel Width:</span> The width of the added diagonal segment.</p>
+	      <p><span class="propertyStyle">Outer Curb:</span> This will add a extra triangles at the outer side to the road level</p>
+	      <p><span class="propertyStyle">Material:</span> The sidewalk material</p>
+	      <p><span class="propertyStyle">Sidewalk Preset Name:</span> Here you can enter the preset name if you want to store the current sidewalk settings as a new sidewalk preset</p>
+          <p><span class="propertyStyle">Save as Corner Preset:</span> Click this button to store the current sidewalk settings as a new preset after entering a name </p>
+<p><strong>Sidewalk UV Editor:</strong> EasyRoads3D will auto assign UVs based on the above settings. Optionally you can fine tune these UVs. The Sidewalk UV EDitor button will open a window that will display the texture assigned to the above selected material. Depending on the chosen complexity of the sidewalk geometry you will see handles at the bottom. Moving these handles will auto update the UVs in the scene. <a href="#uvEditor" class="link">Click here</a> for more info.</p>
+<p>&nbsp;</p>
+	      <p><em>Connection Handles in the Scene:</em></p>
+	      <p>- Near each crossing corner 3 sphere handles are displayed. The middle handle controls sidewalk rendering for this corner in general. The outer two handles control whether sidewalks should be added to roads connected to these crossings.	      </p>
+	      <p>- You will also see grey handles in the center of each crossing. After clicking the grey handle it will display in white, the connection prefab will be aligned according the to this connection attached road direction.</p>
+	      <p><em>Inspector &gt; UV Editor</em> button</p>
+	      <p>The UV Texture window will appear with the selected road texture displayed on the canvas. This window can be used to correctly map the sidewalk UVs. Drag the green handles horizontally. You will see that the UVs update directly in the scene. It is recommended to start with the sidewalk on the left side of the connection (looking towards the center of the object). If the sidewalk on the right side matches you can afterwards click the <strong>mirror</strong> button, this will mirror the left hand UVs for the right side.</p>
+	      <p>If a handle appears to be undraggable, deselect and reselect it!</p>
+	      <p>&nbsp;</p>
+	      <p><strong>Customizing Roundabouts:</strong><span class="style21"><a name="customizingRoundabouts" id="addmarkers6"></a></span></p>
+	      <p>[to do: describe this process, the workflow is almost identical to customizing dynamic crossings]</p>
+	      <p>NOTE: It is recommended to set the Radius and Resolution first before adding connections. You can adjust both afterwads but it could be that connections cannot be created anymore because there is not enough space to fit the connections based on the current settings. This will be optimized further, for now focus on the handles displayed in the scene. These handles represent the selected connection position. Move all connections so the associated handles do not overlap. The roundabout will be rebuild as soon all connection positions do not overlap each other. Alternatively change the radius of connections or increase the radius and /or resolution.</p>
+	      <p>&nbsp;</p>
+	      <p>&nbsp;</p>
+	      <p><strong>CUSTOM CROSSING PREFABS <span class="style21">[Pro]</span><a name="customcrossings" id="customcrossings"></a></strong></p>
+          <p>Custom connection prefabs are mesh based prefabs prepared to be used within the EasyRoads3D system. These can be your own unique models created in a modelling app. The system supports prefabs with child objects and submeshes. Currently all prefab mesh data will be read in.  </p>
+          <p><a href="http://youtu.be/yDUhBZg7tQM" target="_blank">http://youtu.be/yDUhBZg7tQM</a> - customized road networks - Part 1<br>
+          <a href="http://youtu.be/qxeLHG7K9xQ" target="_blank">http://youtu.be/qxeLHG7K9xQ</a> - customized road networks - Part 2          </p>
+          <p>This is how it works:</p>
+          <p>1. Select the General Settings tab from the toolbar in the Inspector.<br>
+            2. Open the Crossing / Connection Prefabs foldout.<br>
+            3. Click <strong>Create New Custom Prefab</strong>, the Custom prefab window will appear.</p>
+<p><img src="../images/custom_editor_1.jpg" width="1172" height="788"></p>
+<p><br>
+        4. Drop your mesh object from the project folder on the stage. It will be assigned to the <strong>Source Object</strong> slot at the top left. <br>
+        5. Make sure the geometry is displayed top down. Try a different axis from the <strong>Trace</strong> dropdown if this is not the case. <br>
+        6. Recalculate Normals. This will assign normals to the mesh using Unity's Mesh.RecalculateNormals() which is also used on the generated roads. It can be useful to achieve a smooth transition from the crossing to the road.<br>
+        7. <strong>Recalculate Tangents</strong>: This will recalculate the tangents which is required when a different roation was applied above in <span class="propertyStyle">Trace On: </span><br>
+        8. Click <strong>Build Connection Prefab</strong>. This will create the new custom crossing prefab in the folder /Assets/EasyRoads3D/Resources/custom prefabs<br>
+  9. The next step is to assign the vertices that will connect to roads attached to the first connection. This is done by drawing a rectangle (Shift + Left Mouse Button+ Drag) around these vertices holding the Shift key. For complex meshes you can use Stage Rotation so the required vertices fit nicely inside the rectangle. The selected vertices will be highlighted in green.<br>
+  10. After selecting the connection vertices the system will check the list of available road types for matches and will auto select a matching road type. You can change this when there are more matches.<br>
+  11. Click <strong>New Road Type</strong> to create a new road type for this connection. This is optional. The advantage is that this road type will be auto selected for other generated connections matching this connection. You will also be able to auto activate side objects to this road types which will be automatically assigned to these road types in the scene. And you will be able to create these type of roads directly in the scene from the second tab on the left in the Insepctor. <strong>Note: </strong>This does require road shape data, if no nodes have been selected yet for this connection, the button will be disabled.<br>
+  12. Select the road material for the attached road from the  <strong>Road Material</strong> drop down or assign it manually by dropping the material from the assets folder in the material slot below the Road Material dropdown.<br>
+  13. The UV Editor window allows you to make changes to the UV layout used on roads attached to this connection.
+  <a href="#uvEditor" class="link">Click here</a> for more info.<br>
+  14. If you want the connection to align with the connected road angle, you can set additional bending settings. Use <strong>Distance</strong> and <strong>Extend Bounds</strong> to set the bending strength and affected vertices. You can test the bending through the <strong>Deform Test</strong> slider. [All this is currently not yet active]<br>
+  15. <strong>Top View</strong> / <strong>Front View</strong> will switch between displaying the full prefab top down and displaying the selected connection geometry from the front view.<br>
+  16. To add more connections, Click <strong>Add Connection</strong> and  repeat the steps starting at 9.<br>
+  17.
+  In order to deform the terrain according the mesh shape make sure <strong>Terrain Deformation</strong> is checked. You will see blue points on the stage which will be used as a reference for the deformation shape. This is currently working for standard shapes like crossings and simple objects like crosswalks. More options will follow and will make it possible to customize the deformation shape and have terrain flattening work for more complex shapes.<br>
+  18. Click Apply to the save the changes. </p>
+<p>The new custom crossing prefab will now appear in the list of available custom crossing prefabs in the scene tab when the first or last marker is selected and in the prefabs tab where you can select the new custom prefab and directly instantiate it in the scene.</p>
+          <p><strong>NOTE:</strong> Add connections in clockwise direction preferably starting at the bottom.</p>
+          <p><strong>NOTE: </strong>Already generated custom prefabs can be edited by opening the window and dragging the prefab from the the assets folder (/Assets/EasyRoads3d/Resources/custom prefabs/) directly on the stage or in the <strong>Crossing Prefab</strong> slot.</p>
+<p><strong>NOTE:</strong> In order to be able to edit custom prefabs in a later stage, do not remove the original mesh object from the assets folder.</p>
+<p><strong>NOTE:</strong> The terrain will be flattened according the local Y=0 position. Depending on the model type, make sure that all vertices are at Y = 0 or higher.</p>
+<p><strong>NOTE:</strong> to avoid z-fighting / flickering make sure to use one of the EasyRoads3D shaders on the material assigned to the custom prefab.</p>
+<p><strong>NOTE:</strong> Although this system should support relatively complex shapes (also none roads related), connections should always point outwards relative to the center of the object. Meaning, roads/tracks connected to this crossing should move away from the center at the connection point which usually is the case for road type of networks. So make sure the center of the mesh bounding box is at the pivot point, the larger blue dot in the image above.</p>
+<p><strong>NOTE:</strong> The system supports, non &quot;flat&quot;  connections for prefabs that do n ot connect with the terrain. This is useful to create for example bridge elements as part of the road geometry. Please check the example prefabs in the package on how to set this up. Important is that the UVs of the vertices where the geometry connects are accurate, 0 resp 1. A small inaccuracy of up to 0.01 will work but you do want to stay within this margin. If the connection does not extract well, this is the first thing to double check. Also make sure to not close the connection area with triangles that will not be visible anyway after connecting roads. </p>
+<p><strong>NOTE: </strong>This custom crossing prefabs system has been tested with a large number of different meshes. Models however can have any arbitrary shape. If you experience issues when using this system with your own models, please report this with preferably the source mesh included by contacting us at <a href="mailto: info@unityterraintools.com" class="link">info@unityterraintools.com</a></p>
+<p>&nbsp;</p>
+<p><strong>UV EDITOR</strong> <span class="style21"><a name="uvEditor" id="addmarkers"></a></span></p>
+<p>
+  <!-- MENU-LOCATION=NONE -->
+  <img src="../images/uvEditor.jpg" alt="" width="894" height="573"></p>
+<p>The UV Editor window can be used to make changes to the UV layout for <a href="#sidewalks" class="link">dynamic crossing sidewalks</a> and road connections added to <a href="#customcrossings" class="link">custom crossing prefabs</a>. By default UVs are calculated within the 0..1 range based on the distances between these vertices. </p>
+<p>The textures assigned to the used material for these objects is displayed on the canvas. At the bottom you will see the UVs positions per vertex. If this is not accurate, You can move these points to the matching position on the texture.</p>
+<ul>
+  <li><span class="propertyStyle"><strong>Planar UVs</strong>: </span>This will auto generate the UVs ignoring the Y position of the vertex.</li>
+  <li><span class="propertyStyle"><strong>Copy UVs from source mesh</strong>:</span> This option is displayed when the UV Editor window is opened from the <a href="#customcrossings" class="link">Custom Crossing Editor</a> window. It will set the U coordinate to the same U value as the matching vertex. You can use this to quickly assign UVs when the road material texture exactly matches the texture used on the source prefab for the connection vertices.</li>
+  <li><span class="propertyStyle">Hard Edge:</span> This option is displayed when the UV Editor window is opened from the <a href="#customcrossings" class="link">Custom Crossing Editor</a> window. By default the road mesh should inherit the normal groups of the source mesh. &quot;Hard Edge&quot; represents smooth or hard edges on matching triangles for the selected node (this is read only).</li>
+</ul>
+<p><strong>Note: </strong>When the UV Editor window is opened from the Custom Crossing editor, selecting a point will highlight the corresponding vertex in the Custom Crossing editor window. This way you can see for which vertex you are adjusting the UVs. </p>
+<p><strong>Note:</strong> When using Copy UVs from source Mesh and the connection has a closed geometry structure (the first and last vertex positions are the same), usually these vertices use x = 0 and x = 1 as the UV coordinate. It could be that these values are assigned to the wrong vertex and  need to be swapped. You will clearly see this in the scene after attaching a road, the full texture is visible between two vertices. Swapping the UVs is done by dragging the most left (0) to the most right position (1) and the most right to the most left. <em>[Add this to trouble shooting as well]</em></p>
+<p>&nbsp;</p>
+	      <p class="header2"><strong>MATERIALS / TEXTURES</strong><span class="style21"><a name="materials" id="addmarkers3"></a></span></p>
+	      <p><img src="../images/defaultMaterials.jpg" width="426" height="212"></p>
+	      <p>Here you can set the default material which will be auto applied when creating new roads, crossing or roundabout prefabs.</p>
+	      <p><strong>[WIP] </strong>This section also includes options to set texture info. For now you can define lane marking info. This info will be used in new crossing features available in v3.x but it can also be used to automatically generate base textures for roads with different width to make that sure outer lanes connect nicely on crossings between these roads with different widths.</p>
+	      <ul>
+	        <li><span class="propertyStyle">Road Material:</span> The list with available materials in /Assets/EasyRoads3D/Resources/Materials/roads. This will use the texture assigned to this material as the source texture. Make sure it is Read/Write enabled in the Import Settings.</li>
+	        <li><span class="propertyStyle">Default  Road Width:</span> The road width for that particular texture.</li>
+	        <li><span class="propertyStyle">Left Inner Offset:</span> The left side of the left lane (currently not used)</li>
+	        <li><span class="propertyStyle">Left Offset:</span> The right side of the left lane</li>
+	        <li><span class="propertyStyle">Right Offset:</span> The left side of the right lane</li>
+	        <li><span class="propertyStyle">Right Inner Offset:</span> The right side of the right lane (currently not used)</li>
+	        <li><span class="propertyStyle">Texture Info Button:</span> This will open the Texture Editor Window. Here you can easily drag handles to set the above 4 values</li>
+	        <li><span class="propertyStyle">Save Changes Button:</span> This will store the info in the project data</li>
+	        <li><span class="propertyStyle">Texture Utility Button:</span> This will open the Texture Utility window<br>
+	          <ul>
+	            <li><span class="propertyStyle">Source Texture:</span> The texture assigned to the selected material</li>
+	            <li><span class="propertyStyle">Target Texture:</span> This is optional, this texture will be updated according the generated texture. If this texture slot is empty you will beasked where to save the generated texture</li>
+	            <li><span class="propertyStyle">Road Width:</span> The road width of the source texture. This will be auto set to the Default Road Width mentioned above.</li>
+	            <li><span class="propertyStyle">Left Offset:</span> The left offset value used to generate the texture. This will be auto set to the Left Offset value mentioned above.</li>
+	            <li><span class="propertyStyle">Right Offset:</span> The right offset value used to generate the texture. This will be auto set to the Right Offset value mentioned above.</li>
+	            <li><span class="propertyStyle">Target Road Width:</span> The width of the road to which this new texture will be assigned.</li>
+	            <li><span class="propertyStyle">Blend Pixels:</span> This will add additional pixels inside so you can easily blend the generated outer sides of the texture with middle part of the texture</li>
+	            <li><span class="propertyStyle">Generate Texture button:</span> This will generate the final texture. Afterwards you can open it in your paint program to create the final texture.</li>
+	          </ul>
+	        </li>
+          </ul>
+	      <p>&nbsp;</p>
+	      <p><strong>LOD GROUPS <span class="style21">[Pro]</span><a name="lodgroups" id="terrain2"></a></strong></p>
+	      <p><img src="../images/lodgroups.jpg" width="418" height="375"></p>
+	      <p>The LOD Groups option will create different LOD levels of the road meshes according the above settings.</p>
+	      <ul>
+	        <li><span class="propertyStyle"><strong>Active</strong></span><strong>:</strong> Activates the LOD Groups system</li>
+	        <li><strong class="propertyStyle">LOD Levels:</strong> The number of LOD levels</li>
+	        <li><strong class="propertyStyle">Bounds:</strong> The transition change based on the bounds of the road mesh relative to the screen</li>
+	        <li><strong class="propertyStyle">Resolution:</strong> The LOD 
+	          level resolution of the road mesh in percentages with a minimum scale of 10% of the original mesh	      </li>
+          </ul>
+	      <p><strong>NOTE:</strong> In order to actually create the LOD groups <a href="terrain_control.html#lod" class="link">Build LOD Groups</a> in the <a href="terrain_control.html" class="link">Build Settings</a> must be active. </p>
+	      <p class="header2">&nbsp;</p>
+	      <p class="header2"><strong>TERRAIN MANAGEMENT<a name="terrain" id="terrain"></a></strong></p>
+	      <p><img src="../images/terrain_management.jpg" width="418" height="531"></p>
+	      <p>EasyRoads3D will alter the Unity terrain object(s) in the scene. Here you can create backups and restore your original terrains. Whenever a new terrain object is detected in the scene you will be asked to create a backup. It is recommended to do so. It is also recommended to update these backups after manual changes to the terrain	to keep these backups up-to-date.	      </p>
+	      <p>The backup / restore options are also displayed in the Inspector of each individual terrain object in the scene.</p>
+	      <p>Alternatively you can also for example create backups of your terrain by duplicating the corresponding terrain asset in the project folder. Simply drag this terrain asset in the scene to replace the corresponding terrain you want to restore.</p>
+	      <p><strong>Tree Distance</strong> and <strong>Detaild Distance</strong> refer to the surface outside the road where trees and detail objects should be removed.	      </p>
+	      <p>&nbsp;</p>
+	      <p><strong>Vegetation Studio</strong></p>
+	      <p>EasyRoads3D supports <a href="https://assetstore.unity.com/packages/tools/terrain/vegetation-studio-103389" class="link">Vegetation Studio</a>. If Vegetation Studio is present, there will be options for adding either a Vegetation Studio Mask Line component or a Biome Mask Area component and an activation checkbox. Road type specific perimeters or biome mask options can be set for that road type in General Settings &gt; Road	Types      </p>
+	      <p>&nbsp;</p>
+	      <p class="header2"><strong>IMPORT ROAD DATA <span class="style21">[Pro]</span><a name="importData" id="importData"></a></strong></p>
+<p>Road data from external sources can be imported directly into EasyRoads3D v3. The roads will be  created automatically.</p>
+<p><img src="../images/import_data.jpg" width="414" height="606"></p>
+<p>&nbsp;</p>
+<p>By default EasyRoads3D will match the bounds in the data file with the bounds of the terrain. However, if the coordinates do not exactly match those of the terrain, the terrain bounds can be entered in the corresponding terrain longitude / latitude fields. The data will be parsed relative to these terrain coordinates.</p>
+<p>&nbsp;</p>
+<p><strong>WORKFLOW</strong></p>
+<p><strong>Open Street Map</strong></p>
+<p>Visit <a href="http://www.openstreetmap.org" class="link">openstreetmap.org</a> , zoom in to the location of your choice. Click the green &quot;Export&quot; item at the top. You will see lon lat coordinates and additional info at the left. Click the blue &quot;Export&quot; button. This will generate an *.osm file. </p>
+<p>For OSM data EasyRoads3D road types can be linked to OSM road type. For each OSM road type select the EasyRoads3D road type from the dropdown.</p>
+<p>For KML files a single road type can be selected. Click the<strong> Open OSM File</strong> button in the Inspector and select the downloaded file. The system will extract the data and create the roads.</p>
+<p><strong>Notes: </strong>The <strong>Stream OSM Data</strong> option is not yet functional. </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></td>
+</tr>
+	  <tr>
+	    <td><a href="toolbar.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="scene.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

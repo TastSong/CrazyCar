@@ -1,0 +1,90 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="quick_start.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="general_workflow.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2" class="style1"><p>&nbsp;</p>
+	      <p class="header1" style="color:#000">Package Contents<hr>
+	      <p class="style8">&nbsp;</p>
+	      <p class="header2">Folders</p>
+	      <p class="header2"><img src="../images/folders.jpg"></p>
+	      <p class="header2">&nbsp;</p>
+	      <p class="propertyStyle">/EasyRoads3D/Editor/</p>
+	      <p class="style1">This folder is used for editor scripts</p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="propertyStyle">/EasyRoads3D/html/ and /EasyRoads3D/images/</p>
+	      <p class="style1">These are used for the manual  which is also available online through the most right Help tab in the Inspector:</p>
+	      <p class="style1"><a href="http://unityterraintools.com/EasyRoads3D/v3/manualv3.html" class="link">http://unityterraintools.com/EasyRoads3D/v3/manualv3.html</a></p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="propertyStyle">/EasyRoads3D/lib/</p>
+	      <p class="style1">This folder is used for scripts</p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="propertyStyle">/EasyRoads3D/Materials/</p>
+<p>It is recommended to use the material folders mentioned <a href="#materials" class="link">further below</a>. This folder includes additional material setups. Currently included is a decal material properly setup (without textures) to be used for <a href="general_settings.html#startEndDecals" class="link">start / end decals</a>.</p>
+<p>&nbsp;</p><p class="propertyStyle">/EasyRoads3D/prefab meshes/</p>
+	      <p class="style1">The generated mesh assets for custom crossing / connection prefabs will be stored in this folder </p>
+	      <p class="style1">&nbsp;</p>
+          <p class="propertyStyle">/EasyRoads3D/prefab sources/</p>
+          <p>Crossing prefabs generated with the <a href="https://www.unityterraintools.com/tutorials/tutorials/crossing_generator.php" class="link">provisional crossing creator utility</a> will be stored in this folder</p>
+          <p>&nbsp;</p>
+          <p class="propertyStyle">/EasyRoads3D/Resources/custom prefabs/</p>
+          <p>Custom crossing / connection prefabs based on mesh models will be stored in this folder. All prefabs will be listed in the crossing / connection tab (3rd from the left) in the Inspector.</p>
+          <p>&nbsp;</p>
+          <p class="propertyStyle">/EasyRoads3D/Resources/dynamic prefabs/</p>
+          <p>Dynamic crossing / connection prefabs generator through the built-in crossing system will be stored here. All prefabs will be listed in the crossing / connection tab (3rd from the left) in the Inspector.</p>
+          <p>&nbsp;</p>
+<p class="propertyStyle"><a name="materials"></a>/EasyRoads3D/Resources/Materials/crossings/</p>
+<p>Any crossing material stored here will be listed in the various material dropdowns related to assigning materials to crossing connections. By storing these materials in this folder you will be able to select them quickly from the dropdowns. This is optional, you can also manually assign materials to crossings.</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Resources/Materials/roads/</p>
+<p>Any road material stored here will be listed in the various material dropdowns related to assigning materials to roads objects. Jus like for crossings, by storing these materials in this folder you will be able to select them quickly from the dropdowns. This is also optional, you can also manually assign materials to crossings.</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Resources/Materials/roundabouts/</p>
+<p>The same as above but for roundabouts</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Resources/Materials/sidewalks/</p>
+<p>The same as above but for sidewalks</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Shaders/</p>
+<p>You can use your own materials and shaders. The package itself comes with a variety of shaders showing how to take advantage of UV and vertex color options defined in both the road settings and side object settings. Visit the <a href="http://unityterraintools.com/tutorials/material_shaders.php" class="link">Materials &amp; Shaders tutorial section</a> on our website for more info. Some shaders for blending textures are especially useful on <a href="http://unityterraintools.com/tutorials/connecting_roads.php" class="link">I Connectors</a>.</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Textures/editor/</p>
+<p>The textures in this folder are used inside the Unity Editor, they are required.</p>
+<p>&nbsp;</p>
+<p class="propertyStyle">/EasyRoads3D/Textures/roads/</p>
+<p>These are the default road textures.</p>
+<p>&nbsp;</p>
+<p class="header2">Additional Assets </p>
+<p>The tool itself does not include additional road and side object assets to keep the import clean and  package updates from the asset store fast. Additional assets can be <a href="http://www.unityterraintools.com/tutorials/so_import_export.php" class="link">imported</a> from the demo project, the demo project package itself could also be used as a starting point.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="quick_start.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="general_workflow.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

@@ -64,6 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\EasyRoads3D\Scripts\ERVegetationStudio.cs" />
+    <Compile Include="Assets\Plugins\EasyRoads3D\Scripts\runtimeScript.cs" />
     <Compile Include="Assets\Plugins\LitJson\IJsonWrapper.cs" />
     <Compile Include="Assets\Plugins\LitJson\JsonData.cs" />
     <Compile Include="Assets\Plugins\LitJson\JsonException.cs" />
@@ -73,6 +75,18 @@
     <Compile Include="Assets\Plugins\LitJson\JsonWriter.cs" />
     <Compile Include="Assets\Plugins\LitJson\Lexer.cs" />
     <Compile Include="Assets\Plugins\LitJson\ParserToken.cs" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\EasyRoads3D-Surface-Offset.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Road Decal.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\Resources\custom prefabs\_custom prefabs.txt" />
+    <None Include="Assets\Plugins\EasyRoads3D\prefab meshes\_custom prefabs.txt" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Dual Road Blend.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\Release - Install Notes.txt" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Single Road Blend.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Road Transparency.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\_Readme.txt" />
+    <None Include="Assets\Plugins\EasyRoads3D\shaders\EasyRoads3D - Unity 2018 Standard.shader" />
+    <None Include="Assets\Plugins\EasyRoads3D\prefab sources\_custom prefabs.txt" />
+    <None Include="Assets\Plugins\EasyRoads3D\lib\DelaunayER.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -255,6 +269,12 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyRoads3Dv3">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/lib/EasyRoads3Dv3.dll</HintPath>
+    </Reference>
+    <Reference Include="DelaunayER">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/lib/DelaunayER.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.14f1c1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

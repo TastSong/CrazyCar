@@ -1,0 +1,85 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="known_issues.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2" class="style1"><p class="style1">&nbsp;</p>
+	      <p class="header1" style="color:#000">Release Notes 
+	      v3.1.9.f1<hr>
+	      <p class="style21">&nbsp;</p>
+	      <p class="header2">Important</p>
+	      <p class="style21">&nbsp;</p>
+	      <p class="style21">Importing package updates</p>
+          <p class="style1">Please do NOT remove the EasyRoads3D folder before importing a package update. Apart from newly created dynamic and custom connection prefabs, the EasyRoads3D folder also includes assets with project info such as road types, side objects. When you remove the EasyRoads3D folder  these assets will be lost. Also make sure to close the Custom Prefab Editor window if currently open before importing a package update.</p>
+          <p class="style1">Additionally, it is also recommended to switch road networks back to Edit Mode or better open an empty scene before importing a package update .</p>
+          <p class="style1">And please always backup your project first. It is recommended to regularly backup your project anyway.</p>
+          <p class="style21">&nbsp;</p>
+          <p class="style21"><strong>Unity  terrain objects</strong></p>
+	      <p class="link">EasyRoads3D can backup your terrain(s) and restore the terrain(s) in case something went wrong.</p>
+	      <p class="link"> For additional safety measures it is recommended to duplicate the terrain object in the project panel so you always have a full back up at hand. Make sure to repeat this process after you changed the terrain!</p>
+	      <p class="link">This also applies to runtime scripts using the API to generate roads. Although this should work just fine, see the demo project runtime scene, it is always recommended to backup your terrains.</p>
+	      <p class="link">To back up your terrains simply duplicate the terrain object stored in the project panel. To find a reference to this terrain asset for the terrain in the scene, select the terrain in the scene and look in the Inspector: Terrain Collider Component &gt; Terrain Data. Put focus on the terrain slot and the corresponding terrain will be highlighted in the project panel. Select it and do CTRL + D to duplicate it. Simply drag the duplicate terrain asset in the scene to replace the original if necessary.</p>
+	      <p class="style21">&nbsp;</p>
+	      <p class="style21">The Runtime API:</p>
+	      <p class="style1">The following is only related to scripted road networks created with the runtime API. The below does not affect road networks manually created inside the editor.</p>
+	      <p class="style1">In order to preserve the original terrain data, make sure you backup your terrains! In general restoring the terrains works well using RoadNetwork.RestoreRoadNetwork(), but it has occured that the terrain was not restored  leaving the road shape in the terrain after exiting Play Mode. This particularly happened when you put focus on the scene view window while in Play Mode!</p>
+<p class="style1">If you want to create a road network at runtime using the runtime API, it is recommended to check the above using a test terrain or make backups of your terrain(s).	      </p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="style1"><strong>Side Objects and the river example in the demo project / video</strong></p>
+	      <p class="style1">In the video the terrain is manually smoothend out at the river edges. In v3 manual terrain changes on areas not affected by roads or other deformation objects are preserved when switching back to Edit Mode. The outer part is not affected by the road, the manual changes will remain visible in the terrain. So be careful with this, only smoothen out the terrain when you are happy with the river shape or when you do not mind to manually make corrections to the terrain after switching back to Edit Mode.	      </p>
+	      <p class="style1"><a name="releasenotes"></a></p>
+          <p>&nbsp;</p>
+          <p class="header1"><strong>Release Notes:</strong> </p>
+          <p class="style1">Please visit our <a href="http://unityterraintools.com/v3beta.php" class="link">website</a> for beta release notes </p>
+
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong>New:</strong></p>
+<p class="style1">- CTRL + SHIFT + M: Snap all the road markers to the terrain height at the markers position</p>
+<p class="style1">- CTRL + M: Snap  the selected road marker to the terrain height at that position</p>
+<p class="style1">- Scripting API: ERRoad.GetMarkerCount(), returns the total number of markers for a the road</p>
+<p class="style1">- Scripting API: ERRoad.GetDistance(int markerIndex), returns the distance of the section corresponding to the passed marker index</p>
+<p class="style1"></p>
+<p class="style1"><strong>Improved:</strong></p>
+<p class="style1">- &quot;Ratio&quot; control for Side Object Connection objects. This represents how often the connection object is instantiated. 1 is every section, 2 is every two sections, and so on. This is for example useful for bridge pillars that should be instantiated less frequently then every repeated section.</p>
+<p class="style1">- The side objects &quot;Default active state for each marker&quot; can now also be set / unset for individual road objects. </p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong>Fixed:</strong></p>
+<p class="style1">- Miscellaneous other small bugs and improvements</p>
+<p class="style1">&nbsp;</p>
+          <p class="header2">To Do / Current limitations:          </p>
+          <p class="style1">&nbsp;</p>
+        <p class="style1">- Roundabouts: when adding new connections you can use the position slider to set the position of the new connection on the roundabout. When the current position overlaps another connection the roundabout will not be rebuild, a warning will appear in the console and the left and right side handles will turn red instead of green. When the current position overlaps the start or end index, a similar warning message will appear as well. So stay within &quot;save&quot; ranges from the start (0 index) and end (depends on the resolution and radius).
+        The <a href="troubleshooting.html" class="link">troubleshooting page</a> includes more on this.        </p>
+        <p class="style1">&nbsp;</p>
+<p class="style1">&nbsp;</p>
+<p class="style1">&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="known_issues.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="resources_contact.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

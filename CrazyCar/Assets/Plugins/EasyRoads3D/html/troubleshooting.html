@@ -1,0 +1,124 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="shortcuts.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="known_issues.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2"><p>&nbsp;</p>
+	      <p class="header1" style="color:#000">Troubleshooting
+	      <hr>
+	      <p class="style21">&nbsp;</p>
+	      <p class="style21">&nbsp;</p>
+	      <p class="style1"><strong><em>After importing the Demo package no road types and side objects are available</em></strong></p>
+	      <p class="style1">The demo package itself does not have road type and side object data stored in the project folder. The reason for this is that importing a package update in a later stage would overwrite this data including possibly changed road types, side objects and newly added road types, side objects.</p>
+	      <p class="style1">In order to make the road types and side objects available in other scenes, please open the demo scene, select the road network objects in the hierarchy and deselect it. At this point the project road type, side object data will be updated. The road types and side objects will now be available in other scenes.</p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="style1"><strong><em>Shader&nbsp;error&nbsp;in&nbsp;'EasyRoads3D/Unity 5 Standard':&nbsp;invalid subscript&nbsp;'uv2'&nbsp;at</em></strong>...</p>
+	      <p class="style1">This is related to Unity 2018. There is an issue in Unity 2018 with modified versions of the Standard shader. This is not critical, to fix this, please select the shader in the project folder (/Assets/EasyRoads3D/shaders/) right click the shader and select &quot;Reimport&quot;.</p>
+	      <p class="style1">&nbsp;</p>
+	      <p class="style1"><strong><em>When I select the main Road Network game object a crossing prefab gets selected</em></strong></p>
+          <p class="style1">This will happen after you created a new dynamic crossing prefab and instantiated it in the scene to make changes. It will be visible in the hierarchy as a child of &quot;Temp Crossing Prefabs&quot;. Make sure to finalize it when you are ready with this. You can do that by clicking the <strong>Exit Prefab Editor</strong> button in the Inspector or by clicking one of the toolbar tabs at the top in the Inspector. You will be asked to save changes to the prefab if there are changes. Afterwards the main <strong>Road Network</strong> game object will be  selected automatically. As long as the new crossing prefab is not completed. this prefab will be  selected when selecting the main <strong>Road Network</strong> game object.          </p>
+          <p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>Roundabouts are not correctly instantiated and connected to the first or last marker of a road</em></strong> </p>
+<p class="style1">For now avoid instantiating a roundabout directly to the first or last marker of the selected road. Instead use the other way to Instantiate intersections in the scene, by selecting the crossing prefabs tab <img src="../images/prefabs_tab.jpg" width="53" height="29" style="vertical-align:middle">. Select the roundabout  from the list of available crossing prefabs, hold the SHIFT key and click in the scene where you want to position this roundabout. You can now connect roads to the prefab or start new roads by dragging the red roundabout connection handles. <a href="intersections.html#create" class="link">For full details click here</a>.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>The Roundabout geometry does not update after changing to the radius, resolution or after adding / changing a connection</strong></em></p>
+<p class="style1">Before creating/ adding the connections of a roundabout it is recommend to first set the radius and resolution correctly. The number of possible connections depends on the resolution and the radius and the width of the connections. If you make changes to the radius or resolution when connections already exist it could be possible that connections cannot be rebuild. You will see warning messages in the console when this occurs. You can try repositioning connections, starting at connection 1, by carefully checking the white middle handle and outer green handles positions. The green handles turn red when that connection cannot be created because it is either to close to the start or end of the roundabout (the white outer handle at the fixed position) or because it is overlapping another connection. But the easiest way to solve this, is by removing all connections first and then start adding new connections, the geometry of the roundabout will rebuild.</p>
+<p class="style1">This will be further optimized, for now it is recommend to avoid this situation by first setting the radius and resolution correctly. In this case the roundabout geometry will only not  rebuild when the currently selected connection overlaps another connection. You can fix this by either changing its position using the position slider or by changing the width of the connection.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>The sidewalks of the connected road  do not update after activating / deactivating the sidewalk on the connection prefab</em></strong><em></em></p>
+<p class="style1">This will happen when the road is connected to a connection prefab on both ends. This will be fixed. For now, please check the other connection sidewalk settings on the corresponding road side and make sure they match.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>I can't select road markers outside the terrain boundaries</em></strong></p>
+<p class="style1">When a marker for some reason is positioned outside the terrain boundaries you can select it by carefully moving towards the marker over the road mesh.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>The Road  cannot be attached to a crossing connection. The road geometry and the crossing connection geometry matches but the connection handle in the center shows in red</em></strong></p>
+<p class="style1">This can happen when sidewalks are active but the outer sidewalk handle is disabled (meaning  sidewalks will be inactive for the attached road). <a href="intersections.html#sidewalks" class="link">Select the specific crossing</a> and make sure the outer corner handle is green (active) when the road on that side does include sidewalks.</p>
+<p class="style1">This will also happen for custom crossings when the geometry structure of the road does not match the custom crossing connection.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><a name="terrain"></a></p>
+<p class="style1"><strong><em>The terrain is clipping through  the road or the road is floating above the terrain / z-fighting</em></strong></p>
+<p class="style1">There are several situations that can cause this: </p>
+  <p class="style1">1)   the Unity terrain object stores height values in decimals between 0 and   1, meaning it is impossible to apply negative height values. The roads   must be at or above the terrains game object Y position.Also take into   account the nature of spline shapes. When placing two markers (A and   B) exactly on the terrain objects Y position and a third marker (C) is raised a   bit higher, the road shape (spline curve) between A and B will go   slightly below the terrain objects Y position, the terrain will be   rendered above the road in this area because it cannot be pushed lower. Random Tilting &amp; Bumpiness values below 0 should also be avoided when the road is positioned at terrain y = 0. <br>
+    <br>
+    2)   the Unity terrain object is grid based, it is impossible to add terrain   points for more detail. The bigger the heightmapscale (terrain size vs   heightmap resolution) the less flexible you are with road shapes. Enough   terrain points must be available to adapt the terrain to the road shape   changes in that area. This for example will clearly become visible in   sharp bends with also significant height changes in the bend. Possibly   the same terrain points are used to adapt the terrain to the road height   at position A and the road height at position B which is not good. You   can see this when zooming in and switch the scene view to for example   Texture Wire which will also show the terrain geometry.</p>
+  <p class="style1">3) the   same can happen when roads or road segments are too close to each other,   at least two terrain points  must be between the two roads, one leveled   to road A, the other leveled to road  B. &nbsp;When the same point is used   on both roads it is very likely the terrain will either pop through the   lower road or the higher road floats above the terrain at that position.</p>
+
+<p class="style1">[show clearly screenshots also divining the critical area (the area between the indent values)]</p>
+<p class="style1">4) Also please check the status of the Left and Right Indent Alignment dropdowns in the marker section of the road. The default value is &quot;Align with the road&quot;. One of the other options will result in a small or larger gap between the road and the terrain. The purpose for these option is custom terrain deformation when walls or terrain mesh overlays near the road edges are used. One thing that have an automated affect on this are side objects marked as Terrain Surface Object in the side object manager? Assuming that the specific side object shape will cover that area for more terrain detail it will keep the terrain itself more at the original height.</p>
+<p class="style1">5) When using customized terrain deformation settings, tilting on the roads and reasonable road height differences in that area, it is more likely that the terrain will poke through the terrain. This will be further optimized. For now try to lower the road tilting and/or height differences.</p>
+<p class="style1">6)  EasyRoads3D uses Layer 31, do you have other objects on this layer?</p>
+<p class="style1">7) Z-fighting, the roads are laid out on top of the terrain. Make sure to set a &quot;Raise&quot; value in the Inspector in Build Mode, especially when shaders with no Offset are used.</p>
+<p class="style1">Please contact us if all this does not apply to your situation.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><a name="assetSerialization"></a></p>
+<p class="style1"><em><strong>Road type and side object preset names in the Inspector are displayed in characters / numbers and are unreadable</strong></em></p>
+<p class="style1">This can happen when Assets Serialization in your Unity project editor settings (Edit &gt; Project Settings &gt; Editor) is set to &quot;Text&quot; instead of the default setting &quot;Mixed&quot;.</p>
+<p class="style1"><a href="https://issuetracker.unity3d.com/issues/importing-a-package-in-force-text-asset-serialization-mode-that-was-exported-in-mixed-mode-results-bad-string-variables" class="link">https://issuetracker.unity3d.com/issues/importing-a-package-in-force-text-asset-serialization-mode-that-was-exported-in-mixed-mode-results-bad-string-variables</a></p>
+<p class="style1">A workaround to fix this is the following:</p>
+<p class="style1">Create a new empty project (Assets Serialization is set to Mixed), import the   package, switch to Force Text and export the full assets folder to a new   package. Import this package in your project that uses Force Text.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>The Delete key destroys the Road Network game object</em></strong></p>
+<p class="style1">Since in general the Road Network game object is selected the delete key will target this game object. When the scene view window has focus, pressing the delete key will becaptured and you will be asked for a confirmation. This will work just fine unless the Hierarchy window has focus. So far we have not found a way to capture key events in the hierarchy window, if you have a suggestion it would be very much appreciated to contact us.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>Keyboard shortcuts do not work</em></strong></p>
+<p class="style1">For actions such as Shift + R (remove the selected marker) please make sure the Scene View window has focus.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>The normals at connection points between the road and a custom connection prefab are not smooth</em></strong></p>
+<p class="style1">This is most likely due to the geometry structure between the connections as both ends of the road not being identical. Although the road connects well it is possible that there is a difference in normal groups between the two connections. Therefor it is impossible to smooth the normals correctly.</p>
+<p class="style1">You may want to double check the smoothing groups in your modelling app. Another reason why this can happen is when using &quot;Calculate&quot; in the import settings of the model. You can verify this by checking the vertex count for the specific mesh asset after clicking &quot;Apply&quot;. Unity will rebuild the mesh based on the selected smoothing angle which will result in a different number of vertices. Another way to check the normal groups is by opening the custom prefab in the Custom Prefab editor window and select the specific connection from the dropdown. The number of normal groups will be listed in the stats window. For exact normal group info you can open the UV editor window and select each node one by one. When the &quot;Hard Edge&quot; checkbox is on a new normal group will start at this node. This is all according the geometry structure of the source mesh.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>I cannot set the Indent values below a certain value</strong></em></p>
+<p class="style1">The minimum indent values are based on the terrains  heightmapscale (size vs heightmap resolution). It is required to ensure the best possible terrain deformation according the road shape because the Unity terrain object does not accept additional points for more detail in certain areas. When using lower values the terrain will pop through the road or the road will float above the terrain. The bigger the heightmapscale the higher the Min Indent values. </p>
+<p class="style1">The default values for each marker match the globally stored Min Indent values in General Settings &gt; Scene Settings.</p>
+<p class="style1">So if these Min Indent values are high in your project, this is probably due to your terrain settings.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>New Markers do not snap to the terrain</strong></em></p>
+<p class="style1">This can happen on large cam zooms further away then 5000 units from the click point. This is unlikely to happen but if it happens it will result in markers floating far above the terrain. In that case, please zoom in a little bit more to the terrain.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>The Inspector toolbar is not displayed</strong></em></p>
+<p class="style1">This is most likely due to the Inspector being in Debug Mode. Click the down arrow (next to the lock icon) at the top right in the Inspector and make sure that &quot;Normal&quot; is selected. Additionally users have reported that working with two Inspector panels with one in debug mode does effect the Scene View functionality. Please avoid doing this if you experience similar behaviour and use one Inspector panel only, this is according the default unity settings.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>The Unity editor is unresponsive or slow after road changes</strong></em></p>
+<p class="style1">This can be a result of &quot;Auto&quot; being selected in the Unity Lighting window. The lighting will be recalculated consistently in the background which can cause delays on slower computers. Switching off &quot;Auto&quot; temporarily while working on the road network will fix that.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>EasyRoads3D Alert: [ref: SO01] Missing Side Object info</em></strong></p>
+<p class="style1">This alert message  is usually related to package upgrades in a project using the custom setting Text Mode for Asset Serialization instead of the default Mixed Mode. Please do not save the scene if this is the case, instead follow the instructions pointed out <a href="#assetSerialization" class="link">here</a>. Please contact us if your project does not use Text Mode for Asset Serialization.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><strong><em>Build Terrain progressbar doesn't update</em></strong></p>
+<p class="style1">Unity progressbars can only be used and updated through editor scripts. Because the Build functionality is also required for the scripting API, this code currently does not run in an editor script hence why the progressbar only updates per terrain and does not show progress on processed roads. This will be improved, meanwhile please be patient during this process, work is being done in the background.</p>
+<p class="style1">&nbsp;</p>
+<p class="style1"><em><strong>Shift + Click to add road markers does not work</strong></em></p>
+<p class="style1">The free version does not support multiple terrain tiles in a scene. If this is the case then adding markers will fail when adding them on the terrain that is currently not referenced by Terrain.activeTerrain.</p>
+<p class="style1">Other known situation that can result in this is custom editor layouts that have corrupted the unity editor functionality. One way to verify this is to duplicate the project and reset the editor layout back to one of the  presets through the main menu &gt; Window &gt; Layouts. If that solves the problem then it is recommended to recreate your preferred custom editor layout. If the problem returns and can be recreated, then please contact us. We have discussed this situation with the Unity QA Team, they have seen this situation and they will be interested to hear how this can be recreated.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="shortcuts.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="known_issues.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

@@ -1,0 +1,121 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="style.css" />    
+</head>
+
+	<body>
+	<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+	  <tr>
+	    <td width="12"><img src="images/topLeft.jpg" width="76" height="62"></td>
+	    <td valign="top" class="style7" style="background:URL(images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+	    <td width="257" align="right"><img src="images/topRight.jpg" width="257" height="62"></td>
+      </tr>
+    </table>
+	<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0" class="contentsText">
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td align="right"><a href="html/quick_start.html"><img src="images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td colspan="2"><p>&nbsp;</p>
+        <p class="style7" style="color:#000">User Guide</p>
+        <p class="style1" style="color:#000">This user guide explains all the EasyRoads3D features. To get a first impression it is recommended to  go through either the <a href="html/getting_started.html" class="link">Getting Started</a> section or the <a href="html/quick_start.html" class="link">Quick Start section</a>. Going through the full manual afterwards and getting familiar with all the features and options will help getting the most out of it. The <a href="https://assetstore.unity.com/packages/tools/terrain/easyroads3d-demo-project-105045" class="link">demo project</a> can be used as a reference, it includes examples of all the features with direct links to the <a href="http://unityterraintools.com/tutorials.php" class="link">Tutorials</a> section on our website.</p>
+        <p class="style1" style="color:#000">Please review  the troubleshooting and known issues sections in the case you are experiencing unexpected behaviour.</p>
+        <p class="style1" style="color:#000"><span class="style1" style="color:#000">A general knowledge of Unity is recommended. All generated objects are ordinary Unity GameObjects with a <a href="https://docs.unity3d.com/Manual/class-MeshFilter.html" class="link">Mesh Filter</a>, <a href="https://docs.unity3d.com/Manual/class-MeshRenderer.html" class="link">Mesh Renderer</a> and <a href="https://docs.unity3d.com/Manual/class-MeshCollider.html" class="link">Mesh Collider</a> attached. </span></p>
+        <p class="style1" style="color:#000">&nbsp;</p>
+        <p class="style8">Table of Contents</p>
+        <ul style="line-height:30px">
+          <li><a href="html/quick_start.html" class="link">Quick Start</a></li>
+          <li><a href="html/package.html" class="link">Package Contents</a></li>
+          <li><a href="html/general_workflow.html" class="link">General Workflow</a></li>
+          <li><a href="html/getting_started.html" class="link">Getting Started</a>
+            <ul style="line-height:20px">
+              <li><a href="html/getting_started.html#download" class="link">Download Files</a></li>
+              <li><a href="html/getting_started.html#package" class="link">Import the Package</a></li>
+              <li><a href="html/getting_started.html#newobject4" class="link">Create a Road Network object</a></li>
+             </ul>
+          </li>
+          <li><a href="html/hierarchy.html" class="link">EasyRoads3D Hierarchy</a>
+             <ul style="line-height:20px">
+             <li><a href="html/hierarchy.html#overview" class="link">Overview</a></li>
+             </ul>          
+          </li>
+           <li><a href="html/toolbar.html" class="link">EasyRoads3D Toolbar</a>
+         	 <ul style="line-height:20px">
+             <li><a href="html/toolbar.html" class="link">Scene Status Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">New Road Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">New Crossing Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">Build Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">General Settings Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">Side Objects Tab</a></li>
+             <li><a href="html/toolbar.html" class="link">Info Tab</a></li>
+         	 </ul>
+           </li>
+                 <li><a href="html/scene.html" class="link">Scene Workflow</a>
+                   <ul style="line-height:20px">
+             <li><a href="html/scene.html#roadProperties" class="link">Road Controls &amp; Properties</a></li>
+             <li><a href="html/scene.html#connectionProperties" class="link">Connection Controls</a></li>
+             </ul>          
+          </li>      
+         <li><a href="html/general_settings.html" class="link">General Settings</a>
+         	 <ul style="line-height:20px">
+             <li><a href="html/general_settings.html#create" class="link">Scene Settings</a></li>
+             <li><a href="html/general_settings.html#roadtypes" class="link">Road Types</a></li>
+             <li><a href="html/general_settings.html#sceneprefabs" class="link">Connection Prefabs</a> (Preparing <a href="html/general_settings.html#dynamiccrossings" class="link">crossings</a> , <a href="html/general_settings.html#customizingRoundabouts" class="link">Roundabouts</a>, <a href="html/scene.html#IConnector" class="link">I Connectors</a> and <a href="html/general_settings.html#customcrossings" class="link">Custom Prefabs</a>)</li>
+             <li><a href="html/general_settings.html#uvEditor" class="link">UV Editor</a></li>
+             <li><a href="html/general_settings.html#materials" class="link">Default Materials</a></li>
+             <li><a href="html/general_settings.html#lodgroups" class="link">LOD Groups</a></li>
+             <li><a href="html/general_settings.html#terrain" class="link">Terrain Management</a></li>
+             <li><a href="html/general_settings.html#importData" class="link">Import Road Data</a></li></ul></li>
+          <li><a href="html/intersections.html" class="link">Intersections</a>
+           <ul style="line-height:20px">
+             <li><a href="html/intersections.html#introduction" class="link">Introduction</a></li>
+             <li><a href="html/intersections.html#hierarchy" class="link">Hierarchy</a></li>
+             <li><a href="html/intersections.html#create" class="link">Create an Intersection</a></li>
+             <li><a href="html/intersections.html#attach" class="link">Starting new roads from an Intersection Connection</a></li>
+             <li><a href="html/intersections.html#attachExisting" class="link">Connecting exisiting roads to an Intersection </a></li>
+             <li><a href="html/intersections.html#hierarchy" class="link"></a><a href="html/intersections.html#position" class="link">Intersection Positioning</a></li>
+             <li><a href="html/intersections.html#hierarchy" class="link"></a><a href="html/intersections.html#alignment" class="link">Intersection Alignment</a></li>
+             <li><a href="html/intersections.html#rotation" class="link">Intersection Rotation</a></li>
+             <li><a href="html/intersections.html#sidewalks" class="link">Sidewalk Control</a><a href="html/intersections.html#customcrossings" class="link"></a></li>
+             <li><a href="html/intersections.html#newprefab" class="link">Creating new crossing prefabs</a></li>
+             <li><a href="html/intersections.html#hierarchy" class="link"></a><a href="html/intersections.html#remove" class="link">Remove an Intersection</a></li>
+             </ul>
+          
+          </li>
+          <li><a href="html/side_objects.html" class="link">Side Objects System</a> </li>
+          <li><a href="html/terrain_control.html" class="link">Terrain Control</a></li>
+          <li><a href="html/materials.html" class="link">Materials & Shaders</a></li>
+          <li><a href="html/shortcuts.html" class="link">Hotkeys  &amp; Scene Operations</a> </li>
+          <li><a href="html/troubleshooting.html" class="link">Troubleshooting</a></li>
+          <li><a href="html/scriptingAPI.html" class="link">Scripting API</a>
+             <ul style="line-height:20px">
+             <li><a href="html/scriptingAPI.html" class="link">Classes</a>
+            	 <ul style="line-height:20px">
+                 	
+             		<li><a href="html/ERRoadNetwork.html" class="link">ERRoadNetwork</a></li>
+                    <li><a href="html/ERRoad.html" class="link">ERRoad</a></li>
+                    <li><a href="html/ERConnection.html" class="link">ERConnection</a></li>
+                    <li><a href="html/ERRoadType.html" class="link">ERRoadType</a></li>
+                    <li><a href="html/EREditor.html" class="link">EREditor</a></li>
+             		</ul>
+             </li>
+             </ul>          
+          </li>
+          <li><a href="html/known_issues.html" class="link">Known Issues</a></li>
+          <li><a href="html/release_notes.html" class="link">Release Notes / Feedback</a></li>
+          <li><a href="html/resources_contact.html" class="link">Additional Resources &amp; Contact Info</a></li>
+        </ul>
+        <p>&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td align="right"><a href="html/getting_started.html"><img src="images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+

@@ -1,0 +1,144 @@
+<html>
+<head>
+		<title>EasyRoads3D v3 Manual</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />    
+</head>
+
+	<body>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img src="../images/topLeft.jpg" width="76" height="62"></td>
+    <td valign="top" class="style7" style="background:url(../images/topMiddle.jpg);padding-top:16px;padding-left:25px">EasyRoads3D V3 Manual</td>
+    <td width="257" align="right"><img src="../images/topRight.jpg" width="257" height="62"></td>
+  </tr>
+</table>
+<table width="93%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	    <td><a href="ERRoad.html"><img src="../images/previousTop.jpg" width="97" height="20" border="0"></a></td>
+	    <td align="right"><a href="EREditor.html"><img src="../images/nextTop.jpg" width="73" height="20" border="0"></a></td>
+      </tr>
+	  <tr>
+	    <td height="35" valign="bottom"><a href="../manualv3.html"><img src="../images/home.jpg" width="130" height="20" border="0"></a></td>
+	    <td align="right">&nbsp;</td>
+      </tr>
+	  <tr>
+	    <td colspan="2" class="style1"><p>&nbsp;</p>
+	      <p class="header1" style="color:#000">ERRoadNetwork<hr>
+	      <p class="header2">Description</p>
+	      <p>This is the base class for an EasyRoads3D road network</p>
+	      <p>&nbsp;</p>
+	      <p class="header2">Constructors</p>
+	      <p>public  <span class="styleAPIBold">ERRoadNetwork</span><span class="styleAPI">()</span></p>
+	      <p>Creates a new road network object in the scene or  a reference to an already existing road network in the scene that was created manually in the Unity editor.</p>
+	      <p>&nbsp;</p>
+	      <p class="header2">Static Properties</p>
+	      <p>public static ERRoadNetwork.RoadUpdateCallback <span class="styleAPIBold">onRoadUpdate</span></p>
+          <p class="styleAPIText">Callback triggered after changes to a road object, including a reference to the changed ERRoad instance</p>
+          
+	      <p>&nbsp;</p>
+	      <p>public static ERRoadNetwork.BuildModeCallback <span class="styleAPIBold">onBuildModeEnter</span></p>
+          <p class="styleAPIText">Callback triggered after switching to Build Mode</p>
+          <p>&nbsp;</p>
+          <p>public static ERRoadNetwork.EditModeCallback <span class="styleAPIBold">onEditModeEnter</span></p>
+          <p class="styleAPIText">Callback triggered after switching to Edit Mode</p>
+          <p class="styleAPIText">&nbsp;</p>
+<p class="header2"><strong>Functions</strong></p>
+	      <p>&nbsp;</p>
+	      <p class="styleAPI">public void <span class="styleAPIBold">BuildRoadNetwork</span>()</p>
+<p class="styleAPIText">Builds the final road network and manipulates the terrain accordingly</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">BuildRoadNetwork</span>(bool splatmaps, bool trees, bool detail)</p>
+<p class="styleAPIText">Builds the final road network and manipulates the terrain according the passed parameters</p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">BuildRoadNetwork</span>(bool splatmaps, bool trees, bool detail, ERRoad[] roads)</p>
+<p class="styleAPIText">Builds the final road network and manipulates the terrain according the passed parameters. The terrain will only be updated according the passed array of road objects.<br>
+  <br>
+  NOTE: <a href="#RestoreRoadNetwork" class="link">RestoreRoadNetwork()</a> will target the last build process. Do not use the above  consecutively without restoring the road network first if you do want to be able to restore the full road network. This mainly relates to restoring the terrain to its original state of before creating the road network.</p>
+  <p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">CenterPivotPoints</span>()</p>
+<p class="styleAPIText">This will set the pivot points of all road objects to the center of the bounding box. This will be reset after each road update so it is recommended to use this only for testing and final builds.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">ConnectRoads</span>(ERRoad road1, ERRoad road2)</p>
+<p class="styleAPIText">Connects two roads at the nearest markers.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">ConnectRoads</span>(ERRoad road1, int markerIndex1, ERRoad road2, int markerIndex2)</p>
+<p class="styleAPIText">Connects two roads between <span class="styleAPI">markerIndex1</span> and <span class="styleAPI">markerIndex2</span>.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">CreateRoad</span>(string name)</p>
+<p class="styleAPIText">Creates a new road object and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">CreateRoad</span>(string name, Vector3[] markers)</p>
+<p class="styleAPIText">Creates and builds a new road object according the passed array of marker positons and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">CreateRoad</span>(string name, ERRoadType type)</p>
+<p class="styleAPIText">Creates and a new road object of ERRoadType <span class="styleAPIValue">type</span> and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">CreateRoad</span>(string name, ERRoadType type, Vector3[] markers)</p>
+<p class="styleAPIText">Creates and builds a new road object of ERRoadType <span class="styleAPIValue">type</span> and according the passed array of marker positons and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">FinalizeObjects</span>()</p>
+<p class="styleAPIText">This will remove all script components from all road network game objects including the main road network script.</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERConnection <strong>GetConnectionByName</strong>(string name)</p>
+<p class="styleAPI"><span class="styleAPIText">Returns the connection in the scene matching </span><span class="styleAPIValue">name</span></p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI">public ERConnection[] <span class="styleAPIBold">GetConnections</span>()</p>
+<p class="styleAPIText">Returns all available connections</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public float <span class="styleAPIBold">GetRaiseOffset</span>()</p>
+<p class="styleAPIText">Returns the raise level of the road network relative to the terrain height</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad[] <span class="styleAPIBold">GetRoads</span>()</p>
+<p class="styleAPIText">Returns all exisiting road objects</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">GetRoadByGameObject</span>(GameObject object)</p>
+<p class="styleAPIText">Finds a road object by GameObject and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoad <span class="styleAPIBold">GetRoadByName</span>(string name)</p>
+<p class="styleAPIText">Finds a road object by <span class="styleAPIValue">name</span> and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoadType <span class="styleAPIBold">GetRoadTypeByName</span>(string name)</p>
+<p class="styleAPIText">Returns a road type by <span class="styleAPIValue">name</span> and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERRoadType[] <span class="styleAPIBold">GetRoadTypes</span>()</p>
+<p class="styleAPIText">Returns all available road types</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public SideObject <span class="styleAPIBold">GetSideObjectByName</span>(string name)</p>
+<p class="styleAPIText">Finds a side object by <span class="styleAPIValue">name</span> and returns it</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <strong>GetSourceConnectionByName</strong>(string name)</p>
+<p class="styleAPI"><span class="styleAPIText">Returns the source connection in resources/custom prefabs or resources/dynamic prefabs  matching </span><span class="styleAPIValue">name</span></p>
+<p class="styleAPI">&nbsp;</p>
+<p class="styleAPI"></p>
+<p class="styleAPI">public void <span class="styleAPIBold">HideWhiteSurfaces</span>(bool value)</p>
+<p class="styleAPIText">Enables/disables visibility of the white surfaces surrounding the road objects</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public ERConnection <span class="styleAPIBold">InstantiateConnection</span>(ERConnection sourceConnection, string name, Vector3 position, Vector3 euler)</p>
+<p class="styleAPIText">Instantiates, names and returns a new connection object according the passed <span class="styleAPIValue">sourceConnection</span><span class="styleAPI">, </span><span class="styleAPIValue">name</span><span class="styleAPI">, </span><span class="styleAPIValue">position</span><span class="styleAPI"> and </span><span class="styleAPIValue">euler</span><span class="styleAPI"> rotation angles</span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public ERConnection[] <span class="styleAPIBold">LoadConnections</span>()</p>
+<p class="styleAPIText">Returns all available connections in the Resources folder</p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI"><a name="restoreNetwork"></a>public void <span class="styleAPIBold">RestoreRoadNetwork</span>()</p>
+<p class="styleAPIText">Restores the road network back to edit mode</p>
+<p>&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">SetRaiseOffset</span>(float value)</p>
+<p class="styleAPIText">This will raise the road network in Build Mode above the terrain according the passed <span class="styleAPIValue">value</span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">Translate</span>(Vector3 translation)</p>
+<p class="styleAPIText">This will move the entire road network according the Vector3 translation<span class="styleAPIValue"></span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></td>
+      </tr>
+	  <tr>
+	    <td><a href="ERRoad.html"><img src="../images/previousBtm.jpg" width="89" height="20" border="0"></a></td>
+	    <td align="right"><a href="EREditor.html"><img src="../images/nextBtm.jpg" width="70" height="20" border="0"></a></td>
+      </tr>
+    </table>
+	<p>&nbsp;</p>
+    </body>
+	
+</html>
+
