@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400000}
-  - component: {fileID: -8256420901489129831}
   m_Layer: 0
   m_Name: Road Objects
   m_TagString: Untagged
@@ -31,18 +30,6 @@ Transform:
   m_Father: {fileID: 400004}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8256420901489129831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1994553136, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,7 +40,6 @@ GameObject:
   m_Component:
   - component: {fileID: 400002}
   - component: {fileID: 11400002}
-  - component: {fileID: 7672405864727969094}
   m_Layer: 0
   m_Name: Connection Objects
   m_TagString: Untagged
@@ -85,18 +71,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1419717442, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7672405864727969094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1994553136, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &100004
@@ -170,7 +144,7 @@ MonoBehaviour:
   sceneGUITex: {fileID: 0}
   roadObjectsParent: {fileID: 400000}
   connectionObjectsParent: {fileID: 400002}
-  OQCQQDCDQC: {fileID: 0}
+  ODQQQDOQOD: {fileID: 0}
   roadTypes:
   - roadTypeName: Default Road
     id: 11
@@ -247,10 +221,10 @@ MonoBehaviour:
     smoothLevel: 0
     splatOpacity: 0
     followTerrainContours: 0
-    terrainContoursOffset: 5
+    terrainContoursOffset: 0
     terrainDeformation: 1
-    defaultIndent: 2
-    defaultSurrounding: 2
+    defaultIndent: 0
+    defaultSurrounding: 0
     castShadow: 0
     randomnessFlag: 0
     randomYPosition: 0
@@ -280,7 +254,6 @@ MonoBehaviour:
     fixedDistance: 0
     connectionAngle: 0
     connectionRadius: 0
-    isRoadShape: 0
   selectedRoadType: 0
   selectedNewRoadType: 0
   inspRoadTypes: []
@@ -374,7 +347,8 @@ MonoBehaviour:
   terrainObjects:
   - {fileID: 0}
   - {fileID: 0}
-  terrainSplatTextures: []
+  terrainSplatTextures:
+  - Splat 1 - Grass ER ER
   activeTerrain: {fileID: 0}
   activeTerrainY: 0
   selectedTerrain: 0
@@ -456,7 +430,7 @@ MonoBehaviour:
   hideSurfaces: 1
   useLightProbes: 0
   hideLockedObjects: 0
-  OQCOCDDQOC: 0
+  ODQQCCODDO: 0
   isInBuildMode: 0
   progressFlag: 0
   progressTerrain: 1
@@ -534,15 +508,15 @@ MonoBehaviour:
   dirtyBool: 0
   dirtyOnSceneBool: 0
   forceRoadNetworkSelect: 0
-  OOCDCCQDDO: 1
-  OQCQQDCDQCScript: {fileID: 0}
-  OCODDCDQOCCrossingsScript: {fileID: 0}
-  OCODDCDQOCScript: {fileID: 0}
-  OQCQQDCDQCElement: -1
-  OCDODODCDO: -1
-  OOCCOQOQQC: {fileID: 0}
-  OQOQOODCCO: {fileID: 0}
-  OQQCQCQODC: -1
+  OQDCDCQDCO: 1
+  ODQQQDOQODScript: {fileID: 0}
+  OOCDOCQOOOCrossingsScript: {fileID: 0}
+  OOCDOCQOOOScript: {fileID: 0}
+  ODQQQDOQODElement: -1
+  ODOCQOOCCO: -1
+  OQOOCOCOQD: {fileID: 0}
+  OOCQDDDDQQ: {fileID: 0}
+  OCQOOQCDOC: -1
   selectedRoadSOMarker: -1
   selectedMarkerNode: -1
   selectedMarkerNodes: 
@@ -560,7 +534,6 @@ MonoBehaviour:
   globalGridSize: 10
   globalGridRadius: 1000
   globalGridRotation: 0
-  gridOffset: {x: 0, y: 0}
   ggTL: {x: 0, y: 0, z: 0}
   ggBL: {x: 0, y: 0, z: 0}
   ggBR: {x: 0, y: 0, z: 0}
@@ -614,8 +587,8 @@ MonoBehaviour:
   lockRoadNetwork: 0
   showNotifications: 1
   multipleTerrainsWarning: 0
-  ODCCCODOOQ: []
-  ODQQCCDOQQ: []
+  OQDQQDDQQO: []
+  OCCODOQQCC: []
   textureCounter: 0
   vegetationStudio: 0
   vegetationStudioPro: 0
@@ -632,7 +605,7 @@ MonoBehaviour:
   vegetationStudioBiomeMaskNoiseScale: 0
   aiTraffic: 0
   aiMatchingLanesOnly: 1
-  aiconnectNonMatchinglaneCounts: 1
+  aiNearestLanesOnly: 1
   aiIgnoreConnections: 1
   displayLaneData: 0
   rightHandDriving: 1
