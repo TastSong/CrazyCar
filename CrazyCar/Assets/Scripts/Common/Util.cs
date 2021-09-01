@@ -22,6 +22,11 @@ namespace Utils {
         public static string registerUrl = "Register";
         public static string avatarUrl = "Avatar";
         public static string changeAvatarUrl = "ChangeAvatar";
+        public static string resourceUrl = "Resource";
+    }
+
+    public static class PrefKeys {
+        public const string lastLogNid = "lastLogNid";
     }
 
     public static class LocalUrl {
@@ -31,6 +36,8 @@ namespace Utils {
 
     public static class Util {
         public delegate void NoneParamFunction();
+
+        public static int lastLogNid;
 
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {
