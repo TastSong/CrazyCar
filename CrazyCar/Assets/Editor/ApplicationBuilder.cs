@@ -11,7 +11,6 @@ public class ApplicationBuilder : Editor {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
         BuildHelper.BuildConfig("Local", () => {
-            BuildHelper.CopyToAssetBundleDir();
         });
     }
 
@@ -20,7 +19,6 @@ public class ApplicationBuilder : Editor {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
         BuildHelper.BuildConfig("Remote", () => {
-            BuildHelper.CopyToAssetBundleDir();
         });
     }
 

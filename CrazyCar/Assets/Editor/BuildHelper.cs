@@ -15,7 +15,6 @@ public static class BuildHelper {
         ConfigBundleID();
         BuildBundleToAsset();
         BuildConfig(type, () => {
-            CopyToAssetBundleDir();
             BuildGameApplication(path);
         });
     }
