@@ -20,8 +20,8 @@ public static class BuildHelper {
     }
 
     public static void ConfigBundleID() {
-        PlayerSettings.productName = "CrazyCar";
-        PlayerSettings.applicationIdentifier = "com.TastSong.CrazyCar";
+        PlayerSettings.productName = "CrazyAvatar";
+        PlayerSettings.applicationIdentifier = "com.TastSong.CrazyAvatar";
     }
     
     public static void BuildBundleToAsset() {
@@ -88,7 +88,7 @@ public static class BuildHelper {
         Util.lastLogNid = PlayerPrefs.GetInt(PrefKeys.lastLogNid, 0);
         string url = Util.GetServerBaseUrl(nc.serverType) + RequestUrl.resourceUrl;
         FetchResource(url, go, path, nc, successCallback);
-        Debug.LogError("BuildConfig...OVER...");
+        Debug.Log("BuildConfig...OVER...");
         PlayerSettings.SplashScreen.show = false;
     }
 
@@ -111,11 +111,11 @@ public static class BuildHelper {
             int code = (int)originData["code"];
             if (code == 200) {
                 JsonData data = originData["data"];
-                string hashCar = (string)data["car"]["hash"];
-                Debug.Log("++++++remote hashCar = " + hashCar);
+                string hashAvatar = (string)data["avatar"]["hash"];
+                Debug.Log("++++++remote hashAvatar = " + hashAvatar);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
-                jsonData["car"] = hashCar;
+                jsonData["avatar"] = hashAvatar;
                 File.WriteAllText(configPath, jsonData.ToJson());
                 GameObject.DestroyImmediate(go);
                 EditorUtility.SetDirty(nc);
@@ -175,7 +175,7 @@ public static class BuildHelper {
 #elif UNITY_IOS
         // year baby! olol
 #elif UNITY_STANDALONE
-        string exeName = "CrazyCar.exe";
+        string exeName = "CrazyAvatar.exe";
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, exeName), BuildTarget.StandaloneWindows,
             BuildOptions.Development | BuildOptions.ConnectWithProfiler);
 

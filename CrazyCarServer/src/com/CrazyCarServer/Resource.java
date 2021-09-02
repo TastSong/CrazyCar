@@ -36,12 +36,12 @@ public class Resource extends HttpServlet {
 
 		PrintWriter out = response.getWriter();				
         JSONObject carJB = new JSONObject();        
-        carJB.put("hash", "18405b0949c810be1bf276bd9735214d");
-        carJB.put("crc", "2699149419");
-        carJB.put("url", "car");
-        carJB.put("size", "12.3");
+        carJB.put("hash", "b455b172bd4eb91a8c6b391d34053f91");
+        carJB.put("crc", "3591698713");
+        carJB.put("url", "avatar");
+        carJB.put("size", "0.1708");
         JSONObject dataJB = new JSONObject();
-        dataJB.put("car", carJB);
+        dataJB.put("avatar", carJB);
         
         JSONObject outJB = new JSONObject();
 		outJB.put("code", 200);

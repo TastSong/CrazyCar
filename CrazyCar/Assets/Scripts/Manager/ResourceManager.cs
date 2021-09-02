@@ -14,21 +14,21 @@ public enum ResourceType {
 }
 
 public class ResourceManager {
-    public static AssetBundle car;
+    public static AssetBundle avatar;
     public ResourceType curResourceType = ResourceType.None;
     public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
 
-    private string hashCar = "";
-    private uint CRCCar = 0;
-    private string urlCar = "";
-    private float sizeCar = 1000;
-    private string localCarString = Application.streamingAssetsPath + "/car";
+    private string hashAvatar = "";
+    private uint CRCAvatar = 0;
+    private string urlAvatar = "";
+    private float sizeAvatar = 1000;
+    private string localAvatarString = Application.streamingAssetsPath + "/avatar";
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
 #if UNITY_EDITOR
-        if (car == null) {
-            car = AssetBundle.LoadFromFile(localCarString);
+        if (avatar == null) {
+            avatar = AssetBundle.LoadFromFile(localAvatarString);
         }       
         curResourceType = ResourceType.Loaded;
         return;
@@ -38,7 +38,7 @@ public class ResourceManager {
     }
 
     private void CheckNew() {
-        if (car != null) {
+        if (avatar != null) {
             curResourceType = ResourceType.Loaded;
         } else {
             CheckCoroutine();
@@ -51,10 +51,10 @@ public class ResourceManager {
         GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.resourceUrl,
             fatchData: (data) => {
                 Debug.Log(data.ToJson());
-                hashCar = (string)data["car"]["hash"];
-                CRCCar = uint.Parse((string)data["car"]["crc"]);
-                urlCar = NetworkController.manager.HttpBaseUrl + (string)data["car"]["url"];
-                sizeCar = float.Parse((string)data["car"]["size"]); 
+                hashAvatar = (string)data["avatar"]["hash"];
+                CRCAvatar = uint.Parse((string)data["avatar"]["crc"]);
+                urlAvatar = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
+                sizeAvatar = float.Parse((string)data["avatar"]["size"]); 
 
                 GetLocalResource();
             },
@@ -88,16 +88,17 @@ public class ResourceManager {
             JsonData maniData = JsonMapper.ToObject(File.ReadAllText(localManiFest));
 #endif
             Debug.Log(maniData.ToJson());
-            string localCarHash = (string)maniData["car"];
+            string localAvatarHash = (string)maniData["avatar"];
 
-            Debug.Log("++++++ remote hashCar = " + hashCar + "   localCarHash = " + localCarHash);
-            if (localCarHash == hashCar) {
-                car = AssetBundle.LoadFromFile(localCarString);
+            Debug.Log("++++++ remote hashAvatar = " + hashAvatar + "   localAvatarHash = " + localAvatarHash);
+            if (localAvatarHash == hashAvatar) {
+                avatar = AssetBundle.LoadFromFile(localAvatarString);
             }
         }
 
         // 下载线上之后，会缓存到一个文件夹，不会替换本地文件
-        if (!Caching.IsVersionCached(urlCar, Hash128.Parse(hashCar)) && car == null) {
+        Caching.ClearCache();
+        if (!Caching.IsVersionCached(urlAvatar, Hash128.Parse(hashAvatar)) && avatar == null) {
             curResourceType = ResourceType.ToDownload;
         } else {
             curResourceType = ResourceType.Loaded;
@@ -110,10 +111,10 @@ public class ResourceManager {
     }
 
     private IEnumerator Download(Util.NoneParamFunction success, ProgressCallback progressCallback, Util.NoneParamFunction fail) {
-        if (car == null) {
+        if (avatar == null) {
             Debug.Log("Try to Load res From Web");
             float lastProgress = -1;
-            var _req = UnityWebRequestAssetBundle.GetAssetBundle(urlCar, Hash128.Parse(hashCar), CRCCar);
+            var _req = UnityWebRequestAssetBundle.GetAssetBundle(urlAvatar, Hash128.Parse(hashAvatar), CRCAvatar);
             _req.SendWebRequest();
             long lastTime = Util.GetTime();
             Debug.Log("dowload before");
@@ -131,7 +132,7 @@ public class ResourceManager {
                 }
 
                 try {
-                    progressCallback(_req.downloadProgress, sizeCar * 1024 * 1024, true);
+                    progressCallback(_req.downloadProgress, sizeAvatar * 1024 * 1024, true);
                 } catch {
                     Debug.LogError("bundleError");
                 }
@@ -139,15 +140,15 @@ public class ResourceManager {
                 yield return null;
             }
 
-            Debug.Log("dowload car finish");
+            Debug.Log("dowload avatar finish");
             try {
-                car = DownloadHandlerAssetBundle.GetContent(_req);
+                avatar = DownloadHandlerAssetBundle.GetContent(_req);
             } catch (System.Exception e) {
                 Debug.Log(e.ToString());
             }
 
             Debug.Log("get bundle finish");
-            if (car == null) {
+            if (avatar == null) {
                 fail?.Invoke();
                 yield break;
             }
@@ -156,21 +157,21 @@ public class ResourceManager {
         success?.Invoke();
     }
 
-    public GameObject GetCarResource(string id) {
-        GameObject resultGO = new GameObject();
+    public Sprite GetAvatarResource(string id) {
+        Sprite resultSprite;
         try {
 #if !UNITY_EDITOR
-            Debug.Log("+++= " + "Assets/AB/Car/" + id + "/Prefab/" + id + ".prefab");
-            resultGO = car.LoadAsset<GameObject>("Assets/AB/Car/" + id + "/Prefab/" + id + ".prefab");
-            if (resultGO == null) {
+            Debug.Log("+++= " + "Assets/AB/Avatar/" + id + ".png");
+            resultSprite = avatar.LoadAsset<Sprite>("Assets/AB/Avatar/" + id + ".png");
+            if (resultSprite == null) {
                 return null;
             }
 #else
-            resultGO = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(
-                "Assets/AB/Car/"+ id + "/Prefab/" + id + ".prefab");
+            resultSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(
+                "Assets/AB/Avatar/" + id + ".png");
 
 #endif
-            return resultGO;
+            return resultSprite;
         } catch (Exception e) {
             Debug.LogError(e);
             return null;

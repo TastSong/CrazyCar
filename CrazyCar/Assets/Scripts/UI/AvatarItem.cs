@@ -22,7 +22,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
 
     public void SetContent(AvatarInfo info) {
         avatarInfo = info;
-        avatarImage.sprite = Resources.Load<Sprite>(LocalUrl.avatarUrl + avatarInfo.aid.ToString());
+        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(avatarInfo.aid.ToString());
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 }

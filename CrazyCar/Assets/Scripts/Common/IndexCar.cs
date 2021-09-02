@@ -14,10 +14,6 @@ public class IndexCar : MonoBehaviour
         } else if (manager != this) {
             Destroy(gameObject);
         }
-
-        // homepage接口配置这个数据 Kaiju
-        carGO = Instantiate(GameController.manager.resourceManager.GetCarResource("Kaiju"));
-        carGO.transform.SetParent(transform, false);
     }
 
     
