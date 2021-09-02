@@ -97,7 +97,7 @@ public class ResourceManager {
         }
 
         // 下载线上之后，会缓存到一个文件夹，不会替换本地文件
-        Caching.ClearCache();
+        //Caching.ClearCache();
         if (!Caching.IsVersionCached(urlAvatar, Hash128.Parse(hashAvatar)) && avatar == null) {
             curResourceType = ResourceType.ToDownload;
         } else {

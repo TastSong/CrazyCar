@@ -112,7 +112,7 @@ public static class BuildHelper {
             if (code == 200) {
                 JsonData data = originData["data"];
                 string hashAvatar = (string)data["avatar"]["hash"];
-                Debug.Log("++++++remote hashAvatar = " + hashAvatar);
+                Debug.Log("++++++local hashAvatar = " + hashAvatar);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
                 jsonData["avatar"] = hashAvatar;
@@ -158,7 +158,7 @@ public static class BuildHelper {
 
     // path set to another value to set the target folder directly
     public static void BuildGameApplication(string path = null) {
-        AddressableAssetSettings.BuildPlayerContent();
+        //AddressableAssetSettings.BuildPlayerContent();
         Debug.Log("BuildGameApplication......");
 
         if (path == null) {

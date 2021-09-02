@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ApplicationBuilder : Editor {
 
-    [MenuItem("Window/Build/1.配置测试数据/Local")]
+    [MenuItem("Window/Build/AB/Local")]
     private static void BuildLocalChina() {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
@@ -14,7 +14,7 @@ public class ApplicationBuilder : Editor {
         });
     }
 
-    [MenuItem("Window/Build/1.配置测试数据/Remote")]
+    [MenuItem("Window/Build/AB/Remote")]
     private static void BuildLocalGlobal() {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
