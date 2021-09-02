@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Utils;
 
 public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    private Transform targetTransform;
-    private bool isTouch;
+    public Transform targetTransform;
+    public bool isTouch;
     private void Start() {
-        targetTransform = IndexCar.manager.carTrans;
+        targetTransform = IndexCar.manager.carGO.transform;
     }
 
     // Update is called once per frame

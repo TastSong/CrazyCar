@@ -26,7 +26,7 @@ public static class BuildHelper {
     }
     
     public static void BuildBundleToAsset() {
-        Debug.LogError("1.BuildBundleToAsset......");
+        Debug.Log("1.BuildBundleToAsset......");
         string assetBundleDirectory = Application.streamingAssetsPath;
 
         if (!Directory.Exists(assetBundleDirectory)) {

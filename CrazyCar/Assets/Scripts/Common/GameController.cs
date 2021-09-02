@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public string token;
     public UserInfo userInfo = new UserInfo();
 
+    public ResourceManager resourceManager = new ResourceManager();
     public LoginManager loginManager = new LoginManager();
     public AvatarManager avatarManager = new AvatarManager();
 
@@ -33,5 +34,6 @@ public class GameController : MonoBehaviour
 
     private void Start() {
         warningAlert.gameObject.SetActiveFast(false);
+        resourceManager.ParseLocalResource();
     }
 }
