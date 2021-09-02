@@ -90,7 +90,7 @@ public static class BuildHelper {
         string url = Util.GetServerBaseUrl(nc.serverType) + RequestUrl.resourceUrl;
         FetchResource(url, go, path, nc, successCallback);
         Debug.LogError("BuildConfig...OVER...");
-        PlayerSettings.SplashScreen.show = true;
+        PlayerSettings.SplashScreen.show = false;
     }
 
     private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Util.NoneParamFunction successCallback) {
