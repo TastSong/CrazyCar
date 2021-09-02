@@ -34,6 +34,5 @@ public class GameController : MonoBehaviour
 
     private void Start() {
         warningAlert.gameObject.SetActiveFast(false);
-        resourceManager.ParseLocalResource();
     }
 }

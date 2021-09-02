@@ -8,9 +8,12 @@ public class LoginCtr : MonoBehaviour
 {
     public LoginUI loginUI;
     public RegisterUI registerUI;
+    public DownloadResUI downloadResUI;
+
     private TinyMessageSubscriptionToken registerToken;
 
     private void Start() {
+        downloadResUI.gameObject.SetActiveFast(true);
         loginUI.gameObject.SetActiveFast(true);
         registerUI.gameObject.SetActiveFast(false);
 

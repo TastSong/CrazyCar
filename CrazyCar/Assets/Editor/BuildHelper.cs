@@ -73,7 +73,7 @@ public static class BuildHelper {
     }
 
     public static void BuildConfig(ServerType serverType, Util.NoneParamFunction successCallback = null) {
-        Debug.LogError("2.BuildConfig......");
+        Debug.Log("2.BuildConfig......");
         GameObject go = new GameObject();
         AssetBundleHelper abh = go.AddComponent<AssetBundleHelper>();
         NetworkController nc = GameObject.FindObjectOfType<NetworkController>();
@@ -85,7 +85,7 @@ public static class BuildHelper {
         if (nc == null) {
             return;
         }
-        Debug.LogError("BuildConfig 当前请求服务器是 ： " + nc.serverType);
+        Debug.Log("BuildConfig 当前请求服务器是 ： " + nc.serverType);
         Util.lastLogNid = PlayerPrefs.GetInt(PrefKeys.lastLogNid, 0);
         string url = Util.GetServerBaseUrl(nc.serverType) + RequestUrl.resourceUrl;
         FetchResource(url, go, path, nc, successCallback);
@@ -94,11 +94,11 @@ public static class BuildHelper {
     }
 
     private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Util.NoneParamFunction successCallback) {
-        Debug.LogError("url : " + url);
+        Debug.Log("请求AB url : " + url);
         UnityWebRequest webRequest = UnityWebRequest.Get(url);
         webRequest.SendWebRequest();
         while (!webRequest.isDone) {
-            Debug.LogError("Requesting");
+            Debug.Log("Requesting");
             Thread.Sleep(1000);
         }
         if (webRequest.isHttpError || webRequest.isNetworkError)
@@ -112,19 +112,11 @@ public static class BuildHelper {
             int code = (int)originData["code"];
             if (code == 200) {
                 JsonData data = originData["data"];
-#if UNITY_ANDROID
-                JsonData dt = data["android"];
-#elif UNITY_STANDALONE
-                JsonData dt = data["pc"];
-#elif UNITY_IOS
-                JsonData dt = data["ios"];
-#endif
-                string hashRes = (string)dt["res"]["hash"];
-                string hashEquip = (string)dt["equip"]["hash"];
+                string hashCar = (string)data["car"]["hash"];
+                Debug.Log("++++++remote hashCar = " + hashCar);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
-                jsonData["res"] = hashRes;
-                jsonData["equip"] = hashEquip;
+                jsonData["car"] = hashCar;
                 File.WriteAllText(configPath, jsonData.ToJson());
                 GameObject.DestroyImmediate(go);
                 EditorUtility.SetDirty(nc);
@@ -168,7 +160,7 @@ public static class BuildHelper {
     // path set to another value to set the target folder directly
     public static void BuildGameApplication(string path = null) {
         AddressableAssetSettings.BuildPlayerContent();
-        Debug.LogError("BuildGameApplication......" + "dev");
+        Debug.Log("BuildGameApplication......");
 
         if (path == null) {
             path = EditorUtility.SaveFolderPanel("Choose Location of Built Game", "", "");

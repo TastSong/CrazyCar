@@ -10,18 +10,18 @@ public class ApplicationBuilder : Editor {
     private static void BuildLocalChina() {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
-        //BuildHelper.BuildConfig("Local", () => {
-        //    BuildHelper.CopyToAssetBundleDir();
-        //});
+        BuildHelper.BuildConfig("Local", () => {
+            BuildHelper.CopyToAssetBundleDir();
+        });
     }
 
     [MenuItem("Window/Build/1.配置测试数据/Remote")]
     private static void BuildLocalGlobal() {
         BuildHelper.ConfigBundleID();
         BuildHelper.BuildBundleToAsset();
-        //BuildHelper.BuildConfig("Remote", () => {
-        //    BuildHelper.CopyToAssetBundleDir();
-        //});
+        BuildHelper.BuildConfig("Remote", () => {
+            BuildHelper.CopyToAssetBundleDir();
+        });
     }
 
     [MenuItem("Window/Build/Local")]
