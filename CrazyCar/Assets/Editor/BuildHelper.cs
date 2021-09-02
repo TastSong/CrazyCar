@@ -172,18 +172,16 @@ public static class BuildHelper {
 #if UNITY_ANDROID
         //PlayerSettings.keystorePass = "123456";
         //PlayerSettings.keyaliasPass = "123456";
-        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "onelap.apk"), BuildTarget.Android,
-            isDevelop ? BuildOptions.Development : BuildOptions.None);
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "onelap.apk"), BuildTarget.Android, BuildOptions.None);
 #elif UNITY_IOS
         // year baby! olol
 #elif UNITY_STANDALONE
         string exeName = "CrazyCar.exe";
-#endif
-
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, exeName), BuildTarget.StandaloneWindows,
             BuildOptions.Development | BuildOptions.ConnectWithProfiler);
 
         //UnityEditor.FileUtil.CopyFileOrDirectory(Path.Combine("postfiles", "OnelapMatchWinForm"),
         //  Path.Combine(path, Path.Combine(exeDataFolder, "OnelapMatchWinForm")));
+#endif
     }
 }
