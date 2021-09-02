@@ -94,3 +94,20 @@ select * from avatar_name;
 
 select * from all_user;   
 update all_user set aid = 2 where user_id = 1;
+
+CREATE TABLE IF NOT EXISTS `ab_resource`(
+   `r_id` INT UNSIGNED AUTO_INCREMENT,
+   `r_name` VARCHAR(100) NOT NULL,
+   `r_hash` VARCHAR(40) NOT NULL,
+   `r_crc` VARCHAR(40) NOT NULL,
+    `r_url` VARCHAR(40) NOT NULL,
+    `r_size` VARCHAR(40) NOT NULL,
+   PRIMARY KEY ( `r_id` )
+   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   VALUES
+				   ( "avatar", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar", "0.1289" );
+select * from ab_resource;                     
+select r_hash from ab_resource where r_name = "avatar";
+
+

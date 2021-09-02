@@ -28,7 +28,7 @@ public class AvatarUI : MonoBehaviour {
     }
 
     private void UpdataUI() {
-        curAvatar.sprite = Resources.Load<Sprite>(LocalUrl.avatarUrl + GameController.manager.avatarManager.curAid.ToString());
+        curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid.ToString()); 
         curAvatarName.text = GameController.manager.avatarManager.avatarDic[GameController.manager.avatarManager.curAid].name;
         Util.DeleteChildren(avatarItemParent);
         foreach (var kvp in GameController.manager.avatarManager.avatarDic) {
