@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
+using TMPro;
 
 public class LoginUI : MonoBehaviour {
-    public InputField userNameInput;
-    public InputField passwordInput;
+    public TMP_InputField userNameInput;
+    public TMP_InputField passwordInput;
     public Button loginBtn;
     public Button registerBtn;
 
@@ -50,6 +51,9 @@ public class LoginUI : MonoBehaviour {
 
         registerBtn.onClick.AddListener(() => {
             GameController.manager.tinyMsgHub.Publish(new RegisterUIMessage());
+            Util.DelayExecuteWithSecond(0.25f, () => {
+                gameObject.SetActiveFast(false);
+            });
         });
     }
 }

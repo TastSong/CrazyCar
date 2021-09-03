@@ -2,14 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TMPro;
 
 public class DownloadResUI : MonoBehaviour {
-    public Text showText;
+    public TMP_Text showText;
     public Slider progressSlider;
 
     private void Start() {
         CheckResource(() => {
-            gameObject.SetActiveFast(false);
+            GameController.manager.tinyMsgHub.Publish(new DownloadResUIMessage());
         });
     }
 

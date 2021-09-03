@@ -7,14 +7,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
+using TMPro;
 
 public class RegisterUI : MonoBehaviour
 {
-    public InputField userNameInput;
-    public InputField passwordInput;
+    public TMP_InputField userNameInput;
+    public TMP_InputField passwordInput;
     public Button registerBtn;
+    public Button closeBtn;
 
     private void Start() {
+        closeBtn.onClick.AddListener(() => {
+            GameController.manager.tinyMsgHub.Publish(new LoginUIMessage());
+            Util.DelayExecuteWithSecond(0.25f, () => {
+                gameObject.SetActiveFast(false);
+            });
+        });
+
+
+
         registerBtn.onClick.AddListener(() => {
             if (userNameInput.text == "" || passwordInput.text == "") {
                 GameController.manager.warningAlert.Show("请输入内容");

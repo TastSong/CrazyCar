@@ -328,7 +328,7 @@ namespace Utils {
             yield return request.SendWebRequest();
 
             if (request.isNetworkError || request.isHttpError) {
-
+                Debug.LogError("Is Network Error");
             } else {
                 byte[] results = request.downloadHandler.data;
                 string s = Encoding.UTF8.GetString(results);

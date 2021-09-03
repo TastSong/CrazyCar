@@ -37,7 +37,7 @@ namespace Ricimi
         // finished, you can use an animation event instead.
         private IEnumerator RunPopupDestroy()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             Destroy(m_background);
             Destroy(gameObject);
         }
