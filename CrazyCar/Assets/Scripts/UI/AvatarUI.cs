@@ -19,12 +19,14 @@ public class AvatarUI : MonoBehaviour {
     private int curAid = 0;
 
     private void OnEnable() {       
-        StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
-            token : GameController.manager.token,
-            fatchData : (data) => {
+        if (GameController.manager.avatarManager.avatarDic.Count == 0) {
+            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
+            token: GameController.manager.token,
+            fatchData: (data) => {
                 GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
                 curAid = GameController.manager.userInfo.aid;
-            }));
+             }));
+        }
     }
 
     private void UpdataUI() {

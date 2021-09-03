@@ -21,7 +21,7 @@ public class HomepageUI : MonoBehaviour {
     }
 
     private void UpdataUI() {
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid.ToString());
+        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid.ToString());
     }
 
     private void OnDestroy() {
