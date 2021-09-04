@@ -58,11 +58,13 @@ public class AvatarUI : MonoBehaviour {
         });
 
         closeBtn.onClick.AddListener(() => {
-            UIManager.instance.HidePage(UIPageType.AvatarUI, new HomepageUIMessage());
+            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+                UIManager.instance.HidePage(UIPageType.AvatarUI, new HomepageUIMessage());
+            });
         });
 
         avatarToken = GameController.manager.tinyMsgHub.Subscribe<AvatarUIMessage>((data) => {
-            curAvatar.sprite = Resources.Load<Sprite>(LocalUrl.avatarUrl + data.aid);
+            curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(data.aid.ToString());
             curAvatarName.text = GameController.manager.avatarManager.avatarDic[data.aid].name;
             curAid = data.aid;
         });

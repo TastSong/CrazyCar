@@ -48,7 +48,7 @@ namespace Utils {
     public static class Util {
         public delegate void NoneParamFunction();
 
-        public static int lastLogNid;
+        public static float btnASTime = 0.25f;
 
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {

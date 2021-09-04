@@ -41,13 +41,15 @@ public class LoginUI : MonoBehaviour {
                     GameController.manager.loginManager.ParseLoginData(data);
                 }, code : (code) => {
                     if (code == 200) {
-                        GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
-                            PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
-                            PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
-                            PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
-
-                            Util.LoadingScene(SceneID.Index);
+                        Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+                            GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
+                                PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
+                                PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
+                                PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
+                                Util.LoadingScene(SceneID.Index);
+                            });
                         });
+                       
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("密码错误");
                     } else if (code == 404) {
@@ -60,7 +62,7 @@ public class LoginUI : MonoBehaviour {
 
         registerBtn.onClick.AddListener(() => {
             GameController.manager.tinyMsgHub.Publish(new RegisterUIMessage());
-            Util.DelayExecuteWithSecond(0.25f, () => {
+            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 gameObject.SetActiveFast(false);
             });
         });

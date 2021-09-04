@@ -25,13 +25,13 @@ public class InfoConfirmAlert : MonoBehaviour {
     void Start() {
         cancelBtn.onClick.AddListener(() => {
             fail?.Invoke();
-            Util.DelayExecuteWithSecond(0.25f, () => {
+            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 gameObject.SetActive(false);
             });
         });
         confirmBtn.onClick.AddListener(() => {
             success?.Invoke();
-            Util.DelayExecuteWithSecond(0.25f, () => {
+            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 gameObject.SetActive(false);
             });
         });

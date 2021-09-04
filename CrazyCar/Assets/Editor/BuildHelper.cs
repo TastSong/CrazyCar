@@ -85,7 +85,6 @@ public static class BuildHelper {
             return;
         }
         Debug.Log("BuildConfig 当前请求服务器是 ： " + nc.serverType);
-        Util.lastLogNid = PlayerPrefs.GetInt(PrefKeys.lastLogNid, 0);
         string url = Util.GetServerBaseUrl(nc.serverType) + RequestUrl.resourceUrl;
         FetchResource(url, go, path, nc, successCallback);
         Debug.Log("BuildConfig...OVER...");
