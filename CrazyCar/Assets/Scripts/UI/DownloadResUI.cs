@@ -40,7 +40,7 @@ public class DownloadResUI : MonoBehaviour {
         }
     }
 
-    private float lastProgress;
+    private float lastProgress = 0;
     private float lastTime = -1;
     private void UpdateProgress(float value, float totalBytes, bool isDownloading) {
         if (value < 0.01f) {
