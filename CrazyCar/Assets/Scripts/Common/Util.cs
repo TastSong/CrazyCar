@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Utils {
@@ -28,10 +29,19 @@ namespace Utils {
 
     public static class PrefKeys {
         public const string lastLogNid = "lastLogNid";
+        public const string userName = "userName";
+        public const string password = "password";
+        public const int rememberPassword = 0;
     }
 
     public static class LocalUrl {
         public static string avatarUrl = "Avatar/";
+    }
+
+    public enum SceneID {
+        Login = 0,
+        Index = 1,
+        Loading = 2
     }
 
 
@@ -345,6 +355,17 @@ namespace Utils {
         private static DateTime JanFirst1970 = new DateTime(1970, 1, 1);
         public static long GetTime() {
             return (long)((DateTime.Now.ToUniversalTime() - JanFirst1970).TotalMilliseconds + 0.5);
+        }
+
+        private static SceneID loadingTargetSceneID;
+        public static SceneID LoadingTargetSceneID {
+            get {
+                return loadingTargetSceneID;
+            }
+        }
+        public static void LoadingScene(SceneID sceneID) {
+            loadingTargetSceneID = sceneID;
+            SceneManager.LoadScene((int)SceneID.Loading);
         }
     }
 

@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
-using TMPro;
 
 public class LoginUI : MonoBehaviour {
-    public TMP_InputField userNameInput;
-    public TMP_InputField passwordInput;
+    public InputField userNameInput;
+    public InputField passwordInput;
+    public Toggle rememberToggle; 
     public Button loginBtn;
     public Button registerBtn;
 
     private void Start() {
+        rememberToggle.isOn = PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1;
+        if (rememberToggle.isOn) {
+            userNameInput.text = PlayerPrefs.GetString(PrefKeys.userName);
+            passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
+        } 
+
         loginBtn.onClick.AddListener(() => {
             if (userNameInput.text == "" || passwordInput.text == "") {
                 GameController.manager.warningAlert.Show("请输入内容");
@@ -37,7 +42,11 @@ public class LoginUI : MonoBehaviour {
                 }, code : (code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
-                            SceneManager.LoadScene(1);
+                            PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
+                            PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
+                            PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
+
+                            Util.LoadingScene(SceneID.Index);
                         });
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("密码错误");

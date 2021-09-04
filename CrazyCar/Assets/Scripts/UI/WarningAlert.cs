@@ -8,7 +8,7 @@ public class WarningAlert : MonoBehaviour {
     private Coroutine warningCor;
 
 
-    public void Show(string text, float time = 1.0f, Util.NoneParamFunction callback = null, int fontSize = 34) {
+    public void Show(string text, float time = 1.0f, Util.NoneParamFunction callback = null, int fontSize = 64) {
         gameObject.SetActiveFast(true);
         warningText.text = text;
         warningText.fontSize = fontSize;

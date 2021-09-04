@@ -2,10 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TMPro;
 
 public class DownloadResUI : MonoBehaviour {
-    public TMP_Text showText;
+    public Text showText;
     public Slider progressSlider;
 
     private void Start() {

@@ -2,17 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using TinyMessenger;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
-using TMPro;
 
 public class RegisterUI : MonoBehaviour
 {
-    public TMP_InputField userNameInput;
-    public TMP_InputField passwordInput;
+    public InputField userNameInput;
+    public InputField passwordInput;
     public Button registerBtn;
     public Button closeBtn;
 
@@ -53,7 +50,7 @@ public class RegisterUI : MonoBehaviour
                 }, code : (code) => {
                     if (code == 200) {
                         GameController.manager.warningAlert.Show(text : "注册成功", callback : () => {
-                            SceneManager.LoadScene(1);
+                            Util.LoadingScene(SceneID.Index);
                         });
                     } else if (code == 423) {
                         GameController.manager.warningAlert.Show("用户已注册");
