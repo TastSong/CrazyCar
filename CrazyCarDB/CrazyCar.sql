@@ -50,22 +50,22 @@ CREATE TABLE IF NOT EXISTS `avatar_name`(
    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 0, "Avatar0" );
+				   ( 0, "Tast" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 1, "Avatar1" );
+				   ( 1, "Black 1" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 2, "Avatar2" );
+				   ( 2, "Write 2" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 3, "Avatar3" );
+				   ( 3, "Write 3" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 4, "Avatar4" );
+				   ( 4, "Write 4" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 5, "Avatar5" );
+				   ( 5, "Write 5" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
 				   ( 6, "Avatar6" );
@@ -83,13 +83,31 @@ INSERT INTO avatar_name ( aid, avatar_name )
 				   (10, "Avatar10" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 11, "Avatar11" );   
+				   (11, "Avatar11" );   
  INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
 				   (12, "Avatar12" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 13, "Avatar13" );                       
+				   (13, "Avatar13" );                
+INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (14, "Avatar14" );             
+INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (15, "Avatar15" );
+INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (16, "Avatar160" );
+INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (17, "Avatar17" );   
+ INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (18, "Avatar18" );
+INSERT INTO avatar_name ( aid, avatar_name )
+				   VALUES
+				   (19, "Avatar19" );                                     
 select * from avatar_name;                    
 
 select * from all_user;   
