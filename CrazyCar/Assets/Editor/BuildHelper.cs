@@ -20,8 +20,8 @@ public static class BuildHelper {
     }
 
     public static void ConfigBundleID() {
-        PlayerSettings.productName = "CrazyAvatar";
-        PlayerSettings.applicationIdentifier = "com.TastSong.CrazyAvatar";
+        PlayerSettings.productName = "CrazyCar";
+        PlayerSettings.applicationIdentifier = "com.TastSong.CrazyCar";
     }
     
     public static void BuildBundleToAsset() {
@@ -87,8 +87,10 @@ public static class BuildHelper {
         Debug.Log("BuildConfig 当前请求服务器是 ： " + nc.serverType);
         string url = Util.GetServerBaseUrl(nc.serverType) + RequestUrl.resourceUrl;
         FetchResource(url, go, path, nc, successCallback);
-        Debug.Log("BuildConfig...OVER...");
+        // 设置打板Unity参数
         PlayerSettings.SplashScreen.show = false;
+        PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
+        Debug.Log("BuildConfig...OVER...");
     }
 
     private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Util.NoneParamFunction successCallback) {
@@ -170,7 +172,7 @@ public static class BuildHelper {
 #if UNITY_ANDROID
         //PlayerSettings.keystorePass = "123456";
         //PlayerSettings.keyaliasPass = "123456";
-        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "onelap.apk"), BuildTarget.Android, BuildOptions.None);
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCar.apk"), BuildTarget.Android, BuildOptions.None);
 #elif UNITY_IOS
         // year baby! olol
 #elif UNITY_STANDALONE
