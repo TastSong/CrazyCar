@@ -16,7 +16,7 @@ public class RouteManger
         Vector3[] pointPos = new Vector3[basePoint.Length];
         for (int i = 0; i < basePoint.Length; i++) {
             pointPos[i].x = basePoint[i].x;
-            pointPos[i].y = basePoint[i].y + 1f;
+            pointPos[i].y = basePoint[i].y;
             pointPos[i].z = basePoint[i].z;
         }
         GetTrackPoint(pointPos);
