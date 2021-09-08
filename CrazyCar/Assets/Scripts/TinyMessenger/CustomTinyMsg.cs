@@ -16,11 +16,11 @@ public class DownloadResUIMessage : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class GameUICtrMsg : ITinyMessage {
+public class InitGameUIMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class EndTimeTrailMsg : ITinyMessage {
+public class CompleteTimeTrailMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 

@@ -8,14 +8,14 @@ public class GameUIControl : MonoBehaviour{
     public TimeTrailUI timeTrailUI;
     public TimeTrailResultUI timeTrailResultUI;
 
-    private TinyMessageSubscriptionToken gameUICtrMsg;
-    private TinyMessageSubscriptionToken endTimeTrailMsg;
+    private TinyMessageSubscriptionToken initGameUIMsg;
+    private TinyMessageSubscriptionToken completeTimeTrailMsg;
 
     private void Start() {
         timeTrailUI.gameObject.SetActiveFast(false);
         timeTrailResultUI.gameObject.SetActiveFast(false);
-        gameUICtrMsg = GameController.manager.tinyMsgHub.Subscribe<GameUICtrMsg>((m) => { InitUI(); });
-        endTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<EndTimeTrailMsg>((m) => { ShowTimeTrailResult(); });
+        initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { InitUI(); });
+        completeTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrailMsg>((m) => { ShowTimeTrailResult(); });
     }
 
     private void InitUI() {
@@ -29,7 +29,7 @@ public class GameUIControl : MonoBehaviour{
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(gameUICtrMsg);
-        GameController.manager.tinyMsgHub.Unsubscribe(endTimeTrailMsg);
+        GameController.manager.tinyMsgHub.Unsubscribe(initGameUIMsg);
+        GameController.manager.tinyMsgHub.Unsubscribe(completeTimeTrailMsg);
     }
 }

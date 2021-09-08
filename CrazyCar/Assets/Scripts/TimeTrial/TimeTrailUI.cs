@@ -45,7 +45,7 @@ public class TimeTrailUI : MonoBehaviour{
                 Debug.LogError("++++++ 限制时间到 可以结算");
             }, limitTimeText));
 
-        endTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<EndTimeTrailMsg>((m) => { EndGame(); });
+        endTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrailMsg>((m) => { EndGame(); });
     }
 
     private void EndGame() {

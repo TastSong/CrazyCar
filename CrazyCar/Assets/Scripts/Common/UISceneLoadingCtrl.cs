@@ -48,6 +48,6 @@ public class UISceneLoadingCtrl : MonoBehaviour {
         Destroy(gameObject);
         yield return new WaitForSeconds(1f);
         GameController.manager.sceneLoaded = true;
-        GameController.manager.tinyMsgHub.Publish(new GameUICtrMsg());
+        GameController.manager.tinyMsgHub.Publish(new InitGameUIMsg());
     }
 }

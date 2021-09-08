@@ -54,7 +54,7 @@ public class TimeTrialManager {
 
         set {
             isComplete = true;
-            GameController.manager.tinyMsgHub.Publish(new EndTimeTrailMsg());
+            GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrailMsg());
             endTime = value;
         }
     }
