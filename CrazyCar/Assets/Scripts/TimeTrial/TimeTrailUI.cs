@@ -41,7 +41,7 @@ public class TimeTrailUI : MonoBehaviour{
 
         limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime, 
             () => {
-                GameController.manager.timeTrialManager.isLimited = true;
+                GameController.manager.timeTrialManager.IsArriveLimitTime = true;
                 Debug.LogError("++++++ 限制时间到 可以结算");
             }, limitTimeText));
 

@@ -20,7 +20,6 @@ public class TimeTrialResultInfo {
 
 public class TimeTrialManager {
     public bool isWin = false;
-    public bool isLimited = false;
     public bool isBreakRecord = false;
     public int rank;
     public Dictionary<int, TimeTrialInfo> timeTrialDic = new Dictionary<int, TimeTrialInfo>();
@@ -31,6 +30,7 @@ public class TimeTrialManager {
     private long startTime;
     private long endTime;
     private bool isComplete = false;
+    private bool isArriveLimitTime = false;
 
     public void CreateTestData() {
         selectInfo.limitTime = 60;
@@ -59,6 +59,19 @@ public class TimeTrialManager {
         }
     }
 
+    public bool IsArriveLimitTime {
+        get {
+            return isArriveLimitTime;
+        }
+
+        set {
+            if (value) {
+                GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrailMsg());
+            }
+            isArriveLimitTime = value;
+        }
+    }
+
     public bool IsStartGame {
         get {      
             return isInit ? (startTime * 1000 < Util.GetTime()) : false;
@@ -67,7 +80,7 @@ public class TimeTrialManager {
 
     public bool IsEndGame {
         get {
-            return isComplete || isLimited;
+            return isComplete || isArriveLimitTime;
         }
     }
 
@@ -92,7 +105,7 @@ public class TimeTrialManager {
         isComplete = false;
         isWin = false;
         isBreakRecord = false;
-        isLimited = false;
+        isArriveLimitTime = false;
     }
 
     public void ParseClassData(JsonData jsonData, Util.NoneParamFunction success = null) {
