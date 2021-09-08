@@ -8,7 +8,8 @@ using Utils;
 
 public enum UIPageType {
     HomePageUI = 0,
-    AvatarUI
+    AvatarUI,
+    TimeTrialIndexUI
 }
 
 public class UIManager : MonoBehaviour {
