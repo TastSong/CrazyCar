@@ -16,6 +16,14 @@ public class DownloadResUIMessage : ITinyMessage {
     public object Sender { get; private set; }
 }
 
+public class GameUICtrMsg : ITinyMessage {
+    public object Sender { get; private set; }
+}
+
+public class EndTimeTrailMsg : ITinyMessage {
+    public object Sender { get; private set; }
+}
+
 public class AvatarUIMessage : ITinyMessage {
     public object Sender { get; private set; }
     public int aid;

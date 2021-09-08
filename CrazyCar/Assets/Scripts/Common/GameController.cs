@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     public ResourceManager resourceManager = new ResourceManager();
     public LoginManager loginManager = new LoginManager();
     public AvatarManager avatarManager = new AvatarManager();
+    public TimeTrialManager timeTrialManager = new TimeTrialManager();
 
     private void Awake() {
         if (manager == null) {

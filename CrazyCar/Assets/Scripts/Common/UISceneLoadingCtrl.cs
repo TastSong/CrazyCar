@@ -15,7 +15,7 @@ public class UISceneLoadingCtrl : MonoBehaviour {
         GameController.manager.sceneLoaded = false;
         progressSlider.value = 0;
         progressText.text = "0%";
-        StartCoroutine(LoadScene());
+        GameController.manager.StartCoroutine(LoadScene());
         DontDestroyOnLoad(gameObject);
     }
 
@@ -24,26 +24,30 @@ public class UISceneLoadingCtrl : MonoBehaviour {
     }
 
     private IEnumerator LoadScene() {
+        GameController.manager.sceneLoaded = false;
         progressSlider.value = 0;
-        progressText.text = progressSlider.value * 100 + "%";
+        progressText.text = (int)(progressSlider.value * 100) + "%";
         progressSlider.value = 0.1f;
-        progressText.text = progressSlider.value * 100 + "%";
+        progressText.text = (int)(progressSlider.value * 100) + "%";
         var async = SceneManager.LoadSceneAsync((int)Util.LoadingTargetSceneID);
 
         while (timer < minLoadingTime) {
             var maxProgress = (timer / minLoadingTime);
             progressSlider.value = maxProgress;
-            progressText.text = maxProgress * 100 + "%";
+            progressText.text = (int)(maxProgress * 100) + "%";
             yield return null;
         }
 
         while (!async.isDone) {
             progressSlider.value = Mathf.Min(async.progress, async.progress);
-            progressText.text = progressSlider.value * 100 + "%";
+            progressText.text = (int)(progressSlider.value * 100) + "%";
             yield return null;
         }
-        yield return new WaitForSeconds(3.0f);
-        GameController.manager.sceneLoaded = true;
+        // 2019加载完场景并不能直接显示
+        yield return new WaitForSeconds(2.0f);
         Destroy(gameObject);
+        yield return new WaitForSeconds(1f);
+        GameController.manager.sceneLoaded = true;
+        GameController.manager.tinyMsgHub.Publish(new GameUICtrMsg());
     }
 }

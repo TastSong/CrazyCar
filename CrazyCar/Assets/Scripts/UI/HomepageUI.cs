@@ -8,12 +8,17 @@ using TinyMessenger;
 public class HomepageUI : MonoBehaviour {
     public Button avatarBtn;
     public Image avatarImage;
+    public Button joinGameBtn;
 
     private TinyMessageSubscriptionToken homepageToken;
 
     private void Start() {
         avatarBtn.onClick.AddListener(() => {
             UIManager.instance.ShowPage(UIPageType.AvatarUI);
+        });
+
+        joinGameBtn.onClick.AddListener(() => {
+            Util.LoadingScene(SceneID.Game);
         });
 
         UpdataUI();

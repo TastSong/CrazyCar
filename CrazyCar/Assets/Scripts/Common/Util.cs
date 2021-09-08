@@ -41,7 +41,8 @@ namespace Utils {
     public enum SceneID {
         Login = 0,
         Index = 1,
-        Loading = 2
+        Loading = 2,
+        Game = 3
     }
 
 
@@ -354,6 +355,7 @@ namespace Utils {
 
         private static DateTime JanFirst1970 = new DateTime(1970, 1, 1);
         public static long GetTime() {
+            // 毫秒级
             return (long)((DateTime.Now.ToUniversalTime() - JanFirst1970).TotalMilliseconds + 0.5);
         }
 
