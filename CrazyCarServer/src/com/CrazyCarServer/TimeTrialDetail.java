@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+
 /**
- * Servlet implementation class Avatar
+ * Servlet implementation class TimeTrialDetail
  */
-@WebServlet("/Avatar")
-public class Avatar extends HttpServlet {
+@WebServlet("/TimeTrialDetail")
+public class TimeTrialDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Avatar() {
+    public TimeTrialDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
-
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,63 +35,52 @@ public class Avatar extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		System.out.println("Avatar ...");
-	    int userId = 0;
+		System.out.println("TimeTrialDetail ...");
 		String token = request.getHeader("Authorization");
 		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
-		} else{
-			userId = Util.JWT.getJWTId(token);
-		}			
+		}		
 	
 		PrintWriter out = response.getWriter();	
 		
         JSONObject jsonObject = new JSONObject();
-		jsonObject.put("code", 200);
-		
-        JSONObject jbData = new JSONObject();        
-        jbData.put("current_aid", GetCurAid(userId));
+		jsonObject.put("code", 200);		
         
 		JSONArray jsonArray = new JSONArray();
-		List<Integer> allAid = GetAllAvatarID();
-		for (int i = 0; i < allAid.size(); i++){
+		List<Integer> allCid = GetAllClassID();
+		for (int i = 0; i < allCid.size(); i++){
 			JSONObject jbItem = new JSONObject();
-			jbItem.put("is_has", IshasAvatar(allAid.get(i), userId));
-			jbItem.put("aid", allAid.get(i));
-			jbItem.put("name", GetAvatarName(allAid.get(i)));
+			jbItem.put("cid", allCid.get(i));
+			jbItem.put("map_id", GetIntData(allCid.get(i), "map_id"));
+			jbItem.put("difficulty", GetIntData(allCid.get(i), "difficulty"));
+			jbItem.put("limit_time", GetIntData(allCid.get(i), "limit_time"));
+			jbItem.put("name", GetClassName(allCid.get(i)));
 			jsonArray.add(jbItem);
 		}		
-		jbData.put("avatars", jsonArray);
-		jsonObject.put("data", jbData);
+		jsonObject.put("data", jsonArray);
 		
         //jsonArray.add(jsonObject);
 	    //String jsonOutput = jsonArray.toJSONString();
 		out.println(jsonObject.toString());	
 		out.flush();
 		out.close();
-	}	
-	
-	private int GetCurAid(int uid) {
-		String sql = "select aid from all_user where user_id = "
-				+  uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid");
 	}
 	
-	private List<Integer> GetAllAvatarID(){
-		String sql = "select aid from avatar_name;";
-		return Util.JDBC.ExecuteSelectAllInt(sql, "aid");
+	private List<Integer> GetAllClassID(){
+		String sql = "select cid from time_trial_class;";
+		return Util.JDBC.ExecuteSelectAllInt(sql, "cid");
 	}
 	
-	private boolean IshasAvatar(int aid, int uid){
-		String sql = "select aid from avatar_index where aid = "
-				+  aid + " and " + " user_id = " + uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid") != -1;
+	private int GetIntData(int cid, String key) {
+		String sql = "select " + key + " from time_trial_class where cid = "
+				+  cid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, key);
 	}
 	
-	private String GetAvatarName(int aid){
-		String sql = "select avatar_name from avatar_name where aid = " + aid + ";";
-		return Util.JDBC.ExecuteSelectString(sql, "avatar_name");
+	private String GetClassName(int cid){
+		String sql = "select class_name from time_trial_class where cid = " + cid + ";";
+		return Util.JDBC.ExecuteSelectString(sql, "class_name");
 	}
 
 	/**

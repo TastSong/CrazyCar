@@ -1425,6 +1425,7 @@ GameObject:
   - component: {fileID: 7912388533651222819}
   - component: {fileID: 5766700096314825881}
   - component: {fileID: 1994840595913760808}
+  - component: {fileID: 8396784698853745932}
   m_Layer: 0
   m_Name: Level Button
   m_TagString: Untagged
@@ -1627,3 +1628,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8396784698853745932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8909915717471460733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ce9827ea5b99945960eae53c2be393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfBtn: {fileID: 7912388533651222819}
+  nameText: {fileID: 4960641804776715784}
+  limiteText: {fileID: 0}
+  difficultyImages: []
+  difficultySprites: []

@@ -130,70 +130,25 @@ select * from ab_resource;
 select r_hash from ab_resource where r_name = "avatar";
 
 /*time trail class*/
-CREATE TABLE IF NOT EXISTS `time_trail_class`(
-   `id` INT UNSIGNED AUTO_INCREMENT,
-   `aid` INT NOT NULL,
-   `avatar_name` VARCHAR(40) NOT NULL,
-   PRIMARY KEY ( `id` )
+CREATE TABLE IF NOT EXISTS `time_trial_class`(
+   `cid` INT NOT NULL,
+   `difficulty` INT NOT NULL,
+   `map_id` INT NOT NULL,
+   `limit_time` INT NOT NULL,
+   `class_name` VARCHAR(40) NOT NULL,
+   PRIMARY KEY ( `cid` )
    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO avatar_name ( aid, avatar_name )
+INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   VALUES
-				   ( 0, "Tast" );
-INSERT INTO avatar_name ( aid, avatar_name )
+				   ( 0, 2, 0, 60, "Test0" );
+INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   VALUES
-				   ( 1, "Black 1" );
-INSERT INTO avatar_name ( aid, avatar_name )
+				   ( 1, 1, 0, 70, "Test1" );
+INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   VALUES
-				   ( 2, "Write 2" );
-INSERT INTO avatar_name ( aid, avatar_name )
+				   ( 2, 3, 0, 80, "Test2" );
+INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   VALUES
-				   ( 3, "Write 3" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 4, "Write 4" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 5, "Write 5" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 6, "Avatar6" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 7, "Avatar7" );   
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 8, "Avatar8" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   ( 9, "Avatar9" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (10, "Avatar10" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (11, "Avatar11" );   
- INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (12, "Avatar12" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (13, "Avatar13" );                
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (14, "Avatar14" );             
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (15, "Avatar15" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (16, "Avatar160" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (17, "Avatar17" );   
- INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (18, "Avatar18" );
-INSERT INTO avatar_name ( aid, avatar_name )
-				   VALUES
-				   (19, "Avatar19" );                                     
-select * from avatar_name;
+				   ( 3, 2, 0, 90, "Test3" );                                 
+select * from time_trial_class;
+select cid from time_trial_class;
