@@ -36,13 +36,13 @@ public class TimeTrailUI : MonoBehaviour{
 
         StartCoroutine(CountdownCor(countDownTime, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
-            Debug.LogError("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
+            Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
         }, countDownText));
 
         limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime, 
             () => {
                 GameController.manager.timeTrialManager.IsArriveLimitTime = true;
-                Debug.LogError("++++++ 限制时间到 可以结算");
+                Debug.Log("++++++ arrive limit time ");
             }, limitTimeText));
 
         endTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrailMsg>((m) => { EndGame(); });

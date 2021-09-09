@@ -7,7 +7,7 @@ using UnityEngine;
 using Utils;
 
 public enum UIPageType {
-    HomePageUI = 0,
+    HomepageUI = 0,
     AvatarUI,
     TimeTrialIndexUI
 }
@@ -96,17 +96,17 @@ public class UIManager : MonoBehaviour {
     public bool IsHomePage() {
         bool isHomePage = true;
         pagesDict.ToList().ForEach(delegate (KeyValuePair<UIPageType, GameObject> pair) {
-            if (pair.Value != null && pair.Key != UIPageType.HomePageUI && pair.Value.activeSelf) {
+            if (pair.Value != null && pair.Key != UIPageType.HomepageUI && pair.Value.activeSelf) {
                 isHomePage = false;
             }
         });
-        return isHomePage && pagesDict[UIPageType.HomePageUI] != null;
+        return isHomePage && pagesDict[UIPageType.HomepageUI] != null;
     }
 
     // 查找Resources中的路径
     private string GetPageUrlByType(UIPageType type) {
         if (!urlDict.ContainsKey(type.ToString())) {
-            Debug.LogError("Error type");
+            Debug.LogError("Error type = " + type.ToString());
             return "";
         }
 

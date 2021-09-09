@@ -157,7 +157,7 @@ public class ResourceManager {
         success?.Invoke();
     }
 
-    public Sprite GetAvatarResource(string id) {
+    public Sprite GetAvatarResource(int id) {
         Sprite resultSprite;
         try {
 #if !UNITY_EDITOR
@@ -168,7 +168,7 @@ public class ResourceManager {
             }
 #else
             resultSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(
-                "Assets/AB/Avatar/" + id + ".png");
+                "Assets/AB/Avatar/" + id.ToString() + ".png");
 
 #endif
             return resultSprite;

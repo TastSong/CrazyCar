@@ -30,7 +30,7 @@ public class AvatarUI : MonoBehaviour {
     }
 
     private void UpdataUI() {
-        curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid.ToString()); 
+        curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid); 
         curAvatarName.text = GameController.manager.avatarManager.avatarDic[GameController.manager.avatarManager.curAid].name;
         Util.DeleteChildren(avatarItemParent);
         foreach (var kvp in GameController.manager.avatarManager.avatarDic) {
@@ -64,7 +64,7 @@ public class AvatarUI : MonoBehaviour {
         });
 
         avatarToken = GameController.manager.tinyMsgHub.Subscribe<AvatarUIMessage>((data) => {
-            curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(data.aid.ToString());
+            curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(data.aid);
             curAvatarName.text = GameController.manager.avatarManager.avatarDic[data.aid].name;
             curAid = data.aid;
         });

@@ -12,8 +12,9 @@ public class TimeTrialInfo {
     public int limitTime;
 }
 
-public class TimeTrialResultInfo {
+public class TimeTrialRankInfo {
     public string name;
+    public int aid;
     public int rank;
     public int completeTime;
 }
@@ -24,13 +25,15 @@ public class TimeTrialManager {
     public int rank;
     public Dictionary<int, TimeTrialInfo> timeTrialDic = new Dictionary<int, TimeTrialInfo>();
     public TimeTrialInfo selectInfo = new TimeTrialInfo();
-    public List<TimeTrialResultInfo> timeTrialResult = new List<TimeTrialResultInfo>(); 
+    public List<TimeTrialRankInfo> timeTrialRankList = new List<TimeTrialRankInfo>();
+    public bool isComplete = false;
+    public int completeTime;
 
     private bool isInit = false;
     private long startTime;
     private long endTime;
-    private bool isComplete = false;
     private bool isArriveLimitTime = false;
+
 
     public void CreateTestData() {
         selectInfo.limitTime = 60;
@@ -90,14 +93,12 @@ public class TimeTrialManager {
         }
     }
 
-    public int CompleteTime {
-        get {
-            if (isComplete) {
-                return (int)(endTime - startTime);
-            } else {
-                return -1;
-            }
-        }
+    public int GetCompleteTime() {
+        if (isComplete) {
+            return (int)(endTime - startTime);
+        } else {
+            return -1;
+        }   
     }
 
     public void CleanData() {
@@ -109,14 +110,35 @@ public class TimeTrialManager {
     }
 
     public void ParseClassData(JsonData jsonData, Util.NoneParamFunction success = null) {
-
+        for (int i = 0; i < jsonData.Count; i++) {
+            TimeTrialInfo info = new TimeTrialInfo();
+            info.cid = (int)jsonData[i]["cid"];
+            info.name = (string)jsonData[i]["name"];
+            info.difficulty = (int)jsonData[i]["difficulty"];
+            info.mapId = (int)jsonData[i]["map_id"];
+            info.limitTime = (int)jsonData[i]["limit_time"];
+            timeTrialDic[info.cid] = info;
+        }
+        success?.Invoke();
     }
 
     public void ParseReslut(JsonData jsonData, Util.NoneParamFunction success = null) {
-
+        isWin = (bool)jsonData["is_win"];
+        completeTime = (int)jsonData["complete_time"];
+        rank = (int)jsonData["rank"];
+        isBreakRecord = (bool)jsonData["is_break_record"];
+        success?.Invoke();
     }
 
     public void ParseRank(JsonData jsonData, Util.NoneParamFunction success = null) {
-
+        for (int i = 0; i < jsonData.Count; i++) {
+            TimeTrialRankInfo info = new TimeTrialRankInfo();
+            info.name = (string)jsonData[i]["name"];
+            info.aid = (int)jsonData[i]["aid"];
+            info.completeTime = (int)jsonData[i]["complete_time"];
+            info.rank = (int)jsonData[i]["rank"];
+            timeTrialRankList.Add(info);
+        }
+        success?.Invoke();
     }
 }

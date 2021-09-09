@@ -25,6 +25,9 @@ namespace Utils {
         public static string avatarUrl = "Avatar";
         public static string changeAvatarUrl = "ChangeAvatar";
         public static string resourceUrl = "Resource";
+        public static string timeTrailDetailUrl = "TimeTrailDetailUrl";
+        public static string timeTrailResultUrl = "TimeTrailResultUrl";
+        public static string timeTrailRankUrl = "TimeTrailRankUrl";
     }
 
     public static class PrefKeys {

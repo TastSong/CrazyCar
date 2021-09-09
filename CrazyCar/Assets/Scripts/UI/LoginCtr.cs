@@ -33,6 +33,7 @@ public class LoginCtr : MonoBehaviour
     }
 
     private void OnDestroy() {
+        GameController.manager.tinyMsgHub.Unsubscribe(loginToken);
         GameController.manager.tinyMsgHub.Unsubscribe(registerToken);
         GameController.manager.tinyMsgHub.Unsubscribe(downloadResToken);
     }

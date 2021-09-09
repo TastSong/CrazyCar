@@ -55,7 +55,7 @@ public class TimeTrailPlayer : MonoBehaviour {
         if (other.tag == "EndSign") {
             GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
             Debug.LogError("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
-            Debug.LogError("++++++可以结算 CompleteTime =  " + GameController.manager.timeTrialManager.CompleteTime);
+            Debug.LogError("++++++可以结算 CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
         }
     }
 }
