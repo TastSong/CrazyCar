@@ -54,8 +54,8 @@ public class TimeTrialPlayer : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "EndSign") {
             GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
-            Debug.LogError("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
-            Debug.LogError("++++++可以结算 CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+            Debug.Log("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
+            Debug.Log("++++++CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
         }
     }
 }

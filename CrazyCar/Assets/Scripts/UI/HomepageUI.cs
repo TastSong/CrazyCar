@@ -18,7 +18,7 @@ public class HomepageUI : MonoBehaviour {
         });
 
         joinGameBtn.onClick.AddListener(() => {
-            UIManager.instance.ShowPage(UIPageType.TimeTrialIndexUI);
+            UIManager.instance.ShowPage(UIPageType.TimeTrialDetailUI);
         });
 
         UpdataUI();

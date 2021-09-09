@@ -335,14 +335,13 @@ namespace Utils {
             request.SetRequestHeader("Content-Type", "application/json");
             request.SetRequestHeader("Accept", "application/json");
             if (!string.IsNullOrEmpty(token)) {
-                Debug.Log("+++ token " + token);
                 request.SetRequestHeader("Authorization", token);
             }
 
             yield return request.SendWebRequest();
 
             if (request.isNetworkError || request.isHttpError) {
-                Debug.LogError("Is Network Error");
+                Debug.LogError("Is Network Error url = " + url);
             } else {
                 byte[] results = request.downloadHandler.data;
                 string s = Encoding.UTF8.GetString(results);

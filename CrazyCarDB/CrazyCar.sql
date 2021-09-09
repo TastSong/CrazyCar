@@ -39,6 +39,18 @@ INSERT INTO avatar_index ( aid, user_id )
 INSERT INTO avatar_index ( aid, user_id )
 				   VALUES
 				   ( 8, 1 );     
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 16, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 17, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 18, 1 );
+INSERT INTO avatar_index ( aid, user_id )
+				   VALUES
+				   ( 19, 1 );                      
 select aid from avatar_index where aid = 0 and user_id = 1;
 select * from avatar_index;  
  
@@ -51,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `avatar_name`(
    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
-				   ( 0, "Tast" );
+				   ( 0, "Tast 0" );
 INSERT INTO avatar_name ( aid, avatar_name )
 				   VALUES
 				   ( 1, "Black 1" );
@@ -153,7 +165,6 @@ INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 select * from time_trial_class;
 select cid from time_trial_class;
 
-
 CREATE TABLE IF NOT EXISTS `test`(
    `id` INT UNSIGNED AUTO_INCREMENT,
    `score` INT NOT NULL,
@@ -188,6 +199,61 @@ FROM
         ORDER BY score DESC
     ) AS ta,
     (SELECT @rownum  := 0) r;
+ 
+ 
+/*time_trial_record*/
+CREATE TABLE IF NOT EXISTS `time_trial_record`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+	`uid` INT NOT NULL,
+    `cid` INT NOT NULL,
+    `complete_time` INT NOT NULL,
+    `record_time` INT NOT NULL,
+   PRIMARY KEY ( `id` )
+   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO time_trial_record ( uid, cid, complete_time, record_time)
+				   VALUES
+				   ( 1, 0, 22, 1629544628 );
+INSERT INTO time_trial_record ( uid, cid, complete_time, record_time)
+				   VALUES
+				   ( 1, 0, 14, 1629544644 );
+INSERT INTO time_trial_record ( uid, cid, complete_time, record_time)
+				   VALUES
+				   ( 2, 0, 15, 1629544644 );         
+select * from time_trial_record;
+SELECT
+	ta.*, @rownum  := @rownum  + 1 AS rownum 
+FROM
+	(
+		SELECT uid, complete_time
+		FROM time_trial_record
+        where uid = 1
+		ORDER BY complete_time ASC
+	) AS ta,
+	(SELECT @rownum  := 0) r;
+                   
+SELECT complete_time from (
+	SELECT
+		record.*, @rownum  := @rownum  + 1 AS rownum 
+	FROM
+		(
+			SELECT uid, complete_time
+			FROM time_trial_record
+             where uid = 1 and cid = 0
+			ORDER BY complete_time ASC
+		) AS record,
+		(SELECT @rownum  := 0) r
+) AS history_rank  where rownum = 1 and complete_time != -1;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

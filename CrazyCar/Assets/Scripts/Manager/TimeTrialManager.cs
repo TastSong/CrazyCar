@@ -52,8 +52,8 @@ public class TimeTrialManager {
 
         set {
             isComplete = true;
-            GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
             endTime = value;
+            GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
         }
     }
 
@@ -63,10 +63,10 @@ public class TimeTrialManager {
         }
 
         set {
+            isArriveLimitTime = value;
             if (value) {
                 GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
             }
-            isArriveLimitTime = value;
         }
     }
 

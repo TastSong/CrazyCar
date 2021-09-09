@@ -32,16 +32,17 @@ public class TimeTrialUI : MonoBehaviour{
             timeTrialPlayer.MoveRight();
         });
 
+        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString();
+
         StartCoroutine(CountdownCor(countDownTime, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
             Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
+            limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
+                () => {
+                    GameController.manager.timeTrialManager.IsArriveLimitTime = true;
+                    Debug.Log("++++++ arrive limit time ");
+                }, limitTimeText));
         }, countDownText));
-
-        limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime, 
-            () => {
-                GameController.manager.timeTrialManager.IsArriveLimitTime = true;
-                Debug.Log("++++++ arrive limit time ");
-            }, limitTimeText));
 
         endTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { EndGame(); });
     }
