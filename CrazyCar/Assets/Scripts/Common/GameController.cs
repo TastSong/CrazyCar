@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public static GameController manager = null;
     public bool sceneLoaded = false;
     public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
+    public GameHelper gameHelper;
     public WarningAlert warningAlert;
     public string token;
     public UserInfo userInfo = new UserInfo();
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour
     }
 
     private void Start() {
+        gameHelper.gameObject.SetActiveFast(false);
         warningAlert.gameObject.SetActiveFast(false);
     }
 }

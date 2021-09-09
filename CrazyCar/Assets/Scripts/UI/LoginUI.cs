@@ -42,6 +42,9 @@ public class LoginUI : MonoBehaviour {
                 }, code : (code) => {
                     if (code == 200) {
                         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+                            if (userNameInput.text.ToLower() == "tast") {
+                                GameController.manager.gameHelper.gameObject.SetActiveFast(true);
+                            }
                             GameController.manager.warningAlert.Show(text: "登录成功", callback: () => {
                                 PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
                                 PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
