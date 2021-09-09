@@ -31,8 +31,6 @@ public class TimeTrialUI : MonoBehaviour{
         rightBtn.SetClickDown(() => {
             timeTrialPlayer.MoveRight();
         });
-        // 创建测试数据
-        GameController.manager.timeTrialManager.CreateTestData();
 
         StartCoroutine(CountdownCor(countDownTime, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;

@@ -34,11 +34,6 @@ public class TimeTrialManager {
     private long endTime;
     private bool isArriveLimitTime = false;
 
-
-    public void CreateTestData() {
-        selectInfo.limitTime = 60;
-    }
-
     public long StartTime {
         get {
             return startTime;

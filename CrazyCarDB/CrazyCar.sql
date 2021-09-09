@@ -152,3 +152,52 @@ INSERT INTO time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   ( 3, 2, 0, 90, "Test3" );                                 
 select * from time_trial_class;
 select cid from time_trial_class;
+
+
+CREATE TABLE IF NOT EXISTS `test`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `score` INT NOT NULL,
+   `uid` INT NOT NULL,
+   PRIMARY KEY ( `id` )
+   )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 10, 1 );
+INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 9, 2 );
+INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 15, 7 );
+INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 9, 4 );
+INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 14, 8 );
+ INSERT INTO test ( score, uid)
+				   VALUES
+				   ( 12, 8 );                  
+select min(score), uid from test where uid = 8;
+SELECT
+    ta.*, @rownum  := @rownum  + 1 AS rownum 
+FROM
+    (
+        SELECT uid, score
+        FROM test
+        ORDER BY score DESC
+    ) AS ta,
+    (SELECT @rownum  := 0) r;
+
+
+
+
+
+
+
+
+
+
+
+
+

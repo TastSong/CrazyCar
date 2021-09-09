@@ -21,10 +21,11 @@ public class TimeTrialItem : MonoBehaviour {
     }
 
     public void SetContent(TimeTrialInfo info) {
-        nameText.text = info.name;
-        //limiteText.text = info.limitTime.ToString();
+        timeTrialInfo = info;
+        nameText.text = timeTrialInfo.name;
+        //limiteText.text = timeTrialInfo.limitTime.ToString();
         //for (int i = 0; i < difficultyImages.Length; i++) {
-        //    if (i < info.difficulty) {
+        //    if (i < timeTrialInfo.difficulty) {
         //        difficultyImages[i].sprite = difficultySprites[0];
         //    } else {
         //        difficultyImages[i].sprite = difficultySprites[1];
