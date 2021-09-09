@@ -5,31 +5,31 @@ using Utils;
 using TinyMessenger;
 
 public class GameUIControl : MonoBehaviour{
-    public TimeTrailUI timeTrailUI;
-    public TimeTrailResultUI timeTrailResultUI;
+    public TimeTrialUI timeTrialUI;
+    public TimeTrialResultUI timeTrialResultUI;
 
     private TinyMessageSubscriptionToken initGameUIMsg;
-    private TinyMessageSubscriptionToken completeTimeTrailMsg;
+    private TinyMessageSubscriptionToken completeTimeTrialMsg;
 
     private void Start() {
-        timeTrailUI.gameObject.SetActiveFast(false);
-        timeTrailResultUI.gameObject.SetActiveFast(false);
+        timeTrialUI.gameObject.SetActiveFast(false);
+        timeTrialResultUI.gameObject.SetActiveFast(false);
         initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { InitUI(); });
-        completeTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrailMsg>((m) => { ShowTimeTrailResult(); });
+        completeTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { ShowTimeTrialResult(); });
     }
 
     private void InitUI() {
-        timeTrailUI.gameObject.SetActiveFast(true);
-        timeTrailResultUI.gameObject.SetActiveFast(false);
+        timeTrialUI.gameObject.SetActiveFast(true);
+        timeTrialResultUI.gameObject.SetActiveFast(false);
     }
 
-    private void ShowTimeTrailResult() {
-        timeTrailUI.gameObject.SetActiveFast(false);
-        timeTrailResultUI.gameObject.SetActiveFast(true);
+    private void ShowTimeTrialResult() {
+        timeTrialUI.gameObject.SetActiveFast(false);
+        timeTrialResultUI.gameObject.SetActiveFast(true);
     }
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(initGameUIMsg);
-        GameController.manager.tinyMsgHub.Unsubscribe(completeTimeTrailMsg);
+        GameController.manager.tinyMsgHub.Unsubscribe(completeTimeTrialMsg);
     }
 }

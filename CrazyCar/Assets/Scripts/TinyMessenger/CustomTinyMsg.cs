@@ -20,7 +20,7 @@ public class InitGameUIMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class CompleteTimeTrailMsg : ITinyMessage {
+public class CompleteTimeTrialMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 

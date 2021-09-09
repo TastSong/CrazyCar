@@ -5,31 +5,31 @@ using UnityEngine.UI;
 using Utils;
 using TinyMessenger;
 
-public class TimeTrailUI : MonoBehaviour{
+public class TimeTrialUI : MonoBehaviour{
     public Text countDownText;
     public Text limitTimeText;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
     public GameCtrBtn leftBtn;
     public GameCtrBtn rightBtn;
-    public TimeTrailPlayer timeTrailPlayer;
+    public TimeTrialPlayer timeTrialPlayer;
 
     private int countDownTime = 3;
     private Coroutine limitTimeCor;
-    private TinyMessageSubscriptionToken endTimeTrailMsg;
+    private TinyMessageSubscriptionToken endTimeTrialMsg;
 
     private void Start() {
         frontBtn.SetClickDown(() => {
-            timeTrailPlayer.MoveFront();
+            timeTrialPlayer.MoveFront();
         });
         backBtn.SetClickDown(() => {
-            timeTrailPlayer.MoveBack();
+            timeTrialPlayer.MoveBack();
         });
         leftBtn.SetClickDown(() => {
-            timeTrailPlayer.MoveLeft();
+            timeTrialPlayer.MoveLeft();
         });
         rightBtn.SetClickDown(() => {
-            timeTrailPlayer.MoveRight();
+            timeTrialPlayer.MoveRight();
         });
         // 创建测试数据
         GameController.manager.timeTrialManager.CreateTestData();
@@ -45,7 +45,7 @@ public class TimeTrailUI : MonoBehaviour{
                 Debug.Log("++++++ arrive limit time ");
             }, limitTimeText));
 
-        endTimeTrailMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrailMsg>((m) => { EndGame(); });
+        endTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { EndGame(); });
     }
 
     private void EndGame() {
@@ -72,6 +72,6 @@ public class TimeTrailUI : MonoBehaviour{
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(endTimeTrailMsg);
+        GameController.manager.tinyMsgHub.Unsubscribe(endTimeTrialMsg);
     }
 }

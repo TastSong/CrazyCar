@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class TimeTrailItem : MonoBehaviour {
+public class TimeTrialItem : MonoBehaviour {
     public Button selfBtn;
     public Text nameText;
     public Text limiteText;

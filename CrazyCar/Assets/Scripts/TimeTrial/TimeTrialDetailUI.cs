@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class TimeTrailDetailUI : MonoBehaviour {
-    public TimeTrailItem timeTrailItem;
+public class TimeTrialDetailUI : MonoBehaviour {
+    public TimeTrialItem timeTrialItem;
     public Transform itemParent;
     public Button closeBtn;
 
     private void OnEnable() {
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrailDetailUrl,
+        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
            token: GameController.manager.token,
            fatchData: (data) => {
                GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
@@ -20,7 +20,7 @@ public class TimeTrailDetailUI : MonoBehaviour {
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
         foreach (var kvp in GameController.manager.timeTrialManager.timeTrialDic) {
-            TimeTrailItem item = Instantiate(timeTrailItem);
+            TimeTrialItem item = Instantiate(timeTrialItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);
         }

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class TimeTrailResultUI : MonoBehaviour {
+public class TimeTrialResultUI : MonoBehaviour {
     public Image avatarImage;
     public Text nameText;
     public Image victoryImage;
@@ -17,10 +17,10 @@ public class TimeTrailResultUI : MonoBehaviour {
     public Text rankText;
     public Button rankBtn;
     public Button confirmBtn;
-    public TimeTrailRankUI timeTrailRankUI;
+    public TimeTrialRankUI timeTrialRankUI;
 
     private void OnEnable() {
-        timeTrailRankUI.gameObject.SetActiveFast(false);
+        timeTrialRankUI.gameObject.SetActiveFast(false);
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -33,7 +33,7 @@ public class TimeTrailResultUI : MonoBehaviour {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrailDetailUrl,
+        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialResultUrl,
             data : bytes,
             token: GameController.manager.token,
             fatchData: (data) => {
@@ -57,7 +57,7 @@ public class TimeTrailResultUI : MonoBehaviour {
         });
 
         rankBtn.onClick.AddListener(() => {
-            timeTrailRankUI.gameObject.SetActiveFast(true);
+            timeTrialRankUI.gameObject.SetActiveFast(true);
         });
     }
 }

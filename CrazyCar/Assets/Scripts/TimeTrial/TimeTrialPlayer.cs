@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
-public class TimeTrailPlayer : MonoBehaviour {
+public class TimeTrialPlayer : MonoBehaviour {
     public float speed = 1;
 
     private Rigidbody rig;
