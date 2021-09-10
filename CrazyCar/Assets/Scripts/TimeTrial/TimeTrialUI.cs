@@ -18,6 +18,22 @@ public class TimeTrialUI : MonoBehaviour{
     private Coroutine limitTimeCor;
     private TinyMessageSubscriptionToken endTimeTrialMsg;
 
+    private void OnEnable() {
+        if (!GameController.manager.sceneLoaded) {
+            return;
+        }
+
+        StartCoroutine(CountdownCor(countDownTime, () => {
+            GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
+            Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
+            limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
+                () => {
+                    GameController.manager.timeTrialManager.IsArriveLimitTime = true;
+                    Debug.Log("++++++ arrive limit time ");
+                }, limitTimeText));
+        }, countDownText));
+    }
+
     private void Start() {
         frontBtn.SetClickDown(() => {
             timeTrialPlayer.MoveFront();
@@ -32,17 +48,7 @@ public class TimeTrialUI : MonoBehaviour{
             timeTrialPlayer.MoveRight();
         });
 
-        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString();
-
-        StartCoroutine(CountdownCor(countDownTime, () => {
-            GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
-            Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
-            limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
-                () => {
-                    GameController.manager.timeTrialManager.IsArriveLimitTime = true;
-                    Debug.Log("++++++ arrive limit time ");
-                }, limitTimeText));
-        }, countDownText));
+        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 
 
         endTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { EndGame(); });
     }

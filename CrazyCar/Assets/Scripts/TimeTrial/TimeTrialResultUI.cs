@@ -37,7 +37,7 @@ public class TimeTrialResultUI : MonoBehaviour {
             data : bytes,
             token: GameController.manager.token,
             fatchData: (data) => {
-                GameController.manager.timeTrialManager.ParseReslut(data, UpdateUI);
+                GameController.manager.timeTrialManager.ParseResult(data, UpdateUI);
          }));
     }
 

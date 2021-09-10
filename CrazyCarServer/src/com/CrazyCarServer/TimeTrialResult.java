@@ -64,7 +64,7 @@ public class TimeTrialResult extends HttpServlet {
 			dataJB.put("is_break_record", isBreakRecord);
 			InsertData(uid, cid, completeTime);
 			if (isBreakRecord){
-				dataJB.put("rank", 2);
+				dataJB.put("rank", GetSelfRank(uid, cid, "rank_num"));
 			} else {
 				dataJB.put("rank", -1);
 			}
@@ -102,6 +102,20 @@ public class TimeTrialResult extends HttpServlet {
 	private int GetClassData(int cid, String key) {
 		String sql = "select " + key + " from time_trial_class where cid = "
 				+  cid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, key);
+	}
+	
+	private int GetSelfRank(int uid,int cid, String key) {
+		String sql = "drop table if exists time_trial_rank_" + cid +";";
+		Util.JDBC.ExecuteInsert(sql);
+		sql = "create table  time_trial_rank_" + cid +" as select * from "
+				+ " (select user_rank.*, @rank_num  := @rank_num  + 1 "
+				+ "as rank_num from ( select * from (select uid, min(complete_time) "
+				+ "as complete_time from time_trial_record where cid =  " + cid + " and "
+				+ "complete_time != -1  group by uid) "
+				+ "as min_time order by complete_time asc ) as user_rank, (select @rank_num:= 0) r)  as all_user_rank;";
+		Util.JDBC.ExecuteInsert(sql);
+		sql = "select rank_num from time_trial_rank_" + cid +" where uid = " + uid + ";";
 		return Util.JDBC.ExecuteSelectInt(sql, key);
 	}
 

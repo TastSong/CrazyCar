@@ -12,6 +12,15 @@ create table if not exists `all_user`(
 insert into all_user ( user_id, user_name, user_password, login_time, aid )
                        values
 					   (1, "Tast", "111111", 1629544628, 0);
+insert into all_user ( user_id, user_name, user_password, login_time, aid )
+                       values
+					   (2, "asd", "111111", 1629544634, 1);
+insert into all_user ( user_id, user_name, user_password, login_time, aid )
+                       values
+					   (3, "qwe", "111111", 1629544655, 2);        
+insert into all_user ( user_id, user_name, user_password, login_time, aid )
+                       values
+					   (4, "Lory", "111111", 1629544666, 3);                       
 select* from all_user;
 
 select user_password 
@@ -236,25 +245,15 @@ from
 				order by complete_time asc
 		) as record,
 		(select @rownum:= 0) r
-) as history_rank
-where rownum = 1 and complete_time != -1;
-
-select* from time_trial_record;
-
-select uid, min(complete_time) as complete_time
- from
-	 time_trial_record
-	 where cid = 0 and complete_time != -1 
-	 group by uid;
+) as history_rank where rownum = 1 and complete_time != -1;
 
 /*获取记录中的所有人的排名*/
 select
 	user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
 from
 	(
-		select uid, complete_time
+		select *
 		from
-
 		(select uid, min(complete_time) as complete_time
 		from
 			 time_trial_record
@@ -264,37 +263,28 @@ from
 	) as user_rank,
 	(select @rank_num:= 0) r;
 
-/*获取记录中的自己的排名*/
-select rank_num 
-from 
-	(select user_rank.*, @rank_num  := @rank_num + 1 as rank_num
-	from
-		(
-			select uid, complete_time
-			from
-			(select uid, min(complete_time) as complete_time
 
-			from
-				 time_trial_record
-				 where cid = 0 and complete_time != -1
-				 group by uid) as min_time
-			order by complete_time asc
-		) as user_rank )  as all_user_rank
+drop table if exists time_trial_rank_0;
+create table  time_trial_rank_0 as
+select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
+				from
+					(
+						select *
+						from
+						(select uid, min(complete_time) as complete_time
+						from
+							 time_trial_record
+							 where cid = 0 and complete_time != -1 
+							 group by uid) as min_time
+						order by complete_time asc
+					) as user_rank,
+					(select @rank_num:= 0) r)  as all_user_rank;
+select rank_num from time_trial_rank_0 where uid = 1;      
+select count(rank_num) as rank_count from  time_trial_rank_0;
+select * from time_trial_rank_0;
+              
 
-	where uid = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
+select uid from time_trial_rank_0 where rank_num = 4;
 
 
 

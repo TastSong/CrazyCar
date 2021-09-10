@@ -117,7 +117,7 @@ public class TimeTrialManager {
         success?.Invoke();
     }
 
-    public void ParseReslut(JsonData jsonData, Util.NoneParamFunction success = null) {
+    public void ParseResult(JsonData jsonData, Util.NoneParamFunction success = null) {
         isWin = (bool)jsonData["is_win"];
         completeTime = (int)jsonData["complete_time"];
         rank = (int)jsonData["rank"];
