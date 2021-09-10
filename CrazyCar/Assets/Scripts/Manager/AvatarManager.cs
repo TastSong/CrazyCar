@@ -15,6 +15,7 @@ public class AvatarManager {
     public Dictionary<int, AvatarInfo> avatarDic = new Dictionary<int, AvatarInfo>();
 
     public void ParseAvatarRes(JsonData jsonData, Util.NoneParamFunction success = null) {
+        avatarDic.Clear();
         curAid = (int)jsonData["current_aid"];
         JsonData data = jsonData["avatars"];
         for (int i = 0; i < data.Count; i++) {

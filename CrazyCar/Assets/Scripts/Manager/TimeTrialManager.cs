@@ -105,6 +105,7 @@ public class TimeTrialManager {
     }
 
     public void ParseClassData(JsonData jsonData, Util.NoneParamFunction success = null) {
+        timeTrialDic.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialInfo info = new TimeTrialInfo();
             info.cid = (int)jsonData[i]["cid"];
@@ -126,6 +127,7 @@ public class TimeTrialManager {
     }
 
     public void ParseRank(JsonData jsonData, Util.NoneParamFunction success = null) {
+        timeTrialRankList.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialRankInfo info = new TimeTrialRankInfo();
             info.name = (string)jsonData[i]["name"];

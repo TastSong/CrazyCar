@@ -26,6 +26,8 @@ public class AvatarUI : MonoBehaviour {
                 GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
                 curAid = GameController.manager.userInfo.aid;
              }));
+        } else {
+            UpdataUI();
         }
     }
 
