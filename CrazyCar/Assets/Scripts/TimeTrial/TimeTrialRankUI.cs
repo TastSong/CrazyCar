@@ -33,7 +33,7 @@ public class TimeTrialRankUI : MonoBehaviour{
         Util.DeleteChildren(itemParent);
         for (int i = 0; i < GameController.manager.timeTrialManager.timeTrialRankList.Count; i++) {
             TimeTrialRankItem item = Instantiate(timeTrialRankItem);
-            item.transform.SetParent(itemParent);
+            item.transform.SetParent(itemParent, false);
             item.SetContent(GameController.manager.timeTrialManager.timeTrialRankList[i]);
         }
     }
