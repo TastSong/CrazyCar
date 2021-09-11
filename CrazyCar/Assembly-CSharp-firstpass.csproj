@@ -64,6 +64,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Plugins\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Plugins\EasyRoads3D\Scripts\ERVegetationStudio.cs" />
     <Compile Include="Assets\Plugins\EasyRoads3D\Scripts\runtimeScript.cs" />
     <Compile Include="Assets\Plugins\LitJson\IJsonWrapper.cs" />
@@ -82,9 +90,11 @@
     <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Dual Road Blend.shader" />
     <None Include="Assets\Plugins\EasyRoads3D\Release - Install Notes.txt" />
     <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Single Road Blend.shader" />
+    <None Include="Assets\Plugins\SimpleRacer\_FX\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\Plugins\EasyRoads3D\shaders\ER Road Transparency.shader" />
     <None Include="Assets\Plugins\EasyRoads3D\_Readme.txt" />
     <None Include="Assets\Plugins\EasyRoads3D\shaders\EasyRoads3D - Unity 2018 Standard.shader" />
+    <None Include="Assets\Plugins\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\Plugins\EasyRoads3D\prefab sources\_custom prefabs.txt" />
     <None Include="Assets\Plugins\EasyRoads3D\lib\DelaunayER.txt" />
     <Reference Include="UnityEngine">
@@ -275,6 +285,9 @@
     </Reference>
     <Reference Include="EasyRoads3Dv3">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/lib/EasyRoads3Dv3.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Hub/Editor/2019.4.14f1c1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
