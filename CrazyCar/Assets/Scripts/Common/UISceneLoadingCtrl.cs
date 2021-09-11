@@ -44,9 +44,8 @@ public class UISceneLoadingCtrl : MonoBehaviour {
             yield return null;
         }
         // 2019加载完场景并不能直接显示
-        yield return new WaitForSeconds(2.0f);
         Destroy(gameObject);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         GameController.manager.sceneLoaded = true;
         GameController.manager.tinyMsgHub.Publish(new InitGameUIMsg());
     }

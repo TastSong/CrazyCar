@@ -6,7 +6,7 @@ using Utils;
 using TinyMessenger;
 
 public class TimeTrialUI : MonoBehaviour{
-    public Text countDownText;
+    public CountDownAnim countDownAnim;
     public Text limitTimeText;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
@@ -23,7 +23,7 @@ public class TimeTrialUI : MonoBehaviour{
             return;
         }
 
-        StartCoroutine(CountdownCor(countDownTime, () => {
+        countDownAnim.PlayAnim(3, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
             Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
             limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
@@ -31,7 +31,7 @@ public class TimeTrialUI : MonoBehaviour{
                     GameController.manager.timeTrialManager.IsArriveLimitTime = true;
                     Debug.Log("++++++ arrive limit time ");
                 }, limitTimeText));
-        }, countDownText));
+        });       
     }
 
     private void Start() {
