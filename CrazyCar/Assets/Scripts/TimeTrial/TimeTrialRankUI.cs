@@ -24,7 +24,7 @@ public class TimeTrialRankUI : MonoBehaviour{
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialRankUrl,
             data: bytes,
             token: GameController.manager.token,
-            fatchData: (data) => {
+            succData: (data) => {
                 GameController.manager.timeTrialManager.ParseRank(data, UpdateUI);
             }));
     }

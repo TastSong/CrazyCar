@@ -12,7 +12,7 @@ public class TimeTrialDetailUI : MonoBehaviour {
     private void OnEnable() {
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
            token: GameController.manager.token,
-           fatchData: (data) => {
+           succData: (data) => {
                GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
            }));
     }

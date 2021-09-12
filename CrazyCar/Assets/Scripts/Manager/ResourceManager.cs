@@ -49,7 +49,7 @@ public class ResourceManager {
         Debug.Log("CheckCoroutine......");
 
         GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.resourceUrl,
-            fatchData: (data) => {
+            succData: (data) => {
                 Debug.Log(data.ToJson());
                 hashAvatar = (string)data["avatar"]["hash"];
                 CRCAvatar = uint.Parse((string)data["avatar"]["crc"]);

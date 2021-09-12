@@ -22,7 +22,7 @@ public class AvatarUI : MonoBehaviour {
         if (GameController.manager.avatarManager.avatarDic.Count == 0) {
             StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
             token: GameController.manager.token,
-            fatchData: (data) => {
+            succData: (data) => {
                 GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
                 curAid = GameController.manager.userInfo.aid;
              }));
@@ -54,8 +54,13 @@ public class AvatarUI : MonoBehaviour {
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.changeAvatarUrl,
                 data: bytes, token: GameController.manager.token,
-                fatchData: (data) => {
+                succData: (data) => {
                     GameController.manager.userInfo.aid = (int)data["aid"];
+                },
+                code : (code) => { 
+                    if (code == 423) {
+                        GameController.manager.warningAlert.Show("未拥有");
+                    }
                 }));
         });
 

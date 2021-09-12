@@ -326,7 +326,7 @@ namespace Utils {
             }
         }
 #endif
-        public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> fatchData = null, Action<int> code = null) {
+        public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
             UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             if (data != null) {
                 request.uploadHandler = new UploadHandlerRaw(data);
@@ -350,7 +350,7 @@ namespace Utils {
 
                 code?.Invoke((int)d["code"]);
                 if ((int)d["code"] == 200) {
-                    fatchData?.Invoke(d["data"]);
+                    succData?.Invoke(d["data"]);
                 }
             }
         }

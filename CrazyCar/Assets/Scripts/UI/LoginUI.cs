@@ -37,7 +37,7 @@ public class LoginUI : MonoBehaviour {
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
-                data : bytes, fatchData : (data) => {
+                data : bytes, succData : (data) => {
                     GameController.manager.loginManager.ParseLoginData(data);
                 }, code : (code) => {
                     if (code == 200) {

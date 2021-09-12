@@ -45,7 +45,7 @@ public class RegisterUI : MonoBehaviour
             Debug.Log("++++++ " + sb.ToString());
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
-                data : bytes, fatchData : (data) => {
+                data : bytes, succData : (data) => {
                     GameController.manager.loginManager.ParseLoginData(data);
                 }, code : (code) => {
                     if (code == 200) {

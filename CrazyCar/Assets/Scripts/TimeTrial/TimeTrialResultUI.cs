@@ -36,7 +36,7 @@ public class TimeTrialResultUI : MonoBehaviour {
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialResultUrl,
             data : bytes,
             token: GameController.manager.token,
-            fatchData: (data) => {
+            succData: (data) => {
                 GameController.manager.timeTrialManager.ParseResult(data, UpdateUI);
          }));
     }
