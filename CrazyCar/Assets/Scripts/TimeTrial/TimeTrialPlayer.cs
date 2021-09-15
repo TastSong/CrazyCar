@@ -13,10 +13,10 @@ public class TimeTrialPlayer : MonoBehaviour {
 
     [Header("力的大小")]
     public float currentForce;
-    public float normalForce = 80;  //通常状态力
-    public float boostForce = 130;  //加速时力大小
+    public float normalForce = 20;  //通常状态力
+    public float boostForce = 40;  //加速时力大小
     public float jumpForce = 10;    //跳时添加的力    
-    public float gravity = 40;      //在空中时往下加的力
+    public float gravity = 20;      //在空中时往下加的力
 
     //力的方向
     private Vector3 forceDir_Horizontal;
@@ -37,16 +37,15 @@ public class TimeTrialPlayer : MonoBehaviour {
     public Transform frontHitTrans;
     public Transform rearHitTrans;
     public bool isGround;
-    public bool isGroundLastFrame;
     public float groundDistance = 0.7f;//根据车模型自行调节
 
-    //[Header("特效")]
-    //public Transform wheelsParticeleTrans;
-    //public ParticleSystem[] wheelsParticeles;
-    //public TrailRenderer leftTrail;
-    //public TrailRenderer rightTrail;
-    //[Header("漂移颜色有关")]
-    //public Color[] driftColors;
+    [Header("特效")]
+    public Transform wheelsParticeleTrans;
+    public ParticleSystem[] wheelsParticeles;
+    public TrailRenderer leftTrail;
+    public TrailRenderer rightTrail;
+    [Header("漂移颜色有关")]
+    public Color[] driftColors;
     public float driftPower = 0;
 
 
@@ -56,38 +55,26 @@ public class TimeTrialPlayer : MonoBehaviour {
         rotationStream = rig.rotation;
 
         //漂移时车轮下粒子特效
-        //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
+        wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
     }
 
     void Update() {
-        if (Input.GetKey(KeyCode.A)) {
-            MoveLeft();
-        }
-        if (Input.GetKey(KeyCode.D)) {
-            MoveRight();
-        }
-        if (Input.GetKey(KeyCode.W)) {
-            MoveFront();
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            MoveBack();
-        }
         //输入相关
         v_Input = Input.GetAxisRaw("Vertical");     //竖直输入
         h_Input = Input.GetAxisRaw("Horizontal");   //水平输入
 
         //按下空格起跳
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (isGround)   //如果在地上
-            {
-                Jump();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Space)) {
+        //    if (isGround)   //如果在地上
+        //    {
+        //        Jump();
+        //    }
+        //}
 
         //按住空格，并且有水平输入：开始漂移
         if (Input.GetKey(KeyCode.Space) && h_Input != 0) {
             //落地瞬间、不在漂移并且速度大于一定值时开始漂移
-            if (isGround && !isGroundLastFrame && !isDrifting &&
+            if (isGround && !isDrifting &&
                 rig.velocity.sqrMagnitude > 10) {
                 StartDrift();   //开始漂移
             }
@@ -99,30 +86,6 @@ public class TimeTrialPlayer : MonoBehaviour {
                 Boost(boostForce);//加速
                 StopDrift();//停止漂移
             }
-        }
-    }
-
-    public void MoveFront() {
-        if (GameController.manager.timeTrialManager.InGame) {
-            rig.MovePosition(transform.position + new Vector3(0, 0, 1) * speed);
-        }
-    }
-
-    public void MoveBack() {
-        if (GameController.manager.timeTrialManager.InGame) {
-            rig.MovePosition(transform.position + new Vector3(0, 0, -1) * speed);
-        }
-    }
-
-    public void MoveLeft() {
-        if (GameController.manager.timeTrialManager.InGame) {
-            rig.MovePosition(transform.position + new Vector3(-1, 0, 0) * speed);
-        }
-    }
-
-    public void MoveRight() {
-        if (GameController.manager.timeTrialManager.InGame) {
-            rig.MovePosition(transform.position + new Vector3(1, 0, 0) * speed);
         }
     }
 
@@ -140,7 +103,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         //如果在漂移
         if (isDrifting) {
             CalculateDriftingLevel();   //计算漂移等级
-            //ChangeDriftColor();         //根据漂移等级改变颜色
+            ChangeDriftColor();         //根据漂移等级改变颜色
         }
 
         //根据上述情况，进行最终的旋转和加力
@@ -191,7 +154,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         if (hasRearHit) {
             Debug.DrawLine(rearHitTrans.position, rearHitTrans.position - transform.up * groundDistance, Color.red);
         }
-        isGroundLastFrame = isGround;
+
         if (hasFrontHit || hasRearHit)//判断是否在地面
         {
             isGround = true;
@@ -216,7 +179,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         }
 
         if (currentForce <= normalForce) {
-            //DisableTrail();
+            DisableTrail();
         }
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
     }
@@ -274,7 +237,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         }
 
         //播放漂移粒子特效
-        //PlayDriftParticle();
+        PlayDriftParticle();
     }
 
     //计算漂移等级
@@ -297,53 +260,77 @@ public class TimeTrialPlayer : MonoBehaviour {
         driftDirection = DriftDirection.None;
         driftPower = 0;
         m_DriftOffset = Quaternion.identity;
-        //StopDriftParticle();
+        StopDriftParticle();
     }
 
     //加速
     public void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
-        //EnableTrail();
+        EnableTrail();
     }
 
-    ////播放粒子特效
-    //public void PlayDriftParticle() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        tempParticle.Play();
-    //    }
-    //}
+    //播放粒子特效
+    public void PlayDriftParticle() {
+        foreach (var tempParticle in wheelsParticeles) {
+            tempParticle.Play();
+        }
+    }
 
-    ////粒子颜色随漂移等级改变
-    //public void ChangeDriftColor() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        var t = tempParticle.main;
-    //        t.startColor = driftColors[(int)driftLevel];
-    //    }
-    //}
+    //粒子颜色随漂移等级改变
+    public void ChangeDriftColor() {
+        foreach (var tempParticle in wheelsParticeles) {
+            var t = tempParticle.main;
+            t.startColor = driftColors[(int)driftLevel];
+        }
+    }
 
-    ////停止播放粒子特效
-    //public void StopDriftParticle() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        tempParticle.Stop();
-    //    }
-    //}
+    //停止播放粒子特效
+    public void StopDriftParticle() {
+        foreach (var tempParticle in wheelsParticeles) {
+            tempParticle.Stop();
+        }
+    }
 
-    //public void EnableTrail() {
-    //    leftTrail.enabled = true;
-    //    rightTrail.enabled = true;
-    //}
+    public void EnableTrail() {
+        leftTrail.enabled = true;
+        rightTrail.enabled = true;
+    }
 
-    //public void DisableTrail() {
-    //    leftTrail.enabled = false;
-    //    rightTrail.enabled = false;
-    //}
+    public void DisableTrail() {
+        leftTrail.enabled = false;
+        rightTrail.enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "EndSign") {
             GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
             Debug.Log("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
             Debug.Log("++++++CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+        }
+    }
+
+    public void MoveFront() {
+        if (GameController.manager.timeTrialManager.InGame) {
+            rig.MovePosition(transform.position + new Vector3(0, 0, 1) * speed);
+        }
+    }
+
+    public void MoveBack() {
+        if (GameController.manager.timeTrialManager.InGame) {
+            rig.MovePosition(transform.position + new Vector3(0, 0, -1) * speed);
+        }
+    }
+
+    public void MoveLeft() {
+        if (GameController.manager.timeTrialManager.InGame) {
+            rig.MovePosition(transform.position + new Vector3(-1, 0, 0) * speed);
+        }
+    }
+
+    public void MoveRight() {
+        if (GameController.manager.timeTrialManager.InGame) {
+            rig.MovePosition(transform.position + new Vector3(1, 0, 0) * speed);
         }
     }
 }
