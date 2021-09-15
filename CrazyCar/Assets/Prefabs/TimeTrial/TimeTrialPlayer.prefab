@@ -88,7 +88,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3226108444913310419}
-  - component: {fileID: 3226108444913594262}
   - component: {fileID: 3226108444910514551}
   - component: {fileID: 3226108444913594260}
   - component: {fileID: 3226108444911585939}
@@ -119,35 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3226108444913594262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226108444913594267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 954ff3cc882582840984093717ff36fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kartRigidbody: {fileID: 3226108444913594266}
-  currentForce: 0
-  normalForce: 80
-  boostForce: 130
-  jumpForce: 10
-  gravity: 40
-  isDrifting: 0
-  driftDirection: 0
-  rotationStream: {x: 0, y: 0, z: 0, w: 0}
-  turnSpeed: 60
-  driftLevel: 0
-  frontHitTrans: {fileID: 3226108444913311805}
-  rearHitTrans: {fileID: 3226108444913425013}
-  isGround: 0
-  isGroundLastFrame: 0
-  groundDistance: 0.7
-  driftPower: 0
 --- !u!33 &3226108444910514551
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -169,6 +139,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  rig: {fileID: 0}
+  v_Input: 0
+  h_Input: 0
+  currentForce: 0
+  normalForce: 80
+  boostForce: 130
+  jumpForce: 10
+  gravity: 40
+  isDrifting: 0
+  driftDirection: 0
+  rotationStream: {x: 0, y: 0, z: 0, w: 0}
+  turnSpeed: 60
+  driftLevel: 0
+  frontHitTrans: {fileID: 0}
+  rearHitTrans: {fileID: 0}
+  isGround: 0
+  isGroundLastFrame: 0
+  groundDistance: 0.7
+  wheelsParticeleTrans: {fileID: 0}
+  wheelsParticeles: []
+  leftTrail: {fileID: 0}
+  rightTrail: {fileID: 0}
+  driftColors: []
+  driftPower: 0
 --- !u!23 &3226108444911585939
 MeshRenderer:
   m_ObjectHideFlags: 0

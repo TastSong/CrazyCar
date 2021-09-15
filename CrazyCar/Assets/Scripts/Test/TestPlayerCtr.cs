@@ -15,7 +15,7 @@ public enum DriftLevel {
 
 public class TestPlayerCtr : MonoBehaviour
 {
-    public Rigidbody kartRigidbody;
+    public Rigidbody rig;
 
     [Header("输入相关")]
     private float v_Input;
@@ -61,9 +61,9 @@ public class TestPlayerCtr : MonoBehaviour
 
 
     void Start() {
-        kartRigidbody = GetComponent<Rigidbody>();
+        rig = GetComponent<Rigidbody>();
         forceDir_Horizontal = transform.forward;
-        rotationStream = kartRigidbody.rotation;
+        rotationStream = rig.rotation;
 
         //漂移时车轮下粒子特效
         // wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
@@ -85,7 +85,7 @@ public class TestPlayerCtr : MonoBehaviour
         //按住空格，并且有水平输入：开始漂移
         if (Input.GetKey(KeyCode.Space) && h_Input != 0) {
             //落地瞬间、不在漂移并且速度大于一定值时开始漂移
-            if (isGround && !isGroundLastFrame && !isDrifting && kartRigidbody.velocity.sqrMagnitude > 10) {
+            if (isGround && !isGroundLastFrame && !isDrifting && rig.velocity.sqrMagnitude > 10) {
                 StartDrift();   //开始漂移
             }
         }
@@ -117,7 +117,7 @@ public class TestPlayerCtr : MonoBehaviour
         }
 
         //根据上述情况，进行最终的旋转和加力
-        kartRigidbody.MoveRotation(rotationStream);
+        rig.MoveRotation(rotationStream);
         //计算力的方向
         CalculateForceDir();
         //移动
@@ -147,7 +147,7 @@ public class TestPlayerCtr : MonoBehaviour
             tempForce = tempForce + gravity * Vector3.down;
         }
 
-        kartRigidbody.AddForce(tempForce, ForceMode.Force);
+        rig.AddForce(tempForce, ForceMode.Force);
     }
 
     //检测是否在地面上，并且使车与地面保持水平
@@ -204,7 +204,7 @@ public class TestPlayerCtr : MonoBehaviour
 
     public void Turn() {
         //只能在移动时转弯
-        if (kartRigidbody.velocity.sqrMagnitude <= 0.1) {
+        if (rig.velocity.sqrMagnitude <= 0.1) {
             return;
         }
 
@@ -216,7 +216,7 @@ public class TestPlayerCtr : MonoBehaviour
         }
 
         //后退时左右颠倒
-        float modifiedSteering = Vector3.Dot(kartRigidbody.velocity, transform.forward) >= 0 ? h_Input : -h_Input;
+        float modifiedSteering = Vector3.Dot(rig.velocity, transform.forward) >= 0 ? h_Input : -h_Input;
 
         //输入可控转向：如果在漂移，可控角速度为30，否则平常状态为60.
         turnSpeed = driftDirection != DriftDirection.None ? 30 : 60;
@@ -227,7 +227,7 @@ public class TestPlayerCtr : MonoBehaviour
     }
 
     public void Jump() {
-        kartRigidbody.AddForce(jumpForce * transform.up, ForceMode.Impulse);
+        rig.AddForce(jumpForce * transform.up, ForceMode.Impulse);
     }
 
 
