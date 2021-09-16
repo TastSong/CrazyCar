@@ -170,7 +170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3226108444913594267}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.37, y: 0, z: -30.720001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -218,7 +218,7 @@ MonoBehaviour:
   turnSpeed: 60
   driftLevel: 0
   frontHitTrans: {fileID: 3226108444913357661}
-  rearHitTrans: {fileID: 3226108444913425013}
+  rearHitTrans: {fileID: 3226108444913370647}
   isGround: 0
   groundDistance: 0.7
   wheelsParticeleTrans: {fileID: 7710844339335011018}
@@ -293,12 +293,12 @@ Rigidbody:
   m_GameObject: {fileID: 3226108444913594267}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 2
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!1 &3226108444913609473
 GameObject:
