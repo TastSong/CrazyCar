@@ -26,6 +26,7 @@ public class TimeTrialUI : MonoBehaviour{
 
         countDownAnim.PlayAnim(3, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
+            timeTrialPlayer.vInput = 1;
             Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
             limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
                 () => {
