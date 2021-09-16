@@ -35,17 +35,25 @@ public class TimeTrialUI : MonoBehaviour{
     }
 
     private void Start() {
-        frontBtn.SetClickDown(() => {
-            timeTrialPlayer.MoveFront();
+        frontBtn.SetClick((float time) => {
+            timeTrialPlayer.v_Input = Mathf.Clamp01(Time.fixedTime - time);
+        }, () => {
+            timeTrialPlayer.v_Input = 0;
         });
-        backBtn.SetClickDown(() => {
-            timeTrialPlayer.MoveBack();
+        backBtn.SetClick((float time) => {
+            timeTrialPlayer.v_Input = -Mathf.Clamp01(Time.fixedTime - time);
+        }, () => {
+            timeTrialPlayer.v_Input = 0;
         });
-        leftBtn.SetClickDown(() => {
-            timeTrialPlayer.MoveLeft();
+        leftBtn.SetClick((float time) => {
+            timeTrialPlayer.h_Input = -Mathf.Clamp01(Time.fixedTime - time);
+        }, () => {
+            timeTrialPlayer.h_Input = 0;
         });
-        rightBtn.SetClickDown(() => {
-            timeTrialPlayer.MoveRight();
+        rightBtn.SetClick((float time) => {
+            timeTrialPlayer.h_Input = Mathf.Clamp01(Time.fixedTime - time);
+        }, () => {
+            timeTrialPlayer.h_Input = 0;
         });
 
         limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 
