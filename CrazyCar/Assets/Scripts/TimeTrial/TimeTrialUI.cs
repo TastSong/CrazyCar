@@ -12,6 +12,7 @@ public class TimeTrialUI : MonoBehaviour{
     public GameCtrBtn backBtn;
     public GameCtrBtn leftBtn;
     public GameCtrBtn rightBtn;
+    public GameCtrBtn spaceBtn;
     public TimeTrialPlayer timeTrialPlayer;
 
     private int countDownTime = 3;
@@ -36,24 +37,25 @@ public class TimeTrialUI : MonoBehaviour{
 
     private void Start() {
         frontBtn.SetClick((float time) => {
-            timeTrialPlayer.v_Input = Mathf.Clamp01(Time.fixedTime - time);
-        }, () => {
-            timeTrialPlayer.v_Input = 0;
+            timeTrialPlayer.vInput = 1;
         });
         backBtn.SetClick((float time) => {
-            timeTrialPlayer.v_Input = -Mathf.Clamp01(Time.fixedTime - time);
-        }, () => {
-            timeTrialPlayer.v_Input = 0;
+            timeTrialPlayer.vInput = -1;
         });
         leftBtn.SetClick((float time) => {
-            timeTrialPlayer.h_Input = -Mathf.Clamp01(Time.fixedTime - time);
+            timeTrialPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            timeTrialPlayer.h_Input = 0;
+            timeTrialPlayer.hInput = 0;
         });
         rightBtn.SetClick((float time) => {
-            timeTrialPlayer.h_Input = Mathf.Clamp01(Time.fixedTime - time);
+            timeTrialPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            timeTrialPlayer.h_Input = 0;
+            timeTrialPlayer.hInput = 0;
+        });
+        spaceBtn.SetClick((float time) => {
+            timeTrialPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
+        }, () => {
+            timeTrialPlayer.sInput = 0;
         });
 
         limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 

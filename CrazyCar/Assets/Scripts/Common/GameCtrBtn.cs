@@ -17,7 +17,7 @@ public class GameCtrBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
         }
     }
 
-    public void SetClick(Action<float> clickDown, Action clickUp) {
+    public void SetClick(Action<float> clickDown = null, Action clickUp = null) {
         this.clickDown = clickDown;
         this.clickUp = clickUp;
     }
@@ -30,6 +30,6 @@ public class GameCtrBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
     public void OnPointerUp(PointerEventData eventData) {
         isClickDown = false;
         curTime = 0;
-        clickUp.Invoke();
+        clickUp?.Invoke();
     }
 }

@@ -7,15 +7,16 @@ public class TimeTrialPlayer : MonoBehaviour {
     public Rigidbody rig;
 
     [Header("输入相关")]
-    public float v_Input;
-    public float h_Input;
+    public float vInput;
+    public float hInput;
+    public float sInput;
 
     [Header("力的大小")]
     public float currentForce;
-    public float normalForce = 20;  
-    public float boostForce = 40;  
-    public float jumpForce = 10;   
-    public float gravity = 20;     
+    public float normalForce = 20;
+    public float boostForce = 40;
+    public float jumpForce = 10;
+    public float gravity = 20;
 
     //力的方向
     private Vector3 forceDir_Horizontal;
@@ -28,7 +29,6 @@ public class TimeTrialPlayer : MonoBehaviour {
     public Quaternion rotationStream;   //用于最终旋转
     public float turnSpeed = 60;
 
-    //Drift()
     Quaternion m_DriftOffset = Quaternion.identity;
     public DriftLevel driftLevel;
 
@@ -64,28 +64,18 @@ public class TimeTrialPlayer : MonoBehaviour {
         }
 
         if (isUseKeyboard) {
-            v_Input = Input.GetAxisRaw("Vertical");     
-            h_Input = Input.GetAxisRaw("Horizontal");   
+            vInput = Input.GetAxisRaw("Vertical");
+            hInput = Input.GetAxisRaw("Horizontal");
         }
 
-        //按下空格起跳
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    if (isGround)   //如果在地上
-        //    {
-        //        Jump();
-        //    }
-        //}
-
-        //按住空格，并且有水平输入：开始漂移
-        if ((Input.GetKey(KeyCode.Space) || h_Input != 0) && currentForce > 0) {
+        if ((Input.GetKey(KeyCode.Space) || sInput > 0) && currentForce > 0) {
             if (isGround && !isDrifting &&
                 rig.velocity.sqrMagnitude > 10) {
-                StartDrift();  
+                StartDrift();
             }
         }
 
-        //放开空格：漂移结束
-        if (Input.GetKeyUp(KeyCode.Space) || h_Input == 0) {
+        if (Input.GetKeyUp(KeyCode.Space) || sInput == 0) {
             if (isDrifting) {
                 Boost(boostForce);
                 StopDrift();
@@ -94,8 +84,8 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        CheckGroundNormal();        
-        Turn();                   
+        CheckGroundNormal();
+        Turn();
 
         //起步时力大小递增
         IncreaseForce();
@@ -103,8 +93,8 @@ public class TimeTrialPlayer : MonoBehaviour {
         ReduceForce();
 
         if (isDrifting) {
-            CalculateDriftingLevel();   
-            ChangeDriftColor();        
+            CalculateDriftingLevel();
+            ChangeDriftColor();
         }
 
         //根据上述情况，进行最终的旋转和加力
@@ -114,12 +104,11 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //计算加力方向
-    public void CalculateForceDir() {
+    private void CalculateForceDir() {
         //往前加力
-        if (v_Input > 0) {
+        if (vInput > 0) {
             verticalModified = 1;
-        } else if (v_Input < 0)
-          {
+        } else if (vInput < 0) {
             verticalModified = -1;
         }
 
@@ -127,12 +116,11 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //加力移动
-    public void AddForceToMove() {
+    private void AddForceToMove() {
         //计算合力
         Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
 
-        if (!isGround)  
-        {
+        if (!isGround) {
             tempForce = tempForce + gravity * Vector3.down;
         }
 
@@ -140,7 +128,7 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //检测是否在地面上，并且使车与地面保持水平
-    public void CheckGroundNormal() {
+    private void CheckGroundNormal() {
         //从车头中心附近往下打射线,长度比发射点到车底的距离长一点
         RaycastHit frontHit;
         bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, LayerMask.GetMask("Ground"));
@@ -154,8 +142,7 @@ public class TimeTrialPlayer : MonoBehaviour {
             Debug.DrawLine(rearHitTrans.position, rearHitTrans.position - transform.up * groundDistance, Color.red);
         }
 
-        if (hasFrontHit || hasRearHit)
-        {
+        if (hasFrontHit || hasRearHit) {
             isGround = true;
         } else {
             isGround = false;
@@ -168,12 +155,11 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //力递减
-    public void ReduceForce() {
+    private void ReduceForce() {
         float targetForce = currentForce;
-        if (isGround && v_Input == 0) {
+        if (isGround && vInput == 0) {
             targetForce = 0;
-        } else if (currentForce > normalForce)    
-          {
+        } else if (currentForce > normalForce) {
             targetForce = normalForce;
         }
 
@@ -184,14 +170,14 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //力递增
-    public void IncreaseForce() {
+    private void IncreaseForce() {
         float targetForce = currentForce;
-        if (v_Input != 0 && currentForce < normalForce) {
+        if (vInput != 0 && currentForce < normalForce) {
             currentForce = Mathf.MoveTowards(currentForce, normalForce, 80 * Time.fixedDeltaTime);//每秒80递增
         }
     }
 
-    public void Turn() {
+    private void Turn() {
         if (rig.velocity.sqrMagnitude <= 0.1) {
             return;
         }
@@ -204,7 +190,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         }
 
         //后退时左右颠倒
-        float modifiedSteering = Vector3.Dot(rig.velocity, transform.forward) >= 0 ? h_Input : -h_Input;
+        float modifiedSteering = Vector3.Dot(rig.velocity, transform.forward) >= 0 ? hInput : -hInput;
 
         //输入可控转向：如果在漂移，可控角速度为30，否则平常状态为60.
         turnSpeed = driftDirection != DriftDirection.None ? 30 : 60;
@@ -214,22 +200,22 @@ public class TimeTrialPlayer : MonoBehaviour {
         rotationStream = rotationStream * deltaRotation;
     }
 
-    public void Jump() {
+    private void Jump() {
         rig.AddForce(jumpForce * transform.up, ForceMode.Impulse);
     }
 
 
     //开始漂移并且决定漂移朝向
-    public void StartDrift() {
+    private void StartDrift() {
         Debug.Log("Start Drift");
         isDrifting = true;
 
         //根据水平输入决定漂移时车的朝向，因为合速度方向与车身方向不一致，所以为加力方向添加偏移
-        if (h_Input < 0) {
+        if (hInput < 0) {
             driftDirection = DriftDirection.Left;
             //左漂移时，合速度方向为车头朝向的右前方，偏移具体数值需结合实际自己调试
             m_DriftOffset = Quaternion.Euler(0f, 30, 0f);
-        } else if (h_Input > 0) {
+        } else if (hInput > 0) {
             driftDirection = DriftDirection.Right;
             m_DriftOffset = Quaternion.Euler(0f, -30, 0f);
         }
@@ -238,7 +224,7 @@ public class TimeTrialPlayer : MonoBehaviour {
     }
 
     //计算漂移等级
-    public void CalculateDriftingLevel() {
+    private void CalculateDriftingLevel() {
         driftPower += Time.fixedDeltaTime;
         //0.7秒提升一个漂移等级
         if (driftPower < 0.7) {
@@ -250,7 +236,7 @@ public class TimeTrialPlayer : MonoBehaviour {
         }
     }
 
-    public void StopDrift() {
+    private void StopDrift() {
         isDrifting = false;
         driftDirection = DriftDirection.None;
         driftPower = 0;
@@ -258,37 +244,37 @@ public class TimeTrialPlayer : MonoBehaviour {
         StopDriftParticle();
     }
 
-    public void Boost(float boostForce) {
+    private void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
         EnableTrail();
     }
 
-    public void PlayDriftParticle() {
+    private void PlayDriftParticle() {
         foreach (var tempParticle in wheelsParticeles) {
             tempParticle.Play();
         }
     }
 
-    public void ChangeDriftColor() {
+    private void ChangeDriftColor() {
         foreach (var tempParticle in wheelsParticeles) {
             var t = tempParticle.main;
             t.startColor = driftColors[(int)driftLevel];
         }
     }
 
-    public void StopDriftParticle() {
+    private void StopDriftParticle() {
         foreach (var tempParticle in wheelsParticeles) {
             tempParticle.Stop();
         }
     }
 
-    public void EnableTrail() {
+    private void EnableTrail() {
         leftTrail.enabled = true;
         rightTrail.enabled = true;
     }
 
-    public void DisableTrail() {
+    private void DisableTrail() {
         leftTrail.enabled = false;
         rightTrail.enabled = false;
     }
