@@ -170,16 +170,16 @@ create table if not exists `time_trial_class`(
    )engine = innodb default charset = utf8;
 insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   values
-				   (0, 2, 0, 60, "Test0");
+				   (0, 2, 0, 60, "Map 0");
 insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   values
-				   (1, 1, 0, 70, "Test1");
+				   (1, 1, 1, 70, "Map 1");
 insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   values
-				   (2, 3, 0, 80, "Test2");
+				   (2, 3, 2, 80, "Map 2");
 insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
 				   values
-				   (3, 2, 0, 90, "Test3");
+				   (3, 2, 3, 90, "Map 3");
 select* from time_trial_class;
 select cid from time_trial_class;
 
