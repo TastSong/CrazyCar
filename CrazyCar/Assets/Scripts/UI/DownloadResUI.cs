@@ -31,7 +31,7 @@ public class DownloadResUI : MonoBehaviour {
             GameController.manager.resourceManager.DownloadAssets(() => {
                 success?.Invoke();
             }, UpdateProgress, () => {
-                GameController.manager.warningAlert.Show(text: "Download assets failed", callback: () => {
+                GameController.manager.warningAlert.ShowWithText(text: "Download assets failed", callback: () => {
                     Application.Quit();
                 });
             });

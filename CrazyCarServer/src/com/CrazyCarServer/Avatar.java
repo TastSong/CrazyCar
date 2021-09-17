@@ -60,6 +60,7 @@ public class Avatar extends HttpServlet {
 			jbItem.put("is_has", IshasAvatar(allAid.get(i), userId));
 			jbItem.put("aid", allAid.get(i));
 			jbItem.put("name", GetAvatarName(allAid.get(i)));
+			jbItem.put("star", GetStar(allAid.get(i)));
 			jsonArray.add(jbItem);
 		}		
 		jbData.put("avatars", jsonArray);
@@ -76,6 +77,12 @@ public class Avatar extends HttpServlet {
 		String sql = "select aid from all_user where user_id = "
 				+  uid + ";";
 		return Util.JDBC.ExecuteSelectInt(sql, "aid");
+	}
+	
+	private int GetStar(int aid) {
+		String sql = "select star from avatar_name where aid = "
+				+  aid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, "star");
 	}
 	
 	private List<Integer> GetAllAvatarID(){

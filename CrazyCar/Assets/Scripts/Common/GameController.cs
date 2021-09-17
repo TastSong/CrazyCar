@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TinyMessenger;
 using UnityEngine;
 using Utils;
 
+[Serializable]
 public class UserInfo {
     public string name;
     public int aid;
     public int uid;
+    public int star;
 }
 
 public class GameController : MonoBehaviour
@@ -17,6 +20,7 @@ public class GameController : MonoBehaviour
     public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
     public GameHelper gameHelper;
     public WarningAlert warningAlert;
+    public InfoConfirmAlert infoConfirmAlert;
     public string token;
     public UserInfo userInfo = new UserInfo();
 

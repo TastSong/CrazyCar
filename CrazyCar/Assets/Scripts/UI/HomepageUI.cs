@@ -9,6 +9,7 @@ public class HomepageUI : MonoBehaviour {
     public Button avatarBtn;
     public Image avatarImage;
     public Button joinGameBtn;
+    public Text starText;
 
     private TinyMessageSubscriptionToken homepageToken;
 
@@ -27,6 +28,7 @@ public class HomepageUI : MonoBehaviour {
 
     private void UpdataUI() {
         avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        starText.text = GameController.manager.userInfo.star.ToString();
     }
 
     private void OnDestroy() {

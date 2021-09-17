@@ -8,6 +8,7 @@ public class AvatarInfo {
     public int aid;
     public string name;
     public bool isHas;
+    public int star;
 }
 
 public class AvatarManager {
@@ -23,6 +24,7 @@ public class AvatarManager {
             info.aid = (int)data[i]["aid"];
             info.name = (string)data[i]["name"];
             info.isHas = (bool)data[i]["is_has"];
+            info.star = (int)data[i]["star"];
             avatarDic[info.aid] = info;
         }
         success?.Invoke();

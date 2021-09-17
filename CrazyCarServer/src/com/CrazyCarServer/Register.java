@@ -45,10 +45,11 @@ public class Register extends HttpServlet {
 				if (IsExistUser(getJB.getString("UserName"))){				
 			        outJB.put("code", 200);
 			        String userName = getJB.getString("UserName");
-			        token = Util.JWT.createJWTById(Util.GetIdByName(userName, "user_id"));
+			        token = Util.JWT.createJWTById(Util.GetDataByName(userName, "user_id"));
 			        userInfoJB.put("name", getJB.getString("UserName"));
-			        userInfoJB.put("uid", Util.GetIdByName(userName, "user_id"));
-			        userInfoJB.put("aid", Util.GetIdByName(userName, "aid"));
+			        userInfoJB.put("uid", Util.GetDataByName(userName, "user_id"));
+			        userInfoJB.put("aid", Util.GetDataByName(userName, "aid"));
+			        userInfoJB.put("star", Util.GetDataByName(userName, "star"));
 				} else{
 			        outJB.put("code", 425);
 				}
@@ -79,6 +80,7 @@ public class Register extends HttpServlet {
 	
 	private void RegisterUser(String userName, String password){
 		int defaultAid = 1;
+		int defaultCid = 0;
 		String sql = "insert into all_user ( user_name, user_password, login_time, aid ) values" +
                        "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + "," + defaultAid +  ");";
 		Util.JDBC.ExecuteInsert(sql);
@@ -88,6 +90,11 @@ public class Register extends HttpServlet {
 		//插入默认头像
 		sql = "insert into avatar_index ( aid, user_id ) values" +
                 "(" + defaultAid + "," + uid +  ");";
+		Util.JDBC.ExecuteInsert(sql);
+		
+		//送一张地图
+		sql = "insert into time_trial_user_map ( cid, user_id ) values" +
+                "(" + defaultCid + "," + uid +  ");";
 		Util.JDBC.ExecuteInsert(sql);
 		return;
 	}

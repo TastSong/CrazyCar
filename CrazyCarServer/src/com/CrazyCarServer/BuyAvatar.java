@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * Servlet implementation class ChangeAvatar
+ * Servlet implementation class BuyAvatar
  */
-@WebServlet("/ChangeAvatar")
-public class ChangeAvatar extends HttpServlet {
+@WebServlet("/BuyAvatar")
+public class BuyAvatar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeAvatar() {
+    public BuyAvatar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +32,14 @@ public class ChangeAvatar extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		
-		int userId = 0;
+		System.out.println("BuyAvatar ...");
+	    int uid = 0;
 		String token = request.getHeader("Authorization");
 		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{
-			userId = Util.JWT.getJWTId(token);
+			uid = Util.JWT.getJWTId(token);
 		}
 		
 		JSONObject getJB = new JSONObject();
@@ -50,10 +50,13 @@ public class ChangeAvatar extends HttpServlet {
 		JSONObject dataJB = new JSONObject();
 		if (getJB != null && getJB.containsKey("aid")) {
 			int aid = getJB.getIntValue("aid");
-			if (IshasAvatar(aid, userId)) {
-				SetCurAvatar(aid, userId);
+			if (ishasAvatar(aid, uid)) {
 				outJB.put("code", 200);
-				dataJB.put("aid", aid);
+				dataJB.put("star", getUserStar(uid));
+			} else if (canBuyAvatar(uid, aid)) {
+				bugAvatar(uid, aid);
+				outJB.put("code", 200);
+				dataJB.put("star", getUserStar(uid));
 			} else {
 				outJB.put("code", 423);
 			}
@@ -65,20 +68,44 @@ public class ChangeAvatar extends HttpServlet {
 
 		out.println(outJB.toString());
 		out.flush();
-		out.close();			
+		out.close();	
 	}
 	
-	private boolean IshasAvatar(int aid, int uid){
+	private boolean ishasAvatar(int aid, int uid){
 		String sql = "select aid from avatar_index where aid = "
 				+  aid + " and " + " user_id = " + uid + ";";
 		return Util.JDBC.ExecuteSelectInt(sql, "aid") != -1;
 	}
 	
-	private void SetCurAvatar(int aid, int uid) {
-		String sql = "update all_user set aid = "
-				+  aid + " where user_id = " + uid + ";";
+	private int getUserStar(int uid){
+		String sql = "select star from all_user where user_id = "
+				+ uid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, "star");
+	}
+	
+	private boolean canBuyAvatar(int uid, int aid) {
+		int curStar = getUserStar(uid);
+		int needStar = getStarByAid(aid);
+		return curStar >= needStar;		
+	}
+	
+	private int getStarByAid(int aid) {
+		String sql = "select star from avatar_name where aid = "
+				+  aid + ";";
+		return Util.JDBC.ExecuteSelectInt(sql, "star");
+	}
+	
+	private void bugAvatar(int uid, int aid) {
+		int curStar = getUserStar(uid) - getStarByAid(aid);
+		String sql = "update all_user set star = "
+				+  curStar + " where user_id = " + uid + ";";
+		Util.JDBC.ExecuteInsert(sql);
+
+		sql = "insert into avatar_index ( aid, user_id ) values" +
+                "(" + aid + "," + uid +  ");";
 		Util.JDBC.ExecuteInsert(sql);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

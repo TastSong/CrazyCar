@@ -61,7 +61,7 @@ public class ResourceManager {
             code : (code) => {
                 if (code != 200) {
                     string content = "资源下载失败";
-                    GameController.manager.warningAlert.Show(
+                    GameController.manager.warningAlert.ShowWithText(
                         text: content,
                         callback: () => {
                             Application.Quit();

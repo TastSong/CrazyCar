@@ -45,7 +45,6 @@ public class InfoConfirmAlert : MonoBehaviour {
             GameController.manager.StartCoroutine(DelayShow(title, content, success, fail, confirmText, cancelText, type));
             return 0;
         }
-        Debug.Log("info");
         titleText.fontSize = titleTextFont;
         contentText.text = content;
         if (content == "") {

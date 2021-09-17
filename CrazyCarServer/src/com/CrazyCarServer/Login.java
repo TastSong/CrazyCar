@@ -46,10 +46,11 @@ public class Login extends HttpServlet {
 			String userName = getJB.getString("UserName");
 			if (IsPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))) {
 				outJB.put("code", 200);
-				token = Util.JWT.createJWTById(Util.GetIdByName(userName, "user_id"));
+				token = Util.JWT.createJWTById(Util.GetDataByName(userName, "user_id"));
 				userInfoJB.put("name", getJB.getString("UserName"));
-				userInfoJB.put("uid", Util.GetIdByName(userName, "user_id"));
-				userInfoJB.put("aid", Util.GetIdByName(userName, "aid"));
+				userInfoJB.put("uid", Util.GetDataByName(userName, "user_id"));
+				userInfoJB.put("aid", Util.GetDataByName(userName, "aid"));
+				userInfoJB.put("star", Util.GetDataByName(userName, "star"));
 			} else {
 				outJB.put("code", 423);
 			}

@@ -59,7 +59,7 @@ public class AvatarUI : MonoBehaviour {
                 },
                 code : (code) => { 
                     if (code == 423) {
-                        GameController.manager.warningAlert.Show("未拥有");
+                        GameController.manager.warningAlert.ShowWithText("未拥有");
                     }
                 }));
         });
