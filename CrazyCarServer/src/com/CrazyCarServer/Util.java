@@ -37,7 +37,7 @@ public class Util {
 		static final String USER = "root";
 		static final String PASS = "164728";
 
-		public static String ExecuteSelectString(String sql, String key) {
+		public static String executeSelectString(String sql, String key) {
 			System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
@@ -93,7 +93,7 @@ public class Util {
 			return resultStr;
 		}
 		
-		public static int ExecuteSelectInt(String sql, String key) {
+		public static int executeSelectInt(String sql, String key) {
 			System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
@@ -147,7 +147,7 @@ public class Util {
 			return resultInt;
 		}
 		
-		public static List<Integer> ExecuteSelectAllInt(String sql, String key) {
+		public static List<Integer> executeSelectAllInt(String sql, String key) {
 			System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
@@ -203,7 +203,7 @@ public class Util {
 			return resultList;
 		}
 		
-		public static void ExecuteInsert(String sql) {
+		public static void executeInsert(String sql) {
 			Connection conn = null;
 			System.out.println("ExecuteInsert sql = " + sql);	
 			try {
@@ -335,10 +335,10 @@ public class Util {
 	    }
 	}
 	
-	public static int GetDataByName(String userName, String id){
+	public static int getDataByName(String userName, String id){
 		String sql = "select " + id + " from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		return Util.JDBC.ExecuteSelectInt(sql, id);
+		return Util.JDBC.executeSelectInt(sql, id);
 	}
 	
 	public static JSONObject getMsgData(HttpServletRequest request) throws ServletException, IOException {

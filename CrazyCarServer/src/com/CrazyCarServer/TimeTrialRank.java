@@ -43,8 +43,8 @@ public class TimeTrialRank extends HttpServlet {
 		JSONObject getJB = new JSONObject();
 		getJB = Util.getMsgData(request);
 		int cid = getJB.getInteger("cid");
-		InitRank(cid);
-		int userNum = GetUserNum(cid);
+		initRank(cid);
+		int userNum = getUserNum(cid);
 
 		PrintWriter out = response.getWriter();
 		JSONObject outJB = new JSONObject();
@@ -52,9 +52,9 @@ public class TimeTrialRank extends HttpServlet {
 		JSONArray jsonArray = new JSONArray();
 		for (int i = 0; i < userNum; i++){
 			JSONObject jbItem = new JSONObject();
-			jbItem.put("name", GetNameByUid(cid, i + 1));
-			jbItem.put("aid", GetAidByUid(cid, i + 1));
-			jbItem.put("complete_time", GetCompleteTime(cid, i + 1));
+			jbItem.put("name", getNameByUid(cid, i + 1));
+			jbItem.put("aid", getAidByUid(cid, i + 1));
+			jbItem.put("complete_time", getCompleteTime(cid, i + 1));
 			jbItem.put("rank", i + 1);
 			jsonArray.add(jbItem);
 		}		
@@ -66,46 +66,46 @@ public class TimeTrialRank extends HttpServlet {
 		out.close();
 	}
 	
-	private void InitRank(int cid) {
+	private void initRank(int cid) {
 		String sql = "drop table if exists time_trial_rank_" + cid +";";
-		Util.JDBC.ExecuteInsert(sql);
+		Util.JDBC.executeInsert(sql);
 		sql = "create table  time_trial_rank_" + cid +" as select * from "
 				+ " (select user_rank.*, @rank_num  := @rank_num  + 1 "
 				+ "as rank_num from ( select * from (select uid, min(complete_time) "
 				+ "as complete_time from time_trial_record where cid =  " + cid + " and "
 				+ "complete_time != -1  group by uid) "
 				+ "as min_time order by complete_time asc ) as user_rank, (select @rank_num:= 0) r)  as all_user_rank;";
-		Util.JDBC.ExecuteInsert(sql);
+		Util.JDBC.executeInsert(sql);
 	}
 	
-	private int GetUserNum(int cid) {
+	private int getUserNum(int cid) {
 		String sql = "select count(rank_num) as rank_count from  time_trial_rank_" + cid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "rank_count");
+		return Util.JDBC.executeSelectInt(sql, "rank_count");
 	}
 	
 	
-	private String GetNameByUid(int cid, int rank){
-		int uid = GetUid(cid, rank);
-		String sql = "select user_name from all_user where user_id = "
+	private String getNameByUid(int cid, int rank){
+		int uid = getUid(cid, rank);
+		String sql = "select user_name from all_user where uid = "
 				+ uid + ";";
-		return Util.JDBC.ExecuteSelectString(sql, "user_name");
+		return Util.JDBC.executeSelectString(sql, "user_name");
 	}
 	
-	private int GetAidByUid(int cid, int rank){
-		int uid = GetUid(cid, rank);
-		String sql = "select aid from all_user where user_id = "
+	private int getAidByUid(int cid, int rank){
+		int uid = getUid(cid, rank);
+		String sql = "select aid from all_user where uid = "
 				+ uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid");
+		return Util.JDBC.executeSelectInt(sql, "aid");
 	}
 	
-	private int GetCompleteTime(int cid, int rank) {	
+	private int getCompleteTime(int cid, int rank) {	
 		String sql = "select complete_time from time_trial_rank_" + cid +" where rank_num = " + rank + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "complete_time");
+		return Util.JDBC.executeSelectInt(sql, "complete_time");
 	}
 
-	private int GetUid(int cid, int rank) {	
+	private int getUid(int cid, int rank) {	
 		String sql = "select uid from time_trial_rank_" + cid +" where rank_num = " + rank + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "uid");
+		return Util.JDBC.executeSelectInt(sql, "uid");
 	}
 	
 	/**

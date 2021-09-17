@@ -37,9 +37,12 @@ public class TimeTrialDetail extends HttpServlet {
 		response.setContentType("text/html");
 		System.out.println("TimeTrialDetail ...");
 		String token = request.getHeader("Authorization");
+		int uid;
 		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
+		} else{
+			uid = Util.JWT.getJWTId(token);
 		}		
 	
 		PrintWriter out = response.getWriter();	
@@ -48,14 +51,15 @@ public class TimeTrialDetail extends HttpServlet {
 		jsonObject.put("code", 200);		
         
 		JSONArray jsonArray = new JSONArray();
-		List<Integer> allCid = GetAllClassID();
+		List<Integer> allCid = getAllClassID();
 		for (int i = 0; i < allCid.size(); i++){
 			JSONObject jbItem = new JSONObject();
 			jbItem.put("cid", allCid.get(i));
-			jbItem.put("map_id", GetIntData(allCid.get(i), "map_id"));
-			jbItem.put("difficulty", GetIntData(allCid.get(i), "difficulty"));
-			jbItem.put("limit_time", GetIntData(allCid.get(i), "limit_time"));
-			jbItem.put("name", GetClassName(allCid.get(i)));
+			jbItem.put("map_id", getIntData(allCid.get(i), "map_id"));
+			jbItem.put("star", getIntData(allCid.get(i), "star"));
+			jbItem.put("limit_time", getIntData(allCid.get(i), "limit_time"));
+			jbItem.put("name", getClassName(allCid.get(i)));
+			jbItem.put("is_has", isHasClass(allCid.get(i), uid));
 			jsonArray.add(jbItem);
 		}		
 		jsonObject.put("data", jsonArray);
@@ -67,20 +71,26 @@ public class TimeTrialDetail extends HttpServlet {
 		out.close();
 	}
 	
-	private List<Integer> GetAllClassID(){
+	private List<Integer> getAllClassID(){
 		String sql = "select cid from time_trial_class;";
-		return Util.JDBC.ExecuteSelectAllInt(sql, "cid");
+		return Util.JDBC.executeSelectAllInt(sql, "cid");
 	}
 	
-	private int GetIntData(int cid, String key) {
+	private boolean isHasClass(int cid, int uid){
+		String sql = "select cid from time_trial_user_map where cid = "
+				+  cid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "cid") != -1;
+	}
+	
+	private int getIntData(int cid, String key) {
 		String sql = "select " + key + " from time_trial_class where cid = "
 				+  cid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, key);
+		return Util.JDBC.executeSelectInt(sql, key);
 	}
 	
-	private String GetClassName(int cid){
+	private String getClassName(int cid){
 		String sql = "select class_name from time_trial_class where cid = " + cid + ";";
-		return Util.JDBC.ExecuteSelectString(sql, "class_name");
+		return Util.JDBC.executeSelectString(sql, "class_name");
 	}
 
 	/**

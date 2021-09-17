@@ -2,24 +2,24 @@ create database crazy_car;
 use crazy_car;
 
 create table if not exists `all_user`(
-   `user_id` int unsigned auto_increment,
+   `uid` int unsigned auto_increment,
    `user_name` varchar(100) not null,
    `user_password` VARCHAR(40) not null,
    `login_time` int not null,
     `aid` INT(4)  not null,
     `star` int not null,
-   primary key ( `user_id` )
+   primary key ( `uid` )
    )engine = innodb default charset = utf8;
-insert into all_user ( user_id, user_name, user_password, login_time, aid, star)
+insert into all_user ( uid, user_name, user_password, login_time, aid, star)
                        values
 					   (1, "Tast", "111111", 1629544628, 0, 20);
-insert into all_user ( user_id, user_name, user_password, login_time, aid, star )
+insert into all_user ( uid, user_name, user_password, login_time, aid, star )
                        values
 					   (2, "asd", "111111", 1629544634, 1, 14);
-insert into all_user ( user_id, user_name, user_password, login_time, aid, star )
+insert into all_user ( uid, user_name, user_password, login_time, aid, star )
                        values
 					   (3, "qwe", "111111", 1629544655, 2, 11);        
-insert into all_user ( user_id, user_name, user_password, login_time, aid, star )
+insert into all_user ( uid, user_name, user_password, login_time, aid, star )
                        values
 					   (4, "Lory", "111111", 1629544666, 3, 12);                       
 select* from all_user;
@@ -32,50 +32,6 @@ where user_name = "Tast";
 ALTER TABLE all_user ADD aid INT(4)  not null;
 alter table all_user drop column aid;
 */
-/*avatar_index*/
-create table if not exists `avatar_index`(
-   `id` int unsigned auto_increment,
-   `aid` int not null,
-   `user_id` int not null,
-   primary key ( `id` )
-   )engine = innodb default charset = utf8;
-insert into avatar_index ( aid, user_id )
-				   values
-				   (0, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (2, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (4, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (8, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (16, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (17, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (18, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (19, 1);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (1, 2);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (2, 3);
-insert into avatar_index ( aid, user_id )
-				   values
-				   (3, 4);                   
-select aid from
- avatar_index 
- where aid = 0 and user_id = 1;
-select* from avatar_index;
 
 /*avatar_name*/
 create table if not exists `avatar_name`(
@@ -150,7 +106,52 @@ select* from avatar_name;
 select* from all_user;
 update all_user 
 set aid = 2 
-where user_id = 1;
+where uid = 1;
+
+/*avatar_uid*/
+create table if not exists `avatar_uid`(
+   `id` int unsigned auto_increment,
+   `aid` int not null,
+   `uid` int not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into avatar_uid ( aid, uid )
+				   values
+				   (0, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (2, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (4, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (8, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (16, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (17, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (18, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (19, 1);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (1, 2);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (2, 3);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (3, 4);                   
+select aid from
+ avatar_uid 
+ where aid = 0 and uid = 1;
+select* from avatar_uid;
 
 create table if not exists `ab_resource`(
    `r_id` int unsigned auto_increment,
@@ -173,26 +174,57 @@ from
 /*time trail class*/
 create table if not exists `time_trial_class`(
    `cid` int not null,
-   `difficulty` int not null,  /*同Star*/
+   `star` int not null,  /*同Star*/
    `map_id` int not null,
    `limit_time` int not null,
    `class_name` VARCHAR(40) not null,
    primary key ( `cid` )
    )engine = innodb default charset = utf8;
-insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
 				   values
 				   (0, 2, 0, 60, "Map 0");
-insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
 				   values
 				   (1, 1, 1, 70, "Map 1");
-insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
 				   values
 				   (2, 3, 2, 80, "Map 2");
-insert into time_trial_class ( cid, difficulty, map_id, limit_time, class_name )
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
 				   values
 				   (3, 2, 3, 90, "Map 3");
 select* from time_trial_class;
 select cid from time_trial_class;
+
+/*time_trial_user_map*/
+create table if not exists `time_trial_user_map`(
+   `id` int unsigned auto_increment,
+   `cid` int not null,
+   `uid` int not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (0, 1);
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (1, 1);
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (2, 1);
+ insert into time_trial_user_map ( cid, uid )
+				   values
+				   (0, 2);
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (0, 3);
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (0, 4);
+                   
+select cid from
+ time_trial_user_map 
+ where cid = 0 and uid = 1;
+select* from time_trial_user_map;
 
 
 /*time_trial_record*/
@@ -295,25 +327,6 @@ select count(rank_num) as rank_count from  time_trial_rank_0;
 select * from time_trial_rank_0;			
 select uid from time_trial_rank_0 where rank_num = 4;
 
-/*time_trial_user_map*/
-create table if not exists `time_trial_user_map`(
-   `id` int unsigned auto_increment,
-   `cid` int not null,
-   `user_id` int not null,
-   primary key ( `id` )
-   )engine = innodb default charset = utf8;
-insert into time_trial_user_map ( cid, user_id )
-				   values
-				   (0, 1);
-insert into time_trial_user_map ( cid, user_id )
-				   values
-				   (1, 1);
-insert into time_trial_user_map ( cid, user_id )
-				   values
-				   (2, 1);
-select cid from
- time_trial_user_map 
- where cid = 0 and user_id = 1;
-select* from time_trial_user_map;
+
 
 

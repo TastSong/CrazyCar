@@ -7,9 +7,10 @@ using Utils;
 public class TimeTrialInfo {
     public string name;
     public int cid;
-    public int difficulty;
+    public int star;
     public int mapId;
     public int limitTime;
+    public bool isHas;
 }
 
 public class TimeTrialRankInfo {
@@ -110,9 +111,10 @@ public class TimeTrialManager {
             TimeTrialInfo info = new TimeTrialInfo();
             info.cid = (int)jsonData[i]["cid"];
             info.name = (string)jsonData[i]["name"];
-            info.difficulty = (int)jsonData[i]["difficulty"];
+            info.star = (int)jsonData[i]["star"];
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];
+            info.isHas = (bool)jsonData[i]["is_has"];
             timeTrialDic[info.cid] = info;
         }
         success?.Invoke();

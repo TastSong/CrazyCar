@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * Servlet implementation class ChangeAvatar
+ * Servlet implementation class BuyTimeTrialClass
  */
-@WebServlet("/ChangeAvatar")
-public class ChangeAvatar extends HttpServlet {
+@WebServlet("/BuyTimeTrialClass")
+public class BuyTimeTrialClass extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeAvatar() {
+    public BuyTimeTrialClass() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +32,8 @@ public class ChangeAvatar extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		
-		int uid = 0;
+		System.out.println("BuyTimeTrialClass ...");
+	    int uid = 0;
 		String token = request.getHeader("Authorization");
 		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
@@ -48,12 +48,15 @@ public class ChangeAvatar extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		JSONObject outJB = new JSONObject();
 		JSONObject dataJB = new JSONObject();
-		if (getJB != null && getJB.containsKey("aid")) {
-			int aid = getJB.getIntValue("aid");
-			if (isHasAvatar(aid, uid)) {
-				setCurAvatar(aid, uid);
+		if (getJB != null && getJB.containsKey("cid")) {
+			int cid = getJB.getIntValue("cid");
+			if (isHasClass(cid, uid)) {
 				outJB.put("code", 200);
-				dataJB.put("aid", aid);
+				dataJB.put("star", getUserStar(uid));
+			} else if (canBuyClass(uid, cid)) {
+				bugClass(uid, cid);
+				outJB.put("code", 200);
+				dataJB.put("star", getUserStar(uid));
 			} else {
 				outJB.put("code", 423);
 			}
@@ -65,18 +68,41 @@ public class ChangeAvatar extends HttpServlet {
 
 		out.println(outJB.toString());
 		out.flush();
-		out.close();			
+		out.close();	
 	}
 	
-	private boolean isHasAvatar(int aid, int uid){
-		String sql = "select aid from avatar_uid where aid = "
-				+  aid + " and " + " uid = " + uid + ";";
-		return Util.JDBC.executeSelectInt(sql, "aid") != -1;
+	private boolean isHasClass(int cid, int uid){
+		String sql = "select cid from time_trial_user_map where cid = "
+				+  cid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "cid") != -1;
 	}
 	
-	private void setCurAvatar(int aid, int uid) {
-		String sql = "update all_user set aid = "
-				+  aid + " where uid = " + uid + ";";
+	private int getUserStar(int uid){
+		String sql = "select star from all_user where uid = "
+				+ uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "star");
+	}
+	
+	private boolean canBuyClass(int uid, int cid) {
+		int curStar = getUserStar(uid);
+		int needStar = getStarByCid(cid);
+		return curStar >= needStar;		
+	}
+	
+	private int getStarByCid(int cid) {
+		String sql = "select star from time_trial_class where cid = "
+				+  cid + ";";
+		return Util.JDBC.executeSelectInt(sql, "star");
+	}
+	
+	private void bugClass(int uid, int cid) {
+		int curStar = getUserStar(uid) - getStarByCid(cid);
+		String sql = "update all_user set star = "
+				+  curStar + " where uid = " + uid + ";";
+		Util.JDBC.executeInsert(sql);
+
+		sql = "insert into time_trial_user_map ( cid, uid ) values" +
+                "(" + cid + "," + uid +  ");";
 		Util.JDBC.executeInsert(sql);
 	}
 

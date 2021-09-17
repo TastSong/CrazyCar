@@ -36,13 +36,13 @@ public class Avatar extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		System.out.println("Avatar ...");
-	    int userId = 0;
+	    int uid = 0;
 		String token = request.getHeader("Authorization");
 		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{
-			userId = Util.JWT.getJWTId(token);
+			uid = Util.JWT.getJWTId(token);
 		}			
 	
 		PrintWriter out = response.getWriter();	
@@ -51,16 +51,16 @@ public class Avatar extends HttpServlet {
 		jsonObject.put("code", 200);
 		
         JSONObject jbData = new JSONObject();        
-        jbData.put("current_aid", GetCurAid(userId));
+        jbData.put("current_aid", getCurAid(uid));
         
 		JSONArray jsonArray = new JSONArray();
-		List<Integer> allAid = GetAllAvatarID();
+		List<Integer> allAid = getAllAvatarID();
 		for (int i = 0; i < allAid.size(); i++){
 			JSONObject jbItem = new JSONObject();
-			jbItem.put("is_has", IshasAvatar(allAid.get(i), userId));
+			jbItem.put("is_has", isHasAvatar(allAid.get(i), uid));
 			jbItem.put("aid", allAid.get(i));
-			jbItem.put("name", GetAvatarName(allAid.get(i)));
-			jbItem.put("star", GetStar(allAid.get(i)));
+			jbItem.put("name", getAvatarName(allAid.get(i)));
+			jbItem.put("star", getStar(allAid.get(i)));
 			jsonArray.add(jbItem);
 		}		
 		jbData.put("avatars", jsonArray);
@@ -73,32 +73,32 @@ public class Avatar extends HttpServlet {
 		out.close();
 	}	
 	
-	private int GetCurAid(int uid) {
-		String sql = "select aid from all_user where user_id = "
+	private int getCurAid(int uid) {
+		String sql = "select aid from all_user where uid = "
 				+  uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid");
+		return Util.JDBC.executeSelectInt(sql, "aid");
 	}
 	
-	private int GetStar(int aid) {
+	private int getStar(int aid) {
 		String sql = "select star from avatar_name where aid = "
 				+  aid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "star");
+		return Util.JDBC.executeSelectInt(sql, "star");
 	}
 	
-	private List<Integer> GetAllAvatarID(){
+	private List<Integer> getAllAvatarID(){
 		String sql = "select aid from avatar_name;";
-		return Util.JDBC.ExecuteSelectAllInt(sql, "aid");
+		return Util.JDBC.executeSelectAllInt(sql, "aid");
 	}
 	
-	private boolean IshasAvatar(int aid, int uid){
-		String sql = "select aid from avatar_index where aid = "
-				+  aid + " and " + " user_id = " + uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid") != -1;
+	private boolean isHasAvatar(int aid, int uid){
+		String sql = "select aid from avatar_uid where aid = "
+				+  aid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "aid") != -1;
 	}
 	
-	private String GetAvatarName(int aid){
+	private String getAvatarName(int aid){
 		String sql = "select avatar_name from avatar_name where aid = " + aid + ";";
-		return Util.JDBC.ExecuteSelectString(sql, "avatar_name");
+		return Util.JDBC.executeSelectString(sql, "avatar_name");
 	}
 
 	/**

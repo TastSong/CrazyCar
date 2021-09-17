@@ -43,8 +43,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
                 });
             } else {
                 GameController.manager.warningAlert.ShowWithText("此头像需要" + avatarInfo.star + "颗星");
-            }
-            
+            }           
         }
     }
 

@@ -38,18 +38,18 @@ public class Register extends HttpServlet {
         JSONObject userInfoJB = new JSONObject();
         String token = null;
 		if(getJB != null && getJB.containsKey("UserName") && getJB.containsKey("Password")){
-			if (IsExistUser(getJB.getString("UserName"))){				
+			if (isExistUser(getJB.getString("UserName"))){				
 		        outJB.put("code", 423);
 			} else{
 				RegisterUser(getJB.getString("UserName"), getJB.getString("Password"));
-				if (IsExistUser(getJB.getString("UserName"))){				
+				if (isExistUser(getJB.getString("UserName"))){				
 			        outJB.put("code", 200);
 			        String userName = getJB.getString("UserName");
-			        token = Util.JWT.createJWTById(Util.GetDataByName(userName, "user_id"));
+			        token = Util.JWT.createJWTById(Util.getDataByName(userName, "uid"));
 			        userInfoJB.put("name", getJB.getString("UserName"));
-			        userInfoJB.put("uid", Util.GetDataByName(userName, "user_id"));
-			        userInfoJB.put("aid", Util.GetDataByName(userName, "aid"));
-			        userInfoJB.put("star", Util.GetDataByName(userName, "star"));
+			        userInfoJB.put("uid", Util.getDataByName(userName, "uid"));
+			        userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
+			        userInfoJB.put("star", Util.getDataByName(userName, "star"));
 				} else{
 			        outJB.put("code", 425);
 				}
@@ -81,28 +81,29 @@ public class Register extends HttpServlet {
 	private void RegisterUser(String userName, String password){
 		int defaultAid = 1;
 		int defaultCid = 0;
-		String sql = "insert into all_user ( user_name, user_password, login_time, aid ) values" +
-                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + "," + defaultAid +  ");";
-		Util.JDBC.ExecuteInsert(sql);
-		sql = "select user_id from all_user where user_name = "
+		int defaultStar = 14;
+		String sql = "insert into all_user ( user_name, user_password, login_time, aid, star ) values" +
+                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + "," + defaultAid + ", " + defaultStar + ");";
+		Util.JDBC.executeInsert(sql);
+		sql = "select uid from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		int uid = Util.JDBC.ExecuteSelectInt(sql, "user_id"); 
+		int uid = Util.JDBC.executeSelectInt(sql, "uid"); 
 		//插入默认头像
-		sql = "insert into avatar_index ( aid, user_id ) values" +
+		sql = "insert into avatar_uid ( aid, uid ) values" +
                 "(" + defaultAid + "," + uid +  ");";
-		Util.JDBC.ExecuteInsert(sql);
+		Util.JDBC.executeInsert(sql);
 		
 		//送一张地图
-		sql = "insert into time_trial_user_map ( cid, user_id ) values" +
+		sql = "insert into time_trial_user_map ( cid, uid ) values" +
                 "(" + defaultCid + "," + uid +  ");";
-		Util.JDBC.ExecuteInsert(sql);
+		Util.JDBC.executeInsert(sql);
 		return;
 	}
 
-	private boolean IsExistUser(String userName){
+	private boolean isExistUser(String userName){
 		String sql = "select user_password from all_user where user_name = "
 				+ "\"" + userName + "\";";
-		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
+		String rs = Util.JDBC.executeSelectString(sql, "user_password");
         return rs != null;		
 	}
 }

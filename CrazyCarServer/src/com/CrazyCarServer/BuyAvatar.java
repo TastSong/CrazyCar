@@ -50,7 +50,7 @@ public class BuyAvatar extends HttpServlet {
 		JSONObject dataJB = new JSONObject();
 		if (getJB != null && getJB.containsKey("aid")) {
 			int aid = getJB.getIntValue("aid");
-			if (ishasAvatar(aid, uid)) {
+			if (isHasAvatar(aid, uid)) {
 				outJB.put("code", 200);
 				dataJB.put("star", getUserStar(uid));
 			} else if (canBuyAvatar(uid, aid)) {
@@ -71,16 +71,16 @@ public class BuyAvatar extends HttpServlet {
 		out.close();	
 	}
 	
-	private boolean ishasAvatar(int aid, int uid){
-		String sql = "select aid from avatar_index where aid = "
-				+  aid + " and " + " user_id = " + uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "aid") != -1;
+	private boolean isHasAvatar(int aid, int uid){
+		String sql = "select aid from avatar_uid where aid = "
+				+  aid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "aid") != -1;
 	}
 	
 	private int getUserStar(int uid){
-		String sql = "select star from all_user where user_id = "
+		String sql = "select star from all_user where uid = "
 				+ uid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "star");
+		return Util.JDBC.executeSelectInt(sql, "star");
 	}
 	
 	private boolean canBuyAvatar(int uid, int aid) {
@@ -92,18 +92,18 @@ public class BuyAvatar extends HttpServlet {
 	private int getStarByAid(int aid) {
 		String sql = "select star from avatar_name where aid = "
 				+  aid + ";";
-		return Util.JDBC.ExecuteSelectInt(sql, "star");
+		return Util.JDBC.executeSelectInt(sql, "star");
 	}
 	
 	private void bugAvatar(int uid, int aid) {
 		int curStar = getUserStar(uid) - getStarByAid(aid);
 		String sql = "update all_user set star = "
-				+  curStar + " where user_id = " + uid + ";";
-		Util.JDBC.ExecuteInsert(sql);
+				+  curStar + " where uid = " + uid + ";";
+		Util.JDBC.executeInsert(sql);
 
-		sql = "insert into avatar_index ( aid, user_id ) values" +
+		sql = "insert into avatar_uid ( aid, uid ) values" +
                 "(" + aid + "," + uid +  ");";
-		Util.JDBC.ExecuteInsert(sql);
+		Util.JDBC.executeInsert(sql);
 	}
 	
 

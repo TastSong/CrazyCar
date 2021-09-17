@@ -27,6 +27,7 @@ namespace Utils {
         public static string buyAvatarUrl = "BuyAvatar";
         public static string resourceUrl = "Resource";
         public static string timeTrialDetailUrl = "TimeTrialDetail";
+        public static string buyTimeTrialClassUrl = "BuyTimeTrialClass";
         public static string timeTrialResultUrl = "TimeTrialResult";
         public static string timeTrialRankUrl = "TimeTrialRank";
     }

@@ -42,15 +42,15 @@ public class Login extends HttpServlet {
 		JSONObject userInfoJB = new JSONObject();
 		String token = null;
 		if (getJB != null && getJB.containsKey("UserName") && getJB.containsKey("Password")
-				&& IsExistUser(getJB.getString("UserName"))) {
+				&& isExistUser(getJB.getString("UserName"))) {
 			String userName = getJB.getString("UserName");
-			if (IsPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))) {
+			if (isPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))) {
 				outJB.put("code", 200);
-				token = Util.JWT.createJWTById(Util.GetDataByName(userName, "user_id"));
+				token = Util.JWT.createJWTById(Util.getDataByName(userName, "uid"));
 				userInfoJB.put("name", getJB.getString("UserName"));
-				userInfoJB.put("uid", Util.GetDataByName(userName, "user_id"));
-				userInfoJB.put("aid", Util.GetDataByName(userName, "aid"));
-				userInfoJB.put("star", Util.GetDataByName(userName, "star"));
+				userInfoJB.put("uid", Util.getDataByName(userName, "uid"));
+				userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
+				userInfoJB.put("star", Util.getDataByName(userName, "star"));
 			} else {
 				outJB.put("code", 423);
 			}
@@ -70,9 +70,9 @@ public class Login extends HttpServlet {
 		out.close();
 	}
 
-	private boolean IsPasswordRight(String userName, String password) {
+	private boolean isPasswordRight(String userName, String password) {
 		String sql = "select user_password from all_user where user_name = " + "\"" + userName + "\";";
-		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
+		String rs = Util.JDBC.executeSelectString(sql, "user_password");
 		if (rs == null) {
 			return false;
 		} else {
@@ -80,9 +80,9 @@ public class Login extends HttpServlet {
 		}
 	}
 
-	private boolean IsExistUser(String userName) {
+	private boolean isExistUser(String userName) {
 		String sql = "select user_password from all_user where user_name = " + "\"" + userName + "\";";
-		String rs = Util.JDBC.ExecuteSelectString(sql, "user_password");
+		String rs = Util.JDBC.executeSelectString(sql, "user_password");
 		return rs != null;
 	}
 

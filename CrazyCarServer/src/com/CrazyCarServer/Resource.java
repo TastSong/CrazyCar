@@ -36,10 +36,10 @@ public class Resource extends HttpServlet {
 
 		PrintWriter out = response.getWriter();				
         JSONObject carJB = new JSONObject();        
-        carJB.put("hash", GetContent("r_hash", "avatar"));
-        carJB.put("crc", GetContent("r_crc", "avatar"));
-        carJB.put("url", GetContent("r_url", "avatar"));
-        carJB.put("size", GetContent("r_size", "avatar"));
+        carJB.put("hash", getContent("r_hash", "avatar"));
+        carJB.put("crc", getContent("r_crc", "avatar"));
+        carJB.put("url", getContent("r_url", "avatar"));
+        carJB.put("size", getContent("r_size", "avatar"));
         JSONObject dataJB = new JSONObject();
         dataJB.put("avatar", carJB);
         
@@ -52,9 +52,9 @@ public class Resource extends HttpServlet {
 		out.close();
 	}
 	
-	private String GetContent(String key, String r_name) {
+	private String getContent(String key, String r_name) {
 		String sql = "select * from ab_resource where r_name = " + "\"" + r_name + "\";";
-		String rs = Util.JDBC.ExecuteSelectString(sql, key);
+		String rs = Util.JDBC.executeSelectString(sql, key);
 		return rs;
 	}
 
