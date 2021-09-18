@@ -231,9 +231,27 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ### 二、登录
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph LR
+start-->LoginUI-->IsRemember{IsRemember}--Yes-->ClickLoginBtn-->PostLogin-->IsSucc{IsSucc}--Yes-->HomepageUI-->End;
+IsRemember--No-->EditUserName-->ClickLoginBtn;
+IsSucc--No-->EditUserName;
+```
+
+
 
 #### 后台
+
+1. 接口：Login.java
+
+2. | Field | Type | Description |
+   | :---- | :--- | :---------- |
+   |       |      |             |
+   |       |      |             |
+
+   
 
 #### 数据库
 
