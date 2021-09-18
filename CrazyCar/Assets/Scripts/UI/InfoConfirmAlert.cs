@@ -38,14 +38,12 @@ public class InfoConfirmAlert : MonoBehaviour {
     }
 
     public int ShowWithText(string title = "提示", string content = "", Util.NoneParamFunction success = null, Util.NoneParamFunction fail = null,
-        string confirmText = "确定", string cancelText = "取消", ConfirmAlertType type = ConfirmAlertType.Double,
-        int titleTextFont = 20, float bgHeight = 160f) {
+        string confirmText = "确定", string cancelText = "取消", ConfirmAlertType type = ConfirmAlertType.Double) {
         if (SceneManager.GetActiveScene().buildIndex == (int)SceneID.Loading) {
             // 在场景正在loading时 延迟加载
             GameController.manager.StartCoroutine(DelayShow(title, content, success, fail, confirmText, cancelText, type));
             return 0;
         }
-        titleText.fontSize = titleTextFont;
         contentText.text = content;
         if (content == "") {
             Debug.LogError("没内容弹啥弹窗！！！！！！！！！！！！！！！！");
