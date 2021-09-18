@@ -190,3 +190,96 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 3. 后台通过 `request.getHeader("Authorization");`获取`Token`
 4. 后台生成的`Token`中的`Id`部分为用户`Id`
 
+### 三、DOTween
+
+1. 动画插件
+
+### 四、Cinemachine(官方插件)
+
+1. 虚拟摄像机，用来追踪Player
+
+## 功能
+
+### 一、资源热更
+
+#### 前端
+
+1. 利用Unity的AB包功能进行实现`ApplicationBuilder`编辑器
+2. 通过面板中的`Window/Build/AB/` 进行AB包制作
+3. 通过面板中的`Window/Build/Local`和`Window/Build/Remote`可以进行打板
+4. 打板过程中会拉取后台资源热更接口，使得打出来的版本不需要热更，便可以直接使用
+5. 热更原理：每次进入游戏前需要对比本地`Assets/StreamingAssets/config.json`中的`Hash`是否与线上一致，从而判断是否需要更新
+
+#### 后台
+
+1. 接口：Resource.java
+2. 不需要`JWT`
+
+#### 数据库
+
+1. 表名：ab_resource
+2. 字段： `r_id `    ` r_name`    `r_hash`   `r_crc`     `r_url`    `r_size` 
+
+#### 使用方法
+
+> 例如头像需要给线上版本添加新的资源
+
+1. 将新头像放入`Assets\AB\Avatar`文件夹
+2. 点击`Window/Build/AB/Remote`编辑资源包
+3. 完成后在`Console`上会显示资源的`CRC`和`Hash`,文件大小需要到文件管理器查看
+4. 将数据更新到数据库ab_resource表中
+
+### 二、登录
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+### 三、注册
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+### 四、头像
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+### 五、计时赛详情
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+### 六、计时赛记录
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+### 七、计时赛榜单
+
+#### 前端
+
+#### 后台
+
+#### 数据库
+
+
+
+
+
+
+
