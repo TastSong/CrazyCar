@@ -204,21 +204,62 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 #### 前端
 
-1. 利用Unity的AB包功能进行实现`ApplicationBuilder`编辑器
-2. 通过面板中的`Window/Build/AB/` 进行AB包制作
-3. 通过面板中的`Window/Build/Local`和`Window/Build/Remote`可以进行打板
-4. 打板过程中会拉取后台资源热更接口，使得打出来的版本不需要热更，便可以直接使用
-5. 热更原理：每次进入游戏前需要对比本地`Assets/StreamingAssets/config.json`中的`Hash`是否与线上一致，从而判断是否需要更新
+```mermaid
+graph LR
+Start-->IsEditor{IsEditor}--No-->PostResource-->HaveNewResource{HaveNewResource}--Hava-->DownloadResource-->IsFinish--No-->Exit-->End;
+IsEditor--Yes-->Login;
+HaveNewResource--NotHava-->Login;
+IsFinish--Yes-->Login-->End
+```
+
+
 
 #### 后台
 
-1. 接口：Resource.java
-2. 不需要`JWT`
+1. 接口：`Host/Resource`
+
+2. Parameter
+
+   | Field | Type | Description |
+   | :---- | :--- | :---------- |
+   | -     | -    | -           |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+           "avatar":{
+               "size":"0.1289",
+               "crc":"1242346442",
+               "hash":"9370cfe1c8e8884648f086b820bca347",
+               "url":"avatar"
+           }
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description  |
+   | :---- | :----------- |
+   | ! 200 | 拉取接口失败 |
 
 #### 数据库
 
-1. 表名：ab_resource
-2. 字段： `r_id `    ` r_name`    `r_hash`   `r_crc`     `r_url`    `r_size` 
+1. 表名：`ab_resource`
+
+2. Parameter
+
+   | Field              | Type         | Description |
+   | :----------------- | :----------- | :---------- |
+   | r_id (primary key) | int          | 资源ID      |
+   | r_name             | varchar(100) | 资源名      |
+   | r_hash             | VARCHAR(40)  | 资源Hash    |
+   | r_crc              | VARCHAR(40)  | 资源CRC     |
+   | r_url              | VARCHAR(40)  | 资源URL     |
+   | r_size             | VARCHAR(40)  | 资源Size    |
 
 #### 使用方法
 
@@ -244,56 +285,487 @@ IsSucc--No-->EditUserName;
 
 #### 后台
 
-1. 接口：Login.java
+1. 接口：`Host/Login`
 
-2. | Field | Type | Description |
-   | :---- | :--- | :---------- |
-   |       |      |             |
-   |       |      |             |
+2. Parameter
 
-   
+   | Field    | Type   | Description |
+   | :------- | :----- | :---------- |
+   | UserName | string | 用户名      |
+   | Password | string | 密码        |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+           "user_info":{
+               "uid":1,
+               "star":13,
+               "name":"tast",
+               "aid":12
+           },
+           								"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjMxOTQ1Njc5LCJzdWIiOiJDcmF6eUNhciIsImlzcyI6IlRhc3RTb25nIiwiZXhwIjoxNjMxOTUxNjc5fQ.7_5peioQaU1XmMR238H0sIcdlJjUG2XbzHrD-9PojUY"
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description |
+   | :---- | :---------- |
+   | 423   | 密码错误    |
+   | 404   | 用户未注册  |
 
 #### 数据库
+
+1. 表名：`all_user`
+
+2. Parameter
+
+   | Field             | Type         | Description |
+   | :---------------- | :----------- | :---------- |
+   | uid (primary key) | int          | 用户ID      |
+   | user_name         | varchar(100) | 用户名      |
+   | user_password     | VARCHAR(40)  | 密码        |
+   | login_time        | int          | 注册时间    |
+   | aid               | int          | 当前头像ID  |
+   | star              | int          | 星星数      |
 
 ### 三、注册
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph LR
+start-->LoginUI-->ClickRegisterBotton-->EidtUserName-->ClickRegisterBtn-->IsLegalInput{IsLegalInput}--Yes-->PostRequest-->IsSucc{IsSucc}--Yes-->HomepageUI-->End;
+IsLegalInput--No-->EidtUserName;
+IsSucc--No-->EidtUserName;
+```
+
+
 
 #### 后台
 
+1. 接口：`Host/Register`
+
+2. Parameter
+
+   | Field    | Type   | Description |
+   | :------- | :----- | :---------- |
+   | UserName | string | 用户名      |
+   | Password | string | 密码        |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+           "user_info":{
+               "uid":7,
+               "star":14,
+               "name":"Taylor",
+               "aid":1
+           },
+           "token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3IiwiaWF0IjoxNjMxOTQ5NTQ1LCJzdWIiOiJDcmF6eUNhciIsImlzcyI6IlRhc3RTb25nIiwiZXhwIjoxNjMxOTU1NTQ1fQ.d82x7zabQtVaXogi5wdp0M1tPz4ybyi_3grsThnL83c"
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description  |
+   | :---- | :----------- |
+   | 423   | 用户已注册   |
+   | 425   | 信息格式不对 |
+
 #### 数据库
+
+1. 表名：`all_user`
+
+2. Parameter
+
+   | Field             | Type         | Description |
+   | :---------------- | :----------- | :---------- |
+   | uid (primary key) | int          | 用户ID      |
+   | user_name         | varchar(100) | 用户名      |
+   | user_password     | VARCHAR(40)  | 密码        |
+   | login_time        | int          | 注册时间    |
+   | aid               | int          | 当前头像ID  |
+   | star              | int          | 星星数      |
 
 ### 四、头像
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph TB
+start-->ClickHomepageAvatarBtn-->PostAvatar-->UpdataUI;
+UpdataUI-->ClickUnlockAvatar-->ClickApplyBtn-->PostChangeAvatar-->IsSucc0{IsSucc}--Yes-->UpdataCurAvatarUI-->ChangeCurAvatar-->End;
+UpdataUI-->ClickLockAvatar-->IsBuy{IsBuy}--Yes-->IsEnoughStar--Yes-->PostBuyAvatar-->IsSucc1{IsSucc}--Yes-->ClickUnlockAvatar;
+IsBuy--No-->End;
+IsEnoughStar--No-->End;
+IsSucc1--No-->End;
+```
+
+
 
 #### 后台
 
+1. * 接口：`Host/Avarar`
+
+   * Parameter
+
+     | Field | Type | Description |
+     | :---- | :--- | :---------- |
+     | -     | -    | -           |
+
+   * Success Callback 
+   
+     ```
+     {
+        "code":200,
+         "data":{
+             "current_aid":12,
+             "avatars":[
+                 {
+                     "star":3,
+                     "name":"Tast 0",
+                     "is_has":true,
+                     "aid":0
+                 },
+                 {
+                     "star":2,
+                     "name":"Black 1",
+                     "is_has":false,
+                     "aid":1
+                 }
+             ]
+         }
+     }
+     ```
+   
+   * Error Code
+   
+     | Field | Description |
+     | :---- | :---------- |
+     | -     | -           |
+   
+     
+
+2. * 接口：`Host/ChangeAvatar`
+
+   * Parameter
+
+     | Field | Type | Description      |
+     | :---- | :--- | :--------------- |
+     | aid   | int  | 想要切换的头像ID |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "aid":2
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | 423   | 未拥有      |
+
+     
+
+3. * 接口：`Host/BuyAvatar`
+
+   * Parameter
+
+     | Field | Type | Description      |
+     | :---- | :--- | :--------------- |
+     | aid   | int  | 想要购买的头像ID |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "star":10
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | 423   | 星星不足    |
+
 #### 数据库
+
+1. * 表名：`avatar_name`
+
+   * Parameter
+
+     | Field            | Type        | Description    |
+     | :--------------- | :---------- | :------------- |
+     | id (primary key) | int         | ID             |
+     | aid              | int         | 头像ID         |
+     | avatar_name      | VARCHAR(40) | 头像名         |
+     | star             | int         | 开锁所需星星数 |
+
+2. * 表名：`avatar_uid`
+
+   * Parameter
+
+     | Field            | Type | Description |
+     | :--------------- | :--- | :---------- |
+     | id (primary key) | int  | ID          |
+     | aid              | int  | 头像ID      |
+     | uid              | int  | 用户ID      |
 
 ### 五、计时赛详情
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph TB
+start-->PostTimeTrialDetail-->UpdataUI-->ClickUnlock-->JoinGame-->End;
+UpdataUI-->ClickLock-->IsBuy{IsBuy}--Yes-->IsEnoughStar--Yes-->PostBuy-->IsSucc{IsSucc}--Yes-->ClickUnlock;
+IsBuy--No-->End;
+IsEnoughStar--No-->End;
+IsSucc--No-->End;
+```
+
+
 
 #### 后台
 
+1. * 接口：`Host/TimeTrialDetail`
+
+   * Parameter
+
+     | Field | Type | Description |
+     | :---- | :--- | :---------- |
+     | -     | -    | -           |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":[
+             {
+                 "star":2,
+                 "map_id":0,
+                 "name":"Map 0",
+                 "is_has":true,
+                 "cid":0,
+                 "limit_time":60
+             },
+             {
+                 "star":1,
+                 "map_id":1,
+                 "name":"Map 1",
+                 "is_has":true,
+                 "cid":1,
+                 "limit_time":70
+             }
+         ]
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | -     | -           |
+
+     
+
+2. * 接口：`Host/BuyTimeTrialClass
+
+   * Parameter
+
+     | Field | Type | Description      |
+     | :---- | :--- | :--------------- |
+     | cid   | int  | 想要购买的课程ID |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "star":10
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | 423   | 星星不足    |
+
 #### 数据库
+
+1. * 表名：`time_trial_class`
+
+   * Parameter
+
+     | Field             | Type        | Description    |
+     | :---------------- | :---------- | :------------- |
+     | cid (primary key) | int         | 课程ID         |
+     | map_id            | int         | 地图ID         |
+     | class_name        | VARCHAR(40) | 课程名         |
+     | star              | int         | 开锁所需星星数 |
+     | limit_time        | int         | 限制时间       |
+
+2. * 表名：`time_trial_user_map`
+
+   * Parameter
+
+     | Field            | Type | Description |
+     | :--------------- | :--- | :---------- |
+     | id (primary key) | int  | ID          |
+     | cid              | int  | 课程ID      |
+     | uid              | int  | 用户ID      |
 
 ### 六、计时赛记录
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph LR
+start-->JoinGame-->IsArriveLimitTime-->TimeTrialResultUI-->PostResult-->IsSucc{IsSucc}--Yes-->ShowRankAndResult-->End;
+JoinGame-->CompleteGame-->TimeTrialResultUI;
+IsSucc--No-->End;
+```
+
+
 
 #### 后台
 
+1. 接口：`Host/TimeTrialResult`
+
+2. Parameter
+
+   | Field         | Type | Description            |
+   | :------------ | :--- | :--------------------- |
+   | uid           | int  | 用户ID                 |
+   | cid           | int  | 课程ID                 |
+   | complete_time | int  | 完成时间(-1代表未完成) |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+           "is_break_record":false,
+           "complete_time":16,
+           "is_win":true, // 按时完成比赛
+           "rank":-1 // 为打破之前成绩记录，所以成绩不上榜
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description |
+   | :---- | :---------- |
+   | -     | -           |
+
 #### 数据库
+
+1. 表名：`time_trial_record`
+
+2. Parameter
+
+   | Field            | Type | Description  |
+   | :--------------- | :--- | :----------- |
+   | id (primary key) | int  | ID           |
+   | uid              | int  | 用户ID       |
+   | cid              | int  | 课程ID       |
+   | complete_time    | int  | 完成时间     |
+   | record_time      | int  | 上传记录时间 |
 
 ### 七、计时赛榜单
 
-#### 前端
+#### 前端 
+
+```mermaid
+graph LR
+start-->TimeTrialResultUI-->PostRankRequest-->IsSucc{IsSucc}--Yes-->ShowRank-->End;
+IsSucc--No-->End;
+```
+
+
 
 #### 后台
 
+1. 接口：`Host/TimeTrialRank`
+
+2. Parameter
+
+   | Field | Type | Description |
+   | :---- | :--- | :---------- |
+   | cid   | int  | 课程ID      |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":[
+           {
+               "complete_time":10,
+               "name":"qwe",
+               "rank":1,
+               "aid":2
+           },
+           {
+               "complete_time":14,
+               "name":"Tast",
+               "rank":2,
+               "aid":2
+           },
+           {
+               "complete_time":14,
+               "name":"asd",
+               "rank":3,
+               "aid":1
+           }
+       ]
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description |
+   | :---- | :---------- |
+   | -     | -           |
+
 #### 数据库
+
+1. 表名：`time_trial_rank_0` 临时表
+
+2. Parameter
+
+   | Field             | Type | Description |
+   | :---------------- | :--- | :---------- |
+   | uid (primary key) | int  | 用户ID      |
+   | rank              | int  | 排名        |
+   | aid               | int  | 用户头像ID  |
+   | complete_time     | int  | 完成时间    |
+   | name              | int  | 用户名      |
 
 
 
