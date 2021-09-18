@@ -41,7 +41,7 @@ public class Register extends HttpServlet {
 			if (isExistUser(getJB.getString("UserName"))){				
 		        outJB.put("code", 423);
 			} else{
-				RegisterUser(getJB.getString("UserName"), getJB.getString("Password"));
+				registerUser(getJB.getString("UserName"), getJB.getString("Password"));
 				if (isExistUser(getJB.getString("UserName"))){				
 			        outJB.put("code", 200);
 			        String userName = getJB.getString("UserName");
@@ -78,7 +78,7 @@ public class Register extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void RegisterUser(String userName, String password){
+	private void registerUser(String userName, String password){
 		int defaultAid = 1;
 		int defaultCid = 0;
 		int defaultStar = 14;

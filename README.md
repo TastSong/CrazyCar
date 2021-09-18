@@ -246,6 +246,13 @@ IsFinish--Yes-->Login-->End
    | :---- | :----------- |
    | ! 200 | 拉取接口失败 |
 
+5. Flow  Chart
+
+   ```mermaid
+   graph LR
+   Start-->Resource-->GetDataFromDB-->200-->End;
+   ```
+
 #### 数据库
 
 1. 表名：`ab_resource`
@@ -318,6 +325,17 @@ IsSucc--No-->EditUserName;
    | 423   | 密码错误    |
    | 404   | 用户未注册  |
 
+5. Flow Chart
+
+   ```mermaid
+   graph LR
+   Start-->Login-->IsExistUser{IsExistUser}--Yes-->IsPasswordRight{IsPasswordRight}--Right-->CreateToken-->200-->End;
+   IsExistUser--No-->404-->End;
+   IsPasswordRight--No-->423-->End;
+   ```
+
+   
+
 #### 数据库
 
 1. 表名：`all_user`
@@ -381,6 +399,17 @@ IsSucc--No-->EidtUserName;
    | 423   | 用户已注册   |
    | 425   | 信息格式不对 |
 
+5. Flow Chat
+
+   ```mermaid
+   graph LR
+   Start-->Register-->IsExistUser{IsExistUser}--Yes-->423-->End;
+   IsExistUser--No-->RegisterUser-->IsExistUser2{IsExistUser}--Yes-->CreateToken-->200-->End;
+   IsExistUser2--No-->425-->End;
+   ```
+
+   
+
 #### 数据库
 
 1. 表名：`all_user`
@@ -423,7 +452,7 @@ IsSucc1--No-->End;
      | -     | -    | -           |
 
    * Success Callback 
-   
+
      ```
      {
         "code":200,
@@ -446,13 +475,21 @@ IsSucc1--No-->End;
          }
      }
      ```
-   
+
    * Error Code
-   
+
      | Field | Description |
      | :---- | :---------- |
      | -     | -           |
-   
+
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetAllAvatarID-->isHasAvatar-->200-->End;
+     GetUidByToken--No-->End;
+     ```
+
      
 
 2. * 接口：`Host/ChangeAvatar`
@@ -480,6 +517,16 @@ IsSucc1--No-->End;
      | :---- | :---------- |
      | 423   | 未拥有      |
 
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetAidByRequest{GetAidByRequest}--Yes-->IsHavaAvatar{IsHavaAvatar}--Yes-->SetAvatar-->200-->End;
+     GetUidByToken--No-->End;
+     GetAidByRequest--No-->404-->End;
+     IsHavaAvatar--No-->423-->End;
+     ```
+
      
 
 3. * 接口：`Host/BuyAvatar`
@@ -506,6 +553,19 @@ IsSucc1--No-->End;
      | Field | Description |
      | :---- | :---------- |
      | 423   | 星星不足    |
+     
+   * Flow Chat
+   
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetAidByRequest{GetAidByRequest}--Yes-->IsHavaAvatar{IsHavaAvatar}--Yes-->200-->End;
+     GetUidByToken--No-->End;
+     GetAidByRequest--No-->404-->End;
+     IsHavaAvatar--No-->CanBuyAvatar{CanBuyAvatar}--Yes-->BuyAvatar-->200;
+     CanBuyAvatar--No-->423-->End;
+     ```
+   
+     
 
 #### 数据库
 
@@ -587,6 +647,14 @@ IsSucc--No-->End;
      | :---- | :---------- |
      | -     | -           |
 
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetAllClassID-->200-->End;
+     GetUidByToken--No-->End;
+     ```
+
      
 
 2. * 接口：`Host/BuyTimeTrialClass
@@ -613,6 +681,19 @@ IsSucc--No-->End;
      | Field | Description |
      | :---- | :---------- |
      | 423   | 星星不足    |
+     
+   * Flow Chat
+   
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetCidByRequest{GetCidByRequest}--Yes-->IsHavaClass{IsHavaClass}--Yes-->200-->End;
+     GetUidByToken--No-->End;
+     GetCidByRequest--No-->404-->End;
+     IsHavaClass--No-->CanBuyClass{CanBuyClass}--Yes-->BuyClass-->200;
+     CanBuyClass--No-->423-->End;
+     ```
+   
+     
 
 #### 数据库
 
@@ -682,6 +763,17 @@ IsSucc--No-->End;
    | Field | Description |
    | :---- | :---------- |
    | -     | -           |
+   
+5. Flow Chat
+
+   ```mermaid
+   graph LR
+   Start-->IsLegalJWT{IsLegalJWT}--Yes-->GetDataByRequest{GetDataByRequest}--Yes-->InsertDataToDB-->200-->End;
+   IsLegalJWT-->End;
+   GetDataByRequest--No-->404-->End;
+   ```
+
+   
 
 #### 数据库
 
@@ -752,6 +844,17 @@ IsSucc--No-->End;
    | Field | Description |
    | :---- | :---------- |
    | -     | -           |
+   
+5. Flow Chat
+
+   ```mermaid
+   graph LR
+   Start-->IsLegalJWT{IsLegalJWT}--Yes-->GetDataByRequest{GetDataByRequest}--Yes-->GetDataByDB-->200-->End;
+   IsLegalJWT-->End;
+   GetDataByRequest--No-->404-->End;
+   ```
+
+   
 
 #### 数据库
 
