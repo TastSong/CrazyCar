@@ -31,7 +31,7 @@ public class Register extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
+		response.setContentType("text/html;charset=UTF-8");
 		JSONObject getJB = Util.getMsgData(request);		
 		PrintWriter out = response.getWriter();		
         JSONObject outJB = new JSONObject();
@@ -64,7 +64,7 @@ public class Register extends HttpServlet {
 		dataJB.put("token", token);
 
 		outJB.put("data", dataJB);
-
+		System.out.println("Register " + outJB.toString());
 		out.println(outJB.toString());	
 		out.flush();
 		out.close();

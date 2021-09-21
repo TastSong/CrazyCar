@@ -38,7 +38,7 @@ public class Util {
 		static final String PASS = "164728";
 
 		public static String executeSelectString(String sql, String key) {
-			System.out.println("ExecuteSelect sql = " + sql);
+			//System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
 			String resultStr = null;
@@ -59,10 +59,10 @@ public class Util {
 				while (rs.next()) {
 					// 通过字段检索
 					resultStr = rs.getString(key);
-					System.out.println("ExecuteSelect : " + key + " = " + resultStr);
+					//System.out.println("ExecuteSelect : " + key + " = " + resultStr);
 				}
 				// 完成后关闭
-				System.out.println("ExecuteSelect  Finish");
+				//System.out.println("ExecuteSelect  Finish");
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -94,7 +94,7 @@ public class Util {
 		}
 		
 		public static int executeSelectInt(String sql, String key) {
-			System.out.println("ExecuteSelect sql = " + sql);
+			//System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
 			int resultInt = -1;
@@ -113,10 +113,10 @@ public class Util {
 				while (rs.next()) {
 					// 通过字段检索
 					resultInt = rs.getInt(key);
-					System.out.println("ExecuteSelect : " + key + " = " + resultInt);
+					//System.out.println("ExecuteSelect : " + key + " = " + resultInt);
 				}
 				// 完成后关闭
-				System.out.println("ExecuteSelect  Finish");
+				//System.out.println("ExecuteSelect  Finish");
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -148,7 +148,7 @@ public class Util {
 		}
 		
 		public static List<Integer> executeSelectAllInt(String sql, String key) {
-			System.out.println("ExecuteSelect sql = " + sql);
+			//System.out.println("ExecuteSelect sql = " + sql);
 			Connection conn = null;
 			Statement stmt = null;
 			List<Integer> resultList = new ArrayList<Integer>();
@@ -169,10 +169,10 @@ public class Util {
 				while (rs.next()) {
 					// 通过字段检索
 					resultList.add(rs.getInt(key));
-					System.out.println("ExecuteSelect : " + key + " = " + rs.getInt(key));
+					//System.out.println("ExecuteSelect : " + key + " = " + rs.getInt(key));
 				}
 				// 完成后关闭
-				System.out.println("ExecuteSelect  Finish");
+				//System.out.println("ExecuteSelect  Finish");
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -205,7 +205,7 @@ public class Util {
 		
 		public static void executeInsert(String sql) {
 			Connection conn = null;
-			System.out.println("ExecuteInsert sql = " + sql);	
+			System.out.println("Execute Insert sql = " + sql);	
 			try {
 				// 注册 JDBC 驱动
 				Class.forName(JDBC_DRIVER);
@@ -213,7 +213,7 @@ public class Util {
 
 				PreparedStatement pst = conn.prepareStatement(sql);
 	            pst.executeUpdate();
-				System.out.println(" ExecuteInsert Finish " + pst);
+				//System.out.println(" ExecuteInsert Finish " + pst);
 				conn.close();
 				return;
 			} catch (SQLException se) {

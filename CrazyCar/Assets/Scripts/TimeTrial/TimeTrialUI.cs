@@ -7,6 +7,7 @@ using TinyMessenger;
 
 public class TimeTrialUI : MonoBehaviour{
     public CountDownAnim countDownAnim;
+    public Button exitBtn;
     public Text limitTimeText;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
@@ -37,6 +38,18 @@ public class TimeTrialUI : MonoBehaviour{
     }
 
     private void Start() {
+        exitBtn.onClick.AddListener(() => {
+            Time.timeScale = 0;
+            GameController.manager.infoConfirmAlert.ShowWithText(content: "是否退出游戏",
+                success: () => {
+                    Time.timeScale = 1;
+                    Util.LoadingScene(SceneID.Index);
+                },
+                fail: () => {
+                    Time.timeScale = 1;
+                });
+        });
+
         frontBtn.SetClick((float time) => {
             timeTrialPlayer.vInput = 1;
         });

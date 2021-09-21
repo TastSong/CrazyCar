@@ -49,6 +49,10 @@ public class RegisterUI : MonoBehaviour
                     GameController.manager.loginManager.ParseLoginData(data);
                 }, code : (code) => {
                     if (code == 200) {
+                        if (PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
+                            PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
+                            PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
+                        }
                         GameController.manager.warningAlert.ShowWithText(text : "注册成功", callback : () => {
                             Util.LoadingScene(SceneID.Index);
                         });

@@ -31,7 +31,7 @@ public class Resource extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
+		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("Resource ...");
 
 		PrintWriter out = response.getWriter();				
