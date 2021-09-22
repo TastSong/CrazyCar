@@ -9,7 +9,9 @@ using Utils;
 public enum UIPageType {
     HomepageUI = 0,
     AvatarUI,
-    TimeTrialDetailUI
+    TimeTrialDetailUI,
+    ProfileUI,
+    SettingsUI
 }
 
 public class UIManager : MonoBehaviour {

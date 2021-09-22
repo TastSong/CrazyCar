@@ -870,6 +870,70 @@ IsSucc--No-->End;
    | complete_time     | int  | 完成时间    |
    | name              | int  | 用户名      |
 
+### 八、强制更新
+
+#### 前端 
+
+```mermaid
+graph LR
+start-->IsEditor{IsEditor}--No-->BeforeRequestRes-->PostIsForcedUpdating--Yes-->SkipDownload-->Updating-->End;
+IsEditor--Yes-->End;
+PostIsForcedUpdating--No-->End;
+```
+
+
+
+#### 后台
+
+1. 接口：`Host/ForcedUpdating`
+
+2. Parameter
+
+   | Field    | Type   | Description |
+   | :------- | :----- | :---------- |
+   | platform | string | 平台        |
+   | version  | string | 版本号      |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+       	is_forced_updating : false
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description |
+   | :---- | :---------- |
+   | -     | -           |
+
+5. Flow Chat
+
+   ```mermaid
+   graph LR
+   Start-->GetDataFromRequest--Yes-->GetCurVersionByPlatform-->GetCurRuleByPlatform-->CheckDataByRule--Yes-->ReturnTrue-->End;
+   GetDataFromRequest--No-->End;
+   CheckDataByRule--No-->ReturnFalse-->End;
+   ```
+
+
+#### 数据库
+
+1. 表名：`forced_updating` 
+
+2. Parameter
+
+   | Field            | Type   | Description |
+   | :--------------- | :----- | :---------- |
+   | id (primary key) | int    | ID          |
+   | platform         | string | 平台        |
+   | version          | string | 当前版本号  |
+   | rule             | string | 规则        |
+
 
 
 

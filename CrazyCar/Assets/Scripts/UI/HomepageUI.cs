@@ -8,6 +8,7 @@ using TinyMessenger;
 public class HomepageUI : MonoBehaviour {
     public Button avatarBtn;
     public Image avatarImage;
+    public Image vipImage;
     public Button joinGameBtn;
     public Text starText;
     public Text nickNameText;
@@ -17,6 +18,10 @@ public class HomepageUI : MonoBehaviour {
     public Button infoBtn;
     public Button questionBtn;
     public Button exitBtn;
+    public Button psrofileBtn;
+    public Button changeCarBtn;
+    public Button rankingBtn;
+    public Button settingBtn;
 
     private TinyMessageSubscriptionToken homepageToken;
 

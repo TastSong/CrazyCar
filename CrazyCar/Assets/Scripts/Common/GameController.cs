@@ -11,6 +11,7 @@ public class UserInfo {
     public int aid;
     public int uid;
     public int star;
+    public bool isVIP;
 }
 
 public class GameController : MonoBehaviour
