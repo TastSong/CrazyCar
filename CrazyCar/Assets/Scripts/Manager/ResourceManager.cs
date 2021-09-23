@@ -17,6 +17,7 @@ public class ResourceManager {
     public static AssetBundle avatar;
     public ResourceType curResourceType = ResourceType.None;
     public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
+    private Dictionary<string, EquipResource> equipResource = new Dictionary<string, EquipResource>();
 
     private string hashAvatar = "";
     private uint CRCAvatar = 0;
@@ -172,6 +173,31 @@ public class ResourceManager {
 
 #endif
             return resultSprite;
+        } catch (Exception e) {
+            Debug.LogError(e);
+            return null;
+        }
+    }
+
+    public EquipResource GetCarResource(string rid) {
+        try {
+            rid = rid.Trim();
+            if (equipResource.ContainsKey(rid)) {
+                return equipResource[rid];
+            }
+#if !UNITY_EDITOR
+            var o = ResourceManager.equip.LoadAsset<GameObject>("Assets/AB/Car/_Items/" + rid + ".prefab");
+			if(o == null) {
+				return null;
+			}
+			var e = o.GetComponent<EquipResource>();
+#else
+            var e = UnityEditor.AssetDatabase.LoadAssetAtPath<EquipResource>(
+                "Assets/AB/Car/_Items/" + rid + ".prefab");
+
+#endif
+            equipResource[rid] = e;
+            return e;
         } catch (Exception e) {
             Debug.LogError(e);
             return null;
