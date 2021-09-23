@@ -13,13 +13,14 @@ namespace Ricimi
         public Sprite enabledSprite;
         public Sprite disabledSprite;
 
-        private bool m_swapped = true;
+        private bool m_swapped;
 
         private Image m_image;
 
         public void Awake()
         {
             m_image = GetComponent<Image>();
+            m_swapped = PlayerPrefs.GetInt("sound_on") == 1;
         }
 
         public void SwapSprite()

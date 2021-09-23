@@ -16,10 +16,11 @@ namespace Ricimi
 
         private void Start()
         {
-            m_spriteSwapper = GetComponent<SpriteSwapper>();
+            m_spriteSwapper = GetComponentInChildren<SpriteSwapper>();
             m_on = PlayerPrefs.GetInt("sound_on") == 1;
-            if (!m_on)
+            if (!m_on) {
                 m_spriteSwapper.SwapSprite();
+            }
         }
 
         public void Toggle()
