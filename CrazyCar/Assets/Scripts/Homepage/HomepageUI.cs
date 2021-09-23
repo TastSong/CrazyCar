@@ -20,7 +20,7 @@ public class HomepageUI : MonoBehaviour {
     public Button exitBtn;
     public Button psrofileBtn;
     public Button changeCarBtn;
-    public Button rankingBtn;
+    public Button rankBtn;
     public Button settingBtn;
 
     private TinyMessageSubscriptionToken homepageToken;
@@ -68,6 +68,9 @@ public class HomepageUI : MonoBehaviour {
         });
         settingBtn.onClick.AddListener(() => {
             UIManager.manager.ShowPage(UIPageType.SettingsUI);
+        });
+        rankBtn.onClick.AddListener(() => {
+            UIManager.manager.ShowPage(UIPageType.RankUI);
         });
         // --------- Bottom Btns ---------
 

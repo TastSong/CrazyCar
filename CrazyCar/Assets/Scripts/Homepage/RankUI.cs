@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
-public class TimeTrialDetailUI : MonoBehaviour {
-    public TimeTrialItem timeTrialItem;
+public class RankUI : MonoBehaviour {
+    public RankDetailItem rankDetailItem;
     public Transform itemParent;
     public Button closeBtn;
 
@@ -21,7 +21,7 @@ public class TimeTrialDetailUI : MonoBehaviour {
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
         foreach (var kvp in GameController.manager.timeTrialManager.timeTrialDic) {
-            TimeTrialItem item = Instantiate(timeTrialItem);
+            RankDetailItem item = Instantiate(rankDetailItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);
         }

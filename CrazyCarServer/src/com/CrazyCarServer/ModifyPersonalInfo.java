@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.Util.Util;
 import com.alibaba.fastjson.JSONObject;
 
-import jdk.nashorn.internal.ir.LiteralNode.PrimitiveLiteralNode;
-
 /**
  * Servlet implementation class ModifyPersonalInfo
  */

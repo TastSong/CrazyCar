@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Anim\CountDownAnim.cs" />
+    <Compile Include="Assets\Scripts\Avatar\AvatarItem.cs" />
+    <Compile Include="Assets\Scripts\Avatar\AvatarUI.cs" />
     <Compile Include="Assets\Scripts\Common\AssetBundleHelper.cs" />
     <Compile Include="Assets\Scripts\Common\CarControl.cs" />
     <Compile Include="Assets\Scripts\Common\GameController.cs" />
@@ -72,10 +74,21 @@
     <Compile Include="Assets\Scripts\Common\GameHelper.cs" />
     <Compile Include="Assets\Scripts\Common\GameUIControl.cs" />
     <Compile Include="Assets\Scripts\Common\IndexCar.cs" />
+    <Compile Include="Assets\Scripts\Common\InfoConfirmAlert.cs" />
     <Compile Include="Assets\Scripts\Common\MapController.cs" />
     <Compile Include="Assets\Scripts\Common\NetworkController.cs" />
     <Compile Include="Assets\Scripts\Common\UISceneLoadingCtrl.cs" />
     <Compile Include="Assets\Scripts\Common\Util.cs" />
+    <Compile Include="Assets\Scripts\Common\WarningAlert.cs" />
+    <Compile Include="Assets\Scripts\Homepage\HomepageCtrl.cs" />
+    <Compile Include="Assets\Scripts\Homepage\HomepageUI.cs" />
+    <Compile Include="Assets\Scripts\Homepage\ProfileUI.cs" />
+    <Compile Include="Assets\Scripts\Homepage\RankDetailItem.cs" />
+    <Compile Include="Assets\Scripts\Homepage\RankUI.cs" />
+    <Compile Include="Assets\Scripts\Login\DownloadResUI.cs" />
+    <Compile Include="Assets\Scripts\Login\LoginCtr.cs" />
+    <Compile Include="Assets\Scripts\Login\LoginUI.cs" />
+    <Compile Include="Assets\Scripts\Login\RegisterUI.cs" />
     <Compile Include="Assets\Scripts\Manager\AvatarManager.cs" />
     <Compile Include="Assets\Scripts\Manager\LoginManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
@@ -97,21 +110,10 @@
     <Compile Include="Assets\Scripts\TinyMessenger\CustomTinyMsg.cs" />
     <Compile Include="Assets\Scripts\TinyMessenger\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Scripts\TinyMessenger\TinyMessenger.cs" />
-    <Compile Include="Assets\Scripts\UI\AvatarItem.cs" />
-    <Compile Include="Assets\Scripts\UI\AvatarUI.cs" />
     <Compile Include="Assets\Scripts\UI\ColorSwapper.cs" />
-    <Compile Include="Assets\Scripts\UI\DownloadResUI.cs" />
-    <Compile Include="Assets\Scripts\UI\HomepageCtrl.cs" />
-    <Compile Include="Assets\Scripts\UI\HomepageUI.cs" />
-    <Compile Include="Assets\Scripts\UI\InfoConfirmAlert.cs" />
-    <Compile Include="Assets\Scripts\UI\LoginCtr.cs" />
-    <Compile Include="Assets\Scripts\UI\LoginUI.cs" />
     <Compile Include="Assets\Scripts\UI\MusicManager.cs" />
-    <Compile Include="Assets\Scripts\UI\ProfileUI.cs" />
-    <Compile Include="Assets\Scripts\UI\RegisterUI.cs" />
     <Compile Include="Assets\Scripts\UI\SoundButton.cs" />
     <Compile Include="Assets\Scripts\UI\SpriteSwapper.cs" />
-    <Compile Include="Assets\Scripts\UI\WarningAlert.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
