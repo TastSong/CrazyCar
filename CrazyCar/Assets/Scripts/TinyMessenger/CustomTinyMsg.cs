@@ -12,7 +12,7 @@ public class HomepageUIMessage : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class DownloadResUIMessage : ITinyMessage {
+public class DownloadResFinishMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 

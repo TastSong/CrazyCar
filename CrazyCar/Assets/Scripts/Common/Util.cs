@@ -20,6 +20,7 @@ namespace Utils {
     }
 
     public static class RequestUrl {
+        public static string forcedUpdatingUrl = "ForcedUpdating";
         public static string loginUrl = "Login";
         public static string registerUrl = "Register";
         public static string avatarUrl = "Avatar";
@@ -373,6 +374,15 @@ namespace Utils {
             loadingTargetSceneID = sceneID;
             SceneManager.LoadScene((int)SceneID.Loading);
         }
-    }
 
+        public static string GetPlatform() {
+#if UNITY_STANDALONE
+        return "PC";
+#elif UNITY_ANDROID
+            return "Android";
+#elif UNITY_IOS
+        return "ios";
+#endif
+        }
+    }  
 }

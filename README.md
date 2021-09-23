@@ -900,7 +900,8 @@ PostIsForcedUpdating--No-->End;
    {
        "code":200,
        "data":{
-       	is_forced_updating : false
+       	is_forced_updating : false,
+       	url : "http://"
        }
    }
    ```
@@ -933,6 +934,7 @@ PostIsForcedUpdating--No-->End;
    | platform         | string | 平台        |
    | version          | string | 当前版本号  |
    | rule             | string | 规则        |
+   | url              | string | 下载地址    |
 
 
 

@@ -25,7 +25,7 @@ public class LoginCtr : MonoBehaviour
         registerToken = GameController.manager.tinyMsgHub.Subscribe<RegisterUIMessage>((m) => {
             registerUI.gameObject.SetActiveFast(true);
         });
-        downloadResToken = GameController.manager.tinyMsgHub.Subscribe<DownloadResUIMessage>((m) => {
+        downloadResToken = GameController.manager.tinyMsgHub.Subscribe<DownloadResFinishMsg>((m) => {
             downloadResUI.gameObject.SetActiveFast(false);
             loginUI.gameObject.SetActiveFast(true);
             registerUI.gameObject.SetActiveFast(false);

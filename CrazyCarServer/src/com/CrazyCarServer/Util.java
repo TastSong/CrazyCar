@@ -351,4 +351,12 @@ public class Util {
 		System.out.println(sb.toString());
 		return JSONObject.parseObject(sb.toString());
 	}
+	
+	public static int getSum(String[] str) {
+		int result = 0;
+		for (int i = 0; i < str.length; i++){
+			result += Integer.parseInt(str[i]) * Math.pow(10, (str.length - i -1));
+		}
+		return result;
+	}
 }

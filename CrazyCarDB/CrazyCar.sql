@@ -327,6 +327,23 @@ select count(rank_num) as rank_count from  time_trial_rank_0;
 select * from time_trial_rank_0;			
 select uid from time_trial_rank_0 where rank_num = 4;
 
-
-
+/*forced_updating*/
+create table if not exists `forced_updating`(
+    `id` int unsigned auto_increment,
+	`platform` VARCHAR(100) not null,
+    `version` VARCHAR(100) not null,
+    `rule` int not null,
+    `url` VARCHAR(100) not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into forced_updating ( platform, version, rule, url)
+				   values
+				   ("Android", "2.0.0", 10, "https://gitee.com/TastSong/CrazyCar");
+insert into forced_updating ( platform, version, rule, url)
+				   values
+				   ("ios", "2.0.0", 0, "https://gitee.com/TastSong/CrazyCar");
+insert into forced_updating ( platform, version, rule, url)
+				   values
+				   ("PC", "2.0.0", 0, "https://gitee.com/TastSong/CrazyCar");                   
+select * from forced_updating;
 
