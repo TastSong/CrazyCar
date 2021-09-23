@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 6281410679638060731}
   - component: {fileID: 7498224631437877040}
   m_Layer: 5
-  m_Name: Text - Blue
+  m_Name: TravelTimesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,6 +829,80 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4355045202838817431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6137462474986344081}
+  - component: {fileID: 5674559795593024492}
+  - component: {fileID: 1817610515093490642}
+  m_Layer: 5
+  m_Name: VIPImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6137462474986344081
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355045202838817431}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1823135754459109250}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -16.5, y: 16.5}
+  m_SizeDelta: {x: 33, y: 33}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5674559795593024492
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355045202838817431}
+  m_CullTransparentMesh: 0
+--- !u!114 &1817610515093490642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355045202838817431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 085e477a06c1df549b3dceb9ea877445, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4868198262214370991
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +989,7 @@ GameObject:
   - component: {fileID: 2293238322427303752}
   - component: {fileID: 2373465388148860611}
   m_Layer: 5
-  m_Name: Text - Blue
+  m_Name: MapsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1014,6 +1088,7 @@ RectTransform:
   - {fileID: 1368665204889791079}
   - {fileID: 7091053653970751093}
   - {fileID: 8272359250122274745}
+  - {fileID: 6137462474986344081}
   m_Father: {fileID: 554053594362271514}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2165,7 +2240,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2179,7 +2254,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5634911295024357301}
   m_TextComponent: {fileID: 5634911295193743599}
   m_Placeholder: {fileID: 5634911294933607934}
@@ -2367,6 +2442,7 @@ GameObject:
   - component: {fileID: 5634911295440943770}
   - component: {fileID: 5634911295440943772}
   - component: {fileID: 5634911295440943773}
+  - component: {fileID: 1777815252510282433}
   m_Layer: 5
   m_Name: ProfileUI
   m_TagString: Untagged
@@ -2431,6 +2507,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1777815252510282433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634911295440943771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1f2307b33085c4d97e96405deeeb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeBtn: {fileID: 7911835370239863124}
+  avatarImage: {fileID: 5316948111452467793}
+  vipImage: {fileID: 1817610515093490642}
+  userNameInput: {fileID: 5634911295843142490}
+  userNameBtn: {fileID: 849182998954081965}
+  passwordInput: {fileID: 5634911295024357298}
+  passwordBtn: {fileID: 2410947491174526544}
+  travelTimesText: {fileID: 7498224631437877040}
+  avatarText: {fileID: 4587847115060251310}
+  mapsText: {fileID: 2373465388148860611}
+  starText: {fileID: 2907421118110349876}
 --- !u!1 &5634911295843142488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,7 +2634,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2549,7 +2648,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5634911295843142493}
   m_TextComponent: {fileID: 5634911295019752534}
   m_Placeholder: {fileID: 5634911296063479870}
@@ -2664,7 +2763,7 @@ GameObject:
   - component: {fileID: 1691728600341154751}
   - component: {fileID: 2907421118110349876}
   m_Layer: 5
-  m_Name: Text - Blue
+  m_Name: StarText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2964,7 +3063,7 @@ GameObject:
   - component: {fileID: 38360364612336421}
   - component: {fileID: 4587847115060251310}
   m_Layer: 5
-  m_Name: Text - Blue
+  m_Name: AvatarsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4427,17 +4526,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7911835370236675506}
         m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

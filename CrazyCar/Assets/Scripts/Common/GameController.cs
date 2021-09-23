@@ -12,6 +12,9 @@ public class UserInfo {
     public int uid;
     public int star;
     public bool isVIP;
+    public int travelTimes;
+    public int avatarNum;
+    public int mapNum;
 }
 
 public class GameController : MonoBehaviour

@@ -5,6 +5,6 @@ using Utils;
 
 public class HomepageCtrl : MonoBehaviour{
     private void Start() {
-        UIManager.instance.ShowPage(UIPageType.HomepageUI);
+        UIManager.manager.ShowPage(UIPageType.HomepageUI);
     }
 }

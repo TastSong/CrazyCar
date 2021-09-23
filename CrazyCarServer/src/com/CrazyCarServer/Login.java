@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.Util.Util;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -46,11 +47,17 @@ public class Login extends HttpServlet {
 			String userName = getJB.getString("UserName");
 			if (isPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))) {
 				outJB.put("code", 200);
+				// 登录加字段注册也要加
 				token = Util.JWT.createJWTById(Util.getDataByName(userName, "uid"));
 				userInfoJB.put("name", getJB.getString("UserName"));
 				userInfoJB.put("uid", Util.getDataByName(userName, "uid"));
 				userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
 				userInfoJB.put("star", Util.getDataByName(userName, "star"));
+				userInfoJB.put("is_vip", (Util.getDataByName(userName, "is_vip") == 1));
+				int uid = Util.getDataByName(userName, "uid");
+				userInfoJB.put("travel_times", getTravelTimes(uid));       
+				userInfoJB.put("avatar_num", getAvatarNum(uid)); 
+				userInfoJB.put("map_num", getMapNum(uid)); 
 			} else {
 				outJB.put("code", 423);
 			}
@@ -84,6 +91,22 @@ public class Login extends HttpServlet {
 		String sql = "select user_password from all_user where user_name = " + "\"" + userName + "\";";
 		String rs = Util.JDBC.executeSelectString(sql, "user_password");
 		return rs != null;
+	}
+	
+	private int getTravelTimes(int uid) {
+		String sql = "select record_time from time_trial_record where uid = " + uid + ";";
+		return Util.JDBC.executeSelectAllInt(sql, "record_time").size();
+	}
+	
+	private int getAvatarNum(int uid) {
+		String sql = "select aid from avatar_uid where uid = " + uid + ";";
+		return Util.JDBC.executeSelectAllInt(sql, "aid").size();
+	}
+	
+	private int getMapNum(int uid) {
+		String sql = "select cid from time_trial_user_map where uid = " + uid + ";";
+		System.out.print("===== " + sql);
+		return Util.JDBC.executeSelectAllInt(sql, "cid").size();
 	}
 
 	/**

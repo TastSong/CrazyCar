@@ -8,20 +8,21 @@ create table if not exists `all_user`(
    `login_time` int not null,
     `aid` INT(4)  not null,
     `star` int not null,
+    `is_vip` int not null,
    primary key ( `uid` )
    )engine = innodb default charset = utf8;
-insert into all_user ( uid, user_name, user_password, login_time, aid, star)
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip)
                        values
-					   (1, "Tast", "111111", 1629544628, 0, 20);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star )
+					   (1, "Tast", "111111", 1629544628, 0, 20, 1);
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
                        values
-					   (2, "asd", "111111", 1629544634, 1, 14);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star )
+					   (2, "asd", "111111", 1629544634, 1, 14, 0);
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
                        values
-					   (3, "qwe", "111111", 1629544655, 2, 11);        
-insert into all_user ( uid, user_name, user_password, login_time, aid, star )
+					   (3, "qwe", "111111", 1629544655, 2, 11, 0);        
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
                        values
-					   (4, "Lory", "111111", 1629544666, 3, 12);                       
+					   (4, "Lory", "111111", 1629544666, 3, 12, 0);                       
 select* from all_user;
 
 select user_password 
@@ -151,7 +152,7 @@ insert into avatar_uid ( aid, uid )
 select aid from
  avatar_uid 
  where aid = 0 and uid = 1;
-select* from avatar_uid;
+select aid from avatar_uid where uid = 1;
 
 create table if not exists `ab_resource`(
    `r_id` int unsigned auto_increment,
@@ -222,9 +223,11 @@ insert into time_trial_user_map ( cid, uid )
 				   (0, 4);
                    
 select cid from
- time_trial_user_map 
- where cid = 0 and uid = 1;
-select* from time_trial_user_map;
+	time_trial_user_map 
+	where cid = 0 and uid = 1;
+select cid from time_trial_user_map 
+	where uid = 5;
+select * from time_trial_user_map;
 
 
 /*time_trial_record*/
@@ -260,6 +263,7 @@ insert into time_trial_record ( uid, cid, complete_time, record_time)
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
 				   (4, 0, 16, 1629544644);
+select record_time from time_trial_record where uid = uid ;			
 
 /*查询自己的成绩排名*/
 select

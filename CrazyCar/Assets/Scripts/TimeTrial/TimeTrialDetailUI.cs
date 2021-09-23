@@ -28,7 +28,7 @@ public class TimeTrialDetailUI : MonoBehaviour {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            UIManager.instance.ShowPage(UIPageType.HomepageUI);
+            UIManager.manager.ShowPage(UIPageType.HomepageUI);
         });
     }
 }

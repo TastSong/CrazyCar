@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.Util.Util;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -50,6 +51,11 @@ public class Register extends HttpServlet {
 			        userInfoJB.put("uid", Util.getDataByName(userName, "uid"));
 			        userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
 			        userInfoJB.put("star", Util.getDataByName(userName, "star"));
+					userInfoJB.put("is_vip", (Util.getDataByName(userName, "is_vip") == 1));
+					int uid = Util.getDataByName(userName, "uid");
+					userInfoJB.put("travel_times", getTravelTimes(uid));       
+					userInfoJB.put("avatar_num", getAvatarNum(uid)); 
+					userInfoJB.put("map_num", getMapNum(uid)); 
 				} else{
 			        outJB.put("code", 425);
 				}
@@ -82,8 +88,10 @@ public class Register extends HttpServlet {
 		int defaultAid = 1;
 		int defaultCid = 0;
 		int defaultStar = 14;
-		String sql = "insert into all_user ( user_name, user_password, login_time, aid, star ) values" +
-                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + "," + defaultAid + ", " + defaultStar + ");";
+		int defaultVIP = 0;
+		String sql = "insert into all_user ( user_name, user_password, login_time, aid, star, is_vip ) values" +
+                       "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + 
+                       "," + defaultAid + ", " + defaultStar+ ", " + defaultVIP + ");";
 		Util.JDBC.executeInsert(sql);
 		sql = "select uid from all_user where user_name = "
 				+ "\"" + userName + "\";";
@@ -105,5 +113,20 @@ public class Register extends HttpServlet {
 				+ "\"" + userName + "\";";
 		String rs = Util.JDBC.executeSelectString(sql, "user_password");
         return rs != null;		
+	}
+	
+	private int getTravelTimes(int uid) {
+		String sql = "select record_time from time_trial_record where uid = " + uid + ";";
+		return Util.JDBC.executeSelectAllInt(sql, "record_time").size();
+	}
+	
+	private int getAvatarNum(int uid) {
+		String sql = "select aid from avatar_uid where uid = " + uid + ";";
+		return Util.JDBC.executeSelectAllInt(sql, "aid").size();
+	}
+	
+	private int getMapNum(int uid) {
+		String sql = "select cid from time_trial_user_map where uid = " + uid + ";";
+		return Util.JDBC.executeSelectAllInt(sql, "cid").size();
 	}
 }

@@ -15,15 +15,15 @@ public enum UIPageType {
 }
 
 public class UIManager : MonoBehaviour {
-    public static UIManager instance = null;
+    public static UIManager manager = null;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else if (instance != this) {
+        if (manager == null) {
+            manager = this;
+        } else if (manager != this) {
             Destroy(gameObject);
         }
 

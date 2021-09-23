@@ -29,11 +29,11 @@ public class HomepageUI : MonoBehaviour {
         nickNameText.text = GameController.manager.userInfo.name;
 
         avatarBtn.onClick.AddListener(() => {
-            UIManager.instance.ShowPage(UIPageType.AvatarUI);
+            UIManager.manager.ShowPage(UIPageType.AvatarUI);
         });
 
         joinGameBtn.onClick.AddListener(() => {
-            UIManager.instance.ShowPage(UIPageType.TimeTrialDetailUI);
+            UIManager.manager.ShowPage(UIPageType.TimeTrialDetailUI);
         });
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);
@@ -61,6 +61,16 @@ public class HomepageUI : MonoBehaviour {
             Application.Quit();
         });
         //--------- option ---------
+
+        // --------- Bottom Btns ---------
+        psrofileBtn.onClick.AddListener(() => {
+            UIManager.manager.ShowPage(UIPageType.ProfileUI);
+        });
+        settingBtn.onClick.AddListener(() => {
+            UIManager.manager.ShowPage(UIPageType.SettingsUI);
+        });
+        // --------- Bottom Btns ---------
+
         UpdataUI();
         homepageToken = GameController.manager.tinyMsgHub.Subscribe<HomepageUIMessage>((m) => { UpdataUI(); });
     }
@@ -68,6 +78,7 @@ public class HomepageUI : MonoBehaviour {
     private void UpdataUI() {
         avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
         starText.text = GameController.manager.userInfo.star.ToString();
+        vipImage.gameObject.SetActiveFast(GameController.manager.userInfo.isVIP);
     }
 
     private void OnDestroy() {

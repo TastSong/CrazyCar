@@ -1,4 +1,4 @@
-package com.CrazyCarServer;
+package com.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -338,6 +338,12 @@ public class Util {
 	public static int getDataByName(String userName, String id){
 		String sql = "select " + id + " from all_user where user_name = "
 				+ "\"" + userName + "\";";
+		return Util.JDBC.executeSelectInt(sql, id);
+	}
+	
+	public static int getDataByUid(int uid, String id){
+		String sql = "select " + id + " from all_user where uid = "
+				+ uid + ";";
 		return Util.JDBC.executeSelectInt(sql, id);
 	}
 	
