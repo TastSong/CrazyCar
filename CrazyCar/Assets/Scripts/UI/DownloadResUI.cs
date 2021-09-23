@@ -10,31 +10,37 @@ public class DownloadResUI : MonoBehaviour {
     public Slider progressSlider;
 
     private void Start() {
-        StringBuilder sb = new StringBuilder();
-        JsonWriter w = new JsonWriter(sb);
-        w.WriteObjectStart();
-        w.WritePropertyName("platform");
-        w.Write(Util.GetPlatform());
-        w.WritePropertyName("version");
-        w.Write(Application.version);
-        w.WriteObjectEnd();
-        Debug.Log("++++++ " + sb.ToString());
-        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-            data: bytes, succData: (data) => {
-                if ((bool)data["is_forced_updating"]) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: "版本过低",
-                        success: () => {
-                            Application.OpenURL((string)data["url"]);
-                            Application.Quit();
-                        },
-                        confirmText: "Download");
-                } else {
-                    CheckResource(() => {
-                        GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
-                    });
-                }
-            }));  
+#if UNITY_EDITOR
+    CheckResource(() => {
+        GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
+    });
+#else
+    StringBuilder sb = new StringBuilder();
+    JsonWriter w = new JsonWriter(sb);
+    w.WriteObjectStart();
+    w.WritePropertyName("platform");
+    w.Write(Util.GetPlatform());
+    w.WritePropertyName("version");
+    w.Write(Application.version);
+    w.WriteObjectEnd();
+    Debug.Log("++++++ " + sb.ToString());
+    byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+    StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+        data: bytes, succData: (data) => {
+            if ((bool)data["is_forced_updating"]) {
+                GameController.manager.infoConfirmAlert.ShowWithText(content: "版本过低",
+                    success: () => {
+                        Application.OpenURL((string)data["url"]);
+                        Application.Quit();
+                    },
+                    confirmText: "Download");
+            } else {
+                CheckResource(() => {
+                    GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
+                });
+            }
+        }));  
+#endif
     }
 
     public void CheckResource(Util.NoneParamFunction success) {
