@@ -13,7 +13,8 @@ public enum UIPageType {
     ProfileUI,
     SettingsUI,
     RankUI,
-    TimeTrialRankUI
+    TimeTrialRankUI,
+    ChangeCarUI
 }
 
 public class UIManager : MonoBehaviour {
