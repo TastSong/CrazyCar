@@ -33,7 +33,7 @@ public class ResourceManager {
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
         if (avatar == null) {
             avatar = AssetBundle.LoadFromFile(localAvatarString);
         }
@@ -64,12 +64,23 @@ public class ResourceManager {
                 Debug.Log(data.ToJson());
                 avatarHash = (string)data["avatar"]["hash"];
                 avatarCRC = uint.Parse((string)data["avatar"]["crc"]);
+                string avatarStr = (string)data["avatar"]["url"];
+                if (avatarStr.Contains("http")) {
+                    avatarURL = avatarStr;
+                } else {
+                    avatarURL = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
+                }
                 avatarURL = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
                 avatarSize = float.Parse((string)data["avatar"]["size"]);
 
                 equipHash = (string)data["equip"]["hash"];
                 equipCRC = uint.Parse((string)data["equip"]["crc"]);
-                equipURL = NetworkController.manager.HttpBaseUrl + (string)data["equip"]["url"];
+                string equipStr = (string)data["equip"]["url"];
+                if (equipStr.Contains("http")) {
+                    equipURL = equipStr;
+                } else {
+                    equipURL = NetworkController.manager.HttpBaseUrl + (string)data["equip"]["url"];
+                }          
                 equipSize = float.Parse((string)data["equip"]["size"]);
 
                 GetLocalResource();
@@ -142,7 +153,7 @@ public class ResourceManager {
             Debug.Log("dowload before");
             while (!_req.isDone) {
                 if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
-                    if (Util.GetTime() - lastTime > 10 * 1000) {
+                    if (Util.GetTime() - lastTime > 100 * 1000) {
                         //fail
                         fail?.Invoke();
                         yield break;
@@ -225,7 +236,7 @@ public class ResourceManager {
     public Sprite GetAvatarResource(int aid) {
         Sprite resultSprite;
         try {
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
             Debug.Log("+++ " + "Assets/AB/Avatar/" + aid + ".png");
             resultSprite = avatar.LoadAsset<Sprite>("Assets/AB/Avatar/" + aid + ".png");
             if (resultSprite == null) {
@@ -249,7 +260,7 @@ public class ResourceManager {
             if (GameController.manager.equipManager.equipResource.ContainsKey(rid)) {
                 return GameController.manager.equipManager.equipResource[rid];
             }
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
             var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Car/Items/" + rid + ".prefab");
 			if(o == null) {
 				return null;

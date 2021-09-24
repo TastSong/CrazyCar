@@ -160,7 +160,7 @@ create table if not exists `ab_resource`(
    `r_name` varchar(100) not null,
    `r_hash` VARCHAR(40) not null,
    `r_crc` VARCHAR(40) not null,
-    `r_url` VARCHAR(40) not null,
+    `r_url` VARCHAR(1000) not null,
     `r_size` VARCHAR(40) not null,
    primary key ( `r_id` )
    )engine = innodb default charset = utf8;
@@ -341,7 +341,7 @@ create table if not exists `forced_updating`(
 	`platform` VARCHAR(100) not null,
     `version` VARCHAR(100) not null,
     `rule` int not null,
-    `url` VARCHAR(100) not null,
+    `url` VARCHAR(1000) not null,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
