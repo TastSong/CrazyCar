@@ -325,10 +325,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6901352107093844294}
+  - component: {fileID: 3649180439535075060}
   - component: {fileID: 6901352107091027348}
   - component: {fileID: 6901352107092012612}
   m_Layer: 0
-  m_Name: SR_Veh_StockCar_Red 2
+  m_Name: R_Car_StockCar_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,6 +353,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3649180439535075060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901352107094203954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de73f051dff3fc41b2691bfcc2fb43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renders:
+  - key: frame
+    value: {fileID: 6901352107092012612}
+  - key: wheel_fl
+    value: {fileID: 6901352107091947282}
+  - key: wheel_fr
+    value: {fileID: 6901352107091968254}
+  - key: wheel_bl
+    value: {fileID: 6901352107092005052}
+  - key: wheel_br
+    value: {fileID: 6901352107092009104}
+  theIcon: {fileID: 21300000, guid: e4d0d6507786ea742a43d799dd39e5da, type: 3}
+  animation: {fileID: 0}
+  rid: R_Car_StockCar_Red
+  type: car
 --- !u!33 &6901352107091027348
 MeshFilter:
   m_ObjectHideFlags: 0

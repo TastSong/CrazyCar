@@ -168,9 +168,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8200444887618329601}
   - component: {fileID: 8200444887617581545}
+  - component: {fileID: 3721072585712853290}
   - component: {fileID: 8200444887616486663}
   m_Layer: 0
-  m_Name: SR_Veh_OffRoadTruck_Orange 1
+  m_Name: R_Car_OffRoadTruck_Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +203,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8200444887618655237}
   m_Mesh: {fileID: 4300000, guid: cc569fe4bbb4a2943bf776e32034b31d, type: 3}
+--- !u!114 &3721072585712853290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8200444887618655237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de73f051dff3fc41b2691bfcc2fb43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renders:
+  - key: frame
+    value: {fileID: 8200444887616486663}
+  - key: wheel_fl
+    value: {fileID: 8200444887616434023}
+  - key: wheel_fr
+    value: {fileID: 8200444887616412505}
+  - key: wheel_bl
+    value: {fileID: 8200444887616471411}
+  - key: wheel_br
+    value: {fileID: 8200444887616424765}
+  theIcon: {fileID: 21300000, guid: d96b259bd9b17b4429e9c663c75f6aaf, type: 3}
+  animation: {fileID: 0}
+  rid: R_Car_OffRoadTruck_Orange
+  type: car
 --- !u!23 &8200444887616486663
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -72,6 +72,9 @@ public class HomepageUI : MonoBehaviour {
         rankBtn.onClick.AddListener(() => {
             UIManager.manager.ShowPage(UIPageType.RankUI);
         });
+        changeCarBtn.onClick.AddListener(() => {
+            UIManager.manager.ShowPage(UIPageType.ChangeCarUI);
+        });
         // --------- Bottom Btns ---------
 
         UpdataUI();

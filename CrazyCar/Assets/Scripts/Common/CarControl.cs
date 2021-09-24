@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    public Transform targetTransform;
+    private Transform targetTransform;
     public bool isTouch;
     private void Start() {
         targetTransform = IndexCar.manager.carGO.transform;

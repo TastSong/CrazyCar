@@ -20,7 +20,7 @@ public class ResourceManager {
     private Dictionary<string, EquipResource> equipResource = new Dictionary<string, EquipResource>();
 
     private string hashAvatar = "";
-    private uint CRCAvatar = 0;
+    private uint crcAvatar = 0;
     private string urlAvatar = "";
     private float sizeAvatar = 1000;
     private string localAvatarString = Application.streamingAssetsPath + "/avatar";
@@ -53,7 +53,7 @@ public class ResourceManager {
             succData: (data) => {
                 Debug.Log(data.ToJson());
                 hashAvatar = (string)data["avatar"]["hash"];
-                CRCAvatar = uint.Parse((string)data["avatar"]["crc"]);
+                crcAvatar = uint.Parse((string)data["avatar"]["crc"]);
                 urlAvatar = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
                 sizeAvatar = float.Parse((string)data["avatar"]["size"]); 
 
@@ -115,7 +115,7 @@ public class ResourceManager {
         if (avatar == null) {
             Debug.Log("Try to Load res From Web");
             float lastProgress = -1;
-            var _req = UnityWebRequestAssetBundle.GetAssetBundle(urlAvatar, Hash128.Parse(hashAvatar), CRCAvatar);
+            var _req = UnityWebRequestAssetBundle.GetAssetBundle(urlAvatar, Hash128.Parse(hashAvatar), crcAvatar);
             _req.SendWebRequest();
             long lastTime = Util.GetTime();
             Debug.Log("dowload before");
