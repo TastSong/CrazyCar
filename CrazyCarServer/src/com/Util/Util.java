@@ -345,7 +345,7 @@ public class Util {
 		String sql = "select " + id + " from all_user where uid = "
 				+ uid + ";";
 		return Util.JDBC.executeSelectInt(sql, id);
-	}
+	}	
 	
 	public static JSONObject getMsgData(HttpServletRequest request) throws ServletException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));

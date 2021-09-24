@@ -31,3 +31,11 @@ public class AvatarUIMessage : ITinyMessage {
         this.aid = aid;
     }
 }
+
+public class ChangeCarMsg : ITinyMessage {
+    public object Sender { get; private set; }
+    public EquipInfo equipInfo;
+    public ChangeCarMsg(EquipInfo info) {
+        this.equipInfo = info;
+    }
+}

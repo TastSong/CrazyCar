@@ -15,22 +15,31 @@ public enum ResourceType {
 
 public class ResourceManager {
     public static AssetBundle avatar;
+    public static AssetBundle equip;
     public ResourceType curResourceType = ResourceType.None;
     public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
-    private Dictionary<string, EquipResource> equipResource = new Dictionary<string, EquipResource>();
 
-    private string hashAvatar = "";
-    private uint crcAvatar = 0;
-    private string urlAvatar = "";
-    private float sizeAvatar = 1000;
+    private string avatarHash = "";
+    private uint avatarCRC = 0;
+    private string avatarURL = "";
+    private float avatarSize = 1000;
     private string localAvatarString = Application.streamingAssetsPath + "/avatar";
+
+    private string equipHash = "";
+    private uint equipCRC = 0;
+    private string equipURL = "";
+    private float equipSize = 1000;
+    private string localEquipString = Application.streamingAssetsPath + "/equip";
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
         if (avatar == null) {
             avatar = AssetBundle.LoadFromFile(localAvatarString);
-        }       
+        }
+        if (equip == null) {
+            equip = AssetBundle.LoadFromFile(localEquipString);
+        }
         curResourceType = ResourceType.Loaded;
         return;
 #else
@@ -39,7 +48,7 @@ public class ResourceManager {
     }
 
     private void CheckNew() {
-        if (avatar != null) {
+        if (avatar != null && equip != null) {
             curResourceType = ResourceType.Loaded;
         } else {
             CheckCoroutine();
@@ -49,13 +58,19 @@ public class ResourceManager {
     private void CheckCoroutine() {
         Debug.Log("CheckCoroutine......");
 
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.resourceUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+            RequestUrl.resourceUrl,
             succData: (data) => {
                 Debug.Log(data.ToJson());
-                hashAvatar = (string)data["avatar"]["hash"];
-                crcAvatar = uint.Parse((string)data["avatar"]["crc"]);
-                urlAvatar = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
-                sizeAvatar = float.Parse((string)data["avatar"]["size"]); 
+                avatarHash = (string)data["avatar"]["hash"];
+                avatarCRC = uint.Parse((string)data["avatar"]["crc"]);
+                avatarURL = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
+                avatarSize = float.Parse((string)data["avatar"]["size"]);
+
+                equipHash = (string)data["equip"]["hash"];
+                equipCRC = uint.Parse((string)data["equip"]["crc"]);
+                equipURL = NetworkController.manager.HttpBaseUrl + (string)data["equip"]["url"];
+                equipSize = float.Parse((string)data["equip"]["size"]);
 
                 GetLocalResource();
             },
@@ -90,16 +105,22 @@ public class ResourceManager {
 #endif
             Debug.Log(maniData.ToJson());
             string localAvatarHash = (string)maniData["avatar"];
+            string localEquipHash = (string)maniData["equip"];
 
-            Debug.Log("++++++ remote hashAvatar = " + hashAvatar + "   localAvatarHash = " + localAvatarHash);
-            if (localAvatarHash == hashAvatar) {
+            Debug.Log("++++++ remote avatarHash = " + avatarHash + "   localAvatarHash = " + localAvatarHash);
+            Debug.Log("++++++ remote equipHash = " + equipHash + "   localEquipHash = " + localEquipHash);
+            if (localAvatarHash == avatarHash) {
                 avatar = AssetBundle.LoadFromFile(localAvatarString);
+            }
+            if (localEquipHash == equipHash) {
+                equip = AssetBundle.LoadFromFile(localEquipString);
             }
         }
 
         // 下载线上之后，会缓存到一个文件夹，不会替换本地文件
         //Caching.ClearCache();
-        if (!Caching.IsVersionCached(urlAvatar, Hash128.Parse(hashAvatar)) && avatar == null) {
+        if (!Caching.IsVersionCached(avatarURL, Hash128.Parse(avatarHash)) && avatar == null ||
+            (!Caching.IsVersionCached(equipURL, Hash128.Parse(equipHash)) && equip == null)) {
             curResourceType = ResourceType.ToDownload;
         } else {
             curResourceType = ResourceType.Loaded;
@@ -115,7 +136,7 @@ public class ResourceManager {
         if (avatar == null) {
             Debug.Log("Try to Load res From Web");
             float lastProgress = -1;
-            var _req = UnityWebRequestAssetBundle.GetAssetBundle(urlAvatar, Hash128.Parse(hashAvatar), crcAvatar);
+            var _req = UnityWebRequestAssetBundle.GetAssetBundle(avatarURL, Hash128.Parse(avatarHash), avatarCRC);
             _req.SendWebRequest();
             long lastTime = Util.GetTime();
             Debug.Log("dowload before");
@@ -133,7 +154,7 @@ public class ResourceManager {
                 }
 
                 try {
-                    progressCallback(_req.downloadProgress, sizeAvatar * 1024 * 1024, true);
+                    progressCallback(_req.downloadProgress, avatarSize * 1024 * 1024, true);
                 } catch {
                     Debug.LogError("bundleError");
                 }
@@ -155,21 +176,64 @@ public class ResourceManager {
             }
         }
 
+        if (equip == null) {
+            Debug.Log("Try to Load res From Web");
+            float lastProgress = -1;
+            var _req = UnityWebRequestAssetBundle.GetAssetBundle(equipURL, Hash128.Parse(equipHash), equipCRC);
+            _req.SendWebRequest();
+            long lastTime = Util.GetTime();
+            Debug.Log("dowload before");
+            while (!_req.isDone) {
+                if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
+                    if (Util.GetTime() - lastTime > 10 * 1000) {
+                        //fail
+                        fail?.Invoke();
+                        yield break;
+                    } else {
+                    }
+                } else {
+                    lastProgress = _req.downloadProgress;
+                    lastTime = Util.GetTime();
+                }
+
+                try {
+                    progressCallback(_req.downloadProgress, equipSize * 1024 * 1024, true);
+                } catch {
+                    Debug.LogError("bundleError");
+                }
+
+                yield return null;
+            }
+
+            Debug.Log("dowload equip finish");
+            try {
+                equip = DownloadHandlerAssetBundle.GetContent(_req);
+            } catch (System.Exception e) {
+                Debug.Log(e.ToString());
+            }
+
+            Debug.Log("get bundle finish");
+            if (equip == null) {
+                fail?.Invoke();
+                yield break;
+            }
+        }
+
         success?.Invoke();
     }
 
-    public Sprite GetAvatarResource(int id) {
+    public Sprite GetAvatarResource(int aid) {
         Sprite resultSprite;
         try {
-#if !UNITY_EDITOR
-            Debug.Log("+++= " + "Assets/AB/Avatar/" + id + ".png");
-            resultSprite = avatar.LoadAsset<Sprite>("Assets/AB/Avatar/" + id + ".png");
+#if UNITY_EDITOR
+            Debug.Log("+++ " + "Assets/AB/Avatar/" + aid + ".png");
+            resultSprite = avatar.LoadAsset<Sprite>("Assets/AB/Avatar/" + aid + ".png");
             if (resultSprite == null) {
                 return null;
             }
 #else
             resultSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(
-                "Assets/AB/Avatar/" + id.ToString() + ".png");
+                "Assets/AB/Avatar/" + aid.ToString() + ".png");
 
 #endif
             return resultSprite;
@@ -182,21 +246,21 @@ public class ResourceManager {
     public EquipResource GetCarResource(string rid) {
         try {
             rid = rid.Trim();
-            if (equipResource.ContainsKey(rid)) {
-                return equipResource[rid];
+            if (GameController.manager.equipManager.equipResource.ContainsKey(rid)) {
+                return GameController.manager.equipManager.equipResource[rid];
             }
-#if !UNITY_EDITOR
-            var o = ResourceManager.equip.LoadAsset<GameObject>("Assets/AB/Car/_Items/" + rid + ".prefab");
+#if UNITY_EDITOR
+            var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Car/Items/" + rid + ".prefab");
 			if(o == null) {
 				return null;
 			}
 			var e = o.GetComponent<EquipResource>();
 #else
             var e = UnityEditor.AssetDatabase.LoadAssetAtPath<EquipResource>(
-                "Assets/AB/Car/_Items/" + rid + ".prefab");
+                "Assets/AB/Equip/Car/Items/" + rid + ".prefab");
 
 #endif
-            equipResource[rid] = e;
+            GameController.manager.equipManager.equipResource[rid] = e;
             return e;
         } catch (Exception e) {
             Debug.LogError(e);

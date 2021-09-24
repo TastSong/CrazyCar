@@ -37,6 +37,7 @@ public class Register extends HttpServlet {
 		PrintWriter out = response.getWriter();		
         JSONObject outJB = new JSONObject();
         JSONObject userInfoJB = new JSONObject();
+        JSONObject equipInfoJB = new JSONObject();
         String token = null;
 		if(getJB != null && getJB.containsKey("UserName") && getJB.containsKey("Password")){
 			if (isExistUser(getJB.getString("UserName"))){				
@@ -50,12 +51,25 @@ public class Register extends HttpServlet {
 			        userInfoJB.put("name", getJB.getString("UserName"));
 			        userInfoJB.put("uid", Util.getDataByName(userName, "uid"));
 			        userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
+					int eid = Util.getDataByName(userName, "eid");
 			        userInfoJB.put("star", Util.getDataByName(userName, "star"));
 					userInfoJB.put("is_vip", (Util.getDataByName(userName, "is_vip") == 1));
 					int uid = Util.getDataByName(userName, "uid");
 					userInfoJB.put("travel_times", getTravelTimes(uid));       
 					userInfoJB.put("avatar_num", getAvatarNum(uid)); 
 					userInfoJB.put("map_num", getMapNum(uid)); 
+					
+					equipInfoJB.put("eid", Util.getDataByName(userName, "eid"));
+					equipInfoJB.put("rid", getStrDataByEid(eid, "rid"));
+					equipInfoJB.put("equip_name", getStrDataByEid(eid, "equip_name"));
+					equipInfoJB.put("star", getIntDataByEid(eid, "star"));
+					equipInfoJB.put("mass", getIntDataByEid(eid, "mass"));
+					equipInfoJB.put("speed", getIntDataByEid(eid, "speed"));
+					equipInfoJB.put("max_speed", getIntDataByEid(eid, "max_speed"));
+					equipInfoJB.put("is_show", getIntDataByEid(eid, "is_show") == 1);
+					equipInfoJB.put("is_has", isHasEquip(eid, uid));
+					
+					userInfoJB.put("equip_info", equipInfoJB);
 				} else{
 			        outJB.put("code", 425);
 				}
@@ -89,9 +103,10 @@ public class Register extends HttpServlet {
 		int defaultCid = 0;
 		int defaultStar = 14;
 		int defaultVIP = 0;
-		String sql = "insert into all_user ( user_name, user_password, login_time, aid, star, is_vip ) values" +
+		int defaultEid = 1;
+		String sql = "insert into all_user ( user_name, user_password, login_time, aid, star, is_vip, eid ) values" +
                        "(\"" + userName + "\"," + "\"" + password + "\"," + System.currentTimeMillis()/1000 + 
-                       "," + defaultAid + ", " + defaultStar+ ", " + defaultVIP + ");";
+                       "," + defaultAid + ", " + defaultStar + ", " + defaultVIP + ", " + defaultEid + ");";
 		Util.JDBC.executeInsert(sql);
 		sql = "select uid from all_user where user_name = "
 				+ "\"" + userName + "\";";
@@ -129,4 +144,21 @@ public class Register extends HttpServlet {
 		String sql = "select cid from time_trial_user_map where uid = " + uid + ";";
 		return Util.JDBC.executeSelectAllInt(sql, "cid").size();
 	}
+	
+	private int getIntDataByEid(int eid, String key) {
+		String sql = "select " + key + " from all_equip where eid = "
+				+  eid + ";";
+		return Util.JDBC.executeSelectInt(sql, key);
+	}
+	
+	private String getStrDataByEid(int eid, String key){
+		String sql = "select " + key +" from all_equip where eid = " + eid + ";";
+		return Util.JDBC.executeSelectString(sql, key);
+	}
+	
+	private boolean isHasEquip(int eid, int uid){
+		String sql = "select eid from equip_uid where eid = "
+				+  eid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "eid") != -1;
+	}	
 }

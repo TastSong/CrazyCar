@@ -7,6 +7,7 @@ public class IndexCar : MonoBehaviour
 {
     public static IndexCar manager = null;
     public GameObject carGO;
+    public AccessoryChanger accessoryChanger;
 
     private void Awake() {
         if (manager == null) {
@@ -14,7 +15,5 @@ public class IndexCar : MonoBehaviour
         } else if (manager != this) {
             Destroy(gameObject);
         }
-    }
-
-    
+    }   
 }

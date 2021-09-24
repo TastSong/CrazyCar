@@ -15,6 +15,7 @@ public class UserInfo {
     public int travelTimes;
     public int avatarNum;
     public int mapNum;
+    public EquipInfo equipInfo;
 }
 
 public class GameController : MonoBehaviour
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     public LoginManager loginManager = new LoginManager();
     public AvatarManager avatarManager = new AvatarManager();
     public TimeTrialManager timeTrialManager = new TimeTrialManager();
+    public EquipManager equipManager = new EquipManager();
 
     private void Awake() {
         if (manager == null) {

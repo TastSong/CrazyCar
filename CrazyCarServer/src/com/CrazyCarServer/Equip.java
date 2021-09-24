@@ -15,20 +15,19 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * Servlet implementation class Avatar
+ * Servlet implementation class Equip
  */
-@WebServlet("/Avatar")
-public class Avatar extends HttpServlet {
+@WebServlet("/Equip")
+public class Equip extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Avatar() {
+    public Equip() {
         super();
         // TODO Auto-generated constructor stub
     }
-
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,7 +35,7 @@ public class Avatar extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("Avatar ...");
+		System.out.println("Equip ...");
 	    int uid = 0;
 		String token = request.getHeader("Authorization");
 		if (!Util.JWT.isLegalJWT(token)){
@@ -52,44 +51,51 @@ public class Avatar extends HttpServlet {
 		
         JSONObject jbData = new JSONObject();                
 		JSONArray jsonArray = new JSONArray();
-		List<Integer> allAid = getAllAvatarID();
-		for (int i = 0; i < allAid.size(); i++){
-			JSONObject jbItem = new JSONObject();
-			jbItem.put("is_has", isHasAvatar(allAid.get(i), uid));
-			jbItem.put("aid", allAid.get(i));
-			jbItem.put("name", getAvatarName(allAid.get(i)));
-			jbItem.put("star", getStar(allAid.get(i)));
+		List<Integer> allEid = getAllEquipID();
+		for (int i = 0; i < allEid.size(); i++){
+			JSONObject jbItem = new JSONObject();			
+			jbItem.put("eid", allEid.get(i));
+			jbItem.put("rid", getStrDataByEid(allEid.get(i), "rid"));
+			jbItem.put("equip_name", getStrDataByEid(allEid.get(i), "equip_name"));
+			jbItem.put("star", getIntDataByEid(allEid.get(i), "star"));
+			jbItem.put("mass", getIntDataByEid(allEid.get(i), "mass"));
+			jbItem.put("speed", getIntDataByEid(allEid.get(i), "speed"));
+			jbItem.put("max_speed", getIntDataByEid(allEid.get(i), "max_speed"));
+			jbItem.put("is_show", getIntDataByEid(allEid.get(i), "is_show") == 1);
+			jbItem.put("is_has", isHasEquip(allEid.get(i), uid));
 			jsonArray.add(jbItem);
 		}		
-		jbData.put("avatars", jsonArray);
+		jbData.put("equips", jsonArray);
 		jsonObject.put("data", jbData);
 		
+        //jsonArray.add(jsonObject);
+	    //String jsonOutput = jsonArray.toJSONString();
 		out.println(jsonObject.toString());	
 		out.flush();
 		out.close();
-	}		
+	}	
 	
-	private int getStar(int aid) {
-		String sql = "select star from avatar_name where aid = "
-				+  aid + ";";
-		return Util.JDBC.executeSelectInt(sql, "star");
+	private int getIntDataByEid(int eid, String key) {
+		String sql = "select " + key + " from all_equip where eid = "
+				+  eid + ";";
+		return Util.JDBC.executeSelectInt(sql, key);
 	}
 	
-	private List<Integer> getAllAvatarID(){
-		String sql = "select aid from avatar_name;";
-		return Util.JDBC.executeSelectAllInt(sql, "aid");
+	private String getStrDataByEid(int eid, String key){
+		String sql = "select " + key +" from all_equip where eid = " + eid + ";";
+		return Util.JDBC.executeSelectString(sql, key);
 	}
 	
-	private boolean isHasAvatar(int aid, int uid){
-		String sql = "select aid from avatar_uid where aid = "
-				+  aid + " and " + " uid = " + uid + ";";
-		return Util.JDBC.executeSelectInt(sql, "aid") != -1;
+	private List<Integer> getAllEquipID(){
+		String sql = "select eid from all_equip;";
+		return Util.JDBC.executeSelectAllInt(sql, "eid");
 	}
 	
-	private String getAvatarName(int aid){
-		String sql = "select avatar_name from avatar_name where aid = " + aid + ";";
-		return Util.JDBC.executeSelectString(sql, "avatar_name");
-	}
+	private boolean isHasEquip(int eid, int uid){
+		String sql = "select eid from equip_uid where eid = "
+				+  eid + " and " + " uid = " + uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "eid") != -1;
+	}	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

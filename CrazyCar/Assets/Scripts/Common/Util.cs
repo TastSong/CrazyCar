@@ -32,6 +32,9 @@ namespace Utils {
         public static string timeTrialResultUrl = "TimeTrialResult";
         public static string timeTrialRankUrl = "TimeTrialRank";
         public static string modifyPersonalInfoUrl = "ModifyPersonalInfo";
+        public static string equipUrl = "Equip";
+        public static string buyEquipUrl = "BuyEquip";
+        public static string changeEquipUrl = "ChangeEquip";
     }
 
     public static class PrefKeys {

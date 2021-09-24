@@ -9,20 +9,21 @@ create table if not exists `all_user`(
     `aid` INT(4)  not null,
     `star` int not null,
     `is_vip` int not null,
+    `eid` int not null,
    primary key ( `uid` )
    )engine = innodb default charset = utf8;
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip)
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "111111", 1629544628, 0, 20, 1);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
+					   (1, "Tast", "111111", 1629544628, 0, 20, 1, 0);
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "asd", "111111", 1629544634, 1, 14, 0);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
+					   (2, "asd", "111111", 1629544634, 1, 14, 0, 1);
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (3, "qwe", "111111", 1629544655, 2, 11, 0);        
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip )
+					   (3, "qwe", "111111", 1629544655, 2, 11, 0, 1);        
+insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (4, "Lory", "111111", 1629544666, 3, 12, 0);                       
+					   (4, "Lory", "111111", 1629544666, 3, 12, 0, 1);                       
 select* from all_user;
 
 select user_password 
@@ -166,6 +167,9 @@ create table if not exists `ab_resource`(
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
 				   ("avatar", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar", "0.1289");
+insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   values
+				   ("equip", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip", "0.4072265625");                   
 select* from ab_resource;
 select r_hash 
 from
@@ -351,3 +355,65 @@ insert into forced_updating ( platform, version, rule, url)
 				   ("PC", "2.0.0", 0, "https://gitee.com/TastSong/CrazyCar");                   
 select * from forced_updating;
 
+/*all_equip*/
+create table if not exists `all_equip`(
+   `id` int unsigned auto_increment,
+   `eid` int not null,
+   `rid` VARCHAR(100) not null,
+   `equip_name` VARCHAR(100) not null,
+   `star` int not null,
+   `mass` int not null,
+   `speed` int not null,
+   `max_speed` int not null,
+   `is_show` int not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 25, 30, 50, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (1, "R_Car_MonsterTruck_Red", "MonsterTruck Red", 2, 25, 38, 52, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (2, "R_Car_OffRoadTruck_Orange", "OffRoadTruck Orange", 4, 27, 37, 55, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 31, 40, 54, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 36, 34, 51, 0);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   values
+				   (5, "R_Car_StockCar_White", "StockCar White", 8, 37, 44, 66, 1);                   
+select* from all_equip;
+
+/*equip_uid*/
+create table if not exists `equip_uid`(
+   `id` int unsigned auto_increment,
+   `eid` int not null,
+   `uid` int not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into equip_uid ( eid, uid )
+				   values
+				   (0, 1);
+insert into equip_uid ( eid, uid )
+				   values
+				   (1, 1);                   
+insert into equip_uid ( eid, uid )
+				   values
+				   (2, 1);
+insert into equip_uid ( eid, uid )
+				   values
+				   (4, 1);
+insert into equip_uid ( eid, uid )
+				   values
+				   (1, 2);
+insert into equip_uid ( eid, uid )
+				   values
+				   (1, 3);
+insert into equip_uid ( eid, uid )
+				   values
+				   (1, 4);                   
+select eid from equip_uid where uid = 1;

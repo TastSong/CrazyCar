@@ -62,7 +62,7 @@ public class BikeEffectBreathing : MonoBehaviour {
 	}
 
 	bool ShouldFrameOn() {
-		if (resource.id == "RF_B_halo" || resource.id == "RM_B_halo") {
+		if (resource.rid == "RF_B_halo" || resource.rid == "RM_B_halo") {
 			return true;
 		} else {
 			return false;
@@ -70,7 +70,7 @@ public class BikeEffectBreathing : MonoBehaviour {
 	}
 
 	bool ShouldWheelOn() {
-		if (resource.id == "RF_B_halo" || resource.id == "RM_B_halo") {
+		if (resource.rid == "RF_B_halo" || resource.rid == "RM_B_halo") {
 			return true;
 		} else {
 			return false;

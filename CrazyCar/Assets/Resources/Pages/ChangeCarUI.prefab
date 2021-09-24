@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 42.999985, y: -2.600006}
-  m_SizeDelta: {x: 147.91208, y: 50}
+  m_AnchoredPosition: {x: 30.5, y: -8.600006}
+  m_SizeDelta: {x: 122.99954, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &108709954518191230
 CanvasRenderer:
@@ -71,10 +71,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 55
@@ -440,7 +440,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Mass \uFF1A "
+  m_Text: 'Mass: '
 --- !u!114 &1263743567973345434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,8 +726,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 42.999985, y: -2.600006}
-  m_SizeDelta: {x: 147.91208, y: 50}
+  m_AnchoredPosition: {x: 34, y: -6}
+  m_SizeDelta: {x: 122.99954, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3668860316967654562
 CanvasRenderer:
@@ -763,10 +763,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 55
@@ -849,7 +849,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Speed \uFF1A "
+  m_Text: "Speed\uFF1A "
 --- !u!114 &3668860316995477439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,8 +898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 42.999985, y: -2.600006}
-  m_SizeDelta: {x: 147.91208, y: 50}
+  m_AnchoredPosition: {x: 97.1, y: -6}
+  m_SizeDelta: {x: 205.25366, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3668860317454298872
 CanvasRenderer:
@@ -935,10 +935,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 55
@@ -1021,7 +1021,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'MaxSpeed : '
+  m_Text: 'MaxSpeed: '
 --- !u!114 &3668860317992838075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,8 +1070,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 73.956055, y: 0.0000061989}
-  m_SizeDelta: {x: 147.91208, y: 50}
+  m_AnchoredPosition: {x: 55, y: -5.999994}
+  m_SizeDelta: {x: 122.99954, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3668860318648412735
 CanvasRenderer:
@@ -1107,10 +1107,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 55
@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_Top: 34
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 14.59
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1478,6 +1478,7 @@ MonoBehaviour:
   speedText: {fileID: 3668860316967654563}
   closeBtn: {fileID: 8557589691641520120}
   applyBtn: {fileID: 7123864035058230709}
+  applyBtnText: {fileID: 2224428487457030665}
   showRawImage: {fileID: 3668860316827065245}
   changeCarItem: {fileID: 2872419601891064173, guid: 8334dd0d42ab052499d21b1e964b41fe,
     type: 3}
@@ -1598,7 +1599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Name \uFF1A "
+  m_Text: "Name\uFF1A "
 --- !u!114 &4285436278583566191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1647,8 +1648,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 42.999985, y: -2.600006}
-  m_SizeDelta: {x: 147.91208, y: 50}
+  m_AnchoredPosition: {x: 46, y: -5.9999695}
+  m_SizeDelta: {x: 140.84784, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &580861807267302793
 CanvasRenderer:
@@ -1684,10 +1685,10 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 55
@@ -1815,7 +1816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1827001838579336747
@@ -1835,12 +1836,12 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 40
   m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
-  m_ChildControlHeight: 1
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
 --- !u!114 &7902234566842955073
@@ -2557,7 +2558,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Star \uFF1A "
+  m_Text: "Star\uFF1A "
 --- !u!114 &1807457651053308481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2652,12 +2653,12 @@ PrefabInstance:
     - target: {fileID: 2872419601891064174, guid: 8334dd0d42ab052499d21b1e964b41fe,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 2872419601891064174, guid: 8334dd0d42ab052499d21b1e964b41fe,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 2872419601891064174, guid: 8334dd0d42ab052499d21b1e964b41fe,
         type: 3}

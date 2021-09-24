@@ -55,7 +55,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
     [HideInInspector]
     public string type = EquipManager.CAR;
 
-    public string id;
+    public string rid;
     public string eid;
 
     public Dictionary<string, Renderer> renders = new Dictionary<string, Renderer>();
@@ -103,18 +103,6 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
         if (r == null) {
             return;
         }
-        //if (type == "bicycle") {
-        //    BikeEffectBreathing be = GetComponent<BikeEffectBreathing>();
-        //    if (be == null) {
-        //        be = gameObject.AddComponent<BikeEffectBreathing>();
-        //    }
-        //    be.resource = this;
-        //    be.frameRenders = new MeshRenderer[1];
-        //    be.frameRenders[0] = (MeshRenderer)renders["frame"];
-        //    be.WheelRenders = new MeshRenderer[2];
-        //    be.WheelRenders[0] = (MeshRenderer)renders["tire_b"];
-        //    be.WheelRenders[1] = (MeshRenderer)renders["tire_f"];
-        //}
         foreach (var item in renders) {
             var key = item.Key;
             var render = item.Value;
@@ -147,10 +135,10 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
         }
         this.eid = eid;
 
-        if (this.id == rid) {
+        if (this.rid == rid) {
             return;
         }
-        this.id = rid;
+        this.rid = rid;
         EquipResource r = GetPartFromResource(rid);
         _SetResource(r);
     }

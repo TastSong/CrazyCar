@@ -15,5 +15,18 @@ public class LoginManager {
         GameController.manager.userInfo.avatarNum = (int)jsonData["user_info"]["avatar_num"];
         GameController.manager.userInfo.travelTimes = (int)jsonData["user_info"]["travel_times"];
         GameController.manager.userInfo.mapNum = (int)jsonData["user_info"]["map_num"];
+
+        JsonData data = jsonData["user_info"]["equip_info"];
+        EquipInfo info = new EquipInfo();
+        info.eid = (int)data["eid"];
+        info.rid = (string)data["rid"];
+        info.equipName = (string)data["equip_name"];
+        info.star = (int)data["star"];
+        info.mass = (int)data["mass"];
+        info.speed = (int)data["speed"];
+        info.maxSpeed = (int)data["max_speed"];
+        info.isHas = (bool)data["is_has"];
+        info.isShow = (bool)data["is_show"];
+        GameController.manager.userInfo.equipInfo = info; 
     }
 }

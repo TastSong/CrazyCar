@@ -36,13 +36,19 @@ public class Resource extends HttpServlet {
 		System.out.println("Resource ...");
 
 		PrintWriter out = response.getWriter();				
-        JSONObject carJB = new JSONObject();        
-        carJB.put("hash", getContent("r_hash", "avatar"));
-        carJB.put("crc", getContent("r_crc", "avatar"));
-        carJB.put("url", getContent("r_url", "avatar"));
-        carJB.put("size", getContent("r_size", "avatar"));
+        JSONObject avatarJB = new JSONObject();        
+        avatarJB.put("hash", getContent("r_hash", "avatar"));
+        avatarJB.put("crc", getContent("r_crc", "avatar"));
+        avatarJB.put("url", getContent("r_url", "avatar"));
+        avatarJB.put("size", getContent("r_size", "avatar"));
+        JSONObject equipJB = new JSONObject();        
+        equipJB.put("hash", getContent("r_hash", "equip"));
+        equipJB.put("crc", getContent("r_crc", "equip"));
+        equipJB.put("url", getContent("r_url", "equip"));
+        equipJB.put("size", getContent("r_size", "equip"));
         JSONObject dataJB = new JSONObject();
-        dataJB.put("avatar", carJB);
+        dataJB.put("avatar", avatarJB);
+        dataJB.put("equip", equipJB);
         
         JSONObject outJB = new JSONObject();
 		outJB.put("code", 200);

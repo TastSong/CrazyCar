@@ -112,11 +112,14 @@ public static class BuildHelper {
             int code = (int)originData["code"];
             if (code == 200) {
                 JsonData data = originData["data"];
-                string hashAvatar = (string)data["avatar"]["hash"];
-                Debug.Log("++++++local hashAvatar = " + hashAvatar);
+                string avatarHash = (string)data["avatar"]["hash"];
+                Debug.Log("++++++local AvatarHash = " + avatarHash);
+                string equipHash = (string)data["equip"]["hash"];
+                Debug.Log("++++++local equipHash  = " + equipHash);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
-                jsonData["avatar"] = hashAvatar;
+                jsonData["avatar"] = avatarHash;
+                jsonData["equip"] = equipHash;
                 File.WriteAllText(configPath, jsonData.ToJson());
                 GameObject.DestroyImmediate(go);
                 EditorUtility.SetDirty(nc);

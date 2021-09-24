@@ -207,7 +207,7 @@ public class TimeTrialPlayer : MonoBehaviour {
 
     //开始漂移并且决定漂移朝向
     private void StartDrift() {
-        Debug.Log("Start Drift");
+        //Debug.Log("Start Drift");
         isDrifting = true;
 
         //根据水平输入决定漂移时车的朝向，因为合速度方向与车身方向不一致，所以为加力方向添加偏移
