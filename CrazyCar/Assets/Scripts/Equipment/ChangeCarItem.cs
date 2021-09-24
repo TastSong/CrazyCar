@@ -20,11 +20,11 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler {
         lockGO.SetActiveFast(!equipInfo.isHas);
     }
 
-    public void UpdateUI() {
+    public void SetUnlockState() {
         lockGO.SetActiveFast(!equipInfo.isHas);
     }
 
-    public void SetStatus(bool isSelect) {
+    public void SetSelectState(bool isSelect) {
         bg.color = isSelect ? Color.white : normalColor;
         selectIamge.gameObject.SetActiveFast(isSelect);
     }

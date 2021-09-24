@@ -87,7 +87,7 @@ public class ChangeCarUI : MonoBehaviour {
                             applyBtnText.text = "Apply";
                             curEquipInfo.isHas = true;
                             for (int i = 0; i < changeCarItems.Count; i++) {
-                                changeCarItems[i].UpdateUI();
+                                changeCarItems[i].SetUnlockState();
                             }
                         }));
                     },
@@ -121,7 +121,7 @@ public class ChangeCarUI : MonoBehaviour {
         speedText.text = curEquipInfo.speed.ToString();
         maxSpeedText.text = curEquipInfo.maxSpeed.ToString();
         for (int i = 0; i < changeCarItems.Count; i++) {
-            changeCarItems[i].SetStatus(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);
+            changeCarItems[i].SetSelectState(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);
         }
         if (curEquipInfo.eid == GameController.manager.userInfo.equipInfo.eid) {
             applyBtn.interactable = false;
