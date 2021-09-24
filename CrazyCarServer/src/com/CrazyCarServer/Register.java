@@ -120,6 +120,11 @@ public class Register extends HttpServlet {
 		sql = "insert into time_trial_user_map ( cid, uid ) values" +
                 "(" + defaultCid + "," + uid +  ");";
 		Util.JDBC.executeInsert(sql);
+		
+		//送一张送的装备
+		sql = "insert into equip_uid ( eid, uid ) values" +
+                "(" + defaultEid + "," + uid +  ");";
+		Util.JDBC.executeInsert(sql);
 		return;
 	}
 
