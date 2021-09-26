@@ -18,19 +18,17 @@ public class AvatarUI : MonoBehaviour {
     private TinyMessageSubscriptionToken avatarToken;
     private int curAid = 0;
 
-    private void OnEnable() {       
-        if (GameController.manager.avatarManager.avatarDic.Count == 0) {
-            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
-            token: GameController.manager.token,
-            succData: (data) => {
-                GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
-                curAid = GameController.manager.userInfo.aid;
-             }));
-        } 
+    private void OnEnable() {
+        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
+        token: GameController.manager.token,
+        succData: (data) => {
+            GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
+            curAid = GameController.manager.userInfo.aid;
+        }));
     }
 
     private void UpdataUI() {
-        curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid); 
+        curAvatar.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.avatarManager.curAid);
         curAvatarName.text = GameController.manager.avatarManager.avatarDic[GameController.manager.avatarManager.curAid].name;
         Util.DeleteChildren(avatarItemParent);
         foreach (var kvp in GameController.manager.avatarManager.avatarDic) {
@@ -56,7 +54,7 @@ public class AvatarUI : MonoBehaviour {
                     GameController.manager.userInfo.aid = (int)data["aid"];
                     GameController.manager.warningAlert.ShowWithText("设置成功");
                 },
-                code : (code) => { 
+                code: (code) => {
                     if (code == 423) {
                         GameController.manager.warningAlert.ShowWithText("未拥有");
                     }
