@@ -132,7 +132,7 @@ public static class BuildHelper {
                 JsonData data = originData["data"];
                 string avatarHash = (string)data["avatar"]["hash"];
                 Debug.Log("++++++local AvatarHash = " + avatarHash);
-                string equipHash = (string)data["equip"]["hash"] + 1;
+                string equipHash = (string)data["equip"]["hash"];
                 Debug.Log("++++++local equipHash  = " + equipHash);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
