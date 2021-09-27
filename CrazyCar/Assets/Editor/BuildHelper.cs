@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Utils;
 using UnityEditor.AddressableAssets.Settings;
+using System.Collections.Generic;
 
 public static class BuildHelper {
     public static void BuildGame(string type, string path = null) {
@@ -31,6 +32,9 @@ public static class BuildHelper {
         if (!Directory.Exists(assetBundleDirectory)) {
             Directory.CreateDirectory(assetBundleDirectory);
         }
+        // manifest存储之前的信息，如果不删除就不会生成新的avatar
+        File.Delete(assetBundleDirectory + "/" + "avatar.manifest");
+        File.Delete(assetBundleDirectory + "/" + "equip.manifest");
 
 #if UNITY_STANDALONE
         var mani = BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
@@ -46,16 +50,20 @@ public static class BuildHelper {
             var file = assetBundleDirectory + "/" + name + ".manifest";
             var s = File.ReadAllLines(file);
             Debug.Log(name + " Hash is:  " + mani.GetAssetBundleHash(name).ToString() + " " + s[1].Trim());
-            // 文件重命名
+            //重命名
             if (File.Exists(assetBundleDirectory + "/" + name)) {
+                Debug.Log("=== " + assetBundleDirectory + "/" + name + "_" + Util.GetPlatform().ToLower());
+                if (File.Exists(assetBundleDirectory + "/" + name + "_" + Util.GetPlatform().ToLower())) {
+                    File.Delete(assetBundleDirectory + "/" + name + "_" + Util.GetPlatform().ToLower());
+                }  
                 File.Move(assetBundleDirectory + "/" + name, assetBundleDirectory + "/" + name + "_" + Util.GetPlatform().ToLower());
-            }            
+            }
         }
 
         Debug.Log("========End========");
         string n = assetBundleDirectory.Substring(assetBundleDirectory.LastIndexOf("/") + 1);
         File.Delete(assetBundleDirectory + "/" + n);
-        File.Delete(assetBundleDirectory + "/" + n + ".manifest");
+        File.Delete(assetBundleDirectory + "/" + n + ".manifest");     
     }
 
     public static void BuildConfig(string type, Util.NoneParamFunction successCallback = null) {

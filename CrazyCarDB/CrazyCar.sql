@@ -170,7 +170,7 @@ insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
-				   ("equip_android", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_android", "0.4072265625");  
+				   ("equip_android", "0dc989fbf1109552e44cb6d6ac3ca5d7", "628708085", "equip_android", "0.4775390625");  
                    
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
@@ -361,7 +361,7 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("Android", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");
+				   ("Android", "2.1.0", 0, "https://files.gitee.com/group1/M00/20/00/CgAAEmFRdG6ACOlqAZGFJRM2SG4483.apk?token=d24d65a215815b5515a043a376644c6e&ts=1632728179&attname=CrazyCar.apk&disposition=attachment");
 insert into forced_updating ( platform, version, rule, url)
 				   values
 				   ("ios", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");
