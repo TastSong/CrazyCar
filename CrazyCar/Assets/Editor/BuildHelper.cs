@@ -38,11 +38,11 @@ public static class BuildHelper {
             if (allFileName[i].Contains("manifest")) {
                 File.Delete(assetBundleDirectory + "/" + allFileName[i]);
             }
-        }       
+        }
 
 #if UNITY_STANDALONE
         var mani = BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID 
         var mani = BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.Android);
 #elif UNITY_IOS
         var mani = BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.iOS);
@@ -212,13 +212,13 @@ public static class BuildHelper {
                 return;
             }
         }
-
 #if UNITY_ANDROID
         //PlayerSettings.keystorePass = "123456";
         //PlayerSettings.keyaliasPass = "123456";
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCar.apk"), BuildTarget.Android, BuildOptions.None);
 #elif UNITY_IOS
         // year baby! olol
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCarXCode"), BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
 #elif UNITY_STANDALONE
         string exeName = "CrazyAvatar.exe";
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, exeName), BuildTarget.StandaloneWindows,
