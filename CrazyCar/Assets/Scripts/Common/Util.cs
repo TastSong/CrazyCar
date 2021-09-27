@@ -387,18 +387,6 @@ namespace Utils {
 #elif UNITY_IOS
         return "ios";
 #endif
-        }
-
-        public static List<string> GetFileDirectory(string path) {
-            List<String> list = new List<string>();
-            DirectoryInfo root = new DirectoryInfo(path);
-            DirectoryInfo[] di = root.GetDirectories();
-            for (int i = 0; i < di.Length; i++) {
-                Debug.Log("++++++" + di[i].FullName);
-                list.Add(di[i].FullName);
-            }
-
-            return list;
-        }
+        }      
     }  
 }

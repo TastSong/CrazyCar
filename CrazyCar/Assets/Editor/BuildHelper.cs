@@ -33,8 +33,12 @@ public static class BuildHelper {
             Directory.CreateDirectory(assetBundleDirectory);
         }
         // manifest存储之前的信息，如果不删除就不会生成新的avatar
-        File.Delete(assetBundleDirectory + "/" + "avatar.manifest");
-        File.Delete(assetBundleDirectory + "/" + "equip.manifest");
+        List<string> allFileName = GetFileDirectory(assetBundleDirectory);
+        for (int i = 0; i < allFileName.Count; i++) {
+            if (allFileName[i].Contains("manifest")) {
+                File.Delete(assetBundleDirectory + "/" + allFileName[i]);
+            }
+        }       
 
 #if UNITY_STANDALONE
         var mani = BuildPipeline.BuildAssetBundles(assetBundleDirectory, BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
@@ -184,6 +188,17 @@ public static class BuildHelper {
                 CopyDirectory(dir, new DirectoryInfo(destinationDir), copySubDirs); //复制子目录
             }
         }
+    }
+
+    public static List<string> GetFileDirectory(string path) {
+        List<string> list = new List<string>();
+        DirectoryInfo root = new DirectoryInfo(path);
+        FileInfo[] files = root.GetFiles();
+        for (int i = 0; i < files.Length; i++) {
+            list.Add(files[i].Name);
+        }
+
+        return list;
     }
 
     // path set to another value to set the target folder directly
