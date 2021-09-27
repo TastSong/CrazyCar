@@ -145,12 +145,12 @@ public class ResourceManager {
 
     private IEnumerator Download(Util.NoneParamFunction success, ProgressCallback progressCallback, Util.NoneParamFunction fail) {
         if (avatar == null) {
-            Debug.Log("Try to Load res From Web");
+            Debug.Log("Try to Load avatar From Web");
             float lastProgress = -1;
             var _req = UnityWebRequestAssetBundle.GetAssetBundle(avatarURL, Hash128.Parse(avatarHash), avatarCRC);
             _req.SendWebRequest();
             long lastTime = Util.GetTime();
-            Debug.Log("dowload before");
+            Debug.Log("dowload avatar before");
             while (!_req.isDone) {
                 if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
                     if (Util.GetTime() - lastTime > 100 * 1000) {
@@ -180,7 +180,7 @@ public class ResourceManager {
                 Debug.Log(e.ToString());
             }
 
-            Debug.Log("get bundle finish");
+            Debug.Log("get avatar bundle finish");
             if (avatar == null) {
                 fail?.Invoke();
                 yield break;
@@ -188,12 +188,12 @@ public class ResourceManager {
         }
 
         if (equip == null) {
-            Debug.Log("Try to Load res From Web");
+            Debug.Log("Try to Load equip From Web");
             float lastProgress = -1;
             var _req = UnityWebRequestAssetBundle.GetAssetBundle(equipURL, Hash128.Parse(equipHash), equipCRC);
             _req.SendWebRequest();
             long lastTime = Util.GetTime();
-            Debug.Log("dowload before");
+            Debug.Log("dowload equip before");
             while (!_req.isDone) {
                 if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
                     if (Util.GetTime() - lastTime > 10 * 1000) {
@@ -223,7 +223,7 @@ public class ResourceManager {
                 Debug.Log(e.ToString());
             }
 
-            Debug.Log("get bundle finish");
+            Debug.Log("get equip bundle finish");
             if (equip == null) {
                 fail?.Invoke();
                 yield break;
