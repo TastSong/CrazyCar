@@ -361,13 +361,13 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("Android", "2.0.0", 10, "https://gitee.com/TastSong/CrazyCar");
+				   ("Android", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("ios", "2.0.0", 0, "https://gitee.com/TastSong/CrazyCar");
+				   ("ios", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("PC", "2.0.0", 0, "https://gitee.com/TastSong/CrazyCar");                   
+				   ("PC", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");                   
 select * from forced_updating;
 
 /*all_equip*/
