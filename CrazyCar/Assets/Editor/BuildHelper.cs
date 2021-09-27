@@ -44,9 +44,12 @@ public static class BuildHelper {
 
         foreach (var name in mani.GetAllAssetBundles()) {
             var file = assetBundleDirectory + "/" + name + ".manifest";
-            Debug.Log(file);
             var s = File.ReadAllLines(file);
             Debug.Log(name + " Hash is:  " + mani.GetAssetBundleHash(name).ToString() + " " + s[1].Trim());
+            // 文件重命名
+            if (File.Exists(assetBundleDirectory + "/" + name)) {
+                File.Move(assetBundleDirectory + "/" + name, assetBundleDirectory + "/" + name + "_" + Util.GetPlatform().ToLower());
+            }            
         }
 
         Debug.Log("========End========");
@@ -95,16 +98,31 @@ public static class BuildHelper {
 
     private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Util.NoneParamFunction successCallback) {
         Debug.Log("请求AB url : " + url);
-        UnityWebRequest webRequest = UnityWebRequest.Get(url);
-        webRequest.SendWebRequest();
-        while (!webRequest.isDone) {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("platform");
+        w.Write(Util.GetPlatform());
+        w.WritePropertyName("version");
+        w.Write(Application.version);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
+        request.uploadHandler = new UploadHandlerRaw(bytes);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Accept", "application/json");
+        request.uploadHandler = new UploadHandlerRaw(bytes);
+        request.SendWebRequest();
+        while (!request.isDone) {
             Debug.Log("Requesting");
             Thread.Sleep(1000);
         }
-        if (webRequest.isHttpError || webRequest.isNetworkError)
-            Debug.Log(webRequest.error);
+        if (request.isHttpError || request.isNetworkError)
+            Debug.Log(request.error);
         else {
-            byte[] results = webRequest.downloadHandler.data;
+            byte[] results = request.downloadHandler.data;
             string s = Encoding.UTF8.GetString(results);
             Debug.Log("Resquest：" + s);
 
@@ -114,7 +132,7 @@ public static class BuildHelper {
                 JsonData data = originData["data"];
                 string avatarHash = (string)data["avatar"]["hash"];
                 Debug.Log("++++++local AvatarHash = " + avatarHash);
-                string equipHash = (string)data["equip"]["hash"];
+                string equipHash = (string)data["equip"]["hash"] + 1;
                 Debug.Log("++++++local equipHash  = " + equipHash);
                 string jsonTest = File.ReadAllText(configPath);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
@@ -126,7 +144,7 @@ public static class BuildHelper {
                 UnityEditor.SceneManagement.EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
                 successCallback?.Invoke();
             } else {
-                Debug.LogError("request url : " + webRequest.url + "   " + originData.ToJson());
+                Debug.LogError("request url : " + request.url + "   " + originData.ToJson());
             }
         }
         GameObject.DestroyImmediate(go);

@@ -34,18 +34,27 @@ public class Resource extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("Resource ...");
+		JSONObject getJB = new JSONObject();
+		getJB = Util.getMsgData(request);
+		String platform = "";
+		if (getJB != null && getJB.containsKey("platform")) {
+			platform = getJB.getString("platform");				
+		} else{
+			System.out.println("Resource `2222 ...");
+			return;
+		}
 
 		PrintWriter out = response.getWriter();				
         JSONObject avatarJB = new JSONObject();        
-        avatarJB.put("hash", getContent("r_hash", "avatar"));
-        avatarJB.put("crc", getContent("r_crc", "avatar"));
-        avatarJB.put("url", getContent("r_url", "avatar"));
-        avatarJB.put("size", getContent("r_size", "avatar"));
+        avatarJB.put("hash", getContent("r_hash", "avatar_" + platform.toLowerCase()));
+        avatarJB.put("crc", getContent("r_crc", "avatar_" + platform.toLowerCase()));
+        avatarJB.put("url", getContent("r_url", "avatar_" + platform.toLowerCase()));
+        avatarJB.put("size", getContent("r_size", "avatar_" + platform.toLowerCase()));
         JSONObject equipJB = new JSONObject();        
-        equipJB.put("hash", getContent("r_hash", "equip"));
-        equipJB.put("crc", getContent("r_crc", "equip"));
-        equipJB.put("url", getContent("r_url", "equip"));
-        equipJB.put("size", getContent("r_size", "equip"));
+        equipJB.put("hash", getContent("r_hash", "equip_" + platform.toLowerCase()));
+        equipJB.put("crc", getContent("r_crc", "equip_" + platform.toLowerCase()));
+        equipJB.put("url", getContent("r_url", "equip_" + platform.toLowerCase()));
+        equipJB.put("size", getContent("r_size", "equip_" + platform.toLowerCase()));
         JSONObject dataJB = new JSONObject();
         dataJB.put("avatar", avatarJB);
         dataJB.put("equip", equipJB);

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using Utils;
@@ -57,9 +58,19 @@ public class ResourceManager {
 
     private void CheckCoroutine() {
         Debug.Log("CheckCoroutine......");
-
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("platform");
+        w.Write(Util.GetPlatform());
+        w.WritePropertyName("version");
+        w.Write(Application.version);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
             RequestUrl.resourceUrl,
+            data: bytes,
             succData: (data) => {
                 Debug.Log(data.ToJson());
                 avatarHash = (string)data["avatar"]["hash"];

@@ -166,10 +166,25 @@ create table if not exists `ab_resource`(
    )engine = innodb default charset = utf8;
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
-				   ("avatar", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar", "0.1289");
+				   ("avatar_android", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_android", "0.1289");
+
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
-				   ("equip", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip", "0.4072265625");                   
+				   ("equip_android", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_android", "0.4072265625");  
+                   
+insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   values
+				   ("avatar_ios", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_ios", "0.1289");
+insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   values
+				   ("equip_ios", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_ios", "0.4072265625");
+                   
+insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   values
+				   ("avatar_pc", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_pc", "0.1289");
+insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
+				   values
+				   ("equip_pc", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_pc", "0.4072265625");                       
 select* from ab_resource;
 select r_hash 
 from
