@@ -8,7 +8,7 @@ public class RegisterUIMessage : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class HomepageUIMessage : ITinyMessage {
+public class HomepageUIMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 

@@ -63,7 +63,7 @@ public class AvatarUI : MonoBehaviour {
 
         closeBtn.onClick.AddListener(() => {
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                UIManager.manager.HidePage(UIPageType.AvatarUI, new HomepageUIMessage());
+                UIManager.manager.HidePage(UIPageType.AvatarUI, new HomepageUIMsg());
             });
         });
 

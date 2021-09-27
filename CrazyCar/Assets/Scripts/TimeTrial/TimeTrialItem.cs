@@ -10,6 +10,7 @@ public class TimeTrialItem : MonoBehaviour {
     public Button selfBtn;
     public Text nameText;
     public Text limiteText;
+    public Text timesText;
     public Image[] difficultyImages;
     public Sprite[] difficultySprites;
     public Image lockImage;
@@ -42,6 +43,7 @@ public class TimeTrialItem : MonoBehaviour {
                             GameController.manager.userInfo.star = (int)data["star"];
                             timeTrialInfo.isHas = true;
                             lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
+                            GameController.manager.tinyMsgHub.Publish(new HomepageUIMsg());
                         }));
                     },
                     fail: () => {
@@ -58,6 +60,7 @@ public class TimeTrialItem : MonoBehaviour {
         timeTrialInfo = info;
         nameText.text = timeTrialInfo.name;
         limiteText.text = timeTrialInfo.limitTime.ToString();
+        timesText.text = timeTrialInfo.times.ToString();
         for (int i = 0; i < difficultyImages.Length; i++) {
             if (i < timeTrialInfo.star) {
                 difficultyImages[i].sprite = difficultySprites[0];

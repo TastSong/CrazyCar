@@ -63,6 +63,10 @@ public class TimeTrialResult extends HttpServlet {
 			}	
 			boolean isBreakRecord = isBreakRecord(uid, cid, completeTime);
 			dataJB.put("is_break_record", isBreakRecord);
+			dataJB.put("reward", isBreakRecord ? getMapStar(cid) : 0);
+			if (isBreakRecord){
+				setUserStar(getMapStar(cid) + getUserStar(uid), uid);
+			}
 			insertData(uid, cid, completeTime);
 			if (isBreakRecord){
 				dataJB.put("rank", getSelfRank(uid, cid, "rank_num"));
@@ -118,6 +122,24 @@ public class TimeTrialResult extends HttpServlet {
 		Util.JDBC.executeInsert(sql);
 		sql = "select rank_num from time_trial_rank_" + cid +" where uid = " + uid + ";";
 		return Util.JDBC.executeSelectInt(sql, key);
+	}
+	
+	private int getMapStar(int cid) {
+		String sql = "select star from time_trial_class where cid = "
+				+  cid + ";";
+		return Util.JDBC.executeSelectInt(sql, "star");
+	}
+	
+	private void setUserStar(int star, int uid) {
+		String sql = "update all_user set star = "
+				+  star + " where uid = " + uid + ";";
+		Util.JDBC.executeInsert(sql);
+	}
+	
+	private int getUserStar(int uid) {
+		String sql = "select star from all_user where uid = "
+				+  uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "star");
 	}
 
 	/**

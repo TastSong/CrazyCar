@@ -61,6 +61,7 @@ public class TimeTrialDetail extends HttpServlet {
 			jbItem.put("limit_time", getIntData(allCid.get(i), "limit_time"));
 			jbItem.put("name", getClassName(allCid.get(i)));
 			jbItem.put("is_has", isHasClass(allCid.get(i), uid));
+			jbItem.put("times", getIntData(allCid.get(i), "times"));
 			jsonArray.add(jbItem);
 		}		
 		jsonObject.put("data", jsonArray);

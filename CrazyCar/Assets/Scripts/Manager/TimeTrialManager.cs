@@ -11,6 +11,7 @@ public class TimeTrialInfo {
     public int mapId;
     public int limitTime;
     public bool isHas;
+    public int times;
 }
 
 public class TimeTrialRankInfo {
@@ -24,6 +25,7 @@ public class TimeTrialManager {
     public bool isWin = false;
     public bool isBreakRecord = false;
     public int rank;
+    public int rewardStar;
     public Dictionary<int, TimeTrialInfo> timeTrialDic = new Dictionary<int, TimeTrialInfo>();
     public TimeTrialInfo selectInfo = new TimeTrialInfo();
     public List<TimeTrialRankInfo> timeTrialRankList = new List<TimeTrialRankInfo>();
@@ -115,6 +117,7 @@ public class TimeTrialManager {
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];
             info.isHas = (bool)jsonData[i]["is_has"];
+            info.times = (int)jsonData[i]["times"];
             timeTrialDic[info.cid] = info;
         }
         success?.Invoke();
@@ -125,6 +128,7 @@ public class TimeTrialManager {
         completeTime = (int)jsonData["complete_time"];
         rank = (int)jsonData["rank"];
         isBreakRecord = (bool)jsonData["is_break_record"];
+        rewardStar = (int)jsonData["reward"];
         success?.Invoke();
     }
 

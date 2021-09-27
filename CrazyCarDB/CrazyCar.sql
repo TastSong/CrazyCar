@@ -198,20 +198,21 @@ create table if not exists `time_trial_class`(
    `map_id` int not null,
    `limit_time` int not null,
    `class_name` VARCHAR(40) not null,
+   `times` int not null,
    primary key ( `cid` )
    )engine = innodb default charset = utf8;
-insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 60, "Map 0");
-insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
+				   (0, 2, 0, 60, "基地卡通", 1);
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (1, 1, 1, 70, "Map 1");
-insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
+				   (1, 1, 1, 70, "几何风光", 3);
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (2, 3, 2, 80, "Map 2");
-insert into time_trial_class ( cid, star, map_id, limit_time, class_name )
+				   (2, 3, 2, 80, "曲折前行", 2);
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (3, 2, 3, 90, "Map 3");
+				   (3, 2, 3, 90, "蜿蜒驰骋", 2);
 select* from time_trial_class;
 select cid from time_trial_class;
 

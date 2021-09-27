@@ -78,7 +78,7 @@ public class HomepageUI : MonoBehaviour {
         // --------- Bottom Btns ---------
 
         UpdataUI();
-        homepageToken = GameController.manager.tinyMsgHub.Subscribe<HomepageUIMessage>((m) => { UpdataUI(); });
+        homepageToken = GameController.manager.tinyMsgHub.Subscribe<HomepageUIMsg>((m) => { UpdataUI(); });
     }
 
     private void UpdataUI() {

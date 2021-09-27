@@ -109,6 +109,7 @@ public class TimeTrialRank extends HttpServlet {
 		return Util.JDBC.executeSelectInt(sql, "uid");
 	}
 	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -14,6 +14,7 @@ public class TimeTrialResultUI : MonoBehaviour {
     public Image breakRankImage;
     public Sprite[] breakRankSprites;
     public Slider completeTimeSlider;
+    public Text rewardText;
     public Text rankText;
     public Button rankBtn;
     public Button confirmBtn;
@@ -48,7 +49,10 @@ public class TimeTrialResultUI : MonoBehaviour {
         breakRankImage.sprite = breakRankSprites[GameController.manager.timeTrialManager.isBreakRecord ? 0 : 1];
         completeTimeSlider.value = GameController.manager.timeTrialManager.isComplete ?
             ((float)GameController.manager.timeTrialManager.completeTime / GameController.manager.timeTrialManager.selectInfo.limitTime) : 0;
+        rewardText.text = GameController.manager.timeTrialManager.rewardStar.ToString();
         rankText.text = GameController.manager.timeTrialManager.isBreakRecord ? GameController.manager.timeTrialManager.rank.ToString() : "--";
+
+        GameController.manager.userInfo.star += GameController.manager.timeTrialManager.rewardStar;
     }
 
     private void Start() {

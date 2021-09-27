@@ -47,6 +47,7 @@ public class TimeTrialPlayer : MonoBehaviour {
     public Color[] driftColors;
     public float driftPower = 0;
 
+    private int passTimes = 0;
     private bool isUseKeyboard = false;
 
     void Start() {
@@ -281,9 +282,14 @@ public class TimeTrialPlayer : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "EndSign") {
-            GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
-            Debug.Log("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
-            Debug.Log("++++++CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+            passTimes++;
+            if (passTimes >= GameController.manager.timeTrialManager.selectInfo.times) {
+                GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
+                Debug.Log("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
+                Debug.Log("++++++CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+                passTimes = 0;
+            }
+           
         }
     }
 }
