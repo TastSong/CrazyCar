@@ -24,13 +24,13 @@ public class ResourceManager {
     private uint avatarCRC = 0;
     private string avatarURL = "";
     private float avatarSize = 1000;
-    private string localAvatarString = Application.streamingAssetsPath + "/avatar";
+    private string localAvatarString = Application.streamingAssetsPath + "/avatar_" + Util.GetPlatform().ToLower();
 
     private string equipHash = "";
     private uint equipCRC = 0;
     private string equipURL = "";
     private float equipSize = 1000;
-    private string localEquipString = Application.streamingAssetsPath + "/equip";
+    private string localEquipString = Application.streamingAssetsPath + "/equip_" + Util.GetPlatform().ToLower();
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");

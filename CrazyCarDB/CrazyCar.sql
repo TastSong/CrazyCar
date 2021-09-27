@@ -177,7 +177,7 @@ insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   ("avatar_ios", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_ios", "0.1289");
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
-				   ("equip_ios", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_ios", "0.4072265625");
+				   ("equip_ios", "6e255c8279db8f8436b31738cd57e50d", "2340302687", "equip_ios", "0.5908203125");
                    
 insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
 				   values
