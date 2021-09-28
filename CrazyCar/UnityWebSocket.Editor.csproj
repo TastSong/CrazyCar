@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D86AB141-3B3E-DDD5-26F4-7B4763B32020}</ProjectGuid>
+    <ProjectGuid>{188761FA-59D4-B4BA-92E3-B587FF998887}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>UnityWebSocket.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -48,7 +48,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
     <UnityProjectGeneratorVersion>4.10.3.0</UnityProjectGeneratorVersion>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2019.4.14f1c1</UnityVersion>
   </PropertyGroup>
@@ -64,124 +64,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Anim\CountDownAnim.cs" />
-    <Compile Include="Assets\Scripts\Avatar\AvatarItem.cs" />
-    <Compile Include="Assets\Scripts\Avatar\AvatarUI.cs" />
-    <Compile Include="Assets\Scripts\Common\AssetBundleHelper.cs" />
-    <Compile Include="Assets\Scripts\Common\CarControl.cs" />
-    <Compile Include="Assets\Scripts\Common\GameController.cs" />
-    <Compile Include="Assets\Scripts\Common\GameCtrBtn.cs" />
-    <Compile Include="Assets\Scripts\Common\GameHelper.cs" />
-    <Compile Include="Assets\Scripts\Common\GameUIControl.cs" />
-    <Compile Include="Assets\Scripts\Common\IndexCar.cs" />
-    <Compile Include="Assets\Scripts\Common\InfoConfirmAlert.cs" />
-    <Compile Include="Assets\Scripts\Common\MapController.cs" />
-    <Compile Include="Assets\Scripts\Common\NetworkController.cs" />
-    <Compile Include="Assets\Scripts\Common\UISceneLoadingCtrl.cs" />
-    <Compile Include="Assets\Scripts\Common\Util.cs" />
-    <Compile Include="Assets\Scripts\Common\WarningAlert.cs" />
-    <Compile Include="Assets\Scripts\Equipment\AccessoryChanger.cs" />
-    <Compile Include="Assets\Scripts\Equipment\BikeEffectBreathing.cs" />
-    <Compile Include="Assets\Scripts\Equipment\ChangeCarItem.cs" />
-    <Compile Include="Assets\Scripts\Equipment\ChangeCarUI.cs" />
-    <Compile Include="Assets\Scripts\Equipment\EquipResource.cs" />
-    <Compile Include="Assets\Scripts\Homepage\HomepageCtrl.cs" />
-    <Compile Include="Assets\Scripts\Homepage\HomepageUI.cs" />
-    <Compile Include="Assets\Scripts\Homepage\ProfileUI.cs" />
-    <Compile Include="Assets\Scripts\Homepage\RankDetailItem.cs" />
-    <Compile Include="Assets\Scripts\Homepage\RankUI.cs" />
-    <Compile Include="Assets\Scripts\Login\DownloadResUI.cs" />
-    <Compile Include="Assets\Scripts\Login\LoginCtr.cs" />
-    <Compile Include="Assets\Scripts\Login\LoginUI.cs" />
-    <Compile Include="Assets\Scripts\Login\RegisterUI.cs" />
-    <Compile Include="Assets\Scripts\Manager\AvatarManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\EquipManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\LoginManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\PlayerManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\RouteManger.cs" />
-    <Compile Include="Assets\Scripts\Manager\TimeTrialManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Route\CatmullRomSpline.cs" />
-    <Compile Include="Assets\Scripts\Route\RouteNet.cs" />
-    <Compile Include="Assets\Scripts\Setting\ColorSwapper.cs" />
-    <Compile Include="Assets\Scripts\Setting\MusicManager.cs" />
-    <Compile Include="Assets\Scripts\Setting\SettingsUI.cs" />
-    <Compile Include="Assets\Scripts\Setting\SoundButton.cs" />
-    <Compile Include="Assets\Scripts\Setting\SpriteSwapper.cs" />
-    <Compile Include="Assets\Scripts\Test\EasyLoadsTest.cs" />
-    <Compile Include="Assets\Scripts\Test\TestCameraCtr.cs" />
-    <Compile Include="Assets\Scripts\Test\TestChangeEquip.cs" />
-    <Compile Include="Assets\Scripts\Test\TestPlayerCtr.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialDetailUI.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialItem.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialPlayer.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialRankItem.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialRankUI.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialResultUI.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialUI.cs" />
-    <Compile Include="Assets\Scripts\TinyMessenger\CustomTinyMsg.cs" />
-    <Compile Include="Assets\Scripts\TinyMessenger\Properties\AssemblyInfo.cs" />
-    <Compile Include="Assets\Scripts\TinyMessenger\TinyMessenger.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\Shaders\GrayTint.shader" />
-    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\ConnectionNotAvailableException.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\FleckLog.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\FrameType.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\HandlerFactory.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Handlers\ComposableHandler.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Handlers\Draft76Handler.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Handlers\FlashSocketPolicyRequestHandler.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Handlers\Hybi13Handler.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Helpers\FleckRuntime.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\IntExtensions.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Interfaces\IHandler.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Interfaces\ISocket.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Interfaces\IWebSocketConnection.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Interfaces\IWebSocketConnectionInfo.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\Interfaces\IWebSocketServer.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\QueuedStream.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\ReadState.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\RequestParser.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\SocketWrapper.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\SubProtocolNegotiationFailureException.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\SubProtocolNegotiator.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketConnection.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketConnectionInfo.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketException.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketHttpRequest.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketServer.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Fleck\WebSocketStatusCodes.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Server\Server_Fleck.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\Settings.cs" />
+    <Compile Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\SettingsWindow.cs" />
+    <None Include="Assets\Plugins\UnityWebSocket\Scripts\Editor\UnityWebSocket.Editor.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -208,6 +121,12 @@
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
@@ -359,14 +278,38 @@
     <Reference Include="UnityEditor">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
     <Reference Include="DOTween">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyRoads3Dv3Editor">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/Editor/EasyRoads3Dv3Editor.dll</HintPath>
     </Reference>
     <Reference Include="DelaunayER">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/lib/DelaunayER.dll</HintPath>
     </Reference>
     <Reference Include="EasyRoads3Dv3">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Assets/Plugins/EasyRoads3D/lib/EasyRoads3Dv3.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -722,73 +665,23 @@
     <Reference Include="Boo.Lang">
       <HintPath>D:/Program Files/Unity/Editor/2019.4.14f1c1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.CacheServer">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ResourceManager">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.ResourceManager.dll</HintPath>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Addressables.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Addressables.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Addressables">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Addressables.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{BACD5749-7577-1797-45ED-E2D3F564A7C9}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityWebSocket.Runtime.csproj">
       <Project>{60040805-B42C-B68E-7E2D-E69D60913C72}</Project>
       <Name>UnityWebSocket.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityWebSocket.Editor.csproj">
-      <Project>{188761FA-59D4-B4BA-92E3-B587FF998887}</Project>
-      <Name>UnityWebSocket.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

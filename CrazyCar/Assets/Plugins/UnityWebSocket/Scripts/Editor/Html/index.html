@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Unity WebSocket Echo</title>
+    <script type="text/javascript" src="https://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <style type="text/css">
+        .talk_con {
+            width: 600px;
+            height: 500px;
+            border: 1px solid #666;
+            margin: 50px auto 0;
+            background: #f9f9f9;
+        }
+
+        .talk_show {
+            width: 580px;
+            height: 400px;
+            border: 1px solid #666;
+            background: #fff;
+            margin: 10px auto 0;
+            overflow: auto;
+            margin-top: 50px;
+        }
+
+        .talk_input {
+            width: 580px;
+            margin: 10px auto 0;
+        }
+
+        .whotalk {
+            width: 80px;
+            height: 30px;
+            float: left;
+            outline: none;
+        }
+
+        .talk_word {
+            width: 400px;
+            height: 26px;
+            padding: 0px;
+            float: left;
+            margin-left: 10px;
+            outline: none;
+            text-indent: 10px;
+        }
+
+        .talk_sub {
+            width: 76px;
+            height: 30px;
+            float: left;
+            margin-left: 10px;
+        }
+
+        .atalk {
+            margin: 10px;
+        }
+
+            .atalk span {
+                display: inline-block;
+                background: #0181cc;
+                border-radius: 10px;
+                color: #fff;
+                padding: 5px 10px;
+            }
+
+        .btalk {
+            margin: 10px;
+            text-align: right;
+        }
+
+            .btalk span {
+                display: inline-block;
+                background: #ef8201;
+                border-radius: 10px;
+                color: #fff;
+                padding: 5px 10px;
+            }
+    </style>
+    <script type="text/javascript">
+        var ws;
+        function WebSocketConnect(address) {
+
+            var ConnectSub = document.getElementById("connectsub");
+
+            if (!("WebSocket" in window)) {
+                ConnectSub.value = "Connect";
+                alert("Your browser does not support WebSocket!");
+                return;
+            }
+
+            ws = new WebSocket(address);
+            ws.onopen = function () {
+                ConnectSub.value = "Close";
+                addMsg("System", "Connect success.");
+            };
+
+            ws.onmessage = function (evt) {
+                var msg = evt.data;
+                addMsg("Server", msg);
+            };
+
+            ws.onclose = function () {
+                var ConnectSub = document.getElementById("connectsub");
+                ConnectSub.value = "Connect";
+                addMsg("System", "Connection Closed.");
+            };
+        }
+
+        function addMsg(name, msg, side = 0) {
+            var Words = document.getElementById("words");
+            var Who = document.getElementById("who");
+            var str = "";
+            if (side == 0) {
+                str = '<div class="atalk"><span>' + name + ' : ' + msg + '</span></div>';
+            }
+            else {
+                str = '<div class="btalk"><span>' + name + ' : ' + msg + '</span></div>';
+            }
+            Words.innerHTML = Words.innerHTML + str;
+        }
+
+        window.onload = function () {
+            var TalkWords = document.getElementById("talkwords");
+            var TalkSub = document.getElementById("talksub");
+            TalkSub.onclick = function () {
+                if (TalkWords.value == "") {
+                    alert("Message can't be empty");
+                    return;
+                }
+                if (!ws || ws.readyState != 1) {
+                    alert("Not connected yet.");
+                    return;
+                }
+                ws.send(TalkWords.value);
+                addMsg("Client", TalkWords.value, 1);
+            }
+            var Address = document.getElementById("address");
+            if (window.location.protocol == "https:")
+                Address.value = "wss://" + window.location.host;
+            else
+                Address.value = "ws://" + window.location.host;
+            var ConnectSub = document.getElementById("connectsub");
+            ConnectSub.onclick = function () {
+                if (ConnectSub.value == "Close") {
+                    ConnectSub.value = "Closing...";
+                    ws.close();
+                }
+                else if (ConnectSub.value == "Connect") {
+                    ConnectSub.value = "Connecting...";
+                    WebSocketConnect(Address.value);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="talk_con">
+        <div class="talk_input">
+            <select class="whotalk">
+                <option value="0">Address</option>
+            </select>
+            <input type="text" class="talk_word" id="address">
+            <input type="button" value="Connect" class="talk_sub" id="connectsub">
+        </div>
+        <div class="talk_show" id="words">
+        </div>
+        <div class="talk_input">
+            <select class="whotalk" id="who">
+                <option value="0">Message</option>
+            </select>
+            <input type="text" class="talk_word" id="talkwords">
+            <input type="button" value="Send" class="talk_sub" id="talksub">
+        </div>
+    </div>
+</body>
+</html>
