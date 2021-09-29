@@ -23,6 +23,7 @@ public class TimeTrialItem : MonoBehaviour {
                 Debug.Log("进入课程 = " + timeTrialInfo.cid);
                 GameController.manager.timeTrialManager.CleanData();
                 GameController.manager.timeTrialManager.selectInfo = timeTrialInfo;
+                GameController.manager.curGameType = CurGameType.TimeTrial;
                 Util.LoadingScene(SceneID.Game);
             } else {
                 if (GameController.manager.userInfo.star > timeTrialInfo.star) {

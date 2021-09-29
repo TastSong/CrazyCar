@@ -18,6 +18,10 @@ public class UserInfo {
     public EquipInfo equipInfo;
 }
 
+public enum CurGameType {
+    TimeTrial = 0
+}
+
 public class GameController : MonoBehaviour
 {
     public static GameController manager = null;
@@ -28,6 +32,7 @@ public class GameController : MonoBehaviour
     public InfoConfirmAlert infoConfirmAlert;
     public string token;
     public UserInfo userInfo = new UserInfo();
+    public CurGameType curGameType = CurGameType.TimeTrial;
 
     public ResourceManager resourceManager = new ResourceManager();
     public LoginManager loginManager = new LoginManager();
