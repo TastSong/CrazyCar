@@ -13,19 +13,50 @@ public class TimeTrialWebSocket : MonoBehaviour {
 
     private IEnumerator SendMsg() {
         while (true) {
-            StringBuilder sb = new StringBuilder();
-            JsonWriter w = new JsonWriter(sb);
-            w.WriteObjectStart();
-            w.WritePropertyName("uid");
-            w.Write(GameController.manager.userInfo.uid);
-            w.WritePropertyName("cid");
-            w.Write(GameController.manager.timeTrialManager.selectInfo.cid);
-            w.WritePropertyName("pos");
-            w.Write(PlayerManager.manager.timeTrialPlayer.transform.position.x);
-            w.WriteObjectEnd();
-            Debug.Log("++++++ " + sb.ToString());
-            WebSocketMan.manager.SendMsgToServer(JsonMapper.ToObject(sb.ToString()));
+            if (GameController.manager.timeTrialManager.IsStartGame) {
+                StringBuilder sb = new StringBuilder();
+                JsonWriter w = new JsonWriter(sb);
+                w.WriteObjectStart();
+                    w.WritePropertyName("book");
+                        w.WriteObjectStart();
+                        w.WritePropertyName("title");
+                        w.Write("android game!");
+                        w.WritePropertyName("author");
+                        w.Write("pei");
+                        w.WritePropertyName("bookdetail");
+                            w.WriteObjectStart();
+                            w.WritePropertyName("pages");
+                            w.Write(429);
+                            w.WritePropertyName("about");
+                            w.Write(null);
+                            w.WriteObjectEnd();
+                    w.WriteObjectEnd();
+                w.WriteObjectEnd();
+                Debug.Log("++++++ " + sb.ToString());
+                WebSocketMan.manager.SendMsgToServer(sb.ToString());
+            }          
             yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    private void Test() {
+        JsonWriter w = new JsonWriter();
+        w.WriteObjectStart();
+        w.WritePropertyName("book");
+            w.WriteObjectStart();
+            w.WritePropertyName("title");
+            w.Write("android game!");
+            w.WritePropertyName("author");
+            w.Write("pei");
+            w.WritePropertyName("bookdetail");
+                w.WriteObjectStart();
+                w.WritePropertyName("pages");
+                w.Write(429);
+                w.WritePropertyName("about");
+                w.Write(null);
+                w.WriteObjectEnd();
+            w.WriteObjectEnd();
+        w.WriteObjectEnd();
+        Debug.Log(w.ToString());
     }
 }

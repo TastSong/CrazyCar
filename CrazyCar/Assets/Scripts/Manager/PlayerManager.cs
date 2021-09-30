@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour{
+public class PlayerStateMsg {
+    public int cid;
+    public UserInfo userInfo = new UserInfo();
+    public Vector3 pos = new Vector3();
+    public int speed;
+}
+
+public class PlayerManager : MonoBehaviour {
     public static PlayerManager manager;
-    public TimeTrialPlayer timeTrialPlayer;
+    public MPlayer mPlayerPrefab;
+    public Transform startPos;
+
+    private MPlayer selfPlayer;
+    private Dictionary<int, MPlayer> peers = new Dictionary<int, MPlayer>();
 
     private void Awake() {
         if (manager == null) {
@@ -15,7 +26,57 @@ public class PlayerManager : MonoBehaviour{
     }
 
     private void Start() {
-        timeTrialPlayer.GetComponent<AccessoryChanger>().
+        MakeSelfPlayer();
+        selfPlayer.GetComponent<AccessoryChanger>().
             SetGear(GameController.manager.userInfo.equipInfo.eid.ToString(), GameController.manager.userInfo.equipInfo.rid);
+    }
+
+    private void MakeSelfPlayer() {
+        selfPlayer = Instantiate(mPlayerPrefab, startPos.position, Quaternion.identity);
+        selfPlayer.transform.SetParent(transform, false);
+        selfPlayer.userInfo = GameController.manager.userInfo;
+    }
+
+    public MPlayer GetSelfPlayer {
+        get {
+            return selfPlayer;
+        }
+    }
+
+    public MPlayer GetPlayerByUid(int uid) {
+        if (uid == selfPlayer.userInfo.uid) {
+            return selfPlayer;
+        }
+
+        MPlayer player;
+        if (peers.TryGetValue(uid, out player)) {
+            return player;
+        }
+
+        return null;
+    }
+
+    public void RespondAction(PlayerStateMsg playerStateMsg) {
+        if (playerStateMsg.userInfo.uid == GameController.manager.userInfo.uid) {
+            selfPlayer.ConfirmStatus(playerStateMsg);
+        } else {
+            AdjustPeerPlayer(playerStateMsg);
+        }
+    }
+
+    private void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
+        MPlayer peer = null;
+        if (!peers.TryGetValue(playerStateMsg.userInfo.uid, out peer)) {
+            MakeNewPlayer(playerStateMsg);
+        }
+        peer.AdjustPlayerPosition(playerStateMsg.pos);
+    }
+
+    private void MakeNewPlayer(PlayerStateMsg playerStateMsg) {
+        UserInfo userInfo = playerStateMsg.userInfo;
+        MPlayer mPlayer = Instantiate(mPlayerPrefab, playerStateMsg.pos, Quaternion.identity);
+        mPlayer.transform.SetParent(transform, false);
+        mPlayer.userInfo = userInfo;
+        peers.Add(userInfo.uid, mPlayer);
     }
 }

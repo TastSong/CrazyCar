@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,9 +31,9 @@ public class WebSocketMan : MonoBehaviour {
         socket.ConnectAsync();
     }
 
-    public void SendMsgToServer(JsonData msg) {
+    public void SendMsgToServer(string msg) {
         if (socket != null) {
-            socket.SendAsync(msg.ToJson());
+            socket.SendAsync(msg);
         }
     }
 
@@ -47,6 +48,7 @@ public class WebSocketMan : MonoBehaviour {
             Debug.Log(string.Format("Receive: {0}\n", e.Data));
             if (GameController.manager.curGameType == CurGameType.TimeTrial) {
                 recJD = JsonMapper.ToObject(e.Data);
+                PlayerManager.manager.RespondAction(ParsePlayerStateMsg(recJD));
             }
         }
         receiveCount += 1;
@@ -60,9 +62,19 @@ public class WebSocketMan : MonoBehaviour {
         Debug.Log(string.Format("Error: {0}\n", e.Message));
     }
 
-    private void OnApplicationQuit() {
+    private void OnDestroy() {
         if (socket != null && socket.ReadyState != WebSocketState.Closed) {
             socket.CloseAsync();
         }
+    }
+
+    private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+        PlayerStateMsg playerStateMsg = new PlayerStateMsg();
+        playerStateMsg.cid = (int)jsonData["cid"];
+        playerStateMsg.userInfo = JsonMapper.ToObject<UserInfo>(jsonData["user_info"].ToString());
+        playerStateMsg.pos = new Vector3((float)jsonData["pos_x"], (float)jsonData["pos_y"], (float)jsonData["pos_z"]);
+        playerStateMsg.speed = (int)(float)jsonData["speed"];
+        success?.Invoke();
+        return playerStateMsg;
     }
 }

@@ -27,6 +27,14 @@ public class LoginManager {
         info.maxSpeed = (int)data["max_speed"];
         info.isHas = (bool)data["is_has"];
         info.isShow = (bool)data["is_show"];
-        GameController.manager.userInfo.equipInfo = info; 
+        GameController.manager.userInfo.equipInfo = info;
+
+        PlayerStateMsg playerStateMsg = new PlayerStateMsg();
+        playerStateMsg.cid = 4;
+        playerStateMsg.userInfo = GameController.manager.userInfo;
+        playerStateMsg.speed = 14;
+        playerStateMsg.pos = new Vector3(1, 4, 4);
+        Debug.LogError("++++++111 " + JsonMapper.ToJson(playerStateMsg));
+        Debug.LogError("++++++222 " + JsonMapper.ToObject(JsonMapper.ToJson(playerStateMsg)).ToJson());
     }
 }

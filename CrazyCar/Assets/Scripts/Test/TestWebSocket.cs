@@ -26,7 +26,7 @@ public class TestWebSocket : MonoBehaviour
             w.Write(x++);
             w.WriteObjectEnd();
             Debug.Log("++++++ " + sb.ToString());
-            WebSocketMan.manager.SendMsgToServer(JsonMapper.ToObject(sb.ToString()));
+            WebSocketMan.manager.SendMsgToServer(sb.ToString());
             yield return new WaitForSeconds(1.0f);
         }
     }

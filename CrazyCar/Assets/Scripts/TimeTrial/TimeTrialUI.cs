@@ -26,7 +26,7 @@ public class TimeTrialUI : MonoBehaviour{
 
         countDownAnim.PlayAnim(3, () => {
             GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
-            PlayerManager.manager.timeTrialPlayer.vInput = 1;
+            PlayerManager.manager.GetSelfPlayer.vInput = 1;
             Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
             limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
                 () => {
@@ -50,25 +50,25 @@ public class TimeTrialUI : MonoBehaviour{
         });
 
         frontBtn.SetClick((float time) => {
-            PlayerManager.manager.timeTrialPlayer.vInput = 1;
+            PlayerManager.manager.GetSelfPlayer.vInput = 1;
         });
         backBtn.SetClick((float time) => {
-            PlayerManager.manager.timeTrialPlayer.vInput = -1;
+            PlayerManager.manager.GetSelfPlayer.vInput = -1;
         });
         leftBtn.SetClick((float time) => {
-            PlayerManager.manager.timeTrialPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
+            PlayerManager.manager.GetSelfPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.timeTrialPlayer.hInput = 0;
+            PlayerManager.manager.GetSelfPlayer.hInput = 0;
         });
         rightBtn.SetClick((float time) => {
-            PlayerManager.manager.timeTrialPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
+            PlayerManager.manager.GetSelfPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.timeTrialPlayer.hInput = 0;
+            PlayerManager.manager.GetSelfPlayer.hInput = 0;
         });
         spaceBtn.SetClick((float time) => {
-            PlayerManager.manager.timeTrialPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
+            PlayerManager.manager.GetSelfPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.timeTrialPlayer.sInput = 0;
+            PlayerManager.manager.GetSelfPlayer.sInput = 0;
         });
 
         limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 
