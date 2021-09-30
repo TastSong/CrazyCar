@@ -15,7 +15,7 @@ public class UserInfo {
     public int travelTimes;
     public int avatarNum;
     public int mapNum;
-    public EquipInfo equipInfo;
+    public EquipInfo equipInfo = new EquipInfo();
 }
 
 public enum CurGameType {
@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
     public string token;
     public UserInfo userInfo = new UserInfo();
     public CurGameType curGameType = CurGameType.TimeTrial;
+    public float sendMsgOffTime = 1.0f;
 
     public ResourceManager resourceManager = new ResourceManager();
     public LoginManager loginManager = new LoginManager();

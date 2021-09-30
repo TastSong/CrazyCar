@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour {
     public static PlayerManager manager;
     public MPlayer mPlayerPrefab;
     public Transform startPos;
+    public Transform  cinemachineTF;
 
     private MPlayer selfPlayer;
     private Dictionary<int, MPlayer> peers = new Dictionary<int, MPlayer>();
@@ -26,15 +27,16 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void Start() {
-        MakeSelfPlayer();
-        selfPlayer.GetComponent<AccessoryChanger>().
-            SetGear(GameController.manager.userInfo.equipInfo.eid.ToString(), GameController.manager.userInfo.equipInfo.rid);
+        MakeSelfPlayer();       
     }
 
     private void MakeSelfPlayer() {
         selfPlayer = Instantiate(mPlayerPrefab, startPos.position, Quaternion.identity);
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = GameController.manager.userInfo;
+        selfPlayer.GetComponent<AccessoryChanger>().
+            SetGear(GameController.manager.userInfo.equipInfo.eid.ToString(), GameController.manager.userInfo.equipInfo.rid);
+        cinemachineTF.SetParent(selfPlayer.transform, false);
     }
 
     public MPlayer GetSelfPlayer {
@@ -68,8 +70,9 @@ public class PlayerManager : MonoBehaviour {
         MPlayer peer = null;
         if (!peers.TryGetValue(playerStateMsg.userInfo.uid, out peer)) {
             MakeNewPlayer(playerStateMsg);
+        } else {
+            peer.AdjustPlayerPosition(playerStateMsg.pos);
         }
-        peer.AdjustPlayerPosition(playerStateMsg.pos);
     }
 
     private void MakeNewPlayer(PlayerStateMsg playerStateMsg) {
@@ -77,6 +80,7 @@ public class PlayerManager : MonoBehaviour {
         MPlayer mPlayer = Instantiate(mPlayerPrefab, playerStateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
         mPlayer.userInfo = userInfo;
+        mPlayer.GetComponent<AccessoryChanger>().SetGear(userInfo.equipInfo.eid.ToString(), userInfo.equipInfo.rid.ToString());
         peers.Add(userInfo.uid, mPlayer);
     }
 }

@@ -66,7 +66,7 @@ namespace Utils {
                 case ServerType.Local:
                     return "http://localhost:8080/CrazyCarServer/";
                 case ServerType.Remote:
-                    return "http://139.9.103.145/CrazyCarServer/";
+                    return "http://139.9.103.145:8080/CrazyCarServer/";
                 default:
                     return "http://localhost:8080/CrazyCarServer/";
             }

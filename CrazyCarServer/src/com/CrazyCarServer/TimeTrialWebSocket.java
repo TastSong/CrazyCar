@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
  * @ServerEndpoint 可以把当前类变成websocket服务类
  */
-@ServerEndpoint("/websocket/TimeTrialWebSocket/{cid}")
+@ServerEndpoint("/websocket/TimeTrialWebSocket/{id}")
 public class TimeTrialWebSocket {
 	 //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -22,7 +22,7 @@ public class TimeTrialWebSocket {
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session WebSocketsession;
     //当前发消息的人员编号
-    private String cid = "";
+    private String id = "";
     private JSONObject sendMsg = new JSONObject(); 
  
     /**
@@ -31,9 +31,9 @@ public class TimeTrialWebSocket {
      * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
      */
     @OnOpen
-    public void onOpen(@PathParam(value = "cid") String param, Session WebSocketsession, EndpointConfig config) {
+    public void onOpen(@PathParam(value = "id") String param, Session WebSocketsession, EndpointConfig config) {
         System.out.println(param);
-        cid = param;//接收到发送消息的人员编号
+        id = param;//接收到发送消息的人员编号
         this.WebSocketsession = WebSocketsession;
         webSocketSet.put(param, this);//加入map中
         addOnlineCount();           //在线数加1
@@ -45,8 +45,8 @@ public class TimeTrialWebSocket {
      */ 
     @OnClose
     public void onClose() {
-        if (!cid.equals("")) {
-            webSocketSet.remove(cid);  //从set中删除
+        if (!id.equals("")) {
+            webSocketSet.remove(id);  //从set中删除
             subOnlineCount();           //在线数减1
             System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
         }
@@ -60,61 +60,29 @@ public class TimeTrialWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
-//        session.get
         sendToUser(message);
+        //sendAll(message) ;
     }
     /**
      * 给指定的人发送消息
      * @param message
      */
     public void sendToUser(String message) {
-    	System.out.println("message = " + message); 
     	sendMsg = JSONObject.parseObject(message);
     	String cid = sendMsg.getString("cid");
+    	
         //String now = getNowTime();
     	for (String key : webSocketSet.keySet()) {
           try {
-              if (cid.equals(key)) {
-                  webSocketSet.get(key).sendMessage(sendMsg.toJSONString());
-              }
+        	  if (key.split(",")[1].equals(cid) && !key.equals(id)){
+        		  webSocketSet.get(key).sendMessage(message);
+        	  }              
           } catch (IOException e) {
               e.printStackTrace();
           }
        }     
     }
-//    /**
-//     * 给所有人发消息
-//     * @param message
-//     */
-//    private void sendAll(String message) {
-//        String now = getNowTime();
-//        String sendMessage = message.split("[|]")[0];
-//        //遍历HashMap
-//        for (String key : webSocketSet.keySet()) {
-//            try {
-//                //判断接收用户是否是当前发消息的用户
-//                if (!cid.equals(key)) {
-//                    webSocketSet.get(key).sendMessage(now + "用户" + cid + "发来消息：" + " <br/> " + sendMessage);
-//                    System.out.println("key = " + key);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
- 
-//    /**
-//     * 获取当前时间
-//     *
-//     * @return
-//     */
-//    private String getNowTime() {
-//        Date date = new Date();
-//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String time = format.format(date);
-//        return time;
-//    }
+
     /**
      * 发生错误时调用
      *

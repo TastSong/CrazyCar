@@ -71,9 +71,15 @@ public class WebSocketMan : MonoBehaviour {
     private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
-        playerStateMsg.userInfo = JsonMapper.ToObject<UserInfo>(jsonData["user_info"].ToString());
         playerStateMsg.pos = new Vector3((float)jsonData["pos_x"], (float)jsonData["pos_y"], (float)jsonData["pos_z"]);
         playerStateMsg.speed = (int)(float)jsonData["speed"];
+        playerStateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
+        playerStateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
+        playerStateMsg.userInfo.aid = (int)jsonData["user_info"]["aid"];
+        playerStateMsg.userInfo.star = (int)jsonData["user_info"]["star"];
+        playerStateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
+        playerStateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
+        playerStateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
         success?.Invoke();
         return playerStateMsg;
     }

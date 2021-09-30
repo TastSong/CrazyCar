@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Utils;
 
 public class TimeTrialWebSocket : MonoBehaviour {
     private void Start() {
-        WebSocketMan.manager.Init("ws://localhost:8080/CrazyCarServer/websocket/TimeTrialWebSocket/" +
-            GameController.manager.timeTrialManager.selectInfo.cid);
+        string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) + "websocket/TimeTrialWebSocket/" + 
+            GameController.manager.userInfo.uid + "," + GameController.manager.timeTrialManager.selectInfo.cid;
+        Debug.Log("+++ " + ws);
+        WebSocketMan.manager.Init(ws);
         WebSocketMan.manager.StartCoroutine(SendMsg());
     }
 
@@ -51,28 +54,7 @@ public class TimeTrialWebSocket : MonoBehaviour {
                 Debug.Log("++++++ " + sb.ToString());
                 WebSocketMan.manager.SendMsgToServer(sb.ToString());
             }
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
         }
-    }
-
-    private void Test() {
-        JsonWriter w = new JsonWriter();
-        w.WriteObjectStart();
-        w.WritePropertyName("book");
-            w.WriteObjectStart();
-            w.WritePropertyName("title");
-            w.Write("android game!");
-            w.WritePropertyName("author");
-            w.Write("pei");
-            w.WritePropertyName("bookdetail");
-                w.WriteObjectStart();
-                w.WritePropertyName("pages");
-                w.Write(429);
-                w.WritePropertyName("about");
-                w.Write(null);
-                w.WriteObjectEnd();
-            w.WriteObjectEnd();
-        w.WriteObjectEnd();
-        Debug.Log(w.ToString());
     }
 }

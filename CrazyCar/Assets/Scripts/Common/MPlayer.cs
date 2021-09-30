@@ -5,7 +5,6 @@ using UnityEngine;
 using Utils;
 
 public class MPlayer : MonoBehaviour {
-    [NonSerialized]
     public UserInfo userInfo;
     public Rigidbody rig;
     //输入相关
@@ -47,6 +46,7 @@ public class MPlayer : MonoBehaviour {
     private int passTimes = 0;
     private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
+    private Vector3 peerTargetPos = new Vector3();
 
     void Start() {
         forceDir_Horizontal = transform.forward;
@@ -103,10 +103,14 @@ public class MPlayer : MonoBehaviour {
         rig.MoveRotation(rotationStream);
         CalculateForceDir();
         AddForceToMove();
+
+        if (PlayerManager.manager.GetSelfPlayer != this) {
+            transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+        }
     }
 
     public void AdjustPlayerPosition(Vector3 pos) {
-        transform.position = pos;
+        peerTargetPos = pos;
     }
 
     //计算加力方向
