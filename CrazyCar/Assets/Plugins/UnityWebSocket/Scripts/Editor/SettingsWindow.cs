@@ -337,7 +337,7 @@ namespace UnityWebSocket.Editor
         private static void DelayOpenWindow()
         {
             EditorApplication.update -= DelayOpenWindow;
-            SettingsWindow.Open();
+            //SettingsWindow.Open();
         }
 
 
