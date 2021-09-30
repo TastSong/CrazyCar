@@ -18,7 +18,7 @@
     var websocket = null;
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8080/CrazyCarServer/websocket");//注意此处的ws要加上项目名JavaWebSocket再加@ServerEndpoint注解的值websocket
+        websocket = new WebSocket("ws://localhost:8080/CrazyCarServer/websocket/WebSocketTest");//注意此处的ws要加上项目名JavaWebSocket再加@ServerEndpoint注解的值websocket
     }
     else {
         alert('当前浏览器 Not support websocket')
