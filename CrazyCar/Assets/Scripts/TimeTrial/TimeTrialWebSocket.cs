@@ -51,7 +51,7 @@ public class TimeTrialWebSocket : MonoBehaviour {
                 w.WriteObjectEnd();
                 w.WriteObjectEnd();
                 w.WriteObjectEnd();
-                Debug.Log("++++++ " + sb.ToString());
+                Debug.Log("Post Server : " + sb.ToString());
                 WebSocketMan.manager.SendMsgToServer(sb.ToString());
             }
             yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);

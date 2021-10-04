@@ -45,7 +45,7 @@ public class WebSocketMan : MonoBehaviour {
         if (e.IsBinary) {
             Debug.Log(string.Format("Receive Bytes ({1}): {0}\n", e.Data, e.RawData.Length));
         } else if (e.IsText) {
-            Debug.Log(string.Format("Receive: {0}\n", e.Data));
+            Debug.Log("Get Server Data : " + e.Data);
             if (GameController.manager.curGameType == CurGameType.TimeTrial) {
                 recJD = JsonMapper.ToObject(e.Data);
                 PlayerManager.manager.RespondAction(ParsePlayerStateMsg(recJD));

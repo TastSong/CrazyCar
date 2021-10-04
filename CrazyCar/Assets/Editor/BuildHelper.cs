@@ -220,7 +220,7 @@ public static class BuildHelper {
         // year baby! olol
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCarXCode"), BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
 #elif UNITY_STANDALONE
-        string exeName = "CrazyAvatar.exe";
+        string exeName = "CrazyCar.exe";
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, exeName), BuildTarget.StandaloneWindows,
             BuildOptions.Development | BuildOptions.ConnectWithProfiler);
 
