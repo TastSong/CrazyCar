@@ -22,6 +22,8 @@ public class HomepageUI : MonoBehaviour {
     public Button changeCarBtn;
     public Button rankBtn;
     public Button settingBtn;
+    public GameObject matchGO;
+    public Button matchBtn;
 
     private TinyMessageSubscriptionToken homepageToken;
 
@@ -34,6 +36,9 @@ public class HomepageUI : MonoBehaviour {
 
         joinGameBtn.onClick.AddListener(() => {
             UIManager.manager.ShowPage(UIPageType.TimeTrialDetailUI);
+        });
+        matchBtn.onClick.AddListener(() => {
+            UIManager.manager.ShowPage(UIPageType.MatchDetailUI);
         });
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);

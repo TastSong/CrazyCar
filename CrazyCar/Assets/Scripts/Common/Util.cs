@@ -35,6 +35,7 @@ namespace Utils {
         public static string equipUrl = "Equip";
         public static string buyEquipUrl = "BuyEquip";
         public static string changeEquipUrl = "ChangeEquip";
+        public static string matchDetailUrl = "MatchDetail";
     }
 
     public static class PrefKeys {

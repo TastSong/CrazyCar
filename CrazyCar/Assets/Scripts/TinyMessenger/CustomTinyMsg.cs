@@ -39,3 +39,7 @@ public class ChangeCarMsg : ITinyMessage {
         this.equipInfo = info;
     }
 }
+
+public class CompleteMatchMsg : ITinyMessage {
+    public object Sender { get; private set; }
+}

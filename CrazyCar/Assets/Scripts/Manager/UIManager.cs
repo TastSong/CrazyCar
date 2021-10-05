@@ -14,7 +14,8 @@ public enum UIPageType {
     SettingsUI,
     RankUI,
     TimeTrialRankUI,
-    ChangeCarUI
+    ChangeCarUI,
+    MatchDetailUI
 }
 
 public class UIManager : MonoBehaviour {

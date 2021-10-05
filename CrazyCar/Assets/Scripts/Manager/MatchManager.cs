@@ -1,51 +1,45 @@
 ﻿using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using System;
 
-public class TimeTrialInfo {
+public class MatchInfo {
     public string name;
     public int cid;
     public int star;
     public int mapId;
     public int limitTime;
-    public bool isHas;
     public int times;
+    public long startTime;
+    public long enrollTime;
 }
 
-public class TimeTrialRankInfo {
+public class MatchRankInfo {
     public string name;
     public int aid;
     public int rank;
     public int completeTime;
 }
 
-public class TimeTrialManager {
+public class MatchManager {
     public bool isWin = false;
     public bool isBreakRecord = false;
     public int rank;
     public int rewardStar;
-    public Dictionary<int, TimeTrialInfo> timeTrialDic = new Dictionary<int, TimeTrialInfo>();
-    public TimeTrialInfo selectInfo = new TimeTrialInfo();
-    public List<TimeTrialRankInfo> timeTrialRankList = new List<TimeTrialRankInfo>();
+    public Dictionary<int, MatchInfo> matchDic = new Dictionary<int, MatchInfo>();
+    public MatchInfo selectInfo = new MatchInfo();
+    public List<MatchRankInfo> matchRankList = new List<MatchRankInfo>();
     public bool isComplete = false;
     public int completeTime;
 
-    private bool isInit = false;
-    private long startTime;
     private long endTime;
     private bool isArriveLimitTime = false;
 
     public long StartTime {
         get {
-            return startTime;
-        }
-
-        set {
-            isInit = true;
-            startTime = value;
+            return selectInfo.startTime;
         }
     }
 
@@ -57,7 +51,7 @@ public class TimeTrialManager {
         set {
             isComplete = true;
             endTime = value;
-            GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
+            GameController.manager.tinyMsgHub.Publish(new CompleteMatchMsg());
         }
     }
 
@@ -69,14 +63,14 @@ public class TimeTrialManager {
         set {
             isArriveLimitTime = value;
             if (value) {
-                GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
+                GameController.manager.tinyMsgHub.Publish(new CompleteMatchMsg());
             }
         }
     }
 
     public bool IsStartGame {
-        get {      
-            return isInit ? (startTime * 1000 < Util.GetTime()) : false;
+        get {
+            return selectInfo.startTime * 1000 < Util.GetTime();
         }
     }
 
@@ -94,14 +88,13 @@ public class TimeTrialManager {
 
     public int GetCompleteTime() {
         if (isComplete) {
-            return (int)(endTime - startTime);
+            return (int)(endTime - selectInfo.startTime);
         } else {
             return -1;
-        }   
+        }
     }
 
     public void CleanData() {
-        isInit = false;
         isComplete = false;
         isWin = false;
         isBreakRecord = false;
@@ -109,17 +102,18 @@ public class TimeTrialManager {
     }
 
     public void ParseClassData(JsonData jsonData, Action success = null) {
-        timeTrialDic.Clear();
+        matchDic.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
-            TimeTrialInfo info = new TimeTrialInfo();
+            MatchInfo info = new MatchInfo();
             info.cid = (int)jsonData[i]["cid"];
             info.name = (string)jsonData[i]["name"];
             info.star = (int)jsonData[i]["star"];
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];
-            info.isHas = (bool)jsonData[i]["is_has"];
             info.times = (int)jsonData[i]["times"];
-            timeTrialDic[info.cid] = info;
+            info.startTime = (long)jsonData[i]["start_time"];
+            info.enrollTime = (long)jsonData[i]["enroll_time"];
+            matchDic[info.cid] = info;
         }
         success?.Invoke();
     }
@@ -134,14 +128,14 @@ public class TimeTrialManager {
     }
 
     public void ParseRank(JsonData jsonData, Action success = null) {
-        timeTrialRankList.Clear();
+        matchRankList.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
-            TimeTrialRankInfo info = new TimeTrialRankInfo();
+            MatchRankInfo info = new MatchRankInfo();
             info.name = (string)jsonData[i]["name"];
             info.aid = (int)jsonData[i]["aid"];
             info.completeTime = (int)jsonData[i]["complete_time"];
             info.rank = (int)jsonData[i]["rank"];
-            timeTrialRankList.Add(info);
+            matchRankList.Add(info);
         }
         success?.Invoke();
     }

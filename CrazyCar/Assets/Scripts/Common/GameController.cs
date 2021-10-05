@@ -19,7 +19,8 @@ public class UserInfo {
 }
 
 public enum CurGameType {
-    TimeTrial = 0
+    TimeTrial = 0,
+    Match
 }
 
 public class GameController : MonoBehaviour
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
     public AvatarManager avatarManager = new AvatarManager();
     public TimeTrialManager timeTrialManager = new TimeTrialManager();
     public EquipManager equipManager = new EquipManager();
+    public MatchManager matchManager = new MatchManager();
 
     private void Awake() {
         if (manager == null) {

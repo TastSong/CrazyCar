@@ -10,6 +10,7 @@ using UnityEngine.Networking;
 using Utils;
 using UnityEditor.AddressableAssets.Settings;
 using System.Collections.Generic;
+using System;
 
 public static class BuildHelper {
     public static void BuildGame(string type, string path = null) {
@@ -70,7 +71,7 @@ public static class BuildHelper {
         File.Delete(assetBundleDirectory + "/" + n + ".manifest");     
     }
 
-    public static void BuildConfig(string type, Util.NoneParamFunction successCallback = null) {
+    public static void BuildConfig(string type, Action successCallback = null) {
         ServerType sType = ServerType.Local;
         switch (type) {
             case "Local":
@@ -86,7 +87,7 @@ public static class BuildHelper {
         BuildConfig(sType, successCallback);
     }
 
-    public static void BuildConfig(ServerType serverType, Util.NoneParamFunction successCallback = null) {
+    public static void BuildConfig(ServerType serverType, Action successCallback = null) {
         Debug.Log("2.BuildConfig......");
         GameObject go = new GameObject();
         AssetBundleHelper abh = go.AddComponent<AssetBundleHelper>();
@@ -108,7 +109,7 @@ public static class BuildHelper {
         Debug.Log("BuildConfig...OVER...");
     }
 
-    private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Util.NoneParamFunction successCallback) {
+    private static void FetchResource(string url, GameObject go, string configPath, NetworkController nc, Action successCallback) {
         Debug.Log("请求AB url : " + url);
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);

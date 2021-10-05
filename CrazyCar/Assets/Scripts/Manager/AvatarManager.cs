@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using System;
 
 public class AvatarInfo {
     public int aid;
@@ -16,7 +17,7 @@ public class AvatarManager {
 
     public Dictionary<int, AvatarInfo> avatarDic = new Dictionary<int, AvatarInfo>();
 
-    public void ParseAvatarRes(JsonData jsonData, Util.NoneParamFunction success = null) {
+    public void ParseAvatarRes(JsonData jsonData, Action success = null) {
         avatarDic.Clear();
         curAid = GameController.manager.userInfo.aid;
         JsonData data = jsonData["avatars"];

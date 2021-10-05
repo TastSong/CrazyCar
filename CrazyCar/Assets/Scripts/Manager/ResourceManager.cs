@@ -150,11 +150,11 @@ public class ResourceManager {
         yield return null;
     }
 
-    public void DownloadAssets(Util.NoneParamFunction success, ProgressCallback progressCallback, Util.NoneParamFunction fail) {
+    public void DownloadAssets(Action success, ProgressCallback progressCallback, Action fail) {
         GameController.manager.StartCoroutine(Download(success, progressCallback, fail));
     }
 
-    private IEnumerator Download(Util.NoneParamFunction success, ProgressCallback progressCallback, Util.NoneParamFunction fail) {
+    private IEnumerator Download(Action success, ProgressCallback progressCallback, Action fail) {
         if (avatar == null) {
             Debug.Log("Try to Load avatar From Web");
             float lastProgress = -1;
@@ -271,7 +271,7 @@ public class ResourceManager {
             if (GameController.manager.equipManager.equipResource.ContainsKey(rid)) {
                 return GameController.manager.equipManager.equipResource[rid];
             }
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
             var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab");
 			if(o == null) {
 				return null;

@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Avatar\AvatarUI.cs" />
     <Compile Include="Assets\Scripts\Common\AssetBundleHelper.cs" />
     <Compile Include="Assets\Scripts\Common\CarControl.cs" />
+    <Compile Include="Assets\Scripts\Common\ControlPanel.cs" />
     <Compile Include="Assets\Scripts\Common\GameController.cs" />
     <Compile Include="Assets\Scripts\Common\GameCtrBtn.cs" />
     <Compile Include="Assets\Scripts\Common\GameHelper.cs" />
@@ -99,12 +100,16 @@
     <Compile Include="Assets\Scripts\Manager\AvatarManager.cs" />
     <Compile Include="Assets\Scripts\Manager\EquipManager.cs" />
     <Compile Include="Assets\Scripts\Manager\LoginManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\MatchManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Manager\RouteManger.cs" />
     <Compile Include="Assets\Scripts\Manager\TimeTrialManager.cs" />
     <Compile Include="Assets\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\WebSocketMan.cs" />
+    <Compile Include="Assets\Scripts\Match\MatchDetailUI.cs" />
+    <Compile Include="Assets\Scripts\Match\MatchGameUI.cs" />
+    <Compile Include="Assets\Scripts\Match\MatchItem.cs" />
     <Compile Include="Assets\Scripts\Route\CatmullRomSpline.cs" />
     <Compile Include="Assets\Scripts\Route\RouteNet.cs" />
     <Compile Include="Assets\Scripts\Setting\ColorSwapper.cs" />
@@ -118,11 +123,11 @@
     <Compile Include="Assets\Scripts\Test\TestPlayerCtr.cs" />
     <Compile Include="Assets\Scripts\Test\TestWebSocket.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialDetailUI.cs" />
+    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialGameUI.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialItem.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialRankItem.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialRankUI.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialResultUI.cs" />
-    <Compile Include="Assets\Scripts\TimeTrial\TimeTrialUI.cs" />
     <Compile Include="Assets\Scripts\TimeTrial\TimeTrialWebSocket.cs" />
     <Compile Include="Assets\Scripts\TinyMessenger\CustomTinyMsg.cs" />
     <Compile Include="Assets\Scripts\TinyMessenger\Properties\AssemblyInfo.cs" />

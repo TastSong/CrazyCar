@@ -3478,7 +3478,7 @@ GameObject:
   - component: {fileID: 4346877392716656988}
   - component: {fileID: 4346877392716656990}
   m_Layer: 5
-  m_Name: Spin Wheel Button
+  m_Name: MatchBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3920,7 +3920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -90.99999}
+  m_AnchoredPosition: {x: -2.5, y: -111.2}
   m_SizeDelta: {x: 169.39746, y: 59.304184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4346877392849578496
@@ -3963,7 +3963,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Spin
+  m_Text: Match
 --- !u!114 &4346877392849578498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4149,7 +4149,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -91}
+  m_AnchoredPosition: {x: -2.5, y: -111.20001}
   m_SizeDelta: {x: 169.39746, y: 59.304184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4346877392987737789
@@ -4192,7 +4192,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Spin
+  m_Text: Match
 --- !u!1 &4346877393027819125
 GameObject:
   m_ObjectHideFlags: 0
@@ -5106,12 +5106,12 @@ GameObject:
   - component: {fileID: 4346877393492242310}
   - component: {fileID: 4346877393492242309}
   m_Layer: 0
-  m_Name: 'SpinWheelButton '
+  m_Name: Match
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4346877393492242310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6783,6 +6783,8 @@ MonoBehaviour:
   changeCarBtn: {fileID: 4346877392406445506}
   rankBtn: {fileID: 4346877391834726815}
   settingBtn: {fileID: 4346877392290931488}
+  matchGO: {fileID: 4346877393492242311}
+  matchBtn: {fileID: 4346877392716656987}
 --- !u!1 &7718636948229963585
 GameObject:
   m_ObjectHideFlags: 0

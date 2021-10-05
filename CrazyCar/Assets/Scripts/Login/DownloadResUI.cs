@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using System;
 
 public class DownloadResUI : MonoBehaviour {
     public Text showText;
@@ -43,11 +44,11 @@ public class DownloadResUI : MonoBehaviour {
 #endif
     }
 
-    public void CheckResource(Util.NoneParamFunction success) {
+    public void CheckResource(Action success) {
         StartCoroutine(Check(success));
     }
 
-    private IEnumerator Check(Util.NoneParamFunction success) {
+    private IEnumerator Check(Action success) {
         yield return new WaitUntil(() => {
             return GameController.manager != null && GameController.manager.resourceManager != null;
         });

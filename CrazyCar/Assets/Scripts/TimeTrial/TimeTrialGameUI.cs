@@ -4,18 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using TinyMessenger;
+using System;
 
-public class TimeTrialUI : MonoBehaviour{
+public class TimeTrialGameUI : MonoBehaviour{
     public CountDownAnim countDownAnim;
-    public Button exitBtn;
     public Text limitTimeText;
-    public GameCtrBtn frontBtn;
-    public GameCtrBtn backBtn;
-    public GameCtrBtn leftBtn;
-    public GameCtrBtn rightBtn;
-    public GameCtrBtn spaceBtn;
 
-    private int countDownTime = 3;
     private Coroutine limitTimeCor;
     private TinyMessageSubscriptionToken endTimeTrialMsg;
 
@@ -36,41 +30,7 @@ public class TimeTrialUI : MonoBehaviour{
         });       
     }
 
-    private void Start() {
-        exitBtn.onClick.AddListener(() => {
-            Time.timeScale = 0;
-            GameController.manager.infoConfirmAlert.ShowWithText(content: "是否退出游戏",
-                success: () => {
-                    Time.timeScale = 1;
-                    Util.LoadingScene(SceneID.Index);
-                },
-                fail: () => {
-                    Time.timeScale = 1;
-                });
-        });
-
-        frontBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.vInput = 1;
-        });
-        backBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.vInput = -1;
-        });
-        leftBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
-        }, () => {
-            PlayerManager.manager.GetSelfPlayer.hInput = 0;
-        });
-        rightBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
-        }, () => {
-            PlayerManager.manager.GetSelfPlayer.hInput = 0;
-        });
-        spaceBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
-        }, () => {
-            PlayerManager.manager.GetSelfPlayer.sInput = 0;
-        });
-
+    private void Start() {       
         limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 
 
         endTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { EndGame(); });
@@ -80,7 +40,7 @@ public class TimeTrialUI : MonoBehaviour{
         StopCoroutine(limitTimeCor);
     }
 
-    private IEnumerator CountdownCor(int time, Util.NoneParamFunction succ = null, Text targetText = null, string str = null) {
+    private IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {
         while (true) {
             if (targetText != null) {
                 if (str != null) {

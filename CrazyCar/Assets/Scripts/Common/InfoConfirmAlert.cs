@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Utils;
+using System;
 
 public enum ConfirmAlertType {
     Double = 0,
@@ -18,8 +19,8 @@ public class InfoConfirmAlert : MonoBehaviour {
     public Text cancelText;
     //public Image Bg;
 
-    private Util.NoneParamFunction success;
-    private Util.NoneParamFunction fail;
+    private Action success;
+    private Action fail;
     private int dialogID = 0;
 
     void Start() {
@@ -37,7 +38,7 @@ public class InfoConfirmAlert : MonoBehaviour {
         });
     }
 
-    public int ShowWithText(string title = "提示", string content = "", Util.NoneParamFunction success = null, Util.NoneParamFunction fail = null,
+    public int ShowWithText(string title = "提示", string content = "", Action success = null, Action fail = null,
         string confirmText = "确定", string cancelText = "取消", ConfirmAlertType type = ConfirmAlertType.Double) {
         if (SceneManager.GetActiveScene().buildIndex == (int)SceneID.Loading) {
             // 在场景正在loading时 延迟加载
@@ -64,7 +65,7 @@ public class InfoConfirmAlert : MonoBehaviour {
     }
 
     // 延迟出现Alert
-    private IEnumerator DelayShow(string title, string content, Util.NoneParamFunction success, Util.NoneParamFunction fail,
+    private IEnumerator DelayShow(string title, string content, Action success, Action fail,
         string confirmText, string cancelText, ConfirmAlertType type) {
         yield return new WaitForSeconds(0.5f);
         ShowWithText(title, content, success, fail, confirmText, cancelText, type);
