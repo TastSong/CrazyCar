@@ -92,9 +92,6 @@ public class EquipResource : MonoBehaviour, ISerializationCallbackReceiver {
     public new RuntimeAnimatorController animation;
 
     public string rid;
-    //public GameObject fashion;
     [HideInInspector]
-    public string type = EquipManager.CAR;
-    //public bool hideGlass;
-    //public bool useMultipleOffset;
+    public string type = EquipType.Car.ToString();
 }

@@ -53,7 +53,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
     #endregion
 
     [HideInInspector]
-    public string type = EquipManager.CAR;
+    public string type;  
 
     public string rid;
     public string eid;
@@ -95,7 +95,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
     // using the equipment id the get the target Equipment
     // may be cached in Resource Manager? or re-load
     EquipResource GetPartFromResource(string rid) {
-        return GameController.manager.resourceManager.GetCarResource(rid);
+        return GameController.manager.resourceManager.GetEquipResource(rid);
     }
 
     public void _SetResource(EquipResource r) {

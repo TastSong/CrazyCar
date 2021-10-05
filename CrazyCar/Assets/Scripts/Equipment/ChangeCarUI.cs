@@ -47,7 +47,7 @@ public class ChangeCarUI : MonoBehaviour {
 
         curEquipInfo = GameController.manager.equipManager.equipDic[GameController.manager.userInfo.equipInfo.eid];
         UpdateUI(curEquipInfo);
-        IndexCar.manager.accessoryChanger.SetGear(curEquipInfo.eid.ToString(), curEquipInfo.rid);
+        IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
     }
 
     private void Start() {

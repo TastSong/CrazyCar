@@ -34,8 +34,9 @@ public class PlayerManager : MonoBehaviour {
         selfPlayer = Instantiate(mPlayerPrefab, startPos.position, Quaternion.identity);
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = GameController.manager.userInfo;
-        selfPlayer.GetComponent<AccessoryChanger>().
-            SetGear(GameController.manager.userInfo.equipInfo.eid.ToString(), GameController.manager.userInfo.equipInfo.rid);
+        selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
+            GameController.manager.userInfo.equipInfo.eid,
+            GameController.manager.userInfo.equipInfo.rid);
         cinemachineTF.SetParent(selfPlayer.transform, false);
     }
 
@@ -80,7 +81,9 @@ public class PlayerManager : MonoBehaviour {
         MPlayer mPlayer = Instantiate(mPlayerPrefab, playerStateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
         mPlayer.userInfo = userInfo;
-        mPlayer.GetComponent<AccessoryChanger>().SetGear(userInfo.equipInfo.eid.ToString(), userInfo.equipInfo.rid.ToString());
+        mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
+            GameController.manager.userInfo.equipInfo.eid,
+            GameController.manager.userInfo.equipInfo.rid);
         peers.Add(userInfo.uid, mPlayer);
     }
 }

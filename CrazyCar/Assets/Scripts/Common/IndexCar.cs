@@ -7,7 +7,7 @@ public class IndexCar : MonoBehaviour
 {
     public static IndexCar manager = null;
     public GameObject carGO;
-    public AccessoryChanger accessoryChanger;
+    public MPlayerStyle mPlayerStyle;
 
     private void Awake() {
         if (manager == null) {

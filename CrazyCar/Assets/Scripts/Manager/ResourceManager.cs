@@ -265,21 +265,21 @@ public class ResourceManager {
         }
     }
 
-    public EquipResource GetCarResource(string rid) {
+    public EquipResource GetEquipResource(string rid) {
         try {
             rid = rid.Trim();
             if (GameController.manager.equipManager.equipResource.ContainsKey(rid)) {
                 return GameController.manager.equipManager.equipResource[rid];
             }
-#if !UNITY_EDITOR
-            var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Car/Items/" + rid + ".prefab");
+#if UNITY_EDITOR
+            var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab");
 			if(o == null) {
 				return null;
 			}
 			var e = o.GetComponent<EquipResource>();
 #else
             var e = UnityEditor.AssetDatabase.LoadAssetAtPath<EquipResource>(
-                "Assets/AB/Equip/Car/Items/" + rid + ".prefab");
+                "Assets/AB/Equip/Items/" + rid + ".prefab");
 
 #endif
             GameController.manager.equipManager.equipResource[rid] = e;

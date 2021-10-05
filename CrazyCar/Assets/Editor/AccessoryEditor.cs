@@ -15,7 +15,8 @@ public class AccessoryEditor : Editor {
     };
   
     public string[] types = new string[] {
-        EquipManager.CAR
+        EquipType.Car.ToString(),
+        EquipType.Player.ToString()
     };
 
     public Renderer rend;
@@ -46,7 +47,7 @@ public class AccessoryEditor : Editor {
         int idx = EditorGUILayout.Popup("Type", selected, types);
         res.type = types[idx];
 
-        if (res.type == EquipManager.CAR) {
+        if (res.type == EquipType.Car.ToString()) {
             if (res.renders.Count != carTypes.Length || !validCarResourceParts(res)) {
                 res.renders = new Dictionary<string, Renderer>(carTypes.Length);
                 foreach (var key in carTypes) {

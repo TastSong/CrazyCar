@@ -7,7 +7,7 @@ using UnityWebSocket;
 
 public class WebSocketMan : MonoBehaviour {
     public static WebSocketMan manager = null;
-    public string address = "ws://127.0.0.1";
+    public string address;
     public int receiveCount;
 
     private IWebSocket socket;

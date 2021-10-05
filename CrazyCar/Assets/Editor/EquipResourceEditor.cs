@@ -15,7 +15,7 @@ public class EquipResourceEditor : Editor {
     };
 
     public string[] types = new string[] {
-        EquipManager.CAR
+        EquipType.Car.ToString()
     };
 
     public Renderer rend;
@@ -48,7 +48,7 @@ public class EquipResourceEditor : Editor {
             res.renders = new Dictionary<string, Renderer>();
         }
 
-        if (res.type == EquipManager.CAR) {
+        if (res.type == EquipType.Car.ToString()) {
 
             res.rid = res.gameObject.name;
 

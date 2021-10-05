@@ -5,6 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
+public enum EquipType {
+    Car = 0,
+    Player
+}
+
 public class EquipInfo {
     public int eid;
     public string rid;
@@ -18,7 +23,7 @@ public class EquipInfo {
 }
 
 public class EquipManager {
-    public const string CAR = "car";
+    public const string CAR = "Car";
 
     public Dictionary<int, EquipInfo> equipDic = new Dictionary<int, EquipInfo>();
     public Dictionary<string, EquipResource> equipResource = new Dictionary<string, EquipResource>();
