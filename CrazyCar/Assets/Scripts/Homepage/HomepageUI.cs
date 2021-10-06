@@ -24,8 +24,24 @@ public class HomepageUI : MonoBehaviour {
     public Button settingBtn;
     public GameObject matchGO;
     public Button matchBtn;
+    public Button createMatchBtn;
 
     private TinyMessageSubscriptionToken homepageToken;
+
+    private void OnEnable() {
+        GetMatchDetail();
+    }
+
+    private void GetMatchDetail() {
+        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+           RequestUrl.matchDetailUrl,
+          token: GameController.manager.token,
+          succData: (data) => {
+              GameController.manager.matchManager.ParseClassData(data, () => {
+                  matchGO.SetActiveFast(GameController.manager.matchManager.matchDic.Count > 0);
+              });
+          }));
+    }
 
     private void Start() {
         nickNameText.text = GameController.manager.userInfo.name;
@@ -38,7 +54,23 @@ public class HomepageUI : MonoBehaviour {
             UIManager.manager.ShowPage(UIPageType.TimeTrialDetailUI);
         });
         matchBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.MatchDetailUI);
+            if (GameController.manager.userInfo.isVIP) {
+                UIManager.manager.ShowPage(UIPageType.MatchDetailUI);
+            } else {
+                GameController.manager.warningAlert.ShowWithText("Match 只面向VIP");
+            }
+        });
+        createMatchBtn.gameObject.SetActiveFast(GameController.manager.userInfo.name == "tast");
+        createMatchBtn.onClick.AddListener(() => {
+            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+                  RequestUrl.createMatchUrl,
+                  token: GameController.manager.token,
+                  code : (code) => { 
+                    if(code == 200) {
+                          GetMatchDetail();
+                      }  
+                  }
+              ));
         });
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);

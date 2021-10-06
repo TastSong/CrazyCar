@@ -7,11 +7,14 @@ using Utils;
 
 public class TimeTrialWebSocket : MonoBehaviour {
     private void Start() {
-        string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) + "websocket/TimeTrialWebSocket/" + 
-            GameController.manager.userInfo.uid + "," + GameController.manager.timeTrialManager.selectInfo.cid;
-        Debug.Log("+++ " + ws);
-        WebSocketMan.manager.Init(ws);
-        WebSocketMan.manager.StartCoroutine(SendMsg());
+        //if (GameController.manager.curGameType == CurGameType.TimeTrial) {
+        //    string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) +
+        //        "websocket/TimeTrialWebSocket/" +
+        //        GameController.manager.userInfo.uid + "," + GameController.manager.timeTrialManager.selectInfo.cid;
+        //    Debug.Log("+++ " + ws);
+        //    WebSocketMan.manager.Init(ws);
+        //    WebSocketMan.manager.StartCoroutine(SendMsg());
+        //}
     }
 
     private IEnumerator SendMsg() {

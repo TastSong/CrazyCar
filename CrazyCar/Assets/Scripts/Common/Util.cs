@@ -36,6 +36,8 @@ namespace Utils {
         public static string buyEquipUrl = "BuyEquip";
         public static string changeEquipUrl = "ChangeEquip";
         public static string matchDetailUrl = "MatchDetail";
+        public static string matchResultUrl = "MatchResult";
+        public static string createMatchUrl = "CreateMatch";
     }
 
     public static class PrefKeys {
@@ -162,6 +164,14 @@ namespace Utils {
             }
 
             return str;
+        }
+
+        public static string GetDateTime(long timeStamp, string format){
+            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = (timeStamp * 10000000);
+            TimeSpan toNow = new TimeSpan(lTime);
+            DateTime targetDt = dtStart.Add(toNow);
+            return targetDt.ToString(format);
         }
 
         public static Dictionary<string, Sprite> cachedImageDic = new Dictionary<string, Sprite>();
@@ -382,12 +392,12 @@ namespace Utils {
 
         public static string GetPlatform() {
 #if UNITY_STANDALONE
-        return "PC";
+            return "PC";
 #elif UNITY_ANDROID
             return "Android";
 #elif UNITY_IOS
         return "ios";
 #endif
-        }      
-    }  
+        }
+    }
 }

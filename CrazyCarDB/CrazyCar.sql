@@ -17,7 +17,7 @@ insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_
 					   (1, "Tast", "111111", 1629544628, 0, 20, 1, 0);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "asd", "111111", 1629544634, 1, 14, 0, 1);
+					   (2, "song", "111111", 1629544634, 1, 14, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
 					   (3, "qwe", "111111", 1629544655, 2, 11, 0, 1);        
@@ -283,7 +283,7 @@ insert into time_trial_record ( uid, cid, complete_time, record_time)
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
 				   (4, 0, 16, 1629544644);
-select record_time from time_trial_record where uid = uid ;			
+select record_time from time_trial_record where uid = 1 ;			
 
 /*查询自己的成绩排名*/
 select
@@ -433,3 +433,81 @@ insert into equip_uid ( eid, uid )
 				   values
 				   (1, 4);                   
 select eid from equip_uid where uid = 1;
+
+/*match class*/
+create table if not exists `match_class`(
+   `cid` int unsigned auto_increment,
+   `star` int not null,  /*同Star*/
+   `map_id` int not null,
+   `limit_time` int not null,
+   `class_name` VARCHAR(40) not null,
+   `times` int not null,
+   `start_time` long not null,
+   `enroll_time` long not null,
+   primary key ( `cid` )
+   )engine = innodb default charset = utf8;
+insert into match_class (star, map_id, limit_time, class_name, times, start_time, enroll_time)
+				   values
+				   (2, 0, 60, "基地卡通", 1, 1633519472, 1633519472);
+insert into match_class (star, map_id, limit_time, class_name, times, start_time, enroll_time )
+				   values
+				   (1, 1, 70, "几何风光", 3, 1633519472, 1633519472);
+select* from match_class;
+
+/*match_record*/
+create table if not exists `match_record`(
+    `id` int unsigned auto_increment,
+	`uid` int not null,
+    `cid` int not null,
+    `complete_time` int not null,
+    `record_time` int not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (1, 1, 22, 1629544628);
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (1, 1, -1, 1629544628);
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (1, 1, 14, 1629544644);
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (2, 1, 14, 1629544644);
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (3, 1, 10, 1629544644);
+insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (4, 1, 16, 1629544644);
+select record_time from match_record where uid = 1 ;	
+
+drop table if exists match_rank_0;
+create table  match_rank_0 as
+select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
+				from
+					(
+						select *
+						from
+						(select uid, min(complete_time) as complete_time
+						from
+							 match_record
+							 where cid = 1 and complete_time != -1 
+							 group by uid) as min_time
+						order by complete_time asc
+					) as user_rank,
+					(select @rank_num:= 0) r)  as all_user_rank;
+select rank_num from match_rank_0 where uid = 1;      
+select count(rank_num) as rank_count from  match_rank_0;
+select * from match_rank_0;			
+select uid from match_rank_0 where rank_num = 4;
+
+
+
+
+
+
+
+
+

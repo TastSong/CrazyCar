@@ -10,12 +10,8 @@ public class MatchDetailUI : MonoBehaviour {
     public Button backBtn;
 
     private void OnEnable() {
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
-            RequestUrl.matchDetailUrl,
-           token: GameController.manager.token,
-           succData: (data) => {
-               GameController.manager.matchManager.ParseClassData(data, UpdateUI);
-           }));
+        // 数据在Homepage已经拉取过了
+        UpdateUI();
     }
 
     private void UpdateUI() {

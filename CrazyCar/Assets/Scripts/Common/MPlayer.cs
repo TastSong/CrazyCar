@@ -291,14 +291,26 @@ public class MPlayer : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "EndSign") {
-            passTimes++;
-            if (passTimes >= GameController.manager.timeTrialManager.selectInfo.times) {
-                GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
-                Debug.Log("++++++ EndTime = " + GameController.manager.timeTrialManager.EndTime);
-                Debug.Log("++++++CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
-                passTimes = 0;
+            if (PlayerManager.manager.GetSelfPlayer == this) {
+                passTimes++;
             }
-           
+
+            if (GameController.manager.curGameType == CurGameType.TimeTrial) {
+                if (passTimes >= GameController.manager.timeTrialManager.selectInfo.times) {
+                    GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
+                    Debug.Log("++++++TimeTrial EndTime = " + GameController.manager.timeTrialManager.EndTime +
+                         "  CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+                    passTimes = 0;
+                }
+            } else if (GameController.manager.curGameType == CurGameType.Match) {
+                if (passTimes >= GameController.manager.matchManager.selectInfo.times) {
+                    GameController.manager.matchManager.EndTime = Util.GetTime() / 1000;
+                    Debug.Log("++++++Match EndTime = " + GameController.manager.matchManager.EndTime +
+                        "  CompleteTime =  " + GameController.manager.matchManager.GetCompleteTime());
+                    passTimes = 0;
+                }
+            }
+                    
         }
     }
 }

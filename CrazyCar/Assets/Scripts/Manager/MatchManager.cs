@@ -24,9 +24,6 @@ public class MatchRankInfo {
 }
 
 public class MatchManager {
-    public bool isWin = false;
-    public bool isBreakRecord = false;
-    public int rank;
     public int rewardStar;
     public Dictionary<int, MatchInfo> matchDic = new Dictionary<int, MatchInfo>();
     public MatchInfo selectInfo = new MatchInfo();
@@ -96,8 +93,6 @@ public class MatchManager {
 
     public void CleanData() {
         isComplete = false;
-        isWin = false;
-        isBreakRecord = false;
         isArriveLimitTime = false;
     }
 
@@ -118,17 +113,9 @@ public class MatchManager {
         success?.Invoke();
     }
 
-    public void ParseResult(JsonData jsonData, Action success = null) {
-        isWin = (bool)jsonData["is_win"];
-        completeTime = (int)jsonData["complete_time"];
-        rank = (int)jsonData["rank"];
-        isBreakRecord = (bool)jsonData["is_break_record"];
-        rewardStar = (int)jsonData["reward"];
-        success?.Invoke();
-    }
-
-    public void ParseRank(JsonData jsonData, Action success = null) {
+    public void ParseRank(JsonData data, Action success = null) {
         matchRankList.Clear();
+        JsonData jsonData = data["rank"];
         for (int i = 0; i < jsonData.Count; i++) {
             MatchRankInfo info = new MatchRankInfo();
             info.name = (string)jsonData[i]["name"];

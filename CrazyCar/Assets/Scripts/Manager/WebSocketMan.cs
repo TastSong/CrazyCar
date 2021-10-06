@@ -46,10 +46,11 @@ public class WebSocketMan : MonoBehaviour {
             Debug.Log(string.Format("Receive Bytes ({1}): {0}\n", e.Data, e.RawData.Length));
         } else if (e.IsText) {
             Debug.Log("Get Server Data : " + e.Data);
-            if (GameController.manager.curGameType == CurGameType.TimeTrial) {
-                recJD = JsonMapper.ToObject(e.Data);
+            recJD = JsonMapper.ToObject(e.Data);
+            if (GameController.manager.curGameType == CurGameType.TimeTrial ||
+                GameController.manager.curGameType == CurGameType.Match) {   
                 PlayerManager.manager.RespondAction(ParsePlayerStateMsg(recJD));
-            }
+            } 
         }
         receiveCount += 1;
     }

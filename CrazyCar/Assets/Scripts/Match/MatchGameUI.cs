@@ -19,26 +19,36 @@ public class MatchGameUI : MonoBehaviour {
             return;
         }
 
-        long offTime = GameController.manager.matchManager.StartTime * 1000 - Util.GetTime();
-        if (offTime > 3000){
-            StartCoroutine(CountdownCor((int)(GameController.manager.matchManager.selectInfo.startTime * 1000 - Util.GetTime()) / 1000 - 3,
+        int offTime = (int)(GameController.manager.matchManager.StartTime * 1000 - Util.GetTime()) / 1000;
+        if (offTime > 3){
+            StartCoroutine(CountdownCor(offTime,
                     () => {
-                        Debug.LogError("进入倒计时三秒");
+                        countDownAnim.gameObject.SetActiveFast(false);
+                        StartGame();
                     }, offStartTimeText));
-        } else if(offTime < 3000 && offTime > 0) {
-            countDownAnim.PlayAnim(3, () => {
-                PlayerManager.manager.GetSelfPlayer.vInput = 1;
-                Debug.Log("++++++ StartTime = " + GameController.manager.matchManager.StartTime);
-                limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.matchManager.selectInfo.limitTime,
-                    () => {
-                        GameController.manager.matchManager.IsArriveLimitTime = true;
-                        Debug.Log("++++++ arrive limit time ");
-                    }, limitTimeText));
+        } else if(offTime < 3 && offTime > 0) {
+            countDownAnim.PlayAnim(offTime, () => {
+                StartGame();
             });
+        } else if (offTime > -GameController.manager.matchManager.selectInfo.limitTime){
+            countDownAnim.gameObject.SetActiveFast(false);
+            StartGame();
         } else {
             countDownAnim.gameObject.SetActiveFast(false);
+            StartGame();
+            Debug.LogError("比赛结束");
         }
         
+    }
+
+    private void StartGame() {
+        PlayerManager.manager.GetSelfPlayer.vInput = 1;
+        Debug.Log("++++++ StartTime = " + GameController.manager.matchManager.StartTime);
+        limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.matchManager.selectInfo.limitTime,
+            () => {
+                GameController.manager.matchManager.IsArriveLimitTime = true;
+                Debug.Log("++++++ arrive limit time ");
+            }, limitTimeText));
     }
 
     private void Start() {
