@@ -20,12 +20,21 @@ public class MatchItem : MonoBehaviour {
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
-            Debug.Log("进入课程 = " + matchInfo.cid);
-            GameController.manager.matchManager.CleanData();
-            GameController.manager.matchManager.selectInfo = matchInfo;
-            GameController.manager.curGameType = CurGameType.Match;
-            Util.LoadingScene(SceneID.Game);
+            if (CanEnter()) {
+                Debug.Log("进入课程 = " + matchInfo.cid);
+                GameController.manager.matchManager.CleanData();
+                GameController.manager.matchManager.selectInfo = matchInfo;
+                GameController.manager.curGameType = CurGameType.Match;
+                Util.LoadingScene(SceneID.Game);
+            } else {
+                GameController.manager.warningAlert.ShowWithText("比赛已结束");
+            }
+
         });
+    }
+
+    private bool CanEnter() {
+        return (matchInfo.startTime + matchInfo.limitTime) * 1000 > Util.GetTime();
     }
 
     public void SetContent(MatchInfo info) {
@@ -40,7 +49,7 @@ public class MatchItem : MonoBehaviour {
                 difficultyImages[i].sprite = difficultySprites[1];
             }
         }
-        startTimeText.text = Util.SecondToStirngWithFormat(info.startTime, "h:m:s");
-        enrollTimeText.text = Util.SecondToStirngWithFormat(info.enrollTime, "h:m:s");
+        startTimeText.text = Util.GetDateTime(info.startTime, "MM-dd HH:mm:ss");
+        enrollTimeText.text = Util.GetDateTime(info.enrollTime, "MM-dd HH:mm:ss");
     }
 }

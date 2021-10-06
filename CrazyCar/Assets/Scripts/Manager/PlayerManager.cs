@@ -82,8 +82,8 @@ public class PlayerManager : MonoBehaviour {
         mPlayer.transform.SetParent(transform, false);
         mPlayer.userInfo = userInfo;
         mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
-            GameController.manager.userInfo.equipInfo.eid,
-            GameController.manager.userInfo.equipInfo.rid);
+            playerStateMsg.userInfo.equipInfo.eid,
+            playerStateMsg.userInfo.equipInfo.rid);
         peers.Add(userInfo.uid, mPlayer);
     }
 }
