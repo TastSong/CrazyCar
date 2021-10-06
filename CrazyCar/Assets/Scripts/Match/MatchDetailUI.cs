@@ -5,23 +5,23 @@ using UnityEngine.UI;
 using Utils;
 
 public class MatchDetailUI : MonoBehaviour {
-    public TimeTrialItem timeTrialItem;
+    public MatchItem matchItem;
     public Transform itemParent;
     public Button backBtn;
 
     private void OnEnable() {
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
-            RequestUrl.timeTrialDetailUrl,
+            RequestUrl.matchDetailUrl,
            token: GameController.manager.token,
            succData: (data) => {
-               GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+               GameController.manager.matchManager.ParseClassData(data, UpdateUI);
            }));
     }
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in GameController.manager.timeTrialManager.timeTrialDic) {
-            TimeTrialItem item = Instantiate(timeTrialItem);
+        foreach (var kvp in GameController.manager.matchManager.matchDic) {
+            MatchItem item = Instantiate(matchItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);
         }

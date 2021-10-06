@@ -38,6 +38,7 @@ public class TimeTrialGameUI : MonoBehaviour{
 
     private void EndGame() {
         StopCoroutine(limitTimeCor);
+        GameController.manager.tinyMsgHub.Publish(new CompleteGameMsg());
     }
 
     private IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {

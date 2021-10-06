@@ -13,34 +13,34 @@ public class MatchItem : MonoBehaviour {
     public Text timesText;
     public Image[] difficultyImages;
     public Sprite[] difficultySprites;
-    public Image lockImage;
+    public Text startTimeText;
+    public Text enrollTimeText;
 
-    private TimeTrialInfo timeTrialInfo;
+    private MatchInfo matchInfo;
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
-            if (timeTrialInfo.isHas) {
-                Debug.Log("进入课程 = " + timeTrialInfo.cid);
-                GameController.manager.timeTrialManager.CleanData();
-                GameController.manager.timeTrialManager.selectInfo = timeTrialInfo;
-                GameController.manager.curGameType = CurGameType.TimeTrial;
-                Util.LoadingScene(SceneID.Game);
-            }
+            Debug.Log("进入课程 = " + matchInfo.cid);
+            GameController.manager.matchManager.CleanData();
+            GameController.manager.matchManager.selectInfo = matchInfo;
+            GameController.manager.curGameType = CurGameType.Match;
+            Util.LoadingScene(SceneID.Game);
         });
     }
 
-    public void SetContent(TimeTrialInfo info) {
-        timeTrialInfo = info;
-        nameText.text = timeTrialInfo.name;
-        limiteText.text = timeTrialInfo.limitTime.ToString();
-        timesText.text = timeTrialInfo.times.ToString();
+    public void SetContent(MatchInfo info) {
+        matchInfo = info;
+        nameText.text = matchInfo.name;
+        limiteText.text = matchInfo.limitTime.ToString();
+        timesText.text = matchInfo.times.ToString();
         for (int i = 0; i < difficultyImages.Length; i++) {
-            if (i < timeTrialInfo.star) {
+            if (i < matchInfo.star) {
                 difficultyImages[i].sprite = difficultySprites[0];
             } else {
                 difficultyImages[i].sprite = difficultySprites[1];
             }
         }
-        lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
+        startTimeText.text = Util.SecondToStirngWithFormat(info.startTime, "h:m:s");
+        enrollTimeText.text = Util.SecondToStirngWithFormat(info.enrollTime, "h:m:s");
     }
 }

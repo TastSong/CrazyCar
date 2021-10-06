@@ -6,36 +6,36 @@ using TinyMessenger;
 
 public class GameUIControl : MonoBehaviour{
     public ControlPanel controlPanel;
-    public TimeTrialGameUI timeTrialUI;
-    public TimeTrialResultUI timeTrialResultUI;
+    public GameResultUI gameResultUI;
+    public TimeTrialGameUI timeTrialGameUI;
+    public MatchGameUI matchGameUI;
 
     private TinyMessageSubscriptionToken initGameUIMsg;
-    private TinyMessageSubscriptionToken completeTimeTrialMsg;
+    private TinyMessageSubscriptionToken completeGameMsg;
 
     private void Start() {
         controlPanel.gameObject.SetActiveFast(false);
-        timeTrialUI.gameObject.SetActiveFast(false);
-        timeTrialResultUI.gameObject.SetActiveFast(false);
-        initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { InitUI(); });
-        completeTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { ShowTimeTrialResult(); });
+        gameResultUI.gameObject.SetActiveFast(false);
+        timeTrialGameUI.gameObject.SetActiveFast(false);
+        matchGameUI.gameObject.SetActiveFast(false);
+        initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { SelectGameUI(); });
+        completeGameMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteGameMsg>((m) => { ShowResultUI(); });
     }
 
-    private void InitUI() {
+    private void SelectGameUI() {
         controlPanel.gameObject.SetActiveFast(true);
-        if (GameController.manager.curGameType == CurGameType.TimeTrial) {
-            timeTrialUI.gameObject.SetActiveFast(true);
-            timeTrialResultUI.gameObject.SetActiveFast(false);
-        }
 
+        timeTrialGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.TimeTrial);
+        matchGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.Match);
     }
 
-    private void ShowTimeTrialResult() {
-        timeTrialUI.gameObject.SetActiveFast(false);
-        timeTrialResultUI.gameObject.SetActiveFast(true);
+    private void ShowResultUI() {
+        controlPanel.gameObject.SetActiveFast(false);
+        gameResultUI.gameObject.SetActiveFast(true);
     }
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(initGameUIMsg);
-        GameController.manager.tinyMsgHub.Unsubscribe(completeTimeTrialMsg);
+        GameController.manager.tinyMsgHub.Unsubscribe(completeGameMsg);
     }
 }
