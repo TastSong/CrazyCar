@@ -47,6 +47,7 @@ public class MPlayer : MonoBehaviour {
     private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
+    private float screenEffectTime = 0;
 
     void Start() {
         forceDir_Horizontal = transform.forward;
@@ -57,6 +58,7 @@ public class MPlayer : MonoBehaviour {
     }
 
     void Update() {
+        //ScreenEffectsManager.manager.motionBlurEffects.Intensity = 0.5f;
         if (Input.GetKeyDown(KeyCode.K)) {
             isUseKeyboard = !isUseKeyboard;
         }
@@ -174,7 +176,9 @@ public class MPlayer : MonoBehaviour {
         }
 
         if (currentForce <= normalForce) {
+            DisableScreenEffect();
             DisableTrail();
+
         }
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
     }
@@ -257,6 +261,7 @@ public class MPlayer : MonoBehaviour {
     private void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
+        EnableScreenEffect();
         EnableTrail();
     }
 
@@ -287,6 +292,17 @@ public class MPlayer : MonoBehaviour {
     private void DisableTrail() {
         leftTrail.enabled = false;
         rightTrail.enabled = false;
+    }
+
+    private void EnableScreenEffect() {
+        Debug.LogError("+++++ " + driftPower);
+        screenEffectTime += Time.fixedDeltaTime;
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.5f);
+    }
+
+    private void DisableScreenEffect() {
+        screenEffectTime = 0;
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = screenEffectTime;
     }
 
     private void OnTriggerEnter(Collider other) {
