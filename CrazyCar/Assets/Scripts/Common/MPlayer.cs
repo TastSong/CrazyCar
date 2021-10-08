@@ -68,19 +68,20 @@ public class MPlayer : MonoBehaviour {
             hInput = Input.GetAxisRaw("Horizontal");
         }
 
-        if ((Input.GetKey(KeyCode.Space) || sInput > 0) && currentForce > 0) {
-            if (isGround && !isDrifting &&
-                rig.velocity.sqrMagnitude > 10) {
+        if (((Input.GetKey(KeyCode.Space) && isUseKeyboard) || (sInput > 0 && !isUseKeyboard)) && currentForce > 0) {
+            if (isGround && !isDrifting && rig.velocity.sqrMagnitude > 10) {
                 StartDrift();
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || sInput == 0) {
+        if ((Input.GetKeyUp(KeyCode.Space) && isUseKeyboard) || (sInput == 0 && !isUseKeyboard)) {
             if (isDrifting) {
                 Boost(boostForce);
                 StopDrift();
             }
         }
+        // 不能放在FixedUpdate 加速时间太短
+        ShowScreenEffect();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
@@ -108,6 +109,14 @@ public class MPlayer : MonoBehaviour {
 
         if (PlayerManager.manager.GetSelfPlayer != this) {
             transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+        }
+    }
+
+    private void ShowScreenEffect() {
+        if (leftTrail.enabled == true) {
+            EnableScreenEffect();
+        } else {
+            DisableScreenEffect();
         }
     }
 
@@ -176,10 +185,9 @@ public class MPlayer : MonoBehaviour {
         }
 
         if (currentForce <= normalForce) {
-            DisableScreenEffect();
             DisableTrail();
+        } 
 
-        }
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
     }
 
@@ -233,7 +241,6 @@ public class MPlayer : MonoBehaviour {
             driftDirection = DriftDirection.Right;
             m_DriftOffset = Quaternion.Euler(0f, -30, 0f);
         }
-
         PlayDriftParticle();
     }
 
@@ -261,7 +268,6 @@ public class MPlayer : MonoBehaviour {
     private void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
-        EnableScreenEffect();
         EnableTrail();
     }
 
