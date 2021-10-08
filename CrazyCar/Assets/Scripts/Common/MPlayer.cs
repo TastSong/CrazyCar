@@ -266,9 +266,9 @@ public class MPlayer : MonoBehaviour {
     }
 
     private void PlayDriftParticle() {
-        foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Play();
-        }
+        //foreach (var tempParticle in wheelsParticeles) {
+        //    tempParticle.Play();
+        //}
     }
 
     private void ChangeDriftColor() {
@@ -295,7 +295,6 @@ public class MPlayer : MonoBehaviour {
     }
 
     private void EnableScreenEffect() {
-        Debug.LogError("+++++ " + driftPower);
         screenEffectTime += Time.fixedDeltaTime;
         ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.5f);
     }
