@@ -627,6 +627,7 @@ IsSucc--No-->End;
                  "name":"Map 0",
                  "is_has":true,
                  "cid":0,
+                 "times":2,
                  "limit_time":60
              },
              {
@@ -635,6 +636,7 @@ IsSucc--No-->End;
                  "name":"Map 1",
                  "is_has":true,
                  "cid":1,
+                 "times":2,
                  "limit_time":70
              }
          ]
@@ -936,9 +938,340 @@ PostIsForcedUpdating--No-->End;
    | rule             | string | 规则        |
    | url              | string | 下载地址    |
 
+### 九、装备
+
+#### 前端 
+
+```mermaid
+graph LR
+start-->ChangeCarUI-->PostEquipRequest-->SetItemContent-->ClickItem-->ChangeEquip-->End
+```
 
 
 
+#### 后台
+
+1. * 接口：`Host/Equip`
+
+   * Parameter
+
+     | Field | Type | Description |
+     | :---- | :--- | :---------- |
+     | -     | -    | -           |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "equips":[
+                 {
+                     "eid":0,
+                     "star":3,
+                     "mass":25,
+                     "equip_name":"F1 Blue",
+                     "max_speed":50,
+                     "is_has":true,
+                     "rid":"R_Car_F1_Blue",
+                     "speed":30,
+                     "is_show":true
+                 },
+                 {
+                     "eid":1,
+                     "star":2,
+                     "mass":25,
+                     "equip_name":"MonsterTruck Red",
+                     "max_speed":52,
+                     "is_has":true,
+                     "rid":"R_Car_MonsterTruck_Red",
+                     "speed":38,
+                     "is_show":true
+                 }
+             ]
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | -     | -           |
+
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->IsLegalJWT{IsLegalJWT}--Yes-->GetUid-->GetDataByDB-->PostData-->End;
+     IsLegalJWT--No-->Return-->End;
+     ```
+
+     
+
+2. * 接口：`Host/ChangeEquip`
+
+   * Parameter
+
+     | Field | Type | Description      |
+     | :---- | :--- | :--------------- |
+     | eid   | int  | 想要切换的装备ID |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "eid":2
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | 423   | 未拥有      |
+
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetEidByRequest{GetEidByRequest}--Yes-->IsHavaEquip{IsHavaEquip}--Yes-->SetEquip-->200-->End;
+     GetUidByToken--No-->End;
+     GetEidByRequest--No-->404-->End;
+     IsHavaEquip--No-->423-->End;
+     ```
+
+     
+
+3. * 接口：`Host/BuyEquip`
+
+   * Parameter
+
+     | Field | Type | Description      |
+     | :---- | :--- | :--------------- |
+     | aid   | int  | 想要购买的头像ID |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":{
+             "star":10
+         }
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | 423   | 星星不足    |
+
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetUidByToken{GetUidByToken}--Yes-->GetEidByRequest{GetEidByRequest}--Yes-->IsHavaEquip{IsHavaEquip}--Yes-->200-->End;
+     GetUidByToken--No-->End;
+     GetEidByRequest--No-->404-->End;
+     IsHavaEquip--No-->CanBuyEquip{CanBuyEquip}--Yes-->BuyEquip-->200;
+     CanBuyEquip--No-->423-->End;
+     ```
+
+     
+
+#### 数据库
+
+1. * 表名：`all_equip`
+
+   * Parameter
+
+     | Field            | Type   | Description  |
+     | :--------------- | :----- | :----------- |
+     | id (primary key) | int    | ID           |
+     | eid              | int    | 装备ID       |
+     | rid              | string | 前端Prefab名 |
+     | equip_name       | string | 完成时间     |
+     | star             | int    | 用户名       |
+     | mass             | int    | 车重         |
+     | speed            | int    | 车的普通速度 |
+     | max_speed        | int    | 车的最大速度 |
+     | is_show          | int    | 是否展示     |
+
+2. * 表名：`equip_uid`
+
+   * Parameter
+
+     | Field            | Type | Description |
+     | :--------------- | :--- | :---------- |
+     | id (primary key) | int  | ID          |
+     | eid              | int  | 装备ID      |
+     | uid              | int  | 用户ID      |
+
+#### 
+
+### 十、比赛详情
+
+#### 前端 
+
+```mermaid
+graph LR
+start-->PostMatchDetail-->UpdataUI-->JoinGame-->End;
+```
 
 
 
+#### 后台
+
+1. * 接口：`Host/MatchDetail`
+
+   * Parameter
+
+     | Field | Type | Description |
+     | :---- | :--- | :---------- |
+     | -     | -    | -           |
+
+   * Success Callback 
+
+     ```
+     {
+         "code":200,
+         "data":[
+             {
+                 "start_time":1633748594,
+                 "times":1,
+                 "star":2,
+                 "enroll_time":1633748534,
+                 "map_id":0,
+                 "name":"TastSong",
+                 "cid":7,
+                 "limit_time":60
+             }
+         ]
+     }
+     ```
+
+   * Error Code
+
+     | Field | Description |
+     | :---- | :---------- |
+     | -     | -           |
+
+   * Flow Chat
+
+     ```mermaid
+     graph LR
+     Start-->GetAllClassID-->200-->End;
+     ```
+
+
+#### 数据库
+
+1. * 表名：`match_class`
+
+   * Parameter
+
+     | Field             | Type        | Description      |
+     | :---------------- | :---------- | :--------------- |
+     | cid (primary key) | int         | 课程ID           |
+     | map_id            | int         | 地图ID           |
+     | class_name        | VARCHAR(40) | 课程名           |
+     | star              | int         | 开锁所需星星数   |
+     | limit_time        | int         | 限制时间         |
+     | start_time        | long        | 比赛开始时间     |
+     | enroll_time       | long        | 比赛可以进入时间 |
+
+
+### 十一、比赛榜单
+
+#### 前端 
+
+```mermaid
+graph LR
+start-->JoinGame-->IsArriveLimitTime-->MatchResultUI-->PostResult-->IsSucc{IsSucc}--Yes-->ShowRank-->End;
+JoinGame-->CompleteGame-->MatchResultUI;
+IsSucc--No-->End;
+```
+
+
+
+#### 后台
+
+1. 接口：`Host/MatchResult`
+
+2. Parameter
+
+   | Field         | Type | Description            |
+   | :------------ | :--- | :--------------------- |
+   | uid           | int  | 用户ID                 |
+   | cid           | int  | 课程ID                 |
+   | complete_time | int  | 完成时间(-1代表未完成) |
+
+3. Success Callback 
+
+   ```
+   {
+       "code":200,
+       "data":{
+           "reward":2,
+           "is_break_record":true,
+           "complete_time":22,
+           "is_win":true,
+           "rank":[
+               {
+                   "complete_time":22,
+                   "name":"Tast",
+                   "rank":1,
+                   "aid":2
+               }
+           ]
+       }
+   }
+   ```
+
+4. Error Code
+
+   | Field | Description |
+   | :---- | :---------- |
+   | -     | -           |
+
+5. Flow Chat
+
+   ```mermaid
+   graph LR
+   Start-->IsLegalJWT{IsLegalJWT}--Yes-->GetDataByRequest{GetDataByRequest}--Yes-->InsertDataToDB-->200-->End;
+   IsLegalJWT-->End;
+   GetDataByRequest--No-->404-->End;
+   ```
+
+   
+
+#### 数据库
+
+1. * 表名：`match_record`
+
+   * Parameter
+
+     | Field            | Type | Description  |
+     | :--------------- | :--- | :----------- |
+     | id (primary key) | int  | ID           |
+     | uid              | int  | 用户ID       |
+     | cid              | int  | 课程ID       |
+     | complete_time    | int  | 完成时间     |
+     | record_time      | int  | 上传记录时间 |
+
+2. * 临时表名：`match_rank_0`
+
+   * Parameter
+
+     | Field             | Type | Description |
+     | :---------------- | :--- | :---------- |
+     | uid (primary key) | int  | 用户ID      |
+     | rank              | int  | 排名        |
+     | aid               | int  | 用户头像ID  |
+     | complete_time     | int  | 完成时间    |
+     | name              | int  | 用户名      |

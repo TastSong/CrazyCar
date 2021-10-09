@@ -47,6 +47,7 @@ public class MPlayer : MonoBehaviour {
     private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
+    private float screenEffectTime = 0;
 
     void Start() {
         forceDir_Horizontal = transform.forward;
@@ -57,6 +58,7 @@ public class MPlayer : MonoBehaviour {
     }
 
     void Update() {
+        //ScreenEffectsManager.manager.motionBlurEffects.Intensity = 0.5f;
         if (Input.GetKeyDown(KeyCode.K)) {
             isUseKeyboard = !isUseKeyboard;
         }
@@ -66,19 +68,20 @@ public class MPlayer : MonoBehaviour {
             hInput = Input.GetAxisRaw("Horizontal");
         }
 
-        if ((Input.GetKey(KeyCode.Space) || sInput > 0) && currentForce > 0) {
-            if (isGround && !isDrifting &&
-                rig.velocity.sqrMagnitude > 10) {
+        if (((Input.GetKey(KeyCode.Space) && isUseKeyboard) || (sInput > 0 && !isUseKeyboard)) && currentForce > 0) {
+            if (isGround && !isDrifting && rig.velocity.sqrMagnitude > 10) {
                 StartDrift();
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || sInput == 0) {
+        if ((Input.GetKeyUp(KeyCode.Space) && isUseKeyboard) || (sInput == 0 && !isUseKeyboard)) {
             if (isDrifting) {
                 Boost(boostForce);
                 StopDrift();
             }
         }
+        // 不能放在FixedUpdate 加速时间太短
+        ShowScreenEffect();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
@@ -106,6 +109,14 @@ public class MPlayer : MonoBehaviour {
 
         if (PlayerManager.manager.GetSelfPlayer != this) {
             transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+        }
+    }
+
+    private void ShowScreenEffect() {
+        if (leftTrail.enabled == true) {
+            EnableScreenEffect();
+        } else {
+            DisableScreenEffect();
         }
     }
 
@@ -175,7 +186,8 @@ public class MPlayer : MonoBehaviour {
 
         if (currentForce <= normalForce) {
             DisableTrail();
-        }
+        } 
+
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
     }
 
@@ -229,7 +241,6 @@ public class MPlayer : MonoBehaviour {
             driftDirection = DriftDirection.Right;
             m_DriftOffset = Quaternion.Euler(0f, -30, 0f);
         }
-
         PlayDriftParticle();
     }
 
@@ -261,9 +272,9 @@ public class MPlayer : MonoBehaviour {
     }
 
     private void PlayDriftParticle() {
-        foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Play();
-        }
+        //foreach (var tempParticle in wheelsParticeles) {
+        //    tempParticle.Play();
+        //}
     }
 
     private void ChangeDriftColor() {
@@ -287,6 +298,16 @@ public class MPlayer : MonoBehaviour {
     private void DisableTrail() {
         leftTrail.enabled = false;
         rightTrail.enabled = false;
+    }
+
+    private void EnableScreenEffect() {
+        screenEffectTime += Time.fixedDeltaTime;
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.5f);
+    }
+
+    private void DisableScreenEffect() {
+        screenEffectTime = 0;
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = screenEffectTime;
     }
 
     private void OnTriggerEnter(Collider other) {

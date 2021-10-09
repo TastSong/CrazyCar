@@ -1763,6 +1763,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 727146239}
+  - component: {fileID: 727146241}
+  - component: {fileID: 727146242}
   - component: {fileID: 727146238}
   - component: {fileID: 727146237}
   - component: {fileID: 727146240}
@@ -1872,6 +1874,36 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &727146241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727146236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42aa2ad60e58aa54690bf84230e37d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionBlurEffects: {fileID: 727146242}
+--- !u!114 &727146242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727146236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f0f1294430472428811adab8474a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurShader: {fileID: 4800000, guid: 854261ffebfd4a04fa0d506d0d79c277, type: 3}
+  IterationNumber: 14
+  Intensity: 0
+  OffsetX: 0.5
+  OffsetY: 0.5
 --- !u!1 &735654424
 GameObject:
   m_ObjectHideFlags: 0
