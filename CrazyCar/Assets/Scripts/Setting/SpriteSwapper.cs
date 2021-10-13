@@ -1,40 +1,27 @@
-// Copyright (C) 2015-2021 ricimi - All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement.
-// A Copy of the Asset Store EULA is available at http://unity3d.com/company/legal/as_terms.
-
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Ricimi
-{
-    // Utility class for swapping the sprite of a UI Image between two predefined values.
-    public class SpriteSwapper : MonoBehaviour
-    {
-        public Sprite enabledSprite;
-        public Sprite disabledSprite;
+public class SpriteSwapper : MonoBehaviour {
+    public Sprite enabledSprite;
+    public Sprite disabledSprite;
 
-        private bool m_swapped;
+    private bool m_swapped;
 
-        private Image m_image;
+    private Image m_image;
 
-        public void Awake()
-        {
-            m_image = GetComponent<Image>();
-            m_swapped = PlayerPrefs.GetInt("sound_on") == 1;
-        }
+    public void Awake() {
+        m_image = GetComponent<Image>();
+        m_swapped = PlayerPrefs.GetInt("sound_on") == 1;
+    }
 
-        public void SwapSprite()
-        {
-            if (m_swapped)
-            {
-                m_swapped = false;
-                m_image.sprite = disabledSprite;
-            }
-            else
-            {
-                m_swapped = true;
-                m_image.sprite = enabledSprite;
-            }
+    public void SwapSprite() {
+        if (m_swapped) {
+            m_swapped = false;
+            m_image.sprite = disabledSprite;
+        } else {
+            m_swapped = true;
+            m_image.sprite = enabledSprite;
         }
     }
 }
+
