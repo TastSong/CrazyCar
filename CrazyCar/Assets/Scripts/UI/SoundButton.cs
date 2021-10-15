@@ -1,6 +1,3 @@
-// Copyright (C) 2015-2021 ricimi - All rights reserved.
-// This code can only be used under the standard Unity Asset Store End User License Agreement.
-// A Copy of the Asset Store EULA is available at http://unity3d.com/company/legal/as_terms.
 
 using UnityEngine;
 
@@ -16,10 +13,11 @@ namespace Ricimi
 
         private void Start()
         {
-            m_spriteSwapper = GetComponent<SpriteSwapper>();
+            m_spriteSwapper = GetComponentInChildren<SpriteSwapper>();
             m_on = PlayerPrefs.GetInt("sound_on") == 1;
-            if (!m_on)
+            if (!m_on) {
                 m_spriteSwapper.SwapSprite();
+            }
         }
 
         public void Toggle()

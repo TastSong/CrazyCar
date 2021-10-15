@@ -22,8 +22,8 @@ namespace Ricimi
 
         public void SwitchMusic()
         {
-            var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
-            backgroundAudioSource.volume = m_musicSlider.value;
+            //var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
+            //backgroundAudioSource.volume = m_musicSlider.value;
             PlayerPrefs.SetInt("music_on", (int)m_musicSlider.value);         
         }
     }
