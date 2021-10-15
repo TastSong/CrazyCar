@@ -118,11 +118,11 @@
     <Compile Include="Assets\Scripts\Match\MatchWebSocket.cs" />
     <Compile Include="Assets\Scripts\Route\CatmullRomSpline.cs" />
     <Compile Include="Assets\Scripts\Route\RouteNet.cs" />
-    <Compile Include="Assets\Scripts\Setting\ColorSwapper.cs" />
-    <Compile Include="Assets\Scripts\Setting\MusicManager.cs" />
-    <Compile Include="Assets\Scripts\Setting\SettingsUI.cs" />
-    <Compile Include="Assets\Scripts\Setting\SoundButton.cs" />
-    <Compile Include="Assets\Scripts\Setting\SpriteSwapper.cs" />
+    <Compile Include="Assets\Scripts\SystemSetting\ColorSwapper.cs" />
+    <Compile Include="Assets\Scripts\SystemSetting\MusicManager.cs" />
+    <Compile Include="Assets\Scripts\SystemSetting\SettingsUI.cs" />
+    <Compile Include="Assets\Scripts\SystemSetting\SoundButton.cs" />
+    <Compile Include="Assets\Scripts\SystemSetting\SpriteSwapper.cs" />
     <Compile Include="Assets\Scripts\Test\EasyLoadsTest.cs" />
     <Compile Include="Assets\Scripts\Test\TestCameraCtr.cs" />
     <Compile Include="Assets\Scripts\Test\TestChangeEquip.cs" />
@@ -776,9 +776,6 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="com.unity.cinemachine.editor">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
@@ -793,6 +790,9 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>F:/Github/CrazyCar/CrazyCar/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
