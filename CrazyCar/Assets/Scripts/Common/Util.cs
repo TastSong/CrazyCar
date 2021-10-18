@@ -64,6 +64,9 @@ namespace Utils {
 
         public static float btnASTime = 0.25f;
 
+        public static string baseLanguagePath = "Language/Locales/";
+        public static string baseFlagPath = "Language/Flag/";
+
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {
                 case ServerType.Local:
@@ -399,5 +402,17 @@ namespace Utils {
         return "ios";
 #endif
         }
+
+        public static List<string> GetFileDirectory(string path) {
+            List<string> list = new List<string>();
+            DirectoryInfo root = new DirectoryInfo(path);
+            FileInfo[] files = root.GetFiles();
+            for (int i = 0; i < files.Length; i++) {
+                list.Add(files[i].Name);
+            }
+
+            return list;
+        }
+
     }
 }
