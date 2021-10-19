@@ -19,7 +19,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
             GameController.manager.tinyMsgHub.Publish(new AvatarUIMessage(avatarInfo.aid));
         } else {
             if (GameController.manager.userInfo.star > avatarInfo.star) {
-                GameController.manager.infoConfirmAlert.ShowWithText(content: "是否花费" + avatarInfo.star + "颗星购买此头像",
+                GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
                 success: () => {
                     StringBuilder sb = new StringBuilder();
                     JsonWriter w = new JsonWriter(sb);
@@ -42,7 +42,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
                     Debug.Log("放弃购买");
                 });
             } else {
-                GameController.manager.warningAlert.ShowWithText("此头像需要" + avatarInfo.star + "颗星");
+                GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This head needs {0} star"), avatarInfo.star));
             }           
         }
     }

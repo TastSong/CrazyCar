@@ -66,8 +66,12 @@ public class GameController : MonoBehaviour
         if (settingsInfo == null) {
             Debug.Log("Load local setting");
             settingsInfo = new SystemSettingsInfo();
-            settingsInfo.language = "en";            
+            settingsInfo.language = "en";
+            settingsInfo.isOnMusic = true;
+            settingsInfo.isOnSound = true;
         }     
-        SystemSettingsInfo.SaveSystemInfo(GameController.manager.settingsInfo);
+        SystemSettingsInfo.SaveSystemInfo(settingsInfo);
+
+        AudioListener.volume = Convert.ToInt32(settingsInfo.isOnSound);
     }
 }

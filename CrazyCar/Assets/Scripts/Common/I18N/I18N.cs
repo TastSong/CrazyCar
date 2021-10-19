@@ -66,7 +66,7 @@ public class I18N : MonoBehaviour {
     }
 
     public void ChangeLang(string id) {
-        Debug.LogError(id);
+        Debug.Log("ChangeLang = " + id);
         current_dict = trans[id];
         currentLang = id;
         RefreshAllText();
