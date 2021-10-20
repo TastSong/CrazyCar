@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour {
 
     private MPlayer selfPlayer;
     private Dictionary<int, MPlayer> peers = new Dictionary<int, MPlayer>();
-    private float widthUnit = 1.2f;
+    private float widthUnit = 0.8f;
 
     private void Awake() {
         if (manager == null) {
@@ -91,7 +91,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private Vector3 GetStartPosition() {
-        Vector3 pos = startPos.position + new Vector3(UnityEngine.Random.Range(-5, 5) * widthUnit, 0, 0);
+        Vector3 pos = startPos.position + new Vector3(UnityEngine.Random.Range(-2, 2) * widthUnit, 0, 0);
         return pos;
     }
 }

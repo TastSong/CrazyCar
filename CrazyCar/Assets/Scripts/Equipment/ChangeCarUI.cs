@@ -68,6 +68,7 @@ public class ChangeCarUI : MonoBehaviour {
                 succData: (data) => {
                     GameController.manager.userInfo.equipInfo = GameController.manager.equipManager.equipDic[(int)data["eid"]];
                     GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                    applyBtn.interactable = false;
                 },
                 code: (code) => {
                     if (code == 423) {

@@ -203,7 +203,7 @@ create table if not exists `time_trial_class`(
    )engine = innodb default charset = utf8;
 insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 60, "基地卡通", 1);
+				   (0, 2, 0, 60, "基地卡通", 2);
 insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
 				   (1, 1, 1, 70, "几何风光", 3);
@@ -386,22 +386,22 @@ create table if not exists `all_equip`(
    )engine = innodb default charset = utf8;
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 25, 30, 50, 1);
+				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 30, 50, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (1, "R_Car_MonsterTruck_Red", "MonsterTruck Red", 2, 25, 38, 52, 1);
+				   (1, "R_Car_MonsterTruck_Red", "MonsterTruck Red", 2, 20, 38, 52, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (2, "R_Car_OffRoadTruck_Orange", "OffRoadTruck Orange", 4, 27, 37, 55, 1);
+				   (2, "R_Car_OffRoadTruck_Orange", "OffRoadTruck Orange", 4, 21, 37, 55, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 31, 40, 54, 1);
+				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 20, 40, 54, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 36, 34, 51, 0);
+				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 34, 51, 0);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 8, 37, 44, 66, 1);                   
+				   (5, "R_Car_StockCar_White", "StockCar White", 8, 15, 44, 66, 1);                   
 select* from all_equip;
 
 /*equip_uid*/
