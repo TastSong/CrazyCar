@@ -36,16 +36,16 @@ public class ProfileUI : MonoBehaviour {
         });
         userNameBtn.onClick.AddListener(() => {
             if (userNameInput.text == GameController.manager.userInfo.name) {
-                GameController.manager.warningAlert.ShowWithText("与原昵称一致");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original nickname"));
             } else {
 
             }
         });
         passwordBtn.onClick.AddListener(() => {
             if (passwordInput.text == PlayerPrefs.GetString(PrefKeys.password)) {
-                GameController.manager.warningAlert.ShowWithText("与原密码一致");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original password"));
             } else if (passwordInput.text.Length < 6) {
-                GameController.manager.warningAlert.ShowWithText("密码长度应大于6位");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
             } else {
                 StringBuilder sb = new StringBuilder();
                 JsonWriter w = new JsonWriter(sb);
@@ -58,14 +58,14 @@ public class ProfileUI : MonoBehaviour {
                 StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
                     data: bytes, token: GameController.manager.token, 
                     succData: (data) => {
-                        GameController.manager.warningAlert.ShowWithText("修改成功");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
                         PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
                     },
                     code: (code) => {
                         if (code == 423) {
-                            GameController.manager.warningAlert.ShowWithText("修改失败");
+                            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
                         } else if (code == 404) {
-                            GameController.manager.warningAlert.ShowWithText("信息有误");
+                            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
                         } 
                     }));
             }

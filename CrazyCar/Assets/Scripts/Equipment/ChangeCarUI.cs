@@ -67,16 +67,16 @@ public class ChangeCarUI : MonoBehaviour {
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
                     GameController.manager.userInfo.equipInfo = GameController.manager.equipManager.equipDic[(int)data["eid"]];
-                    GameController.manager.warningAlert.ShowWithText("设置成功");
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                 },
                 code: (code) => {
                     if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText("未拥有");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
                     }
                 }));
             } else {
                 if (GameController.manager.userInfo.star > curEquipInfo.star) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: "是否花费" + curEquipInfo.star + "颗星购买此装备",
+                    GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"), curEquipInfo.star),
                     success: () => { 
                         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + 
                             RequestUrl.buyEquipUrl,
@@ -84,7 +84,7 @@ public class ChangeCarUI : MonoBehaviour {
                         token: GameController.manager.token,
                         succData: (data) => {
                             GameController.manager.userInfo.star = (int)data["star"];
-                            applyBtnText.text = "Apply";
+                            applyBtnText.text = I18N.manager.GetText("Apply");
                             curEquipInfo.isHas = true;
                             for (int i = 0; i < changeCarItems.Count; i++) {
                                 changeCarItems[i].SetUnlockState();
@@ -92,10 +92,10 @@ public class ChangeCarUI : MonoBehaviour {
                         }));
                     },
                     fail: () => {
-                        Debug.Log("放弃购买");
+                        Debug.Log(I18N.manager.GetText("Give up to buy"));
                     });
                 } else {
-                    GameController.manager.warningAlert.ShowWithText("此装备需要" + curEquipInfo.star + "颗星");
+                    GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), curEquipInfo.star));
                 }
             }
             
@@ -129,9 +129,9 @@ public class ChangeCarUI : MonoBehaviour {
             applyBtn.interactable = true;
         }
         if (info.isHas) {
-            applyBtnText.text = "Apply";
+            applyBtnText.text = I18N.manager.GetText("Apply");
         } else {
-            applyBtnText.text = "buy";
+            applyBtnText.text = I18N.manager.GetText("Buy");
         }
     }
 

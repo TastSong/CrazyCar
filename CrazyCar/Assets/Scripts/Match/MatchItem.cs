@@ -27,7 +27,7 @@ public class MatchItem : MonoBehaviour {
                 GameController.manager.curGameType = CurGameType.Match;
                 Util.LoadingScene(SceneID.Game);
             } else {
-                GameController.manager.warningAlert.ShowWithText("比赛已结束");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The game is over"));
             }
 
         });
