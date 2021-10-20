@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour {
         selfPlayer = Instantiate(mPlayerPrefab, startPos.position, Quaternion.identity);
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = GameController.manager.userInfo;
+        selfPlayer.UpdatePlayerParameter();
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
             GameController.manager.userInfo.equipInfo.eid,
             GameController.manager.userInfo.equipInfo.rid);
