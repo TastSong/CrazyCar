@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class PlayerManager : MonoBehaviour {
 
     private MPlayer selfPlayer;
     private Dictionary<int, MPlayer> peers = new Dictionary<int, MPlayer>();
+    private float widthUnit = 1.2f;
 
     private void Awake() {
         if (manager == null) {
@@ -31,7 +33,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     private void MakeSelfPlayer() {
-        selfPlayer = Instantiate(mPlayerPrefab, startPos.position, Quaternion.identity);
+        selfPlayer = Instantiate(mPlayerPrefab, GetStartPosition(), Quaternion.identity);
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = GameController.manager.userInfo;
         selfPlayer.UpdatePlayerParameter();
@@ -86,5 +88,10 @@ public class PlayerManager : MonoBehaviour {
             playerStateMsg.userInfo.equipInfo.eid,
             playerStateMsg.userInfo.equipInfo.rid);
         peers.Add(userInfo.uid, mPlayer);
+    }
+
+    private Vector3 GetStartPosition() {
+        Vector3 pos = startPos.position + new Vector3(UnityEngine.Random.Range(-5, 5) * widthUnit, 0, 0);
+        return pos;
     }
 }
