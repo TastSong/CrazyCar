@@ -52,11 +52,11 @@ public class AvatarUI : MonoBehaviour {
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
                     GameController.manager.userInfo.aid = (int)data["aid"];
-                    GameController.manager.warningAlert.ShowWithText("设置成功");
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                 },
                 code: (code) => {
                     if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText("未拥有");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
                     }
                 }));
         });

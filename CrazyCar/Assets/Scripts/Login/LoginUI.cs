@@ -22,7 +22,7 @@ public class LoginUI : MonoBehaviour {
 
         loginBtn.onClick.AddListener(() => {
             if (userNameInput.text == "" || passwordInput.text == "") {
-                GameController.manager.warningAlert.ShowWithText("请输入内容");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Please enter the content"));
                 return;
             }
 
@@ -45,7 +45,7 @@ public class LoginUI : MonoBehaviour {
                             if (userNameInput.text.ToLower() == "tast") {
                                 GameController.manager.gameHelper.gameObject.SetActiveFast(true);
                             }
-                            GameController.manager.warningAlert.ShowWithText(text: "登录成功", callback: () => {
+                            GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"), callback: () => {
                                 PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
                                 PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
                                 PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
@@ -54,11 +54,11 @@ public class LoginUI : MonoBehaviour {
                         });
                        
                     } else if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText("密码错误");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Password Error"));
                     } else if (code == 404) {
-                        GameController.manager.warningAlert.ShowWithText("用户未注册");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User not registered"));
                     } else {
-                        GameController.manager.warningAlert.ShowWithText("未知错误");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
                     }
                 }));
         });

@@ -38,8 +38,8 @@ public class InfoConfirmAlert : MonoBehaviour {
         });
     }
 
-    public int ShowWithText(string title = "提示", string content = "", Action success = null, Action fail = null,
-        string confirmText = "确定", string cancelText = "取消", ConfirmAlertType type = ConfirmAlertType.Double) {
+    public int ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
+        string confirmText ="Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
         if (SceneManager.GetActiveScene().buildIndex == (int)SceneID.Loading) {
             // 在场景正在loading时 延迟加载
             GameController.manager.StartCoroutine(DelayShow(title, content, success, fail, confirmText, cancelText, type));
@@ -55,13 +55,25 @@ public class InfoConfirmAlert : MonoBehaviour {
         this.fail = fail;
         cancelBtn.gameObject.SetActive(type == ConfirmAlertType.Double && fail != null);
 
-        this.confirmText.text = confirmText;
-        this.cancelText.text = cancelText;
-        titleText.text =title;
+        this.confirmText.text = GetI18NText("Confirm", confirmText);
+        this.cancelText.text = GetI18NText("Cancel", cancelText);
+        titleText.text = GetI18NText("Tips", title);
         //Bg.rectTransform.sizeDelta = new Vector2(Bg.rectTransform.sizeDelta.x, bgHeight);
         dialogID += 1;
         dialogID %= 25535;
         return dialogID;
+    }
+
+    public string GetI18NText(string normalText, string showText) {
+        if (I18N.manager.initFinish) {
+            if (normalText == showText) {
+                return I18N.manager.GetText(showText);
+            } else {
+                return showText;
+            }
+        } else {
+            return normalText;
+        }
     }
 
     // 延迟出现Alert

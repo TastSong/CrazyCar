@@ -23,7 +23,7 @@ public class ControlPanel : MonoBehaviour {
     private void Start() {
         exitBtn.onClick.AddListener(() => {
             Time.timeScale = 0;
-            GameController.manager.infoConfirmAlert.ShowWithText(content: "是否退出游戏",
+            GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Quit the game?"),
                 success: () => {
                     Time.timeScale = 1;
                     Util.LoadingScene(SceneID.Index);

@@ -27,7 +27,7 @@ public class TimeTrialItem : MonoBehaviour {
                 Util.LoadingScene(SceneID.Game);
             } else {
                 if (GameController.manager.userInfo.star > timeTrialInfo.star) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: "是否花费" + timeTrialInfo.star + "颗星购买此课程",
+                    GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
                     success: () => {
                         StringBuilder sb = new StringBuilder();
                         JsonWriter w = new JsonWriter(sb);
@@ -48,10 +48,10 @@ public class TimeTrialItem : MonoBehaviour {
                         }));
                     },
                     fail: () => {
-                        Debug.Log("放弃购买");
+                        Debug.Log(I18N.manager.GetText("Give up to buy"));
                     });
                 } else {
-                    GameController.manager.warningAlert.ShowWithText("此课程需要" + timeTrialInfo.star + "颗星");
+                    GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This course requires {0} star"), timeTrialInfo.star));
                 }
             }
         });

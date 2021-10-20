@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     public TimeTrialManager timeTrialManager = new TimeTrialManager();
     public EquipManager equipManager = new EquipManager();
     public MatchManager matchManager = new MatchManager();
+    public SystemSettingsInfo settingsInfo;
 
     private void Awake() {
         if (manager == null) {
@@ -56,5 +57,21 @@ public class GameController : MonoBehaviour
     private void Start() {
         gameHelper.gameObject.SetActiveFast(false);
         warningAlert.gameObject.SetActiveFast(false);
+        InitSettingsInfo();
+        I18N.manager.InitTranslation();
+    }
+
+    public void InitSettingsInfo() {
+        settingsInfo = SystemSettingsInfo.ParseSystemInfo();
+        if (settingsInfo == null) {
+            Debug.Log("Load local setting");
+            settingsInfo = new SystemSettingsInfo();
+            settingsInfo.language = "en";
+            settingsInfo.isOnMusic = true;
+            settingsInfo.isOnSound = true;
+        }     
+        SystemSettingsInfo.SaveSystemInfo(settingsInfo);
+
+        AudioListener.volume = Convert.ToInt32(settingsInfo.isOnSound);
     }
 }

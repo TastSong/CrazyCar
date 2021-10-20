@@ -11,7 +11,7 @@ public class DownloadResUI : MonoBehaviour {
     public Slider progressSlider;
 
     private void Start() {
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
     CheckResource(() => {
         GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
     });
@@ -29,12 +29,12 @@ public class DownloadResUI : MonoBehaviour {
     StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
         data: bytes, succData: (data) => {
             if ((bool)data["is_forced_updating"]) {
-                GameController.manager.infoConfirmAlert.ShowWithText(content: "版本过低",
+                GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Version is too low"),
                     success: () => {
                         Application.OpenURL((string)data["url"]);
                         Application.Quit();
                     },
-                    confirmText: "Download");
+                    confirmText: I18N.manager.GetText("Download"));
             } else {
                 CheckResource(() => {
                     GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
@@ -62,7 +62,7 @@ public class DownloadResUI : MonoBehaviour {
             GameController.manager.resourceManager.DownloadAssets(() => {
                 success?.Invoke();
             }, UpdateProgress, () => {
-                GameController.manager.warningAlert.ShowWithText(text: "Download assets failed", callback: () => {
+                GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Download assets failed"), callback: () => {
                     Application.Quit();
                 });
             });
@@ -100,7 +100,7 @@ public class DownloadResUI : MonoBehaviour {
                 showText.text = speed.ToString("0.0") + "K/s";
             }
         } else {
-            showText.text = "Resource loading";
+            showText.text = I18N.manager.GetText("Resource loading");
         }
     }
 }

@@ -25,12 +25,12 @@ public class RegisterUI : MonoBehaviour
 
         registerBtn.onClick.AddListener(() => {
             if (userNameInput.text == "" || passwordInput.text == "") {
-                GameController.manager.warningAlert.ShowWithText("请输入内容");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Please enter the content"));
                 return;
             }
 
             if (passwordInput.text.Length < 6) {
-                GameController.manager.warningAlert.ShowWithText("密码长度应大于六个字符");
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
                 return;
             }
 
@@ -53,15 +53,15 @@ public class RegisterUI : MonoBehaviour
                             PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
                             PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
                         }
-                        GameController.manager.warningAlert.ShowWithText(text : "注册成功", callback : () => {
+                        GameController.manager.warningAlert.ShowWithText(text : I18N.manager.GetText("Registration Successful"), callback : () => {
                             Util.LoadingScene(SceneID.Index);
                         });
                     } else if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText("用户已注册");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User registered"));
                     } else if (code == 425) {
-                        GameController.manager.warningAlert.ShowWithText("信息格式不对");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
                     } else {
-                        GameController.manager.warningAlert.ShowWithText("未知错误");
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
                     }
                 }));
         });     
