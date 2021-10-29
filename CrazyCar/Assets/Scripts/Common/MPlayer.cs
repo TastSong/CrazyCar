@@ -35,7 +35,6 @@ public class MPlayer : MonoBehaviour {
     public bool isGround;
     public float groundDistance = 0.7f;//根据车模型自行调节
     //特效
-    public Transform wheelsParticeleTrans;
     public ParticleSystem[] wheelsParticeles;
     public TrailRenderer leftTrail;
     public TrailRenderer rightTrail;
@@ -53,7 +52,7 @@ public class MPlayer : MonoBehaviour {
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
 
-        wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
+        //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
         StopDrift();
     }
 
@@ -272,9 +271,9 @@ public class MPlayer : MonoBehaviour {
     }
 
     private void PlayDriftParticle() {
-        //foreach (var tempParticle in wheelsParticeles) {
-        //    tempParticle.Play();
-        //}
+        foreach (var tempParticle in wheelsParticeles) {
+            tempParticle.Play();
+        }
     }
 
     private void ChangeDriftColor() {
@@ -302,7 +301,7 @@ public class MPlayer : MonoBehaviour {
 
     private void EnableScreenEffect() {
         screenEffectTime += Time.fixedDeltaTime;
-        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.5f);
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.4f);
     }
 
     private void DisableScreenEffect() {
