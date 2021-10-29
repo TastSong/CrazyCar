@@ -106,7 +106,9 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
         foreach (var item in renders) {
             var key = item.Key;
             var render = item.Value;
-            render.sharedMaterial = r.mats[key];
+            //render.sharedMaterial = r.mats[key];
+            var renderInResource = r.renders[key];
+            render.sharedMaterials = renderInResource.sharedMaterials;
         }
         foreach (var item in filters) {
             var key = item.Key;
