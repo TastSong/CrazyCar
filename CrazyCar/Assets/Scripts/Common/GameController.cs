@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     public UserInfo userInfo = new UserInfo();
     public CurGameType curGameType = CurGameType.TimeTrial;
     public float sendMsgOffTime = 0.1f;
+    public bool standAlone = false;
 
     public ResourceManager resourceManager = new ResourceManager();
     public LoginManager loginManager = new LoginManager();

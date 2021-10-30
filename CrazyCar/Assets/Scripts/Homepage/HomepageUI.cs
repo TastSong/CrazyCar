@@ -47,6 +47,10 @@ public class HomepageUI : MonoBehaviour {
         nickNameText.text = GameController.manager.userInfo.name;
 
         avatarBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             UIManager.manager.ShowPage(UIPageType.AvatarUI);
         });
 
@@ -54,6 +58,10 @@ public class HomepageUI : MonoBehaviour {
             UIManager.manager.ShowPage(UIPageType.TimeTrialDetailUI);
         });
         matchBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             if (GameController.manager.userInfo.isVIP) {
                 UIManager.manager.ShowPage(UIPageType.MatchDetailUI);
             } else {
@@ -62,6 +70,10 @@ public class HomepageUI : MonoBehaviour {
         });
         createMatchBtn.gameObject.SetActiveFast(GameController.manager.userInfo.name == "tast");
         createMatchBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
                   RequestUrl.createMatchUrl,
                   token: GameController.manager.token,
@@ -101,21 +113,37 @@ public class HomepageUI : MonoBehaviour {
 
         // --------- Bottom Btns ---------
         psrofileBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             UIManager.manager.ShowPage(UIPageType.ProfileUI);
         });
         settingBtn.onClick.AddListener(() => {
             UIManager.manager.ShowPage(UIPageType.SettingsUI);
         });
         rankBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             UIManager.manager.ShowPage(UIPageType.RankUI);
         });
         changeCarBtn.onClick.AddListener(() => {
+            if (GameController.manager.standAlone) {
+                ShowStandAlone();
+                return;
+            }
             UIManager.manager.ShowPage(UIPageType.ChangeCarUI);
         });
         // --------- Bottom Btns ---------
 
         UpdataUI();
         homepageToken = GameController.manager.tinyMsgHub.Subscribe<HomepageUIMsg>((m) => { UpdataUI(); });
+    }
+
+    private void ShowStandAlone() {
+        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("This function is unavailable in single-machine mode"));
     }
 
     private void UpdataUI() {

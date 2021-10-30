@@ -9,38 +9,53 @@ using System;
 public class DownloadResUI : MonoBehaviour {
     public Text showText;
     public Slider progressSlider;
+    public Button standAloneBtn;
 
     private void Start() {
+        standAloneBtn.onClick.AddListener(() => {
+            GameController.manager.standAlone = true;
+            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
+            JsonData data = JsonMapper.ToObject(ta.text);
+            GameController.manager.loginManager.ParseLoginData(data);
+
+            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+                GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+                    callback: () => {
+                        Util.LoadingScene(SceneID.Index);
+                    });
+            });
+        });
+
 #if !UNITY_EDITOR
     CheckResource(() => {
         GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
     });
 #else
-    StringBuilder sb = new StringBuilder();
-    JsonWriter w = new JsonWriter(sb);
-    w.WriteObjectStart();
-    w.WritePropertyName("platform");
-    w.Write(Util.GetPlatform());
-    w.WritePropertyName("version");
-    w.Write(Application.version);
-    w.WriteObjectEnd();
-    Debug.Log("++++++ " + sb.ToString());
-    byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-    StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-        data: bytes, succData: (data) => {
-            if ((bool)data["is_forced_updating"]) {
-                GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Version is too low"),
-                    success: () => {
-                        Application.OpenURL((string)data["url"]);
-                        Application.Quit();
-                    },
-                    confirmText: I18N.manager.GetText("Download"));
-            } else {
-                CheckResource(() => {
-                    GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
-                });
-            }
-        }));  
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("platform");
+        w.Write(Util.GetPlatform());
+        w.WritePropertyName("version");
+        w.Write(Application.version);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+            data: bytes, succData: (data) => {
+                if ((bool)data["is_forced_updating"]) {
+                    GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Version is too low"),
+                        success: () => {
+                            Application.OpenURL((string)data["url"]);
+                            Application.Quit();
+                        },
+                        confirmText: I18N.manager.GetText("Download"));
+                } else {
+                    CheckResource(() => {
+                        GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
+                    });
+                }
+            }));
 #endif
     }
 

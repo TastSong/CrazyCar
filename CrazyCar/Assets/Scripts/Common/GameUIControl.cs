@@ -30,8 +30,15 @@ public class GameUIControl : MonoBehaviour{
     }
 
     private void ShowResultUI() {
-        controlPanel.gameObject.SetActiveFast(false);
-        gameResultUI.gameObject.SetActiveFast(true);
+        if (GameController.manager.standAlone) {
+            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Game Over"), 2.0f);
+            Util.DelayExecuteWithSecond(2.0f, () => {
+                Util.LoadingScene(SceneID.Index);
+            });           
+        } else {
+            controlPanel.gameObject.SetActiveFast(false);
+            gameResultUI.gameObject.SetActiveFast(true);
+        }
     }
 
     private void OnDestroy() {

@@ -67,6 +67,8 @@ namespace Utils {
         public static string baseLanguagePath = "Language/Locales/";
         public static string baseFlagPath = "Language/Flag/";
 
+        public static string baseStandAlone = "StandAlone/";
+
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {
                 case ServerType.Local:
@@ -348,6 +350,10 @@ namespace Utils {
         }
 #endif
         public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
+            if (GameController.manager.standAlone) {
+                yield break;
+            }
+            
             UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             if (data != null) {
                 request.uploadHandler = new UploadHandlerRaw(data);

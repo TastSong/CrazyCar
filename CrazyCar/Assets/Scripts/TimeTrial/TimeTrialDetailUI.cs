@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using LitJson;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,17 @@ public class TimeTrialDetailUI : MonoBehaviour {
     public Button closeBtn;
 
     private void OnEnable() {
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
-            RequestUrl.timeTrialDetailUrl,
-           token: GameController.manager.token,
-           succData: (data) => {
-               GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
-           }));
+        if (GameController.manager.standAlone) {
+            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.timeTrialDetailUrl);
+            JsonData data = JsonMapper.ToObject(ta.text);
+            GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+        } else {
+            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
+               token: GameController.manager.token,
+               succData: (data) => {
+                   GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+               }));
+        }
     }
 
     private void UpdateUI() {
