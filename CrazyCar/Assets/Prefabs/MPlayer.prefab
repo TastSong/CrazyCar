@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &668321200006424457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672096003053841657}
+  - component: {fileID: 636525190062889731}
+  m_Layer: 0
+  m_Name: Plexus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &672096003053841657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668321200006424457}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.04, y: 1.98, z: -0.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3226108444913310419}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &636525190062889731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668321200006424457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb8a810ae4045342a7b72f088142ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WiresParticles: {fileID: 1322427905316200, guid: ca4b64bf1b05320459e2d15cc4861f56,
+    type: 3}
+  LineRendererPrefab: {fileID: 1032586693171982, guid: dedac2a320d46d044be83c96341dfaf6,
+    type: 3}
+  UseSkinnedMeshRenderer: 0
+  TargetSkinnedMeshRenderer: {fileID: 0}
+  MaxDistance: 5
+  MaxConnections: 5
+  MaxLineRenderers: 45
 --- !u!1 &1274186665418148512
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +225,7 @@ Transform:
   m_LocalPosition: {x: 22.37, y: 0, z: -30.720001}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
+  - {fileID: 672096003053841657}
   - {fileID: 8349466569829953231}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -236,6 +289,7 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.13333334, g: 0.23137257, b: 0.32941177, a: 1}
   driftPower: 0
+  plexusVFX: {fileID: 668321200006424457}
 --- !u!114 &9136838119040640985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +900,7 @@ Transform:
   - {fileID: 8265655260810998501}
   - {fileID: 7710844339335011018}
   m_Father: {fileID: 3226108444913310419}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5479981562350723117
 MonoBehaviour:

@@ -362,13 +362,13 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("Android", "2.1.0", 0, "https://files.gitee.com/group1/M00/20/00/CgAAEmFRdG6ACOlqAZGFJRM2SG4483.apk?token=d24d65a215815b5515a043a376644c6e&ts=1632728179&attname=CrazyCar.apk&disposition=attachment");
+				   ("Android", "10.1.0", 10000, "https://files.gitee.com/group1/M00/20/00/CgAAEmFRdG6ACOlqAZGFJRM2SG4483.apk?token=d24d65a215815b5515a043a376644c6e&ts=1632728179&attname=CrazyCar.apk&disposition=attachment");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("ios", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");
+				   ("ios", "10.1.0", 10000, "https://gitee.com/TastSong/CrazyCar");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("PC", "2.1.0", 0, "https://gitee.com/TastSong/CrazyCar");                   
+				   ("PC", "10.1.0", 10000, "https://gitee.com/TastSong/CrazyCar");                   
 select * from forced_updating;
 
 /*all_equip*/

@@ -42,6 +42,9 @@ public class MPlayer : MonoBehaviour {
     public Color[] driftColors;
     public float driftPower = 0;
 
+    //VFX
+    public GameObject plexusVFX;
+
     private int passTimes = 0;
     private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
@@ -274,6 +277,7 @@ public class MPlayer : MonoBehaviour {
         foreach (var tempParticle in wheelsParticeles) {
             tempParticle.Play();
         }
+        plexusVFX.gameObject.SetActiveFast(true);
     }
 
     private void ChangeDriftColor() {
@@ -287,6 +291,7 @@ public class MPlayer : MonoBehaviour {
         foreach (var tempParticle in wheelsParticeles) {
             tempParticle.Stop();
         }
+        plexusVFX.gameObject.SetActiveFast(false);
     }
 
     private void EnableTrail() {
