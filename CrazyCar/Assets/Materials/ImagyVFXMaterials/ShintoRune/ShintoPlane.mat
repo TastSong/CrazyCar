@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShintoPlane
+  m_Shader: {fileID: 4800000, guid: 64448f3ae9eb15c4a85643df1c36a470, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _DissolveTex
+      second:
+        m_Texture: {fileID: 2800000, guid: cf7fcba2f8820e644b4e392534831e21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DistTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DistortionTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: ea0201d665d15c44cb9539729e4e7584, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex2
+      second:
+        m_Texture: {fileID: 2800000, guid: 03edd4a66d005a14ea2db0aaae2b7578, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ShakeTex
+      second:
+        m_Texture: {fileID: 2800000, guid: cf7fcba2f8820e644b4e392534831e21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Cols
+      second: -15.6
+    - first:
+        name: _Dissolve
+      second: -0.01
+    - first:
+        name: _DissolveSize
+      second: 0.01
+    - first:
+        name: _Frame
+      second: 0.025
+    - first:
+        name: _InvFade
+      second: 3
+    - first:
+        name: _MaskPow
+      second: 1
+    - first:
+        name: _Opacity
+      second: -24.21
+    - first:
+        name: _Rows
+      second: -45.95
+    - first:
+        name: _Shake
+      second: 0.05
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 2.655108, g: 2.232456, b: 4.897, a: 1}
+    - first:
+        name: _DissolveColor
+      second: {r: 0.52941203, g: 1.1480731, b: 2, a: 1}
+    - first:
+        name: _DistanceFade
+      second: {r: 20, g: 50, b: 0, a: 0}
+    - first:
+        name: _Params
+      second: {r: 0.2, g: 0.5, b: 0, a: 0}
+    - first:
+        name: _TintColor
+      second: {r: 0.22831963, g: 0.31953242, b: 0.75735295, a: 1}

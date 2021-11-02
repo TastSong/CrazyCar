@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: GreenGrabSquaresParticles
+  m_Shader: {fileID: 4800000, guid: 8179a30e204672b4294c85da979f18a6, type: 3}
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _DistTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 6968714afc841544e8db1b418cf815be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 6968714afc841544e8db1b418cf815be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _distTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 6968714afc841544e8db1b418cf815be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1.0557811, g: 2.5, b: 0.8639708, a: 1}
+    - first:
+        name: _DistanceFade
+      second: {r: 0, g: 50, b: 0, a: 0.06}
+    - first:
+        name: _Params
+      second: {r: 0.05, g: 0, b: 0, a: 0}

@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DistortionTorus
+  m_Shader: {fileID: 4800000, guid: c17e1042a465e28488017ddffb76d540, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2999
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _DissolveTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 03edd4a66d005a14ea2db0aaae2b7578, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DistTex
+      second:
+        m_Texture: {fileID: 2800000, guid: cf7fcba2f8820e644b4e392534831e21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DistortionTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 2e0986d5a26d6794abbd042fcf85c025, type: 3}
+        m_Scale: {x: 0.1, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex2
+      second:
+        m_Texture: {fileID: 2800000, guid: 03edd4a66d005a14ea2db0aaae2b7578, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Cols
+      second: 8
+    - first:
+        name: _Dissolve
+      second: 0.5
+    - first:
+        name: _DissolveSize
+      second: 0.01
+    - first:
+        name: _Distortion
+      second: 0.02
+    - first:
+        name: _Frame
+      second: 0.03
+    - first:
+        name: _InvFade
+      second: 3
+    - first:
+        name: _MaskPow
+      second: 1
+    - first:
+        name: _Opacity
+      second: -24.21
+    - first:
+        name: _Rows
+      second: 3
+    - first:
+        name: _Shake
+      second: 2
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _DissolveColor
+      second: {r: 0.00989404, g: 0.022058845, b: 0.011488051, a: 1}
+    - first:
+        name: _DistanceFade
+      second: {r: 20, g: 50, b: 0, a: 0}
+    - first:
+        name: _DotsColor
+      second: {r: 1.222, g: 0.5750588, b: 0.5750588, a: 1}
+    - first:
+        name: _Params
+      second: {r: 0.03, g: 20, b: 5, a: 0}
+    - first:
+        name: _TintColor
+      second: {r: 0.22831963, g: 0.31953242, b: 0.75735295, a: 1}
