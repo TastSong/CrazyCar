@@ -192,7 +192,7 @@ public class MPlayer : MonoBehaviour {
             DisableTrail();
         } 
 
-        currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
+        currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime);//每秒60递减，可调
     }
 
     //力递增
