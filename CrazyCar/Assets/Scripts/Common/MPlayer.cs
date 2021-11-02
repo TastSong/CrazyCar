@@ -117,8 +117,10 @@ public class MPlayer : MonoBehaviour {
     private void ShowScreenEffect() {
         if (leftTrail.enabled == true) {
             EnableScreenEffect();
+            PlayDriftParticle();
         } else {
             DisableScreenEffect();
+            StopDriftParticle();
         }
     }
 
@@ -243,7 +245,6 @@ public class MPlayer : MonoBehaviour {
             driftDirection = DriftDirection.Right;
             m_DriftOffset = Quaternion.Euler(0f, -30, 0f);
         }
-        PlayDriftParticle();
     }
 
     //计算漂移等级
@@ -264,7 +265,6 @@ public class MPlayer : MonoBehaviour {
         driftDirection = DriftDirection.None;
         driftPower = 0;
         m_DriftOffset = Quaternion.identity;
-        StopDriftParticle();
     }
 
     private void Boost(float boostForce) {
