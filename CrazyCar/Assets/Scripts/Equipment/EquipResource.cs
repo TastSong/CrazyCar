@@ -92,6 +92,5 @@ public class EquipResource : MonoBehaviour, ISerializationCallbackReceiver {
     public new RuntimeAnimatorController animation;
 
     public string rid;
-    [HideInInspector]
     public string type = EquipType.Car.ToString();
 }

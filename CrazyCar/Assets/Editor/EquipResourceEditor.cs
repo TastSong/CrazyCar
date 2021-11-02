@@ -34,9 +34,9 @@ public class EquipResourceEditor : Editor {
         base.OnInspectorGUI();
 
         EditorGUILayout.LabelField("Resource", EditorStyles.boldLabel);
-        int selected = 2;
+        int selected = 1;
         for (int i = 0; i < types.Length; i += 1) {
-            if (res.type == types[i]) {
+            if (res.type.ToLower() == types[i].ToLower()) {
                 selected = i;
                 break;
             }
@@ -48,7 +48,7 @@ public class EquipResourceEditor : Editor {
             res.renders = new Dictionary<string, Renderer>();
         }
 
-        if (res.type == EquipType.Car.ToString()) {
+        if (res.type.ToLower() == EquipType.Car.ToString().ToLower()) {
 
             res.rid = res.gameObject.name;
 
