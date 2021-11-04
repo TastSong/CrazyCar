@@ -28,7 +28,7 @@
 
 
 <div  align="center">  
-  <a><img src="./SamplePictures/Preview.JPG"></a>
+  <a><img src="./SamplePictures/Preview.jpg"></a>
 </div> 
 
 
@@ -65,14 +65,14 @@
 ## 示例截图
 <div  align="center">  
   <a><img src="./SamplePictures/Login.JPG"  width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Homepage.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Avatar.png" width="316px" height="146px""></a>
-  <a><img src="./SamplePictures/Profile.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Equip.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Rank.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Setting.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/TimeTrial.png" width="316px" height="146px"></a>
-  <a><img src="./SamplePictures/Match.png" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Homepage.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Avatar.PNG" width="316px" height="146px""></a>
+  <a><img src="./SamplePictures/Profile.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Equip.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Rank.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Setting.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/TimeTrial.PNG" width="316px" height="146px"></a>
+  <a><img src="./SamplePictures/Match.PNG" width="316px" height="146px"></a>
 </div> 
 
 
