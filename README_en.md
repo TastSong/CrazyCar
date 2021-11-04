@@ -6,9 +6,9 @@
     Crazy Car
   </h1>
   <h3 align="center">
-    联机赛车游戏
+    Online racing game
   </h3>
-    <a href = "https://github.com/TastSong/CrazyCar/releases">下 载</a> | <a href = "https://github.com/TastSong/CrazyCar/releases">主 页</a> <br>
+    <a href = "https://github.com/TastSong/CrazyCar/releases">Download</a> | <a href = "https://github.com/TastSong/CrazyCar/releases">Homepage</a> <br>
 <a>
     <img src="https://img.shields.io/github/stars/TastSong/CrazyCar?style=plastic" alt="">
     </a>
@@ -27,42 +27,43 @@
 </div>
 
 
+
 <div  align="center">  
   <a><img src="./SamplePictures/Preview.JPG"></a>
 </div> 
 
 
-[开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[English](./README_en.md)
+[Quick Start](./README_QuickStart.md)&nbsp; | &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[中文](./README.md)
 
-:clap:  欢迎使用 **Crazy Car** ！ 
+:clap:  Welcome **Crazy Car** ！ 
 
-:sparkles:  **Crazy Car** 一个联机赛车游戏，利用Unity游戏引擎开发，使用Java后台和MySQL数据库
+:sparkles: **Crazy Car** An online racing game, using Unity game engine development, using Java background and MySQL database 
 
-## 特性 :point_down:
-:pushpin:  支持版本强制更新
+## Features :point_down:
+:pushpin:  Mandatory version update is supported
 
-:sunrise: 支持头像和装备的资源热更新
+:sunrise: Support avatar and equipment resource hot update
 
-:rocket:  登录页面可以一键切换单机模式 
+:rocket:  On the login page, you can switch the single-machine mode with one click
 
-:car:  可以进行头像和赛车的购买和穿戴
+:car:  You can buy and wear avatars and racing cars
 
-:computer:  你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
+:computer: You can use this client on **Windows**、 **Android** and** IOS** devices
 
-:earth_asia:  支持多语言
+:earth_asia:  Support for multiple languages
 
-:page_facing_up:  个人信息页面，记录个人成就
+:page_facing_up:  Personal information page, record personal achievements
 
-:video_game:  计时赛和多人比赛两种竞技模式
+:video_game:  Time trial and multiplayer competition two modes
 
-:seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前:running:
+:seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
 
 :kissing_heart: Enjoy~
 
-## 联系
+## Connection
 :email: ： TastSong@163.com
 
-## 示例截图
+## Sample screenshots
 <div  align="center">  
   <a><img src="./SamplePictures/Login.JPG"  width="316px" height="146px"></a>
   <a><img src="./SamplePictures/Homepage.png" width="316px" height="146px"></a>
@@ -76,8 +77,8 @@
 </div> 
 
 
-## 贡献
-我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 
+## contribution
+You can submit questions in the  [pull requests](https://github.com/TastSong/CrazyCar/pulls) or [issues](https://github.com/TastSong/CrazyCar/issues) format.
 
 
 ## License
