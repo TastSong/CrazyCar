@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScreenEffectsManager : MonoBehaviour {
     public static ScreenEffectsManager manager;
     public MotionBlurEffects motionBlurEffects;
+    public Projector wireframeProjector;
 
     private void Awake() {
         if (manager == null) {

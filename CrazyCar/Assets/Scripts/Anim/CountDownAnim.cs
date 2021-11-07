@@ -15,13 +15,21 @@ public class CountDownAnim : MonoBehaviour {
 
     public void PlayAnim(int time, Action succ = null) {
         GameController.manager.StartCoroutine(CountDown(time));
+        ScreenEffectsManager.manager.wireframeProjector.gameObject.SetActiveFast(true);
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < time; i++) {
             sequence.Append(countDownText.transform.DOScale(1, 0.5f));
             sequence.Append(countDownText.transform.DOScale(0, 0.5f));
         }
+
+        Tween tween = DOTween.To(() => ScreenEffectsManager.manager.wireframeProjector.fieldOfView,
+            x => ScreenEffectsManager.manager.wireframeProjector.fieldOfView = x, 150, 4);
+        tween.OnComplete(() => {
+            ScreenEffectsManager.manager.wireframeProjector.gameObject.SetActiveFast(false);
+        });
+
         sequence.OnComplete(() => {
-            succ?.Invoke();
+            succ?.Invoke();          
             gameObject.SetActiveFast(false);
         });       
     }
