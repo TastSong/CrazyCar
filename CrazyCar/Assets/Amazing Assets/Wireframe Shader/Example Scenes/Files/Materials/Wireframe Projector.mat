@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Wireframe Projector
+  m_Shader: {fileID: 4800000, guid: 0caf1e79def48d04eb8133cf1edaf149, type: 3}
+  m_ShaderKeywords: V_WIRE_TRY_QUAD_ON WIREFRAME_NORMALIZE_EDGES_ON
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FalloffTex:
+        m_Texture: {fileID: 2800000, guid: 6abc118e38639744897007a2a8abb56d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowTex:
+        m_Texture: {fileID: 2800000, guid: aec0da6268030224499e78163786beaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - V_WIRE_TAG: 0
+    - V_WIRE_V_OPTIONS: 0
+    - V_WIRE_W_OPTIONS: 0
+    - _BumpScale: 1
+    - _CurvedWorldTitle: 0
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _V_WIRE_DistanceFade: 0
+    - _V_WIRE_DistanceFadeEnd: 4
+    - _V_WIRE_DistanceFadeStart: 4
+    - _V_WIRE_EmissionStrength: 1.2
+    - _V_WIRE_FixedSize: 0
+    - _V_WIRE_ProjectorEnumID: 0
+    - _V_WIRE_Size: 1
+    - _V_WIRE_Source_Options: 0
+    - _V_WIRE_Tag: 0
+    - _V_WIRE_Title_S_Options: 0
+    - _V_WIRE_Title_V_Options: 0
+    - _V_WIRE_Title_W_Options: 0
+    - _V_WIRE_Transparency_M_Options: 0
+    - _V_WIRE_TryQuad: 1
+    - _WireframeShader_Diameter: 0.5
+    - _WireframeShader_Smoothness: 0
+    - _WireframeShader_Thickness: 0.01
+    - _Wireframe_ColorEmissionStrength: 3
+    - _Wireframe_DistanceFade: 0
+    - _Wireframe_DistanceFadeEnd: 10
+    - _Wireframe_DistanceFadeStart: 5
+    - _Wireframe_NormalizeEdges: 1
+    - _Wireframe_Title_S_Options: 0
+    - _Wireframe_Title_V_Options: 0
+    - _Wireframe_Title_W_Options: 0
+    - _Wireframe_Transparency_M_Options: 0
+    - _Wireframe_TryQuad: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _V_WIRE_Color: {r: 0.05882341, g: 0.68843865, b: 1, a: 1}
+    - _Wireframe_Color: {r: 0.08235294, g: 0.37462485, b: 0.8784314, a: 1}
