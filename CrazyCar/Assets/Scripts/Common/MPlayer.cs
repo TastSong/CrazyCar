@@ -44,6 +44,7 @@ public class MPlayer : MonoBehaviour {
 
     //VFX
     public GameObject plexusVFX;
+    public GameObject wireframeVFX;
 
     private int passTimes = 0;
     private bool isUseKeyboard = false;
@@ -278,6 +279,7 @@ public class MPlayer : MonoBehaviour {
             tempParticle.Play();
         }
         plexusVFX.gameObject.SetActiveFast(true);
+        wireframeVFX.SetActiveFast(true);
     }
 
     private void ChangeDriftColor() {
@@ -292,6 +294,7 @@ public class MPlayer : MonoBehaviour {
             tempParticle.Stop();
         }
         plexusVFX.gameObject.SetActiveFast(false);
+        wireframeVFX.gameObject.SetActiveFast(false);
     }
 
     private void EnableTrail() {
@@ -306,7 +309,7 @@ public class MPlayer : MonoBehaviour {
 
     private void EnableScreenEffect() {
         screenEffectTime += Time.fixedDeltaTime;
-        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.4f);
+        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.14f);
     }
 
     private void DisableScreenEffect() {
