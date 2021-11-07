@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BlobMesh
+  m_Shader: {fileID: 4800000, guid: 0dac9bc9f82b5d64a9f490427f4c5406, type: 3}
+  m_ShaderKeywords: V_WIRE_FRESNEL_ON V_WIRE_IBL_OFF V_WIRE_LIGHT_OFF WIREFRAME_LIGHT_ATTENTION_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 8900000, guid: e8d0de5c60960cb42b82ac737a42f588, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_AoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_IBL_Cube:
+        m_Texture: {fileID: 8900000, guid: 12ed54b2ed9419649a33e6afb8724c1a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_NormalMap:
+        m_Texture: {fileID: 2800000, guid: ee579624399a75f42ab2928b94163a0a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_SourceTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_TransparentTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _V_WIRE_WireTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wireframe_AmbientOcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wireframe_ColorTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wireframe_NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - V_WIRE_IncludeLightEnumID: 0
+    - V_WIRE_M_OPTIONS: 0
+    - V_WIRE_TAG: 0
+    - V_WIRE_V_OPTIONS: 0
+    - V_WIRE_W_OPTIONS: 0
+    - _BumpScale: 1
+    - _Cull: 2
+    - _CurvedWorldTitle: 0
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0
+    - _Metallic: 1
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _Shininess: 0.019
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _V_WIRE_Ao: 0
+    - _V_WIRE_AoStrength: 1
+    - _V_WIRE_BumpEnumID: 0
+    - _V_WIRE_DistanceFade: 0
+    - _V_WIRE_DistanceFadeEnd: 10
+    - _V_WIRE_DistanceFadeStart: 5
+    - _V_WIRE_DynamicGI: 0
+    - _V_WIRE_DynamicGIEnumID: 0
+    - _V_WIRE_DynamicGIStrength: 0
+    - _V_WIRE_DynamicMaskEffectsBaseTexEnumID: 0
+    - _V_WIRE_DynamicMaskEffectsBaseTexInvert: 0
+    - _V_WIRE_DynamicMaskEnumID: 0
+    - _V_WIRE_DynamicMaskInvert: 0
+    - _V_WIRE_DynamicMaskSmooth: 1
+    - _V_WIRE_DynamicMaskType: 1
+    - _V_WIRE_EmissionStrength: 0
+    - _V_WIRE_FixedSize: 0
+    - _V_WIRE_FresnelBias: 0
+    - _V_WIRE_FresnelEnumID: 1
+    - _V_WIRE_FresnelInvert: 0
+    - _V_WIRE_FresnelPow: 1
+    - _V_WIRE_IBLEnumID: 1
+    - _V_WIRE_IBL_Cube_Contrast: 0
+    - _V_WIRE_IBL_Cube_Intensity: 1
+    - _V_WIRE_IBL_Light_Strength: 0
+    - _V_WIRE_IBL_Roughness: 0
+    - _V_WIRE_ImprovedBlendEnumID: 0
+    - _V_WIRE_IncludeLightEnumID: 0
+    - _V_WIRE_NormalScale: 1
+    - _V_WIRE_PBR_Compiler: 0
+    - _V_WIRE_ReflectionEnumID: 0
+    - _V_WIRE_Reflection_Fresnel_Bias: 0
+    - _V_WIRE_Reflection_Pow: 1
+    - _V_WIRE_Reflection_Roughness: 1
+    - _V_WIRE_Reflection_Strength: 0.5
+    - _V_WIRE_RenderingOptions_ODLEnumID: 0
+    - _V_WIRE_RenderingOptions_PBREnumID: 0
+    - _V_WIRE_Size: 1
+    - _V_WIRE_Source_Options: 0
+    - _V_WIRE_Tag: 0
+    - _V_WIRE_Title_M_Options: 0
+    - _V_WIRE_Title_S_Options: 0
+    - _V_WIRE_Title_UAR_Options: 0
+    - _V_WIRE_Title_V_Options: 0
+    - _V_WIRE_Title_W_Options: 0
+    - _V_WIRE_TransparencyEnumID: 0
+    - _V_WIRE_Transparency_M_Options: 0
+    - _V_WIRE_TransparentTex_Alpha_Offset: 0
+    - _V_WIRE_TransparentTex_Invert: 0
+    - _V_WIRE_TransparentTex_UVSet: 0
+    - _V_WIRE_VertexColor: 0
+    - _V_WIRE_VertexColorEnumID: 0
+    - _V_WIRE_VertexLightAndAmbientID: 0
+    - _V_WIRE_WireTex_UVSet: 0
+    - _V_WIRE_WireVertexColor: 0
+    - _WireframeShader_Diameter: 0.5
+    - _WireframeShader_Smoothness: 0
+    - _WireframeShader_Thickness: 0.02
+    - _Wireframe_AmbientOcclusion: 0
+    - _Wireframe_AmbientOcclusionStrength: 1
+    - _Wireframe_BaseVertexColor: 0
+    - _Wireframe_BumpEnumID: 0
+    - _Wireframe_ColorEmissionStrength: 0
+    - _Wireframe_DistanceFade: 0
+    - _Wireframe_DistanceFadeEnd: 10
+    - _Wireframe_DistanceFadeStart: 5
+    - _Wireframe_DynamicMaskEdgeSmooth: 0
+    - _Wireframe_DynamicMaskEffectsBaseTexEnumID: 0
+    - _Wireframe_DynamicMaskEffectsBaseTexInvert: 0
+    - _Wireframe_DynamicMaskEnumID: 0
+    - _Wireframe_DynamicMaskInvert: -1
+    - _Wireframe_DynamicMaskType: 1
+    - _Wireframe_FresnelBias: 0
+    - _Wireframe_FresnelEnumID: 0
+    - _Wireframe_FresnelInvert: 0
+    - _Wireframe_FresnelPow: 1
+    - _Wireframe_IncludeLightEnumID: 1
+    - _Wireframe_MetaPassMultiplier: 0
+    - _Wireframe_NormalScale: 1
+    - _Wireframe_RenderingOptions_PBREnumID: 0
+    - _Wireframe_Title_GI_Options: 0
+    - _Wireframe_Title_M_Options: 0
+    - _Wireframe_Title_Rendering_Options: 0
+    - _Wireframe_Title_S_Options: 0
+    - _Wireframe_Title_UAR_Options: 0
+    - _Wireframe_Title_V_Options: 0
+    - _Wireframe_Title_W_Options: 0
+    - _Wireframe_TransparencyEnumID: 0
+    - _Wireframe_Transparency_M_Options: 0
+    - _Wireframe_TransparentTex_Alpha_Offset: 0
+    - _Wireframe_TransparentTex_Invert: 0
+    - _Wireframe_WireVertexColor: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SpecColor: {r: 0.106401384, g: 0.9044118, b: 0.37607396, a: 1}
+    - _V_WIRE_Color: {r: 0, g: 0.046827573, b: 0.07, a: 0.872}
+    - _V_WIRE_MainTex_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _V_WIRE_ObjectWorldPos: {r: 0, g: 0, b: 0, a: 0}
+    - _V_WIRE_SourceTex_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _V_WIRE_TransparentTex_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _V_WIRE_WireTex_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _Wireframe_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Wireframe_ColorTexture_Scroll: {r: 0, g: 0, b: 0, a: 0}
+    - _Wireframe_MainTex_Scroll: {r: 0, g: 0, b: 0, a: 0}
