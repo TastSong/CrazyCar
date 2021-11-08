@@ -15,7 +15,9 @@ public class CountDownAnim : MonoBehaviour {
 
     public void PlayAnim(int time, Action succ = null) {
         GameController.manager.StartCoroutine(CountDown(time));
+#if !UNITY_IOS
         PlayScreenEffect();
+#endif
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < time; i++) {
             sequence.Append(countDownText.transform.DOScale(1, 0.5f));
