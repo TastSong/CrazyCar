@@ -68,7 +68,7 @@ public class HomepageUI : MonoBehaviour {
                 GameController.manager.warningAlert.ShowWithText("Match 只面向VIP");
             }
         });
-        createMatchBtn.gameObject.SetActiveFast(GameController.manager.userInfo.name == "tast");
+        createMatchBtn.gameObject.SetActiveFast(GameController.manager.userInfo.name.ToLower() == "tast");
         createMatchBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
                 ShowStandAlone();
