@@ -65,14 +65,14 @@
 ## 示例截图
 <div  align="center">  
     <a><img src="./SamplePictures/Login.JPG"  width="316px" height="146px" title="Login"></a>
-    <a><img src="./SamplePictures/Homepage.PNG" width="316px" height="146px" title="Homepage"></a>
-    <a><img src="./SamplePictures/Avatar.PNG" width="316px" height="146px" title="Avatar"></a>
-    <a><img src="./SamplePictures/Profile.PNG" width="316px" height="146px" title="Profile"></a>
-    <a><img src="./SamplePictures/Equip.PNG" width="316px" height="146px" title="Equip"></a>
-    <a><img src="./SamplePictures/Rank.PNG" width="316px" height="146px" title="Rank"></a>
-    <a><img src="./SamplePictures/Setting.PNG" width="316px" height="146px" title="Setting"></a>
-    <a><img src="./SamplePictures/TimeTrial.PNG" width="316px" height="146px" title="TimeTrial"></a>
-    <a><img src="./SamplePictures/Match.PNG" width="316px" height="146px" title="Login"></a>
+    <a><img src="./SamplePictures/Homepage.png" width="316px" height="146px" title="Homepage"></a>
+    <a><img src="./SamplePictures/Avatar.png" width="316px" height="146px" title="Avatar"></a>
+    <a><img src="./SamplePictures/Profile.png" width="316px" height="146px" title="Profile"></a>
+    <a><img src="./SamplePictures/Equip.png" width="316px" height="146px" title="Equip"></a>
+    <a><img src="./SamplePictures/Rank.png" width="316px" height="146px" title="Rank"></a>
+    <a><img src="./SamplePictures/Setting.png" width="316px" height="146px" title="Setting"></a>
+    <a><img src="./SamplePictures/TimeTrial.png" width="316px" height="146px" title="TimeTrial"></a>
+    <a><img src="./SamplePictures/Match.png" width="316px" height="146px" title="Login"></a>
 </div> 
 
 
