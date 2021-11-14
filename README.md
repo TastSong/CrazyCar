@@ -28,8 +28,9 @@
 
 
 <div  align="center">  
-  <a><img src="./SamplePictures/Preview.jpg"></a>
+  <a><img src="./SamplePictures/Preview.JPG"></a>
 </div> 
+
 
 
 [开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[English](./README_en.md)

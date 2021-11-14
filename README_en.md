@@ -29,7 +29,7 @@
 
 
 <div  align="center">  
-  <a><img src="./SamplePictures/Preview.jpg"></a>
+  <a><img src="./SamplePictures/Preview.JPG"></a>
 </div> 
 
 
