@@ -342,7 +342,7 @@ public class MPlayer : MonoBehaviour {
         }
     }
 
-    public void UpdatePlayerParameter() {
+    public void UpdateSelfParameter() {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
         gravity = userInfo.equipInfo.mass;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MPlayerStyle : MonoBehaviour {
+    public TextMesh nameText;
     private Dictionary<string, AccessoryChanger> equipDic = new Dictionary<string, AccessoryChanger>();
 
     public void ChangeEquip(EquipType equipType, int eid, string rid) {
@@ -17,5 +18,9 @@ public class MPlayerStyle : MonoBehaviour {
                 equipDic[chgs[i].type] = chgs[i];
             }
         }
+    }
+
+    public void SetNameText(string name, bool isVIP = false) {
+        nameText.text = name;
     }
 }

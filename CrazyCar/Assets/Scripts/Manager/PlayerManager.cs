@@ -36,11 +36,12 @@ public class PlayerManager : MonoBehaviour {
         selfPlayer = Instantiate(mPlayerPrefab, GetStartPosition(), Quaternion.identity);
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = GameController.manager.userInfo;
-        selfPlayer.UpdatePlayerParameter();
+        selfPlayer.UpdateSelfParameter();
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
             GameController.manager.userInfo.equipInfo.eid,
             GameController.manager.userInfo.equipInfo.rid);
         cinemachineTF.SetParent(selfPlayer.transform, false);
+        selfPlayer.GetComponent<MPlayerStyle>().SetNameText(GameController.manager.userInfo.name, GameController.manager.userInfo.isVIP);
     }
 
     public MPlayer GetSelfPlayer {
@@ -88,6 +89,7 @@ public class PlayerManager : MonoBehaviour {
             playerStateMsg.userInfo.equipInfo.eid,
             playerStateMsg.userInfo.equipInfo.rid);
         peers.Add(userInfo.uid, mPlayer);
+        mPlayer.GetComponent<MPlayerStyle>().SetNameText(userInfo.name, userInfo.isVIP);
     }
 
     private Vector3 GetStartPosition() {
