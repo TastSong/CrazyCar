@@ -5,13 +5,17 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class RegisterUI : MonoBehaviour
-{
+public class RegisterUI : MonoBehaviour, IController {
     public InputField userNameInput;
     public InputField passwordInput;
     public Button registerBtn;
     public Button closeBtn;
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
@@ -46,7 +50,8 @@ public class RegisterUI : MonoBehaviour
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
                 data : bytes, succData : (data) => {
-                    GameController.manager.loginManager.ParseLoginData(data);
+                    GameController.manager.token = (string)data["token"];
+                    GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
                 }, code : (code) => {
                     if (code == 200) {
                         if (PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {

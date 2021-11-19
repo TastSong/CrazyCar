@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
+using TFramework;
 
-public class DownloadResUI : MonoBehaviour {
+public class DownloadResUI : MonoBehaviour, IController {
     public Text showText;
     public Slider progressSlider;
     public Button standAloneBtn;
@@ -16,7 +17,8 @@ public class DownloadResUI : MonoBehaviour {
             GameController.manager.standAlone = true;
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
             JsonData data = JsonMapper.ToObject(ta.text);
-            GameController.manager.loginManager.ParseLoginData(data);
+            GameController.manager.token = (string)data["token"];
+            GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
 
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
@@ -117,5 +119,9 @@ public class DownloadResUI : MonoBehaviour {
         } else {
             showText.text = I18N.manager.GetText("Resource loading");
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
