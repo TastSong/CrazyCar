@@ -5,13 +5,18 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class LoginUI : MonoBehaviour {
+public class LoginUI : MonoBehaviour, IController {
     public InputField userNameInput;
     public InputField passwordInput;
     public Toggle rememberToggle; 
     public Button loginBtn;
     public Button registerBtn;
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
 
     private void Start() {
         rememberToggle.isOn = PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1;
@@ -38,7 +43,8 @@ public class LoginUI : MonoBehaviour {
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
                 data : bytes, succData : (data) => {
-                    GameController.manager.loginManager.ParseLoginData(data);
+                    GameController.manager.token = (string)data["token"];
+                    GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
                 }, code : (code) => {
                     if (code == 200) {
                         Util.DelayExecuteWithSecond(Util.btnASTime, () => {

@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class ProfileUI : MonoBehaviour {
+public class ProfileUI : MonoBehaviour, IController {
     public Button closeBtn;
     public Image avatarImage;
     public Image vipImage;
@@ -19,15 +20,19 @@ public class ProfileUI : MonoBehaviour {
     public Text mapsText;
     public Text starText;
 
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
+
     private void OnEnable() {
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
-        vipImage.gameObject.SetActiveFast(GameController.manager.userInfo.isVIP);
-        userNameInput.text = GameController.manager.userInfo.name;
+        UserInfo userInfo = this.GetModel<IPlayerInfoModel>().GetPlayerInfoByUid(GameController.manager.userInfo.uid);        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        vipImage.gameObject.SetActiveFast(userInfo.isVIP);
+        userNameInput.text = userInfo.name;
         passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
-        starText.text = GameController.manager.userInfo.star.ToString();
-        travelTimesText.text = GameController.manager.userInfo.travelTimes.ToString();
-        avatarText.text = GameController.manager.userInfo.avatarNum.ToString();
-        mapsText.text = GameController.manager.userInfo.mapNum.ToString(); 
+        starText.text = userInfo.star.ToString();
+        travelTimesText.text = userInfo.travelTimes.ToString();
+        avatarText.text = userInfo.avatarNum.ToString();
+        mapsText.text = userInfo.mapNum.ToString(); 
     }
 
     private void Start() {
