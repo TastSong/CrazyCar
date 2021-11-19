@@ -25,19 +25,21 @@ public class ProfileUI : MonoBehaviour, IController {
     }
 
     private void OnEnable() {
-        UserInfo userInfo = this.GetModel<IPlayerInfoModel>().GetPlayerInfoByUid(GameController.manager.userInfo.uid);        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        UserInfo userInfo = this.GetModel<IPlayerInfoModel>().GetPlayerInfoByUid(GameController.manager.userInfo.uid);       
         vipImage.gameObject.SetActiveFast(userInfo.isVIP);
         userNameInput.text = userInfo.name;
-        passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
         starText.text = userInfo.star.ToString();
         travelTimesText.text = userInfo.travelTimes.ToString();
         avatarText.text = userInfo.avatarNum.ToString();
-        mapsText.text = userInfo.mapNum.ToString(); 
+        mapsText.text = userInfo.mapNum.ToString();
+
+        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
     }
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            UIManager.manager.HidePage(UIPageType.ProfileUI);
+            this.SendCommand(new HidePageCommand(UIPageType.ProfileUI));
         });
         userNameBtn.onClick.AddListener(() => {
             if (userNameInput.text == GameController.manager.userInfo.name) {
