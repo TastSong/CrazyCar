@@ -1,6 +1,7 @@
 ﻿using TFramework;
 using System;
 using Utils;
+using UnityEngine;
 
 [Serializable]
 public class UserInfo {
@@ -31,8 +32,8 @@ public interface IUserModel : IModel {
 }
 
 public class UserModel : AbstractModel, IUserModel {
-    public BindableProperty<string> Name { get; set; } = new BindableProperty<string>() { Value = "" };
-    public BindableProperty<string> Password { get; set; } = new BindableProperty<string>() { Value = "" };
+    public BindableProperty<string> Name { get; set; } = new BindableProperty<string>();
+    public BindableProperty<string> Password { get; set; } = new BindableProperty<string>();
     public BindableProperty<int> Aid { get; set; } = new BindableProperty<int>();
     public BindableProperty<int> Uid { get; set; } = new BindableProperty<int>();
     public BindableProperty<int> Star { get; set; } = new BindableProperty<int>();
@@ -57,9 +58,17 @@ public class UserModel : AbstractModel, IUserModel {
     protected override void OnInit() {
         var storage = this.GetUtility <IPlayerPrefsStorage>();
         Name.Value = storage.LoadString(PrefKeys.userName);
-        Name.Register(v => storage.SaveString(PrefKeys.userName, v));
+        Name.Register((v) => { 
+            if(PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
+                storage.SaveString(PrefKeys.userName, v);
+            }
+        });
         Password.Value = storage.LoadString(PrefKeys.password);
-        Password.Register(v => storage.SaveString(PrefKeys.password, v));
+        Password.Register((v) => {
+            if (PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
+                storage.SaveString(PrefKeys.password, v);
+            }           
+        });
     }
    
 }

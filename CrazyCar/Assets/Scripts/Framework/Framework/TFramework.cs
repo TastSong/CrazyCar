@@ -648,15 +648,12 @@ namespace TFramework
             get => mValue;
             set
             {
-                if (value.Equals(mValue)) return;
+                if (value.Equals(mValue)) {
+                    return;
+                } 
                 mValue = value;
                 mOnValueChanged?.Invoke(value);
             }
-        }
-
-        public BindableProperty(T value = default)
-        {
-            Value = value;
         }
 
         private Action<T> mOnValueChanged = (v) => { };

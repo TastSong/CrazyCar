@@ -66,7 +66,7 @@ public class ProfileUI : MonoBehaviour, IController {
                     data: bytes, token: GameController.manager.token, 
                     succData: (data) => {
                         GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
-                        PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
+                        this.GetModel<IUserModel>().Password.Value = passwordInput.text;
                     },
                     code: (code) => {
                         if (code == 423) {

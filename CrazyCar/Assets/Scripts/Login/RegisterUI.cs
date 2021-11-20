@@ -52,12 +52,10 @@ public class RegisterUI : MonoBehaviour, IController {
                 data : bytes, succData : (data) => {
                     GameController.manager.token = (string)data["token"];
                     GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
+                    this.GetModel<IUserModel>().SetUserInfoPart(this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data));
+                    this.GetModel<IUserModel>().Password.Value = passwordInput.text;
                 }, code : (code) => {
                     if (code == 200) {
-                        if (PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
-                            PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
-                            PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
-                        }
                         GameController.manager.warningAlert.ShowWithText(text : I18N.manager.GetText("Registration Successful"), callback : () => {
                             Util.LoadingScene(SceneID.Index);
                         });
