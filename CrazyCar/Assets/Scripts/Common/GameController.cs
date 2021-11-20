@@ -5,19 +5,6 @@ using TinyMessenger;
 using UnityEngine;
 using Utils;
 
-[Serializable]
-public class UserInfo {
-    public string name;
-    public int aid;
-    public int uid;
-    public int star;
-    public bool isVIP;
-    public int travelTimes;
-    public int avatarNum;
-    public int mapNum;
-    public EquipInfo equipInfo = new EquipInfo();
-}
-
 public enum CurGameType {
     TimeTrial = 0,
     Match

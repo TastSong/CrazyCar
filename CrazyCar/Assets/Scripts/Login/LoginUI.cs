@@ -21,8 +21,8 @@ public class LoginUI : MonoBehaviour, IController {
     private void Start() {
         rememberToggle.isOn = PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1;
         if (rememberToggle.isOn) {
-            userNameInput.text = PlayerPrefs.GetString(PrefKeys.userName);
-            passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
+            userNameInput.text = this.GetModel<IUserModel>().Name;
+            passwordInput.text = this.GetModel<IUserModel>().Password;
         } 
 
         loginBtn.onClick.AddListener(() => {
@@ -45,15 +45,15 @@ public class LoginUI : MonoBehaviour, IController {
                 data : bytes, succData : (data) => {
                     GameController.manager.token = (string)data["token"];
                     GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
+                    this.GetModel<IUserModel>().SetUserInfoPart(this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data));
                 }, code : (code) => {
                     if (code == 200) {
                         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                             if (userNameInput.text.ToLower() == "tast") {
                                 GameController.manager.gameHelper.gameObject.SetActiveFast(true);
                             }
-                            GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"), callback: () => {
-                                PlayerPrefs.SetString(PrefKeys.userName, userNameInput.text);
-                                PlayerPrefs.SetString(PrefKeys.password, passwordInput.text);
+                            GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"), 
+                                callback: () => {
                                 PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
                                 Util.LoadingScene(SceneID.Index);
                             });
