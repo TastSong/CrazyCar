@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class RankUI : MonoBehaviour {
+public class RankUI : MonoBehaviour, IController {
     public RankDetailItem rankDetailItem;
     public Transform itemParent;
     public Button closeBtn;
@@ -29,7 +30,11 @@ public class RankUI : MonoBehaviour {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.HomepageUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

@@ -305,10 +305,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 408871986}
+  - component: {fileID: 408871988}
   - component: {fileID: 408871985}
   - component: {fileID: 408871984}
   - component: {fileID: 408871983}
-  - component: {fileID: 408871987}
   m_Layer: 5
   m_Name: UIManagerCanvas
   m_TagString: Untagged
@@ -395,7 +395,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &408871987
+--- !u!114 &408871988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 408871982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e27de738eb302cf42ac8257e110379b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e89219c5edd12d41a2829f12904b7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1034699149
@@ -740,7 +740,6 @@ MonoBehaviour:
   rearHitTrans: {fileID: 3226108444331679175}
   isGround: 0
   groundDistance: 0.7
-  wheelsParticeleTrans: {fileID: 7710844338905874714}
   wheelsParticeles:
   - {fileID: 8442919666962610925}
   leftTrail: {fileID: 6297710214734548909}
@@ -751,6 +750,8 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.13333334, g: 0.23137257, b: 0.32941177, a: 1}
   driftPower: 0
+  plexusVFX: {fileID: 0}
+  wireframeVFX: {fileID: 0}
 --- !u!65 &3226108444331373637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6248,3 +6249,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaae004b3d3c7e04eba44aed9332ff7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 0}

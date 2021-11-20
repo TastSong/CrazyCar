@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class TimeTrialDetailUI : MonoBehaviour {
+public class TimeTrialDetailUI : MonoBehaviour, IController {
     public TimeTrialItem timeTrialItem;
     public Transform itemParent;
     public Button closeBtn;
@@ -35,7 +36,11 @@ public class TimeTrialDetailUI : MonoBehaviour {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.HomepageUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

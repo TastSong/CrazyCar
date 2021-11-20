@@ -12,6 +12,6 @@ public class HidePageCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        UIManager.manager.HidePage(mUIPageType);
+        this.SendEvent(new HidePageEvent(mUIPageType));
     }
 }

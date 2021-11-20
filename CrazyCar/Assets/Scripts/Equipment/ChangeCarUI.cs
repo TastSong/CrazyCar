@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using TinyMessenger;
+using TFramework;
 
-public class ChangeCarUI : MonoBehaviour {
+public class ChangeCarUI : MonoBehaviour, IController {
     public Text nameText;
     public Text starText;
     public Text massText;
@@ -105,7 +106,7 @@ public class ChangeCarUI : MonoBehaviour {
 
         closeBtn.onClick.AddListener(() => {
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                UIManager.manager.HidePage(UIPageType.ChangeCarUI);
+                this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));
             });
         });
 
@@ -138,5 +139,9 @@ public class ChangeCarUI : MonoBehaviour {
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(changeCarToken);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

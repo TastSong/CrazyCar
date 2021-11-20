@@ -8,10 +8,6 @@ public class RegisterUIMessage : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class HomepageUIMsg : ITinyMessage {
-    public object Sender { get; private set; }
-}
-
 public class DownloadResFinishMsg : ITinyMessage {
     public object Sender { get; private set; }
 }

@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class TimeTrialItem : MonoBehaviour {
+public class TimeTrialItem : MonoBehaviour, IController {
     public Button selfBtn;
     public Text nameText;
     public Text limiteText;
@@ -44,7 +45,7 @@ public class TimeTrialItem : MonoBehaviour {
                             GameController.manager.userInfo.star = (int)data["star"];
                             timeTrialInfo.isHas = true;
                             lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
-                            GameController.manager.tinyMsgHub.Publish(new HomepageUIMsg());
+                            this.SendCommand<UpdateHomepageUICommand>();
                         }));
                     },
                     fail: () => {
@@ -70,5 +71,9 @@ public class TimeTrialItem : MonoBehaviour {
             }
         }
         lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

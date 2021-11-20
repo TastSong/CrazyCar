@@ -38,7 +38,6 @@ public class GameController : MonoBehaviour
     public bool standAlone = false;
 
     public ResourceManager resourceManager = new ResourceManager();
-    public LoginManager loginManager = new LoginManager();
     public AvatarManager avatarManager = new AvatarManager();
     public TimeTrialManager timeTrialManager = new TimeTrialManager();
     public EquipManager equipManager = new EquipManager();

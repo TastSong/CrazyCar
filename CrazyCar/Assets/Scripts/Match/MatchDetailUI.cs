@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class MatchDetailUI : MonoBehaviour {
+public class MatchDetailUI : MonoBehaviour, IController {
     public MatchItem matchItem;
     public Transform itemParent;
     public Button backBtn;
@@ -25,7 +26,11 @@ public class MatchDetailUI : MonoBehaviour {
 
     private void Start() {
         backBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.HomepageUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

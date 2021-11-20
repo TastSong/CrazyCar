@@ -1,10 +1,12 @@
-﻿using LitJson;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TinyMessenger;
 using UnityEngine;
+using TFramework;
+using LitJson;
 using Utils;
+using TinyMessenger;
+using System.Linq;
+using System;
 
 public enum UIPageType {
     HomepageUI = 0,
@@ -18,8 +20,13 @@ public enum UIPageType {
     MatchDetailUI
 }
 
-public class UIManager : MonoBehaviour {
-    public static UIManager manager = null;
+public class UIController : MonoBehaviour, IController {
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
+
+    public static UIController manager = null;
+
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
@@ -40,40 +47,39 @@ public class UIManager : MonoBehaviour {
             string value = (string)data[key];
             urlDict[key] = value;
         }
+
+        this.RegisterEvent<HidePageEvent>(HidePage);
+        this.RegisterEvent<ShowPageEvent>(ShowPage);
+    }
+
+    public void HidePage(HidePageEvent e) {
+        if (!pagesDict.ContainsKey(e.pageType)) {
+            Debug.LogError("Not Exist Page");
+            return;
+        }
+
+        pagesDict[e.pageType].SetActiveFast(false);
     }
 
     // 根据对应页面类型显示页面 如果没有页面则创建 如果有页面则调取并active为true 第二个参数是是否关闭其他开启界面
-    public void ShowPage(UIPageType type, bool closeOther = false) {
-        if (closeOther) {
+    public void ShowPage(ShowPageEvent e) {
+        if (e.closeOther) {
             foreach (var kv in pagesDict) {
                 kv.Value.SetActiveFast(false);
             }
         }
 
-        if (pagesDict.ContainsKey(type)) {
-            pagesDict[type].SetActiveFast(true);
+        if (pagesDict.ContainsKey(e.pageType)) {
+            pagesDict[e.pageType].SetActiveFast(true);
         } else {
             // FindPage]
-            string pageUrl = GetPageUrlByType(type);
+            string pageUrl = GetPageUrlByType(e.pageType);
             GameObject page = Instantiate(Resources.Load<GameObject>(pageUrl));
             page.transform.SetParent(transform, false);
-            pagesDict[type] = page;
+            pagesDict[e.pageType] = page;
         }
 
-        pagesDict[type].transform.SetAsLastSibling();
-    }
-
-    // 关闭对应的界面
-    public void HidePage(UIPageType type, ITinyMessage message = null) {
-        if (!pagesDict.ContainsKey(type)) {
-            Debug.LogError("not exist page");
-            return;
-        }
-
-        pagesDict[type].SetActiveFast(false);
-        if (message != null) {
-            GameController.manager.tinyMsgHub.Publish(message);
-        }
+        pagesDict[e.pageType].transform.SetAsLastSibling();
     }
 
     // 获取对应页面
@@ -120,6 +126,9 @@ public class UIManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        this.UnRegisterEvent<HidePageEvent>(HidePage);
+        this.UnRegisterEvent<ShowPageEvent>(ShowPage);
+
         foreach (var kv in pagesDict) {
             if (kv.Value != null) {
                 Destroy(kv.Value);

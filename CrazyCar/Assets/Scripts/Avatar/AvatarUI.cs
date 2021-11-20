@@ -6,8 +6,9 @@ using TinyMessenger;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class AvatarUI : MonoBehaviour {
+public class AvatarUI : MonoBehaviour, IController {
     public Image curAvatar;
     public Text curAvatarName;
     public Button applyBtn;
@@ -63,7 +64,8 @@ public class AvatarUI : MonoBehaviour {
 
         closeBtn.onClick.AddListener(() => {
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                UIManager.manager.HidePage(UIPageType.AvatarUI, new HomepageUIMsg());
+                this.SendCommand(new HidePageCommand(UIPageType.AvatarUI));
+                this.SendCommand<UpdateHomepageUICommand>();
             });
         });
 
@@ -76,5 +78,9 @@ public class AvatarUI : MonoBehaviour {
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(avatarToken);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

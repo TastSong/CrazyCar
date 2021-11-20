@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class RankDetailItem : MonoBehaviour {
+public class RankDetailItem : MonoBehaviour, IController {
     public Button selfBtn;
     public Text nameText;
     public Text limiteText;
@@ -18,7 +19,7 @@ public class RankDetailItem : MonoBehaviour {
     private void Start() {
         selfBtn.onClick.AddListener(() => {
             GameController.manager.timeTrialManager.selectInfo.cid = timeTrialInfo.cid;
-            UIManager.manager.ShowPage(UIPageType.TimeTrialRankUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialRankUI));
         });
     }
 
@@ -33,5 +34,9 @@ public class RankDetailItem : MonoBehaviour {
                 difficultyImages[i].sprite = difficultySprites[1];
             }
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

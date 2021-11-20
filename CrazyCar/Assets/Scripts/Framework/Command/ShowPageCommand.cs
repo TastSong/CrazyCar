@@ -9,6 +9,6 @@ public class ShowPageCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        UIManager.manager.ShowPage(mUIPageType);
+        this.SendEvent(new ShowPageEvent(mUIPageType));
     }
 }

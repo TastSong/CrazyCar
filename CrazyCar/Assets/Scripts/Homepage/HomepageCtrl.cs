@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class HomepageCtrl : MonoBehaviour{
+public class HomepageCtrl : MonoBehaviour, IController{
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
+
     private void Start() {
-        UIManager.manager.ShowPage(UIPageType.HomepageUI);
+        this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
     }
 }

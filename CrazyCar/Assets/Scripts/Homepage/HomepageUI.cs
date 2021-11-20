@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TinyMessenger;
+using TFramework;
 
-public class HomepageUI : MonoBehaviour {
+
+public class HomepageUI : MonoBehaviour, IController {
     public Button avatarBtn;
     public Image avatarImage;
     public Image vipImage;
@@ -25,8 +26,6 @@ public class HomepageUI : MonoBehaviour {
     public GameObject matchGO;
     public Button matchBtn;
     public Button createMatchBtn;
-
-    private TinyMessageSubscriptionToken homepageToken;
 
     private void OnEnable() {
         GetMatchDetail();
@@ -51,11 +50,12 @@ public class HomepageUI : MonoBehaviour {
                 ShowStandAlone();
                 return;
             }
-            UIManager.manager.ShowPage(UIPageType.AvatarUI);
+
+            this.SendCommand(new ShowPageCommand(UIPageType.AvatarUI));
         });
 
         joinGameBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.TimeTrialDetailUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialDetailUI));
         });
         matchBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
@@ -63,7 +63,7 @@ public class HomepageUI : MonoBehaviour {
                 return;
             }
             if (GameController.manager.userInfo.isVIP) {
-                UIManager.manager.ShowPage(UIPageType.MatchDetailUI);
+                this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
             } else {
                 GameController.manager.warningAlert.ShowWithText("Match 只面向VIP");
             }
@@ -117,43 +117,48 @@ public class HomepageUI : MonoBehaviour {
                 ShowStandAlone();
                 return;
             }
-            UIManager.manager.ShowPage(UIPageType.ProfileUI);
+
+            this.SendCommand(new ShowPageCommand(UIPageType.ProfileUI));
         });
         settingBtn.onClick.AddListener(() => {
-            UIManager.manager.ShowPage(UIPageType.SettingsUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.SettingsUI));
         });
         rankBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
                 ShowStandAlone();
                 return;
             }
-            UIManager.manager.ShowPage(UIPageType.RankUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.RankUI));
         });
         changeCarBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
                 ShowStandAlone();
                 return;
             }
-            UIManager.manager.ShowPage(UIPageType.ChangeCarUI);
+            this.SendCommand(new ShowPageCommand(UIPageType.ChangeCarUI));
         });
         // --------- Bottom Btns ---------
 
-        UpdataUI();
-        homepageToken = GameController.manager.tinyMsgHub.Subscribe<HomepageUIMsg>((m) => { UpdataUI(); });
+        OnUpdataUI(new UpdateHomepageUIEvent());
+        this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
     }
 
     private void ShowStandAlone() {
         GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("This function is unavailable in single-machine mode"));
     }
 
-    private void UpdataUI() {
+    private void OnUpdataUI(UpdateHomepageUIEvent e) {
         avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
         starText.text = GameController.manager.userInfo.star.ToString();
         vipImage.gameObject.SetActiveFast(GameController.manager.userInfo.isVIP);
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(homepageToken);
+        this.UnRegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
 
