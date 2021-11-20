@@ -21,23 +21,11 @@ public enum UIPageType {
 }
 
 public class UIController : MonoBehaviour, IController {
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
-    }
-
-    public static UIController manager = null;
-
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
-        if (manager == null) {
-            manager = this;
-        } else if (manager != this) {
-            Destroy(gameObject);
-        }
-
         string urlStr = Resources.Load<TextAsset>(basePageUrl + "url").text;
         JsonData data = JsonMapper.ToObject(urlStr);
         IDictionary dict = data;
@@ -136,5 +124,9 @@ public class UIController : MonoBehaviour, IController {
         }
         pagesDict.Clear();
         urlDict.Clear();
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
