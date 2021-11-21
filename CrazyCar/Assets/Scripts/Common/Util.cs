@@ -44,7 +44,7 @@ namespace Utils {
         public const string lastLogNid = "lastLogNid";
         public const string userName = "userName";
         public const string password = "password";
-        public const int rememberPassword = 0;
+        public const string rememberPassword = "rememberPassword";
     }
 
     public static class LocalUrl {

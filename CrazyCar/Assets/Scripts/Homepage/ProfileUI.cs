@@ -34,7 +34,7 @@ public class ProfileUI : MonoBehaviour, IController {
         mapsText.text = userInfo.mapNum.ToString();
 
         avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
-        passwordInput.text = PlayerPrefs.GetString(PrefKeys.password);
+        passwordInput.text = this.GetModel<IUserModel>().Password.Value;
     }
 
     private void Start() {
@@ -49,7 +49,7 @@ public class ProfileUI : MonoBehaviour, IController {
             }
         });
         passwordBtn.onClick.AddListener(() => {
-            if (passwordInput.text == PlayerPrefs.GetString(PrefKeys.password)) {
+            if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
                 GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original password"));
             } else if (passwordInput.text.Length < 6) {
                 GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));

@@ -19,7 +19,7 @@ public class LoginUI : MonoBehaviour, IController {
     }
 
     private void Start() {
-        rememberToggle.isOn = PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1;
+        rememberToggle.isOn = this.GetModel<IUserModel>().RememberPassword == 1;
         if (rememberToggle.isOn) {
             userNameInput.text = this.GetModel<IUserModel>().Name;
             passwordInput.text = this.GetModel<IUserModel>().Password;
@@ -43,9 +43,10 @@ public class LoginUI : MonoBehaviour, IController {
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
                 data : bytes, succData : (data) => {
-                    GameController.manager.token = (string)data["token"];
+                    GameController.manager.token = (string)data["token"];                  
                     GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
                     this.GetModel<IUserModel>().SetUserInfoPart(this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data));
+                    this.GetModel<IUserModel>().Password.Value = passwordInput.text;
                 }, code : (code) => {
                     if (code == 200) {
                         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
@@ -54,10 +55,10 @@ public class LoginUI : MonoBehaviour, IController {
                             }
                             GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"), 
                                 callback: () => {
-                                PlayerPrefs.SetInt(PrefKeys.rememberPassword.ToString(), (rememberToggle.isOn ? 1 : 0));
-                                Util.LoadingScene(SceneID.Index);
+                                    this.GetModel<IUserModel>().RememberPassword.Value = rememberToggle.isOn ? 1 : 0;
+                                    Util.LoadingScene(SceneID.Index);
+                                });
                             });
-                        });
                        
                     } else if (code == 423) {
                         GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Password Error"));

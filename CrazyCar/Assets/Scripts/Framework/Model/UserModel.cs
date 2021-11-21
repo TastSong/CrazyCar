@@ -27,6 +27,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> AvatarNum { get; }
     BindableProperty<int> MapNum { get; }
     BindableProperty<EquipInfo> EquipInfo { get; }
+    BindableProperty<int> RememberPassword { get; }
 
     void SetUserInfoPart(UserInfo userInfo);
 }
@@ -42,6 +43,7 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<int> AvatarNum { get; set; } = new BindableProperty<int>();
     public BindableProperty<int> MapNum { get; set; } = new BindableProperty<int>();
     public BindableProperty<EquipInfo> EquipInfo { get; set; } = new BindableProperty<EquipInfo>();
+    public BindableProperty<int> RememberPassword { get; set; } = new BindableProperty<int>();
 
     public void SetUserInfoPart(UserInfo userInfo) {
         Name.Value = userInfo.name;
@@ -59,16 +61,20 @@ public class UserModel : AbstractModel, IUserModel {
         var storage = this.GetUtility <IPlayerPrefsStorage>();
         Name.Value = storage.LoadString(PrefKeys.userName);
         Name.Register((v) => { 
-            if(PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
+            if(PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.userName, v);
             }
         });
         Password.Value = storage.LoadString(PrefKeys.password);
         Password.Register((v) => {
-            if (PlayerPrefs.GetInt(PrefKeys.rememberPassword.ToString()) == 1) {
+            if (PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.password, v);
             }           
         });
+        RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);
+        RememberPassword.Register(v =>
+            storage.SaveInt(PrefKeys.rememberPassword, v)
+        );
     }
    
 }
