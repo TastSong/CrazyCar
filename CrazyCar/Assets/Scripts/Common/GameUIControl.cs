@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using TinyMessenger;
+using TFramework;
 
-public class GameUIControl : MonoBehaviour{
+public class GameUIControl : MonoBehaviour, IController {
     public ControlPanel controlPanel;
     public GameResultUI gameResultUI;
     public TimeTrialGameUI timeTrialGameUI;
     public MatchGameUI matchGameUI;
 
     private TinyMessageSubscriptionToken initGameUIMsg;
-    private TinyMessageSubscriptionToken completeGameMsg;
 
     private void Start() {
         controlPanel.gameObject.SetActiveFast(false);
@@ -19,7 +19,7 @@ public class GameUIControl : MonoBehaviour{
         timeTrialGameUI.gameObject.SetActiveFast(false);
         matchGameUI.gameObject.SetActiveFast(false);
         initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { SelectGameUI(); });
-        completeGameMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteGameMsg>((m) => { ShowResultUI(); });
+        this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 
     private void SelectGameUI() {
@@ -29,7 +29,7 @@ public class GameUIControl : MonoBehaviour{
         matchGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.Match);
     }
 
-    private void ShowResultUI() {
+    private void OnShowResultUI(ShowResultUIEvent e) {
         if (GameController.manager.standAlone) {
             GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Game Over"), 2.0f);
             Util.DelayExecuteWithSecond(2.0f, () => {
@@ -43,6 +43,10 @@ public class GameUIControl : MonoBehaviour{
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(initGameUIMsg);
-        GameController.manager.tinyMsgHub.Unsubscribe(completeGameMsg);
+        this.UnRegisterEvent<ShowResultUIEvent>(OnShowResultUI);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

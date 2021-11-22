@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using Utils;
 using TinyMessenger;
 using System;
+using TFramework;
 
-public class TimeTrialGameUI : MonoBehaviour{
+public class TimeTrialGameUI : MonoBehaviour, IController {
     public CountDownAnim countDownAnim;
     public Text limitTimeText;
 
@@ -38,7 +39,7 @@ public class TimeTrialGameUI : MonoBehaviour{
 
     private void EndGame() {
         StopCoroutine(limitTimeCor);
-        GameController.manager.tinyMsgHub.Publish(new CompleteGameMsg());
+        this.SendCommand(new ShowResultUICommand());
     }
 
     private IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {
@@ -62,5 +63,9 @@ public class TimeTrialGameUI : MonoBehaviour{
 
     private void OnDestroy() {
         GameController.manager.tinyMsgHub.Unsubscribe(endTimeTrialMsg);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

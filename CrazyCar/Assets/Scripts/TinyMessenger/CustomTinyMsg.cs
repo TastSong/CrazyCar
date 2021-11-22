@@ -31,7 +31,3 @@ public class ChangeCarMsg : ITinyMessage {
 public class CompleteMatchMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
-
-public class CompleteGameMsg : ITinyMessage {
-    public object Sender { get; private set; }
-}
