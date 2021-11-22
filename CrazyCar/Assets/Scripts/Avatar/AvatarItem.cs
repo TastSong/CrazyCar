@@ -40,6 +40,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
                     succData: (data) => {
                         this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                         avatarInfo.isHas = true;
+                        this.GetModel<IUserModel>().AvatarNum.Value++;
                         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
                     }));
                 }, 

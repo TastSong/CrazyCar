@@ -44,6 +44,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         succData: (data) => {
                             this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                             timeTrialInfo.isHas = true;
+                            this.GetModel<IUserModel>().MapNum.Value++;
                             lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
                             this.SendCommand<UpdateHomepageUICommand>();
                         }));
