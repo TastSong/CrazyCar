@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TinyMessenger;
 using System;
 using TFramework;
 
@@ -12,7 +11,6 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
     public Text limitTimeText;
 
     private Coroutine limitTimeCor;
-    private TinyMessageSubscriptionToken endTimeTrialMsg;
 
     private void OnEnable() {
         if (!GameController.manager.sceneLoaded) {
@@ -32,12 +30,12 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
     }
 
     private void Start() {       
-        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString(); 
+        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString();
 
-        endTimeTrialMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteTimeTrialMsg>((m) => { EndGame(); });
+        this.RegisterEvent<CompleteTimeTrialEvent>(OnCompleteTimeTrial);
     }
 
-    private void EndGame() {
+    private void OnCompleteTimeTrial(CompleteTimeTrialEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
     }
@@ -62,7 +60,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(endTimeTrialMsg);
+        this.UnRegisterEvent<CompleteTimeTrialEvent>(OnCompleteTimeTrial);
     }
 
     public IArchitecture GetArchitecture() {

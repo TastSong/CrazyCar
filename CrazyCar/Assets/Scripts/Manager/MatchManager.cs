@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
 public class MatchInfo {
     public string name;
@@ -23,7 +24,7 @@ public class MatchRankInfo {
     public int completeTime;
 }
 
-public class MatchManager {
+public class MatchManager : IController {
     public int rewardStar;
     public Dictionary<int, MatchInfo> matchDic = new Dictionary<int, MatchInfo>();
     public MatchInfo selectInfo = new MatchInfo();
@@ -48,7 +49,7 @@ public class MatchManager {
         set {
             isComplete = true;
             endTime = value;
-            GameController.manager.tinyMsgHub.Publish(new CompleteMatchMsg());
+            this.SendCommand(new CompleteMatchCommand());
         }
     }
 
@@ -60,7 +61,7 @@ public class MatchManager {
         set {
             isArriveLimitTime = value;
             if (value) {
-                GameController.manager.tinyMsgHub.Publish(new CompleteMatchMsg());
+                this.SendCommand(new CompleteMatchCommand());
             }
         }
     }
@@ -125,5 +126,9 @@ public class MatchManager {
             matchRankList.Add(info);
         }
         success?.Invoke();
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

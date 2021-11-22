@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using System;
+using TFramework;
 
 public class TimeTrialInfo {
     public string name;
@@ -22,7 +23,7 @@ public class TimeTrialRankInfo {
     public int completeTime;
 }
 
-public class TimeTrialManager {
+public class TimeTrialManager : IController {
     public bool isWin = false;
     public bool isBreakRecord = false;
     public int rank;
@@ -57,7 +58,7 @@ public class TimeTrialManager {
         set {
             isComplete = true;
             endTime = value;
-            GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
+            this.SendCommand(new CompleteTimeTrialCommand());
         }
     }
 
@@ -69,7 +70,7 @@ public class TimeTrialManager {
         set {
             isArriveLimitTime = value;
             if (value) {
-                GameController.manager.tinyMsgHub.Publish(new CompleteTimeTrialMsg());
+                this.SendCommand(new CompleteTimeTrialCommand());
             }
         }
     }
@@ -144,5 +145,9 @@ public class TimeTrialManager {
             timeTrialRankList.Add(info);
         }
         success?.Invoke();
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

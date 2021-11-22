@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TinyMessenger;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -13,7 +12,6 @@ public class MatchGameUI : MonoBehaviour, IController {
     public Text limitTimeText;
 
     private Coroutine limitTimeCor;
-    private TinyMessageSubscriptionToken endMatchMsg;
 
     private void OnEnable() {
         if (!GameController.manager.sceneLoaded) {
@@ -55,10 +53,10 @@ public class MatchGameUI : MonoBehaviour, IController {
     private void Start() {
         limitTimeText.text = GameController.manager.matchManager.selectInfo.limitTime.ToString();
 
-        endMatchMsg = GameController.manager.tinyMsgHub.Subscribe<CompleteMatchMsg>((m) => { EndGame(); });
+        this.RegisterEvent<CompleteMatchEvent>(OnCompleteMatch);
     }
 
-    private void EndGame() {
+    private void OnCompleteMatch(CompleteMatchEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
     }
@@ -83,7 +81,7 @@ public class MatchGameUI : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(endMatchMsg);
+        this.UnRegisterEvent<CompleteMatchEvent>(OnCompleteMatch);
     }
 
     public IArchitecture GetArchitecture() {
