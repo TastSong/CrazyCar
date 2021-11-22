@@ -59,7 +59,7 @@ public class DownloadResUI : MonoBehaviour, IController {
                         confirmText: I18N.manager.GetText("Download"));
                 } else {
                     CheckResource(() => {
-                        GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
+                        this.SendCommand(new DownloadResFinishCommand());
                     });
                 }
             }));

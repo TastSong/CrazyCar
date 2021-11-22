@@ -19,12 +19,7 @@ public class LoginCtr : MonoBehaviour, IController {
 
         this.RegisterEvent<OpenLoginEvent>(OnOpenLogin);
         this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister);
-
-        downloadResToken = GameController.manager.tinyMsgHub.Subscribe<DownloadResFinishMsg>((m) => {
-            downloadResUI.gameObject.SetActiveFast(false);
-            loginUI.gameObject.SetActiveFast(true);
-            registerUI.gameObject.SetActiveFast(false);
-        });
+        this.RegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish);
     }
 
     private void OnOpenLogin(OpenLoginEvent e) {
@@ -35,11 +30,16 @@ public class LoginCtr : MonoBehaviour, IController {
         registerUI.gameObject.SetActiveFast(true);
     }
 
+    private void OnDownloadResFinish(DownloadResFinishEvent e) {
+        downloadResUI.gameObject.SetActiveFast(false);
+        loginUI.gameObject.SetActiveFast(true);
+        registerUI.gameObject.SetActiveFast(false);
+    }
+
     private void OnDestroy() {
         this.UnRegisterEvent<OpenLoginEvent>(OnOpenLogin);
         this.UnRegisterEvent<OpenRegisterEvent>(OnOpenRegister);
-
-        GameController.manager.tinyMsgHub.Unsubscribe(downloadResToken);
+        this.UnRegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish);
     }
 
     public IArchitecture GetArchitecture() {
