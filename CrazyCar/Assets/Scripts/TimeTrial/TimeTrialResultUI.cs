@@ -27,7 +27,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("uid");
-        w.Write(GameController.manager.userInfo.uid);
+        w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WritePropertyName("cid");
         w.Write(GameController.manager.timeTrialManager.selectInfo.cid);
         w.WritePropertyName("complete_time");
@@ -44,8 +44,8 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
     }
 
     private void UpdateUI() {
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
-        nameText.text = GameController.manager.userInfo.name;
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
+        nameText.text = this.GetModel<IUserModel>().Name.Value;
         victoryImage.sprite = victorySprites[GameController.manager.timeTrialManager.isWin ? 0 :1];
         breakRankImage.sprite = breakRankSprites[GameController.manager.timeTrialManager.isBreakRecord ? 0 : 1];
         completeTimeSlider.value = GameController.manager.timeTrialManager.isComplete ?
@@ -53,7 +53,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
         rewardText.text = GameController.manager.timeTrialManager.rewardStar.ToString();
         rankText.text = GameController.manager.timeTrialManager.isBreakRecord ? GameController.manager.timeTrialManager.rank.ToString() : "--";
 
-        GameController.manager.userInfo.star += GameController.manager.timeTrialManager.rewardStar;
+        this.GetModel<IUserModel>().Star.Value += GameController.manager.timeTrialManager.rewardStar;
     }
 
     private void Start() {

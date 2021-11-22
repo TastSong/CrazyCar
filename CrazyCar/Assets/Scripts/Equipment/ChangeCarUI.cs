@@ -46,7 +46,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
             }
         }
 
-        curEquipInfo = GameController.manager.equipManager.equipDic[GameController.manager.userInfo.equipInfo.eid];
+        curEquipInfo = GameController.manager.equipManager.equipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
         UpdateUI(curEquipInfo);
         IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
     }
@@ -67,7 +67,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
                     RequestUrl.changeEquipUrl,
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
-                    GameController.manager.userInfo.equipInfo = GameController.manager.equipManager.equipDic[(int)data["eid"]];
+                    this.GetModel<IUserModel>().EquipInfo.Value = GameController.manager.equipManager.equipDic[(int)data["eid"]];
                     GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                     applyBtn.interactable = false;
                 },
@@ -77,7 +77,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
                     }
                 }));
             } else {
-                if (GameController.manager.userInfo.star > curEquipInfo.star) {
+                if (this.GetModel<IUserModel>().Star.Value > curEquipInfo.star) {
                     GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"), curEquipInfo.star),
                     success: () => { 
                         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + 
@@ -85,7 +85,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
                         data: bytes,
                         token: GameController.manager.token,
                         succData: (data) => {
-                            GameController.manager.userInfo.star = (int)data["star"];
+                            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                             applyBtnText.text = I18N.manager.GetText("Apply");
                             curEquipInfo.isHas = true;
                             for (int i = 0; i < changeCarItems.Count; i++) {
@@ -125,7 +125,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
         for (int i = 0; i < changeCarItems.Count; i++) {
             changeCarItems[i].SetSelectState(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);
         }
-        if (curEquipInfo.eid == GameController.manager.userInfo.equipInfo.eid) {
+        if (curEquipInfo.eid == this.GetModel<IUserModel>().EquipInfo.Value.eid) {
             applyBtn.interactable = false;
         } else {
             applyBtn.interactable = true;

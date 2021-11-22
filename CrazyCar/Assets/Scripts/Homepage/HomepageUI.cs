@@ -43,7 +43,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void Start() {
-        nickNameText.text = GameController.manager.userInfo.name;
+        nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
         avatarBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
@@ -62,13 +62,13 @@ public class HomepageUI : MonoBehaviour, IController {
                 ShowStandAlone();
                 return;
             }
-            if (GameController.manager.userInfo.isVIP) {
+            if (this.GetModel<IUserModel>().IsVIP.Value) {
                 this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
             } else {
                 GameController.manager.warningAlert.ShowWithText("Match 只面向VIP");
             }
         });
-        createMatchBtn.gameObject.SetActiveFast(GameController.manager.userInfo.name.ToLower() == "tast");
+        createMatchBtn.gameObject.SetActiveFast(this.GetModel<IUserModel>().Name.Value.ToLower() == "tast");
         createMatchBtn.onClick.AddListener(() => {
             if (GameController.manager.standAlone) {
                 ShowStandAlone();
@@ -148,9 +148,9 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
-        starText.text = GameController.manager.userInfo.star.ToString();
-        vipImage.gameObject.SetActiveFast(GameController.manager.userInfo.isVIP);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
+        starText.text = this.GetModel<IUserModel>().Star.Value.ToString();
+        vipImage.gameObject.SetActiveFast(this.GetModel<IUserModel>().IsVIP.Value);
     }
 
     private void OnDestroy() {

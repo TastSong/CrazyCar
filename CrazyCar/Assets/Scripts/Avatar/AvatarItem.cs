@@ -23,7 +23,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
             Debug.Log("点击头像 = " + avatarInfo.aid);
             GameController.manager.tinyMsgHub.Publish(new AvatarUIMessage(avatarInfo.aid));
         } else {
-            if (GameController.manager.userInfo.star > avatarInfo.star) {
+            if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
                 GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
                 success: () => {
                     StringBuilder sb = new StringBuilder();
@@ -38,7 +38,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
                     data: bytes,
                     token: GameController.manager.token,
                     succData: (data) => {
-                        GameController.manager.userInfo.star = (int)data["star"];
+                        this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                         avatarInfo.isHas = true;
                         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
                     }));

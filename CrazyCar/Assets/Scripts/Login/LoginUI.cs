@@ -21,7 +21,7 @@ public class LoginUI : MonoBehaviour, IController {
     private void Start() {
         rememberToggle.isOn = this.GetModel<IUserModel>().RememberPassword == 1;
         if (rememberToggle.isOn) {
-            userNameInput.text = this.GetModel<IUserModel>().Name;
+            userNameInput.text = this.GetModel<IUserModel>().Name.Value;
             passwordInput.text = this.GetModel<IUserModel>().Password;
         } 
 

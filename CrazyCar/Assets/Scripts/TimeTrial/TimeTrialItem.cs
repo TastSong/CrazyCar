@@ -27,7 +27,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                 GameController.manager.curGameType = CurGameType.TimeTrial;
                 Util.LoadingScene(SceneID.Game);
             } else {
-                if (GameController.manager.userInfo.star > timeTrialInfo.star) {
+                if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
                     GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
                     success: () => {
                         StringBuilder sb = new StringBuilder();
@@ -42,7 +42,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         data: bytes,
                         token: GameController.manager.token,
                         succData: (data) => {
-                            GameController.manager.userInfo.star = (int)data["star"];
+                            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                             timeTrialInfo.isHas = true;
                             lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
                             this.SendCommand<UpdateHomepageUICommand>();

@@ -25,7 +25,7 @@ public class ProfileUI : MonoBehaviour, IController {
     }
 
     private void OnEnable() {
-        UserInfo userInfo = this.GetModel<IPlayerInfoModel>().GetPlayerInfoByUid(GameController.manager.userInfo.uid);       
+        UserInfo userInfo = this.GetModel<IPlayerInfoModel>().GetPlayerInfoByUid(this.GetModel<IUserModel>().Uid.Value);       
         vipImage.gameObject.SetActiveFast(userInfo.isVIP);
         userNameInput.text = userInfo.name;
         starText.text = userInfo.star.ToString();
@@ -33,7 +33,7 @@ public class ProfileUI : MonoBehaviour, IController {
         avatarText.text = userInfo.avatarNum.ToString();
         mapsText.text = userInfo.mapNum.ToString();
 
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
         passwordInput.text = this.GetModel<IUserModel>().Password.Value;
     }
 
@@ -42,7 +42,7 @@ public class ProfileUI : MonoBehaviour, IController {
             this.SendCommand(new HidePageCommand(UIPageType.ProfileUI));
         });
         userNameBtn.onClick.AddListener(() => {
-            if (userNameInput.text == GameController.manager.userInfo.name) {
+            if (userNameInput.text == this.GetModel<IUserModel>().Name.Value) {
                 GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original nickname"));
             } else {
 

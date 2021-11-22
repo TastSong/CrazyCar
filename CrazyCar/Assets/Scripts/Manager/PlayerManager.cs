@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TFramework;
 
 public class PlayerStateMsg {
     public int cid;
@@ -10,7 +11,7 @@ public class PlayerStateMsg {
     public int speed;
 }
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager : MonoBehaviour, IController {
     public static PlayerManager manager;
     public MPlayer mPlayerPrefab;
     public Transform startPos;
@@ -38,10 +39,10 @@ public class PlayerManager : MonoBehaviour {
         selfPlayer.userInfo = GameController.manager.userInfo;
         selfPlayer.UpdateSelfParameter();
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
-            GameController.manager.userInfo.equipInfo.eid,
-            GameController.manager.userInfo.equipInfo.rid);
+            this.GetModel<IUserModel>().EquipInfo.Value.eid,
+            this.GetModel<IUserModel>().EquipInfo.Value.rid);
         cinemachineTF.SetParent(selfPlayer.transform, false);
-        selfPlayer.GetComponent<MPlayerStyle>().SetNameText(GameController.manager.userInfo.name, GameController.manager.userInfo.isVIP);
+        selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value, this.GetModel<IUserModel>().IsVIP.Value);
     }
 
     public MPlayer GetSelfPlayer {
@@ -64,7 +65,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     public void RespondAction(PlayerStateMsg playerStateMsg) {
-        if (playerStateMsg.userInfo.uid == GameController.manager.userInfo.uid) {
+        if (playerStateMsg.userInfo.uid == this.GetModel<IUserModel>().Uid.Value) {
             selfPlayer.ConfirmStatus(playerStateMsg);
         } else {
             AdjustPeerPlayer(playerStateMsg);
@@ -95,5 +96,9 @@ public class PlayerManager : MonoBehaviour {
     private Vector3 GetStartPosition() {
         Vector3 pos = startPos.position + new Vector3(UnityEngine.Random.Range(-2, 2) * widthUnit, 0, 0);
         return pos;
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class MatchWebSocket : MonoBehaviour {
+public class MatchWebSocket : MonoBehaviour,IController {
     private void Start() {
         if (GameController.manager.curGameType == CurGameType.Match) {
             string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) + 
                 "websocket/MatchWebSocket/" +
-                GameController.manager.userInfo.uid + "," +
+                this.GetModel<IUserModel>().Uid.Value + "," +
                 GameController.manager.matchManager.selectInfo.cid;
             WebSocketMan.manager.Init(ws);
             Util.DelayExecuteWithSecond(3, () => { WebSocketMan.manager.StartCoroutine(SendMsg()); }); 
@@ -35,21 +36,21 @@ public class MatchWebSocket : MonoBehaviour {
             w.WritePropertyName("user_info");
             w.WriteObjectStart();
             w.WritePropertyName("name");
-            w.Write(GameController.manager.userInfo.name);
+            w.Write(this.GetModel<IUserModel>().Name.Value);
             w.WritePropertyName("uid");
-            w.Write(GameController.manager.userInfo.uid);
+            w.Write(this.GetModel<IUserModel>().Uid.Value);
             w.WritePropertyName("aid");
-            w.Write(GameController.manager.userInfo.aid);
+            w.Write(this.GetModel<IUserModel>().Aid.Value);
             w.WritePropertyName("star");
-            w.Write(GameController.manager.userInfo.star);
+            w.Write(this.GetModel<IUserModel>().Star.Value);
             w.WritePropertyName("is_vip");
-            w.Write(GameController.manager.userInfo.isVIP);
+            w.Write(this.GetModel<IUserModel>().IsVIP.Value);
             w.WritePropertyName("equip_info");
             w.WriteObjectStart();
             w.WritePropertyName("eid");
-            w.Write(GameController.manager.userInfo.equipInfo.eid);
+            w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
             w.WritePropertyName("rid");
-            w.Write(GameController.manager.userInfo.equipInfo.rid);
+            w.Write(this.GetModel<IUserModel>().EquipInfo.Value.rid);
             w.WriteObjectEnd();
             w.WriteObjectEnd();
             w.WriteObjectEnd();
@@ -57,5 +58,9 @@ public class MatchWebSocket : MonoBehaviour {
             WebSocketMan.manager.SendMsgToServer(sb.ToString());
             yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

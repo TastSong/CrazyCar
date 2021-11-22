@@ -27,7 +27,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> AvatarNum { get; }
     BindableProperty<int> MapNum { get; }
     BindableProperty<EquipInfo> EquipInfo { get; }
-    BindableProperty<int> RememberPassword { get; }
+    BindableProperty<int> RememberPassword { get; set; }
 
     void SetUserInfoPart(UserInfo userInfo);
 }

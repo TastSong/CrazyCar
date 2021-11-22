@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class MatchResultUI : MonoBehaviour{
+public class MatchResultUI : MonoBehaviour, IController {
     public Button closeBtn;
     public Button refreshBtn;
     public MatchRankItem matchResultItem;
@@ -30,7 +31,7 @@ public class MatchResultUI : MonoBehaviour{
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("uid");
-        w.Write(GameController.manager.userInfo.uid);
+        w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WritePropertyName("cid");
         w.Write(GameController.manager.matchManager.selectInfo.cid);
         w.WritePropertyName("complete_time");
@@ -55,5 +56,9 @@ public class MatchResultUI : MonoBehaviour{
         refreshBtn.onClick.AddListener(() => {
             FetchData();
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

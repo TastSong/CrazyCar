@@ -24,7 +24,7 @@ public class AvatarUI : MonoBehaviour, IController {
         token: GameController.manager.token,
         succData: (data) => {
             GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
-            curAid = GameController.manager.userInfo.aid;
+            curAid = this.GetModel<IUserModel>().Aid.Value;
         }));
     }
 
@@ -52,7 +52,7 @@ public class AvatarUI : MonoBehaviour, IController {
             StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.changeAvatarUrl,
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
-                    GameController.manager.userInfo.aid = (int)data["aid"];
+                    this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
                     GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                 },
                 code: (code) => {

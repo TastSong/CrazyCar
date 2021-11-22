@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using System;
+using TFramework;
 
 public class AvatarInfo {
     public int aid;
@@ -12,14 +13,18 @@ public class AvatarInfo {
     public int star;
 }
 
-public class AvatarManager {
+public class AvatarManager : IController {
     public int curAid;
 
     public Dictionary<int, AvatarInfo> avatarDic = new Dictionary<int, AvatarInfo>();
 
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
+
     public void ParseAvatarRes(JsonData jsonData, Action success = null) {
         avatarDic.Clear();
-        curAid = GameController.manager.userInfo.aid;
+        curAid = this.GetModel<IUserModel>().Aid.Value;
         JsonData data = jsonData["avatars"];
         for (int i = 0; i < data.Count; i++) {
             AvatarInfo info = new AvatarInfo();
