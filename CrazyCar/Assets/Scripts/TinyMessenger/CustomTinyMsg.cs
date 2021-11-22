@@ -12,9 +12,6 @@ public class DownloadResFinishMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class InitGameUIMsg : ITinyMessage {
-    public object Sender { get; private set; }
-}
 
 public class CompleteTimeTrialMsg : ITinyMessage {
     public object Sender { get; private set; }

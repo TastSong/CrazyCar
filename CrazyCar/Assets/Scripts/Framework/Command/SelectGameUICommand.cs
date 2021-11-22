@@ -1,18 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using TFramework;
 
-public class SelectGameUICommand : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+public class SelectGameUICommand : AbstractCommand {
+    protected override void OnExecute() {
+        this.SendEvent(new SelectGameUIEvent());
     }
 }

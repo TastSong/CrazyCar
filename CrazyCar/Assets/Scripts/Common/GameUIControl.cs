@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using TinyMessenger;
 using TFramework;
 
 public class GameUIControl : MonoBehaviour, IController {
@@ -11,18 +10,16 @@ public class GameUIControl : MonoBehaviour, IController {
     public TimeTrialGameUI timeTrialGameUI;
     public MatchGameUI matchGameUI;
 
-    private TinyMessageSubscriptionToken initGameUIMsg;
-
     private void Start() {
         controlPanel.gameObject.SetActiveFast(false);
         gameResultUI.gameObject.SetActiveFast(false);
         timeTrialGameUI.gameObject.SetActiveFast(false);
         matchGameUI.gameObject.SetActiveFast(false);
-        initGameUIMsg = GameController.manager.tinyMsgHub.Subscribe<InitGameUIMsg>((m) => { SelectGameUI(); });
+        this.RegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
         this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 
-    private void SelectGameUI() {
+    private void OnSelectGameUI(SelectGameUIEvent e) {
         controlPanel.gameObject.SetActiveFast(true);
 
         timeTrialGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.TimeTrial);
@@ -42,7 +39,7 @@ public class GameUIControl : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(initGameUIMsg);
+        this.UnRegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
         this.UnRegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 

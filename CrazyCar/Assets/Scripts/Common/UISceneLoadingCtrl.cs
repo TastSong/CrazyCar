@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class UISceneLoadingCtrl : MonoBehaviour {
+public class UISceneLoadingCtrl : MonoBehaviour, IController {
     public Slider progressSlider;
     public Text progressText;
 
@@ -47,6 +48,10 @@ public class UISceneLoadingCtrl : MonoBehaviour {
         Destroy(gameObject);
         yield return new WaitForSeconds(1.8f);
         GameController.manager.sceneLoaded = true;
-        GameController.manager.tinyMsgHub.Publish(new InitGameUIMsg());
+        this.SendCommand(new SelectGameUICommand());
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
