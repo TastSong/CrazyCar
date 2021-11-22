@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using TinyMessenger;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -16,7 +15,6 @@ public class AvatarUI : MonoBehaviour, IController {
     public Transform avatarItemParent;
     public Button closeBtn;
 
-    private TinyMessageSubscriptionToken avatarToken;
     private int curAid = 0;
 
     private void OnEnable() {
@@ -69,15 +67,17 @@ public class AvatarUI : MonoBehaviour, IController {
             });
         });
 
-        avatarToken = GameController.manager.tinyMsgHub.Subscribe<AvatarUIMessage>((data) => {
-            curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(data.aid);
-            curAvatarName.text = GameController.manager.avatarManager.avatarDic[data.aid].name;
-            curAid = data.aid;
-        });
+        this.RegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent);
+    }
+
+    private void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
+        curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(e.aid);
+        curAvatarName.text = GameController.manager.avatarManager.avatarDic[e.aid].name;
+        curAid = e.aid;
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(avatarToken);
+        this.UnRegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent);
     }
 
     public IArchitecture GetArchitecture() {

@@ -21,7 +21,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
     public void OnPointerClick(PointerEventData eventData) {
         if (avatarInfo.isHas) {
             Debug.Log("点击头像 = " + avatarInfo.aid);
-            GameController.manager.tinyMsgHub.Publish(new AvatarUIMessage(avatarInfo.aid));
+            this.SendCommand(new UpdataAvatarUICommand(avatarInfo.aid));
         } else {
             if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
                 GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
