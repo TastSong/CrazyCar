@@ -2,6 +2,7 @@
 using System;
 using Utils;
 using UnityEngine;
+using LitJson;
 
 [Serializable]
 public class UserInfo {
@@ -30,6 +31,10 @@ public interface IUserModel : IModel {
     BindableProperty<int> RememberPassword { get; set; }
 
     void SetUserInfoPart(UserInfo userInfo);
+
+    void ParseUserInfo(JsonData jsonData);
+
+    UserInfo GetUserInfoPart();
 }
 
 public class UserModel : AbstractModel, IUserModel {
@@ -44,6 +49,45 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<int> MapNum { get; set; } = new BindableProperty<int>();
     public BindableProperty<EquipInfo> EquipInfo { get; set; } = new BindableProperty<EquipInfo>();
     public BindableProperty<int> RememberPassword { get; set; } = new BindableProperty<int>();
+
+    public UserInfo GetUserInfoPart() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.aid = Aid.Value;
+        userInfo.avatarNum = AvatarNum.Value;
+        userInfo.equipInfo = EquipInfo.Value;
+        userInfo.isVIP = IsVIP;
+        userInfo.mapNum = MapNum.Value;
+        userInfo.name = Name.Value;
+        userInfo.star = Star.Value;
+        userInfo.uid = Uid.Value;
+        userInfo.travelTimes = TravelTimes.Value;
+        return userInfo;
+    }
+
+    public void ParseUserInfo(JsonData jsonData) {
+        UserInfo userInfo = new UserInfo();
+        Name.Value = (string)jsonData["user_info"]["name"];
+        Uid.Value = (int)jsonData["user_info"]["uid"];
+        Aid.Value = (int)jsonData["user_info"]["aid"];
+        Star.Value = (int)jsonData["user_info"]["star"];
+        IsVIP.Value = (bool)jsonData["user_info"]["is_vip"];
+        AvatarNum.Value = (int)jsonData["user_info"]["avatar_num"];
+        TravelTimes.Value = (int)jsonData["user_info"]["travel_times"];
+        MapNum.Value = (int)jsonData["user_info"]["map_num"];
+
+        JsonData data = jsonData["user_info"]["equip_info"];
+        EquipInfo info = new EquipInfo();
+        info.eid = (int)data["eid"];
+        info.rid = (string)data["rid"];
+        info.equipName = (string)data["equip_name"];
+        info.star = (int)data["star"];
+        info.mass = (int)data["mass"];
+        info.speed = (int)data["speed"];
+        info.maxSpeed = (int)data["max_speed"];
+        info.isHas = (bool)data["is_has"];
+        info.isShow = (bool)data["is_show"];
+        EquipInfo.Value = info;
+    }
 
     public void SetUserInfoPart(UserInfo userInfo) {
         Name.Value = userInfo.name;

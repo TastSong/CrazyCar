@@ -51,8 +51,8 @@ public class RegisterUI : MonoBehaviour, IController {
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
                 data : bytes, succData : (data) => {
                     GameController.manager.token = (string)data["token"];
-                    GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
-                    this.GetModel<IUserModel>().SetUserInfoPart(this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data));
+                    this.GetModel<IUserModel>().ParseUserInfo(data);
+                    GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
                     this.GetModel<IUserModel>().Password.Value = passwordInput.text;
                 }, code : (code) => {
                     if (code == 200) {

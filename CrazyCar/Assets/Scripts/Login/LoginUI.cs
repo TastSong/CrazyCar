@@ -43,9 +43,9 @@ public class LoginUI : MonoBehaviour, IController {
             byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
                 data : bytes, succData : (data) => {
-                    GameController.manager.token = (string)data["token"];                  
-                    GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
-                    this.GetModel<IUserModel>().SetUserInfoPart(this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data));
+                    GameController.manager.token = (string)data["token"];
+                    this.GetModel<IUserModel>().ParseUserInfo(data);
+                    GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
                     this.GetModel<IUserModel>().Password.Value = passwordInput.text;
                 }, code : (code) => {
                     if (code == 200) {

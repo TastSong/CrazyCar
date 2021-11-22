@@ -22,7 +22,8 @@ public class DownloadResUI : MonoBehaviour, IController {
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
             JsonData data = JsonMapper.ToObject(ta.text);
             GameController.manager.token = (string)data["token"];
-            GameController.manager.userInfo = this.GetModel<IPlayerInfoModel>().ParsePlayerInfoData(data);
+            this.GetModel<IUserModel>().ParseUserInfo(data);
+            GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
 
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
