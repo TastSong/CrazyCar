@@ -19,7 +19,7 @@ public class RegisterUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            GameController.manager.tinyMsgHub.Publish(new LoginUIMessage());
+            this.SendCommand(new OpenLoginCommand());
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 gameObject.SetActiveFast(false);
             });

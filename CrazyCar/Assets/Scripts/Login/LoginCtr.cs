@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using TinyMessenger;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class LoginCtr : MonoBehaviour
-{
+public class LoginCtr : MonoBehaviour, IController {
     public LoginUI loginUI;
     public RegisterUI registerUI;
     public DownloadResUI downloadResUI;
 
-    private TinyMessageSubscriptionToken loginToken;
-    private TinyMessageSubscriptionToken registerToken;
     private TinyMessageSubscriptionToken downloadResToken;
 
     private void Start() {
@@ -19,12 +17,9 @@ public class LoginCtr : MonoBehaviour
         loginUI.gameObject.SetActiveFast(false);
         registerUI.gameObject.SetActiveFast(false);
 
-        loginToken = GameController.manager.tinyMsgHub.Subscribe<LoginUIMessage>((m) => {
-            loginUI.gameObject.SetActiveFast(true);
-        });
-        registerToken = GameController.manager.tinyMsgHub.Subscribe<RegisterUIMessage>((m) => {
-            registerUI.gameObject.SetActiveFast(true);
-        });
+        this.RegisterEvent<OpenLoginEvent>(OnOpenLogin);
+        this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister);
+
         downloadResToken = GameController.manager.tinyMsgHub.Subscribe<DownloadResFinishMsg>((m) => {
             downloadResUI.gameObject.SetActiveFast(false);
             loginUI.gameObject.SetActiveFast(true);
@@ -32,9 +27,22 @@ public class LoginCtr : MonoBehaviour
         });
     }
 
+    private void OnOpenLogin(OpenLoginEvent e) {
+        loginUI.gameObject.SetActiveFast(true);
+    }
+
+    private void OnOpenRegister(OpenRegisterEvent e) {
+        registerUI.gameObject.SetActiveFast(true);
+    }
+
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(loginToken);
-        GameController.manager.tinyMsgHub.Unsubscribe(registerToken);
+        this.UnRegisterEvent<OpenLoginEvent>(OnOpenLogin);
+        this.UnRegisterEvent<OpenRegisterEvent>(OnOpenRegister);
+
         GameController.manager.tinyMsgHub.Unsubscribe(downloadResToken);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

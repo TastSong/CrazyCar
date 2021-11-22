@@ -71,7 +71,7 @@ public class LoginUI : MonoBehaviour, IController {
         });
 
         registerBtn.onClick.AddListener(() => {
-            GameController.manager.tinyMsgHub.Publish(new RegisterUIMessage());
+            this.SendCommand(new OpenRegisterCommand());
             Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                 gameObject.SetActiveFast(false);
             });
