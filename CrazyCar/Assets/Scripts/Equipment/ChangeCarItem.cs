@@ -32,7 +32,7 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
 
     public void OnPointerClick(PointerEventData eventData) {
         IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, equipInfo.eid, equipInfo.rid);;
-        GameController.manager.tinyMsgHub.Publish(new ChangeCarMsg(equipInfo));        
+        this.SendCommand(new ChangeCarCommand(equipInfo));      
     }
 
     public IArchitecture GetArchitecture() {

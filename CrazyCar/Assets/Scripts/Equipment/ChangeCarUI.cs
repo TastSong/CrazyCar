@@ -5,7 +5,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TinyMessenger;
 using TFramework;
 
 public class ChangeCarUI : MonoBehaviour, IController {
@@ -22,7 +21,6 @@ public class ChangeCarUI : MonoBehaviour, IController {
     public Transform itemParent;
 
     private EquipInfo curEquipInfo;
-    private TinyMessageSubscriptionToken changeCarToken;
     private List<ChangeCarItem> changeCarItems = new List<ChangeCarItem>();
 
     private void OnEnable() {
@@ -47,7 +45,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
         }
 
         curEquipInfo = GameController.manager.equipManager.equipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
-        UpdateUI(curEquipInfo);
+        OnChangeCarEvent(new ChangeCarEvent(curEquipInfo));
         IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
     }
 
@@ -110,13 +108,11 @@ public class ChangeCarUI : MonoBehaviour, IController {
             });
         });
 
-        changeCarToken = GameController.manager.tinyMsgHub.Subscribe<ChangeCarMsg>((data) => {
-            UpdateUI(data.equipInfo);
-        });
+        this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
     }
 
-    private void UpdateUI(EquipInfo info) {
-        curEquipInfo = info;
+    private void OnChangeCarEvent(ChangeCarEvent e) {
+        curEquipInfo = e.mEquipInfo;
         nameText.text = curEquipInfo.equipName;
         starText.text = curEquipInfo.star.ToString();
         massText.text = curEquipInfo.mass.ToString();
@@ -125,12 +121,13 @@ public class ChangeCarUI : MonoBehaviour, IController {
         for (int i = 0; i < changeCarItems.Count; i++) {
             changeCarItems[i].SetSelectState(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);
         }
+
         if (curEquipInfo.eid == this.GetModel<IUserModel>().EquipInfo.Value.eid) {
             applyBtn.interactable = false;
         } else {
             applyBtn.interactable = true;
         }
-        if (info.isHas) {
+        if (curEquipInfo.isHas) {
             applyBtnText.text = I18N.manager.GetText("Apply");
         } else {
             applyBtnText.text = I18N.manager.GetText("Buy");
@@ -138,7 +135,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        GameController.manager.tinyMsgHub.Unsubscribe(changeCarToken);
+        this.UnRegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
     }
 
     public IArchitecture GetArchitecture() {
