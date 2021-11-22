@@ -20,14 +20,6 @@ public class CompleteTimeTrialMsg : ITinyMessage {
     public object Sender { get; private set; }
 }
 
-public class AvatarUIMessage : ITinyMessage {
-    public object Sender { get; private set; }
-    public int aid;
-    public AvatarUIMessage(int aid) {
-        this.aid = aid;
-    }
-}
-
 public class ChangeCarMsg : ITinyMessage {
     public object Sender { get; private set; }
     public EquipInfo equipInfo;
