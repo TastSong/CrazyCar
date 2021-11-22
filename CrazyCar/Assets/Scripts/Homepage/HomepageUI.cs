@@ -148,7 +148,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
         starText.text = GameController.manager.userInfo.star.ToString();
         vipImage.gameObject.SetActiveFast(GameController.manager.userInfo.isVIP);
     }

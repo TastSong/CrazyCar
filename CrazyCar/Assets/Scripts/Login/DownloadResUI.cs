@@ -12,7 +12,11 @@ public class DownloadResUI : MonoBehaviour, IController {
     public Slider progressSlider;
     public Button standAloneBtn;
 
+    private IResourceSystem resourceSystem;
+
     private void Start() {
+        resourceSystem = this.GetSystem<IResourceSystem>();
+
         standAloneBtn.onClick.AddListener(() => {
             GameController.manager.standAlone = true;
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
@@ -67,16 +71,16 @@ public class DownloadResUI : MonoBehaviour, IController {
 
     private IEnumerator Check(Action success) {
         yield return new WaitUntil(() => {
-            return GameController.manager != null && GameController.manager.resourceManager != null;
+            return GameController.manager != null && resourceSystem != null;
         });
         showText.text = "";
         progressSlider.value = 0;
-        GameController.manager.resourceManager.CheckNewResource();
+        resourceSystem.CheckNewResource();
         yield return new WaitUntil(() => {
-            return GameController.manager.resourceManager.curResourceType != ResourceType.None;
+            return resourceSystem.curResourceType != ResourceType.None;
         });
-        if (GameController.manager.resourceManager.curResourceType != ResourceType.None) {
-            GameController.manager.resourceManager.DownloadAssets(() => {
+        if (resourceSystem.curResourceType != ResourceType.None) {
+            resourceSystem.DownloadAssets(() => {
                 success?.Invoke();
             }, UpdateProgress, () => {
                 GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Download assets failed"), callback: () => {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Utils;
 using System;
+using TFramework;
 
 [Serializable]
 class _DicItemRender {
@@ -10,7 +11,7 @@ class _DicItemRender {
     public Renderer value;
 }
 
-public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
+public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver, IController {
     static int _templeCount;
     [SerializeField] List<_DicItemRender> _renders = new List<_DicItemRender>();
 
@@ -95,7 +96,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
     // using the equipment id the get the target Equipment
     // may be cached in Resource Manager? or re-load
     EquipResource GetPartFromResource(string rid) {
-        return GameController.manager.resourceManager.GetEquipResource(rid);
+        return this.GetSystem<IResourceSystem>().GetEquipResource(rid);
     }
 
     public void _SetResource(EquipResource r) {
@@ -143,5 +144,9 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver {
         this.rid = rid;
         EquipResource r = GetPartFromResource(rid);
         _SetResource(r);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

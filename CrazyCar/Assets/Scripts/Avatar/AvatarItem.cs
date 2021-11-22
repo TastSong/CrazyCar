@@ -6,12 +6,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class AvatarItem : MonoBehaviour, IPointerClickHandler {
+public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image avatarImage;
     public Image lockImage;
 
-    private AvatarInfo avatarInfo; 
+    private AvatarInfo avatarInfo;
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
 
     public void OnPointerClick(PointerEventData eventData) {
         if (avatarInfo.isHas) {
@@ -49,7 +54,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler {
 
     public void SetContent(AvatarInfo info) {
         avatarInfo = info;
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(avatarInfo.aid);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(avatarInfo.aid);
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 }

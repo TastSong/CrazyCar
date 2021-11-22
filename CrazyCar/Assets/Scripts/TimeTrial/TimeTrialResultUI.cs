@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class TimeTrialResultUI : MonoBehaviour {
+public class TimeTrialResultUI : MonoBehaviour, IController {
     public Image avatarImage;
     public Text nameText;
     public Image victoryImage;
@@ -43,7 +44,7 @@ public class TimeTrialResultUI : MonoBehaviour {
     }
 
     private void UpdateUI() {
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
         nameText.text = GameController.manager.userInfo.name;
         victoryImage.sprite = victorySprites[GameController.manager.timeTrialManager.isWin ? 0 :1];
         breakRankImage.sprite = breakRankSprites[GameController.manager.timeTrialManager.isBreakRecord ? 0 : 1];
@@ -63,5 +64,9 @@ public class TimeTrialResultUI : MonoBehaviour {
         rankBtn.onClick.AddListener(() => {
             timeTrialRankUI.gameObject.SetActiveFast(true);
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

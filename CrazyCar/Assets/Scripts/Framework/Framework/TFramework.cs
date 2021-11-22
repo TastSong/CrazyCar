@@ -643,21 +643,23 @@ namespace TFramework
     {
         private T mValue;
 
-        public T Value
-        {
+        public T Value {
             get => mValue;
-            set
-            {
-                if (value.Equals(mValue)) {
-                    return;
-                } 
+            set {
+                if (value == null && mValue == null) return;
+
+                if (value != null && value.Equals(mValue)) return;
+
                 mValue = value;
                 mOnValueChanged?.Invoke(value);
             }
         }
 
-        private Action<T> mOnValueChanged = (v) => { };
+        public BindableProperty(T value = default) {
+            Value = value;
+        }
 
+        private Action<T> mOnValueChanged = (v) => { };
         public IUnRegister Register(Action<T> onValueChanged)
         {
             mOnValueChanged += onValueChanged;

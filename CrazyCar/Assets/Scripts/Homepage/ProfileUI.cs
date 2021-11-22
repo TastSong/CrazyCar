@@ -33,7 +33,7 @@ public class ProfileUI : MonoBehaviour, IController {
         avatarText.text = userInfo.avatarNum.ToString();
         mapsText.text = userInfo.mapNum.ToString();
 
-        avatarImage.sprite = GameController.manager.resourceManager.GetAvatarResource(GameController.manager.userInfo.aid);
+        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.userInfo.aid);
         passwordInput.text = this.GetModel<IUserModel>().Password.Value;
     }
 

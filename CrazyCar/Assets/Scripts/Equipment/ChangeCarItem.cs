@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class ChangeCarItem : MonoBehaviour, IPointerClickHandler {
+public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image bg;
     public Image showImage;
     public GameObject lockGO;
@@ -16,7 +17,7 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler {
     public Color normalColor;
     public void SetContent(EquipInfo info) {
         equipInfo = info;
-        showImage.sprite = GameController.manager.resourceManager.GetEquipResource(equipInfo.rid).theIcon;
+        showImage.sprite = this.GetSystem<IResourceSystem>().GetEquipResource(equipInfo.rid).theIcon;
         lockGO.SetActiveFast(!equipInfo.isHas);
     }
 
@@ -32,5 +33,9 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler {
     public void OnPointerClick(PointerEventData eventData) {
         IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, equipInfo.eid, equipInfo.rid);;
         GameController.manager.tinyMsgHub.Publish(new ChangeCarMsg(equipInfo));        
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

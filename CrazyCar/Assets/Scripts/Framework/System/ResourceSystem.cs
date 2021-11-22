@@ -1,18 +1,34 @@
 ﻿using LitJson;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
+using TFramework;
 using UnityEngine;
 using UnityEngine.Networking;
 using Utils;
 
-public class ResourceManager {
-    public static AssetBundle avatar;
-    public static AssetBundle equip;
-    public ResourceType curResourceType = ResourceType.None;
-    public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
+public enum ResourceType {
+    None = 0,
+    Loaded,
+    ToDownload
+}
+
+public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
+
+public interface IResourceSystem : ISystem {
+    AssetBundle avatar { get; set; }
+    AssetBundle equip { get; set; }
+    ResourceType curResourceType { get; set; }
+    void CheckNewResource();
+    void DownloadAssets(Action success, ProgressCallback progressCallback, Action fail);
+    Sprite GetAvatarResource(int aid);
+    EquipResource GetEquipResource(string rid);
+}
+
+public class ResourceSystem : AbstractSystem, IResourceSystem {
+    public AssetBundle avatar { get; set; }
+    public AssetBundle equip { get; set; }
+    public ResourceType curResourceType { get; set; }
 
     private string avatarHash = "";
     private uint avatarCRC = 0;
@@ -25,6 +41,8 @@ public class ResourceManager {
     private string equipURL = "";
     private float equipSize = 1000;
     private string localEquipString = Application.streamingAssetsPath + "/equip_" + Util.GetPlatform().ToLower();
+    
+    private ProgressCallback progressCallback;
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
@@ -85,12 +103,12 @@ public class ResourceManager {
                     equipURL = equipStr;
                 } else {
                     equipURL = NetworkController.manager.HttpBaseUrl + (string)data["equip"]["url"];
-                }          
+                }
                 equipSize = float.Parse((string)data["equip"]["size"]);
 
                 GetLocalResource();
             },
-            code : (code) => {
+            code: (code) => {
                 if (code != 200) {
                     string content = "资源下载失败";
                     GameController.manager.warningAlert.ShowWithText(
@@ -112,8 +130,7 @@ public class ResourceManager {
         WWW www = new WWW(localManiFest);
         yield return www;
         string data = www.text;
-        if (data != null && data != "") 
-        {
+        if (data != null && data != "") {
             JsonData maniData = JsonMapper.ToObject(data);
 #else
         if (File.Exists(localManiFest)) {
@@ -143,6 +160,7 @@ public class ResourceManager {
         }
         yield return null;
     }
+
 
     public void DownloadAssets(Action success, ProgressCallback progressCallback, Action fail) {
         GameController.manager.StartCoroutine(Download(success, progressCallback, fail));
@@ -283,4 +301,10 @@ public class ResourceManager {
             return null;
         }
     }
+
+    protected override void OnInit() {
+
+    }
+
+
 }
