@@ -4,7 +4,6 @@ using UnityEngine;
 using TFramework;
 using LitJson;
 using Utils;
-using TinyMessenger;
 using System.Linq;
 using System;
 
@@ -80,14 +79,12 @@ public class UIController : MonoBehaviour, IController {
     }
 
     //销毁对应页面
-    public void DestoryPage(UIPageType type, ITinyMessage message = null) {
+    public void DestoryPage(UIPageType type) {
         if (!pagesDict.ContainsKey(type)) {
             Debug.LogError("not exist page");
             return;
         }
-        if (message != null) {
-            GameController.manager.tinyMsgHub.Publish(message);
-        }
+
         Destroy(pagesDict[type]);
         pagesDict.Remove(type);
     }

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TinyMessenger;
 using UnityEngine;
 using Utils;
 using TFramework;
@@ -9,8 +8,6 @@ public class LoginCtr : MonoBehaviour, IController {
     public LoginUI loginUI;
     public RegisterUI registerUI;
     public DownloadResUI downloadResUI;
-
-    private TinyMessageSubscriptionToken downloadResToken;
 
     private void Start() {
         downloadResUI.gameObject.SetActiveFast(true);

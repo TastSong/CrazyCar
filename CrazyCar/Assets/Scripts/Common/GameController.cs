@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TinyMessenger;
 using UnityEngine;
 using Utils;
 
@@ -14,7 +13,6 @@ public class GameController : MonoBehaviour
 {
     public static GameController manager = null;
     public bool sceneLoaded = false;
-    public TinyMessengerHub tinyMsgHub = new TinyMessengerHub();
     public GameHelper gameHelper;
     public WarningAlert warningAlert;
     public InfoConfirmAlert infoConfirmAlert;
