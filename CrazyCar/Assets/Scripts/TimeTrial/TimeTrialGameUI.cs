@@ -18,19 +18,19 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         }
 
         countDownAnim.PlayAnim(3, () => {
-            GameController.manager.timeTrialManager.StartTime = Util.GetTime() / 1000;
+            this.GetModel<ITimeTrialModel>().StartTime.Value = Util.GetTime() / 1000;
             PlayerManager.manager.GetSelfPlayer.vInput = 1;
-            Debug.Log("++++++ StartTime = " + GameController.manager.timeTrialManager.StartTime);
-            limitTimeCor = StartCoroutine(CountdownCor(GameController.manager.timeTrialManager.selectInfo.limitTime,
+            Debug.Log("++++++ StartTime = " + this.GetModel<ITimeTrialModel>().StartTime);
+            limitTimeCor = StartCoroutine(CountdownCor(this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime,
                 () => {
-                    GameController.manager.timeTrialManager.IsArriveLimitTime = true;
+                    this.GetModel<ITimeTrialModel>().IsArriveLimitTime.Value = true;
                     Debug.Log("++++++ arrive limit time ");
                 }, limitTimeText));
         });       
     }
 
     private void Start() {       
-        limitTimeText.text = GameController.manager.timeTrialManager.selectInfo.limitTime.ToString();
+        limitTimeText.text = this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime.ToString();
 
         this.RegisterEvent<CompleteTimeTrialEvent>(OnCompleteTimeTrial);
     }

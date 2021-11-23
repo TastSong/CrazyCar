@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class MapController : MonoBehaviour {
+public class MapController : MonoBehaviour, IController {
     public GameObject[] mapsGO;
     public int mapId;
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
 
     private void OnEnable() {
         int selectMapId = 0;
         if (GameController.manager.curGameType == CurGameType.TimeTrial) {
-            selectMapId = GameController.manager.timeTrialManager.selectInfo.mapId;
+            selectMapId = this.GetModel<ITimeTrialModel>().SelectInfo.Value.mapId;
         } else if (GameController.manager.curGameType == CurGameType.Match) {
             selectMapId = GameController.manager.matchManager.selectInfo.mapId;
         }

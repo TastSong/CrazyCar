@@ -6,8 +6,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class TimeTrialRankUI : MonoBehaviour{
+public class TimeTrialRankUI : MonoBehaviour, IController {
     public Button closeBtn;
     public TimeTrialRankItem timeTrialRankItem;
     public Transform itemParent;
@@ -17,7 +18,7 @@ public class TimeTrialRankUI : MonoBehaviour{
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("cid");
-        w.Write(GameController.manager.timeTrialManager.selectInfo.cid);
+        w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
@@ -25,16 +26,16 @@ public class TimeTrialRankUI : MonoBehaviour{
             data: bytes,
             token: GameController.manager.token,
             succData: (data) => {
-                GameController.manager.timeTrialManager.ParseRank(data, UpdateUI);
+                this.GetModel<ITimeTrialModel>().ParseRank(data, UpdateUI);
             }));
     }
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        for (int i = 0; i < GameController.manager.timeTrialManager.timeTrialRankList.Count; i++) {
+        for (int i = 0; i < this.GetModel<ITimeTrialModel>().timeTrialRankList.Count; i++) {
             TimeTrialRankItem item = Instantiate(timeTrialRankItem);
             item.transform.SetParent(itemParent, false);
-            item.SetContent(GameController.manager.timeTrialManager.timeTrialRankList[i]);
+            item.SetContent(this.GetModel<ITimeTrialModel>().timeTrialRankList[i]);
         }
     }
 
@@ -42,5 +43,9 @@ public class TimeTrialRankUI : MonoBehaviour{
         closeBtn.onClick.AddListener(() => {
             gameObject.SetActiveFast(false);
         });
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

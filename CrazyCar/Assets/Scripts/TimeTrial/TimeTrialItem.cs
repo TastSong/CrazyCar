@@ -22,8 +22,8 @@ public class TimeTrialItem : MonoBehaviour, IController {
         selfBtn.onClick.AddListener(() => {
             if (timeTrialInfo.isHas) {
                 Debug.Log("进入课程 = " + timeTrialInfo.cid);
-                GameController.manager.timeTrialManager.CleanData();
-                GameController.manager.timeTrialManager.selectInfo = timeTrialInfo;
+                this.GetModel<ITimeTrialModel>().CleanData();
+                this.GetModel<ITimeTrialModel>().SelectInfo.Value = timeTrialInfo;
                 GameController.manager.curGameType = CurGameType.TimeTrial;
                 Util.LoadingScene(SceneID.Game);
             } else {

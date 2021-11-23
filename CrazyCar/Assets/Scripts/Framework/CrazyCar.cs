@@ -8,6 +8,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IResourceSystem>(new ResourceSystem());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
+        RegisterModel<ITimeTrialModel>(new TimeTrialModel());
         RegisterUtility<IPlayerPrefsStorage>(new PlayerPrefsStorage());
     }
 }

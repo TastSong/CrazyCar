@@ -11,7 +11,7 @@ public class TimeTrialWebSocket : MonoBehaviour, IController {
         //if (GameController.manager.curGameType == CurGameType.TimeTrial) {
         //    string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) +
         //        "websocket/TimeTrialWebSocket/" +
-        //        this.GetModel<IUserModel>().Uid.Value + "," + GameController.manager.timeTrialManager.selectInfo.cid;
+        //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
         //    Debug.Log("+++ " + ws);
         //    WebSocketMan.manager.Init(ws);
         //    WebSocketMan.manager.StartCoroutine(SendMsg());
@@ -20,12 +20,12 @@ public class TimeTrialWebSocket : MonoBehaviour, IController {
 
     private IEnumerator SendMsg() {
         while (true) {
-            if (GameController.manager.timeTrialManager.IsStartGame) {
+            if (this.GetModel<ITimeTrialModel>().IsStartGame) {
                 StringBuilder sb = new StringBuilder();
                 JsonWriter w = new JsonWriter(sb);
                 w.WriteObjectStart();
                 w.WritePropertyName("cid");
-                w.Write(GameController.manager.timeTrialManager.selectInfo.cid);
+                w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
                 w.WritePropertyName("pos_x");
                 w.Write(PlayerManager.manager.GetSelfPlayer.transform.position.x);
                 w.WritePropertyName("pos_y");

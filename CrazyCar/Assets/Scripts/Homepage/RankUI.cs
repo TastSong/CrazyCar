@@ -15,13 +15,13 @@ public class RankUI : MonoBehaviour, IController {
             RequestUrl.timeTrialDetailUrl,
            token: GameController.manager.token,
            succData: (data) => {
-               GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+               this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
            }));
     }
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in GameController.manager.timeTrialManager.timeTrialDic) {
+        foreach (var kvp in this.GetModel<ITimeTrialModel>().timeTrialDic) {
             RankDetailItem item = Instantiate(rankDetailItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);

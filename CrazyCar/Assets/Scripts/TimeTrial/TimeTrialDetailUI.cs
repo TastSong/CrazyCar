@@ -15,19 +15,19 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
         if (GameController.manager.standAlone) {
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.timeTrialDetailUrl);
             JsonData data = JsonMapper.ToObject(ta.text);
-            GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+            this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
         } else {
             StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
                token: GameController.manager.token,
                succData: (data) => {
-                   GameController.manager.timeTrialManager.ParseClassData(data, UpdateUI);
+                   this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
                }));
         }
     }
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in GameController.manager.timeTrialManager.timeTrialDic) {
+        foreach (var kvp in this.GetModel<ITimeTrialModel>().timeTrialDic) {
             TimeTrialItem item = Instantiate(timeTrialItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);

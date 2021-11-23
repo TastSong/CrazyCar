@@ -28,7 +28,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> AvatarNum { get; }
     BindableProperty<int> MapNum { get; }
     BindableProperty<EquipInfo> EquipInfo { get; }
-    BindableProperty<int> RememberPassword { get; set; }
+    BindableProperty<int> RememberPassword { get; }
 
     void SetUserInfoPart(UserInfo userInfo);
 
@@ -38,17 +38,17 @@ public interface IUserModel : IModel {
 }
 
 public class UserModel : AbstractModel, IUserModel {
-    public BindableProperty<string> Name { get; set; } = new BindableProperty<string>();
-    public BindableProperty<string> Password { get; set; } = new BindableProperty<string>();
-    public BindableProperty<int> Aid { get; set; } = new BindableProperty<int>();
-    public BindableProperty<int> Uid { get; set; } = new BindableProperty<int>();
-    public BindableProperty<int> Star { get; set; } = new BindableProperty<int>();
-    public BindableProperty<bool> IsVIP { get; set; } = new BindableProperty<bool>();
-    public BindableProperty<int> TravelTimes { get; set; } = new BindableProperty<int>();
-    public BindableProperty<int> AvatarNum { get; set; } = new BindableProperty<int>();
-    public BindableProperty<int> MapNum { get; set; } = new BindableProperty<int>();
-    public BindableProperty<EquipInfo> EquipInfo { get; set; } = new BindableProperty<EquipInfo>();
-    public BindableProperty<int> RememberPassword { get; set; } = new BindableProperty<int>();
+    public BindableProperty<string> Name { get; } = new BindableProperty<string>();
+    public BindableProperty<string> Password { get; } = new BindableProperty<string>();
+    public BindableProperty<int> Aid { get; } = new BindableProperty<int>();
+    public BindableProperty<int> Uid { get; } = new BindableProperty<int>();
+    public BindableProperty<int> Star { get; } = new BindableProperty<int>();
+    public BindableProperty<bool> IsVIP { get; } = new BindableProperty<bool>();
+    public BindableProperty<int> TravelTimes { get; } = new BindableProperty<int>();
+    public BindableProperty<int> AvatarNum { get; } = new BindableProperty<int>();
+    public BindableProperty<int> MapNum { get; } = new BindableProperty<int>();
+    public BindableProperty<EquipInfo> EquipInfo { get; } = new BindableProperty<EquipInfo>();
+    public BindableProperty<int> RememberPassword { get; } = new BindableProperty<int>();
 
     public UserInfo GetUserInfoPart() {
         UserInfo userInfo = new UserInfo();

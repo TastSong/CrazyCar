@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class MPlayer : MonoBehaviour {
+public class MPlayer : MonoBehaviour, IController {
     public UserInfo userInfo;
     public Rigidbody rig;
     //输入相关
@@ -324,10 +325,10 @@ public class MPlayer : MonoBehaviour {
             }
 
             if (GameController.manager.curGameType == CurGameType.TimeTrial) {
-                if (passTimes >= GameController.manager.timeTrialManager.selectInfo.times) {
-                    GameController.manager.timeTrialManager.EndTime = Util.GetTime() / 1000;
-                    Debug.Log("++++++TimeTrial EndTime = " + GameController.manager.timeTrialManager.EndTime +
-                         "  CompleteTime =  " + GameController.manager.timeTrialManager.GetCompleteTime());
+                if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
+                    this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
+                    Debug.Log("++++++TimeTrial EndTime = " + this.GetModel<ITimeTrialModel>().EndTime +
+                         "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
                     passTimes = 0;
                 }
             } else if (GameController.manager.curGameType == CurGameType.Match) {
@@ -346,5 +347,9 @@ public class MPlayer : MonoBehaviour {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
         gravity = userInfo.equipInfo.mass;
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

@@ -18,7 +18,7 @@ public class RankDetailItem : MonoBehaviour, IController {
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
-            GameController.manager.timeTrialManager.selectInfo.cid = timeTrialInfo.cid;
+            this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid = timeTrialInfo.cid;
             this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialRankUI));
         });
     }
