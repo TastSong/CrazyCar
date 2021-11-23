@@ -19,10 +19,10 @@ public class MatchResultUI : MonoBehaviour, IController {
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        for (int i = 0; i < GameController.manager.matchManager.matchRankList.Count; i++) {
+        for (int i = 0; i < this.GetModel<IMatchModel>().MatchRankList.Count; i++) {
             MatchRankItem item = Instantiate(matchResultItem);
             item.transform.SetParent(itemParent, false);
-            item.SetContent(GameController.manager.matchManager.matchRankList[i]);
+            item.SetContent(this.GetModel<IMatchModel>().MatchRankList[i]);
         }
     }
 
@@ -33,9 +33,9 @@ public class MatchResultUI : MonoBehaviour, IController {
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WritePropertyName("cid");
-        w.Write(GameController.manager.matchManager.selectInfo.cid);
+        w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);
         w.WritePropertyName("complete_time");
-        w.Write(GameController.manager.matchManager.GetCompleteTime());
+        w.Write(this.GetModel<IMatchModel>().GetCompleteTime());
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
@@ -44,7 +44,7 @@ public class MatchResultUI : MonoBehaviour, IController {
             data: bytes,
             token: GameController.manager.token,
             succData: (data) => {
-                GameController.manager.matchManager.ParseRank(data, UpdateUI);
+                this.GetModel<IMatchModel>().ParseRank(data, UpdateUI);
             }));
     }
 

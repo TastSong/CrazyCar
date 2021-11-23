@@ -12,7 +12,7 @@ public class MatchWebSocket : MonoBehaviour,IController {
             string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) + 
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
-                GameController.manager.matchManager.selectInfo.cid;
+                this.GetModel<IMatchModel>().SelectInfo.Value.cid;
             WebSocketMan.manager.Init(ws);
             Util.DelayExecuteWithSecond(3, () => { WebSocketMan.manager.StartCoroutine(SendMsg()); }); 
         }           
@@ -24,7 +24,7 @@ public class MatchWebSocket : MonoBehaviour,IController {
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
             w.WritePropertyName("cid");
-            w.Write(GameController.manager.matchManager.selectInfo.cid);
+            w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);
             w.WritePropertyName("pos_x");
             w.Write(PlayerManager.manager.GetSelfPlayer.transform.position.x);
             w.WritePropertyName("pos_y");

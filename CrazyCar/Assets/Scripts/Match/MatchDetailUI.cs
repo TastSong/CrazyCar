@@ -17,7 +17,7 @@ public class MatchDetailUI : MonoBehaviour, IController {
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in GameController.manager.matchManager.matchDic) {
+        foreach (var kvp in this.GetModel<IMatchModel>().MatchDic) {
             MatchItem item = Instantiate(matchItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);

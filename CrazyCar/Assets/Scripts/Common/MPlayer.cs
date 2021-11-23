@@ -332,10 +332,10 @@ public class MPlayer : MonoBehaviour, IController {
                     passTimes = 0;
                 }
             } else if (GameController.manager.curGameType == CurGameType.Match) {
-                if (passTimes >= GameController.manager.matchManager.selectInfo.times) {
-                    GameController.manager.matchManager.EndTime = Util.GetTime() / 1000;
-                    Debug.Log("++++++Match EndTime = " + GameController.manager.matchManager.EndTime +
-                        "  CompleteTime =  " + GameController.manager.matchManager.GetCompleteTime());
+                if (passTimes >= this.GetModel<IMatchModel>().SelectInfo.Value.times) {
+                    this.GetModel<IMatchModel>().EndTime.Value = Util.GetTime() / 1000;
+                    Debug.Log("++++++Match EndTime = " + this.GetModel<IMatchModel>().EndTime +
+                        "  CompleteTime =  " + this.GetModel<IMatchModel>().GetCompleteTime());
                     passTimes = 0;
                 }
             }

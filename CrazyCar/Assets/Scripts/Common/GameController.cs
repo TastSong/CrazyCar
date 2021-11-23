@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
     public bool standAlone = false;
 
     public EquipManager equipManager = new EquipManager();
-    public MatchManager matchManager = new MatchManager();
+    //public MatchManager matchManager = new MatchManager();
     public SystemSettingsInfo settingsInfo;
 
     private void Awake() {

@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class MatchItem : MonoBehaviour {
+public class MatchItem : MonoBehaviour, IController {
     public Button selfBtn;
     public Text nameText;
     public Text limiteText;
@@ -22,8 +23,8 @@ public class MatchItem : MonoBehaviour {
         selfBtn.onClick.AddListener(() => {
             if (CanEnter()) {
                 Debug.Log("进入课程 = " + matchInfo.cid);
-                GameController.manager.matchManager.CleanData();
-                GameController.manager.matchManager.selectInfo = matchInfo;
+                this.GetModel<IMatchModel>().CleanData();
+                this.GetModel<IMatchModel>().SelectInfo.Value = matchInfo;
                 GameController.manager.curGameType = CurGameType.Match;
                 Util.LoadingScene(SceneID.Game);
             } else {
@@ -51,5 +52,9 @@ public class MatchItem : MonoBehaviour {
         }
         startTimeText.text = Util.GetDateTime(info.startTime, "MM-dd HH:mm:ss");
         enrollTimeText.text = Util.GetDateTime(info.enrollTime, "MM-dd HH:mm:ss");
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

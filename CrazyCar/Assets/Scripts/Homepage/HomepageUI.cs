@@ -36,8 +36,8 @@ public class HomepageUI : MonoBehaviour, IController {
            RequestUrl.matchDetailUrl,
           token: GameController.manager.token,
           succData: (data) => {
-              GameController.manager.matchManager.ParseClassData(data, () => {
-                  matchGO.SetActiveFast(GameController.manager.matchManager.matchDic.Count > 0);
+              this.GetModel<IMatchModel>().ParseClassData(data, () => {
+                  matchGO.SetActiveFast(this.GetModel<IMatchModel>().MatchDic.Count > 0);
               });
           }));
     }
