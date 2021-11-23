@@ -10,8 +10,9 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using static UnityEngine.UI.Dropdown;
+using TFramework;
 
-public class SettingsUI : MonoBehaviour {
+public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;
     public Button exitBtn;
     public Dropdown languageDropdown;
@@ -67,15 +68,16 @@ public class SettingsUI : MonoBehaviour {
         if (!isInit) {
             return;
         }
-        SystemSettingsInfo info = GameController.manager.settingsInfo;
+
+        var info = this.GetModel<ISettingsModel>();
         for (int i = 0; i < languageOptionsList.Count; i++) {
-            if (info.language.Equals(lanMap[languageOptionsList[i]])) {
+            if (info.Language.Value.Equals(lanMap[languageOptionsList[i]])) {
                 languageDropdown.value = i;
                 break;
             }
         }
-        musicSlider.value = Convert.ToInt32(info.isOnMusic);
-        soundSlider.value = Convert.ToInt32(info.isOnSound);
+        musicSlider.value = Convert.ToInt32(info.IsOnMusic);
+        soundSlider.value = Convert.ToInt32(info.IsOnSound);
     }
 
     private SystemSettingsInfo GetCurrentInfo() {
@@ -88,76 +90,18 @@ public class SettingsUI : MonoBehaviour {
 
     /*********     判断信息改变    ***********/
     public void SaveSettings(Util.NoneParamFunction success = null) {
-        SystemSettingsInfo info = GetCurrentInfo();       
-        SystemSettingsInfo.SaveSystemInfo(info);
-        GameController.manager.settingsInfo = info.Clone();
+        this.GetModel<ISettingsModel>().SaveSystemInfo(GetCurrentInfo());
         // 切换语言
-        I18N.manager.ChangeLang(info.language);
+        I18N.manager.ChangeLang(this.GetModel<ISettingsModel>().Language);
         //var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
         //backgroundAudioSource.volume = Convert.ToInt32(info.isOnMusic);
-        AudioListener.volume = Convert.ToInt32(info.isOnSound);
+        AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
         success?.Invoke();
     }
-}
 
-[Serializable]
-public class SystemSettingsInfo : ISerializable {
-    public string language;
-    public bool isOnMusic;
-    public bool isOnSound;
-    private static string fileName = "settings.stf";
-    public SystemSettingsInfo() {
-    }
-
-    private SystemSettingsInfo(SerializationInfo info, StreamingContext ctxt) {       
-        language = info.GetString("language");
-        isOnMusic = info.GetBoolean("isOnMusic");
-        isOnSound = info.GetBoolean("isOnSound");
-    }
-
-    public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
-        info.AddValue("language", language);
-        info.AddValue("isOnMusic", isOnMusic);
-        info.AddValue("isOnSound", isOnSound);
-    }
-
-    public static void SaveSystemInfo(SystemSettingsInfo ss) {
-        Stream steam = File.Open(Path.Combine(Application.persistentDataPath, fileName), FileMode.Create);
-
-        var bf = new BinaryFormatter();
-        bf.Serialize(steam, ss);
-        steam.Close();
-    }
-
-    public static void DelFile() {
-        File.Delete(Path.Combine(Application.persistentDataPath, fileName));
-    }
-
-    public static SystemSettingsInfo ParseSystemInfo() {
-        Stream stream = File.Open(Path.Combine(Application.persistentDataPath, fileName), FileMode.OpenOrCreate);
-        BinaryFormatter bf = new BinaryFormatter();
-        SystemSettingsInfo mp = null;
-        try {
-            mp = (SystemSettingsInfo)bf.Deserialize(stream);
-        } catch {
-            // ignore exception
-        }
-
-        stream.Close();
-        return mp;
-    }
-
-    public SystemSettingsInfo Clone() {
-        SystemSettingsInfo info = new SystemSettingsInfo();     
-        info.language = language;
-        info.isOnMusic = isOnMusic;
-        info.isOnSound = isOnSound;
-        return info;
-    }
-
-    public bool EqualTo(SystemSettingsInfo info) {
-        return info.language == language &&
-            info.isOnMusic == isOnMusic &&
-            info.isOnSound == isOnSound;
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
+
+

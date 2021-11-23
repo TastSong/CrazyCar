@@ -5,8 +5,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class I18N : MonoBehaviour {
+public class I18N : MonoBehaviour, IController {
 
     public static I18N manager = null;
     public string currentLang = "zh-cn";
@@ -38,8 +39,8 @@ public class I18N : MonoBehaviour {
         initFinish = true;
 
         try {
-            ChangeLang(string.IsNullOrEmpty(GameController.manager.settingsInfo.language)
-                ? defaultLang : GameController.manager.settingsInfo.language);
+            ChangeLang(string.IsNullOrEmpty(this.GetModel<ISettingsModel>().Language)
+                ? defaultLang : this.GetModel<ISettingsModel>().Language);
         } catch (Exception e) {
             Console.WriteLine(e);
             ChangeLang(defaultLang);
@@ -81,5 +82,9 @@ public class I18N : MonoBehaviour {
                 i.Reset();
             }
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

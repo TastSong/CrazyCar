@@ -11,6 +11,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());
         RegisterModel<IMatchModel>(new MatchModel());
         RegisterModel<IEquipModel>(new EquipModel());
+        RegisterModel<ISettingsModel>(new SettingsModel());
         RegisterUtility<IPlayerPrefsStorage>(new PlayerPrefsStorage());
     }
 }

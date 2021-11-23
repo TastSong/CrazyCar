@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
 public enum CurGameType {
     TimeTrial = 0,
     Match
 }
 
-public class GameController : MonoBehaviour
-{
+public class GameController : MonoBehaviour, IController {
     public static GameController manager = null;
     public bool sceneLoaded = false;
     public GameHelper gameHelper;
@@ -21,8 +21,6 @@ public class GameController : MonoBehaviour
     public CurGameType curGameType = CurGameType.TimeTrial;
     public float sendMsgOffTime = 0.1f;
     public bool standAlone = false;
-
-    public SystemSettingsInfo settingsInfo;
 
     private void Awake() {
         if (manager == null) {
@@ -41,17 +39,11 @@ public class GameController : MonoBehaviour
         I18N.manager.InitTranslation();
     }
 
-    public void InitSettingsInfo() {
-        settingsInfo = SystemSettingsInfo.ParseSystemInfo();
-        if (settingsInfo == null) {
-            Debug.Log("Load local setting");
-            settingsInfo = new SystemSettingsInfo();
-            settingsInfo.language = "en";
-            settingsInfo.isOnMusic = true;
-            settingsInfo.isOnSound = true;
-        }     
-        SystemSettingsInfo.SaveSystemInfo(settingsInfo);
+    public void InitSettingsInfo() {        
+        AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
+    }
 
-        AudioListener.volume = Convert.ToInt32(settingsInfo.isOnSound);
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
