@@ -7,6 +7,7 @@ public class ChangeCarCommand : AbstractCommand{
     }
 
     protected override void OnExecute() {
+        IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, mEquipInfo.eid, mEquipInfo.rid);
         this.SendEvent(new ChangeCarEvent(mEquipInfo));
     }
 }

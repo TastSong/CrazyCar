@@ -30,8 +30,7 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
         selectIamge.gameObject.SetActiveFast(isSelect);
     }
 
-    public void OnPointerClick(PointerEventData eventData) {
-        IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, equipInfo.eid, equipInfo.rid);;
+    public void OnPointerClick(PointerEventData eventData) {        
         this.SendCommand(new ChangeCarCommand(equipInfo));      
     }
 
