@@ -32,10 +32,10 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        for (int i = 0; i < this.GetModel<ITimeTrialModel>().timeTrialRankList.Count; i++) {
+        for (int i = 0; i < this.GetModel<ITimeTrialModel>().TimeTrialRankList.Count; i++) {
             TimeTrialRankItem item = Instantiate(timeTrialRankItem);
             item.transform.SetParent(itemParent, false);
-            item.SetContent(this.GetModel<ITimeTrialModel>().timeTrialRankList[i]);
+            item.SetContent(this.GetModel<ITimeTrialModel>().TimeTrialRankList[i]);
         }
     }
 

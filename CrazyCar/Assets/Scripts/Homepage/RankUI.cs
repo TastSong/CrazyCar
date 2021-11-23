@@ -21,7 +21,7 @@ public class RankUI : MonoBehaviour, IController {
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in this.GetModel<ITimeTrialModel>().timeTrialDic) {
+        foreach (var kvp in this.GetModel<ITimeTrialModel>().TimeTrialDic) {
             RankDetailItem item = Instantiate(rankDetailItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);

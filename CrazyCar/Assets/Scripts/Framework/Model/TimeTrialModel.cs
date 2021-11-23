@@ -28,9 +28,9 @@ public interface ITimeTrialModel : IModel {
     BindableProperty<bool> IsBreakRecord { get; }
     BindableProperty<int> Rank { get; }
     BindableProperty<int> RewardStar { get; }
-    Dictionary<int, TimeTrialInfo> timeTrialDic { get; set; }
+    Dictionary<int, TimeTrialInfo> TimeTrialDic { get; set; }
     BindableProperty<TimeTrialInfo> SelectInfo { get; }
-    List<TimeTrialRankInfo> timeTrialRankList { get; set; }
+    List<TimeTrialRankInfo> TimeTrialRankList { get; set; }
     BindableProperty<bool> IsComplete { get; }
     BindableProperty<int> CompleteTime { get; }
 
@@ -59,11 +59,11 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
 
     public BindableProperty<int> RewardStar { get; } = new BindableProperty<int>();
 
-    public Dictionary<int, TimeTrialInfo> timeTrialDic { get; set; } = new Dictionary<int, TimeTrialInfo>();
+    public Dictionary<int, TimeTrialInfo> TimeTrialDic { get; set; } = new Dictionary<int, TimeTrialInfo>();
 
     public BindableProperty<TimeTrialInfo> SelectInfo { get; } = new BindableProperty<TimeTrialInfo>();
 
-    public List<TimeTrialRankInfo> timeTrialRankList { get; set; } = new List<TimeTrialRankInfo>();
+    public List<TimeTrialRankInfo> TimeTrialRankList { get; set; } = new List<TimeTrialRankInfo>();
 
     public BindableProperty<bool> IsComplete { get; } = new BindableProperty<bool>();
 
@@ -100,7 +100,7 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
     }
 
     public void ParseClassData(JsonData jsonData, Action success = null) {
-        timeTrialDic.Clear();
+        TimeTrialDic.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialInfo info = new TimeTrialInfo();
             info.cid = (int)jsonData[i]["cid"];
@@ -110,20 +110,20 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
             info.limitTime = (int)jsonData[i]["limit_time"];
             info.isHas = (bool)jsonData[i]["is_has"];
             info.times = (int)jsonData[i]["times"];
-            timeTrialDic[info.cid] = info;
+            TimeTrialDic[info.cid] = info;
         }
         success?.Invoke();
     }
 
     public void ParseRank(JsonData jsonData, Action success = null) {
-        timeTrialRankList.Clear();
+        TimeTrialRankList.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialRankInfo info = new TimeTrialRankInfo();
             info.name = (string)jsonData[i]["name"];
             info.aid = (int)jsonData[i]["aid"];
             info.completeTime = (int)jsonData[i]["complete_time"];
             info.rank = (int)jsonData[i]["rank"];
-            timeTrialRankList.Add(info);
+            TimeTrialRankList.Add(info);
         }
         success?.Invoke();
     }

@@ -27,7 +27,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private void UpdateUI() {
         Util.DeleteChildren(itemParent);
-        foreach (var kvp in this.GetModel<ITimeTrialModel>().timeTrialDic) {
+        foreach (var kvp in this.GetModel<ITimeTrialModel>().TimeTrialDic) {
             TimeTrialItem item = Instantiate(timeTrialItem);
             item.transform.SetParent(itemParent, false);
             item.SetContent(kvp.Value);
