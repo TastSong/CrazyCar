@@ -1,9 +1,9 @@
-﻿using LitJson;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Utils;
+using TFramework;
+using LitJson;
+using System;
 
 public enum EquipType {
     Car = 0,
@@ -22,14 +22,21 @@ public class EquipInfo {
     public bool isShow;
 }
 
-public class EquipManager {
-    public const string CAR = "Car";
+public interface IEquipModel : IModel {
+    Dictionary<int, EquipInfo> EquipDic { get; set; }
 
-    public Dictionary<int, EquipInfo> equipDic = new Dictionary<int, EquipInfo>();
-    public Dictionary<string, EquipResource> equipResource = new Dictionary<string, EquipResource>();
+    Dictionary<string, EquipResource> EquipResource { get; set; }
+
+    void ParseEquipRes(JsonData jsonData, Action success = null);
+}
+
+public class EquipModel : AbstractModel, IEquipModel {
+    public Dictionary<int, EquipInfo> EquipDic { get; set; } = new Dictionary<int, EquipInfo>();
+
+    public Dictionary<string, EquipResource> EquipResource { get; set; } = new Dictionary<string, EquipResource>();
 
     public void ParseEquipRes(JsonData jsonData, Action success = null) {
-        equipDic.Clear();
+        EquipDic.Clear();
         JsonData data = jsonData["equips"];
         for (int i = 0; i < data.Count; i++) {
             EquipInfo info = new EquipInfo();
@@ -43,8 +50,12 @@ public class EquipManager {
             info.isHas = (bool)data[i]["is_has"];
             info.isShow = (bool)data[i]["is_show"];
 
-            equipDic[info.eid] = info;
+            EquipDic[info.eid] = info;
         }
         success?.Invoke();
+    }
+
+    protected override void OnInit() {
+        
     }
 }

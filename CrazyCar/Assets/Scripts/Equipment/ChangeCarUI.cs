@@ -28,14 +28,14 @@ public class ChangeCarUI : MonoBehaviour, IController {
             RequestUrl.equipUrl,
         token: GameController.manager.token,
         succData: (data) => {
-            GameController.manager.equipManager.ParseEquipRes(data, SetItemContent);       
+            this.GetModel<IEquipModel>().ParseEquipRes(data, SetItemContent);       
         }));
     }
 
     private void SetItemContent() {
         Util.DeleteChildren(itemParent);
         changeCarItems.Clear();
-        foreach (var kvp in GameController.manager.equipManager.equipDic) {
+        foreach (var kvp in this.GetModel<IEquipModel>().EquipDic) {
             if (kvp.Value.isShow) {
                 ChangeCarItem item = Instantiate(changeCarItem);
                 item.transform.SetParent(itemParent, false);
@@ -44,7 +44,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
             }
         }
 
-        curEquipInfo = GameController.manager.equipManager.equipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
+        curEquipInfo = this.GetModel<IEquipModel>().EquipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
         OnChangeCarEvent(new ChangeCarEvent(curEquipInfo));
         IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
     }
@@ -65,7 +65,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
                     RequestUrl.changeEquipUrl,
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
-                    this.GetModel<IUserModel>().EquipInfo.Value = GameController.manager.equipManager.equipDic[(int)data["eid"]];
+                    this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
                     GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                     applyBtn.interactable = false;
                 },

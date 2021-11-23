@@ -10,6 +10,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());
         RegisterModel<IMatchModel>(new MatchModel());
+        RegisterModel<IEquipModel>(new EquipModel());
         RegisterUtility<IPlayerPrefsStorage>(new PlayerPrefsStorage());
     }
 }

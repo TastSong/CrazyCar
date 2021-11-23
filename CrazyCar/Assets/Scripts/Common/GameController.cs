@@ -22,8 +22,6 @@ public class GameController : MonoBehaviour
     public float sendMsgOffTime = 0.1f;
     public bool standAlone = false;
 
-    public EquipManager equipManager = new EquipManager();
-    //public MatchManager matchManager = new MatchManager();
     public SystemSettingsInfo settingsInfo;
 
     private void Awake() {

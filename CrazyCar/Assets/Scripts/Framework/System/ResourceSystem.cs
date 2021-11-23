@@ -281,8 +281,8 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     public EquipResource GetEquipResource(string rid) {
         try {
             rid = rid.Trim();
-            if (GameController.manager.equipManager.equipResource.ContainsKey(rid)) {
-                return GameController.manager.equipManager.equipResource[rid];
+            if (this.GetModel<IEquipModel>().EquipResource.ContainsKey(rid)) {
+                return this.GetModel<IEquipModel>().EquipResource[rid];
             }
 #if !UNITY_EDITOR
             var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab");
@@ -295,7 +295,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                 "Assets/AB/Equip/Items/" + rid + ".prefab");
 
 #endif
-            GameController.manager.equipManager.equipResource[rid] = e;
+            this.GetModel<IEquipModel>().EquipResource[rid] = e;
             return e;
         } catch (Exception e) {
             Debug.LogError(e);
