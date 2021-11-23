@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour
     public float sendMsgOffTime = 0.1f;
     public bool standAlone = false;
 
-    public AvatarManager avatarManager = new AvatarManager();
     public TimeTrialManager timeTrialManager = new TimeTrialManager();
     public EquipManager equipManager = new EquipManager();
     public MatchManager matchManager = new MatchManager();

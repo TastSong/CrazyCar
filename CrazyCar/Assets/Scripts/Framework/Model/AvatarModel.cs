@@ -1,10 +1,9 @@
-﻿using LitJson;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Utils;
-using System;
 using TFramework;
+using LitJson;
+using System;
 
 public class AvatarInfo {
     public int aid;
@@ -13,18 +12,17 @@ public class AvatarInfo {
     public int star;
 }
 
-public class AvatarManager : IController {
-    public int curAid;
+public interface IAvatarModel : IModel {
+    Dictionary<int, AvatarInfo> AvatarDic { get; set; }
+    void ParseAvatarRes(JsonData jsonData, Action success = null);
+}
 
-    public Dictionary<int, AvatarInfo> avatarDic = new Dictionary<int, AvatarInfo>();
+public class AvatarModel : AbstractModel, IAvatarModel {
 
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
-    }
+    public Dictionary<int, AvatarInfo> AvatarDic { get; set; } = new Dictionary<int, AvatarInfo>();
 
     public void ParseAvatarRes(JsonData jsonData, Action success = null) {
-        avatarDic.Clear();
-        curAid = this.GetModel<IUserModel>().Aid.Value;
+        AvatarDic.Clear();
         JsonData data = jsonData["avatars"];
         for (int i = 0; i < data.Count; i++) {
             AvatarInfo info = new AvatarInfo();
@@ -32,8 +30,12 @@ public class AvatarManager : IController {
             info.name = (string)data[i]["name"];
             info.isHas = (bool)data[i]["is_has"];
             info.star = (int)data[i]["star"];
-            avatarDic[info.aid] = info;
+            AvatarDic[info.aid] = info;
         }
         success?.Invoke();
+    }
+
+    protected override void OnInit() {
+        
     }
 }

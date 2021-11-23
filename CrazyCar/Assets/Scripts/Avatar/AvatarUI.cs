@@ -15,22 +15,24 @@ public class AvatarUI : MonoBehaviour, IController {
     public Transform avatarItemParent;
     public Button closeBtn;
 
+    private IAvatarModel avatarModel;
     private int curAid = 0;
 
     private void OnEnable() {
+        avatarModel = this.GetModel<IAvatarModel>();
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
         token: GameController.manager.token,
         succData: (data) => {
-            GameController.manager.avatarManager.ParseAvatarRes(data, UpdataUI);
+            avatarModel.ParseAvatarRes(data, UpdataUI);
             curAid = this.GetModel<IUserModel>().Aid.Value;
         }));
     }
 
     private void UpdataUI() {
-        curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(GameController.manager.avatarManager.curAid);
-        curAvatarName.text = GameController.manager.avatarManager.avatarDic[GameController.manager.avatarManager.curAid].name;
+        curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(curAid);
+        curAvatarName.text = avatarModel.AvatarDic[curAid].name;
         Util.DeleteChildren(avatarItemParent);
-        foreach (var kvp in GameController.manager.avatarManager.avatarDic) {
+        foreach (var kvp in avatarModel.AvatarDic) {
             AvatarItem item = Instantiate(avatarItem);
             item.transform.SetParent(avatarItemParent, false);
             item.SetContent(kvp.Value);
@@ -72,7 +74,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
         curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(e.aid);
-        curAvatarName.text = GameController.manager.avatarManager.avatarDic[e.aid].name;
+        curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;
     }
 
