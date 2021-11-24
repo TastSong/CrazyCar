@@ -21,21 +21,8 @@ public class MatchItem : MonoBehaviour, IController {
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
-            if (CanEnter()) {
-                Debug.Log("进入课程 = " + matchInfo.cid);
-                this.GetModel<IMatchModel>().CleanData();
-                this.GetModel<IMatchModel>().SelectInfo.Value = matchInfo;
-                GameController.manager.curGameType = CurGameType.Match;
-                Util.LoadingScene(SceneID.Game);
-            } else {
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The game is over"));
-            }
-
+            this.SendCommand(new EnterMatchCommand(matchInfo));
         });
-    }
-
-    private bool CanEnter() {
-        return (matchInfo.startTime + matchInfo.limitTime) * 1000 > Util.GetTime();
     }
 
     public void SetContent(MatchInfo info) {

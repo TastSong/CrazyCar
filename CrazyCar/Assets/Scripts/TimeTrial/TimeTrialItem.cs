@@ -21,33 +21,12 @@ public class TimeTrialItem : MonoBehaviour, IController {
     private void Start() {
         selfBtn.onClick.AddListener(() => {
             if (timeTrialInfo.isHas) {
-                Debug.Log("进入课程 = " + timeTrialInfo.cid);
-                this.GetModel<ITimeTrialModel>().CleanData();
-                this.GetModel<ITimeTrialModel>().SelectInfo.Value = timeTrialInfo;
-                GameController.manager.curGameType = CurGameType.TimeTrial;
-                Util.LoadingScene(SceneID.Game);
+                this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
                     GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
                     success: () => {
-                        StringBuilder sb = new StringBuilder();
-                        JsonWriter w = new JsonWriter(sb);
-                        w.WriteObjectStart();
-                        w.WritePropertyName("cid");
-                        w.Write(timeTrialInfo.cid);
-                        w.WriteObjectEnd();
-                        Debug.Log("++++++ " + sb.ToString());
-                        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-                        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
-                        data: bytes,
-                        token: GameController.manager.token,
-                        succData: (data) => {
-                            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
-                            timeTrialInfo.isHas = true;
-                            this.GetModel<IUserModel>().MapNum.Value++;
-                            lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
-                            this.SendCommand<UpdateHomepageUICommand>();
-                        }));
+                        this.SendCommand(new BuyTimeTrialClassCommand(timeTrialInfo));
                     },
                     fail: () => {
                         Debug.Log(I18N.manager.GetText("Give up to buy"));
@@ -57,6 +36,12 @@ public class TimeTrialItem : MonoBehaviour, IController {
                 }
             }
         });
+
+        this.RegisterEvent<UnlockTimeTrialEvent>(OnUnlockTimeTrial);
+    }
+
+    private void OnUnlockTimeTrial(UnlockTimeTrialEvent e) {
+        lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
     }
 
     public void SetContent(TimeTrialInfo info) {
@@ -72,6 +57,10 @@ public class TimeTrialItem : MonoBehaviour, IController {
             }
         }
         lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
+    }
+
+    private void OnDestroy() {
+        this.UnRegisterEvent<UnlockTimeTrialEvent>(OnUnlockTimeTrial);
     }
 
     public IArchitecture GetArchitecture() {

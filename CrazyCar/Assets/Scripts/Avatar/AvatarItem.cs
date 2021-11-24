@@ -14,17 +14,43 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
 
     private AvatarInfo avatarInfo;
 
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
+    public void OnPointerClick(PointerEventData eventData) {
+        if (avatarInfo.isHas) {
+            Debug.Log("点击头像 = " + avatarInfo.aid);
+            this.SendCommand(new UpdataAvatarUICommand(avatarInfo.aid));
+        } else {
+            if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
+                GameController.manager.infoConfirmAlert.ShowWithText(content:
+                    string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
+                success: () => {
+                    this.SendCommand(new BuyAvatarCommand(avatarInfo));
+                },
+                fail: () => {
+                    Debug.Log("放弃购买");
+                });
+            } else {
+                GameController.manager.warningAlert.ShowWithText
+                    (string.Format(I18N.manager.GetText("This head needs {0} star"), avatarInfo.star));
+            }
+        }
     }
 
-    public void OnPointerClick(PointerEventData eventData) {
-        this.SendCommand(new ChangeAvatarCommand(avatarInfo, lockImage));
+    private void OnUnlockAvatar(UnlockAvatarEvent e) {
+        lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 
     public void SetContent(AvatarInfo info) {
         avatarInfo = info;
         avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(avatarInfo.aid);
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
+        this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar);
+    }
+
+    private void OnDestroy() {
+        this.UnRegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }
