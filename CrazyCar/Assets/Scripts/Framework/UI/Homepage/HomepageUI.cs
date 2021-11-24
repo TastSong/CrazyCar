@@ -32,7 +32,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+        StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
            RequestUrl.matchDetailUrl,
           token: GameController.manager.token,
           succData: (data) => {

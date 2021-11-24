@@ -9,7 +9,7 @@ using TFramework;
 public class MatchWebSocket : MonoBehaviour,IController {
     private void Start() {
         if (GameController.manager.curGameType == CurGameType.Match) {
-            string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) + 
+            string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
                 this.GetModel<IMatchModel>().SelectInfo.Value.cid;

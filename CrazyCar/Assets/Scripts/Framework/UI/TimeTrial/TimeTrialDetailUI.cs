@@ -17,7 +17,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
             JsonData data = JsonMapper.ToObject(ta.text);
             this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
         } else {
-            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
+            StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
                token: GameController.manager.token,
                succData: (data) => {
                    this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);

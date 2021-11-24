@@ -20,7 +20,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         avatarModel = this.GetModel<IAvatarModel>();
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.avatarUrl,
+        StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
         token: GameController.manager.token,
         succData: (data) => {
             avatarModel.ParseAvatarRes(data, UpdataUI);

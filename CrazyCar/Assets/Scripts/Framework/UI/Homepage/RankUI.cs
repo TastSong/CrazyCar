@@ -11,7 +11,7 @@ public class RankUI : MonoBehaviour, IController {
     public Button closeBtn;
 
     private void OnEnable() {
-        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+        StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.timeTrialDetailUrl,
            token: GameController.manager.token,
            succData: (data) => {

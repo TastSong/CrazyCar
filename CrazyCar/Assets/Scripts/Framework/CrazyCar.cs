@@ -10,6 +10,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IWebSocketSystem>(new WebSocketSystem());
         RegisterSystem<IScreenEffectsSystem>(new ScreenEffectsSystem());
         RegisterSystem<IIndexCarSystem>(new IndexCarSystem());
+        RegisterSystem<INetworkSystem>(new NetworkSystem());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());

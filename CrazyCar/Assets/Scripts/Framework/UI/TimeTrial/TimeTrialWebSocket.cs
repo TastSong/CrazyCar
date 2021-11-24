@@ -9,7 +9,7 @@ using TFramework;
 public class TimeTrialWebSocket : MonoBehaviour, IController {
     private void Start() {
         //if (GameController.manager.curGameType == CurGameType.TimeTrial) {
-        //    string ws = "ws" + NetworkController.manager.HttpBaseUrl.Substring(4) +
+        //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
         //        "websocket/TimeTrialWebSocket/" +
         //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
         //    Debug.Log("+++ " + ws);

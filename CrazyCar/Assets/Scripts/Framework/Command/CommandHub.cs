@@ -23,7 +23,7 @@ public class BuyAvatarCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         GameController.manager.StartCoroutine(Util.POSTHTTP
-            (url: NetworkController.manager.HttpBaseUrl + RequestUrl.buyAvatarUrl,
+            (url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
         data: bytes,
         token: GameController.manager.token,
         succData: (data) => {
@@ -51,7 +51,7 @@ public class ApplyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.changeAvatarUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
             data: bytes, token: GameController.manager.token,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
@@ -85,7 +85,7 @@ public class BuyEquipCommand : AbstractCommand {
             GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"),
                 mEquipInfo.star),
             success: () => {
-                GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+                GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.buyEquipUrl,
                 data: bytes,
                 token: GameController.manager.token,
@@ -120,7 +120,7 @@ public class ApplyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.changeEquipUrl,
                 data: bytes, token: GameController.manager.token,
                 succData: (data) => {
@@ -138,7 +138,7 @@ public class ApplyEquipCommand : AbstractCommand {
 
 public class CreateMatchCommand : AbstractCommand {
     protected override void OnExecute() {
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                   RequestUrl.createMatchUrl,
                   token: GameController.manager.token,
                   code: (code) => {
@@ -166,7 +166,7 @@ public class ChangePasswordCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             data: bytes, token: GameController.manager.token,
             succData: (data) => {
                 GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
@@ -222,7 +222,7 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
                 GameController.manager.token = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
@@ -273,7 +273,7 @@ public class RegisterCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
             data: bytes, succData: (data) => {
                 GameController.manager.token = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
@@ -351,7 +351,7 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
         data: bytes,
         token: GameController.manager.token,
         succData: (data) => {

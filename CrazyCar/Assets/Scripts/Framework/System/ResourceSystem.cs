@@ -81,7 +81,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.resourceUrl,
             data: bytes,
             succData: (data) => {
@@ -92,9 +92,9 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                 if (avatarStr.Contains("http")) {
                     avatarURL = avatarStr;
                 } else {
-                    avatarURL = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
+                    avatarURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["avatar"]["url"];
                 }
-                avatarURL = NetworkController.manager.HttpBaseUrl + (string)data["avatar"]["url"];
+                avatarURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["avatar"]["url"];
                 avatarSize = float.Parse((string)data["avatar"]["size"]);
 
                 equipHash = (string)data["equip"]["hash"];
@@ -103,7 +103,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                 if (equipStr.Contains("http")) {
                     equipURL = equipStr;
                 } else {
-                    equipURL = NetworkController.manager.HttpBaseUrl + (string)data["equip"]["url"];
+                    equipURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["equip"]["url"];
                 }
                 equipSize = float.Parse((string)data["equip"]["size"]);
 
