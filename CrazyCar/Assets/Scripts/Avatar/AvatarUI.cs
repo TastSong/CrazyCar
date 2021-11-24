@@ -41,25 +41,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void Start() {
         applyBtn.onClick.AddListener(() => {
-            StringBuilder sb = new StringBuilder();
-            JsonWriter w = new JsonWriter(sb);
-            w.WriteObjectStart();
-            w.WritePropertyName("aid");
-            w.Write(curAid);
-            w.WriteObjectEnd();
-            Debug.Log("++++++ " + sb.ToString());
-            byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.changeAvatarUrl,
-                data: bytes, token: GameController.manager.token,
-                succData: (data) => {
-                    this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
-                },
-                code: (code) => {
-                    if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
-                    }
-                }));
+            this.SendCommand(new ApplyAvatar(curAid));
         });
 
         closeBtn.onClick.AddListener(() => {

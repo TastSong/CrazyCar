@@ -19,38 +19,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        if (avatarInfo.isHas) {
-            Debug.Log("点击头像 = " + avatarInfo.aid);
-            this.SendCommand(new UpdataAvatarUICommand(avatarInfo.aid));
-        } else {
-            if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
-                GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
-                success: () => {
-                    StringBuilder sb = new StringBuilder();
-                    JsonWriter w = new JsonWriter(sb);
-                    w.WriteObjectStart();
-                    w.WritePropertyName("aid");
-                    w.Write(avatarInfo.aid);
-                    w.WriteObjectEnd();
-                    Debug.Log("++++++ " + sb.ToString());
-                    byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-                    StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.buyAvatarUrl,
-                    data: bytes,
-                    token: GameController.manager.token,
-                    succData: (data) => {
-                        this.GetModel<IUserModel>().Star.Value = (int)data["star"];
-                        avatarInfo.isHas = true;
-                        this.GetModel<IUserModel>().AvatarNum.Value++;
-                        lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
-                    }));
-                }, 
-                fail: () => {
-                    Debug.Log("放弃购买");
-                });
-            } else {
-                GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This head needs {0} star"), avatarInfo.star));
-            }           
-        }
+        this.SendCommand(new ChangeAvatarCommand(avatarInfo, lockImage));
     }
 
     public void SetContent(AvatarInfo info) {
