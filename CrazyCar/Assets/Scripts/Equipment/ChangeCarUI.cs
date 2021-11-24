@@ -52,54 +52,11 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private void Start() {
         applyBtn.interactable = false;
         applyBtn.onClick.AddListener(() => {
-            StringBuilder sb = new StringBuilder();
-            JsonWriter w = new JsonWriter(sb);
-            w.WriteObjectStart();
-            w.WritePropertyName("eid");
-            w.Write(curEquipInfo.eid);
-            w.WriteObjectEnd();
-            Debug.Log("++++++ " + sb.ToString());
-            byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
             if (curEquipInfo.isHas) {
-                StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
-                    RequestUrl.changeEquipUrl,
-                data: bytes, token: GameController.manager.token,
-                succData: (data) => {
-                    this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
-                    applyBtn.interactable = false;
-                },
-                code: (code) => {
-                    if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
-                    }
-                }));
+                this.SendCommand(new ApplyEquipCommand(curEquipInfo));
             } else {
-                if (this.GetModel<IUserModel>().Star.Value > curEquipInfo.star) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"), curEquipInfo.star),
-                    success: () => { 
-                        StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + 
-                            RequestUrl.buyEquipUrl,
-                        data: bytes,
-                        token: GameController.manager.token,
-                        succData: (data) => {
-                            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
-                            applyBtnText.text = I18N.manager.GetText("Apply");
-                            curEquipInfo.isHas = true;
-                            for (int i = 0; i < changeCarItems.Count; i++) {
-                                changeCarItems[i].SetUnlockState();
-                            }
-                        }));
-                    },
-                    fail: () => {
-                        Debug.Log(I18N.manager.GetText("Give up to buy"));
-                    });
-                } else {
-                    GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), curEquipInfo.star));
-                }
-            }
-            
-            
+                this.SendCommand(new BuyEquipCommand(curEquipInfo));
+            }  
         });
 
         closeBtn.onClick.AddListener(() => {
@@ -109,6 +66,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
         });
 
         this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
+        this.RegisterEvent<BuyEquipEvent>(OnBuyEquip);
+        this.RegisterEvent<ApplyEquipEvent>(OnApplyEquip);
     }
 
     private void OnChangeCarEvent(ChangeCarEvent e) {
@@ -134,8 +93,22 @@ public class ChangeCarUI : MonoBehaviour, IController {
         }
     }
 
+    private void OnBuyEquip(BuyEquipEvent e) {
+        applyBtnText.text = I18N.manager.GetText("Apply");
+        curEquipInfo.isHas = true;
+        for (int i = 0; i < changeCarItems.Count; i++) {
+            changeCarItems[i].SetUnlockState();
+        }
+    }
+
+    private void OnApplyEquip(ApplyEquipEvent e) {
+        applyBtn.interactable = false;
+    }
+
     private void OnDestroy() {
         this.UnRegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
+        this.UnRegisterEvent<BuyEquipEvent>(OnBuyEquip);
+        this.UnRegisterEvent<ApplyEquipEvent>(OnApplyEquip);
     }
 
     public IArchitecture GetArchitecture() {

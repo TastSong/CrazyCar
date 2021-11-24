@@ -41,7 +41,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void Start() {
         applyBtn.onClick.AddListener(() => {
-            this.SendCommand(new ApplyAvatar(curAid));
+            this.SendCommand(new ApplyAvatarCommand(curAid));
         });
 
         closeBtn.onClick.AddListener(() => {

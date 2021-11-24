@@ -54,10 +54,10 @@ public class ChangeAvatarCommand : AbstractCommand {
     }
 }
 
-public class ApplyAvatar : AbstractCommand {
+public class ApplyAvatarCommand : AbstractCommand {
     private readonly int mCurAid;
 
-    public ApplyAvatar(int curAid) {
+    public ApplyAvatarCommand(int curAid) {
         mCurAid = curAid;
     }
 
@@ -81,5 +81,76 @@ public class ApplyAvatar : AbstractCommand {
                     GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
                 }
             }));
+    }
+}
+
+public class BuyEquipCommand : AbstractCommand {
+    private EquipInfo mEquipInfo;
+
+    public BuyEquipCommand(EquipInfo equipInfo) {
+        mEquipInfo = equipInfo;
+    }
+
+    protected override void OnExecute() {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("eid");
+        w.Write(mEquipInfo.eid);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        if (this.GetModel<IUserModel>().Star.Value > mEquipInfo.star) {
+            GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"),
+                mEquipInfo.star),
+            success: () => {
+                GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+                    RequestUrl.buyEquipUrl,
+                data: bytes,
+                token: GameController.manager.token,
+                succData: (data) => {
+                    this.GetModel<IUserModel>().Star.Value = (int)data["star"];
+                    this.SendEvent<BuyEquipEvent>();
+                }));
+            },
+            fail: () => {
+                Debug.Log(I18N.manager.GetText("Give up to buy"));
+            });
+        } else {
+            GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), 
+                mEquipInfo.star));
+        }
+    }
+}
+
+public class ApplyEquipCommand : AbstractCommand {
+    private EquipInfo mEquipInfo;
+
+    public ApplyEquipCommand(EquipInfo equipInfo) {
+        mEquipInfo = equipInfo;
+    }
+
+    protected override void OnExecute() {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("eid");
+        w.Write(mEquipInfo.eid);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+                    RequestUrl.changeEquipUrl,
+                data: bytes, token: GameController.manager.token,
+                succData: (data) => {
+                    this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                    this.SendEvent<ApplyEquipEvent>();
+                },
+                code: (code) => {
+                    if (code == 423) {
+                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
+                    }
+                }));
     }
 }
