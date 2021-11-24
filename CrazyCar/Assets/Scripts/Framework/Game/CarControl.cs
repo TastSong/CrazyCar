@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TFramework;
 
-public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IController {
     private Transform targetTransform;
     public bool isTouch;
     private void Start() {
-        targetTransform = IndexCar.manager.carGO.transform;
+        targetTransform = this.GetSystem<IIndexCarSystem>().CarGO.transform;
     }
 
     // Update is called once per frame
@@ -44,4 +45,7 @@ public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         isTouch = false;
     }
 
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
+    }
 }

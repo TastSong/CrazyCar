@@ -7,7 +7,7 @@ public class ScreenEffectsManager : MonoBehaviour, IController {
     public MotionBlurEffects motionBlurEffects;
     public Projector wireframeProjector;
 
-    private void Start() {
+    private void Awake() {
         this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects = motionBlurEffects;
         this.GetSystem<IScreenEffectsSystem>().WireframeProjector = wireframeProjector;
     }

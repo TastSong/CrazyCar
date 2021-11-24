@@ -9,6 +9,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IPlayerManagerSystem>(new PlayerManagerSystem());
         RegisterSystem<IWebSocketSystem>(new WebSocketSystem());
         RegisterSystem<IScreenEffectsSystem>(new ScreenEffectsSystem());
+        RegisterSystem<IIndexCarSystem>(new IndexCarSystem());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());

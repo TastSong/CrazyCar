@@ -46,7 +46,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
         curEquipInfo = this.GetModel<IEquipModel>().EquipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
         OnChangeCarEvent(new ChangeCarEvent(curEquipInfo));
-        IndexCar.manager.mPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
+        this.GetSystem<IIndexCarSystem>().MPlayerStyle.ChangeEquip(EquipType.Car, curEquipInfo.eid, curEquipInfo.rid);
     }
 
     private void Start() {
