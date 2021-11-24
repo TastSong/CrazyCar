@@ -18,19 +18,7 @@ public class DownloadResUI : MonoBehaviour, IController {
         resourceSystem = this.GetSystem<IResourceSystem>();
 
         standAloneBtn.onClick.AddListener(() => {
-            GameController.manager.standAlone = true;
-            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
-            JsonData data = JsonMapper.ToObject(ta.text);
-            GameController.manager.token = (string)data["token"];
-            this.GetModel<IUserModel>().ParseUserInfo(data);
-            GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
-
-            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
-                    callback: () => {
-                        Util.LoadingScene(SceneID.Index);
-                    });
-            });
+            this.SendCommand<EnableStandAloneCommand>();
         });
 
 #if !UNITY_EDITOR

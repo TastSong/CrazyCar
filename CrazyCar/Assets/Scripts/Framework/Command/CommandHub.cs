@@ -200,3 +200,116 @@ public class ChangePasswordCommand : AbstractCommand {
             }));
     }
 }
+
+public class EnableStandAloneCommand : AbstractCommand {
+    protected override void OnExecute() {
+        GameController.manager.standAlone = true;
+        TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
+        JsonData data = JsonMapper.ToObject(ta.text);
+        GameController.manager.token = (string)data["token"];
+        this.GetModel<IUserModel>().ParseUserInfo(data);
+        GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
+
+        Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+            GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+                callback: () => {
+                    Util.LoadingScene(SceneID.Index);
+                });
+        });
+    }
+}
+
+public class LoginCommand : AbstractCommand {
+    private string mUserName;
+    private string mPassword;
+    private bool mIsRemember;
+
+    public LoginCommand(string userName, string password, bool isRemember) {
+        mUserName = userName;
+        mPassword = password;
+        mIsRemember = isRemember;
+    }
+
+    protected override void OnExecute() {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("UserName");
+        w.Write(mUserName);
+        w.WritePropertyName("Password");
+        w.Write(mPassword);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.loginUrl,
+            data: bytes, succData: (data) => {
+                GameController.manager.token = (string)data["token"];
+                this.GetModel<IUserModel>().ParseUserInfo(data);
+                GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
+                this.GetModel<IUserModel>().Password.Value = mPassword;
+            }, code: (code) => {
+                if (code == 200) {
+                    Util.DelayExecuteWithSecond(Util.btnASTime, () => {
+                        if (mUserName.ToLower() == "tast") {
+                            GameController.manager.gameHelper.gameObject.SetActiveFast(true);
+                        }
+                        GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+                            callback: () => {
+                                this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
+                                Util.LoadingScene(SceneID.Index);
+                            });
+                    });
+
+                } else if (code == 423) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Password Error"));
+                } else if (code == 404) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User not registered"));
+                } else {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                }
+            }));
+    }
+}
+
+
+public class RegisterCommand : AbstractCommand {
+    private string mUserName;
+    private string mPassword;
+
+    public RegisterCommand(string userName, string password) {
+        mUserName = userName;
+        mPassword = password;
+    }
+
+    protected override void OnExecute() {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("UserName");
+        w.Write(mUserName);
+        w.WritePropertyName("Password");
+        w.Write(mPassword);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
+            data: bytes, succData: (data) => {
+                GameController.manager.token = (string)data["token"];
+                this.GetModel<IUserModel>().ParseUserInfo(data);
+                GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
+                this.GetModel<IUserModel>().Password.Value = mPassword;
+            }, code: (code) => {
+                if (code == 200) {
+                    GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Registration Successful"), callback: () => {
+                        Util.LoadingScene(SceneID.Index);
+                    });
+                } else if (code == 423) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User registered"));
+                } else if (code == 425) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
+                } else {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                }
+            }));
+    }
+}

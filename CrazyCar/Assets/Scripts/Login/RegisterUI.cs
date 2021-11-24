@@ -38,35 +38,7 @@ public class RegisterUI : MonoBehaviour, IController {
                 return;
             }
 
-            StringBuilder sb = new StringBuilder();
-            JsonWriter w = new JsonWriter(sb);
-            w.WriteObjectStart();
-            w.WritePropertyName("UserName");
-            w.Write(userNameInput.text);
-            w.WritePropertyName("Password");
-            w.Write(passwordInput.text);
-            w.WriteObjectEnd();
-            Debug.Log("++++++ " + sb.ToString());
-            byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-            StartCoroutine(Util.POSTHTTP(url : NetworkController.manager.HttpBaseUrl + RequestUrl.registerUrl,
-                data : bytes, succData : (data) => {
-                    GameController.manager.token = (string)data["token"];
-                    this.GetModel<IUserModel>().ParseUserInfo(data);
-                    GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
-                    this.GetModel<IUserModel>().Password.Value = passwordInput.text;
-                }, code : (code) => {
-                    if (code == 200) {
-                        GameController.manager.warningAlert.ShowWithText(text : I18N.manager.GetText("Registration Successful"), callback : () => {
-                            Util.LoadingScene(SceneID.Index);
-                        });
-                    } else if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User registered"));
-                    } else if (code == 425) {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
-                    } else {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
-                    }
-                }));
+            this.SendCommand(new RegisterCommand(userNameInput.text, passwordInput.text));
         });     
     }
 }
