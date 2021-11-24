@@ -6,21 +6,17 @@ using UnityEngine;
 using UnityWebSocket;
 using TFramework;
 
-public class WebSocketMan : MonoBehaviour, IController {
-    public static WebSocketMan manager = null;
-    public string address;
-    public int receiveCount;
+public interface IWebSocketSystem : ISystem {
+    void Init(string url);
+    void SendMsgToServer(string msg);
+    void CloseConnect();
+}
 
+public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
+    private string address;
+    private int receiveCount;
     private IWebSocket socket;
     private JsonData recJD = new JsonData();
-
-    private void Awake() {
-        if (manager == null) {
-            manager = this;
-        } else if (manager != this) {
-            Destroy(gameObject);
-        }
-    }
 
     public void Init(string url) {
         address = url;
@@ -38,6 +34,12 @@ public class WebSocketMan : MonoBehaviour, IController {
         }
     }
 
+    public void CloseConnect() {
+        if (socket != null && socket.ReadyState != WebSocketState.Closed) {
+            socket.CloseAsync();
+        }
+    }
+
     private void Socket_OnOpen(object sender, OpenEventArgs e) {
         Debug.Log(string.Format("Connected: {0}\n", address));
     }
@@ -49,9 +51,9 @@ public class WebSocketMan : MonoBehaviour, IController {
             Debug.Log("Get Server Data : " + e.Data);
             recJD = JsonMapper.ToObject(e.Data);
             if (GameController.manager.curGameType == CurGameType.TimeTrial ||
-                GameController.manager.curGameType == CurGameType.Match) {   
+                GameController.manager.curGameType == CurGameType.Match) {
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(ParsePlayerStateMsg(recJD));
-            } 
+            }
         }
         receiveCount += 1;
     }
@@ -62,12 +64,6 @@ public class WebSocketMan : MonoBehaviour, IController {
 
     private void Socket_OnError(object sender, ErrorEventArgs e) {
         Debug.Log(string.Format("Error: {0}\n", e.Message));
-    }
-
-    private void OnDestroy() {
-        if (socket != null && socket.ReadyState != WebSocketState.Closed) {
-            socket.CloseAsync();
-        }
     }
 
     private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
@@ -86,7 +82,9 @@ public class WebSocketMan : MonoBehaviour, IController {
         return playerStateMsg;
     }
 
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
+    protected override void OnInit() {
+        
     }
+
+    
 }

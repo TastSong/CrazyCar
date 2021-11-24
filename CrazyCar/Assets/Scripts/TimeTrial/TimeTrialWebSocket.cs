@@ -56,10 +56,14 @@ public class TimeTrialWebSocket : MonoBehaviour, IController {
                 w.WriteObjectEnd();
                 w.WriteObjectEnd();
                 Debug.Log("Post Server : " + sb.ToString());
-                WebSocketMan.manager.SendMsgToServer(sb.ToString());
+                this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
             }
             yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
         }
+    }
+
+    private void OnDestroy() {
+        this.GetSystem<IWebSocketSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {

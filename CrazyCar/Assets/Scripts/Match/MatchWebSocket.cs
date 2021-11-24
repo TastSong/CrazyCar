@@ -13,8 +13,8 @@ public class MatchWebSocket : MonoBehaviour,IController {
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
                 this.GetModel<IMatchModel>().SelectInfo.Value.cid;
-            WebSocketMan.manager.Init(ws);
-            Util.DelayExecuteWithSecond(3, () => { WebSocketMan.manager.StartCoroutine(SendMsg()); }); 
+            this.GetSystem<IWebSocketSystem>().Init(ws);
+            Util.DelayExecuteWithSecond(3, () => { GameController.manager.StartCoroutine(SendMsg()); }); 
         }           
     }
 
@@ -55,9 +55,13 @@ public class MatchWebSocket : MonoBehaviour,IController {
             w.WriteObjectEnd();
             w.WriteObjectEnd();
             //Debug.Log("Post Server : " + sb.ToString());
-            WebSocketMan.manager.SendMsgToServer(sb.ToString());
+            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
             yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
         }
+    }
+
+    private void OnDestroy() {
+        this.GetSystem<IWebSocketSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {
