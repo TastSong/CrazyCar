@@ -5,8 +5,9 @@ using DG.Tweening;
 using Utils;
 using UnityEngine.UI;
 using System;
+using TFramework;
 
-public class CountDownAnim : MonoBehaviour {
+public class CountDownAnim : MonoBehaviour, IController {
     public Text countDownText;
 
     private void Start() {
@@ -28,15 +29,16 @@ public class CountDownAnim : MonoBehaviour {
     }
 
     private void PlayScreenEffect() {
-        ScreenEffectsManager.manager.wireframeProjector.farClipPlane = 0;
-        ScreenEffectsManager.manager.wireframeProjector.gameObject.SetActiveFast(true);
+        Projector wireframeProjector = this.GetSystem<IScreenEffectsSystem>().WireframeProjector;
+        wireframeProjector.farClipPlane = 0;
+        wireframeProjector.gameObject.SetActiveFast(true);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(DOTween.To(() => ScreenEffectsManager.manager.wireframeProjector.farClipPlane,
-            x => ScreenEffectsManager.manager.wireframeProjector.farClipPlane = x, 300, 3.4f));
-        sequence.Append(DOTween.To(() => ScreenEffectsManager.manager.wireframeProjector.farClipPlane,
-            x => ScreenEffectsManager.manager.wireframeProjector.farClipPlane = x, 0, 1.4f));
+        sequence.Append(DOTween.To(() => wireframeProjector.farClipPlane,
+            x => wireframeProjector.farClipPlane = x, 300, 3.4f));
+        sequence.Append(DOTween.To(() => wireframeProjector.farClipPlane,
+            x => wireframeProjector.farClipPlane = x, 0, 1.4f));
         sequence.OnComplete(() => {
-            ScreenEffectsManager.manager.wireframeProjector.gameObject.SetActiveFast(false);
+            wireframeProjector.gameObject.SetActiveFast(false);
         });
     }
 
@@ -46,5 +48,9 @@ public class CountDownAnim : MonoBehaviour {
             yield return new WaitForSecondsRealtime(1.0f);
             time--;
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

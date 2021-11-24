@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TFramework;
 
-public class ScreenEffectsManager : MonoBehaviour {
-    public static ScreenEffectsManager manager;
+public class ScreenEffectsManager : MonoBehaviour, IController {
     public MotionBlurEffects motionBlurEffects;
     public Projector wireframeProjector;
 
-    private void Awake() {
-        if (manager == null) {
-            manager = this;
-        } else if (manager != this) {
-            Destroy(this);
-        }
+    private void Start() {
+        this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects = motionBlurEffects;
+        this.GetSystem<IScreenEffectsSystem>().WireframeProjector = wireframeProjector;
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

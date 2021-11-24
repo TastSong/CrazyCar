@@ -62,7 +62,7 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     void Update() {
-        //ScreenEffectsManager.manager.motionBlurEffects.Intensity = 0.5f;
+        //this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = 0.5f;
         if (Input.GetKeyDown(KeyCode.K)) {
             isUseKeyboard = !isUseKeyboard;
         }
@@ -310,12 +310,12 @@ public class MPlayer : MonoBehaviour, IController {
 
     private void EnableScreenEffect() {
         screenEffectTime += Time.fixedDeltaTime;
-        ScreenEffectsManager.manager.motionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.14f);
+        this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.14f);
     }
 
     private void DisableScreenEffect() {
         screenEffectTime = 0;
-        ScreenEffectsManager.manager.motionBlurEffects.Intensity = screenEffectTime;
+        this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = screenEffectTime;
     }
 
     private void OnTriggerEnter(Collider other) {
