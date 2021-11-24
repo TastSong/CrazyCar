@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour, IController {
     public WarningAlert warningAlert;
     public InfoConfirmAlert infoConfirmAlert;
     public string token;
+    public UserInfo userInfo = new UserInfo();
     public CurGameType curGameType = CurGameType.TimeTrial;
     public float sendMsgOffTime = 0.1f;
     public bool standAlone = false;

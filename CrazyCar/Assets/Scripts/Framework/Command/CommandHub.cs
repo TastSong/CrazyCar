@@ -189,6 +189,7 @@ public class EnableStandAloneCommand : AbstractCommand {
         JsonData data = JsonMapper.ToObject(ta.text);
         GameController.manager.token = (string)data["token"];
         this.GetModel<IUserModel>().ParseUserInfo(data);
+        GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
 
         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
             GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
@@ -225,6 +226,7 @@ public class LoginCommand : AbstractCommand {
             data: bytes, succData: (data) => {
                 GameController.manager.token = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
+                GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
@@ -275,6 +277,7 @@ public class RegisterCommand : AbstractCommand {
             data: bytes, succData: (data) => {
                 GameController.manager.token = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
+                GameController.manager.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
