@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
-public class ControlPanel : MonoBehaviour {
+public class ControlPanel : MonoBehaviour, IController {
     public Button exitBtn;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
@@ -33,26 +34,30 @@ public class ControlPanel : MonoBehaviour {
         });
 
         frontBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.vInput = 1;
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = 1;
         });
         backBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.vInput = -1;
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = -1;
         });
         leftBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.GetSelfPlayer.hInput = 0;
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = 0;
         });
         rightBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.GetSelfPlayer.hInput = 0;
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = 0;
         });
         spaceBtn.SetClick((float time) => {
-            PlayerManager.manager.GetSelfPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
         }, () => {
-            PlayerManager.manager.GetSelfPlayer.sInput = 0;
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.sInput = 0;
         });
 
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

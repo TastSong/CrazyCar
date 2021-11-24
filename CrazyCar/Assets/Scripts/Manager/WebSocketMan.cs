@@ -4,8 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityWebSocket;
+using TFramework;
 
-public class WebSocketMan : MonoBehaviour {
+public class WebSocketMan : MonoBehaviour, IController {
     public static WebSocketMan manager = null;
     public string address;
     public int receiveCount;
@@ -49,7 +50,7 @@ public class WebSocketMan : MonoBehaviour {
             recJD = JsonMapper.ToObject(e.Data);
             if (GameController.manager.curGameType == CurGameType.TimeTrial ||
                 GameController.manager.curGameType == CurGameType.Match) {   
-                PlayerManager.manager.RespondAction(ParsePlayerStateMsg(recJD));
+                this.GetSystem<IPlayerManagerSystem>().RespondAction(ParsePlayerStateMsg(recJD));
             } 
         }
         receiveCount += 1;
@@ -83,5 +84,9 @@ public class WebSocketMan : MonoBehaviour {
         playerStateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
         success?.Invoke();
         return playerStateMsg;
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

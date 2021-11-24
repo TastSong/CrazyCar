@@ -6,6 +6,7 @@ using TFramework;
 public class CrazyCar : Architecture<CrazyCar> {
     protected override void Init() {
         RegisterSystem<IResourceSystem>(new ResourceSystem());
+        RegisterSystem<IPlayerManagerSystem>(new PlayerManagerSystem());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());

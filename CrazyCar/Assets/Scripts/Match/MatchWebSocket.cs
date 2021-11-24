@@ -26,13 +26,13 @@ public class MatchWebSocket : MonoBehaviour,IController {
             w.WritePropertyName("cid");
             w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);
             w.WritePropertyName("pos_x");
-            w.Write(PlayerManager.manager.GetSelfPlayer.transform.position.x);
+            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.x);
             w.WritePropertyName("pos_y");
-            w.Write(PlayerManager.manager.GetSelfPlayer.transform.position.y);
+            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.y);
             w.WritePropertyName("pos_z");
-            w.Write(PlayerManager.manager.GetSelfPlayer.transform.position.z);
+            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.z);
             w.WritePropertyName("speed");
-            w.Write(PlayerManager.manager.GetSelfPlayer.rig.velocity.x);
+            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.x);
             w.WritePropertyName("user_info");
             w.WriteObjectStart();
             w.WritePropertyName("name");

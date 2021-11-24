@@ -67,7 +67,7 @@ public class MPlayer : MonoBehaviour, IController {
             isUseKeyboard = !isUseKeyboard;
         }
 
-        if (isUseKeyboard && PlayerManager.manager.GetSelfPlayer == this) {
+        if (isUseKeyboard && this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this) {
             vInput = Input.GetAxisRaw("Vertical");
             hInput = Input.GetAxisRaw("Horizontal");
         }
@@ -111,7 +111,7 @@ public class MPlayer : MonoBehaviour, IController {
         CalculateForceDir();
         AddForceToMove();
 
-        if (PlayerManager.manager.GetSelfPlayer != this) {
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
             transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
         }
     }
@@ -320,7 +320,7 @@ public class MPlayer : MonoBehaviour, IController {
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "EndSign") {
-            if (PlayerManager.manager.GetSelfPlayer == this) {
+            if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this) {
                 passTimes++;
             }
 
