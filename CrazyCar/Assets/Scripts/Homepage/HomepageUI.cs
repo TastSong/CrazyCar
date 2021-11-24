@@ -28,10 +28,10 @@ public class HomepageUI : MonoBehaviour, IController {
     public Button createMatchBtn;
 
     private void OnEnable() {
-        GetMatchDetail();
+        OnUpdataMatchDetail(new UpdataMatchDetailEvent());
     }
 
-    private void GetMatchDetail() {
+    private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
         StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
            RequestUrl.matchDetailUrl,
           token: GameController.manager.token,
@@ -74,15 +74,7 @@ public class HomepageUI : MonoBehaviour, IController {
                 ShowStandAlone();
                 return;
             }
-            StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
-                  RequestUrl.createMatchUrl,
-                  token: GameController.manager.token,
-                  code : (code) => { 
-                    if(code == 200) {
-                          GetMatchDetail();
-                      }  
-                  }
-              ));
+            this.SendCommand<CreateMatchCommand>();
         });
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);
@@ -141,6 +133,7 @@ public class HomepageUI : MonoBehaviour, IController {
 
         OnUpdataUI(new UpdateHomepageUIEvent());
         this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
+        this.RegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail);
     }
 
     private void ShowStandAlone() {
@@ -155,6 +148,7 @@ public class HomepageUI : MonoBehaviour, IController {
 
     private void OnDestroy() {
         this.UnRegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
+        this.UnRegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail);
     }
 
     public IArchitecture GetArchitecture() {

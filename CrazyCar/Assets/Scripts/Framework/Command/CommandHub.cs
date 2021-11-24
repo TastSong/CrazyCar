@@ -154,3 +154,49 @@ public class ApplyEquipCommand : AbstractCommand {
                 }));
     }
 }
+
+public class CreateMatchCommand : AbstractCommand {
+    protected override void OnExecute() {
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl +
+                  RequestUrl.createMatchUrl,
+                  token: GameController.manager.token,
+                  code: (code) => {
+                      if (code == 200) {
+                          this.SendEvent<UpdataMatchDetailEvent>();
+                      }
+                  }
+              ));
+    }
+}
+
+public class ChangePasswordCommand : AbstractCommand {
+    private string mPassword;
+
+    public ChangePasswordCommand(string password) {
+        mPassword = password;
+    }
+
+    protected override void OnExecute() {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("password");
+        w.Write(mPassword);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        GameController.manager.StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+            data: bytes, token: GameController.manager.token,
+            succData: (data) => {
+                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
+                this.GetModel<IUserModel>().Password.Value = mPassword;
+            },
+            code: (code) => {
+                if (code == 423) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
+                } else if (code == 404) {
+                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
+                }
+            }));
+    }
+}

@@ -54,27 +54,7 @@ public class ProfileUI : MonoBehaviour, IController {
             } else if (passwordInput.text.Length < 6) {
                 GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
             } else {
-                StringBuilder sb = new StringBuilder();
-                JsonWriter w = new JsonWriter(sb);
-                w.WriteObjectStart();
-                w.WritePropertyName("password");
-                w.Write(passwordInput.text);
-                w.WriteObjectEnd();
-                Debug.Log("++++++ " + sb.ToString());
-                byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-                StartCoroutine(Util.POSTHTTP(url: NetworkController.manager.HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
-                    data: bytes, token: GameController.manager.token, 
-                    succData: (data) => {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
-                        this.GetModel<IUserModel>().Password.Value = passwordInput.text;
-                    },
-                    code: (code) => {
-                        if (code == 423) {
-                            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
-                        } else if (code == 404) {
-                            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
-                        } 
-                    }));
+                this.SendCommand(new ChangePasswordCommand(passwordInput.text));
             }
         });
     }
