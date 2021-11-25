@@ -734,28 +734,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223188429}
-  - component: {fileID: 223188428}
   m_Layer: 0
-  m_Name: WebSocketManager
+  m_Name: WebSocketController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &223188428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223188427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c2e7e85fa94594da5929050ff8d49c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  address: ws://127.0.0.1
-  receiveCount: 0
 --- !u!4 &223188429
 Transform:
   m_ObjectHideFlags: 0
@@ -3052,7 +3037,7 @@ GameObject:
   - component: {fileID: 1406224802}
   - component: {fileID: 1406224801}
   m_Layer: 0
-  m_Name: ScreenEffectsManager
+  m_Name: ScreenEffectsController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3741,7 +3726,7 @@ GameObject:
   - component: {fileID: 1844047187}
   - component: {fileID: 1844047188}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: PlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TFramework;
 
-public class ScreenEffectsManager : MonoBehaviour, IController {
+public class ScreenEffectsController : MonoBehaviour, IController {
     public MotionBlurEffects motionBlurEffects;
     public Projector wireframeProjector;
 

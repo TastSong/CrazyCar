@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour, IController {
     public float sendMsgOffTime = 0.1f;
     public bool standAlone = false;
 
+
     private void Awake() {
         if (manager == null) {
             DontDestroyOnLoad(gameObject);

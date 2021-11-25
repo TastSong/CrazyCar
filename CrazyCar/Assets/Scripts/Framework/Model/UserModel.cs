@@ -65,7 +65,6 @@ public class UserModel : AbstractModel, IUserModel {
     }
 
     public void ParseUserInfo(JsonData jsonData) {
-        UserInfo userInfo = new UserInfo();
         Name.Value = (string)jsonData["user_info"]["name"];
         Uid.Value = (int)jsonData["user_info"]["uid"];
         Aid.Value = (int)jsonData["user_info"]["aid"];
@@ -87,6 +86,7 @@ public class UserModel : AbstractModel, IUserModel {
         info.isHas = (bool)data["is_has"];
         info.isShow = (bool)data["is_show"];
         EquipInfo.Value = info;
+        GameController.manager.userInfo = GetUserInfoPart();
     }
 
     public void SetUserInfoPart(UserInfo userInfo) {

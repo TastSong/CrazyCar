@@ -5,7 +5,7 @@ using UnityEngine;
 using TFramework;
 
 
-public class PlayerManager : MonoBehaviour, IController {
+public class PlayerController : MonoBehaviour, IController {
     public MPlayer mPlayerPrefab;
     public Transform startPos;
     public Transform  cinemachineTF;
