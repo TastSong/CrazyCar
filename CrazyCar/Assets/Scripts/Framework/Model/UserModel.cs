@@ -86,7 +86,6 @@ public class UserModel : AbstractModel, IUserModel {
         info.isHas = (bool)data["is_has"];
         info.isShow = (bool)data["is_show"];
         EquipInfo.Value = info;
-        GameController.manager.userInfo = GetUserInfoPart();
     }
 
     public void SetUserInfoPart(UserInfo userInfo) {
@@ -107,18 +106,30 @@ public class UserModel : AbstractModel, IUserModel {
         Name.Register((v) => { 
             if(PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.userName, v);
+                this.SendEvent<UpdataUserInfoEvent>();
             }
         });
+
+        Aid.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        Uid.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        Star.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        IsVIP.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        TravelTimes.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        MapNum.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+        EquipInfo.Register((v) => { this.SendEvent<UpdataUserInfoEvent>(); });
+
         Password.Value = storage.LoadString(PrefKeys.password);
         Password.Register((v) => {
             if (PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.password, v);
             }           
         });
+
         RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);
         RememberPassword.Register(v =>
             storage.SaveInt(PrefKeys.rememberPassword, v)
         );
+       
     }
    
 }

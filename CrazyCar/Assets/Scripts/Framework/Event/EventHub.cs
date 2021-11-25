@@ -25,3 +25,7 @@ public class MakeNewPlayerEvent {
         playerStateMsg = msg;
     }
 }
+
+public class UpdataUserInfoEvent {
+
+}
