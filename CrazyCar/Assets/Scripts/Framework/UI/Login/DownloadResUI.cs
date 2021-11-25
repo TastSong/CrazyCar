@@ -35,8 +35,9 @@ public class DownloadResUI : MonoBehaviour, IController {
         w.Write(Application.version);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
+        Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
             data: bytes, succData: (data) => {
                 if ((bool)data["is_forced_updating"]) {
                     this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),

@@ -350,38 +350,6 @@ namespace Utils {
             }
         }
 #endif
-        public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
-            //if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
-            //    yield break;
-            //}
-            
-            UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-            if (data != null) {
-                request.uploadHandler = new UploadHandlerRaw(data);
-            }
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Accept", "application/json");
-            if (!string.IsNullOrEmpty(token)) {
-                request.SetRequestHeader("Authorization", token);
-            }
-
-            yield return request.SendWebRequest();
-
-            if (request.isNetworkError || request.isHttpError) {
-                Debug.LogError("Is Network Error url = " + url);
-            } else {
-                byte[] results = request.downloadHandler.data;
-                string s = Encoding.UTF8.GetString(results);
-                Debug.Log(s);
-                JsonData d = JsonMapper.ToObject(s);
-
-                code?.Invoke((int)d["code"]);
-                if ((int)d["code"] == 200) {
-                    succData?.Invoke(d["data"]);
-                }
-            }
-        }
 
         private static DateTime JanFirst1970 = new DateTime(1970, 1, 1);
         public static long GetTime() {

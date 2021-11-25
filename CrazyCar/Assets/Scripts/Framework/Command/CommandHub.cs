@@ -21,7 +21,7 @@ public class BuyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP
             (url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
         data: bytes,
         token: this.GetModel<IGameControllerModel>().Token.Value,
@@ -50,7 +50,7 @@ public class ApplyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
@@ -84,7 +84,7 @@ public class BuyEquipCommand : AbstractCommand {
             this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(this.GetSystem<II18NSystem>().GetText("Whether to spend {0} star on this equip"),
                 mEquipInfo.star),
             success: () => {
-                CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.buyEquipUrl,
                 data: bytes,
                 token: this.GetModel<IGameControllerModel>().Token.Value,
@@ -119,7 +119,7 @@ public class ApplyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.changeEquipUrl,
                 data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
                 succData: (data) => {
@@ -137,7 +137,7 @@ public class ApplyEquipCommand : AbstractCommand {
 
 public class CreateMatchCommand : AbstractCommand {
     protected override void OnExecute() {
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                   RequestUrl.createMatchUrl,
                   token: this.GetModel<IGameControllerModel>().Token.Value,
                   code: (code) => {
@@ -165,7 +165,7 @@ public class ChangePasswordCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Modify Successfully"));
@@ -220,7 +220,7 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
                 this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
@@ -270,7 +270,7 @@ public class RegisterCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
             data: bytes, succData: (data) => {
                 this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
@@ -348,7 +348,7 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
         data: bytes,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
