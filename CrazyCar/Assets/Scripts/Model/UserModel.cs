@@ -33,8 +33,6 @@ public interface IUserModel : IModel {
     void SetUserInfoPart(UserInfo userInfo);
 
     void ParseUserInfo(JsonData jsonData);
-
-    UserInfo GetUserInfoPart();
 }
 
 public class UserModel : AbstractModel, IUserModel {
@@ -49,20 +47,6 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<int> MapNum { get; } = new BindableProperty<int>();
     public BindableProperty<EquipInfo> EquipInfo { get; } = new BindableProperty<EquipInfo>();
     public BindableProperty<int> RememberPassword { get; } = new BindableProperty<int>();
-
-    public UserInfo GetUserInfoPart() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.aid = Aid.Value;
-        userInfo.avatarNum = AvatarNum.Value;
-        userInfo.equipInfo = EquipInfo.Value;
-        userInfo.isVIP = IsVIP;
-        userInfo.mapNum = MapNum.Value;
-        userInfo.name = Name.Value;
-        userInfo.star = Star.Value;
-        userInfo.uid = Uid.Value;
-        userInfo.travelTimes = TravelTimes.Value;
-        return userInfo;
-    }
 
     public void ParseUserInfo(JsonData jsonData) {
         Name.Value = (string)jsonData["user_info"]["name"];

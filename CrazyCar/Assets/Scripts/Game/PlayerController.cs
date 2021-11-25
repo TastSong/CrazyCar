@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour, IController {
         this.GetSystem<IPlayerManagerSystem>().SelfPlayer = Instantiate(mPlayerPrefab, GetStartPosition(), Quaternion.identity);
         MPlayer selfPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         selfPlayer.transform.SetParent(transform, false);
-        selfPlayer.userInfo = this.GetModel<IUserModel>().GetUserInfoPart();
+        selfPlayer.userInfo = this.SendQuery(new UserInfoQuery());
         selfPlayer.UpdateSelfParameter();
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(EquipType.Car,
             this.GetModel<IUserModel>().EquipInfo.Value.eid,

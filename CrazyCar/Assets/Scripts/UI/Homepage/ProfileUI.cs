@@ -25,7 +25,7 @@ public class ProfileUI : MonoBehaviour, IController {
     }
 
     private void OnEnable() {
-        UserInfo userInfo = this.GetModel<IUserModel>().GetUserInfoPart();       
+        UserInfo userInfo = this.SendQuery(new UserInfoQuery());
         vipImage.gameObject.SetActiveFast(userInfo.isVIP);
         userNameInput.text = userInfo.name;
         starText.text = userInfo.star.ToString();
