@@ -32,8 +32,7 @@
 </div> 
 
 
-
-[开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[English](./README_en.md)
+[开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[English](./README_en.md)
 
 :clap:  欢迎使用 **Crazy Car** ！ 
 
