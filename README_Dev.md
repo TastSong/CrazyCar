@@ -1,6 +1,72 @@
 # CrazyCar
 unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
+## 框架结构
+
+### 层级
+
+* 表现层：ViewController 层
+
+* 系统层：System 层
+
+* 数据层：Model 层
+
+* 工具层：Utility 层
+
+### 规则
+
+#### 表现层：
+
+* 可以获取 System
+
+* 可以获取 Model
+
+* 可以发送 Command
+
+* 可以监听 Event
+
+#### 系统层：
+
+* 可以获取 System
+
+* 可以获取 Model
+
+* 可以监听、发送 Event
+
+* 可以获取 Utility
+
+#### 数据层：
+
+* 可以获取 Utility
+
+* 可以发送 Event
+
+#### 工具层：
+
+* 集成第三方库，或者封装 API
+
+#### Command (独立于层级之外)
+
+* 可以获取 System
+
+* 可以获取 Model
+
+* 可以发送 Event
+
+* 可以获取 Utility
+
+* 可以发送 Command
+
+### 框架-设计模式
+
+1. ViewController将交互逻辑以Command方式实现；(命令模式)
+2. ViewController将表现逻辑以Event方式表现；(观察者模式)
+3. ViewController和System对Model的数据查询，用Qurey实现，从而使得查询变成充血模型；(中介者模式)
+4. 四层的注册利用的原理为IOC；(外观模式) 
+5. 四层的获取； (单例模式) 
+
+> 在[QFramework](https://github.com/liangxiegame/QFramework)上进行微改
+
 ## 数据传输格式制定
 
 1. HTTP 数据传输格式指定为JSON
@@ -1224,4 +1290,4 @@ IsSucc--No-->End;
      | rank              | int  | 排名        |
      | aid               | int  | 用户头像ID  |
      | complete_time     | int  | 完成时间    |
-     | name              | int  | 用户名      |
+     | name              | int  | 用户名-+-   |
