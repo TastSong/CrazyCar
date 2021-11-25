@@ -50,8 +50,8 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         } else if (e.IsText) {
             Debug.Log("Get Server Data : " + e.Data);
             recJD = JsonMapper.ToObject(e.Data);
-            if (GameController.manager.curGameType == CurGameType.TimeTrial ||
-                GameController.manager.curGameType == CurGameType.Match) {
+            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
+                this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(ParsePlayerStateMsg(recJD));
             }
         }

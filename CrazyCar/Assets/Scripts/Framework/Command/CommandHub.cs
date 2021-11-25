@@ -1,13 +1,12 @@
 ﻿using LitJson;
 using System.Text;
-using TFramework;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
+using TFramework;
 
 public class BuyAvatarCommand : AbstractCommand {
-    private AvatarInfo mAvatarInfo; // 不用New
-    private Image mLockImage;
+    private AvatarInfo mAvatarInfo; 
 
     public BuyAvatarCommand(AvatarInfo avatarInfo) {
         mAvatarInfo = avatarInfo;
@@ -22,10 +21,10 @@ public class BuyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP
             (url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
         data: bytes,
-        token: GameController.manager.token,
+        token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
             this.GetModel<IUserModel>().Star.Value = (int)data["star"];
             mAvatarInfo.isHas = true;
@@ -51,15 +50,15 @@ public class ApplyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
-            data: bytes, token: GameController.manager.token,
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
+            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
             },
             code: (code) => {
                 if (code == 423) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
                 }
             }));
     }
@@ -82,13 +81,13 @@ public class BuyEquipCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         if (this.GetModel<IUserModel>().Star.Value > mEquipInfo.star) {
-            GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"),
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"),
                 mEquipInfo.star),
             success: () => {
-                GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.buyEquipUrl,
                 data: bytes,
-                token: GameController.manager.token,
+                token: this.GetModel<IGameControllerModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                     this.SendEvent<BuyEquipEvent>();
@@ -98,7 +97,7 @@ public class BuyEquipCommand : AbstractCommand {
                 Debug.Log(I18N.manager.GetText("Give up to buy"));
             });
         } else {
-            GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), 
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), 
                 mEquipInfo.star));
         }
     }
@@ -120,17 +119,17 @@ public class ApplyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.changeEquipUrl,
-                data: bytes, token: GameController.manager.token,
+                data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
                     this.SendEvent<ApplyEquipEvent>();
                 },
                 code: (code) => {
                     if (code == 423) {
-                        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
+                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
                     }
                 }));
     }
@@ -138,9 +137,9 @@ public class ApplyEquipCommand : AbstractCommand {
 
 public class CreateMatchCommand : AbstractCommand {
     protected override void OnExecute() {
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                   RequestUrl.createMatchUrl,
-                  token: GameController.manager.token,
+                  token: this.GetModel<IGameControllerModel>().Token.Value,
                   code: (code) => {
                       if (code == 200) {
                           this.SendEvent<UpdataMatchDetailEvent>();
@@ -166,17 +165,17 @@ public class ChangePasswordCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
-            data: bytes, token: GameController.manager.token,
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             },
             code: (code) => {
                 if (code == 423) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
                 } else if (code == 404) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
                 }
             }));
     }
@@ -184,14 +183,14 @@ public class ChangePasswordCommand : AbstractCommand {
 
 public class EnableStandAloneCommand : AbstractCommand {
     protected override void OnExecute() {
-        GameController.manager.standAlone = true;
+        this.GetModel<IGameControllerModel>().StandAlone.Value = true;
         TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
         JsonData data = JsonMapper.ToObject(ta.text);
-        GameController.manager.token = (string)data["token"];
+        this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
         this.GetModel<IUserModel>().ParseUserInfo(data);
 
         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-            GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
                 callback: () => {
                     Util.LoadingScene(SceneID.Index);
                 });
@@ -221,18 +220,18 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
-                GameController.manager.token = (string)data["token"];
+                this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
                     Util.DelayExecuteWithSecond(Util.btnASTime, () => {
                         if (mUserName.ToLower() == "tast") {
-                            GameController.manager.gameHelper.gameObject.SetActiveFast(true);
+                            this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
                         }
-                        GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
                             callback: () => {
                                 this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                                 Util.LoadingScene(SceneID.Index);
@@ -240,11 +239,11 @@ public class LoginCommand : AbstractCommand {
                     });
 
                 } else if (code == 423) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Password Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Password Error"));
                 } else if (code == 404) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User not registered"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("User not registered"));
                 } else {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
                 }
             }));
     }
@@ -271,23 +270,23 @@ public class RegisterCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
             data: bytes, succData: (data) => {
-                GameController.manager.token = (string)data["token"];
+                this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
                 this.GetModel<IUserModel>().ParseUserInfo(data);
                 
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Registration Successful"), callback: () => {
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
                     });
                 } else if (code == 423) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("User registered"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("User registered"));
                 } else if (code == 425) {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
                 } else {
-                    GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
                 }
             }));
     }
@@ -305,10 +304,10 @@ public class EnterMatchCommand : AbstractCommand {
             Debug.Log("进入课程 = " + mMatchInfo.cid);
             this.GetModel<IMatchModel>().CleanData();
             this.GetModel<IMatchModel>().SelectInfo.Value = mMatchInfo;
-            GameController.manager.curGameType = CurGameType.Match;
+            this.GetModel<IGameControllerModel>().CurGameType = GameType.Match;
             Util.LoadingScene(SceneID.Game);
         } else {
-            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The game is over"));
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("The game is over"));
         }
     }
 
@@ -328,7 +327,7 @@ public class EnterTimeTrialCommand : AbstractCommand {
         Debug.Log("进入课程 = " + mTimeTrialInfo.cid);
         this.GetModel<ITimeTrialModel>().CleanData();
         this.GetModel<ITimeTrialModel>().SelectInfo.Value = mTimeTrialInfo;
-        GameController.manager.curGameType = CurGameType.TimeTrial;
+        this.GetModel<IGameControllerModel>().CurGameType = GameType.TimeTrial;
         Util.LoadingScene(SceneID.Game);
     }
 }
@@ -349,9 +348,9 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
         data: bytes,
-        token: GameController.manager.token,
+        token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
             this.GetModel<IUserModel>().Star.Value = (int)data["star"];
             mTimeTrialInfo.isHas = true;

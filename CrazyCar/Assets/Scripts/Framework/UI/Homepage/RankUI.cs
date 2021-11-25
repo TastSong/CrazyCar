@@ -13,7 +13,7 @@ public class RankUI : MonoBehaviour, IController {
     private void OnEnable() {
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.timeTrialDetailUrl,
-           token: GameController.manager.token,
+           token: this.GetModel<IGameControllerModel>().Token.Value,
            succData: (data) => {
                this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
            }));

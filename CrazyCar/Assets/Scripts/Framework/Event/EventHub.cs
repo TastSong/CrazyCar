@@ -26,6 +26,6 @@ public class MakeNewPlayerEvent {
     }
 }
 
-public class UpdataUserInfoEvent {
+//public class UpdataUserInfoEvent {
 
-}
+//}

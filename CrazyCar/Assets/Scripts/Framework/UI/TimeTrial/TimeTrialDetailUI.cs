@@ -12,13 +12,13 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
     public Button closeBtn;
 
     private void OnEnable() {
-        if (GameController.manager.standAlone) {
+        if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.timeTrialDetailUrl);
             JsonData data = JsonMapper.ToObject(ta.text);
             this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
         } else {
             StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
-               token: GameController.manager.token,
+               token: this.GetModel<IGameControllerModel>().Token.Value,
                succData: (data) => {
                    this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
                }));

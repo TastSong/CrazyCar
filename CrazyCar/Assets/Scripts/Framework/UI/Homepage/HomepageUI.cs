@@ -34,7 +34,7 @@ public class HomepageUI : MonoBehaviour, IController {
     private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
            RequestUrl.matchDetailUrl,
-          token: GameController.manager.token,
+          token: this.GetModel<IGameControllerModel>().Token.Value,
           succData: (data) => {
               this.GetModel<IMatchModel>().ParseClassData(data, () => {
                   matchGO.SetActiveFast(this.GetModel<IMatchModel>().MatchDic.Count > 0);
@@ -46,7 +46,7 @@ public class HomepageUI : MonoBehaviour, IController {
         nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
         avatarBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -58,19 +58,19 @@ public class HomepageUI : MonoBehaviour, IController {
             this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialDetailUI));
         });
         matchBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
             if (this.GetModel<IUserModel>().IsVIP.Value) {
                 this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
             } else {
-                GameController.manager.warningAlert.ShowWithText("Match 只面向VIP");
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("Match 只面向VIP");
             }
         });
         createMatchBtn.gameObject.SetActiveFast(this.GetModel<IUserModel>().Name.Value.ToLower() == "tast");
         createMatchBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -93,10 +93,10 @@ public class HomepageUI : MonoBehaviour, IController {
             });
         });
         infoBtn.onClick.AddListener(() => {
-            GameController.manager.infoConfirmAlert.ShowWithText(title: "Version", content: "当前版本为：" + Application.version);
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(title: "Version", content: "当前版本为：" + Application.version);
         });
         questionBtn.onClick.AddListener(() => {
-            GameController.manager.infoConfirmAlert.ShowWithText(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com");
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com");
         });
         exitBtn.onClick.AddListener(() => {
             Application.Quit();
@@ -105,7 +105,7 @@ public class HomepageUI : MonoBehaviour, IController {
 
         // --------- Bottom Btns ---------
         psrofileBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -116,14 +116,14 @@ public class HomepageUI : MonoBehaviour, IController {
             this.SendCommand(new ShowPageCommand(UIPageType.SettingsUI));
         });
         rankBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
             this.SendCommand(new ShowPageCommand(UIPageType.RankUI));
         });
         changeCarBtn.onClick.AddListener(() => {
-            if (GameController.manager.standAlone) {
+            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -137,7 +137,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void ShowStandAlone() {
-        GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("This function is unavailable in single-machine mode"));
+        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("This function is unavailable in single-machine mode"));
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {

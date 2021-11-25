@@ -14,7 +14,7 @@ public class MatchGameUI : MonoBehaviour, IController {
     private Coroutine limitTimeCor;
 
     private void OnEnable() {
-        if (!GameController.manager.sceneLoaded) {
+        if (!this.GetModel<IGameControllerModel>().SceneLoaded.Value) {
             return;
         }
 

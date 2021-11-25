@@ -81,7 +81,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        GameController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.resourceUrl,
             data: bytes,
             succData: (data) => {
@@ -112,7 +112,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
             code: (code) => {
                 if (code != 200) {
                     string content = "资源下载失败";
-                    GameController.manager.warningAlert.ShowWithText(
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(
                         text: content,
                         callback: () => {
                             Application.Quit();
@@ -122,7 +122,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     }
 
     private void GetLocalResource() {
-        GameController.manager.StartCoroutine(ParseLocalResource());
+        CoroutineController.manager.StartCoroutine(ParseLocalResource());
     }
 
     private IEnumerator ParseLocalResource() {
@@ -164,7 +164,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
 
 
     public void DownloadAssets(Action success, ProgressCallback progressCallback, Action fail) {
-        GameController.manager.StartCoroutine(Download(success, progressCallback, fail));
+        CoroutineController.manager.StartCoroutine(Download(success, progressCallback, fail));
     }
 
     private IEnumerator Download(Action success, ProgressCallback progressCallback, Action fail) {

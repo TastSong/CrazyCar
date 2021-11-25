@@ -24,7 +24,7 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialRankUrl,
             data: bytes,
-            token: GameController.manager.token,
+            token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<ITimeTrialModel>().ParseRank(data, UpdateUI);
             }));

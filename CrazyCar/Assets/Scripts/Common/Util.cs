@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TFramework;
 
 namespace Utils {
     public static class GameObjectExtension {
@@ -96,7 +97,7 @@ namespace Utils {
         }
 
         public static Coroutine DelayExecute(NoneParamFunction f, Func<bool> pre) {
-            return GameController.manager.StartCoroutine(DelayExecuting(f, pre));
+            return CoroutineController.manager.StartCoroutine(DelayExecuting(f, pre));
         }
 
         private static IEnumerator DelayExecuting(NoneParamFunction f, Func<bool> pre) {
@@ -108,7 +109,7 @@ namespace Utils {
         }
 
         public static void DelayExecuteWithSecond(float sec, NoneParamFunction func) {
-            GameController.manager.StartCoroutine(DelayExecutingWithSecond(sec, func));
+            CoroutineController.manager.StartCoroutine(DelayExecutingWithSecond(sec, func));
         }
 
         private static IEnumerator DelayExecutingWithSecond(float sec, NoneParamFunction func) {
@@ -350,9 +351,9 @@ namespace Utils {
         }
 #endif
         public static IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
-            if (GameController.manager.standAlone) {
-                yield break;
-            }
+            //if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            //    yield break;
+            //}
             
             UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
             if (data != null) {

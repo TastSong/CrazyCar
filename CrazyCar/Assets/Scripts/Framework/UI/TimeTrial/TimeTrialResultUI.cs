@@ -37,7 +37,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialResultUrl,
             data : bytes,
-            token: GameController.manager.token,
+            token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<ITimeTrialModel>().ParseResult(data, UpdateUI);
          }));

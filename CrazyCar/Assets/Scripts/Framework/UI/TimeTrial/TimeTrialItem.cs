@@ -24,7 +24,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                 this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
+                    this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
                     success: () => {
                         this.SendCommand(new BuyTimeTrialClassCommand(timeTrialInfo));
                     },
@@ -32,7 +32,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         Debug.Log(I18N.manager.GetText("Give up to buy"));
                     });
                 } else {
-                    GameController.manager.warningAlert.ShowWithText(string.Format(I18N.manager.GetText("This course requires {0} star"), timeTrialInfo.star));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(I18N.manager.GetText("This course requires {0} star"), timeTrialInfo.star));
                 }
             }
         });

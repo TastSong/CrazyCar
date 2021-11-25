@@ -43,16 +43,16 @@ public class ProfileUI : MonoBehaviour, IController {
         });
         userNameBtn.onClick.AddListener(() => {
             if (userNameInput.text == this.GetModel<IUserModel>().Name.Value) {
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original nickname"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original nickname"));
             } else {
 
             }
         });
         passwordBtn.onClick.AddListener(() => {
             if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original password"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Consistent with the original password"));
             } else if (passwordInput.text.Length < 6) {
-                GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
             } else {
                 this.SendCommand(new ChangePasswordCommand(passwordInput.text));
             }

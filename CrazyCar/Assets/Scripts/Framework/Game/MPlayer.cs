@@ -324,14 +324,14 @@ public class MPlayer : MonoBehaviour, IController {
                 passTimes++;
             }
 
-            if (GameController.manager.curGameType == CurGameType.TimeTrial) {
+            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
                 if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
                     this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++TimeTrial EndTime = " + this.GetModel<ITimeTrialModel>().EndTime +
                          "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
                     passTimes = 0;
                 }
-            } else if (GameController.manager.curGameType == CurGameType.Match) {
+            } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
                 if (passTimes >= this.GetModel<IMatchModel>().SelectInfo.Value.times) {
                     this.GetModel<IMatchModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++Match EndTime = " + this.GetModel<IMatchModel>().EndTime +

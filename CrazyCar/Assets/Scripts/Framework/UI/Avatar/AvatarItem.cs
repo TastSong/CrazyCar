@@ -20,7 +20,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
             this.SendCommand(new UpdataAvatarUICommand(avatarInfo.aid));
         } else {
             if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
-                GameController.manager.infoConfirmAlert.ShowWithText(content:
+                this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content:
                     string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
                 success: () => {
                     this.SendCommand(new BuyAvatarCommand(avatarInfo));
@@ -29,7 +29,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
                     Debug.Log("放弃购买");
                 });
             } else {
-                GameController.manager.warningAlert.ShowWithText
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText
                     (string.Format(I18N.manager.GetText("This head needs {0} star"), avatarInfo.star));
             }
         }

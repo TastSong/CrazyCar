@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using TFramework;
 
-public class GameResultUI : MonoBehaviour {
+public class GameResultUI : MonoBehaviour, IController {
     public TimeTrialResultUI timeTrialResultUI;
     public MatchResultUI matchResultUI;
 
     private void OnEnable() {
-        timeTrialResultUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.TimeTrial);
-        matchResultUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.Match);
+        timeTrialResultUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
+        matchResultUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

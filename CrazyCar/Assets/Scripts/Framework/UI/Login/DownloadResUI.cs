@@ -39,7 +39,7 @@ public class DownloadResUI : MonoBehaviour, IController {
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
             data: bytes, succData: (data) => {
                 if ((bool)data["is_forced_updating"]) {
-                    GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Version is too low"),
+                    this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Version is too low"),
                         success: () => {
                             Application.OpenURL((string)data["url"]);
                             Application.Quit();
@@ -60,7 +60,7 @@ public class DownloadResUI : MonoBehaviour, IController {
 
     private IEnumerator Check(Action success) {
         yield return new WaitUntil(() => {
-            return GameController.manager != null && resourceSystem != null;
+            return resourceSystem != null;
         });
         showText.text = "";
         progressSlider.value = 0;
@@ -72,7 +72,7 @@ public class DownloadResUI : MonoBehaviour, IController {
             resourceSystem.DownloadAssets(() => {
                 success?.Invoke();
             }, UpdateProgress, () => {
-                GameController.manager.warningAlert.ShowWithText(text: I18N.manager.GetText("Download assets failed"), callback: () => {
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Download assets failed"), callback: () => {
                     Application.Quit();
                 });
             });

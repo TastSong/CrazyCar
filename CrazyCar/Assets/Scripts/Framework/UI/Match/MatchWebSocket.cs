@@ -8,13 +8,13 @@ using TFramework;
 
 public class MatchWebSocket : MonoBehaviour,IController {
     private void Start() {
-        if (GameController.manager.curGameType == CurGameType.Match) {
+        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
             string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
                 this.GetModel<IMatchModel>().SelectInfo.Value.cid;
             this.GetSystem<IWebSocketSystem>().Init(ws);
-            Util.DelayExecuteWithSecond(3, () => { GameController.manager.StartCoroutine(SendMsg()); }); 
+            Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 
         }           
     }
 
@@ -56,7 +56,7 @@ public class MatchWebSocket : MonoBehaviour,IController {
             w.WriteObjectEnd();
             //Debug.Log("Post Server : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
-            yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
+            yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }
     }
 

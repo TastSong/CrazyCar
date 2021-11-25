@@ -11,6 +11,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IScreenEffectsSystem>(new ScreenEffectsSystem());
         RegisterSystem<IIndexCarSystem>(new IndexCarSystem());
         RegisterSystem<INetworkSystem>(new NetworkSystem());
+        RegisterModel<IGameControllerModel>(new GameControllerModel());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());

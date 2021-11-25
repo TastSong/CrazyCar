@@ -26,7 +26,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private void OnEnable() {
         StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.equipUrl,
-        token: GameController.manager.token,
+        token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
             this.GetModel<IEquipModel>().ParseEquipRes(data, SetItemContent);       
         }));

@@ -15,7 +15,7 @@ public class ControlPanel : MonoBehaviour, IController {
     public GameCtrBtn spaceBtn;
 
     private void OnEnable() {
-        if (!GameController.manager.sceneLoaded) {
+        if (!this.GetModel<IGameControllerModel>().SceneLoaded.Value) {
             return;
         }     
     }
@@ -23,7 +23,7 @@ public class ControlPanel : MonoBehaviour, IController {
     private void Start() {
         exitBtn.onClick.AddListener(() => {
             Time.timeScale = 0;
-            GameController.manager.infoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Quit the game?"),
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: I18N.manager.GetText("Quit the game?"),
                 success: () => {
                     Time.timeScale = 1;
                     Util.LoadingScene(SceneID.Index);

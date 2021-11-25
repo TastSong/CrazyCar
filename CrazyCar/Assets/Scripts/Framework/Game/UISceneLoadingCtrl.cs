@@ -13,10 +13,10 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     public float minLoadingTime = 3f;
 
     private void Start() {
-        GameController.manager.sceneLoaded = false;
+        this.GetModel<IGameControllerModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = "0%";
-        GameController.manager.StartCoroutine(LoadScene());
+        CoroutineController.manager.StartCoroutine(LoadScene());
         DontDestroyOnLoad(gameObject);
     }
 
@@ -25,7 +25,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     }
 
     private IEnumerator LoadScene() {
-        GameController.manager.sceneLoaded = false;
+        this.GetModel<IGameControllerModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = (int)(progressSlider.value * 100) + "%";
         progressSlider.value = 0.1f;
@@ -47,7 +47,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         // 2019加载完场景并不能直接显示
         Destroy(gameObject);
         yield return new WaitForSeconds(1.8f);
-        GameController.manager.sceneLoaded = true;
+        this.GetModel<IGameControllerModel>().SceneLoaded.Value = true;
         this.SendCommand(new SelectGameUICommand());
     }
 

@@ -8,7 +8,7 @@ using TFramework;
 
 public class TimeTrialWebSocket : MonoBehaviour, IController {
     private void Start() {
-        //if (GameController.manager.curGameType == CurGameType.TimeTrial) {
+        //if (this.GetModel<IGameControllerModel>().CurGameType == CurGameType.TimeTrial) {
         //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
         //        "websocket/TimeTrialWebSocket/" +
         //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
@@ -58,7 +58,7 @@ public class TimeTrialWebSocket : MonoBehaviour, IController {
                 Debug.Log("Post Server : " + sb.ToString());
                 this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
             }
-            yield return new WaitForSeconds(GameController.manager.sendMsgOffTime);
+            yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }
     }
 

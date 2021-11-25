@@ -22,13 +22,13 @@ public class GameUIControl : MonoBehaviour, IController {
     private void OnSelectGameUI(SelectGameUIEvent e) {
         controlPanel.gameObject.SetActiveFast(true);
 
-        timeTrialGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.TimeTrial);
-        matchGameUI.gameObject.SetActiveFast(GameController.manager.curGameType == CurGameType.Match);
+        timeTrialGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
+        matchGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
     }
 
     private void OnShowResultUI(ShowResultUIEvent e) {
-        if (GameController.manager.standAlone) {
-            GameController.manager.warningAlert.ShowWithText(I18N.manager.GetText("Game Over"), 2.0f);
+        if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Game Over"), 2.0f);
             Util.DelayExecuteWithSecond(2.0f, () => {
                 Util.LoadingScene(SceneID.Index);
             });           
