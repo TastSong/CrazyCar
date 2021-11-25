@@ -21,7 +21,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
         } else {
             if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
                 this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content:
-                    string.Format(I18N.manager.GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
+                    string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
                 success: () => {
                     this.SendCommand(new BuyAvatarCommand(avatarInfo));
                 },
@@ -30,7 +30,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
                 });
             } else {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText
-                    (string.Format(I18N.manager.GetText("This head needs {0} star"), avatarInfo.star));
+                    (string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star));
             }
         }
     }

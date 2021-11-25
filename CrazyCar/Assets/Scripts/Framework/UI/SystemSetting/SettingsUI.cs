@@ -92,7 +92,7 @@ public class SettingsUI : MonoBehaviour, IController {
     public void SaveSettings(Util.NoneParamFunction success = null) {
         this.GetModel<ISettingsModel>().SaveSystemInfo(GetCurrentInfo());
         // 切换语言
-        I18N.manager.ChangeLang(this.GetModel<ISettingsModel>().Language);
+        this.GetSystem<II18NSystem>().ChangeLang(this.GetModel<ISettingsModel>().Language);
         //var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
         //backgroundAudioSource.volume = Convert.ToInt32(info.isOnMusic);
         AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);

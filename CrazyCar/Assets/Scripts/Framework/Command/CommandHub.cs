@@ -54,11 +54,11 @@ public class ApplyAvatarCommand : AbstractCommand {
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Successfully Set"));
             },
             code: (code) => {
                 if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Did not have"));
                 }
             }));
     }
@@ -81,7 +81,7 @@ public class BuyEquipCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         if (this.GetModel<IUserModel>().Star.Value > mEquipInfo.star) {
-            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(I18N.manager.GetText("Whether to spend {0} star on this equip"),
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(this.GetSystem<II18NSystem>().GetText("Whether to spend {0} star on this equip"),
                 mEquipInfo.star),
             success: () => {
                 CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
@@ -94,10 +94,10 @@ public class BuyEquipCommand : AbstractCommand {
                 }));
             },
             fail: () => {
-                Debug.Log(I18N.manager.GetText("Give up to buy"));
+                Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
             });
         } else {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(I18N.manager.GetText("This equip requires {0} star"), 
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(this.GetSystem<II18NSystem>().GetText("This equip requires {0} star"), 
                 mEquipInfo.star));
         }
     }
@@ -124,12 +124,12 @@ public class ApplyEquipCommand : AbstractCommand {
                 data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Successfully Set"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Successfully Set"));
                     this.SendEvent<ApplyEquipEvent>();
                 },
                 code: (code) => {
                     if (code == 423) {
-                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Did not have"));
+                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Did not have"));
                     }
                 }));
     }
@@ -168,14 +168,14 @@ public class ChangePasswordCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(Util.POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Modify Successfully"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Modify Successfully"));
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             },
             code: (code) => {
                 if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Fail To Modify"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Fail To Modify"));
                 } else if (code == 404) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Information Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Information Error"));
                 }
             }));
     }
@@ -190,7 +190,7 @@ public class EnableStandAloneCommand : AbstractCommand {
         this.GetModel<IUserModel>().ParseUserInfo(data);
 
         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                 callback: () => {
                     Util.LoadingScene(SceneID.Index);
                 });
@@ -231,7 +231,7 @@ public class LoginCommand : AbstractCommand {
                         if (mUserName.ToLower() == "tast") {
                             this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
                         }
-                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Login Success"),
+                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                             callback: () => {
                                 this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                                 Util.LoadingScene(SceneID.Index);
@@ -239,11 +239,11 @@ public class LoginCommand : AbstractCommand {
                     });
 
                 } else if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Password Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Password Error"));
                 } else if (code == 404) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("User not registered"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("User not registered"));
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Unknown Error"));
                 }
             }));
     }
@@ -278,15 +278,15 @@ public class RegisterCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: I18N.manager.GetText("Registration Successful"), callback: () => {
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
                     });
                 } else if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("User registered"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("User registered"));
                 } else if (code == 425) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Incorrect information format"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Incorrect information format"));
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Unknown Error"));
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Unknown Error"));
                 }
             }));
     }
@@ -307,7 +307,7 @@ public class EnterMatchCommand : AbstractCommand {
             this.GetModel<IGameControllerModel>().CurGameType = GameType.Match;
             Util.LoadingScene(SceneID.Game);
         } else {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("The game is over"));
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The game is over"));
         }
     }
 

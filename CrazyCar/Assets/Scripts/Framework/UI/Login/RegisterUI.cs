@@ -29,12 +29,12 @@ public class RegisterUI : MonoBehaviour, IController {
 
         registerBtn.onClick.AddListener(() => {
             if (userNameInput.text == "" || passwordInput.text == "") {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("Please enter the content"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Please enter the content"));
                 return;
             }
 
             if (passwordInput.text.Length < 6) {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("The password must contain more than six characters"));
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The password must contain more than six characters"));
                 return;
             }
 

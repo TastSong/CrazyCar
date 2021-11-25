@@ -137,7 +137,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void ShowStandAlone() {
-        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(I18N.manager.GetText("This function is unavailable in single-machine mode"));
+        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("This function is unavailable in single-machine mode"));
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {

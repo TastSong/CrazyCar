@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TFramework;
 
 // 不能重复添加这个组件
 [DisallowMultipleComponent]
-public class I18NText : MonoBehaviour {
+public class I18NText : MonoBehaviour, IController {
     private Text showText;
     public string key;
 
     void Start() {
         showText = GetComponent<Text>();
-        I18N.manager.RegisterText(this);
+        this.GetSystem<II18NSystem>().RegisterText(this);
     }
 
     public void Reset() {
@@ -17,19 +18,23 @@ public class I18NText : MonoBehaviour {
             return;
         }
 
-        string s = I18N.manager.GetText(key);
+        string s = this.GetSystem<II18NSystem>().GetText(key);
         if (showText != null && s.Length != 0) {
             showText.text = s;
         }
     }
 
     private void OnEnable() {
-        if (I18N.manager != null)
+        if (this.GetSystem<II18NSystem>() != null)
             Reset();
     }
 
     private void OnDestroy() {
-        if (I18N.manager != null)
-            I18N.manager.UnregisterText(this);
+        if (this.GetSystem<II18NSystem>() != null)
+            this.GetSystem<II18NSystem>().UnregisterText(this);
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

@@ -87,14 +87,14 @@ public class ChangeCarUI : MonoBehaviour, IController {
             applyBtn.interactable = true;
         }
         if (curEquipInfo.isHas) {
-            applyBtnText.text = I18N.manager.GetText("Apply");
+            applyBtnText.text = this.GetSystem<II18NSystem>().GetText("Apply");
         } else {
-            applyBtnText.text = I18N.manager.GetText("Buy");
+            applyBtnText.text = this.GetSystem<II18NSystem>().GetText("Buy");
         }
     }
 
     private void OnBuyEquip(BuyEquipEvent e) {
-        applyBtnText.text = I18N.manager.GetText("Apply");
+        applyBtnText.text = this.GetSystem<II18NSystem>().GetText("Apply");
         curEquipInfo.isHas = true;
         for (int i = 0; i < changeCarItems.Count; i++) {
             changeCarItems[i].SetUnlockState();

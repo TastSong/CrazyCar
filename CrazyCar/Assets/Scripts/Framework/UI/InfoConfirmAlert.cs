@@ -4,13 +4,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Utils;
 using System;
+using TFramework;
 
 public enum ConfirmAlertType {
     Double = 0,
     Single
 }
 
-public class InfoConfirmAlert : MonoBehaviour {
+public class InfoConfirmAlert : MonoBehaviour, IController {
     public Text titleText;
     public Text contentText;
     public Button cancelBtn;
@@ -65,9 +66,9 @@ public class InfoConfirmAlert : MonoBehaviour {
     }
 
     public string GetI18NText(string normalText, string showText) {
-        if (I18N.manager.initFinish) {
+        if (this.GetSystem<II18NSystem>().InitFinish) {
             if (normalText == showText) {
-                return I18N.manager.GetText(showText);
+                return this.GetSystem<II18NSystem>().GetText(showText);
             } else {
                 return showText;
             }
@@ -87,5 +88,9 @@ public class InfoConfirmAlert : MonoBehaviour {
         if (dialogID == id) {
             gameObject.SetActiveFast(false);
         }
+    }
+
+    public IArchitecture GetArchitecture() {
+        return CrazyCar.Interface;
     }
 }

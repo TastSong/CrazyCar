@@ -1,42 +1,40 @@
-﻿using LitJson;
-using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
-using Utils;
 using TFramework;
+using LitJson;
+using Utils;
+using System;
 
-public class I18N : MonoBehaviour, IController {
+public interface II18NSystem : ISystem {
+    string CurrentLang { get; set; }
+    bool InitFinish { get; set; }
 
-    public static I18N manager = null;
-    public string currentLang = "zh-cn";
+    void InitTranslation();
+    string GetText(string key);
+    void RegisterText(I18NText t);
+    void UnregisterText(I18NText t);
+    void ChangeLang(string id);
+}
+
+public class I18NSystem : AbstractSystem, II18NSystem {
+    public string CurrentLang { get; set; }
+    public bool InitFinish { get; set; }
 
     private Dictionary<string, JsonData> trans = new Dictionary<string, JsonData>();
     private Dictionary<string, string> langMap = new Dictionary<string, string>();
     private List<I18NText> allTexts = new List<I18NText>();
     private JsonData current_dict;
     private string defaultLang = "zh-cn";
-    public bool initFinish = false;
 
-    private void Awake() {
-        if (manager == null) {
-            DontDestroyOnLoad(gameObject);
-            manager = this;
-        } else if (manager != this) {
-            Destroy(gameObject);
-        }
-    }
-
-    // 读取本地语言 如果读取不到设置中的语言设置 就设置默认语言
     public void InitTranslation() {
-        TextAsset[] tas = Resources.LoadAll<TextAsset>(Util.baseLanguagePath);     
+        TextAsset[] tas = Resources.LoadAll<TextAsset>(Util.baseLanguagePath);
         foreach (var t in tas) {
             JsonData d = JsonMapper.ToObject(t.text);
             langMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;
         }
-        initFinish = true;
+        InitFinish = true;
 
         try {
             ChangeLang(string.IsNullOrEmpty(this.GetModel<ISettingsModel>().Language)
@@ -69,7 +67,7 @@ public class I18N : MonoBehaviour, IController {
     public void ChangeLang(string id) {
         Debug.Log("ChangeLang = " + id);
         current_dict = trans[id];
-        currentLang = id;
+        CurrentLang = id;
         RefreshAllText();
     }
 
@@ -84,7 +82,7 @@ public class I18N : MonoBehaviour, IController {
         }
     }
 
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
+    protected override void OnInit() {
+        
     }
 }
