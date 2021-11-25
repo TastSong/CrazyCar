@@ -23,7 +23,7 @@ public class DownloadResUI : MonoBehaviour, IController {
 
 #if !UNITY_EDITOR
     CheckResource(() => {
-        GameController.manager.tinyMsgHub.Publish(new DownloadResFinishMsg());
+        this.SendCommand(new DownloadResFinishCommand());
     });
 #else
         StringBuilder sb = new StringBuilder();
