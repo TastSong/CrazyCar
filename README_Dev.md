@@ -64,6 +64,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 3. ViewController和System对Model的数据查询，用Qurey实现，从而使得查询变成充血模型；(中介者模式)
 4. 四层的注册利用的原理为IOC；(外观模式) 
 5. 四层的获取； (单例模式) 
+5. 注册的时候利用接口初始化对象；(原型模式)
 
 > 在[QFramework](https://github.com/liangxiegame/QFramework)上进行微改
 
