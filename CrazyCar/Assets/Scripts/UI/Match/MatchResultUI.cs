@@ -44,7 +44,7 @@ public class MatchResultUI : MonoBehaviour, IController {
             data: bytes,
             token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
-                this.GetModel<IMatchModel>().ParseRank(data, UpdateUI);
+                this.GetSystem<IDataParseSystem>().ParseMatchRank(data, UpdateUI);
             }));
     }
 

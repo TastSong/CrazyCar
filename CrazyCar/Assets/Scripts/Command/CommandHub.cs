@@ -187,7 +187,7 @@ public class EnableStandAloneCommand : AbstractCommand {
         TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
         JsonData data = JsonMapper.ToObject(ta.text);
         this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
-        this.GetModel<IUserModel>().ParseUserInfo(data);
+        this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
 
         Util.DelayExecuteWithSecond(Util.btnASTime, () => {
             this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
@@ -223,7 +223,7 @@ public class LoginCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
                 this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
-                this.GetModel<IUserModel>().ParseUserInfo(data);
+                this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
@@ -273,7 +273,7 @@ public class RegisterCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl,
             data: bytes, succData: (data) => {
                 this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
-                this.GetModel<IUserModel>().ParseUserInfo(data);
+                this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
                 
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {

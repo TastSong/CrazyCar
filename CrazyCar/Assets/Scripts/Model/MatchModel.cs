@@ -41,8 +41,6 @@ public interface IMatchModel : IModel {
 
     int GetCompleteTime();
     void CleanData();
-    void ParseClassData(JsonData jsonData, Action success = null);
-    void ParseRank(JsonData data, Action success = null);
 }
 
 public class MatchModel : AbstractModel, IMatchModel {
@@ -79,37 +77,6 @@ public class MatchModel : AbstractModel, IMatchModel {
         } else {
             return -1;
         }
-    }
-
-    public void ParseClassData(JsonData jsonData, Action success = null) {
-        MatchDic.Clear();
-        for (int i = 0; i < jsonData.Count; i++) {
-            MatchInfo info = new MatchInfo();
-            info.cid = (int)jsonData[i]["cid"];
-            info.name = (string)jsonData[i]["name"];
-            info.star = (int)jsonData[i]["star"];
-            info.mapId = (int)jsonData[i]["map_id"];
-            info.limitTime = (int)jsonData[i]["limit_time"];
-            info.times = (int)jsonData[i]["times"];
-            info.startTime = (long)jsonData[i]["start_time"];
-            info.enrollTime = (long)jsonData[i]["enroll_time"];
-            MatchDic[info.cid] = info;
-        }
-        success?.Invoke();
-    }
-
-    public void ParseRank(JsonData data, Action success = null) {
-        MatchRankList.Clear();
-        JsonData jsonData = data["rank"];
-        for (int i = 0; i < jsonData.Count; i++) {
-            MatchRankInfo info = new MatchRankInfo();
-            info.name = (string)jsonData[i]["name"];
-            info.aid = (int)jsonData[i]["aid"];
-            info.completeTime = (int)jsonData[i]["complete_time"];
-            info.rank = (int)jsonData[i]["rank"];
-            MatchRankList.Add(info);
-        }
-        success?.Invoke();
     }
 
     protected override void OnInit() {   

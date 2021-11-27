@@ -28,7 +28,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
             RequestUrl.equipUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
-            this.GetModel<IEquipModel>().ParseEquipRes(data, SetItemContent);       
+            this.GetSystem<IDataParseSystem>().ParseEquipRes(data, SetItemContent);       
         }));
     }
 

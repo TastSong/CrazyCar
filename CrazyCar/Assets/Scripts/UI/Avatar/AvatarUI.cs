@@ -23,7 +23,7 @@ public class AvatarUI : MonoBehaviour, IController {
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
-            avatarModel.ParseAvatarRes(data, UpdataUI);
+            this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, UpdataUI);
             curAid = this.GetModel<IUserModel>().Aid.Value;
         }));
     }

@@ -45,9 +45,6 @@ public interface ITimeTrialModel : IModel {
 
     int GetCompleteTime();
     void CleanData();
-    void ParseClassData(JsonData jsonData, Action success = null);
-    void ParseResult(JsonData jsonData, Action success = null);
-    void ParseRank(JsonData jsonData, Action success = null);
 }
 
 public class TimeTrialModel : AbstractModel, ITimeTrialModel {
@@ -97,44 +94,6 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
         } else {
             return -1;
         }
-    }
-
-    public void ParseClassData(JsonData jsonData, Action success = null) {
-        TimeTrialDic.Clear();
-        for (int i = 0; i < jsonData.Count; i++) {
-            TimeTrialInfo info = new TimeTrialInfo();
-            info.cid = (int)jsonData[i]["cid"];
-            info.name = (string)jsonData[i]["name"];
-            info.star = (int)jsonData[i]["star"];
-            info.mapId = (int)jsonData[i]["map_id"];
-            info.limitTime = (int)jsonData[i]["limit_time"];
-            info.isHas = (bool)jsonData[i]["is_has"];
-            info.times = (int)jsonData[i]["times"];
-            TimeTrialDic[info.cid] = info;
-        }
-        success?.Invoke();
-    }
-
-    public void ParseRank(JsonData jsonData, Action success = null) {
-        TimeTrialRankList.Clear();
-        for (int i = 0; i < jsonData.Count; i++) {
-            TimeTrialRankInfo info = new TimeTrialRankInfo();
-            info.name = (string)jsonData[i]["name"];
-            info.aid = (int)jsonData[i]["aid"];
-            info.completeTime = (int)jsonData[i]["complete_time"];
-            info.rank = (int)jsonData[i]["rank"];
-            TimeTrialRankList.Add(info);
-        }
-        success?.Invoke();
-    }
-
-    public void ParseResult(JsonData jsonData, Action success = null) {
-        IsWin.Value = (bool)jsonData["is_win"];
-        CompleteTime.Value = (int)jsonData["complete_time"];
-        Rank.Value = (int)jsonData["rank"];
-        IsBreakRecord.Value = (bool)jsonData["is_break_record"];
-        RewardStar.Value = (int)jsonData["reward"];
-        success?.Invoke();
     }
 
     protected override void OnInit() {

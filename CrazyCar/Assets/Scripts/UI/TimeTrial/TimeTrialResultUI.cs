@@ -39,7 +39,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
             data : bytes,
             token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
-                this.GetModel<ITimeTrialModel>().ParseResult(data, UpdateUI);
+                this.GetSystem<IDataParseSystem>().ParseTimeTrialResult(data, UpdateUI);
          }));
     }
 

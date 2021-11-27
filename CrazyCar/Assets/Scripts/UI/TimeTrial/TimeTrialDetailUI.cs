@@ -15,12 +15,12 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
         if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
             TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.timeTrialDetailUrl);
             JsonData data = JsonMapper.ToObject(ta.text);
-            this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
+            this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data, UpdateUI);
         } else {
             StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
                token: this.GetModel<IGameControllerModel>().Token.Value,
                succData: (data) => {
-                   this.GetModel<ITimeTrialModel>().ParseClassData(data, UpdateUI);
+                   this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data, UpdateUI);
                }));
         }
     }

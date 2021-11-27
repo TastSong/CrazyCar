@@ -26,7 +26,7 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
             data: bytes,
             token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
-                this.GetModel<ITimeTrialModel>().ParseRank(data, UpdateUI);
+                this.GetSystem<IDataParseSystem>().ParseTimeTrialRank(data, UpdateUI);
             }));
     }
 
