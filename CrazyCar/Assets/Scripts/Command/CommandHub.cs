@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using TFramework;
+using MoreMountains.NiceVibrations;
 
 public class BuyAvatarCommand : AbstractCommand {
     private AvatarInfo mAvatarInfo; 
@@ -233,6 +234,7 @@ public class LoginCommand : AbstractCommand {
                         }
                         this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                             callback: () => {
+                                MMVibrationManager.Haptic(HapticTypes.Success);
                                 this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                                 Util.LoadingScene(SceneID.Index);
                             });
@@ -278,6 +280,7 @@ public class RegisterCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
+                    MMVibrationManager.Haptic(HapticTypes.Success);
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
                     });
