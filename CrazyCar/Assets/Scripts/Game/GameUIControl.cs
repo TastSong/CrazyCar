@@ -9,19 +9,21 @@ public class GameUIControl : MonoBehaviour, IController {
     public GameResultUI gameResultUI;
     public TimeTrialGameUI timeTrialGameUI;
     public MatchGameUI matchGameUI;
+    public GameObject miniMap;
 
     private void Start() {
         controlPanel.gameObject.SetActiveFast(false);
         gameResultUI.gameObject.SetActiveFast(false);
         timeTrialGameUI.gameObject.SetActiveFast(false);
         matchGameUI.gameObject.SetActiveFast(false);
+        miniMap.SetActiveFast(false);
         this.RegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
         this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 
     private void OnSelectGameUI(SelectGameUIEvent e) {
         controlPanel.gameObject.SetActiveFast(true);
-
+        miniMap.SetActiveFast(true);
         timeTrialGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
         matchGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
     }
