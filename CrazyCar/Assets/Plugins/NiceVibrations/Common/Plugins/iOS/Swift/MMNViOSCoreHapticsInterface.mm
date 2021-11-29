@@ -1,7 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreHaptics/CoreHaptics.h>
-#import "unityswift-Swift.h"
+//#import "unityswift-Swift.h"
 #import "UnitySwift-Bridging-Header.h"
+#import "UnityFramework/UnityFramework-Swift.h"
+
 
 extern "C"
 {
@@ -29,19 +31,24 @@ extern "C"
 	[MMNViOSCoreHapticsInterface SetDebugModeWithStatus:status];
   }
 
+  void MMNViOS_CreateEngine()
+  {
+    [MMNViOSCoreHapticsInterface CreateEngine];
+  }
+
   void MMNViOS_StopEngine()
   {
-	[MMNViOSCoreHapticsInterface StopEngine];
+    [MMNViOSCoreHapticsInterface StopEngine];
   }
 
-  void MMNViOS_PlayTransientHapticPattern(float intensity, float sharpness)
+  void MMNViOS_PlayTransientHapticPattern(float intensity, float sharpness, bool threaded)
   {
-    [MMNViOSCoreHapticsInterface PlayTransientHapticWithIntensity:intensity sharpness:sharpness];
+    [MMNViOSCoreHapticsInterface PlayTransientHapticWithIntensity:intensity sharpness:sharpness threaded:threaded];
   }
 
-  void MMNViOS_PlayContinuousHapticPattern(float intensity, float sharpness, float duration)
+  void MMNViOS_PlayContinuousHapticPattern(float intensity, float sharpness, float duration, bool threaded, bool fullIntensity)
   {
-    [MMNViOSCoreHapticsInterface PlayContinuousHapticWithIntensity: intensity sharpness:sharpness duration:duration];
+    [MMNViOSCoreHapticsInterface PlayContinuousHapticWithIntensity: intensity sharpness:sharpness duration:duration threaded:threaded fullIntensity:fullIntensity];
   }
 
   void MMNViOS_StopContinuousHaptic()
@@ -49,12 +56,12 @@ extern "C"
     [MMNViOSCoreHapticsInterface StopContinuousHaptic];
   }
 
-  void MMNViOS_UpdateContinuousHapticPattern(float intensity, float sharpness)
+  void MMNViOS_UpdateContinuousHapticPattern(float intensity, float sharpness, bool threaded)
   {
-    [MMNViOSCoreHapticsInterface UpdateContinuousHapticWithIntensity:intensity sharpness:sharpness];
+    [MMNViOSCoreHapticsInterface UpdateContinuousHapticWithIntensity:intensity sharpness:sharpness threaded:threaded];
   }
 
-  void MMNViOS_PlayCoreHapticsFromJSON(const char* jsonDict)
+  void MMNViOS_PlayCoreHapticsFromJSON(const char* jsonDict, bool threaded)
   {
       if (jsonDict == nil)
       {
@@ -70,7 +77,7 @@ extern "C"
       /*NSData* data = [jsonAsString dataUsingEncoding:NSUTF8StringEncoding];
       NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
       CHHapticPattern* pattern = [[CHHapticPattern alloc] initWithDictionary:dict error:&error];*/
-      [MMNViOSCoreHapticsInterface PlayHapticsFromJSONWithPatternAsString:jsonAsString];
+      [MMNViOSCoreHapticsInterface PlayHapticsFromJSONWithPatternAsString:jsonAsString threaded:threaded];
 
   }
 

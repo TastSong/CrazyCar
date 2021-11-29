@@ -7,7 +7,7 @@ namespace MoreMountains.NiceVibrations
 {
 	public class V2DemoManager : MonoBehaviour
     {
-        public List<RectTransform> Pages;        
+        public List<RectTransform> Pages;
         public int CurrentPage = 0;
         public float PageTransitionDuration = 1f;
         public AnimationCurve TransitionCurve;
@@ -18,8 +18,8 @@ namespace MoreMountains.NiceVibrations
         protected Vector3 _position;
         protected List<Pagination> _paginations;
         protected Coroutine _transitionCoroutine;
-        
-        
+
+
         protected virtual void Start()
         {
             Initialization();
@@ -87,10 +87,12 @@ namespace MoreMountains.NiceVibrations
 
         protected virtual void Transition(int previous, int next, bool goingRight)
         {
+						MMVibrationManager.StopAllHaptics(true);
+
             if (_transitionCoroutine != null)
             {
                 StopCoroutine(_transitionCoroutine);
-            }            
+            }
             _transitionCoroutine = StartCoroutine(TransitionCoroutine(previous, next, goingRight));
         }
 
@@ -135,12 +137,12 @@ namespace MoreMountains.NiceVibrations
         public virtual void TurnHapticsOn()
         {
             MMVibrationManager.SetHapticsActive(true);
-            MMVibrationManager.Haptic(HapticTypes.Success);
+            MMVibrationManager.Haptic(HapticTypes.Success, false, true, this);
         }
 
         public virtual void TurnHapticsOff()
         {
-            MMVibrationManager.Haptic(HapticTypes.Warning);
+            MMVibrationManager.Haptic(HapticTypes.Warning, false, true, this);
             MMVibrationManager.SetHapticsActive(false);
         }
 
@@ -148,14 +150,14 @@ namespace MoreMountains.NiceVibrations
         {
             AudioListener.volume = 1f;
             SoundActive = true;
-            MMVibrationManager.Haptic(HapticTypes.Success);
+            MMVibrationManager.Haptic(HapticTypes.Success, false, true, this);
         }
 
         public virtual void TurnSoundsOff()
         {
             AudioListener.volume = 0f;
             SoundActive = false;
-            MMVibrationManager.Haptic(HapticTypes.Warning);
+            MMVibrationManager.Haptic(HapticTypes.Warning, false, true, this);
         }
     }
 }

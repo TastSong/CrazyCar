@@ -11,8 +11,8 @@ namespace MoreMountains.NiceVibrations
     /// <summary>
     /// This custom inspector for MMNVAndroidWaveFormAssets adds a button to import values from an AHAP file
     /// </summary>
-    [CustomEditor(typeof(MMNVAndroidWaveFormAsset))]
-    public class MMNVAndroidWaveFormAssetEditor : Editor
+    [CustomEditor(typeof(MMNVRumbleWaveFormAsset))]
+    public class MMNVRumbleWaveFormAssetEditor : Editor
     {        
         /// <summary>
         /// On inspector GUI, we draw an extra button
@@ -21,7 +21,7 @@ namespace MoreMountains.NiceVibrations
         {
             serializedObject.Update();
 
-            MMNVAndroidWaveFormAsset waveformAsset = (MMNVAndroidWaveFormAsset)target;            
+            MMNVRumbleWaveFormAsset waveformAsset = (MMNVRumbleWaveFormAsset)target;
 
             DrawDefaultInspector();
 
@@ -29,9 +29,10 @@ namespace MoreMountains.NiceVibrations
             {
                 if (GUILayout.Button("Import from AHAP"))
                 {
-                    MMNVAndroidWaveForm tempWaveform = MMNVAHAP.AHAPtoAndroidWaveForm(waveformAsset.AHAPFile.text, waveformAsset.IntensityMultiplier, waveformAsset.SharpnessMultiplier);
+                    MMNVRumbleWaveForm tempWaveform = MMNVAHAP.AHAPtoRumbleWaveForm(waveformAsset.AHAPFile.text, waveformAsset.IntensityMultiplier, waveformAsset.SharpnessMultiplier);
                     waveformAsset.WaveForm.Pattern = tempWaveform.Pattern;
-                    waveformAsset.WaveForm.Amplitudes = tempWaveform.Amplitudes;
+                    waveformAsset.WaveForm.LowFrequencyAmplitudes = tempWaveform.LowFrequencyAmplitudes;
+                    waveformAsset.WaveForm.HighFrequencyAmplitudes = tempWaveform.HighFrequencyAmplitudes;
                 }
             }            
 

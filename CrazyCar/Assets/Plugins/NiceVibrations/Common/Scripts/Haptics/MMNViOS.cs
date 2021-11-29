@@ -63,7 +63,7 @@ namespace MoreMountains.NiceVibrations
         /// </summary>
         public static void iOSInitializeHaptics()
         {
-            if (!MMVibrationManager.iOS()) { return; }
+            if (!MMNVPlatform.iOS()) { return; }
             MMNViOS_InstantiateFeedbackGenerators();
             iOSHapticsInitialized = true;
         }
@@ -74,7 +74,7 @@ namespace MoreMountains.NiceVibrations
         /// </summary>
         public static void iOSReleaseHaptics()
         {
-            if (!MMVibrationManager.iOS()) { return; }
+            if (!MMNVPlatform.iOS()) { return; }
             MMNViOS_ReleaseFeedbackGenerators();
         }
 
@@ -84,7 +84,7 @@ namespace MoreMountains.NiceVibrations
 		/// <param name="type">Type.</param>
 		public static void iOSTriggerHaptics(HapticTypes type, bool defaultToRegularVibrate = false)
         {
-            if (!MMVibrationManager.iOS()) { return; }
+            if (!MMNVPlatform.iOS()) { return; }
 
             if (!iOSHapticsInitialized)
             {
@@ -153,6 +153,26 @@ namespace MoreMountains.NiceVibrations
             #else
                         return null;
             #endif
+        }
+
+
+        /// <summary>
+        /// Computes and stores the current iOS version
+        /// </summary>
+        /// <returns></returns>
+        public static float ComputeiOSVersion()
+        {
+            int version = 0;
+            string versionAsString = "0.0.0";
+#if UNITY_IOS && !UNITY_EDITOR
+                versionAsString = Device.systemVersion;
+#endif
+
+            string[] versionArray = versionAsString.Split('.');
+
+            int.TryParse(versionArray[0], out version);
+
+            return version;
         }
 
         /// <summary>
