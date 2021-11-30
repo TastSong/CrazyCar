@@ -36,6 +36,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
         });
     }

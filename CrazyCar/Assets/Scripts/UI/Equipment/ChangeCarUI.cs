@@ -52,6 +52,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private void Start() {
         applyBtn.interactable = false;
         applyBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (curEquipInfo.isHas) {
                 this.SendCommand(new ApplyEquipCommand(curEquipInfo));
             } else {
@@ -60,9 +61,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
         });
 
         closeBtn.onClick.AddListener(() => {
-            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));
-            });
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
+            this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));           
         });
 
         this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent);

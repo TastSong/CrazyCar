@@ -19,15 +19,13 @@ public class RegisterUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             this.SendCommand(new OpenLoginCommand());
-            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                gameObject.SetActiveFast(false);
-            });
+            gameObject.SetActiveFast(false);
         });
 
-
-
         registerBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (userNameInput.text == "" || passwordInput.text == "") {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Please enter the content"));
                 return;

@@ -190,12 +190,10 @@ public class EnableStandAloneCommand : AbstractCommand {
         this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
         this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
 
-        Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
-                callback: () => {
-                    Util.LoadingScene(SceneID.Index);
-                });
-        });
+        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
+            callback: () => {
+                Util.LoadingScene(SceneID.Index);
+            });
     }
 }
 
@@ -228,17 +226,15 @@ public class LoginCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                        if (mUserName.ToLower() == "tast") {
-                            this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
-                        }
-                        this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
-                            callback: () => {
-                                MMVibrationManager.Haptic(HapticTypes.Success);
-                                this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
-                                Util.LoadingScene(SceneID.Index);
-                            });
-                    });
+                    if (mUserName.ToLower() == "tast") {
+                        this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
+                    }
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
+                        callback: () => {
+                            MMVibrationManager.Haptic(HapticTypes.Success);
+                            this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
+                            Util.LoadingScene(SceneID.Index);
+                        });
 
                 } else if (code == 423) {
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Password Error"));

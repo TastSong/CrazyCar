@@ -60,6 +60,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
         StopDrift();
+        DisableTrail();
     }
 
     void Update() {
@@ -284,13 +285,7 @@ public class MPlayer : MonoBehaviour, IController {
         }
         plexusVFX.gameObject.SetActiveFast(true);
         wireframeVFX.SetActiveFast(true);
-    }
-
-    private void ChangeDriftColor() {
-        foreach (var tempParticle in wheelsParticeles) {
-            var t = tempParticle.main;
-            t.startColor = driftColors[(int)driftLevel];
-        }
+        this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
     }
 
     private void StopDriftParticle() {
@@ -319,6 +314,13 @@ public class MPlayer : MonoBehaviour, IController {
     private void DisableScreenEffect() {
         screenEffectTime = 0;
         this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
+    }
+
+    private void ChangeDriftColor() {
+        foreach (var tempParticle in wheelsParticeles) {
+            var t = tempParticle.main;
+            t.startColor = driftColors[(int)driftLevel];
+        }
     }
 
     private void OnTriggerEnter(Collider other) {

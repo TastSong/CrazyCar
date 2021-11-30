@@ -13,6 +13,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<INetworkSystem>(new NetworkSystem());
         RegisterSystem<II18NSystem>(new I18NSystem());
         RegisterSystem<IDataParseSystem>(new DataParseSystem());
+        RegisterSystem<ISoundSystem>(new SoundSystem());
         RegisterModel<IGameControllerModel>(new GameControllerModel());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());

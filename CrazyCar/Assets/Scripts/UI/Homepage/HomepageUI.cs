@@ -46,6 +46,7 @@ public class HomepageUI : MonoBehaviour, IController {
         nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
         avatarBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
@@ -55,9 +56,11 @@ public class HomepageUI : MonoBehaviour, IController {
         });
 
         joinGameBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialDetailUI));
         });
         matchBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
@@ -70,6 +73,7 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         createMatchBtn.gameObject.SetActiveFast(this.GetModel<IUserModel>().Name.Value.ToLower() == "tast");
         createMatchBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
@@ -81,11 +85,13 @@ public class HomepageUI : MonoBehaviour, IController {
         optionCloseBtn.gameObject.SetActiveFast(false);
         optionOpenBtn.gameObject.SetActiveFast(true);
         optionOpenBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             optionBtnsGO.SetActiveFast(true);
             optionOpenBtn.gameObject.SetActiveFast(false);
             optionCloseBtn.gameObject.SetActiveFast(true);
         });
         optionCloseBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             optionBtnsGO.SetActiveFast(false);
             Util.DelayExecuteWithSecond(0.25f, () => {
                 optionCloseBtn.gameObject.SetActiveFast(false);
@@ -93,18 +99,22 @@ public class HomepageUI : MonoBehaviour, IController {
             });
         });
         infoBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(title: "Version", content: "当前版本为：" + Application.version);
         });
         questionBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com");
         });
         exitBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             Application.Quit();
         });
         //--------- option ---------
 
         // --------- Bottom Btns ---------
         psrofileBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
@@ -113,9 +123,11 @@ public class HomepageUI : MonoBehaviour, IController {
             this.SendCommand(new ShowPageCommand(UIPageType.ProfileUI));
         });
         settingBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new ShowPageCommand(UIPageType.SettingsUI));
         });
         rankBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
@@ -123,6 +135,7 @@ public class HomepageUI : MonoBehaviour, IController {
             this.SendCommand(new ShowPageCommand(UIPageType.RankUI));
         });
         changeCarBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;

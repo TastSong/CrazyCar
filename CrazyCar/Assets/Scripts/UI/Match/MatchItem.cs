@@ -21,6 +21,7 @@ public class MatchItem : MonoBehaviour, IController {
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new EnterMatchCommand(matchInfo));
         });
     }

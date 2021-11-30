@@ -41,14 +41,14 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void Start() {
         applyBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new ApplyAvatarCommand(curAid));
         });
 
         closeBtn.onClick.AddListener(() => {
-            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                this.SendCommand(new HidePageCommand(UIPageType.AvatarUI));
-                this.SendCommand<UpdateHomepageUICommand>();
-            });
+            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.SendCommand(new HidePageCommand(UIPageType.AvatarUI));
+            this.SendCommand<UpdateHomepageUICommand>();
         });
 
         this.RegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent);

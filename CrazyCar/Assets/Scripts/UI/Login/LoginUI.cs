@@ -25,7 +25,7 @@ public class LoginUI : MonoBehaviour, IController {
         } 
 
         loginBtn.onClick.AddListener(() => {
-
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (userNameInput.text == "" || passwordInput.text == "") {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Please enter the content"));
                 return;
@@ -35,10 +35,9 @@ public class LoginUI : MonoBehaviour, IController {
         });
 
         registerBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new OpenRegisterCommand());
-            Util.DelayExecuteWithSecond(Util.btnASTime, () => {
-                gameObject.SetActiveFast(false);
-            });
+            gameObject.SetActiveFast(false);
         });
     }
 }

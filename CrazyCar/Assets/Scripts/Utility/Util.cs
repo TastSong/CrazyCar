@@ -29,8 +29,6 @@ namespace Utils {
     public static class Util {
         public delegate void NoneParamFunction();
 
-        public static float btnASTime = 0.25f;
-
         public static string baseLanguagePath = "Language/Locales/";
         public static string baseFlagPath = "Language/Flag/";
 

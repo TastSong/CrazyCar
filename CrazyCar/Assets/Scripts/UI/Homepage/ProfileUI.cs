@@ -39,6 +39,7 @@ public class ProfileUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             this.SendCommand(new HidePageCommand(UIPageType.ProfileUI));
         });
         userNameBtn.onClick.AddListener(() => {
@@ -49,6 +50,7 @@ public class ProfileUI : MonoBehaviour, IController {
             }
         });
         passwordBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Consistent with the original password"));
             } else if (passwordInput.text.Length < 6) {

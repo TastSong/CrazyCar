@@ -41,6 +41,7 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             gameObject.SetActiveFast(false);
         });
     }

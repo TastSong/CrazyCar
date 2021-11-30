@@ -28,8 +28,9 @@ public class GameController : MonoBehaviour, IController {
         InitSettingsInfo();
     }
 
-    public void InitSettingsInfo() {        
-        AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
+    public void InitSettingsInfo() {
+        this.GetSystem<ISoundSystem>().SetSound(this.GetModel<ISettingsModel>().IsOnSound);
+        this.GetSystem<ISoundSystem>().SetBackgroundMusic(this.GetModel<ISettingsModel>().IsOnMusic);
         MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
     }
 

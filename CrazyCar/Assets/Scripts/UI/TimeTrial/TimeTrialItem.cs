@@ -20,6 +20,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             if (timeTrialInfo.isHas) {
                 this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
             } else {

@@ -29,11 +29,13 @@ public class SettingsUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             SaveSettings();
             gameObject.SetActiveFast(false);
         });
 
         exitBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayClickSound();
             Application.Quit();
         });
 
@@ -93,9 +95,8 @@ public class SettingsUI : MonoBehaviour, IController {
         this.GetModel<ISettingsModel>().SaveSystemInfo(GetCurrentInfo());
         // 切换语言
         this.GetSystem<II18NSystem>().ChangeLang(this.GetModel<ISettingsModel>().Language);
-        //var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
-        //backgroundAudioSource.volume = Convert.ToInt32(info.isOnMusic);
-        AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
+        this.GetSystem<ISoundSystem>().SetSound(this.GetModel<ISettingsModel>().IsOnSound);
+        this.GetSystem<ISoundSystem>().SetBackgroundMusic(this.GetModel<ISettingsModel>().IsOnMusic);
         MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
         success?.Invoke();
     }

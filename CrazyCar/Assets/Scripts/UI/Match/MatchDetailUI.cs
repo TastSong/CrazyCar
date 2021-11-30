@@ -26,6 +26,7 @@ public class MatchDetailUI : MonoBehaviour, IController {
 
     private void Start() {
         backBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlayCloseSound();
             this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
         });
     }
