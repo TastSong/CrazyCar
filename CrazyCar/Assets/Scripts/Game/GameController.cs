@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using TFramework;
+using MoreMountains.NiceVibrations;
 
 public class GameController : MonoBehaviour, IController {
     public GameHelper gameHelper;
@@ -29,6 +30,7 @@ public class GameController : MonoBehaviour, IController {
 
     public void InitSettingsInfo() {        
         AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
+        MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
     }
 
     public IArchitecture GetArchitecture() {

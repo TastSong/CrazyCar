@@ -12,6 +12,7 @@ public class SystemSettingsInfo : ISerializable {
     public string language;
     public bool isOnMusic;
     public bool isOnSound;
+    public bool isOnVibration;
     private static string fileName = "settings.stf";
     public SystemSettingsInfo() {
     }
@@ -20,12 +21,14 @@ public class SystemSettingsInfo : ISerializable {
         language = info.GetString("language");
         isOnMusic = info.GetBoolean("isOnMusic");
         isOnSound = info.GetBoolean("isOnSound");
+        isOnVibration = info.GetBoolean("isOnVibration");
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
         info.AddValue("language", language);
         info.AddValue("isOnMusic", isOnMusic);
         info.AddValue("isOnSound", isOnSound);
+        info.AddValue("isOnVibration", isOnVibration);
     }
 
     public static void SaveSystemInfo(SystemSettingsInfo ss) {
@@ -59,13 +62,15 @@ public class SystemSettingsInfo : ISerializable {
         info.language = language;
         info.isOnMusic = isOnMusic;
         info.isOnSound = isOnSound;
+        info.isOnVibration = isOnVibration;
         return info;
     }
 
     public bool EqualTo(SystemSettingsInfo info) {
         return info.language == language &&
             info.isOnMusic == isOnMusic &&
-            info.isOnSound == isOnSound;
+            info.isOnSound == isOnSound && 
+            info.isOnVibration == isOnVibration;
     }
 }
 
@@ -73,6 +78,7 @@ public interface ISettingsModel : IModel {
     BindableProperty <string> Language { get; }
     BindableProperty<bool> IsOnMusic { get; }
     BindableProperty<bool> IsOnSound { get; }
+    BindableProperty<bool> IsOnVibration { get; }
 
     void SaveSystemInfo(SystemSettingsInfo ss);
     void DelFile();
@@ -85,10 +91,13 @@ public class SettingsModel : AbstractModel, ISettingsModel {
 
     public BindableProperty<bool> IsOnSound { get; } = new BindableProperty<bool>();
 
+    public BindableProperty<bool> IsOnVibration { get; } = new BindableProperty<bool>();
+
     private void SetContent(SystemSettingsInfo ss) {
         Language.Value = ss.language;
         IsOnMusic.Value = ss.isOnMusic;
         IsOnSound.Value = ss.isOnSound;
+        IsOnVibration.Value = ss.isOnVibration;
     }
 
     public void DelFile() {
@@ -109,6 +118,7 @@ public class SettingsModel : AbstractModel, ISettingsModel {
             settingsInfo.language = "en";
             settingsInfo.isOnMusic = true;
             settingsInfo.isOnSound = true;
+            settingsInfo.isOnVibration = true;
             SystemSettingsInfo.SaveSystemInfo(settingsInfo);
         }
 

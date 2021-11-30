@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using UnityEditor;
 using LitJson;
 using System;
-using System.Runtime.Serialization;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using static UnityEngine.UI.Dropdown;
 using TFramework;
+using MoreMountains.NiceVibrations;
 
 public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;
@@ -18,6 +15,7 @@ public class SettingsUI : MonoBehaviour, IController {
     public Dropdown languageDropdown;
     public Slider musicSlider;
     public Slider soundSlider;
+    public Slider vibrationSlider;
 
     private bool isInit = false;
     private List<string> languageOptionsList = new List<string>();
@@ -78,6 +76,7 @@ public class SettingsUI : MonoBehaviour, IController {
         }
         musicSlider.value = Convert.ToInt32(info.IsOnMusic);
         soundSlider.value = Convert.ToInt32(info.IsOnSound);
+        vibrationSlider.value = Convert.ToInt32(info.IsOnVibration);
     }
 
     private SystemSettingsInfo GetCurrentInfo() {
@@ -85,17 +84,19 @@ public class SettingsUI : MonoBehaviour, IController {
         info.language = lanMap[languageDropdown.captionText.text];
         info.isOnMusic = Convert.ToBoolean(musicSlider.value);
         info.isOnSound = Convert.ToBoolean(soundSlider.value);
+        info.isOnVibration = Convert.ToBoolean(vibrationSlider.value);
         return info;
     }
 
     /*********     判断信息改变    ***********/
-    public void SaveSettings(Util.NoneParamFunction success = null) {
+    public void SaveSettings(Action success = null) {
         this.GetModel<ISettingsModel>().SaveSystemInfo(GetCurrentInfo());
         // 切换语言
         this.GetSystem<II18NSystem>().ChangeLang(this.GetModel<ISettingsModel>().Language);
         //var backgroundAudioSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
         //backgroundAudioSource.volume = Convert.ToInt32(info.isOnMusic);
         AudioListener.volume = Convert.ToInt32(this.GetModel<ISettingsModel>().IsOnSound);
+        MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
         success?.Invoke();
     }
 
