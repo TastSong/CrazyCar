@@ -1752,6 +1752,7 @@ GameObject:
   - component: {fileID: 727146238}
   - component: {fileID: 727146237}
   - component: {fileID: 727146240}
+  - component: {fileID: 727146241}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1858,6 +1859,21 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &727146241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727146236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c11265b855408d42af33d62691f5194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChannelMask: -1
+  m_Gain: 1
+  m_Use2DDistance: 0
 --- !u!114 &727146242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3036,6 +3052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1406224802}
   - component: {fileID: 1406224801}
+  - component: {fileID: 1406224803}
   m_Layer: 0
   m_Name: ScreenEffectsController
   m_TagString: Untagged
@@ -3055,6 +3072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42aa2ad60e58aa54690bf84230e37d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachineImpulseSource: {fileID: 1406224803}
   motionBlurEffects: {fileID: 727146242}
   wireframeProjector: {fileID: 8791738322306626710}
 --- !u!4 &1406224802
@@ -3072,6 +3090,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1406224803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406224800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 89a4acac94ac8cb45b8376a8c3e1a8f4, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
 --- !u!1 &1431426699
 GameObject:
   m_ObjectHideFlags: 0
