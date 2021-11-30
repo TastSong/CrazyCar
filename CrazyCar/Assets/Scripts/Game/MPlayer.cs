@@ -312,12 +312,12 @@ public class MPlayer : MonoBehaviour, IController {
 
     private void EnableScreenEffect() {
         screenEffectTime += Time.fixedDeltaTime;
-        this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = Mathf.Min(screenEffectTime, 0.14f);
+        this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(Mathf.Min(screenEffectTime, 0.14f));
     }
 
     private void DisableScreenEffect() {
         screenEffectTime = 0;
-        this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = screenEffectTime;
+        this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
     }
 
     private void OnTriggerEnter(Collider other) {
