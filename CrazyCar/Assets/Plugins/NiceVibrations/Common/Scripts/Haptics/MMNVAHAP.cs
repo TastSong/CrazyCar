@@ -88,7 +88,8 @@ namespace MoreMountains.NiceVibrations
         /// <returns></returns>
         public static MMNVAndroidWaveForm AHAPtoAndroidWaveForm(string AHAPasString, float intensityMultiplier, float sharpnessMultiplier)
         {
-            MMNVAHAP ahap = JsonConvert.DeserializeObject<MMNVAHAP>(AHAPasString);
+            //MMNVAHAP ahap = JsonConvert.DeserializeObject<MMNVAHAP>(AHAPasString);
+            MMNVAHAP ahap = new MMNVAHAP();
 
             List<long> patterns = new List<long>();
             List<int> amplitudes = new List<int>();
@@ -132,7 +133,8 @@ namespace MoreMountains.NiceVibrations
         /// <returns></returns>
         public static MMNVRumbleWaveForm AHAPtoRumbleWaveForm(string AHAPasString, float intensityMultiplier, float sharpnessMultiplier)
         {
-            MMNVAHAP ahap = JsonConvert.DeserializeObject<MMNVAHAP>(AHAPasString);
+            //MMNVAHAP ahap = JsonConvert.DeserializeObject<MMNVAHAP>(AHAPasString);
+            MMNVAHAP ahap = new MMNVAHAP();
 
             List<long> patterns = new List<long>();
             List<int> lowFreqAmplitudes = new List<int>();
