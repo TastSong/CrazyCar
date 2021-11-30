@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR 
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 #endif
 
 namespace MoreMountains.NiceVibrations
