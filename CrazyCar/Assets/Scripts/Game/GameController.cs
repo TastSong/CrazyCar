@@ -24,8 +24,8 @@ public class GameController : MonoBehaviour, IController {
         this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(false);
         this.GetModel<IGameControllerModel>().WarningAlert.gameObject.SetActiveFast(false);
         this.GetModel<IGameControllerModel>().InfoConfirmAlert.gameObject.SetActiveFast(false);
-        InitSettingsInfo();
         this.GetSystem<II18NSystem>().InitTranslation();
+        InitSettingsInfo();
     }
 
     public void InitSettingsInfo() {        
