@@ -20,7 +20,7 @@ public class MatchGameUI : MonoBehaviour, IController {
 
         int offTime = (int)(this.GetModel<IMatchModel>().StartTime * 1000 - Util.GetTime()) / 1000;
         if (offTime > 3){
-            StartCoroutine(CountdownCor(offTime,
+            StartCoroutine(Util.CountdownCor(offTime,
                     () => {
                         countDownAnim.gameObject.SetActiveFast(false);
                         StartGame();
@@ -43,7 +43,7 @@ public class MatchGameUI : MonoBehaviour, IController {
     private void StartGame() {
         this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = 1;
         Debug.Log("++++++ StartTime = " + this.GetModel<IMatchModel>().StartTime);
-        limitTimeCor = StartCoroutine(CountdownCor(this.GetModel<IMatchModel>().SelectInfo.Value.limitTime,
+        limitTimeCor = StartCoroutine(Util.CountdownCor(this.GetModel<IMatchModel>().SelectInfo.Value.limitTime,
             () => {
                 this.GetModel<IMatchModel>().IsArriveLimitTime.Value = true;
                 Debug.Log("++++++ arrive limit time ");
@@ -59,25 +59,6 @@ public class MatchGameUI : MonoBehaviour, IController {
     private void OnCompleteMatch(CompleteMatchEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
-    }
-
-    private IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {
-        while (true) {
-            if (targetText != null) {
-                if (str != null) {
-                    targetText.text = string.Format(str, time);
-                } else {
-                    targetText.text = time.ToString();
-                }
-            }
-
-            yield return new WaitForSecondsRealtime(1.0f);
-            time--;
-            if (time < 0) {
-                succ?.Invoke();
-                yield break;
-            }
-        }
     }
 
     private void OnDestroy() {

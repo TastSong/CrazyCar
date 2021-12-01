@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Utils {
     public static class GameObjectExtension {
@@ -353,5 +354,84 @@ namespace Utils {
             return list;
         }
 
+        // 颜色缓存到本地
+        private static Dictionary<string, Color> colorDict = new Dictionary<string, Color>();
+
+        private static Dictionary<int, Dictionary<string, Color>> alphaColorDict =
+            new Dictionary<int, Dictionary<string, Color>>();
+        public static Color GetColorFromString(string s) {
+            if (colorDict.ContainsKey(s)) {
+                return colorDict[s];
+            }
+
+            // string must be #xxxxxxxx
+            int R = int.Parse(s.Substring(1, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            int G = int.Parse(s.Substring(3, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            int B = int.Parse(s.Substring(5, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            try {
+                int A = int.Parse(s.Substring(7, 2),
+                    System.Globalization.NumberStyles.HexNumber);
+                colorDict[s] = new Color(R / 255f, G / 255f, B / 255f, A / 255f);
+                return colorDict[s];
+            } catch {
+                colorDict[s] = new Color(R / 255f, G / 255f, B / 255f, 1f);
+                return colorDict[s];
+            }
+        }
+
+        // alpha * 100 --- key1   colorStr --- key2
+        public static Color GetColorFromString(string s, float a) {
+            int alphaKey = (int)(a * 100);
+            if (alphaColorDict.ContainsKey(alphaKey)) {
+                if (alphaColorDict[alphaKey].ContainsKey(s)) {
+                    return alphaColorDict[alphaKey][s];
+                }
+            } else {
+                alphaColorDict[alphaKey] = new Dictionary<string, Color>();
+            }
+
+            int R = int.Parse(s.Substring(1, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            int G = int.Parse(s.Substring(3, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            int B = int.Parse(s.Substring(5, 2),
+                System.Globalization.NumberStyles.HexNumber);
+            Color col = new Color(R / 255f, G / 255f, B / 255f, a);
+            alphaColorDict[alphaKey][s] = col;
+            return col;
+        }
+
+        public static IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {
+            while (true) {
+                if (targetText != null) {
+                    if (str != null) {
+                        targetText.text = string.Format(str, time);
+                    } else {
+                        targetText.text = time.ToString();
+                    }
+
+                    if (time <= 3) {
+                        targetText.color = GetColorFromString("#EC2E37");
+                        Sequence sequence = DOTween.Sequence();
+                        for (int i = 0; i < time; i++) {
+                            sequence.Append(targetText.transform.DOScale(1.4f, 0.4f));
+                            sequence.Append(targetText.transform.DOScale(1f, 0.4f));
+                        }
+                    } else {
+                        targetText.color = GetColorFromString("#0F6DDE");
+                    }
+                }
+
+                yield return new WaitForSecondsRealtime(1.0f);
+                time--;
+                if (time < 0) {
+                    succ?.Invoke();
+                    yield break;
+                }
+            }
+        }
     }
 }
