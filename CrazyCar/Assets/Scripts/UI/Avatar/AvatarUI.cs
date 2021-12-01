@@ -23,8 +23,8 @@ public class AvatarUI : MonoBehaviour, IController {
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
-            this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, UpdataUI);
             curAid = this.GetModel<IUserModel>().Aid.Value;
+            this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, UpdataUI);
         }));
     }
 
@@ -40,6 +40,7 @@ public class AvatarUI : MonoBehaviour, IController {
     }
 
     private void Start() {
+        applyBtn.interactable = false;
         applyBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new ApplyAvatarCommand(curAid));
@@ -55,6 +56,11 @@ public class AvatarUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
+        if (e.aid == this.GetModel<IUserModel>().Aid) {
+            applyBtn.interactable = false;
+        } else {
+            applyBtn.interactable = true;
+        }
         curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(e.aid);
         curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;

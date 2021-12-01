@@ -95,6 +95,10 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private void FixedUpdate() {
+        if (IsRollover()) {
+            Jump();
+        }
+
         CheckGroundNormal();
         Turn();
 
@@ -157,6 +161,11 @@ public class MPlayer : MonoBehaviour, IController {
 
         rig.AddForce(tempForce, ForceMode.Force);
     }
+
+    private bool IsRollover() {
+        return transform.rotation.z > 10;
+    }
+
 
     //检测是否在地面上，并且使车与地面保持水平
     private void CheckGroundNormal() {

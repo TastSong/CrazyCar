@@ -55,6 +55,7 @@ public class ApplyAvatarCommand : AbstractCommand {
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
+                this.SendEvent(new UpdataAvatarUIEvent(this.GetModel<IUserModel>().Aid));
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Successfully Set"));
             },
             code: (code) => {
