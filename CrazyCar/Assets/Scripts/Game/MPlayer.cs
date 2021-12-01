@@ -163,7 +163,7 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private bool IsRollover() {
-        return transform.rotation.z > 10;
+        return Mathf.Abs(transform.rotation.z) > 35;
     }
 
 
