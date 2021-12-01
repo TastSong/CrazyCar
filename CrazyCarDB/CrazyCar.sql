@@ -386,22 +386,22 @@ create table if not exists `all_equip`(
    )engine = innodb default charset = utf8;
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 55, 66, 1);
+				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 80, 96, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (1, "R_Car_MonsterTruck_Red", "MonsterTruck Red", 2, 20, 58, 68, 1);
+				   (1, "R_Car_MonsterTruck_Red", "MonsterTruck Red", 2, 20, 79, 86, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (2, "R_Car_OffRoadTruck_Orange", "OffRoadTruck Orange", 4, 21, 60, 80, 1);
+				   (2, "R_Car_OffRoadTruck_Orange", "OffRoadTruck Orange", 4, 21, 78, 93, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 20, 66, 88, 1);
+				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 20, 80, 92, 1);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 64, 78, 0);
+				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 8, 15, 65, 88, 1);                   
+				   (5, "R_Car_StockCar_White", "StockCar White", 8, 15, 82, 98, 1);                   
 select* from all_equip;
 
 /*equip_uid*/
