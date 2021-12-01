@@ -88,11 +88,16 @@ public class TimeTrialResult extends HttpServlet {
 		String sql = "SELECT complete_time from (SELECT record.*, @rownum  := @rownum  + 1 AS rownum FROM "
 				+ "( SELECT uid, complete_time FROM time_trial_record where uid = " + uid + " and cid = " + cid + " ORDER BY complete_time ASC )"
 						+ " AS record, (SELECT @rownum  := 0) r ) AS history_rank  where rownum = 1 and complete_time != -1;";
-		// ����-1 �����ǿ� ��Ҳ�����Ǵ洢�����ݾ���Ϊ-1
+
+		if (completeTime == -1) {
+			return false;
+		} 
+		
 		int minTime = Util.JDBC.executeSelectInt(sql, "complete_time");
 		if (minTime == -1 && completeTime != -1){
 			return true;
-		}
+		}		
+		
 		return completeTime < minTime;
 	}
 	
