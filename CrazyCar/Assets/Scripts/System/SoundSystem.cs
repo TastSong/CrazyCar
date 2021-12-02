@@ -92,6 +92,9 @@ public class SoundSystem : AbstractSystem, ISoundSystem {
     }
 
     protected override void OnInit() {
-        
+        this.RegisterEvent<ChangeSettingEvent>((e) => {
+            SetSound(this.GetModel<ISettingsModel>().IsOnSound);
+            SetBackgroundMusic(this.GetModel<ISettingsModel>().IsOnMusic);
+        });
     }
 }

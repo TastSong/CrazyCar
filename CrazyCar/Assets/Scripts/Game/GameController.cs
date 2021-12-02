@@ -29,9 +29,7 @@ public class GameController : MonoBehaviour, IController {
     }
 
     public void InitSettingsInfo() {
-        this.GetSystem<ISoundSystem>().SetSound(this.GetModel<ISettingsModel>().IsOnSound);
-        this.GetSystem<ISoundSystem>().SetBackgroundMusic(this.GetModel<ISettingsModel>().IsOnMusic);
-        MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
+        this.SendCommand<SavaSettingsCommand>();
     }
 
     public IArchitecture GetArchitecture() {

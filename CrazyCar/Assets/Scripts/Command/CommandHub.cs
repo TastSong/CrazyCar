@@ -232,7 +232,7 @@ public class LoginCommand : AbstractCommand {
                     }
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                         callback: () => {
-                            MMVibrationManager.Haptic(HapticTypes.Success);
+                            this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.Success);
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                             Util.LoadingScene(SceneID.Index);
                         });
@@ -277,7 +277,7 @@ public class RegisterCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    MMVibrationManager.Haptic(HapticTypes.Success);
+                    this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.Success);
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
                     });
@@ -358,5 +358,11 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
             this.SendEvent<UnlockTimeTrialEvent>();
             this.SendCommand<UpdateHomepageUICommand>();
         }));
+    }
+}
+
+public class SavaSettingsCommand : AbstractCommand {
+    protected override void OnExecute() {
+        this.SendEvent<ChangeSettingEvent>();
     }
 }

@@ -14,7 +14,6 @@ public interface II18NSystem : ISystem {
     string GetText(string key);
     void RegisterText(I18NText t);
     void UnregisterText(I18NText t);
-    void ChangeLang(string id);
 }
 
 public class I18NSystem : AbstractSystem, II18NSystem {
@@ -64,7 +63,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
         allTexts.Remove(t);
     }
 
-    public void ChangeLang(string id) {
+    private void ChangeLang(string id) {
         Debug.Log("ChangeLang = " + id);
         current_dict = trans[id];
         CurrentLang = id;
@@ -83,6 +82,8 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     }
 
     protected override void OnInit() {
-        
+        this.RegisterEvent<ChangeSettingEvent>((e) => {
+            ChangeLang(this.GetModel<ISettingsModel>().Language);
+        });
     }
 }

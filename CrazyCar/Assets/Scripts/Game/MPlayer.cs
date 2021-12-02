@@ -155,7 +155,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (!isGround) {
             this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
-            MMVibrationManager.Haptic(HapticTypes.RigidImpact);
+            this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.RigidImpact);
             tempForce = tempForce + gravity * Vector3.down;
         }
 

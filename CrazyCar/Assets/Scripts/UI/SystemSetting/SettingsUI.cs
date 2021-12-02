@@ -7,7 +7,6 @@ using LitJson;
 using System;
 using static UnityEngine.UI.Dropdown;
 using TFramework;
-using MoreMountains.NiceVibrations;
 
 public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;
@@ -94,10 +93,7 @@ public class SettingsUI : MonoBehaviour, IController {
     public void SaveSettings(Action success = null) {
         this.GetModel<ISettingsModel>().SaveSystemInfo(GetCurrentInfo());
         // 切换语言
-        this.GetSystem<II18NSystem>().ChangeLang(this.GetModel<ISettingsModel>().Language);
-        this.GetSystem<ISoundSystem>().SetSound(this.GetModel<ISettingsModel>().IsOnSound);
-        this.GetSystem<ISoundSystem>().SetBackgroundMusic(this.GetModel<ISettingsModel>().IsOnMusic);
-        MMVibrationManager.SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
+        this.SendCommand<SavaSettingsCommand>();
         success?.Invoke();
     }
 
