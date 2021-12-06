@@ -38,6 +38,8 @@
 
 :sparkles:  **Crazy Car** 一个联机赛车游戏，利用Unity游戏引擎开发，使用Java后台和MySQL数据库
 
+:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置
+
 ## 特性 :point_down:
 :pushpin:  支持版本强制更新
 

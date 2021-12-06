@@ -39,6 +39,8 @@
 
 :sparkles: **Crazy Car** An online racing game, using Unity game engine development, using Java background and MySQL database 
 
+:loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly
+
 ## Features :point_down:
 :pushpin:  Mandatory version update is supported
 
