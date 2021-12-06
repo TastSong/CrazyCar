@@ -86,7 +86,7 @@ public class MPlayer : MonoBehaviour, IController {
             }
         }
         // 不能放在FixedUpdate 加速时间太短
-        ShowScreenEffect();
+        ShowVFX();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
@@ -121,10 +121,11 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    private void ShowScreenEffect() {
+    private void ShowVFX() {
         if (leftTrail.enabled == true) {
             EnableScreenEffect();
             PlayDriftParticle();
+            this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
         } else {
             DisableScreenEffect();
             StopDriftParticle();
@@ -287,13 +288,13 @@ public class MPlayer : MonoBehaviour, IController {
         EnableTrail();
     }
 
+    #region VFX
     private void PlayDriftParticle() {
         foreach (var tempParticle in wheelsParticeles) {
             tempParticle.Play();
         }
         plexusVFX.gameObject.SetActiveFast(true);
-        wireframeVFX.SetActiveFast(true);
-        this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
+        wireframeVFX.SetActiveFast(true);     
     }
 
     private void StopDriftParticle() {
@@ -323,6 +324,7 @@ public class MPlayer : MonoBehaviour, IController {
         screenEffectTime = 0;
         this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
     }
+    #endregion
 
     private void ChangeDriftColor() {
         foreach (var tempParticle in wheelsParticeles) {
