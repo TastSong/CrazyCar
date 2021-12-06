@@ -3,7 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 using MoreMountains.NiceVibrations;
 
 public class BuyAvatarCommand : AbstractCommand {

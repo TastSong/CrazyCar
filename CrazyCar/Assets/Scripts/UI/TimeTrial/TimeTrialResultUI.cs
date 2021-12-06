@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class TimeTrialResultUI : MonoBehaviour, IController {
     public Image avatarImage;

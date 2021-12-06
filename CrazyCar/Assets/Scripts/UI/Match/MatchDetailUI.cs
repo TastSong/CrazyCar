@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class MatchDetailUI : MonoBehaviour, IController {
     public MatchItem matchItem;

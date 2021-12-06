@@ -5,7 +5,7 @@ using DG.Tweening;
 using Utils;
 using UnityEngine.UI;
 using System;
-using TFramework;
+using QFramework;
 
 public class CountDownAnim : MonoBehaviour, IController {
     public Text countDownText;

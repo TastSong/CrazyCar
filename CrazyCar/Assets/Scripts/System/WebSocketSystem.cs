@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityWebSocket;
-using TFramework;
+using QFramework;
 
 public interface IWebSocketSystem : ISystem {
     void Init(string url);

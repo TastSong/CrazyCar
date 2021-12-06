@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class TimeTrialDetailUI : MonoBehaviour, IController {
     public TimeTrialItem timeTrialItem;

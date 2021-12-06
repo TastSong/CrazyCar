@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class TimeTrialWebSocket : MonoBehaviour, IController {
     private void Start() {

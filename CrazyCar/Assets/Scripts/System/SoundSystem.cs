@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TFramework;
+using QFramework;
 
 public interface ISoundSystem : ISystem {
     AudioSource ClickAudio { get; set; }

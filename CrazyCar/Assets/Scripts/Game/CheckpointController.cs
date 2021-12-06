@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TFramework;
+using QFramework;
 
 public class CheckpointController : MonoBehaviour, IController {
 

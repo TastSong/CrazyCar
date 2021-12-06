@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class ChangeCarUI : MonoBehaviour, IController {
     public Text nameText;

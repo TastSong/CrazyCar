@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
-using TFramework;
+using QFramework;
 
 public class TimeTrialGameUI : MonoBehaviour, IController {
     public CountDownAnim countDownAnim;

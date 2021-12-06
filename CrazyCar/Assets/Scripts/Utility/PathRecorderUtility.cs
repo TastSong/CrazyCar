@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TFramework;
+using QFramework;
 
 public static class RequestUrl {
     public static string forcedUpdatingUrl = "ForcedUpdating";

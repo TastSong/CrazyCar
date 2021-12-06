@@ -1,4 +1,4 @@
-﻿using TFramework;
+﻿using QFramework;
 
 public class DownloadResFinishCommand : AbstractCommand{
     protected override void OnExecute() {

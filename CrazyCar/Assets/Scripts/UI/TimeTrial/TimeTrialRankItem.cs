@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TFramework;
+using QFramework;
 
 public class TimeTrialRankItem : MonoBehaviour, IController {
     public Text nameText;

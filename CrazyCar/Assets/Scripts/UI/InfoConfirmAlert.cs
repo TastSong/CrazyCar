@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Utils;
 using System;
-using TFramework;
+using QFramework;
 
 public enum ConfirmAlertType {
     Double = 0,

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class LoginCtr : MonoBehaviour, IController {
     public LoginUI loginUI;

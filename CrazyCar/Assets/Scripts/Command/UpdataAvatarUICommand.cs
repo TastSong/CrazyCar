@@ -1,4 +1,4 @@
-﻿using TFramework;
+﻿using QFramework;
 
 public class UpdataAvatarUICommand : AbstractCommand {
     private readonly int mAid;

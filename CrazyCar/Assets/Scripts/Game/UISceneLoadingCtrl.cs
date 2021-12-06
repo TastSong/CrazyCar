@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class UISceneLoadingCtrl : MonoBehaviour, IController {
     public Slider progressSlider;

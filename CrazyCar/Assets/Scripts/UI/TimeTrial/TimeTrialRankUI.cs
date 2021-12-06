@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class TimeTrialRankUI : MonoBehaviour, IController {
     public Button closeBtn;

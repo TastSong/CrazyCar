@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
-using TFramework;
+using QFramework;
 
 public class HomepageCtrl : MonoBehaviour, IController{
     public IArchitecture GetArchitecture() {

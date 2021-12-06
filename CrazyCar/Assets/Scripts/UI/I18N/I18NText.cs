@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TFramework;
+using QFramework;
 
 // 不能重复添加这个组件
 [DisallowMultipleComponent]

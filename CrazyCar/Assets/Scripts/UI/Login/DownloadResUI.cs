@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
-using TFramework;
+using QFramework;
 
 public class DownloadResUI : MonoBehaviour, IController {
     public Text showText;

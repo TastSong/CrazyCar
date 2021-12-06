@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using TFramework;
+using QFramework;
 
 [Serializable]
 public class SystemSettingsInfo : ISerializable {

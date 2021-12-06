@@ -6,7 +6,7 @@ using Utils;
 using LitJson;
 using System;
 using static UnityEngine.UI.Dropdown;
-using TFramework;
+using QFramework;
 
 public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;

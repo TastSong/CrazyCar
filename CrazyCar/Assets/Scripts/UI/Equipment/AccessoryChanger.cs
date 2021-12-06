@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Utils;
 using System;
-using TFramework;
+using QFramework;
 
 [Serializable]
 class _DicItemRender {
