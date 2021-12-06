@@ -29,3 +29,7 @@ public class MakeNewPlayerEvent {
 public class ChangeSettingEvent {
 
 }
+
+public class AddCheckpoint {
+
+}

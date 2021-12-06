@@ -48,7 +48,6 @@ public class MPlayer : MonoBehaviour, IController {
     public GameObject plexusVFX;
     public GameObject wireframeVFX;
 
-    private int passTimes = 0;
     private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
@@ -96,7 +95,7 @@ public class MPlayer : MonoBehaviour, IController {
 
     private void FixedUpdate() {
         if (IsRollover()) {
-            Jump();
+            transform.position = this.GetSystem<ICheckpointSystem>().GetResetPos(transform.position);
         }
 
         CheckGroundNormal();
@@ -329,31 +328,6 @@ public class MPlayer : MonoBehaviour, IController {
         foreach (var tempParticle in wheelsParticeles) {
             var t = tempParticle.main;
             t.startColor = driftColors[(int)driftLevel];
-        }
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "EndSign") {
-            if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this) {
-                passTimes++;
-            }
-
-            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
-                if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
-                    this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
-                    Debug.Log("++++++TimeTrial EndTime = " + this.GetModel<ITimeTrialModel>().EndTime +
-                         "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
-                    passTimes = 0;
-                }
-            } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
-                if (passTimes >= this.GetModel<IMatchModel>().SelectInfo.Value.times) {
-                    this.GetModel<IMatchModel>().EndTime.Value = Util.GetTime() / 1000;
-                    Debug.Log("++++++Match EndTime = " + this.GetModel<IMatchModel>().EndTime +
-                        "  CompleteTime =  " + this.GetModel<IMatchModel>().GetCompleteTime());
-                    passTimes = 0;
-                }
-            }
-                    
         }
     }
 

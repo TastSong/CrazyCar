@@ -15,6 +15,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IDataParseSystem>(new DataParseSystem());
         RegisterSystem<ISoundSystem>(new SoundSystem());
         RegisterSystem<IVibrationSystem>(new VibrationSystem());
+        RegisterSystem<ICheckpointSystem>(new CheckpointSystem());
         RegisterModel<IGameControllerModel>(new GameControllerModel());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
