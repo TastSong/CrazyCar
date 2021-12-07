@@ -1,4 +1,24 @@
-﻿using System;
+﻿/****************************************************************************
+ * Copyright (c) 2015 ~ 2022 liangxiegame MIT License
+ *
+ * QFramework v1.0
+ *
+ * https://qframework.cn
+ * https://github.com/liangxiegame/QFramework
+ * 
+ * Author:
+ *  liangxie        https://github.com/liangxie
+ *  soso            https://github.com/so-sos-so
+ *
+ * Contributor
+ *  TastSong        https://github.com/TastSong
+ * 
+ * Community
+ *  QQ Group: 623597263
+ ****************************************************************************/
+
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
