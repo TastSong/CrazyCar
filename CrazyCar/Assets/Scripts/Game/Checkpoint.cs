@@ -11,13 +11,14 @@ public class Checkpoint : MonoBehaviour, IController {
         var checkpointSystem = this.GetSystem<ICheckpointSystem>();
         if (other.tag == "Player" && 
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer == other.GetComponent<MPlayer>()) {
-            checkpointSystem.CheckedCount.Value += 1;
             if (isEndSign) {
                 if (checkpointSystem.CheckpointCount * (checkpointSystem.PassTimes + 1) ==
-                    checkpointSystem.CheckedCount) {
+                    (checkpointSystem.CheckedCount + 1)) {
+                    checkpointSystem.CheckedCount.Value += 1;
                     checkpointSystem.PassTimes.Value += 1;
                 }
             } else {
+                checkpointSystem.CheckedCount.Value += 1;
                 gameObject.SetActiveFast(false);
             }
         }
