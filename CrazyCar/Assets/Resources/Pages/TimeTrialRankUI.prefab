@@ -1453,7 +1453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6576522674468043551
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1992,7 +1992,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2302,12 +2302,12 @@ PrefabInstance:
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 511.85602
       objectReference: {fileID: 0}
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -49.413788
       objectReference: {fileID: 0}
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
@@ -2327,7 +2327,7 @@ PrefabInstance:
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
@@ -2337,7 +2337,7 @@ PrefabInstance:
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4341751251613823368, guid: e57f43a76c8f2c245860bb74449805a4,
         type: 3}
@@ -2353,6 +2353,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TimeTrialRankItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664234575086713739, guid: e57f43a76c8f2c245860bb74449805a4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e57f43a76c8f2c245860bb74449805a4, type: 3}

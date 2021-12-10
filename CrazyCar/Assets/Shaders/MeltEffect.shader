@@ -12,19 +12,46 @@
 		_DissolveThreshold("Dissolve Threshold", Range(0.0, 1.0)) = 0.0
 		_LineWidth("Dissolve Line Width", Range(0.0, 0.2)) = 0.1
 		_DissolveColor("Dissolve First Color", Color) = (0, 0, 1, 1)
+
+		_OffsetDirection("Offset Direction", Vector) = (0, 0, 0, 0)
+		_OffsetThreshold("Vertex Offset Threshold", Range(0.0, 1.0)) = 0.5
+		_OffsetScale("Vertex Offset Scale", Range(0.0, 1.0)) = 0.3
 	}
-		SubShader
+	SubShader{
+
+		Pass
 		{
-			Pass
-			{
-				Tags {"LightMode" = "ForwardBase"}
-				Name "lighting"
+			Tags {"LightMode" = "ForwardBase"}
+			Name "lighting"
 
 				//不要裁剪背面
 				Cull Off
 
 				CGPROGRAM
-				...
+				#include"Lighting.cginc"
+				#include"AutoLight.cginc"
+
+				#pragma multi_compile_fwdbase noshadow
+				#pragma vertex vert
+				#pragma fragment frag
+
+				sampler2D _MainTex;
+				float4 _MainTex_ST;
+				sampler2D _BumpMap;
+				float4 _BumpMap_ST;
+				float4 _Specular;
+				float _BumpScale;
+				float _Gloss;
+				sampler2D _NoiseMap;
+				float4 _NoiseMap_ST;
+				float _DissolveThreshold;
+				float _LineWidth;
+				float _DissolveColor;
+
+				float4 _OffsetDirection;
+				float _OffsetThreshold;
+				float _OffsetScale;
+
 				struct a2v
 				{
 					float4 vertex : POSITION;
@@ -48,6 +75,7 @@
 				{
 					v2f o;
 					//模型空间-->裁剪空间
+					v.vertex.xyz += _OffsetDirection * saturate(_OffsetThreshold) * _OffsetScale;
 					o.pos = UnityObjectToClipPos(v.vertex);
 					//根据缩放和偏移计算diffuse、normal、noise纹理坐标
 					o.uv0 = TRANSFORM_TEX(v.texcoord, _MainTex);
@@ -97,25 +125,63 @@
 
 					//_LineWidth控制消融颜色作用的范围。与光照颜色进行lerp
 					fixed t = 1 - smoothstep(0.0, _LineWidth, noise.r - _DissolveThreshold);
-					fixed3 finalColor = ambient + (diffuse + specular) * atten;
-
-					if (_DissolveStartPosX < i.objectPos.x)
-					{
-						//采样noise,与阈值比较进行clip
-						fixed3 noise = tex2D(_NoiseMap, i.uv2).rgb;
-						clip(noise.r - _DissolveThreshold);
-
-						//在消融边缘增加边缘颜色，_LineWidth * 0.5宽度外保持原消融颜色
-						fixed3 finalDisscolveColor = lerp(_DissolveColor, _DissolveBorderColor, step(i.objectPos.x - _DissolveStartPosX, _LineWidth * 0.5));
-						//_LineWidth控制消融颜色作用的范围。与光照颜色进行lerp
-						fixed t = smoothstep(0.0, _LineWidth, noise.r - _DissolveThreshold) * 0.8;
-						finalColor = lerp(ambient + (diffuse + specular) * atten, finalDisscolveColor, t * step(0.001, _DissolveThreshold));
-					}
+					fixed3 finalColor = lerp(ambient + (diffuse + specular) * atten, _DissolveColor, t * step(0.001, _DissolveThreshold));
 
 					return float4(finalColor, 1.0);
 				}
 
 				ENDCG
-			}
 		}
+		Pass
+		{
+			Tags { "LightMode" = "ShadowCaster" }
+
+			Name "shadowCaster"
+
+			CGPROGRAM
+			#include"Lighting.cginc"
+			#include"AutoLight.cginc"
+
+			#pragma multi_compile_fwdbase
+			#pragma vertex vert
+			#pragma fragment frag
+
+			sampler2D _NoiseMap;
+			float4 _NoiseMap_ST;
+			float _DissolveThreshold;
+
+			struct v2f
+			{
+			//frag需要的shadowCaster信息，包括位置、bias、depth等
+			V2F_SHADOW_CASTER;
+			//noise map的纹理坐标
+			float2 uv0 : TEXCOORD0;
+			};
+
+			v2f vert(appdata_base v)
+			{
+				v2f o;
+				//完成：
+				//1.UnityClipSpaceShadowCasterPos：根据模型空间pos和normal，计算裁剪空间阴影位置，与光照配置中的NormalBias有关（unity_LightShadowBias.z==NormalBias）
+				//2.UnityApplyLinearShadowBias：增加裁剪空间中Z值。与光照参数中的Bias、UNITY_NEAR_CLIP_VALUE、UNITY_REVERSED_Z有关
+				TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+					//根据缩放和偏移计算noise map纹理坐标
+					o.uv0 = TRANSFORM_TEX(v.texcoord, _NoiseMap);
+
+					return o;
+				}
+
+			fixed4 frag(v2f i) : SV_Target
+			{
+				//采样noise,与阈值比较，未通过不显示阴影
+				fixed3 noise = tex2D(_NoiseMap, i.uv0).rgb;
+				clip(noise.r - _DissolveThreshold);
+				//平行光、聚光灯情况下返回 0（黑色）
+				//点光源情况下调用UnityEncodeCubeShadowDepth得到cubemap shadow值
+				SHADOW_CASTER_FRAGMENT(i)
+			}
+
+			ENDCG
+		}
+	}
 }

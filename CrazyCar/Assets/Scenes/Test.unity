@@ -76010,6 +76010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690130663825481564}
   - component: {fileID: 1690130663826889312}
+  - component: {fileID: 1690130663825980103}
   - component: {fileID: 1690130663827732414}
   m_Layer: 0
   m_Name: R_Car_F1_Blue
@@ -76018,6 +76019,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1690130663825980103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690130663825980102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a7c05bd1c71124fb1105d882e69b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 0
+  speed: 0.3
 --- !u!1 &1690130663825983328
 GameObject:
   m_ObjectHideFlags: 0
@@ -76172,7 +76187,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4076d263ff313c44c97d68f2440685b5, type: 2}
+  - {fileID: 2100000, guid: f6447d6d39f9abd4fbdb727ec273bab7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
