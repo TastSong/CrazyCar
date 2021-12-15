@@ -118,6 +118,12 @@
   	<description></description>
   	<servlet-class>test.TestJWT</servlet-class>
   </servlet>
+    <servlet>
+  	<servlet-name>KCPTest</servlet-name>
+  	<display-name>KCPTest</display-name>
+  	<description></description>
+  	<servlet-class>test.KCPTest</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>Avatar</servlet-name>
   	<url-pattern>/Avatar</url-pattern>
@@ -193,5 +199,9 @@
   <servlet-mapping>
   	<servlet-name>TestJWT</servlet-name>
   	<url-pattern>/TestJWT</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+  	<servlet-name>KCPTest</servlet-name>
+  	<url-pattern>/KCPTest</url-pattern>
   </servlet-mapping>
 </web-app>
