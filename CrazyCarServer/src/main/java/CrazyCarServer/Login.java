@@ -47,7 +47,6 @@ public class Login extends HttpServlet {
 			String userName = getJB.getString("UserName");
 			if (isPasswordRight(getJB.getString("UserName"), getJB.getString("Password"))) {
 				outJB.put("code", 200);
-				// ��¼���ֶ�ע��ҲҪ��
 				token = Util.JWT.createJWTById(Util.getDataByName(userName, "uid"));
 				userInfoJB.put("name", getJB.getString("UserName"));
 				userInfoJB.put("uid", Util.getDataByName(userName, "uid"));

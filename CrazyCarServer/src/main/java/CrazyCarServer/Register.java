@@ -110,17 +110,14 @@ public class Register extends HttpServlet {
 		sql = "select uid from all_user where user_name = "
 				+ "\"" + userName + "\";";
 		int uid = Util.JDBC.executeSelectInt(sql, "uid"); 
-		//����Ĭ��ͷ��
 		sql = "insert into avatar_uid ( aid, uid ) values" +
                 "(" + defaultAid + "," + uid +  ");";
 		Util.JDBC.executeInsert(sql);
-		
-		//��һ�ŵ�ͼ
+
 		sql = "insert into time_trial_user_map ( cid, uid ) values" +
                 "(" + defaultCid + "," + uid +  ");";
 		Util.JDBC.executeInsert(sql);
 		
-		//��һ���͵�װ��
 		sql = "insert into equip_uid ( eid, uid ) values" +
                 "(" + defaultEid + "," + uid +  ");";
 		Util.JDBC.executeInsert(sql);
