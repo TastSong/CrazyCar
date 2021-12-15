@@ -8,14 +8,14 @@ using QFramework;
 
 public class TimeTrialWebSocket : MonoBehaviour, IController {
     private void Start() {
-        //if (this.GetModel<IGameControllerModel>().CurGameType == CurGameType.TimeTrial) {
-        //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-        //        "websocket/TimeTrialWebSocket/" +
-        //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
-        //    Debug.Log("+++ " + ws);
-        //    WebSocketMan.manager.Init(ws);
-        //    WebSocketMan.manager.StartCoroutine(SendMsg());
-        //}
+        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+            string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
+                "websocket/TimeTrialWebSocket/" +
+                this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
+            Debug.Log("+++ " + ws);
+            this.GetSystem<INetworkSystem>().Connect(ws);
+            Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); });
+        }
     }
 
     private IEnumerator SendMsg() {
@@ -56,14 +56,14 @@ public class TimeTrialWebSocket : MonoBehaviour, IController {
                 w.WriteObjectEnd();
                 w.WriteObjectEnd();
                 Debug.Log("Post Server : " + sb.ToString());
-                this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+                this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
             }
             yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }
     }
 
     private void OnDestroy() {
-        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        this.GetSystem<INetworkSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {

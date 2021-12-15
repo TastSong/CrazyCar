@@ -13,7 +13,13 @@ public class MatchWebSocket : MonoBehaviour,IController {
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
                 this.GetModel<IMatchModel>().SelectInfo.Value.cid;
-            this.GetSystem<IWebSocketSystem>().Init(ws);
+
+            if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
+                this.GetSystem<INetworkSystem>().Connect(ws);
+            } else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP) {
+                this.GetSystem<INetworkSystem>().Connect("127.0.0.1");
+            }
+
             Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 
         }           
     }
@@ -55,13 +61,13 @@ public class MatchWebSocket : MonoBehaviour,IController {
             w.WriteObjectEnd();
             w.WriteObjectEnd();
             //Debug.Log("Post Server : " + sb.ToString());
-            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+            this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
             yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }
     }
 
     private void OnDestroy() {
-        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        this.GetSystem<INetworkSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {

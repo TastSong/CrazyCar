@@ -22,6 +22,7 @@ public static class RequestUrl {
     public static string matchDetailUrl = "MatchDetail";
     public static string matchResultUrl = "MatchResult";
     public static string createMatchUrl = "CreateMatch";
+    public static string kcpServerUrl = "KCPServer";
 }
 
 public static class PrefKeys {

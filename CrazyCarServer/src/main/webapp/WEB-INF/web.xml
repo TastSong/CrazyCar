@@ -124,6 +124,12 @@
   	<description></description>
   	<servlet-class>test.KCPTest</servlet-class>
   </servlet>
+    <servlet>
+    	<servlet-name>KCPServer</servlet-name>
+    	<display-name>KCPServer</display-name>
+    	<description></description>
+    	<servlet-class>CrazyCarServer.KCPServer</servlet-class>
+    </servlet>
   <servlet-mapping>
   	<servlet-name>Avatar</servlet-name>
   	<url-pattern>/Avatar</url-pattern>
@@ -204,4 +210,8 @@
   	<servlet-name>KCPTest</servlet-name>
   	<url-pattern>/KCPTest</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>KCPServer</servlet-name>
+    	<url-pattern>/KCPServer</url-pattern>
+    </servlet-mapping>
 </web-app>

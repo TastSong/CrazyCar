@@ -7,7 +7,7 @@ using UnityWebSocket;
 using QFramework;
 
 public interface IWebSocketSystem : ISystem {
-    void Init(string url);
+    void Connect(string url);
     void SendMsgToServer(string msg);
     void CloseConnect();
 }
@@ -17,8 +17,9 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     private int receiveCount;
     private IWebSocket socket;
     private JsonData recJD = new JsonData();
+    private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
 
-    public void Init(string url) {
+    public void Connect(string url) {
         address = url;
         socket = new WebSocket(address);
         socket.OnOpen += Socket_OnOpen;
@@ -52,7 +53,8 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
             recJD = JsonMapper.ToObject(e.Data);
             if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
                 this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
-                this.GetSystem<IPlayerManagerSystem>().RespondAction(ParsePlayerStateMsg(recJD));
+                playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
+                this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
             }
         }
         receiveCount += 1;
@@ -66,25 +68,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         Debug.Log(string.Format("Error: {0}\n", e.Message));
     }
 
-    private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
-        PlayerStateMsg playerStateMsg = new PlayerStateMsg();
-        playerStateMsg.cid = (int)jsonData["cid"];
-        playerStateMsg.pos = new Vector3((float)jsonData["pos_x"], (float)jsonData["pos_y"], (float)jsonData["pos_z"]);
-        playerStateMsg.speed = (int)(float)jsonData["speed"];
-        playerStateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
-        playerStateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
-        playerStateMsg.userInfo.aid = (int)jsonData["user_info"]["aid"];
-        playerStateMsg.userInfo.star = (int)jsonData["user_info"]["star"];
-        playerStateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
-        playerStateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
-        playerStateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
-        success?.Invoke();
-        return playerStateMsg;
-    }
-
     protected override void OnInit() {
         
-    }
-
-    
+    }   
 }

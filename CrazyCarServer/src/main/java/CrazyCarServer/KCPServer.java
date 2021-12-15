@@ -1,44 +1,64 @@
-package test;
+package CrazyCarServer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONObject;
 import com.backblaze.erasure.fec.Snmp;
+
+import Util.Util;
 import io.netty.buffer.ByteBuf;
 import kcp.ChannelConfig;
 import kcp.KcpListener;
 import kcp.KcpServer;
 import kcp.Ukcp;
+import test.KCPTest;
 
 /**
- * Servlet implementation class KCPJavaWebServer
+ * Servlet implementation class KCPServer
  */
-public class KCPTest extends HttpServlet implements KcpListener {
+public class KCPServer extends HttpServlet implements KcpListener {
 	private static final long serialVersionUID = 1L;
-
-	private boolean isInit = false;
-	
+	private boolean isInit = false;       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public KCPTest() {
+    public KCPServer() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+    /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html;charset=UTF-8");
+		System.out.println("Init KCP");
+		String token = request.getHeader("Authorization");
+		if (!Util.JWT.isLegalJWT(token)){
+			System.out.println("illegal JWT");
+			return;
+		} 
+
+		PrintWriter out = response.getWriter();
+		JSONObject outJB = new JSONObject();
+		JSONObject dataJB = new JSONObject();
 		if (!isInit) {
 			initKCP();
 			isInit = true;
 		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		outJB.put("code", 200);
+		dataJB.put("KCP", "KCP");	
+		outJB.put("data", dataJB);
+		out.println(outJB.toString());
+		out.flush();
+		out.close();
 	}
 	
 	private void initKCP() {
