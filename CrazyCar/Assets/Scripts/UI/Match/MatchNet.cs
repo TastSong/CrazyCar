@@ -6,7 +6,7 @@ using UnityEngine;
 using Utils;
 using QFramework;
 
-public class MatchWebSocket : MonoBehaviour,IController {
+public class MatchNet : MonoBehaviour,IController {
     private void Start() {
         if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
             string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
@@ -17,7 +17,7 @@ public class MatchWebSocket : MonoBehaviour,IController {
             if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
                 this.GetSystem<INetworkSystem>().Connect(ws);
             } else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP) {
-                this.GetSystem<INetworkSystem>().Connect("127.0.0.1");
+                this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
             }
 
             Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 

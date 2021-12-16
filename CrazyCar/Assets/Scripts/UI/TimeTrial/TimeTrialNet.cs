@@ -6,16 +6,20 @@ using UnityEngine;
 using Utils;
 using QFramework;
 
-public class TimeTrialWebSocket : MonoBehaviour, IController {
+public class TimeTrialNet : MonoBehaviour, IController {
     private void Start() {
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
-            string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-                "websocket/TimeTrialWebSocket/" +
-                this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
-            Debug.Log("+++ " + ws);
-            this.GetSystem<INetworkSystem>().Connect(ws);
-            Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); });
-        }
+        //if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+        //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
+        //        "websocket/TimeTrialWebSocket/" +
+        //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
+        //    Debug.Log("+++ " + ws);
+        //    if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
+        //        this.GetSystem<INetworkSystem>().Connect(ws);
+        //    } else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP) {
+        //        this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
+        //    }
+        //    Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); });
+        //}
     }
 
     private IEnumerator SendMsg() {

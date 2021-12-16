@@ -46,6 +46,17 @@ namespace Utils {
             }
         }
 
+        public static string GetServerHost(ServerType serverType) {
+            switch (serverType) {
+                case ServerType.Local:
+                    return "127.0.0.1";
+                case ServerType.Remote:
+                    return "139.9.103.145";
+                default:
+                    return "127.0.0.1";
+            }
+        }
+
         public static string GetContentFromHexString(string hex) {
             byte[] buf1 = new byte[hex.Length / 2];
             for (int i = 0; i < hex.Length; i += 2) {

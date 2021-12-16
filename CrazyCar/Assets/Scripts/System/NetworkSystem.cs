@@ -66,7 +66,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         } else {
             byte[] results = request.downloadHandler.data;
             string s = Encoding.UTF8.GetString(results);
-            Debug.Log(s);
+            Debug.Log(url + " : " + s);
             JsonData d = JsonMapper.ToObject(s);
 
             code?.Invoke((int)d["code"]);
