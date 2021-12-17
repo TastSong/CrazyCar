@@ -78,12 +78,14 @@ public class SoundSystem : AbstractSystem, ISoundSystem {
             LoseAudio.volume = 1;
             WinAudio.volume = 1;
             SpinWheelAudio.volume = 1;
+            WheelEngineAudio.volume = 1;
         } else {
             ClickAudio.volume = 0;
             CloseAudio.volume = 0;
             LoseAudio.volume = 0;
             WinAudio.volume = 0;
             SpinWheelAudio.volume = 0;
+            WheelEngineAudio.volume = 0;
         }
     }
 
