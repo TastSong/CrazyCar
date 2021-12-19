@@ -30,6 +30,10 @@ public class ChangeSettingEvent {
 
 }
 
-public class AddCheckpoint {
+public class AddCheckpointEvent {
+
+}
+
+public class ResetCheckpointEvent {
 
 }

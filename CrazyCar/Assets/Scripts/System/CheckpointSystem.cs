@@ -52,15 +52,9 @@ public class CheckpointSystem : AbstractSystem, ICheckpointSystem {
         return CheckpointPos[miniIndex];
     }
 
-    private void ResetCheckpoint() {
-        for (int i = 0; i < CheckpointCount; i++) {
-            CheckpointsList[i].SetActiveFast(true);
-        }
-    }
-
     protected override void OnInit() {
         PassTimes.Register((passTimes) => {
-            ResetCheckpoint();
+            this.SendEvent<ResetCheckpointEvent>();
             if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
                 if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
                     this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
