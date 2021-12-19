@@ -99,7 +99,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver, I
         return this.GetSystem<IResourceSystem>().GetEquipResource(rid);
     }
 
-    public void _SetResource(EquipResource r) {
+    private void SetResource(EquipResource r) {
         // Skip Invalid Suite
         if (r == null) {
             return;
@@ -143,7 +143,7 @@ public class AccessoryChanger : MonoBehaviour, ISerializationCallbackReceiver, I
         }
         this.rid = rid;
         EquipResource r = GetPartFromResource(rid);
-        _SetResource(r);
+        SetResource(r);
     }
 
     public IArchitecture GetArchitecture() {
