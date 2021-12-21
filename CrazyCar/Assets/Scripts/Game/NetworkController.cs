@@ -27,6 +27,7 @@ public class NetworkController : MonoBehaviour, IController {
     }
 
     private void Update() {
+        // KCP 开了线程所以只能把 RespondAction放进主线程
         if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
             lock (this.GetSystem<INetworkSystem>().MsgLock) {
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(
