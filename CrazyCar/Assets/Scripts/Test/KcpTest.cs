@@ -78,7 +78,7 @@ public class KCPTestManager : KcpClient {
         client.Timeout(10 * 1000);
         client.SetMtu(512);
         client.SetMinRto(10);
-        client.SetConv(port);
+        //client.SetConv(port);
         client.Connect(host, port);
         client.Start();
     }

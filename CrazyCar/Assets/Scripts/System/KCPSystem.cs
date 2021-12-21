@@ -13,7 +13,7 @@ public interface IKCPSystem : ISystem {
 }
 
 public class KCPSystem : AbstractSystem, IKCPSystem {
-    private int port = 40001;
+    private int port = 50001;
     private KCPManager kcpManager = new KCPManager();
     private string host;
     public static string recStr;
@@ -55,7 +55,10 @@ public class KCPManager : KcpClient, IController {
         if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
             this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
             playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
-            this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
+
+            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                this.GetSystem<INetworkSystem>().PlayerStateMsgs.Enqueue(playerStateMsg);
+            }
         }
     }
 
@@ -77,13 +80,12 @@ public class KCPManager : KcpClient, IController {
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.kcpServerUrl,
             token: this.GetModel<IGameControllerModel>().Token.Value,
             succData : (d) => {
-                client = new KCPTestManager();
+                client = new KCPManager();
                 client.NoDelay(1, 10, 2, 1);
                 client.WndSize(64, 64);
                 client.Timeout(10 * 1000);
                 client.SetMtu(512);
                 client.SetMinRto(10);
-                client.SetConv(port);
                 client.Connect(host, port);
                 client.Start();
             }));     

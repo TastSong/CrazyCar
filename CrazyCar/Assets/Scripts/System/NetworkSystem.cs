@@ -17,6 +17,8 @@ public interface INetworkSystem : ISystem {
     void CloseConnect();
     IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
+    Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
+    System.Object MsgLock { get; set; }
 }
 
 public class NetworkSystem : AbstractSystem, INetworkSystem {
@@ -41,7 +43,8 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
     public string HttpBaseUrl { get; set; }
-
+    public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
+    public object MsgLock { get; set; } = new object();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
         if (this.GetModel<IGameControllerModel>().StandAlone.Value) {

@@ -26,6 +26,16 @@ public class NetworkController : MonoBehaviour, IController {
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update() {
+        if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
+            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                this.GetSystem<IPlayerManagerSystem>().RespondAction(
+                    this.GetSystem<INetworkSystem>().PlayerStateMsgs.Peek());
+                this.GetSystem<INetworkSystem>().PlayerStateMsgs.Dequeue();
+            }
+        }
+    }
+
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
     }
