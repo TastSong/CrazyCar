@@ -7,11 +7,12 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 3. 搭建服务器环境 **下文提供简单参考**
 4. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库
-5. 用**Eclipse**打开**CrazyCar -> CrazyCarServer**项目，如果是首次打开，**Manven**需要自动下载依赖包，这个可能需要点时间，**Eclipse4.21.0**已经自带**Manven**环境所以等着就行；
-6. 运行**Eclipse**，如果是首次运行，系统会提示你添加**Tomcat**，添加即可；(如果你只是本地测试，不需要再启动**Nginx**)
-7. 后台运行成功后，即可运行**Unity**客户端；
+5. 用**Eclipse**打开**CrazyCar -> CrazyCarServer**项目，如果是首次打开，**Maven**需要自动下载依赖包(**右键项目->Maven->Update Maven**)，这个可能需要点时间，**Eclipse4.21.0**已经自带**Maven**环境所以等着就行；
+6. 更新完Maven后，**Project->Clean**，然后**Project->BuildAll**(注意关闭**Project->Automatic**)
+7. 运行**Eclipse**，如果是首次运行，系统会提示你添加**Tomcat**，添加即可；(如果你只是本地测试，不需要再启动**Nginx**)
+8. 后台运行成功后，即可运行**Unity**客户端；
 
-> 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、Eclipse添加Tomcat、Manven环境加载失败等问题，请自行百度！
+> 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、Eclipse添加Tomcat、Maven环境加载失败等问题，请自行百度！
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
 
 ## 环境版本
