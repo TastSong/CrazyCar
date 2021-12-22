@@ -22,15 +22,13 @@ public class ForcedUpdating extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public ForcedUpdating() {
-        super();
-         
+        super();    
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
 		response.setContentType("text/html;charset=UTF-8");
 		JSONObject getJB = new JSONObject();
 		getJB = Util.getMsgData(request);
@@ -76,7 +74,6 @@ public class ForcedUpdating extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
 		doGet(request, response);
 	}
 

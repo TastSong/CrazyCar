@@ -30,7 +30,6 @@ public class KCPTest extends HttpServlet implements KcpListener {
      */
     public KCPTest() {
         super();
-         
     }
 
 	/**

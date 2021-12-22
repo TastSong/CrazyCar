@@ -27,12 +27,10 @@ public class Avatar extends HttpServlet {
          
     }
 
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("Avatar ...");
 	    int uid = 0;
@@ -92,8 +90,7 @@ public class Avatar extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	 
 		doGet(request, response);
 	}
 

@@ -22,15 +22,13 @@ public class ChangeEquip extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public ChangeEquip() {
-        super();
-         
+        super();   
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		response.setContentType("text/html;charset=UTF-8");
 		
 		int uid = 0;
@@ -83,8 +81,7 @@ public class ChangeEquip extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		 
 		doGet(request, response);
 	}
 
