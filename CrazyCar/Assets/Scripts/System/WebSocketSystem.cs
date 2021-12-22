@@ -49,7 +49,6 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         if (e.IsBinary) {
             Debug.Log(string.Format("Receive Bytes ({1}): {0}\n", e.Data, e.RawData.Length));
         } else if (e.IsText) {
-            Debug.Log("Get Server Data : " + e.Data);
             recJD = JsonMapper.ToObject(e.Data);
             if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
                 this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {

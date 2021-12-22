@@ -80,6 +80,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+        Debug.Log("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
         playerStateMsg.pos = new Vector3((float)jsonData["pos_x"], (float)jsonData["pos_y"], (float)jsonData["pos_z"]);

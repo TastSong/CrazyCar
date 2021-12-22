@@ -50,7 +50,6 @@ public class KCPManager : KcpClient, IController {
 
     protected override void HandleReceive(ByteBuf bb) {
         recStr = System.Text.Encoding.UTF8.GetString(bb.GetRaw());
-        Debug.Log("+++++ Receive " + recStr);
         recJD = JsonMapper.ToObject(recStr);
         if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
             this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
@@ -94,7 +93,6 @@ public class KCPManager : KcpClient, IController {
     public void Send(string content) {
         if (client != null && client.IsRunning()) {
             ByteBuf bb = new ByteBuf(System.Text.Encoding.UTF8.GetBytes(content));
-            Debug.Log(bb.ReadableBytes());
             client.Send(bb);
         }
     }
