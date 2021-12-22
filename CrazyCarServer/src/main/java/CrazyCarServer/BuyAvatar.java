@@ -21,15 +21,14 @@ public class BuyAvatar extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public BuyAvatar() {
-        super();
-        // TODO Auto-generated constructor stub
+        super();     
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("BuyAvatar ...");
 	    int uid = 0;
@@ -110,7 +109,7 @@ public class BuyAvatar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		doGet(request, response);
 	}
 

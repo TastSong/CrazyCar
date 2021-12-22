@@ -19,14 +19,12 @@ public class TestJWT extends HttpServlet {
      */
     public TestJWT() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String jwt = Util.JWT.createJWTById(1);
 		Util.JWT.isLegalJWT(jwt);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -36,7 +34,6 @@ public class TestJWT extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}	    
 }

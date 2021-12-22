@@ -23,7 +23,7 @@ public class Login extends HttpServlet {
 	 */
 	public Login() {
 		super();
-		// TODO Auto-generated constructor stub
+		 
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		response.setContentType("text/html;charset=UTF-8");
 		JSONObject getJB = new JSONObject();
 		getJB = Util.getMsgData(request);
@@ -144,7 +144,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		doGet(request, response);
 	}
 

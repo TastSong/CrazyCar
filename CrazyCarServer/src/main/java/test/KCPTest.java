@@ -30,14 +30,14 @@ public class KCPTest extends HttpServlet implements KcpListener {
      */
     public KCPTest() {
         super();
-        // TODO Auto-generated constructor stub
+         
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		if (!isInit) {
 			initKCP();
 			isInit = true;
@@ -68,7 +68,7 @@ public class KCPTest extends HttpServlet implements KcpListener {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 
 		doGet(request, response);
 	}
 	
