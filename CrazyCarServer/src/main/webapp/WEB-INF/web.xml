@@ -130,6 +130,12 @@
     	<description></description>
     	<servlet-class>CrazyCarServer.KCPRttServer</servlet-class>
     </servlet>
+	<servlet>
+    	<servlet-name>EnterRoom</servlet-name>
+    	<display-name>EnterRoom</display-name>
+    	<description></description>
+    	<servlet-class>CrazyCarServer.EnterRoom</servlet-class>
+    </servlet>
   <servlet-mapping>
   	<servlet-name>Avatar</servlet-name>
   	<url-pattern>/Avatar</url-pattern>
@@ -213,5 +219,9 @@
     <servlet-mapping>
     	<servlet-name>KCPRttServer</servlet-name>
     	<url-pattern>/KCPRttServer</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+    	<servlet-name>EnterRoom</servlet-name>
+    	<url-pattern>/EnterRoom</url-pattern>
     </servlet-mapping>
 </web-app>
