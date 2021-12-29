@@ -42,7 +42,11 @@
 :loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly
 
 ## Features :point_down:
-:pushpin:  Mandatory version update is supported
+:pushpin:Mandatory version update is supported
+
+:telephone:Supports switching between KCP and WebSocket  
+
+:hammer:The game uses QFramework, easy to expand
 
 :sunrise: Support avatar and equipment resource hot update
 
@@ -52,7 +56,7 @@
 
 :computer: You can use this client on **Windows**、 **Android** and** IOS** devices
 
-:earth_asia:  Support for multiple languages
+:earth_asia:  Support for multiple languag,Multiple languages can be created in one click with **translateeditor. cs**
 
 :page_facing_up:  Personal information page, record personal achievements
 

@@ -41,7 +41,11 @@
 :loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置
 
 ## 特性 :point_down:
-:pushpin:  支持版本强制更新
+:pushpin:支持版本强制更新
+
+:telephone:支持KCP和WebSocket两种网络传输协议切换
+
+:hammer:游戏采用QFramework，易于扩展
 
 :sunrise: 支持头像和装备的资源热更新
 
@@ -51,7 +55,7 @@
 
 :computer:  你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
 
-:earth_asia:  支持多语言
+:earth_asia:  支持多语言，通过**TranslateEditor.cs**可以一键创建多国语言
 
 :page_facing_up:  个人信息页面，记录个人成就
 
