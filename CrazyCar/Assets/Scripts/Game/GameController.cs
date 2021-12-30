@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class GameController : MonoBehaviour, IController {
     public GameHelper gameHelper;

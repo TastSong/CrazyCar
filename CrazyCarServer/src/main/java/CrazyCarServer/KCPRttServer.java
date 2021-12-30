@@ -41,7 +41,7 @@ public class KCPRttServer extends HttpServlet implements KcpListener {
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("Init KCP");
 		String token = request.getHeader("Authorization");
-		if (!Util.JWT.isLegalJWT(token)){
+		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} 

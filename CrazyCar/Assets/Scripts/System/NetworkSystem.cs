@@ -19,6 +19,7 @@ public interface INetworkSystem : ISystem {
     PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     System.Object MsgLock { get; set; }
+    void EnterRoom(GameType gameType, int cid, Action succ = null);
 }
 
 public class NetworkSystem : AbstractSystem, INetworkSystem {
@@ -119,7 +120,37 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
+    public void EnterRoom(GameType gameType, int cid, Action succ = null) {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("cid");
+        w.Write(cid);
+        w.WritePropertyName("GameType");
+        w.Write((int)gameType);
+        w.WritePropertyName("NetType");
+        w.Write((int)NetType);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        _ = CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
+        data: bytes,
+        token: this.GetModel<IGameControllerModel>().Token.Value,
+        succData: (data) => {
+            succ?.Invoke();
+        },
+        code: (code) => {
+            if (code == 423) {
+                if (gameType == GameType.Match) {
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("The match is currently open only to VIP users");
+                } else {
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("Do not own this course");
+                }
+            }
+        }));
+    }
+
     protected override void OnInit() {
 
-    }
+    }   
 }

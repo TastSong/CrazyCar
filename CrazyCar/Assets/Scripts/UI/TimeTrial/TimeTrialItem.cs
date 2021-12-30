@@ -22,7 +22,9 @@ public class TimeTrialItem : MonoBehaviour, IController {
         selfBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             if (timeTrialInfo.isHas) {
-                this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
+                this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid, () => {
+                    this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
+                });
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
                     this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),

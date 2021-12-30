@@ -34,7 +34,7 @@ public class BuyTimeTrialClass extends HttpServlet {
 		System.out.println("BuyTimeTrialClass ...");
 	    int uid = 0;
 		String token = request.getHeader("Authorization");
-		if (!Util.JWT.isLegalJWT(token)){
+		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{

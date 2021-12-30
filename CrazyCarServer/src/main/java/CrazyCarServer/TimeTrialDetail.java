@@ -37,7 +37,7 @@ public class TimeTrialDetail extends HttpServlet {
 		System.out.println("TimeTrialDetail ...");
 		String token = request.getHeader("Authorization");
 		int uid;
-		if (!Util.JWT.isLegalJWT(token)){
+		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{

@@ -33,7 +33,7 @@ public class TimeTrialResult extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("TimeTrialResult ...");
 		String token = request.getHeader("Authorization");
-		if (!Util.JWT.isLegalJWT(token)){
+		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} 

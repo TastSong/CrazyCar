@@ -33,7 +33,7 @@ public class ChangeAvatar extends HttpServlet {
 		
 		int uid = 0;
 		String token = request.getHeader("Authorization");
-		if (!Util.JWT.isLegalJWT(token)){
+		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{

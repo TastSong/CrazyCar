@@ -65,11 +65,8 @@ public class HomepageUI : MonoBehaviour, IController {
                 ShowStandAlone();
                 return;
             }
-            if (this.GetModel<IUserModel>().IsVIP.Value) {
-                this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
-            } else {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("Match 只面向VIP");
-            }
+
+            this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));   
         });
         createMatchBtn.gameObject.SetActiveFast(this.GetModel<IUserModel>().Name.Value.ToLower() == "tast");
         createMatchBtn.onClick.AddListener(() => {
