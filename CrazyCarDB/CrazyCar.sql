@@ -503,7 +503,17 @@ select count(rank_num) as rank_count from  match_rank_0;
 select * from match_rank_0;			
 select uid from match_rank_0 where rank_num = 4;
 
-
+create table if not exists `superuser`(
+   `uid` int unsigned auto_increment,
+   primary key ( `uid` )
+   )engine = innodb default charset = utf8;
+insert into superuser ( uid)
+                       values
+					   (1);
+insert into superuser ( uid)
+                       values
+					   (2);                  
+select* from superuser;
 
 
 

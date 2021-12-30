@@ -227,9 +227,6 @@ public class LoginCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    if (mUserName.ToLower() == "tast") {
-                        this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
-                    }
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.Success);

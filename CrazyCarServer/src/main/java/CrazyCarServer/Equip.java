@@ -36,7 +36,7 @@ public class Equip extends HttpServlet {
 		System.out.println("Equip ...");
 	    int uid = 0;
 		String token = request.getHeader("Authorization");
-		if  (token == null || !Util.JWT.isLegalJWT(token)){
+		if (!Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
 		} else{
@@ -66,8 +66,6 @@ public class Equip extends HttpServlet {
 		jbData.put("equips", jsonArray);
 		jsonObject.put("data", jbData);
 		
-        //jsonArray.add(jsonObject);
-	    //String jsonOutput = jsonArray.toJSONString();
 		out.println(jsonObject.toString());	
 		out.flush();
 		out.close();

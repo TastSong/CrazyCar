@@ -39,6 +39,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         userModel.Aid.Value = (int)jsonData["user_info"]["aid"];
         userModel.Star.Value = (int)jsonData["user_info"]["star"];
         userModel.IsVIP.Value = (bool)jsonData["user_info"]["is_vip"];
+        userModel.IsSuperuser.Value = (bool)jsonData["user_info"]["is_superuser"];
         userModel.AvatarNum.Value = (int)jsonData["user_info"]["avatar_num"];
         userModel.TravelTimes.Value = (int)jsonData["user_info"]["travel_times"];
         userModel.MapNum.Value = (int)jsonData["user_info"]["map_num"];

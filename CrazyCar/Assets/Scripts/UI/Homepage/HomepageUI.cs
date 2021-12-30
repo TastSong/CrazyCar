@@ -43,6 +43,10 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void Start() {
+        if (this.GetModel<IUserModel>().IsSuperuser) {
+            this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(true);
+        }
+
         nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
         avatarBtn.onClick.AddListener(() => {
@@ -68,14 +72,19 @@ public class HomepageUI : MonoBehaviour, IController {
 
             this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));   
         });
-        createMatchBtn.gameObject.SetActiveFast(this.GetModel<IUserModel>().Name.Value.ToLower() == "tast");
+
         createMatchBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
-            this.SendCommand<CreateMatchCommand>();
+
+            if (this.GetModel<IUserModel>().IsSuperuser) {
+                this.SendCommand<CreateMatchCommand>();
+            } else {
+                OnUpdataMatchDetail(new UpdataMatchDetailEvent());
+            }
         });
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);

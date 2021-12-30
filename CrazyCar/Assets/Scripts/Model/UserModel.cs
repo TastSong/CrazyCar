@@ -11,6 +11,7 @@ public class UserInfo {
     public int uid;
     public int star;
     public bool isVIP;
+    public bool isSuperuser;
     public int travelTimes;
     public int avatarNum;
     public int mapNum;
@@ -24,6 +25,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> Uid { get; }
     BindableProperty<int> Star { get; }
     BindableProperty<bool> IsVIP { get; }
+    BindableProperty<bool> IsSuperuser { get; }
     BindableProperty<int> TravelTimes { get; }
     BindableProperty<int> AvatarNum { get; }
     BindableProperty<int> MapNum { get; }
@@ -46,6 +48,8 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<EquipInfo> EquipInfo { get; } = new BindableProperty<EquipInfo>();
     public BindableProperty<int> RememberPassword { get; } = new BindableProperty<int>();
 
+    public BindableProperty<bool> IsSuperuser { get; } = new BindableProperty<bool>();
+
     public void SetUserInfoPart(UserInfo userInfo) {
         Name.Value = userInfo.name;
         Aid.Value = userInfo.aid;
@@ -56,6 +60,7 @@ public class UserModel : AbstractModel, IUserModel {
         AvatarNum.Value = userInfo.avatarNum;
         MapNum.Value = userInfo.mapNum;
         EquipInfo.Value = userInfo.equipInfo;
+        IsSuperuser.Value = userInfo.isSuperuser;
     }
 
     protected override void OnInit() {
@@ -77,8 +82,6 @@ public class UserModel : AbstractModel, IUserModel {
         RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);
         RememberPassword.Register(v =>
             storage.SaveInt(PrefKeys.rememberPassword, v)
-        );
-       
+        ); 
     }
-   
 }
