@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour, IController {
     public Transform startPos;
     public Transform  cinemachineTF;
 
-    private float widthUnit = 0.8f;
+    private float widthUnit = 1.2f;
 
     private void Start() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
@@ -43,7 +43,14 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private Vector3 GetStartPosition() {
-        Vector3 pos = startPos.position + new Vector3(UnityEngine.Random.Range(-2, 2) * widthUnit, 0, 0);
+        Vector3 pos = new Vector3();
+        double num = this.GetModel<IRoomMsgModel>().Num;
+        if (num % 2 == 0) {
+            pos = startPos.position + new Vector3((int)(num / 2 * widthUnit), 0, 0);
+        } else {
+            Debug.LogError("++++++ " + (int)(Math.Ceiling(num / 2)));
+            pos = startPos.position - new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
+        }
         return pos;
     }
 

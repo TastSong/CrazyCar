@@ -133,10 +133,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        _ = CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
         data: bytes,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
+            this.GetModel<IRoomMsgModel>().Num = (int)data["num"];
             succ?.Invoke();
         },
         code: (code) => {
