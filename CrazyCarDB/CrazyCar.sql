@@ -401,7 +401,7 @@ insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_s
 				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 82, 98, 1);                   
+				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1);                   
 select* from all_equip;
 
 /*equip_uid*/
@@ -510,9 +510,7 @@ create table if not exists `superuser`(
 insert into superuser ( uid)
                        values
 					   (1);
-insert into superuser ( uid)
-                       values
-					   (2);                  
+                
 select* from superuser;
 
 

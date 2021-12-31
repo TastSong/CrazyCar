@@ -93,6 +93,7 @@ public class BuyEquipCommand : AbstractCommand {
                 succData: (data) => {
                     this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                     this.SendEvent<BuyEquipEvent>();
+                    this.SendEvent<UpdateHomepageUIEvent>();
                 }));
             },
             fail: () => {
@@ -353,7 +354,7 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
             mTimeTrialInfo.isHas = true;
             this.GetModel<IUserModel>().MapNum.Value++;
             this.SendEvent<UnlockTimeTrialEvent>();
-            this.SendCommand<UpdateHomepageUICommand>();
+            this.SendEvent<UpdateHomepageUIEvent>();
         }));
     }
 }
