@@ -14,7 +14,7 @@ create table if not exists `all_user`(
    )engine = innodb default charset = utf8;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "111111", 1629544628, 0, 20, 1, 0);
+					   (1, "Tast", "111111", 1629544628, 0, 99, 1, 0);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
 					   (2, "song", "111111", 1629544634, 1, 14, 1, 1);
@@ -401,7 +401,7 @@ insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_s
 				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0);
 insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 8, 15, 82, 98, 1);                   
+				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 82, 98, 1);                   
 select* from all_equip;
 
 /*equip_uid*/
