@@ -13,6 +13,7 @@ public class MPlayer : MonoBehaviour, IController {
     public float vInput;
     public float hInput;
     public float sInput;
+    public bool isLockSpeed = false;
     //力的大小
     public float currentForce;
     public float normalForce = 20;
@@ -94,6 +95,11 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private void FixedUpdate() {
+        if (isLockSpeed) {
+            rig.AddForce(Vector3.zero, ForceMode.Force);
+            return;
+        }
+
         if (IsRollover()) {
             transform.position = this.GetSystem<ICheckpointSystem>().GetResetPos(transform.position);
         }
