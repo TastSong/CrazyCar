@@ -53,6 +53,7 @@ public class Register extends HttpServlet {
 			        userInfoJB.put("star", Util.getDataByName(userName, "star"));
 					userInfoJB.put("is_vip", (Util.getDataByName(userName, "is_vip") == 1));
 					int uid = Util.getDataByName(userName, "uid");
+					userInfoJB.put("is_superuser", isSuperuser(uid));
 					userInfoJB.put("travel_times", getTravelTimes(uid));       
 					userInfoJB.put("avatar_num", getAvatarNum(uid)); 
 					userInfoJB.put("map_num", getMapNum(uid)); 
@@ -160,4 +161,10 @@ public class Register extends HttpServlet {
 				+  eid + " and " + " uid = " + uid + ";";
 		return Util.JDBC.executeSelectInt(sql, "eid") != -1;
 	}	
+
+	private boolean isSuperuser(int uid){
+		String sql = "select uid from superuser where uid = "
+				+  uid + ";";
+		return Util.JDBC.executeSelectInt(sql, "uid") != -1;
+	}
 }
