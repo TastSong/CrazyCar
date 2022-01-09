@@ -5,38 +5,6 @@ using Utils;
 using QFramework;
 using MoreMountains.NiceVibrations;
 
-public class ChangePasswordCommand : AbstractCommand {
-    private string mPassword;
-
-    public ChangePasswordCommand(string password) {
-        mPassword = password;
-    }
-
-    protected override void OnExecute() {
-        StringBuilder sb = new StringBuilder();
-        JsonWriter w = new JsonWriter(sb);
-        w.WriteObjectStart();
-        w.WritePropertyName("password");
-        w.Write(mPassword);
-        w.WriteObjectEnd();
-        Debug.Log("++++++ " + sb.ToString());
-        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
-            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
-            succData: (data) => {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Modify Successfully"));
-                this.GetModel<IUserModel>().Password.Value = mPassword;
-            },
-            code: (code) => {
-                if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Fail To Modify"));
-                } else if (code == 404) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Information Error"));
-                }
-            }));
-    }
-}
-
 public class EnableStandAloneCommand : AbstractCommand {
     protected override void OnExecute() {
         this.GetModel<IGameControllerModel>().StandAlone.Value = true;
