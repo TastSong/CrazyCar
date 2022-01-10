@@ -1,8 +1,4 @@
 ﻿
-public class UnlockAvatarEvent {
-
-}
-
 public class MakeNewPlayerEvent {
     public PlayerStateMsg playerStateMsg;
 
