@@ -1,10 +1,4 @@
 ﻿
-
-
-public class UnlockTimeTrialEvent {
-
-}
-
 public class UnlockAvatarEvent {
 
 }
