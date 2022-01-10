@@ -1,8 +1,4 @@
-﻿public class ApplyEquipEvent {
-
-}
-
-public class BuyEquipEvent {
+﻿public class BuyEquipEvent {
 
 }
 
