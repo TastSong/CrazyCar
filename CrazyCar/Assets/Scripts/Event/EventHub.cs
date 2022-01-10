@@ -1,7 +1,5 @@
 ﻿
-public class UpdataMatchDetailEvent {
 
-}
 
 public class UnlockTimeTrialEvent {
 
