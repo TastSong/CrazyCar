@@ -17,6 +17,8 @@ public interface IGameControllerModel : IModel {
     WarningAlert WarningAlert { get; set; }
     InfoConfirmAlert InfoConfirmAlert { get; set; }
     GameHelper GameHelper { get; set; }
+
+    LoadingUI LoadingUI { get; set; }
 }
 
 public class GameControllerModel : AbstractModel, IGameControllerModel {
@@ -32,6 +34,7 @@ public class GameControllerModel : AbstractModel, IGameControllerModel {
     public WarningAlert WarningAlert { get; set; } = new WarningAlert();
     public InfoConfirmAlert InfoConfirmAlert { get; set; } = new InfoConfirmAlert();
     public GameHelper GameHelper { get; set; } = new GameHelper();
+    public LoadingUI LoadingUI { get; set; } = new LoadingUI();
 
     protected override void OnInit() {
         SceneLoaded.Value = false;
