@@ -32,6 +32,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
+        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
            RequestUrl.matchDetailUrl,
           token: this.GetModel<IGameControllerModel>().Token.Value,

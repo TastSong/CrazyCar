@@ -39,6 +39,7 @@ public class MatchResultUI : MonoBehaviour, IController {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.matchResultUrl,
             data: bytes,

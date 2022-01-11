@@ -24,6 +24,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private List<ChangeCarItem> changeCarItems = new List<ChangeCarItem>();
 
     private void OnEnable() {
+        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.equipUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
