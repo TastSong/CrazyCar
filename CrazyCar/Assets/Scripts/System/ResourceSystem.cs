@@ -45,21 +45,6 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     public ResourceType curResourceType { get; set; }
 
     private Dictionary<ABType, ABInfo> abDic = new Dictionary<ABType, ABInfo>();
-    private AssetBundle avatar;
-    private AssetBundle equip;
-    private string avatarHash = "";
-    private uint avatarCRC = 0;
-    private string avatarURL = "";
-    private float avatarSize = 1000;
-    private string localAvatarString = Application.streamingAssetsPath + "/avatar_" + Util.GetPlatform().ToLower();
-
-    private string equipHash = "";
-    private uint equipCRC = 0;
-    private string equipURL = "";
-    private float equipSize = 1000;
-    private string localEquipString = Application.streamingAssetsPath + "/equip_" + Util.GetPlatform().ToLower();
-    
-    private ProgressCallback progressCallback;
 
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
@@ -114,15 +99,15 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                 }
                 abDic[ABType.Avatar].size = float.Parse((string)data["avatar"]["size"]);
 
-                equipHash = (string)data["equip"]["hash"];
-                equipCRC = uint.Parse((string)data["equip"]["crc"]);
+                abDic[ABType.Equip].hash = (string)data["equip"]["hash"];
+                abDic[ABType.Equip].crc = uint.Parse((string)data["equip"]["crc"]);
                 string equipStr = (string)data["equip"]["url"];
                 if (equipStr.Contains("http")) {
-                    equipURL = equipStr;
+                    abDic[ABType.Equip].url = equipStr;
                 } else {
-                    equipURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["equip"]["url"];
+                    abDic[ABType.Equip].url = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["equip"]["url"];
                 }
-                equipSize = float.Parse((string)data["equip"]["size"]);
+                abDic[ABType.Equip].size = float.Parse((string)data["equip"]["size"]);
 
                 GetLocalResource();
             },
@@ -158,20 +143,20 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
             string localAvatarHash = (string)maniData["avatar"];
             string localEquipHash = (string)maniData["equip"];
 
-            Debug.Log("++++++ remote avatarHash = " + avatarHash + "   localAvatarHash = " + localAvatarHash);
-            Debug.Log("++++++ remote equipHash = " + equipHash + "   localEquipHash = " + localEquipHash);
-            if (localAvatarHash == avatarHash) {
-                avatar = AssetBundle.LoadFromFile(localAvatarString);
+            Debug.Log("++++++ remote avatarHash = " + abDic[ABType.Avatar].hash + "   localAvatarHash = " + localAvatarHash);
+            Debug.Log("++++++ remote equipHash = " + abDic[ABType.Equip].hash + "   localEquipHash = " + localEquipHash);
+            if (localAvatarHash == abDic[ABType.Avatar].hash) {
+                abDic[ABType.Avatar].assetBundle = AssetBundle.LoadFromFile(abDic[ABType.Avatar].localABPath);
             }
-            if (localEquipHash == equipHash) {
-                equip = AssetBundle.LoadFromFile(localEquipString);
+            if (localEquipHash == abDic[ABType.Equip].hash) {
+                abDic[ABType.Equip].assetBundle = AssetBundle.LoadFromFile(abDic[ABType.Equip].localABPath);
             }
         }
 
         // 下载线上之后，会缓存到一个文件夹，不会替换本地文件
         //Caching.ClearCache();
-        if (!Caching.IsVersionCached(avatarURL, Hash128.Parse(avatarHash)) && avatar == null ||
-            (!Caching.IsVersionCached(equipURL, Hash128.Parse(equipHash)) && equip == null)) {
+        if (!Caching.IsVersionCached(abDic[ABType.Avatar].url, Hash128.Parse(abDic[ABType.Avatar].hash)) && abDic[ABType.Avatar].assetBundle == null ||
+            (!Caching.IsVersionCached(abDic[ABType.Equip].url, Hash128.Parse(abDic[ABType.Equip].hash)) && abDic[ABType.Equip].assetBundle == null)) {
             curResourceType = ResourceType.ToDownload;
         } else {
             curResourceType = ResourceType.Loaded;
@@ -185,89 +170,48 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     }
 
     private IEnumerator Download(Action success, ProgressCallback progressCallback, Action fail) {
-        if (avatar == null) {
-            Debug.Log("Try to Load avatar From Web");
-            float lastProgress = -1;
-            var _req = UnityWebRequestAssetBundle.GetAssetBundle(avatarURL, Hash128.Parse(avatarHash), avatarCRC);
-            _req.SendWebRequest();
-            long lastTime = Util.GetTime();
-            Debug.Log("dowload avatar before");
-            while (!_req.isDone) {
-                if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
-                    if (Util.GetTime() - lastTime > 100 * 1000) {
-                        //fail
-                        fail?.Invoke();
-                        yield break;
+        foreach (var item in abDic) {
+            if (item.Value.assetBundle == null) {
+                Debug.Log("Try to Load " + item.Value.name + " From Web");
+                float lastProgress = -1;
+                var _req = UnityWebRequestAssetBundle.GetAssetBundle(item.Value.url, Hash128.Parse(item.Value.hash), item.Value.crc);
+                _req.SendWebRequest();
+                long lastTime = Util.GetTime();
+                Debug.Log("dowload " + item.Value.name + " before");
+                while (!_req.isDone) {
+                    if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
+                        if (Util.GetTime() - lastTime > 100 * 1000) {
+                            //fail
+                            fail?.Invoke();
+                            yield break;
+                        } else {
+                        }
                     } else {
+                        lastProgress = _req.downloadProgress;
+                        lastTime = Util.GetTime();
                     }
-                } else {
-                    lastProgress = _req.downloadProgress;
-                    lastTime = Util.GetTime();
-                }
 
-                try {
-                    progressCallback(_req.downloadProgress, avatarSize * 1024 * 1024, true);
-                } catch {
-                    Debug.LogError("bundleError");
-                }
-
-                yield return null;
-            }
-
-            Debug.Log("dowload avatar finish");
-            try {
-                avatar = DownloadHandlerAssetBundle.GetContent(_req);
-            } catch (System.Exception e) {
-                Debug.Log(e.ToString());
-            }
-
-            Debug.Log("get avatar bundle finish");
-            if (avatar == null) {
-                fail?.Invoke();
-                yield break;
-            }
-        }
-
-        if (equip == null) {
-            Debug.Log("Try to Load equip From Web");
-            float lastProgress = -1;
-            var _req = UnityWebRequestAssetBundle.GetAssetBundle(equipURL, Hash128.Parse(equipHash), equipCRC);
-            _req.SendWebRequest();
-            long lastTime = Util.GetTime();
-            Debug.Log("dowload equip before");
-            while (!_req.isDone) {
-                if (Mathf.Approximately(lastProgress, _req.downloadProgress)) {
-                    if (Util.GetTime() - lastTime > 10 * 1000) {
-                        //fail
-                        fail?.Invoke();
-                        yield break;
-                    } else {
+                    try {
+                        progressCallback(_req.downloadProgress, item.Value.size * 1024 * 1024, true);
+                    } catch {
+                        Debug.LogError("bundleError");
                     }
-                } else {
-                    lastProgress = _req.downloadProgress;
-                    lastTime = Util.GetTime();
+
+                    yield return null;
                 }
 
+                Debug.Log("dowload " + item.Value.name + " finish");
                 try {
-                    progressCallback(_req.downloadProgress, equipSize * 1024 * 1024, true);
-                } catch {
-                    Debug.LogError("bundleError");
+                    item.Value.assetBundle = DownloadHandlerAssetBundle.GetContent(_req);
+                } catch (System.Exception e) {
+                    Debug.Log(e.ToString());
                 }
 
-                yield return null;
-            }
-
-            Debug.Log("dowload equip finish");
-            try {
-                equip = DownloadHandlerAssetBundle.GetContent(_req);
-            } catch (System.Exception e) {
-                Debug.Log(e.ToString());
-            }
-
-            Debug.Log("get equip bundle finish");
-            if (equip == null) {
-                fail?.Invoke();
-                yield break;
+                Debug.Log("get " + item.Value.name + " bundle finish");
+                if (item.Value.assetBundle == null) {
+                    fail?.Invoke();
+                    yield break;
+                }
             }
         }
 
@@ -278,14 +222,14 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
         Sprite resultSprite;
         try {
 #if !UNITY_EDITOR
-            Debug.Log("+++ " + "Assets/AB/Avatar/" + aid + ".png");
-            resultSprite = avatar.LoadAsset<Sprite>("Assets/AB/Avatar/" + aid + ".png");
+            Debug.Log("+++ " + abDic[ABType.Avatar].localPrafabPath + aid + ".png");
+            resultSprite = abDic[ABType.Avatar].assetBundle.LoadAsset<Sprite>(abDic[ABType.Avatar].localPrafabPath + aid + ".png");
             if (resultSprite == null) {
                 return null;
             }
 #else
             resultSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(
-                "Assets/AB/Avatar/" + aid.ToString() + ".png");
+                abDic[ABType.Avatar].localPrafabPath + aid.ToString() + ".png");
 
 #endif
             return resultSprite;
@@ -302,14 +246,14 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                 return this.GetModel<IEquipModel>().EquipResource[rid];
             }
 #if !UNITY_EDITOR
-            var o = equip.LoadAsset<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab");
+            var o = abDic[ABType.Equip].assetBundle.LoadAsset<GameObject>(abDic[ABType.Equip].localPrafabPath + rid + ".prefab");
 			if(o == null) {
 				return null;
 			}
 			var e = o.GetComponent<EquipResource>();
 #else
             var e = UnityEditor.AssetDatabase.LoadAssetAtPath<EquipResource>(
-                "Assets/AB/Equip/Items/" + rid + ".prefab");
+                abDic[ABType.Equip].localPrafabPath + rid + ".prefab");
 
 #endif
             this.GetModel<IEquipModel>().EquipResource[rid] = e;
