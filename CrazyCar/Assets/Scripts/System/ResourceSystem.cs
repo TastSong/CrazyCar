@@ -7,6 +7,7 @@ using QFramework;
 using UnityEngine;
 using UnityEngine.Networking;
 using Utils;
+using System.Collections.Generic;
 
 public enum ResourceType {
     None = 0,
@@ -17,8 +18,6 @@ public enum ResourceType {
 public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
 
 public interface IResourceSystem : ISystem {
-    AssetBundle avatar { get; set; }
-    AssetBundle equip { get; set; }
     ResourceType curResourceType { get; set; }
     void CheckNewResource();
     void DownloadAssets(Action success, ProgressCallback progressCallback, Action fail);
@@ -26,11 +25,28 @@ public interface IResourceSystem : ISystem {
     EquipResource GetEquipResource(string rid);
 }
 
+class ABInfo {
+    public string name;
+    public string hash = "";
+    public uint crc = 0;
+    public string url = "";
+    public float size = 1000;
+    public string localABPath;
+    public string localPrafabPath;
+    public AssetBundle assetBundle;
+}
+
+public enum ABType {
+    Avatar,
+    Equip
+}
+
 public class ResourceSystem : AbstractSystem, IResourceSystem {
-    public AssetBundle avatar { get; set; }
-    public AssetBundle equip { get; set; }
     public ResourceType curResourceType { get; set; }
 
+    private Dictionary<ABType, ABInfo> abDic = new Dictionary<ABType, ABInfo>();
+    private AssetBundle avatar;
+    private AssetBundle equip;
     private string avatarHash = "";
     private uint avatarCRC = 0;
     private string avatarURL = "";
@@ -48,11 +64,10 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     public void CheckNewResource() {
         //Debug.Log("CheckNewResource");
 #if UNITY_EDITOR
-        if (avatar == null) {
-            avatar = AssetBundle.LoadFromFile(localAvatarString);
-        }
-        if (equip == null) {
-            equip = AssetBundle.LoadFromFile(localEquipString);
+        foreach (var item in abDic) {
+            if (item.Value.assetBundle == null) {
+                item.Value.assetBundle = AssetBundle.LoadFromFile(item.Value.localABPath);
+            }
         }
         curResourceType = ResourceType.Loaded;
         return;
@@ -62,11 +77,14 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
     }
 
     private void CheckNew() {
-        if (avatar != null && equip != null) {
-            curResourceType = ResourceType.Loaded;
-        } else {
-            CheckCoroutine();
+
+        foreach (var item in abDic) {
+            if (item.Value.assetBundle == null) {
+                CheckCoroutine();
+                return;
+            } 
         }
+        curResourceType = ResourceType.Loaded;
     }
 
     private void CheckCoroutine() {
@@ -86,16 +104,15 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
             data: bytes,
             succData: (data) => {
                 Debug.Log(data.ToJson());
-                avatarHash = (string)data["avatar"]["hash"];
-                avatarCRC = uint.Parse((string)data["avatar"]["crc"]);
+                abDic[ABType.Avatar].hash = (string)data["avatar"]["hash"];
+                abDic[ABType.Avatar].crc = uint.Parse((string)data["avatar"]["crc"]);
                 string avatarStr = (string)data["avatar"]["url"];
                 if (avatarStr.Contains("http")) {
-                    avatarURL = avatarStr;
+                    abDic[ABType.Avatar].url = avatarStr;
                 } else {
-                    avatarURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["avatar"]["url"];
+                    abDic[ABType.Avatar].url = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["avatar"]["url"];
                 }
-                avatarURL = this.GetSystem<INetworkSystem>().HttpBaseUrl + (string)data["avatar"]["url"];
-                avatarSize = float.Parse((string)data["avatar"]["size"]);
+                abDic[ABType.Avatar].size = float.Parse((string)data["avatar"]["size"]);
 
                 equipHash = (string)data["equip"]["hash"];
                 equipCRC = uint.Parse((string)data["equip"]["crc"]);
@@ -303,9 +320,20 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
         }
     }
 
-    protected override void OnInit() {
-
+    private void InitABInfo() {
+        ABInfo avatarInfo = new ABInfo();    
+        avatarInfo.name = "avatar";
+        avatarInfo.localABPath = Application.streamingAssetsPath + "/avatar_" + Util.GetPlatform().ToLower();
+        avatarInfo.localPrafabPath = "Assets/AB/Avatar/";
+        abDic.Add(ABType.Avatar, avatarInfo);
+        ABInfo equipInfo = new ABInfo();
+        equipInfo.name = "equip";
+        equipInfo.localABPath = Application.streamingAssetsPath + "/equip_" + Util.GetPlatform().ToLower();
+        equipInfo.localPrafabPath = "Assets/AB/Equip/Items/";
+        abDic.Add(ABType.Equip, equipInfo);
     }
 
-
+    protected override void OnInit() {
+        InitABInfo();
+    }
 }
