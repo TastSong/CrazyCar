@@ -69,6 +69,32 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 **Unity 2019.4.14 及以上**
 
+## 添加新的热更类型
+
+一、热更流程图
+
+```mermaid
+graph LR
+Start-->IsEditor{IsEditor}--No-->PostResource-->HaveNewResource{HaveNewResource}--Hava-->DownloadResource-->IsFinish--No-->Exit-->End;
+IsEditor--Yes-->Login;
+HaveNewResource--NotHava-->Login;
+IsFinish--Yes-->Login-->End
+```
+
+二、以添加新类型Medal(勋章)为例
+
+1. **CrazyCar\CrazyCar\Assets\AB**文件夹下添加新的文件夹**Medal**
+2. 在**Inspection**窗口设置**Medal**文件夹的**Asset Labels**为**medal**
+3. 将热更资源移动到此文件夹
+4. 在**CrazyCar\CrazyCarDB\CrazyCar.sql**数据库的**ab_resource**表中添加相应的资源信息*(Hash现在可以随便填写，等客户端打出AB包后使用相应地信息)*
+5. 在**Resource.java**中添加相应的字段
+6. 在**ResourceSystem.cs**中添加相应的**ABType**，**CheckCoroutine()**，**InitABInfo()**代码
+7. **CrazyCar\CrazyCar\Assets\StreamingAssets\config.json**中添加相应的**key**
+8. 在**BuildHelper.cs**的**FetchResource()**添加相应的代码*(用来一键打AB包)*
+9. 点击**Window--> Build --> AB --> Local**进行AB打包*(需要在本地部署好服务器)*
+
+> 注意：每次打包操作都会在打完后自动拉取后台资源接口，更新本地的config.json文件里的内容，这样每次出版本时就不需要将本地的资源包同步到后台，这就意味着后台的资源包会落后客户端的；在需要中途热更资源时再通过客户端打包，并将**Console**窗口中的相应资源的**CRC**和**Hash**以及**CrazyCar\CrazyCar\Assets\StreamingAssets**里相应的AB包发送给后台进行配置即可
+
 ## 添加头像
 
 一、热更新
