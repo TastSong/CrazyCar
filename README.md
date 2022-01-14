@@ -86,6 +86,15 @@
 ## 贡献
 我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 
 
+## Reference
+
+1. [UnityWebSocket: The Best Unity WebSocket Plugin for All Platforms. ](https://github.com/psygames/UnityWebSocket)
+2. [QFramework: Unity3D System Design Architecture ](https://github.com/liangxiegame/QFramework)
+3. [java-Kcp: 基于java的netty实现的可靠udp网络库(kcp算法)，包含fec实现，可用于游戏，视频，加速等业务 ](https://github.com/l42111996/java-Kcp)
+4. [kcp4sharp: kcp for c#. ](https://github.com/beykery/kcp4sharp)
+5. [DOTween (HOTween v2) Unity Asset Store](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
+6. [Unity实现简化版卡丁车漂移](https://zhuanlan.zhihu.com/p/95013367)
+
 
 ## License
 [MIT](https://github.com/TastSong/CrazyCar/blob/master/LICENSE)
