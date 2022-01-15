@@ -14,16 +14,11 @@ public class ControlPanel : MonoBehaviour, IController {
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
 
-    private void OnEnable() {
-        if (!this.GetModel<IGameControllerModel>().SceneLoaded.Value) {
-            return;
-        }     
-    }
-
     private void Start() {
         exitBtn.onClick.AddListener(() => {
             Time.timeScale = 0;
-            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
+            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(
+                content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
                 success: () => {
                     Time.timeScale = 1;
                     Util.LoadingScene(SceneID.Index);
