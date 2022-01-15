@@ -14,6 +14,8 @@ public class ControlPanel : MonoBehaviour, IController {
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
 
+    public bool isUseKeyboard = false;
+
     private void Start() {
         exitBtn.onClick.AddListener(() => {
             Time.timeScale = 0;
@@ -29,27 +31,45 @@ public class ControlPanel : MonoBehaviour, IController {
         });
 
         frontBtn.SetClick((float time) => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = 1;
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 1));
         });
         backBtn.SetClick((float time) => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = -1;
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, -1));
         });
         leftBtn.SetClick((float time) => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = -Mathf.Clamp01(Time.fixedTime - time);
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -Mathf.Clamp01(Time.fixedTime - time)));
         }, () => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = 0;
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
         rightBtn.SetClick((float time) => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = Mathf.Clamp01(Time.fixedTime - time);
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Mathf.Clamp01(Time.fixedTime - time)));
         }, () => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.hInput = 0;
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
         spaceBtn.SetClick((float time) => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.sInput = Mathf.Clamp01(Time.fixedTime - time);
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, Mathf.Clamp01(Time.fixedTime - time)));
         }, () => {
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.sInput = 0;
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, -1));
         });
 
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.K)) {
+            isUseKeyboard = !isUseKeyboard;
+        }
+
+        if (isUseKeyboard) {
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("Vertical")));
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("Horizontal")));
+            if (Input.GetKey(KeyCode.Space)) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 1));
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space)) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, -1));
+            }
+        }
     }
 
     public IArchitecture GetArchitecture() {

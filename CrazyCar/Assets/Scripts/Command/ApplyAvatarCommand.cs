@@ -1,9 +1,7 @@
 ﻿using LitJson;
 using System.Text;
 using UnityEngine;
-using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class ApplyAvatarCommand : AbstractCommand {
     private readonly int mCurAid;

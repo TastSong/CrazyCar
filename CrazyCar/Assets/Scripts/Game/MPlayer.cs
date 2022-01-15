@@ -49,7 +49,6 @@ public class MPlayer : MonoBehaviour, IController {
     public GameObject plexusVFX;
     public GameObject wireframeVFX;
 
-    private bool isUseKeyboard = false;
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
     private float screenEffectTime = 0;
@@ -65,27 +64,6 @@ public class MPlayer : MonoBehaviour, IController {
 
     void Update() {
         //this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = 0.5f;
-        if (Input.GetKeyDown(KeyCode.K)) {
-            isUseKeyboard = !isUseKeyboard;
-        }
-
-        if (isUseKeyboard && this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this) {
-            vInput = Input.GetAxisRaw("Vertical");
-            hInput = Input.GetAxisRaw("Horizontal");
-        }
-
-        if (((Input.GetKey(KeyCode.Space) && isUseKeyboard) || (sInput > 0 && !isUseKeyboard)) && currentForce > 0) {
-            if (isGround && !isDrifting && rig.velocity.sqrMagnitude > 10) {
-                StartDrift();
-            }
-        }
-
-        if ((Input.GetKeyUp(KeyCode.Space) && isUseKeyboard) || (sInput == 0 && !isUseKeyboard)) {
-            if (isDrifting) {
-                Boost(boostForce);
-                StopDrift();
-            }
-        }
         // 不能放在FixedUpdate 加速时间太短
         ShowVFX();
     }
@@ -253,7 +231,7 @@ public class MPlayer : MonoBehaviour, IController {
 
 
     //开始漂移并且决定漂移朝向
-    private void StartDrift() {
+    public void StartDrift() {
         //Debug.Log("Start Drift");
         isDrifting = true;
 
@@ -281,14 +259,14 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    private void StopDrift() {
+    public void StopDrift() {
         isDrifting = false;
         driftDirection = DriftDirection.None;
         driftPower = 0;
         m_DriftOffset = Quaternion.identity;
     }
 
-    private void Boost(float boostForce) {
+    public void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
         EnableTrail();
