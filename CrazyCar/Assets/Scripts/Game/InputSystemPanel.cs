@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Utils;
 using QFramework;
 
-public class ControlPanel : MonoBehaviour, IController {
+public class InputSystemPanel : MonoBehaviour, IController {
     public Button exitBtn;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;

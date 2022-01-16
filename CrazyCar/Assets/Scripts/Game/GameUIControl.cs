@@ -5,7 +5,7 @@ using Utils;
 using QFramework;
 
 public class GameUIControl : MonoBehaviour, IController {
-    public ControlPanel controlPanel;
+    public InputSystemPanel controlPanel;
     public GameResultUI gameResultUI;
     public TimeTrialGameUI timeTrialGameUI;
     public MatchGameUI matchGameUI;
