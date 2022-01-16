@@ -14,7 +14,9 @@ public class InputSystemPanel : MonoBehaviour, IController {
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
 
-    public bool isUseKeyboard = false;
+    private bool isUseKeyboard = false;
+    private bool isConnectXBOX = false;
+    private bool curIsConnectXBOX = false;
 
     private void Start() {
         exitBtn.onClick.AddListener(() => {
@@ -59,9 +61,10 @@ public class InputSystemPanel : MonoBehaviour, IController {
             isUseKeyboard = !isUseKeyboard;
         }
 
-        if (isUseKeyboard) {
+        if (isUseKeyboard || isConnectXBOX) {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("Vertical")));
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("Horizontal")));
+            
             if (Input.GetKey(KeyCode.Space)) {
                 this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 1));
             }
@@ -70,6 +73,23 @@ public class InputSystemPanel : MonoBehaviour, IController {
                 this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, -1));
             }
         }
+
+        isConnectXBOX = (Input.GetJoystickNames()[1] != "");
+
+        if (isConnectXBOX != curIsConnectXBOX) {
+            curIsConnectXBOX = isConnectXBOX;
+            ShowXBOXAnim(curIsConnectXBOX);
+        }
+
+        if (isConnectXBOX) {
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("XBOX_Vertical_Left")));
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("XBOX_Horizontal_Right")));
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, Input.GetAxis("XBOX_LRT")));
+        }
+    }
+
+    private void ShowXBOXAnim(bool isShow) {
+        Debug.LogError("++++++isShow = " + isShow);
     }
 
     public IArchitecture GetArchitecture() {
