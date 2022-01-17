@@ -18,16 +18,18 @@ public class ScreenEffectsSystem : AbstractSystem, IScreenEffectsSystem {
     public Projector WireframeProjector { get; set; }
 
     public void ShakeCamera() {
-        CinemachineImpulseSource.GenerateImpulse();
+        if (CinemachineImpulseSource != null) {
+            CinemachineImpulseSource.GenerateImpulse();
+        }
     }
 
     public void SetMotionBlur(float intensity) {
-        MotionBlurEffects.Intensity = intensity;
+        if (MotionBlurEffects != null) {
+            MotionBlurEffects.Intensity = intensity;
+        }
     }
 
     protected override void OnInit() {
 
     }
-
-   
 }

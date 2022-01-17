@@ -37,35 +37,35 @@ public class MPlayer : MonoBehaviour, IController {
     public Transform rearHitTrans;
     public bool isGround;
     public float groundDistance = 0.7f;//根据车模型自行调节
-    //特效
-    public ParticleSystem[] wheelsParticeles;
-    public TrailRenderer leftTrail;
-    public TrailRenderer rightTrail;
-    //漂移颜色有关
-    public Color[] driftColors;
+    ////特效
+    //public ParticleSystem[] wheelsParticeles;
+    //public TrailRenderer leftTrail;
+    //public TrailRenderer rightTrail;
+    ////漂移颜色有关
+    //public Color[] driftColors;
     public float driftPower = 0;
 
-    //VFX
-    public GameObject plexusVFX;
-    public GameObject wireframeVFX;
+    ////VFX
+    //public GameObject plexusVFX;
+    //public GameObject wireframeVFX;
 
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
-    private float screenEffectTime = 0;
+    //private float screenEffectTime = 0;
+
+    private MPlayerStyle mPlayerStyle;
 
     void Start() {
+        mPlayerStyle = GetComponent<MPlayerStyle>();
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
-
-        //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
+       
         StopDrift();
-        DisableTrail();
     }
 
-    void Update() {
-        //this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = 0.5f;
+    void Update() { 
         // 不能放在FixedUpdate 加速时间太短
-        ShowVFX();
+        //mPlayerStyle.ShowVFX();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
@@ -92,7 +92,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (isDrifting) {
             CalculateDriftingLevel();
-            ChangeDriftColor();
+            //ChangeDriftColor();
         }
 
         //根据上述情况，进行最终的旋转和加力
@@ -105,16 +105,16 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    private void ShowVFX() {
-        if (leftTrail.enabled == true) {
-            EnableScreenEffect();
-            PlayDriftParticle();
-            this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
-        } else {
-            DisableScreenEffect();
-            StopDriftParticle();
-        }
-    }
+    //private void ShowVFX() {
+    //    if (leftTrail.enabled == true) {
+    //        EnableScreenEffect();
+    //        PlayDriftParticle();
+    //        this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
+    //    } else {
+    //        DisableScreenEffect();
+    //        StopDriftParticle();
+    //    }
+    //}
 
     public void AdjustPlayerPosition(Vector3 pos) {
         peerTargetPos = pos;
@@ -188,7 +188,7 @@ public class MPlayer : MonoBehaviour, IController {
         }
 
         if (currentForce <= normalForce) {
-            DisableTrail();
+            mPlayerStyle.DisableTrail();
         } 
 
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime);//每秒60递减，可调
@@ -269,53 +269,54 @@ public class MPlayer : MonoBehaviour, IController {
     public void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
-        EnableTrail();
+        mPlayerStyle.EnableTrail();
     }
 
-    #region VFX
-    private void PlayDriftParticle() {
-        foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Play();
-        }
-        plexusVFX.gameObject.SetActiveFast(true);
-        wireframeVFX.SetActiveFast(true);     
-    }
+    //#region VFX
+    //private void PlayDriftParticle() {
+    //    foreach (var tempParticle in wheelsParticeles) {
+    //        tempParticle.Play();
+    //    }
+    //    plexusVFX.gameObject.SetActiveFast(true);
+    //    wireframeVFX.SetActiveFast(true);     
+    //}
 
-    private void StopDriftParticle() {
-        foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Stop();
-        }
-        plexusVFX.gameObject.SetActiveFast(false);
-        wireframeVFX.gameObject.SetActiveFast(false);
-    }
+    //private void StopDriftParticle() {
+    //    foreach (var tempParticle in wheelsParticeles) {
+    //        tempParticle.Stop();
+    //    }
+    //    plexusVFX.gameObject.SetActiveFast(false);
+    //    wireframeVFX.gameObject.SetActiveFast(false);
+    //}
 
-    private void EnableTrail() {
-        leftTrail.enabled = true;
-        rightTrail.enabled = true;
-    }
+    //private void EnableTrail() {
+    //    leftTrail.enabled = true;
+    //    rightTrail.enabled = true;
+    //}
 
-    private void DisableTrail() {
-        leftTrail.enabled = false;
-        rightTrail.enabled = false;
-    }
+    //private void DisableTrail() {
+    //    leftTrail.enabled = false;
+    //    rightTrail.enabled = false;
+    //}
 
-    private void EnableScreenEffect() {
-        screenEffectTime += Time.fixedDeltaTime;
-        this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(Mathf.Min(screenEffectTime, 0.14f));
-    }
+    //private void EnableScreenEffect() {
+    //    screenEffectTime += Time.fixedDeltaTime;
+    //    this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(Mathf.Min(screenEffectTime, 0.14f));
+    //}
 
-    private void DisableScreenEffect() {
-        screenEffectTime = 0;
-        this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
-    }
-    #endregion
+    //private void DisableScreenEffect() {
+    //    screenEffectTime = 0;
+    //    this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
+    //}
+    
 
-    private void ChangeDriftColor() {
-        foreach (var tempParticle in wheelsParticeles) {
-            var t = tempParticle.main;
-            t.startColor = driftColors[(int)driftLevel];
-        }
-    }
+    //private void ChangeDriftColor() {
+    //    foreach (var tempParticle in wheelsParticeles) {
+    //        var t = tempParticle.main;
+    //        t.startColor = driftColors[(int)driftLevel];
+    //    }
+    //}
+    //#endregion
 
     public void UpdateSelfParameter() {
         normalForce = userInfo.equipInfo.speed;

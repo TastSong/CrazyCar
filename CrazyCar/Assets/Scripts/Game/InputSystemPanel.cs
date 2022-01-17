@@ -79,7 +79,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
             }
         }
 
-        isConnectXBOX = (Input.GetJoystickNames()[1] != "");
+        isConnectXBOX = (Input.GetJoystickNames().Length > 2 && Input.GetJoystickNames()[1] != "");
 
         if (isConnectXBOX != curIsConnectXBOX) {
             curIsConnectXBOX = isConnectXBOX;

@@ -376,6 +376,7 @@ MonoBehaviour:
     uid: 0
     star: 0
     isVIP: 0
+    isSuperuser: 0
     travelTimes: 0
     avatarNum: 0
     mapNum: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   vInput: 0
   hInput: 0
   sInput: 0
+  isLockSpeed: 0
   currentForce: 0
   normalForce: 60
   boostForce: 100
@@ -426,6 +428,20 @@ MonoBehaviour:
   nameText: {fileID: 6633780378458071414}
   carPos: {fileID: 1436035956050045295}
   car: {fileID: 6823405543883031100}
+  wheelsParticeles:
+  - {fileID: 7319125326218733070}
+  - {fileID: 7318929794387721276}
+  - {fileID: 7319081939204948392}
+  leftTrail: {fileID: 6297710215297897597}
+  rightTrail: {fileID: 5113195171024321228}
+  driftColors:
+  - {r: 0.50980395, g: 0.85098046, b: 0.92549026, a: 1}
+  - {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.13333334, g: 0.23137257, b: 0.32941177, a: 1}
+  driftPower: 0
+  plexusVFX: {fileID: 668321200006424457}
+  wireframeVFX: {fileID: 9189166485782086823}
 --- !u!65 &3226108444913594261
 BoxCollider:
   m_ObjectHideFlags: 0
