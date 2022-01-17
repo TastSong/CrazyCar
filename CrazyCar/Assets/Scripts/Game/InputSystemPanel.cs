@@ -8,7 +8,6 @@ using QFramework;
 using Coffee.UIExtensions;
 
 public class InputSystemPanel : MonoBehaviour, IController {
-    public Button exitBtn;
     public GameObject uiController;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
@@ -22,20 +21,18 @@ public class InputSystemPanel : MonoBehaviour, IController {
     private bool isConnectXBOX = false;
     private bool curIsConnectXBOX = false;
 
-    private void Start() {
-        exitBtn.onClick.AddListener(() => {
-            Time.timeScale = 0;
-            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(
-                content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
-                success: () => {
-                    Time.timeScale = 1;
-                    Util.LoadingScene(SceneID.Index);
-                },
-                fail: () => {
-                    Time.timeScale = 1;
-                });
-        });
+    private bool IsStartGame {
+        get {
+            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+                return this.GetModel<ITimeTrialModel>().IsStartGame;
+            } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+                return this.GetModel<IMatchModel>().IsStartGame;
+            }
+            return false;
+        }
+    }
 
+    private void Start() {
         frontBtn.SetClick((float time) => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 1));
         });
@@ -66,7 +63,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
             isUseKeyboard = !isUseKeyboard;
         }
 
-        if (isUseKeyboard) {
+        if (isUseKeyboard && IsStartGame) {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("Vertical")));
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("Horizontal")));
             
@@ -92,7 +89,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
             }
         }
 
-        if (isConnectXBOX) {
+        if (isConnectXBOX && IsStartGame) {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("XBOX_Vertical_Left")));
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("XBOX_Horizontal_Right")));
             this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, Input.GetAxis("XBOX_LRT")));

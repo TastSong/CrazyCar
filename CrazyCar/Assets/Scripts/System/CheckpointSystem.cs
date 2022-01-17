@@ -55,6 +55,7 @@ public class CheckpointSystem : AbstractSystem, ICheckpointSystem {
     protected override void OnInit() {
         PassTimes.Register((passTimes) => {
             this.SendEvent<ResetCheckpointEvent>();
+            this.SendEvent<UpdateCylinderNumEvent>();
             if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
                 if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
                     this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;

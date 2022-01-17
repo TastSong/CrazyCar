@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
+using UnityEngine.UI;
 
 public class GameUIControl : MonoBehaviour, IController {
+    public CommonGameUI commonGameUI;
     public InputSystemPanel controlPanel;
     public GameResultUI gameResultUI;
     public TimeTrialGameUI timeTrialGameUI;
     public MatchGameUI matchGameUI;
-    public GameObject miniMap;
 
-    private void Start() {
+    private void Awake() {
+        commonGameUI.gameObject.SetActiveFast(false);
         controlPanel.gameObject.SetActiveFast(false);
         gameResultUI.gameObject.SetActiveFast(false);
         timeTrialGameUI.gameObject.SetActiveFast(false);
         matchGameUI.gameObject.SetActiveFast(false);
-        miniMap.SetActiveFast(false);
         this.RegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
         this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 
     private void OnSelectGameUI(SelectGameUIEvent e) {
+        commonGameUI.gameObject.SetActiveFast(true);
         controlPanel.gameObject.SetActiveFast(true);
-        miniMap.SetActiveFast(true);
         timeTrialGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
         matchGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
     }

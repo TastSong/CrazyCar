@@ -17,7 +17,6 @@ public interface IGameControllerModel : IModel {
     WarningAlert WarningAlert { get; set; }
     InfoConfirmAlert InfoConfirmAlert { get; set; }
     GameHelper GameHelper { get; set; }
-
     LoadingUI LoadingUI { get; set; }
 }
 
