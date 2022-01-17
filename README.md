@@ -94,6 +94,7 @@
 4. [kcp4sharp: kcp for c#. ](https://github.com/beykery/kcp4sharp)
 5. [DOTween (HOTween v2) Unity Asset Store](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
 6. [Unity实现简化版卡丁车漂移](https://zhuanlan.zhihu.com/p/95013367)
+6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 
 
 ## License

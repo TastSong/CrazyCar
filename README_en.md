@@ -94,7 +94,8 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 3. [java-Kcp: 基于java的netty实现的可靠udp网络库(kcp算法)，包含fec实现，可用于游戏，视频，加速等业务 ](https://github.com/l42111996/java-Kcp)
 4. [kcp4sharp: kcp for c#. ](https://github.com/beykery/kcp4sharp)
 5. [DOTween (HOTween v2) Unity Asset Store](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
-6. [Unity实现简化版卡丁车漂移](
+6. [Unity实现简化版卡丁车漂移](https://zhuanlan.zhihu.com/p/95013367)
+6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 
 
 ## License
