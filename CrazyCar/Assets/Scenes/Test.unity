@@ -7389,7 +7389,6 @@ GameObject:
   - component: {fileID: 316053478}
   - component: {fileID: 316053482}
   - component: {fileID: 316053481}
-  - component: {fileID: 316053480}
   - component: {fileID: 316053479}
   m_Layer: 5
   m_Name: Image (1)
@@ -7397,7 +7396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &316053478
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7415,7 +7414,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 402, y: 0}
-  m_SizeDelta: {x: 256, y: 256}
+  m_SizeDelta: {x: 288, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316053479
 MonoBehaviour:
@@ -7426,44 +7425,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 316053477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8b2ed11d675446c5a49da1ea296d490, type: 3}
+  m_Script: {fileID: 11500000, guid: ce76b7a490bd74f34a2f2752641aea24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 300
-  m_EffectMaterial: {fileID: 21305736874167728, guid: aee96bc531e6eba468ec405e536f515f,
+  m_EffectMaterial: {fileID: 21939717441729078, guid: 17b17d6effbe14075a3bbdf1fda1f6e1,
     type: 2}
-  m_EffectFactor: 1
-  m_ColorFactor: 1
-  m_BlurFactor: 1
-  m_EffectMode: 0
-  m_ColorMode: 1
-  m_BlurMode: 3
-  m_AdvancedBlur: 1
-  m_ShadowBlur: 1
-  m_ShadowStyle: 0
-  m_ShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
-  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AdditionalShadows: []
---- !u!114 &316053480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316053477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0848bff101191904ead4bb831f7084db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BlurFactor: 1
-  m_Style: 1
-  m_AdditionalShadows: []
-  m_EffectColor: {r: 1, g: 0, b: 0.009691238, a: 1}
-  m_EffectDistance: {x: 11.95, y: 12}
-  m_UseGraphicAlpha: 1
+  m_EffectFactor: 0
+  m_Width: 0.5
+  m_Softness: 0.5
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_ColorMode: 2
+  m_NoiseTexture: {fileID: 2800000, guid: 3e04c247fb2604af186173fce0bc62de, type: 3}
+  m_EffectArea: 0
+  m_KeepAspectRatio: 0
+  m_Player:
+    play: 1
+    initialPlayDelay: 0.4
+    duration: 1
+    loop: 0
+    loopDelay: 0
+    updateMode: 0
+  m_Reverse: 0
+  m_Duration: 1
+  m_UpdateMode: 0
 --- !u!114 &316053481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7476,15 +7461,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 21305736874167728, guid: aee96bc531e6eba468ec405e536f515f,
-    type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 580145f6a94af450ab9791dcc7a3d7e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8fa36304e912972418d63c07e8cf27a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15692,7 +15676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &663254759
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15710,7 +15694,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 256, y: 256}
+  m_SizeDelta: {x: 288, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &663254760
 MonoBehaviour:
@@ -15724,14 +15708,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 9dc7e810a87b444ab96919f3215c2fe5, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 580145f6a94af450ab9791dcc7a3d7e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8fa36304e912972418d63c07e8cf27a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15772,7 +15756,7 @@ MonoBehaviour:
   m_EffectArea: 0
   m_Player:
     play: 1
-    initialPlayDelay: 0.5
+    initialPlayDelay: 0.4
     duration: 1
     loop: 0
     loopDelay: 0
@@ -19107,6 +19091,7 @@ GameObject:
   - component: {fileID: 826622642}
   - component: {fileID: 826622644}
   - component: {fileID: 826622643}
+  - component: {fileID: 826622645}
   m_Layer: 5
   m_Name: UIEffect
   m_TagString: Untagged
@@ -19172,6 +19157,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826622641}
   m_CullTransparentMesh: 0
+--- !u!114 &826622645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826622641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69b938f6d3d52e43905c069817dfe91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xboxConnect: {fileID: 663254762}
+  xboxDisconnect: {fileID: 316053479}
 --- !u!1 &829427474
 GameObject:
   m_ObjectHideFlags: 0

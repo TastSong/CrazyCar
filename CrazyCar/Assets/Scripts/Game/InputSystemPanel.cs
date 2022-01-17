@@ -5,14 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using Coffee.UIExtensions;
 
 public class InputSystemPanel : MonoBehaviour, IController {
     public Button exitBtn;
+    public GameObject uiController;
     public GameCtrBtn frontBtn;
     public GameCtrBtn backBtn;
     public GameCtrBtn leftBtn;
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
+    public UIShiny xboxConnect;
+    public UIDissolve xboxDisconnect;
 
     private bool isUseKeyboard = false;
     private bool isConnectXBOX = false;
@@ -56,12 +60,13 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     }
 
+    [Obsolete]
     private void Update() {
         if (Input.GetKeyDown(KeyCode.K)) {
             isUseKeyboard = !isUseKeyboard;
         }
 
-        if (isUseKeyboard || isConnectXBOX) {
+        if (isUseKeyboard) {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("Vertical")));
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("Horizontal")));
             
@@ -78,7 +83,13 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
         if (isConnectXBOX != curIsConnectXBOX) {
             curIsConnectXBOX = isConnectXBOX;
-            ShowXBOXAnim(curIsConnectXBOX);
+            if (curIsConnectXBOX) {
+                uiController.SetActiveFast(false);
+                PlayConnectAnim();
+            } else {
+                uiController.SetActiveFast(true);
+                PlayDisconnectAnim();
+            }
         }
 
         if (isConnectXBOX) {
@@ -88,8 +99,26 @@ public class InputSystemPanel : MonoBehaviour, IController {
         }
     }
 
-    private void ShowXBOXAnim(bool isShow) {
-        Debug.LogError("++++++isShow = " + isShow);
+    [Obsolete]
+    private void PlayConnectAnim() {
+        xboxConnect.gameObject.SetActiveFast(true);
+        float time = xboxConnect.duration + 1;
+        Util.DelayExecuteWithSecond(time, () => { 
+            xboxConnect.gameObject.SetActiveFast(false);
+            xboxConnect.effectFactor = 0;
+            xboxConnect.play = true;
+        });
+    }
+
+    [Obsolete]
+    private void PlayDisconnectAnim() {
+        xboxDisconnect.gameObject.SetActiveFast(true);
+        float time = xboxDisconnect.duration + 1;
+        Util.DelayExecuteWithSecond(time, () => {
+            xboxDisconnect.gameObject.SetActiveFast(false);
+            xboxDisconnect.effectFactor = 0;
+            xboxDisconnect.play = true;
+        });
     }
 
     public IArchitecture GetArchitecture() {
