@@ -9,8 +9,8 @@ public interface IIndexCarSystem : ISystem {
 }
 
 public class IndexCarSystem : AbstractSystem, IIndexCarSystem {
-    public GameObject CarGO { get; set; } = new GameObject();
-    public MPlayerStyle MPlayerStyle { get; set; } = new MPlayerStyle();
+    public GameObject CarGO { get; set; }
+    public MPlayerStyle MPlayerStyle { get; set; }
 
     protected override void OnInit() {
         

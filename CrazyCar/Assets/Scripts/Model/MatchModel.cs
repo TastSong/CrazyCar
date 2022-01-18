@@ -27,7 +27,7 @@ public class MatchRankInfo {
 public interface IMatchModel : IModel {
     BindableProperty<int> RewardStar { get; }
     Dictionary<int, MatchInfo> MatchDic { get; set; }
-    BindableProperty<MatchInfo> SelectInfo { get; } 
+    BindableProperty<MatchInfo> SelectInfo { get; }
     List<MatchRankInfo> MatchRankList { get; set; }
     BindableProperty<bool> IsComplete { get; }
     BindableProperty<int> CompleteTime { get; }
@@ -35,9 +35,9 @@ public interface IMatchModel : IModel {
     BindableProperty<long> StartTime { get; }
     BindableProperty<long> EndTime { get; }
     BindableProperty<bool> IsArriveLimitTime { get; }
-    BindableProperty<bool> IsStartGame { get; }
-    BindableProperty<bool> IsEndGame { get; }
-    BindableProperty<bool> InGame { get; }
+    bool IsStartGame { get; }
+    bool IsEndGame { get; }
+    bool InGame { get; }
 
     int GetCompleteTime();
     void CleanData();
@@ -60,11 +60,9 @@ public class MatchModel : AbstractModel, IMatchModel {
 
     public BindableProperty<bool> IsArriveLimitTime { get; } = new BindableProperty<bool>();
 
-    public BindableProperty<bool> IsStartGame { get; } = new BindableProperty<bool>();
-
-    public BindableProperty<bool> IsEndGame { get; } = new BindableProperty<bool>();
-
-    public BindableProperty<bool> InGame { get; } = new BindableProperty<bool>();
+    public bool IsStartGame { get { return StartTime * 1000 < Util.GetTime(); }}
+    public bool IsEndGame { get { return IsComplete || IsArriveLimitTime;}}
+    public bool InGame { get { return IsStartGame && !IsEndGame; } }
 
     public void CleanData() {
         IsComplete.Value = false;
@@ -79,7 +77,7 @@ public class MatchModel : AbstractModel, IMatchModel {
         }
     }
 
-    protected override void OnInit() {   
+    protected override void OnInit() {
         EndTime.Register((v) => {
             IsComplete.Value = true;
             this.SendEvent(new CompleteMatchEvent());
@@ -89,9 +87,6 @@ public class MatchModel : AbstractModel, IMatchModel {
         });
         SelectInfo.Register((v) => {
             StartTime.Value = SelectInfo.Value.startTime;
-            IsStartGame.Value = SelectInfo.Value.startTime * 1000 < Util.GetTime();
         });
-        IsEndGame.Value = IsComplete || IsArriveLimitTime;
-        InGame.Value =  IsStartGame && !IsEndGame;
     }
 }

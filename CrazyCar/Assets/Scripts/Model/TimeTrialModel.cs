@@ -33,14 +33,12 @@ public interface ITimeTrialModel : IModel {
     List<TimeTrialRankInfo> TimeTrialRankList { get; set; }
     BindableProperty<bool> IsComplete { get; }
     BindableProperty<int> CompleteTime { get; }
-
-
     BindableProperty<long> StartTime { get; }
     BindableProperty<long> EndTime { get; }
     BindableProperty<bool> IsArriveLimitTime { get; }
-    BindableProperty<bool> IsStartGame { get; }
-    BindableProperty<bool> IsEndGame { get; }
-    BindableProperty<bool> InGame { get; }
+    bool IsStartGame { get; }
+    bool IsEndGame { get; }
+    bool InGame { get; }
 
 
     int GetCompleteTime();
@@ -72,11 +70,10 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
 
     public BindableProperty<bool> IsArriveLimitTime { get; } = new BindableProperty<bool>();
 
-    public BindableProperty<bool> IsStartGame { get; } = new BindableProperty<bool>();
+    public bool IsStartGame { get {return isInit ? (StartTime * 1000 < Util.GetTime()) : false; } }
 
-    public BindableProperty<bool> IsEndGame { get; } = new BindableProperty<bool>();
-
-    public BindableProperty<bool> InGame { get; } = new BindableProperty<bool>();
+    public bool IsEndGame { get { return IsComplete || IsArriveLimitTime; } }
+    public bool InGame { get { return IsStartGame && !IsEndGame; } }
 
     private bool isInit = false;
 
@@ -97,7 +94,9 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
     }
 
     protected override void OnInit() {
-        StartTime.Register((v) => { isInit = true; });
+        StartTime.Register((v) => {
+            isInit = true;
+        });
         EndTime.Register((v) => {
             IsComplete.Value = true;
             this.SendEvent(new CompleteTimeTrialEvent());
@@ -107,8 +106,5 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
                 this.SendEvent(new CompleteTimeTrialEvent());
             }
         });
-        IsStartGame.Value = isInit ? (StartTime * 1000 < Util.GetTime()) : false;
-        IsEndGame.Value = IsComplete || IsArriveLimitTime;
-        InGame.Value = IsStartGame && !IsEndGame;
     }
 }
