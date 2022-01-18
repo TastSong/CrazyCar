@@ -11,7 +11,7 @@ Shader "QFX/SF_VFX/AlphaAddHDRBlend" {
 		Category{
 			Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 			Blend SrcAlpha OneMinusSrcAlpha
-			ColorMask RGB
+			ColorMask RGBA
 			Cull Off Lighting Off ZWrite Off
 
 			SubShader {
