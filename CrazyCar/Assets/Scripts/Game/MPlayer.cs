@@ -37,21 +37,10 @@ public class MPlayer : MonoBehaviour, IController {
     public Transform rearHitTrans;
     public bool isGround;
     public float groundDistance = 0.7f;//根据车模型自行调节
-    ////特效
-    //public ParticleSystem[] wheelsParticeles;
-    //public TrailRenderer leftTrail;
-    //public TrailRenderer rightTrail;
-    ////漂移颜色有关
-    //public Color[] driftColors;
     public float driftPower = 0;
-
-    ////VFX
-    //public GameObject plexusVFX;
-    //public GameObject wireframeVFX;
 
     private long lastRecvStatusStamp = 0;
     private Vector3 peerTargetPos = new Vector3();
-    //private float screenEffectTime = 0;
 
     private MPlayerStyle mPlayerStyle;
 
@@ -61,11 +50,6 @@ public class MPlayer : MonoBehaviour, IController {
         rotationStream = rig.rotation;
        
         StopDrift();
-    }
-
-    void Update() { 
-        // 不能放在FixedUpdate 加速时间太短
-        //mPlayerStyle.ShowVFX();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
@@ -104,17 +88,6 @@ public class MPlayer : MonoBehaviour, IController {
             transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
         }
     }
-
-    //private void ShowVFX() {
-    //    if (leftTrail.enabled == true) {
-    //        EnableScreenEffect();
-    //        PlayDriftParticle();
-    //        this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
-    //    } else {
-    //        DisableScreenEffect();
-    //        StopDriftParticle();
-    //    }
-    //}
 
     public void AdjustPlayerPosition(Vector3 pos) {
         peerTargetPos = pos;
@@ -271,52 +244,6 @@ public class MPlayer : MonoBehaviour, IController {
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
         mPlayerStyle.EnableTrail();
     }
-
-    //#region VFX
-    //private void PlayDriftParticle() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        tempParticle.Play();
-    //    }
-    //    plexusVFX.gameObject.SetActiveFast(true);
-    //    wireframeVFX.SetActiveFast(true);     
-    //}
-
-    //private void StopDriftParticle() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        tempParticle.Stop();
-    //    }
-    //    plexusVFX.gameObject.SetActiveFast(false);
-    //    wireframeVFX.gameObject.SetActiveFast(false);
-    //}
-
-    //private void EnableTrail() {
-    //    leftTrail.enabled = true;
-    //    rightTrail.enabled = true;
-    //}
-
-    //private void DisableTrail() {
-    //    leftTrail.enabled = false;
-    //    rightTrail.enabled = false;
-    //}
-
-    //private void EnableScreenEffect() {
-    //    screenEffectTime += Time.fixedDeltaTime;
-    //    this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(Mathf.Min(screenEffectTime, 0.14f));
-    //}
-
-    //private void DisableScreenEffect() {
-    //    screenEffectTime = 0;
-    //    this.GetSystem<IScreenEffectsSystem>().SetMotionBlur(screenEffectTime);
-    //}
-    
-
-    //private void ChangeDriftColor() {
-    //    foreach (var tempParticle in wheelsParticeles) {
-    //        var t = tempParticle.main;
-    //        t.startColor = driftColors[(int)driftLevel];
-    //    }
-    //}
-    //#endregion
 
     public void UpdateSelfParameter() {
         normalForce = userInfo.equipInfo.speed;
