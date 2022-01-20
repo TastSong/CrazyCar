@@ -14,12 +14,13 @@ public class RankDetailItem : MonoBehaviour, IController {
     public Image[] difficultyImages;
     public Sprite[] difficultySprites;
 
-    private TimeTrialInfo timeTrialInfo;
+    private TimeTrialInfo timeTrialInfo = new TimeTrialInfo();
 
     private void Start() {
         selfBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid = timeTrialInfo.cid;
+            this.GetModel<ITimeTrialModel>().SelectInfo.Value = timeTrialInfo;
+            
             this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialRankUI));
         });
     }
