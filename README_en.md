@@ -25,12 +25,13 @@
     <img src="https://img.shields.io/github/last-commit/TastSong/Crazycar?color=%231AE66B&label=last-commit&style=plastic" alt="">
   </a>
 </div>
-
-
+## Preview function
 
 <div  align="center">  
-  <a><img src="./SamplePictures/Preview.JPG"></a>
+  <a><img src="./SamplePictures/Preview.gif"></a>
+  <a><img src="./SamplePictures/Match.gif"></a>
 </div> 
+
 
 
 [Quick Start](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[中文](./README.md)

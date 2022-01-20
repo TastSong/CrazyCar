@@ -25,11 +25,13 @@
     <img src="https://img.shields.io/github/last-commit/TastSong/Crazycar?color=%231AE66B&label=last-commit&style=plastic" alt="">
   </a>
 </div>
-
+## 功能预览
 
 <div  align="center">  
-  <a><img src="./SamplePictures/Preview.JPG"></a>
+  <a><img src="./SamplePictures/Preview.gif"></a>
+  <a><img src="./SamplePictures/Match.gif"></a>
 </div> 
+
 
 
 [开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[English](./README_en.md)
