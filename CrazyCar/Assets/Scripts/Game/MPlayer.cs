@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class MPlayer : MonoBehaviour, IController {
     public UserInfo userInfo;
@@ -112,7 +111,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (!isGround) {
             this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
-            this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.RigidImpact);
+            this.GetSystem<IVibrationSystem>().Haptic();
             tempForce = tempForce + gravity * Vector3.down;
         }
 

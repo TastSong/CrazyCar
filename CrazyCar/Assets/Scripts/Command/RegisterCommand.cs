@@ -3,7 +3,6 @@ using System.Text;
 using UnityEngine;
 using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class RegisterCommand : AbstractCommand {
     private string mUserName;
@@ -33,7 +32,7 @@ public class RegisterCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.Success);
+                    this.GetSystem<IVibrationSystem>().Haptic();
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
                     });

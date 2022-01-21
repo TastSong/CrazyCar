@@ -3,7 +3,6 @@ using System.Text;
 using UnityEngine;
 using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class LoginCommand : AbstractCommand {
     private string mUserName;
@@ -36,7 +35,7 @@ public class LoginCommand : AbstractCommand {
                 if (code == 200) {
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                         callback: () => {
-                            this.GetSystem<IVibrationSystem>().Haptic(HapticTypes.Success);
+                            this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                             Util.LoadingScene(SceneID.Index);
                         });

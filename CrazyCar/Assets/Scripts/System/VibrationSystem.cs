@@ -2,25 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public interface IVibrationSystem : ISystem {
-    void SetHapticsActive(bool isOn);
-    void Haptic(HapticTypes hapticTypes);
+    void Haptic();
 }
 
 public class VibrationSystem : AbstractSystem, IVibrationSystem {
-    public void Haptic(HapticTypes hapticTypes) {
-        MMVibrationManager.Haptic(hapticTypes);
-    }
-
-    public void SetHapticsActive(bool isOn) {
-        MMVibrationManager.SetHapticsActive(isOn);
+    public void Haptic() {
+        if (this.GetModel<ISettingsModel>().IsOnVibration) {
+            Handheld.Vibrate();
+        }
     }
 
     protected override void OnInit() {
-        this.RegisterEvent<ChangeSettingEvent>((e) => {
-            SetHapticsActive(this.GetModel<ISettingsModel>().IsOnVibration);
-        });
     }
 }

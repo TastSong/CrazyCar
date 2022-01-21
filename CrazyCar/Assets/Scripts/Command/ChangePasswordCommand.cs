@@ -3,7 +3,6 @@ using System.Text;
 using UnityEngine;
 using Utils;
 using QFramework;
-using MoreMountains.NiceVibrations;
 
 public class ChangePasswordCommand : AbstractCommand {
     private string mPassword;
