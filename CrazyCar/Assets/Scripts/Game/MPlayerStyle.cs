@@ -18,7 +18,6 @@ public class MPlayerStyle : MonoBehaviour, IController {
 
     //VFX
     public GameObject plexusVFX;
-    public GameObject wireframeVFX;
 
     private float screenEffectTime = 0;
     private Dictionary<string, AccessoryChanger> equipDic = new Dictionary<string, AccessoryChanger>();
@@ -94,7 +93,6 @@ public class MPlayerStyle : MonoBehaviour, IController {
             tempParticle.Play();
         }
         plexusVFX.gameObject.SetActiveFast(true);
-        wireframeVFX.SetActiveFast(true);
     }
 
     private void StopDriftParticle() {
@@ -102,7 +100,6 @@ public class MPlayerStyle : MonoBehaviour, IController {
             tempParticle.Stop();
         }
         plexusVFX.gameObject.SetActiveFast(false);
-        wireframeVFX.gameObject.SetActiveFast(false);
     }
 
     public void EnableTrail() {

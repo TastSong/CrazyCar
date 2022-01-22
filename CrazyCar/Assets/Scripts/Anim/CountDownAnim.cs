@@ -16,7 +16,6 @@ public class CountDownAnim : MonoBehaviour, IController {
 
     public void PlayAnim(int time, Action succ = null) {
         CoroutineController.manager.StartCoroutine(CountDown(time));
-        PlayScreenEffect();
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < time; i++) {
             sequence.Append(countDownText.transform.DOScale(1, 0.5f));
@@ -26,20 +25,6 @@ public class CountDownAnim : MonoBehaviour, IController {
             succ?.Invoke();          
             gameObject.SetActiveFast(false);
         });       
-    }
-
-    private void PlayScreenEffect() {
-        Projector wireframeProjector = this.GetSystem<IScreenEffectsSystem>().WireframeProjector;
-        wireframeProjector.farClipPlane = 0;
-        wireframeProjector.gameObject.SetActiveFast(true);
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(DOTween.To(() => wireframeProjector.farClipPlane,
-            x => wireframeProjector.farClipPlane = x, 300, 3.4f));
-        sequence.Append(DOTween.To(() => wireframeProjector.farClipPlane,
-            x => wireframeProjector.farClipPlane = x, 0, 1.4f));
-        sequence.OnComplete(() => {
-            wireframeProjector.gameObject.SetActiveFast(false);
-        });
     }
 
     private IEnumerator CountDown(int time) {
