@@ -179,14 +179,3 @@ IsFinish--Yes-->Login-->End
 2. 输入要翻译的文案数量以及内容，点击**显示翻译**按钮
 3. 查看翻译内容是否合适
 4. 点击添加**翻译按钮**，文案就会自动添加到**CrazyCar\CrazyCar\Assets\Resources\Language\Locales**对应的文件里
-
-## 为新地图添加网格特效
-
-1. 打开**Window --> Amazing Assets --> Wireframe Shader**窗口
-2. 选择左侧的**Generate Mesh**
-3. 在**Unity**的**Project**窗口选择你要发光的**Mesh**，然后再点击**Generate Mesh --> Add Selected**
-4. 然后他会在你选择的**Mesh**文件同级文件加下生成可**发光的Mesh**
-5. **Map**中用**发光的Mesh**替换掉**原来的Mesh**
-
-> 原理：特殊处理之后的Mesh经过带有**Wireframe Projector** **Material**的**Projector**照射就会发光，但是如果使用**Wireframe Projector (Dynamic GeometryShader)** **Material**在PC和高端的安卓中，不需要处理Mesh，就可以动态实现Mesh发光，但是Ios不支持，因为他不支持**Shader Model 5.0** 和**GeometryShaders**，可悲的苹果
-
