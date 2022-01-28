@@ -144,13 +144,6 @@ IsFinish--Yes-->Login-->End
 5. 在数据库**all_equip**表中添加装备信息
 6. 运行Unity，进行查看
 
-> 1. 装备的结构就是五个Mesh组成，即：一个车身四个轮子，如果你的模型还有其他的部件，就需要进行Mesh合并，现有的代码是支持多例子材质的，所以不需要但是合并后材质的问题
-> 2. 如果想修改车子的Mesh结构，需要修改**EquipResourceEditor**和**AccessoryEditor**中的**carTypes**，修改完成后，对现有的**CrazyCar --> CrazyCar --> Assets --> AB --> Equip--> Items**Prefab进行修改，最后对**Mplayer.prefab**进行修改
-> 3. 现在换装的方法只适合固定的**Mesh**数量(能共用Mesh更好)，只是换贴图，会降低内存
-> 4. 如果是你的车子都是异形的车子，就需要直接更换Prefab，需要修改**AccessoryChanger.cs**中的**_SetResource()** (V6.0.0以后的版本可能我就修改了，到时候再说吧)
-> 5. 热更新的方法和头像一样，先打包，再修改**ab_resource**表，最后添加在**all_equip**表中添加信息
-> 6. 在**CrazyCar\CrazyCar\Assets\Models\SimpleRacer\Veh**文件夹中提供了一些车子
-
 ## 增加TimeTrial关卡
 
 1. 在数据库**time_trial_class**表中添加关卡信息即可
