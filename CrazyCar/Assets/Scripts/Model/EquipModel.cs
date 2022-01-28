@@ -5,11 +5,6 @@ using QFramework;
 using LitJson;
 using System;
 
-public enum EquipType {
-    Car = 0,
-    Player
-}
-
 public class EquipInfo {
     public int eid;
     public string rid;

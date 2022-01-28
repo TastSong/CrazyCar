@@ -12,5 +12,4 @@ public class EquipResource : MonoBehaviour {
     public new RuntimeAnimatorController animation;
 
     public string rid;
-    public string type = EquipType.Car.ToString();
 }

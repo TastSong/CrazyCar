@@ -41,7 +41,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
         }
     }
 
-    public void ChangeEquip(EquipType equipType, int eid, string rid) {
+    public void ChangeEquip(int eid, string rid) {
         EquipResource r = this.GetSystem<IResourceSystem>().GetEquipResource(rid);
 
         if (r != null && r.gameObject != null) {

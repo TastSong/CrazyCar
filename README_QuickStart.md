@@ -138,9 +138,8 @@ IsFinish--Yes-->Login-->End
 ## 添加装备
 
 1. 复制一个**CrazyCar --> CrazyCar --> Assets --> AB --> Equip--> Items**文件夹下个任意一个**Prefab** ，并重命名
-2. 在复制好的基础上进行处理你要添加你的装备
 3. 将你的装备的**Icon**、**Material**、**Mesh**放入**CrazyCar --> CrazyCar --> Assets --> AB --> Equip**对应的文件夹
-4. 双击开你的**Prefab**修改**Prefab**对应的信息
+4. 双击开你的**Prefab**修改**Prefab**对应的信息，在复制好的基础上进行处理你要添加你的装备
 5. 在数据库**all_equip**表中添加装备信息
 6. 运行Unity，进行查看
 
