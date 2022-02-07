@@ -776,7 +776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &861806596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +857,7 @@ RectTransform:
   - {fileID: 1110756238}
   - {fileID: 1871788376}
   - {fileID: 826622642}
+  - {fileID: 1278238250}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -979,6 +980,12 @@ MonoBehaviour:
   contentScrollbar: {fileID: 4852207293944735726}
   inputField: {fileID: 4852207293537613792}
   sendBtn: {fileID: 4852207294253571957}
+--- !u!224 &1278238250 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 655777608178695604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1588540969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a41c02af4b62245b0a13c503eef8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accessoryChanger: {fileID: 0}
   changeEquipBtn: {fileID: 800409620}
 --- !u!224 &1918909954 stripped
 RectTransform:
@@ -1472,6 +1478,125 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1001 &655777608178695604
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 861806599}
+    m_Modifications:
+    - target: {fileID: 655777609184256925, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_Name
+      value: ShareBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 655777609184256926, guid: e3340a62ecd76d641a375a5a186335e9,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3340a62ecd76d641a375a5a186335e9, type: 3}
 --- !u!33 &755724754088569013
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1781,21 +1906,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de73f051dff3fc41b2691bfcc2fb43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renders:
-  - key: frame
-    value: {fileID: 0}
-  - key: wheel_fl
-    value: {fileID: 0}
-  - key: wheel_fr
-    value: {fileID: 0}
-  - key: wheel_bl
-    value: {fileID: 0}
-  - key: wheel_br
-    value: {fileID: 0}
   theIcon: {fileID: 21300000, guid: 9727f1362bbc8274d94e8b3c4b1c435a, type: 3}
   animation: {fileID: 0}
   rid: R_Car_StockCar_White
-  type: Car
 --- !u!4 &1690130663825475670
 Transform:
   m_ObjectHideFlags: 0
