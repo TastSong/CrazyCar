@@ -16,6 +16,7 @@ public interface IPlayerManagerSystem : ISystem {
     MPlayer GetPlayerByUid(int uid);
     Dictionary<int, MPlayer> peers { get; set; }
     void RespondAction(PlayerStateMsg playerStateMsg);
+    void RemovePlayer(int uid);
 }
 
 public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
@@ -51,6 +52,20 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
         } else {
             peer.AdjustPlayerPosition(playerStateMsg.pos);
         }
+    }
+
+    public void RemovePlayer(int uid) {
+        if (uid == SelfPlayer.userInfo.uid) {
+            return;
+        }
+
+        MPlayer b = null;
+        if (!peers.TryGetValue(uid, out b)) {
+            return;
+        }
+
+        peers.Remove(uid);
+        b.DestroySelf();
     }
 
     protected override void OnInit() {

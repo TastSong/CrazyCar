@@ -42,6 +42,7 @@ public class MPlayer : MonoBehaviour, IController {
     private Vector3 peerTargetPos = new Vector3();
 
     private MPlayerStyle mPlayerStyle;
+    private int destroyTimeLimit = 10000; // micro seconds
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -85,11 +86,17 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
             transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+
+            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
+                this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
+                return;
+            }
         }
     }
 
     public void AdjustPlayerPosition(Vector3 pos) {
         peerTargetPos = pos;
+        lastRecvStatusStamp = Util.GetTime();
     }
 
     //计算加力方向
@@ -248,6 +255,10 @@ public class MPlayer : MonoBehaviour, IController {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
         gravity = userInfo.equipInfo.mass;
+    }
+
+    public void DestroySelf() {
+        Destroy(gameObject);
     }
 
     public IArchitecture GetArchitecture() {
