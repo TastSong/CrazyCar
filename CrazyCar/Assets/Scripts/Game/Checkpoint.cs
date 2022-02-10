@@ -18,8 +18,7 @@ public class Checkpoint : MonoBehaviour, IController {
     }
 
     private void Update() {
-        material.SetFloat("_DissolveThreshold", amount);
-        material.SetFloat("_OffsetThreshold", amount);
+        material.SetFloat("ClipValue", amount);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -35,7 +34,7 @@ public class Checkpoint : MonoBehaviour, IController {
             } else {
                 checkpointSystem.CheckedCount.Value += 1;
                 Sequence sequence = DOTween.Sequence();
-                sequence.Join( DOTween.To(() => amount, x => amount = x, 1, 0.4f).SetEase(Ease.InCubic));
+                sequence.Join( DOTween.To(() => amount, x => amount = x, 4, 1.4f).SetEase(Ease.InCubic));
                 sequence.OnComplete(() => {
                     gameObject.SetActiveFast(false);
                 });
