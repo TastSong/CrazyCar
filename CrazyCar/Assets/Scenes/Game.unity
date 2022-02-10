@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3539,8 +3539,8 @@ MonoBehaviour:
   leftBtn: {fileID: 932269305456230197}
   rightBtn: {fileID: 5845639855796246423}
   spaceBtn: {fileID: 2761799466374670880}
-  xboxConnect: {fileID: 1779806540}
-  xboxDisconnect: {fileID: 1845005468}
+  xboxConnect: {fileID: 0}
+  xboxDisconnect: {fileID: 0}
 --- !u!1 &1577216429
 GameObject:
   m_ObjectHideFlags: 0
@@ -4009,7 +4009,6 @@ GameObject:
   - component: {fileID: 1779806537}
   - component: {fileID: 1779806539}
   - component: {fileID: 1779806538}
-  - component: {fileID: 1779806540}
   m_Layer: 5
   m_Name: XBOXConnect
   m_TagString: Untagged
@@ -4073,39 +4072,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1779806536}
   m_CullTransparentMesh: 0
---- !u!114 &1779806540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779806536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f19b7e2285c104f6ca47d583f3e5444f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 300
-  m_EffectMaterial: {fileID: 2100000, guid: 9dc7e810a87b444ab96919f3215c2fe5, type: 2}
-  m_EffectFactor: 0
-  m_Width: 0.25
-  m_Rotation: 0
-  m_Softness: 1
-  m_Brightness: 1
-  m_Gloss: 1
-  m_EffectArea: 0
-  m_Player:
-    play: 1
-    initialPlayDelay: 0.4
-    duration: 1
-    loop: 0
-    loopDelay: 0
-    updateMode: 0
-  m_Play: 0
-  m_Loop: 0
-  m_Duration: 1
-  m_LoopDelay: 1
-  m_UpdateMode: 0
 --- !u!1 &1802634529
 GameObject:
   m_ObjectHideFlags: 3
@@ -4259,7 +4225,6 @@ GameObject:
   - component: {fileID: 1845005467}
   - component: {fileID: 1845005470}
   - component: {fileID: 1845005469}
-  - component: {fileID: 1845005468}
   m_Layer: 5
   m_Name: XBOXDisconnect
   m_TagString: Untagged
@@ -4286,39 +4251,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 288, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1845005468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845005466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce76b7a490bd74f34a2f2752641aea24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 300
-  m_EffectMaterial: {fileID: 21162286589123374, guid: 17b17d6effbe14075a3bbdf1fda1f6e1,
-    type: 2}
-  m_EffectFactor: 0
-  m_Width: 0.5
-  m_Softness: 0.5
-  m_Color: {r: 0.5707547, g: 1, b: 0.98839873, a: 1}
-  m_ColorMode: 1
-  m_NoiseTexture: {fileID: 2800000, guid: 3e04c247fb2604af186173fce0bc62de, type: 3}
-  m_EffectArea: 0
-  m_KeepAspectRatio: 0
-  m_Player:
-    play: 1
-    initialPlayDelay: 0.4
-    duration: 1
-    loop: 0
-    loopDelay: 0
-    updateMode: 0
-  m_Reverse: 0
-  m_Duration: 1
-  m_UpdateMode: 0
 --- !u!114 &1845005469
 MonoBehaviour:
   m_ObjectHideFlags: 0

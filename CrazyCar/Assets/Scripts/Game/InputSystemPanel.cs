@@ -98,23 +98,19 @@ public class InputSystemPanel : MonoBehaviour, IController {
     [Obsolete]
     private void PlayConnectAnim() {
         xboxConnect.gameObject.SetActiveFast(true);
-        //float time = xboxConnect.duration + 1;
-        //Util.DelayExecuteWithSecond(time, () => { 
-        //    xboxConnect.gameObject.SetActiveFast(false);
-        //    xboxConnect.effectFactor = 0;
-        //    xboxConnect.play = true;
-        //});
+        float time = 1;
+        Util.DelayExecuteWithSecond(time, () => {
+            xboxConnect.gameObject.SetActiveFast(false);
+        });
     }
 
     [Obsolete]
     private void PlayDisconnectAnim() {
         xboxDisconnect.gameObject.SetActiveFast(true);
-        //float time = xboxDisconnect.duration + 1;
-        //Util.DelayExecuteWithSecond(time, () => {
-        //    xboxDisconnect.gameObject.SetActiveFast(false);
-        //    xboxDisconnect.effectFactor = 0;
-        //    xboxDisconnect.play = true;
-        //});
+        float time = 1;
+        Util.DelayExecuteWithSecond(time, () => {
+            xboxDisconnect.gameObject.SetActiveFast(false);
+        });
     }
 
     public IArchitecture GetArchitecture() {
