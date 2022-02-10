@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
-using Coffee.UIExtensions;
 
 public class InputSystemPanel : MonoBehaviour, IController {
     public GameObject uiController;
@@ -14,8 +13,8 @@ public class InputSystemPanel : MonoBehaviour, IController {
     public GameCtrBtn leftBtn;
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
-    public UIShiny xboxConnect;
-    public UIDissolve xboxDisconnect;
+    public GameObject xboxConnect;
+    public GameObject xboxDisconnect;
 
     private bool isUseKeyboard = false;
     private bool isConnectXBOX = false;
@@ -99,23 +98,23 @@ public class InputSystemPanel : MonoBehaviour, IController {
     [Obsolete]
     private void PlayConnectAnim() {
         xboxConnect.gameObject.SetActiveFast(true);
-        float time = xboxConnect.duration + 1;
-        Util.DelayExecuteWithSecond(time, () => { 
-            xboxConnect.gameObject.SetActiveFast(false);
-            xboxConnect.effectFactor = 0;
-            xboxConnect.play = true;
-        });
+        //float time = xboxConnect.duration + 1;
+        //Util.DelayExecuteWithSecond(time, () => { 
+        //    xboxConnect.gameObject.SetActiveFast(false);
+        //    xboxConnect.effectFactor = 0;
+        //    xboxConnect.play = true;
+        //});
     }
 
     [Obsolete]
     private void PlayDisconnectAnim() {
         xboxDisconnect.gameObject.SetActiveFast(true);
-        float time = xboxDisconnect.duration + 1;
-        Util.DelayExecuteWithSecond(time, () => {
-            xboxDisconnect.gameObject.SetActiveFast(false);
-            xboxDisconnect.effectFactor = 0;
-            xboxDisconnect.play = true;
-        });
+        //float time = xboxDisconnect.duration + 1;
+        //Util.DelayExecuteWithSecond(time, () => {
+        //    xboxDisconnect.gameObject.SetActiveFast(false);
+        //    xboxDisconnect.effectFactor = 0;
+        //    xboxDisconnect.play = true;
+        //});
     }
 
     public IArchitecture GetArchitecture() {
