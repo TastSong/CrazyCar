@@ -22,37 +22,32 @@ public class DownloadResUI : MonoBehaviour, IController {
             this.SendCommand<EnableStandAloneCommand>();
         });
 
-#if !UNITY_EDITOR
-    CheckResource(() => {
-        this.SendCommand(new DownloadResFinishCommand());
-    });
-#endif
-    StringBuilder sb = new StringBuilder();
-    JsonWriter w = new JsonWriter(sb);
-    w.WriteObjectStart();
-    w.WritePropertyName("platform");
-    w.Write(Util.GetPlatform());
-    w.WritePropertyName("version");
-    w.Write(Application.version);
-    w.WriteObjectEnd();
-    Debug.Log("++++++ " + sb.ToString());
-    Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
-    byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-    StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-        data: bytes, succData: (data) => {
-            if ((bool)data["is_forced_updating"]) {
-                this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
-                    success: () => {
-                        Application.OpenURL((string)data["url"]);
-                        Application.Quit();
-                    },
-                    confirmText: this.GetSystem<II18NSystem>().GetText("Download"));
-            } else {
-                CheckResource(() => {
-                    this.SendCommand(new DownloadResFinishCommand());
-                });
-            }
-        }));
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("platform");
+        w.Write(Util.GetPlatform());
+        w.WritePropertyName("version");
+        w.Write(Application.version);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+            data: bytes, succData: (data) => {
+                if ((bool)data["is_forced_updating"]) {
+                    this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
+                        success: () => {
+                            Application.OpenURL((string)data["url"]);
+                            Application.Quit();
+                        },
+                        confirmText: this.GetSystem<II18NSystem>().GetText("Download"));
+                } else {
+                    CheckResource(() => {
+                        this.SendCommand(new DownloadResFinishCommand());
+                    });
+                }
+            }));
     }
 
     public void CheckResource(Action success) {
