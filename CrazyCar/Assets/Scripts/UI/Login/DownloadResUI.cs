@@ -43,48 +43,44 @@ public class DownloadResUI : MonoBehaviour, IController {
                         },
                         confirmText: this.GetSystem<II18NSystem>().GetText("Download"));
                 } else {
-                    CheckResource(() => {
-                        this.SendCommand(new DownloadResFinishCommand());
-                    });
+                    DownloadRes();
                 }
             }));
     }
 
-    public void CheckResource(Action success) {
-        StartCoroutine(Check(success));
-    }
+    private void DownloadRes() {
+        Caching.ClearCache();
+        this.GetSystem<IAddressableSystem>().PraseData();
+        this.GetSystem<IAddressableSystem>().GetDownloadAssets();
 
-    private IEnumerator Check(Action success) {
-        yield return new WaitUntil(() => {
-            return resourceSystem != null;
-        });
-        showText.text = "";
-        progressSlider.value = 0;
-        resourceSystem.CheckNewResource();
-        yield return new WaitUntil(() => {
-            return resourceSystem.curResourceType != ResourceType.None;
-        });
-        if (resourceSystem.curResourceType != ResourceType.None) {
-            resourceSystem.DownloadAssets(() => {
-                success?.Invoke();
-            }, UpdateProgress, () => {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Download assets failed"), callback: () => {
-                    Application.Quit();
-                });
+        this.GetSystem<IAddressableSystem>().SetCallBack(
+            OnCheckCompleteNeedUpdate: (size) => {
+                Debug.LogError("111 需要更新");
+                this.GetSystem<IAddressableSystem>().DownloadAsset();
+            },
+            OnCompleteDownload: () => {
+                Debug.LogError("222 下载完成");
+                this.SendCommand(new DownloadResFinishCommand());
+            },
+            OnCheckCompleteNoUpdate: () => {
+                Debug.LogError("333 不需要更新");
+                this.SendCommand(new DownloadResFinishCommand());
+            },
+            OnUpdate: (percent, tatalSize) => {
+                try {
+                    UpdateProgress(percent, tatalSize);
+                } catch { }
             });
-        } else {
-            success?.Invoke();
-        }
     }
 
     private float lastProgress = 0;
     private float lastTime = -1;
-    private void UpdateProgress(float value, float totalBytes, bool isDownloading) {
+    private void UpdateProgress(float value, float totalBytes) {
         if (value < 0.01f) {
             return;
         }
 
-        if (isDownloading) {
+        if (value < 1f) {
             // download
             var t = Time.realtimeSinceStartup;
             float speed = 0f;

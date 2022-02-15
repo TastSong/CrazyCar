@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class TimeTrialResultUI : MonoBehaviour, IController {
     public Image avatarImage;
@@ -45,7 +46,11 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
     }
 
     private void UpdateUI() {
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         nameText.text = this.GetModel<IUserModel>().Name.Value;
         victoryImage.sprite = victorySprites[this.GetModel<ITimeTrialModel>().IsWin ? 0 :1];
         breakRankImage.sprite = breakRankSprites[this.GetModel<ITimeTrialModel>().IsBreakRecord ? 0 : 1];

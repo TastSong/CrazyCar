@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class AvatarUI : MonoBehaviour, IController {
     public Image curAvatar;
@@ -30,7 +31,11 @@ public class AvatarUI : MonoBehaviour, IController {
     }
 
     private void UpdataUI() {
-        curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(curAid);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(curAid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                curAvatar.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         curAvatarName.text = avatarModel.AvatarDic[curAid].name;
         Util.DeleteChildren(avatarItemParent);
         foreach (var kvp in avatarModel.AvatarDic) {
@@ -62,7 +67,11 @@ public class AvatarUI : MonoBehaviour, IController {
         } else {
             applyBtn.interactable = true;
         }
-        curAvatar.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(e.aid);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(e.aid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                curAvatar.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;
     }

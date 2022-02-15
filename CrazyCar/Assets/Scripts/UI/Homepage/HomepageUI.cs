@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
-
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class HomepageUI : MonoBehaviour, IController {
     public Button avatarBtn;
@@ -161,7 +161,11 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         starText.text = this.GetModel<IUserModel>().Star.Value.ToString();
         vipImage.gameObject.SetActiveFast(this.GetModel<IUserModel>().IsVIP.Value);
     }

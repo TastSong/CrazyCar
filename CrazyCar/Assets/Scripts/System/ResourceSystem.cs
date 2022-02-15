@@ -15,7 +15,7 @@ public enum ResourceType {
     ToDownload
 }
 
-public delegate void ProgressCallback(float value, float totalBytes, bool isDownloading);
+public delegate void ProgressCallback(float value, float totalBytes);
 
 public interface IResourceSystem : ISystem {
     ResourceType curResourceType { get; set; }
@@ -192,7 +192,7 @@ public class ResourceSystem : AbstractSystem, IResourceSystem {
                     }
 
                     try {
-                        progressCallback(_req.downloadProgress, item.Value.size * 1024 * 1024, true);
+                        progressCallback(_req.downloadProgress, item.Value.size * 1024 * 1024);
                     } catch {
                         Debug.LogError("bundleError");
                     }

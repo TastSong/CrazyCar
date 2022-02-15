@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
 using Utils;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MPlayerStyle : MonoBehaviour, IController {
     public TextMesh nameText;
@@ -42,18 +43,17 @@ public class MPlayerStyle : MonoBehaviour, IController {
     }
 
     public void ChangeEquip(int eid, string rid) {
-        EquipResource r = this.GetSystem<IResourceSystem>().GetEquipResource(rid);
-
-        if (r != null && r.gameObject != null) {
-            if (car != null) {
-                car.transform.SetParent(null);
-                Destroy(car);
+        this.GetSystem<IAddressableSystem>().GetEquipResource(rid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                if (car != null) {
+                    car.transform.SetParent(null);
+                    Destroy(car);
+                }
+                car = Instantiate(obj.Result);
+                car.transform.SetParent(carPos.transform, false);
+                car.transform.localPosition = carPos.localPosition;
             }
-            car = Instantiate(r.gameObject);
-            car.transform.SetParent(carPos.transform, false);
-            car.transform.localPosition = carPos.localPosition;
-        }
-        // End
+        });
     }
 
     public void SetNameText(string name, bool isVIP = false) {

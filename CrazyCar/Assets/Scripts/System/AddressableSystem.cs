@@ -13,27 +13,29 @@ public class AddressableInfo {
 }
 
 public interface IAddressableSystem : ISystem {
-    void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float> OnUpdate = null);
+    void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
     void GetDownloadAssets();
     void PraseData();
     void DownloadAsset();
+    void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoad);
+    void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded);
 }
 
 public class AddressableSystem : AbstractSystem, IAddressableSystem {
     private int downloadFailedTimes = 0;
     private static List<object> downloadKeys;
     private long totalDownloadSize;
-    private Action<float> OnUpdate;
+    private Action<float, float> OnUpdate;
     private Action<long> OnCheckCompleteUpdate;
     private Action OnCheckCompleteNoUpdate;
     private Action OnCompleteDownload;
     private AsyncOperationHandle downloadHandle;
 
     public void PraseData() {
-        AddressableInfo.BaseUrl = "http://localhost:8080/examples";
+        AddressableInfo.BaseUrl = this.GetSystem<INetworkSystem>().HttpBaseUrl;
     }
 
-    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float> OnUpdate = null) {
+    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null) {
         this.OnCheckCompleteUpdate = OnCheckCompleteNeedUpdate ?? OnCheckCompleteUpdate;
         this.OnCompleteDownload = OnCompleteDownload ?? this.OnCompleteDownload;
         this.OnCheckCompleteNoUpdate = OnCheckCompleteNoUpdate;
@@ -117,7 +119,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         if (totalDownloadSize > 0) {
             while (!downloadHandle.IsDone) {
                 float percent = downloadHandle.PercentComplete;
-                OnUpdate?.Invoke(percent);
+                OnUpdate?.Invoke(percent, totalDownloadSize);
                 yield return null;
             }
             Addressables.Release(downloadHandle);
@@ -132,8 +134,16 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
             if (downloadFailedTimes >= 3) {
                 //ChangeDownloadUrl(AddressableInfo.cdn_1);
             }
-            Debug.LogError("温馨提示,下载出现问题（N59015），你可以重新下载\n如果下载仍失败，请<color=#FF6849>提交客服</color>协助处理");
         }
+    }
+
+    public void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoaded) {
+        Addressables.LoadAssetAsync<Sprite>("Assets/AB/Avatar/" + aid + ".png").Completed += OnLoaded;
+    }
+
+    public void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded) {
+        rid = rid.Trim();
+        Addressables.LoadAssetAsync<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab").Completed += OnLoaded;
     }
 
     protected override void OnInit() {

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ProfileUI : MonoBehaviour, IController {
     public Button closeBtn;
@@ -33,7 +34,11 @@ public class ProfileUI : MonoBehaviour, IController {
         avatarText.text = userInfo.avatarNum.ToString();
         mapsText.text = userInfo.mapNum.ToString();
 
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid.Value);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         passwordInput.text = this.GetModel<IUserModel>().Password.Value;
     }
 

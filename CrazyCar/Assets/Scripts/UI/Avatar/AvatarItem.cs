@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image avatarImage;
@@ -41,7 +42,11 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
 
     public void SetContent(AvatarInfo info) {
         avatarInfo = info;
-        avatarImage.sprite = this.GetSystem<IResourceSystem>().GetAvatarResource(avatarInfo.aid);
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(avatarInfo.aid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
         this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar);
     }

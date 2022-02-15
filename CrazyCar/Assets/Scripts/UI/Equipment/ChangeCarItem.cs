@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image bg;
@@ -17,8 +18,12 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Color normalColor;
     public void SetContent(EquipInfo info) {
         equipInfo = info;
-        showImage.sprite = this.GetSystem<IResourceSystem>().GetEquipResource(equipInfo.rid).theIcon;
-        lockGO.SetActiveFast(!equipInfo.isHas);
+        this.GetSystem<IAddressableSystem>().GetEquipResource(equipInfo.rid, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                showImage.sprite = obj.Result.GetComponent<EquipResource>().theIcon;
+                lockGO.SetActiveFast(!equipInfo.isHas);
+            }
+        });
     }
 
     public void SetUnlockState() {
