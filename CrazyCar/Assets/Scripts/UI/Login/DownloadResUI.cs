@@ -12,11 +12,7 @@ public class DownloadResUI : MonoBehaviour, IController {
     public Slider progressSlider;
     public Button standAloneBtn;
 
-    private IResourceSystem resourceSystem;
-
     private void Start() {
-        resourceSystem = this.GetSystem<IResourceSystem>();
-
         standAloneBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand<EnableStandAloneCommand>();

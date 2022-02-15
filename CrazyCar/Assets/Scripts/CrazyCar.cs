@@ -5,7 +5,6 @@ using QFramework;
 
 public class CrazyCar : Architecture<CrazyCar> {
     protected override void Init() {
-        RegisterSystem<IResourceSystem>(new ResourceSystem());
         RegisterSystem<IPlayerManagerSystem>(new PlayerManagerSystem());
         RegisterSystem<IWebSocketSystem>(new WebSocketSystem());
         RegisterSystem<IScreenEffectsSystem>(new ScreenEffectsSystem());
