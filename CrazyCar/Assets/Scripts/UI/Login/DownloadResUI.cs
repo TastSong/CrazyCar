@@ -46,7 +46,6 @@ public class DownloadResUI : MonoBehaviour, IController {
     }
 
     private void DownloadRes() {
-        Caching.ClearCache();
         this.GetSystem<IAddressableSystem>().GetDownloadAssets();
 
         this.GetSystem<IAddressableSystem>().SetCallBack(
