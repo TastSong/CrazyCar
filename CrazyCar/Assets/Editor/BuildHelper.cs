@@ -54,6 +54,7 @@ public static class BuildHelper {
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
         Debug.Log("BuildConfig...OVER...");
+        successCallback?.Invoke();
     }
 
     /// <summary>
