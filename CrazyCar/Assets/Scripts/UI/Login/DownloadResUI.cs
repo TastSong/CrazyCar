@@ -43,6 +43,7 @@ public class DownloadResUI : MonoBehaviour, IController {
                         },
                         confirmText: this.GetSystem<II18NSystem>().GetText("Download"));
                 } else {
+                    AddressableInfo.BaseUrl = this.GetSystem<INetworkSystem>().HttpBaseUrl;
                     DownloadRes();
                 }
             }));
@@ -50,20 +51,19 @@ public class DownloadResUI : MonoBehaviour, IController {
 
     private void DownloadRes() {
         Caching.ClearCache();
-        this.GetSystem<IAddressableSystem>().PraseData();
         this.GetSystem<IAddressableSystem>().GetDownloadAssets();
 
         this.GetSystem<IAddressableSystem>().SetCallBack(
             OnCheckCompleteNeedUpdate: (size) => {
-                Debug.LogError("111 需要更新");
+                Debug.Log("111 需要更新");
                 this.GetSystem<IAddressableSystem>().DownloadAsset();
             },
             OnCompleteDownload: () => {
-                Debug.LogError("222 下载完成");
+                Debug.Log("222 下载完成");
                 this.SendCommand(new DownloadResFinishCommand());
             },
             OnCheckCompleteNoUpdate: () => {
-                Debug.LogError("333 不需要更新");
+                Debug.Log("333 不需要更新");
                 this.SendCommand(new DownloadResFinishCommand());
             },
             OnUpdate: (percent, tatalSize) => {

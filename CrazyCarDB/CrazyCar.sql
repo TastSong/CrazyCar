@@ -155,42 +155,6 @@ select aid from
  where aid = 0 and uid = 1;
 select aid from avatar_uid where uid = 1;
 
-create table if not exists `ab_resource`(
-   `r_id` int unsigned auto_increment,
-   `r_name` varchar(100) not null,
-   `r_hash` VARCHAR(40) not null,
-   `r_crc` VARCHAR(40) not null,
-    `r_url` VARCHAR(1000) not null,
-    `r_size` VARCHAR(40) not null,
-   primary key ( `r_id` )
-   )engine = innodb default charset = utf8;
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("avatar_android", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_android", "0.1289");
-
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("equip_android", "0dc989fbf1109552e44cb6d6ac3ca5d7", "628708085", "equip_android", "0.4775390625");  
-                   
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("avatar_ios", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_ios", "0.1289");
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("equip_ios", "6e255c8279db8f8436b31738cd57e50d", "2340302687", "equip_ios", "0.5908203125");
-                   
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("avatar_pc", "9370cfe1c8e8884648f086b820bca347", "1242346442", "avatar_pc", "0.1289");
-insert into ab_resource ( r_name, r_hash, r_crc, r_url, r_size)
-				   values
-				   ("equip_pc", "0dc989fbf1109552e44cb6d6ac3ca5d7", "3051294646", "equip_pc", "0.4072265625");                       
-select* from ab_resource;
-select r_hash 
-from
- ab_resource
- where r_name = "avatar";
-
 /*time trail class*/
 create table if not exists `time_trial_class`(
    `cid` int not null,

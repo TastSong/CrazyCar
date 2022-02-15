@@ -87,13 +87,7 @@
   	<display-name>Register</display-name>
   	<description></description>
   	<servlet-class>CrazyCarServer.Register</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>Resource</servlet-name>
-  	<display-name>Resource</display-name>
-  	<description></description>
-  	<servlet-class>CrazyCarServer.Resource</servlet-class>
-  </servlet>  
+  </servlet> 
   <servlet>
   	<servlet-name>TimeTrialDetail</servlet-name>
   	<display-name>TimeTrialDetail</display-name>
@@ -192,10 +186,6 @@
   	<servlet-name>Register</servlet-name>
   	<url-pattern>/Register</url-pattern>
   </servlet-mapping> 
-       <servlet-mapping>
-  	<servlet-name>Resource</servlet-name>
-  	<url-pattern>/Resource</url-pattern>
-  </servlet-mapping>  
   <servlet-mapping>
   	<servlet-name>TimeTrialDetail</servlet-name>
   	<url-pattern>/TimeTrialDetail</url-pattern>
