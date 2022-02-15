@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LoginUI : MonoBehaviour, IController {
     public InputField userNameInput;
@@ -14,8 +12,6 @@ public class LoginUI : MonoBehaviour, IController {
     public Toggle rememberToggle; 
     public Button loginBtn;
     public Button registerBtn;
-
-    public Image image;
 
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
@@ -42,16 +38,6 @@ public class LoginUI : MonoBehaviour, IController {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new OpenRegisterCommand());
             gameObject.SetActiveFast(false);
-        });
-
-        LoadAsset();
-    }
-
-    public void LoadAsset() {
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(1, (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                image.sprite = Instantiate(obj.Result, transform, false);
-            }
         });
     }
 }
