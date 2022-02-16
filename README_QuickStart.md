@@ -3,7 +3,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ## 运行
 
-1. 用**Unity**(2019.4.14及以上)打开**CrazyCar -> CrazyCar**项目；
+1. 用**Unity**(2019.4.35及以上)打开**CrazyCar -> CrazyCar**项目；
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 3. 搭建服务器环境 **下文提供简单参考**
 4. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库
@@ -17,7 +17,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ## 环境版本
 
-1. Unity 2019.4.14
+1. Unity 2019.4.35
 2. VS 2019
 3. Eclipse 4.21.0
 4. JDK 1.8.0_91
@@ -67,7 +67,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ## 游戏引擎
 
-**Unity 2019.4.14 及以上**
+**Unity 2019.4.35 及以上**
 
 ## 添加新的热更类型
 
