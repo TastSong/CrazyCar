@@ -39,12 +39,12 @@ public class InputSystemPanel : MonoBehaviour, IController {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, -1));
         });
         leftBtn.SetClick((float time) => {
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -Mathf.Clamp01(Time.fixedTime - time)));
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -1));
         }, () => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
         rightBtn.SetClick((float time) => {
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Mathf.Clamp01(Time.fixedTime - time)));
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 1));
         }, () => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
