@@ -78,40 +78,21 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 3. 打开**Windows -> Asset Management -> Groups**窗口
 4. 点击**Create**创建新的**Group**，命名为**Medal**
 5. 将资源拖入此分组
-6. 点击**Build -> Update a previous Build**，进行生成增量包  (请自行百度Addressable了解生成新包和增量包的区别)
-7. 将**CrazyCar\CrazyCar\ServerData**下生成的包发送给后台即可
+6. 点击**Build -> Update a previous Build**，进行生成增量包  (请自行百度**Addressable**了解生成新包和增量包的区别)
+7. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
 
 ## 添加头像
 
-一、热更新
-
-1. 点击**Unity**中的**Window--> Build --> AB --> Local** ，生成AB包
-2. 记录**Unity**中的**Console**窗口会打印出类似**avatar Hash is:  b99e280df02593fde9ce4e342f4ea477 CRC: 2776471209**的Log，记录好
-3. 更新数据库**ab_resource**表中的对应平台的**Hash**以及**CRC**
-4. 将**CrazyCar\CrazyCar\Assets\StreamingAssets**中的**avatar_pc**(如果你是测试的是PC平台)，复制到**CrazyCar\CrazyCarServer\src\main\webapp**
-5. 在数据库**avatar_name**表中添加新的头像信息，ID字段为头像名
-6. **Unity**的**Edit**模式下不会拉取后台的资源包，会直接加载本地的文件，可以打一个PC的AB包进行本地测试热更新，或者修改**ResourceSystem.cs**文件中的**CheckNewResource()**以达到在**Edit**模式下测试完整的热更新功能，但是在打版本之前需要修改**CrazyCar\CrazyCar\Assets\StreamingAssets\config.json**中的**Hesh**，随意修改一下即可
-7. 然后就通过打出来的版本，进行测试热更新
-
-> AB包实现热更新的原理：
->
-> 1. 用户登录客户端
-> 2. 拉取后台接口，获取最新资源包的**Hash**和**CRC**
-> 3. 对比**CrazyCar\CrazyCar\Assets\StreamingAssets\config.json**中的**Hesh**和**CRC**，不相同就拉取后台的AB资源包
->
-> 所以打版本的时候会**先**拉取后台的**Hesh**和**CRC**，并记录到**config.json**文件中，这样就不用每次打出新资源都同步到后台，这样就表现为虽然后台的资源是旧的但是**Hesh**和**CRC**都是最新的，就不会更新资源。
-
-二、非热更新
-
-1. 在**CrazyCar --> CrazyCar --> Assets --> AB --> Avatar** 文件夹添加你要添加的头像，头像名按照既有的依次叠加即可，此为ID
-2. 在数据库**avatar_name**表中添加新的头像信息，ID字段为头像名
-3. **Unity**的**Edit**模式下直接运行即可测试
-
-> 本地搭建服务器，进行测试热更新只能将Unity平台切换到PC才行；Unity的AB包每个平台都是不同的，所以如果你使用的是云服务器，就需要按你要测试的平台进行测试，如你要测试安卓，就需要切换到安卓打包
+1. 将头像放入**Assets -> AB -> Avatar** 文件夹
+2. 将新头像拖入**Windows -> Asset Management -> Groups**窗口，中的**Avatar**分组
+3. 在数据库**avatar_name**表中添加新的头像信息，ID字段为头像名
+4. 运行Unity，进行查看
+5. 点击**Build -> Update a previous Build**，进行生成增量包 
+6. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
 
 ## 自动化打版
 
-1. 安卓和PC都是直接点击**Window--> Build -->Local**，脚本会先打AB包，然后拉取后台AB的信息，防止热更新，最后进行打版。(过程中会让你选择目标文件夹)
+1. 安卓和PC都是直接点击**Window--> Build -->Local**，进行打版。(过程中会让你选择目标文件夹)
 
 2. IOS选择文件时，要确保文件夹下有**CrazyCarXCode**文件夹
 
@@ -124,10 +105,13 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 ## 添加装备
 
 1. 复制一个**CrazyCar --> CrazyCar --> Assets --> AB --> Equip--> Items**文件夹下个任意一个**Prefab** ，并重命名
-3. 将你的装备的**Icon**、**Material**、**Mesh**放入**CrazyCar --> CrazyCar --> Assets --> AB --> Equip**对应的文件夹
-4. 双击开你的**Prefab**修改**Prefab**对应的信息，在复制好的基础上进行处理你要添加你的装备
+2. 将你的装备的**Icon**、**Material**、**Mesh**放入**CrazyCar --> CrazyCar --> Assets --> AB --> Equip**对应的文件夹
+3. 双击开你的**Prefab**修改**Prefab**对应的信息，在复制好的基础上进行处理你要添加你的装备(当然你也可以重新制作一个新的，最后将EquipResource脚本放在根节点，并填好信息即可)
+4. 将新装备**prefab**拖入**Windows -> Asset Management -> Groups**窗口，中的**Equip**分组
 5. 在数据库**all_equip**表中添加装备信息
 6. 运行Unity，进行查看
+7. 点击**Build -> Update a previous Build**，进行生成增量包 
+8. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
 
 ## 增加TimeTrial关卡
 
