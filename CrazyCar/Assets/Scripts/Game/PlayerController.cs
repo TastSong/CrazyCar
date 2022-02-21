@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnChangeAngleView(ChangeAngleViewEvent e) {
-        Debug.LogError("++++++ " + e.angleView);
         if (e.angleView == AngleView.FirstAngle) {
             cinemachineTF.localPosition = firstAngle.localPosition;
         } else {
