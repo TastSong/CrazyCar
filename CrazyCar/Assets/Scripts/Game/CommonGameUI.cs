@@ -7,8 +7,11 @@ using Utils;
 
 public class CommonGameUI : MonoBehaviour, IController {
     public Button exitBtn;
+    public Button angleViewBtn;
     public GameObject miniMap;
     public Text cylinderNumText;
+
+    private AngleView curAngleView = AngleView.ThirdAngle;
 
     private void Start() {
         exitBtn.onClick.AddListener(() => {
@@ -22,6 +25,16 @@ public class CommonGameUI : MonoBehaviour, IController {
                 fail: () => {
                     Time.timeScale = 1;
                 });
+        });
+
+        angleViewBtn.onClick.AddListener(() => {
+            if (curAngleView == AngleView.FirstAngle) {
+                this.SendCommand(new ChangeAngleViewCommand(AngleView.ThirdAngle));
+                curAngleView = AngleView.ThirdAngle;
+            } else {
+                this.SendCommand(new ChangeAngleViewCommand(AngleView.FirstAngle));
+                curAngleView = AngleView.FirstAngle;
+            }
         });
 
         UpdateCylinderNum(new UpdateCylinderNumEvent());

@@ -8,12 +8,15 @@ using QFramework;
 public class PlayerController : MonoBehaviour, IController {
     public MPlayer mPlayerPrefab;
     public Transform startPos;
-    public Transform  cinemachineTF;
+    public Transform cinemachineTF;
+    public Transform firstAngle;
+    public Transform thirdAngle;
 
     private float widthUnit = 1.6f;
 
     private void Start() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
+        this.RegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView);
         MakeSelfPlayer();       
     }
 
@@ -26,6 +29,8 @@ public class PlayerController : MonoBehaviour, IController {
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(this.GetModel<IUserModel>().EquipInfo.Value.eid,
             this.GetModel<IUserModel>().EquipInfo.Value.rid);
         cinemachineTF.SetParent(selfPlayer.transform, false);
+        firstAngle.SetParent(selfPlayer.transform, false);
+        thirdAngle.SetParent(selfPlayer.transform, false);
         selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value, this.GetModel<IUserModel>().IsVIP.Value);
     }
 
@@ -38,6 +43,15 @@ public class PlayerController : MonoBehaviour, IController {
             e.playerStateMsg.userInfo.equipInfo.rid);
         this.GetSystem<IPlayerManagerSystem>().peers.Add(userInfo.uid, mPlayer);
         mPlayer.GetComponent<MPlayerStyle>().SetNameText(userInfo.name, userInfo.isVIP);
+    }
+
+    private void OnChangeAngleView(ChangeAngleViewEvent e) {
+        Debug.LogError("++++++ " + e.angleView);
+        if (e.angleView == AngleView.FirstAngle) {
+            cinemachineTF.localPosition = firstAngle.localPosition;
+        } else {
+            cinemachineTF.localPosition = thirdAngle.localPosition;
+        }
     }
 
     private Vector3 GetStartPosition() {
@@ -54,6 +68,7 @@ public class PlayerController : MonoBehaviour, IController {
 
     private void OnDestroy() {
         this.UnRegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
+        this.UnRegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView);
     }
 
     public IArchitecture GetArchitecture() {
