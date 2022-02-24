@@ -251,6 +251,19 @@ public class MPlayer : MonoBehaviour, IController {
         mPlayerStyle.EnableTrail();
     }
 
+    public void SpeedUp(float time) {
+        StartCoroutine(KeepSpeedUp(time));
+    }
+
+    private IEnumerator KeepSpeedUp(float time) {
+        float cF = currentForce * 1.6f;
+        while (time > 0) {
+            currentForce = cF;
+            time -= Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+    }
+
     public void UpdateSelfParameter() {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
