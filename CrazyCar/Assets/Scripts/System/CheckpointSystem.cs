@@ -9,7 +9,6 @@ public interface ICheckpointSystem : ISystem {
     BindableProperty<int> CheckedCount { get; }
     BindableProperty<int> PassTimes { get; }
     List<Vector3> CheckpointPos { get; set; }
-    Vector3 GetResetPos(Vector3 pos);
     List<GameObject> CheckpointsList { get; }
     void ClearData();
 }
@@ -31,25 +30,6 @@ public class CheckpointSystem : AbstractSystem, ICheckpointSystem {
         CheckpointCount.Value = 0;
         CheckpointPos.Clear();
         PassTimes.Value = 0; // 放最后
-    }
-
-    public Vector3 GetResetPos(Vector3 pos) {
-        float miniOff = 0;
-        int miniIndex = 0;
-
-        for (int i = 0; i < CheckpointCount; i++) {
-            if (i == 0) {
-                miniOff = Vector3.Distance(CheckpointPos[i], pos);
-                miniIndex = i;
-            } else {
-                if (Vector3.Distance(CheckpointPos[i], pos) < miniOff) {
-                    miniOff = Vector3.Distance(CheckpointPos[i], pos);
-                    miniIndex = i;
-                }
-            }            
-        }
-
-        return CheckpointPos[miniIndex];
     }
 
     protected override void OnInit() {

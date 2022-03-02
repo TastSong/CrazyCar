@@ -25,6 +25,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterModel<IEquipModel>(new EquipModel());
         RegisterModel<ISettingsModel>(new SettingsModel());
         RegisterModel<IRoomMsgModel>(new RoomMsgModel());
+        RegisterModel<IMapControllerModel>(new MapControllerModel());
         RegisterUtility<IPlayerPrefsStorage>(new PlayerPrefsStorage());
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
+using PathCreation;
 
 public class MPlayer : MonoBehaviour, IController {
     public UserInfo userInfo;
@@ -43,9 +44,12 @@ public class MPlayer : MonoBehaviour, IController {
 
     private MPlayerStyle mPlayerStyle;
     private int destroyTimeLimit = 10000; // micro seconds
+    private PathCreator pathCreator;
+    private float playerHigh = 0.2f;
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
+        pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
        
@@ -62,8 +66,8 @@ public class MPlayer : MonoBehaviour, IController {
             return;
         }
 
-        if (IsRollover()) {
-            transform.position = this.GetSystem<ICheckpointSystem>().GetResetPos(transform.position);
+        if (IsOutside) {
+            ResetCar();
         }
 
         CheckGroundNormal();
@@ -125,9 +129,32 @@ public class MPlayer : MonoBehaviour, IController {
         rig.AddForce(tempForce, ForceMode.Force);
     }
 
-    private bool IsRollover() {
-        return Mathf.Abs(transform.rotation.z) > 35;
+    private bool IsOutside {
+        get {
+            if (pathCreator != null) {
+                Vector3 closestPos = pathCreator.path.GetClosestPointOnPath(transform.position);
+                float dis = Vector3.Distance(closestPos, transform.position);
+                return dis > this.GetModel<IMapControllerModel>().RoadWidth;
+            } else {
+                return false;
+            }
+        }
     }
+
+    private bool IsTurnover {
+        get {
+            float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
+            var nor = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
+            Debug.LogError("++++++ " + Mathf.Abs(nor.eulerAngles.x - transform.eulerAngles.x));
+            return Mathf.Abs(nor.eulerAngles.x - transform.eulerAngles.x) > 10;
+        }       
+    }
+
+    private void ResetCar() {
+        transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
+        float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
+        transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
+      }
 
 
     //检测是否在地面上，并且使车与地面保持水平

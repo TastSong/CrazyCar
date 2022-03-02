@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
+using PathCreation;
 
 public class MapController : MonoBehaviour, IController {
     public GameObject[] mapsGO;
@@ -28,5 +29,6 @@ public class MapController : MonoBehaviour, IController {
             mapsGO[i].SetActiveFast(i == selectMapId);
         }
         mapId = selectMapId;
+        this.GetModel<IMapControllerModel>().PathCreator = mapsGO[mapId].GetComponentInChildren<PathCreator>();
     }
 }
