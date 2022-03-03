@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPathCreator : MonoBehaviour
-{
+public class TestPathCreator : MonoBehaviour {
     public PathCreator pathCreator;
     public RoadMeshCreator roadMeshCreator;
+    public float turnoverOffset = 4;
 
     private float roadWidth;
 
@@ -19,12 +19,12 @@ public class TestPathCreator : MonoBehaviour
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space) && IsOutside()) {
             transform.position = pathCreator.path.GetClosestPointOnPath(transform.position);
-            IsTurnover();
         }
 
         if (Input.GetKeyDown(KeyCode.A) && IsTurnover()) {
             float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-            transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
+            transform.rotation = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
+                 new Vector3(0, 0, 90));
         }
     }
 
@@ -38,6 +38,15 @@ public class TestPathCreator : MonoBehaviour
     private bool IsTurnover() {
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
         var nor = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
-        return Mathf.Abs(nor.eulerAngles.z - transform.localRotation.eulerAngles.z) > 14;
+        float targetZ = (nor.eulerAngles.z + 90) % 360;
+        float z = transform.localRotation.eulerAngles.z;
+        Debug.LogError("+++++ nor = " + nor.eulerAngles + "  " + transform.localRotation.eulerAngles);
+
+        if (z < 0) {
+            z = 360 + z;
+        } else if (z > 360) {
+            z = z % 360;
+        } 
+        return Mathf.Abs(z - targetZ) > turnoverOffset;
     }
 }
