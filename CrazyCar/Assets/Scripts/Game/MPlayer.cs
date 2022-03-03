@@ -46,6 +46,7 @@ public class MPlayer : MonoBehaviour, IController {
     private int destroyTimeLimit = 10000; // micro seconds
     private PathCreator pathCreator;
     private float playerHigh = 0.2f;
+    private Coroutine speedUpCor;
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -60,29 +61,23 @@ public class MPlayer : MonoBehaviour, IController {
 
     }
 
+    private bool isLock = false;
     private void FixedUpdate() {
         if (isLockSpeed) {
             rig.AddForce(Vector3.zero, ForceMode.Force);
             return;
         }
-
-        if (IsOutside) {
-            ResetCar();
-        }
-
-        CheckGroundNormal();
+        CheckGroundNormal();    
         Turn();
 
         //起步时力大小递增
         IncreaseForce();
         //漂移加速后/松开加油键力大小时递减
         ReduceForce();
-
         if (isDrifting) {
             CalculateDriftingLevel();
             //ChangeDriftColor();
         }
-
         //根据上述情况，进行最终的旋转和加力
         rig.MoveRotation(rotationStream);
         CalculateForceDir();
@@ -96,6 +91,10 @@ public class MPlayer : MonoBehaviour, IController {
                 return;
             }
         }
+
+        if (IsOutside) {
+            ResetCar();
+        }     
     }
 
     public void AdjustPlayerPosition(Vector3 pos) {
@@ -151,9 +150,12 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private void ResetCar() {
+        StopSpeedUp();
+        currentForce = 0;
+        rig.velocity = Vector3.zero;
         transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-        transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
+        rotationStream = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
       }
 
 
@@ -279,7 +281,7 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     public void SpeedUp(float time) {
-        StartCoroutine(KeepSpeedUp(time));
+        speedUpCor = StartCoroutine(KeepSpeedUp(time));
     }
 
     private IEnumerator KeepSpeedUp(float time) {
@@ -289,6 +291,10 @@ public class MPlayer : MonoBehaviour, IController {
             time -= Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
+    }
+
+    private void StopSpeedUp() {
+        StopCoroutine(speedUpCor);
     }
 
     public void UpdateSelfParameter() {
