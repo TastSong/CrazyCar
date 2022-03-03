@@ -7,7 +7,7 @@ using UnityEngine;
 public class TestPathCreator : MonoBehaviour {
     public PathCreator pathCreator;
     public RoadMeshCreator roadMeshCreator;
-    public float turnoverOffset = 4;
+    public float offsetTurnover = 4;
 
     private float roadWidth;
 
@@ -47,6 +47,6 @@ public class TestPathCreator : MonoBehaviour {
         } else if (z > 360) {
             z = z % 360;
         } 
-        return Mathf.Abs(z - targetZ) > turnoverOffset;
+        return Mathf.Abs(z - targetZ) > offsetTurnover;
     }
 }

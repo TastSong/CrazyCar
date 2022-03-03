@@ -44,9 +44,11 @@ public class MPlayer : MonoBehaviour, IController {
 
     private MPlayerStyle mPlayerStyle;
     private int destroyTimeLimit = 10000; // micro seconds
+    // 出界 翻车判断
     private PathCreator pathCreator;
-    private float playerHigh = 0.2f;
+    private float playerHigh = 2f;
     private Coroutine speedUpCor;
+    private float turnoverOffset = 24;
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -92,7 +94,7 @@ public class MPlayer : MonoBehaviour, IController {
             }
         }
 
-        if (IsOutside) {
+        if (IsOutside || IsTurnover) {
             ResetCar();
         }     
     }
@@ -144,9 +146,21 @@ public class MPlayer : MonoBehaviour, IController {
         get {
             float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
             var nor = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
-            Debug.LogError("++++++ " + Mathf.Abs(nor.eulerAngles.x - transform.eulerAngles.x));
-            return Mathf.Abs(nor.eulerAngles.x - transform.eulerAngles.x) > 10;
-        }       
+            float targetZ = (nor.eulerAngles.z + 90) % 360;
+            float z = transform.localRotation.eulerAngles.z;
+            
+            if (z < 0) {
+                z = 360 + z;
+            }
+
+            z = z % 360;
+
+            if (Mathf.Abs(z - targetZ) > 180) {
+                return (360 - Mathf.Abs(z - targetZ)) > turnoverOffset;
+            } else {
+                return Mathf.Abs(z - targetZ) > turnoverOffset;
+            }
+        }
     }
 
     private void ResetCar() {
@@ -155,8 +169,9 @@ public class MPlayer : MonoBehaviour, IController {
         rig.velocity = Vector3.zero;
         transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-        rotationStream = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
-      }
+        rotationStream = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
+                 new Vector3(0, 0, 90));
+    }
 
 
     //检测是否在地面上，并且使车与地面保持水平
@@ -294,7 +309,9 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private void StopSpeedUp() {
-        StopCoroutine(speedUpCor);
+        if (speedUpCor != null) {
+            StopCoroutine(speedUpCor);
+        }
     }
 
     public void UpdateSelfParameter() {
