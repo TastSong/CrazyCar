@@ -167,7 +167,7 @@ create table if not exists `time_trial_class`(
    )engine = innodb default charset = utf8;
 insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 60, "基地卡通", 2);
+				   (0, 2, 0, 88, "基地卡通", 2);
 insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
 				   (1, 1, 1, 70, "几何风光", 3);
@@ -176,7 +176,10 @@ insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times 
 				   (2, 3, 2, 80, "曲折前行", 2);
 insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
 				   values
-				   (3, 2, 3, 90, "蜿蜒驰骋", 2);
+				   (3, 22, 3, 100, "蜿蜒驰骋", 2);
+insert into time_trial_class ( cid, star, map_id, limit_time, class_name, times )
+				   values
+				   (4, 4, 4, 90, "砥砺前行", 2);                   
 select* from time_trial_class;
 select cid from time_trial_class;
 
