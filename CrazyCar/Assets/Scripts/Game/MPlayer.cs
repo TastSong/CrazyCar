@@ -48,7 +48,7 @@ public class MPlayer : MonoBehaviour, IController {
     private PathCreator pathCreator;
     private float playerHigh = 2f;
     private Coroutine speedUpCor;
-    private float turnoverOffset = 24;
+    private float turnoverOffset = 44;
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -94,9 +94,14 @@ public class MPlayer : MonoBehaviour, IController {
             }
         }
 
-        if (IsOutside || IsTurnover) {
+        if (IsOutside) {
+            Debug.Log("++++++ IsOutside ");
             ResetCar();
-        }     
+        } 
+        if (IsTurnover) {
+            Debug.Log("++++++ IsTurnover " );
+            ResetCar();
+        }
     }
 
     public void AdjustPlayerPosition(Vector3 pos) {
