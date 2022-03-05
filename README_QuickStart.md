@@ -128,12 +128,30 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 ## 添加地图
 
 1. 在**Unity**中打开**MapController.prefab**，添加你的地图
+
 2. 将新图拖入到**MapController**中的**MapsGO**中
+
 3. 从**Map0**中复制一份**CheckpointController**，到新地图，并将**CheckpointController**里面的**Checkpoint**和**EndSign**，移动到相应的位置
+
 4. 从**Map0**中复制一份**MiniMap**，到新地图，将**MiniMap**下**Plane**中的**Material**换成新地图的素材
+
 5. 打开**Game**场景，将新地图的**Scale**调整的和现有地图大小相似
+
 6. 地图的起点位置为，**Game**场景中**StartPos**所在的位置
-7. 可以在**TimeTrial**添加相应的关卡进行测试
+
+7. 添加路线
+
+   * 添加Path空物体
+
+   * 在Path空物体下添加空物体PathCreator
+
+   * 给PathCreator添加PathCreator组件
+
+   * 通过Shift+左鼠标键添加节点，Ctrl+左鼠标键删除节点，制作地图路线 
+
+     > 详情操作可以查看[Path Creator - Google 文档](https://docs.google.com/document/d/1-FInNfD2GC-fVXO6KyeTSp9OSKst5AzLxDaBRb69b-Y/edit#heading=h.gnp37l55xf4w)
+
+8. 可以在**TimeTrial**添加相应的关卡进行测试
 
 ## 添加多语言
 
