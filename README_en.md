@@ -97,6 +97,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 8. [UnityNativeShare: A Unity plugin to natively share files ](https://github.com/yasirkula/UnityNativeShare)
 8. [Path-Creator: Path creation asset for Unity game development ](https://github.com/SebLague/Path-Creator)
+10. [AudioKit](https://github.com/liangxiegame/AudioKit)
 
 
 ## License
