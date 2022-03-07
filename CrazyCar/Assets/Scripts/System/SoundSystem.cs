@@ -4,14 +4,6 @@ using UnityEngine;
 using QFramework;
 
 public interface ISoundSystem : ISystem {
-    AudioSource ClickAudio { get; set; }
-    AudioSource CloseAudio { get; set; }
-    AudioSource LoseAudio { get; set; }
-    AudioSource WinAudio { get; set; }
-    AudioSource BackgroundMusic { get; set; }
-    AudioSource SpinWheelAudio { get; set; }
-    AudioSource WheelEngineAudio { get; set; }
-
     void PlayClickSound();
     void PlayCloseSound();
     void PlayLoseSound();
@@ -24,14 +16,6 @@ public interface ISoundSystem : ISystem {
 }
 
 public class SoundSystem : AbstractSystem, ISoundSystem {
-    public AudioSource ClickAudio { get; set; } = new AudioSource();
-    public AudioSource CloseAudio { get; set; } = new AudioSource();
-    public AudioSource LoseAudio { get; set; } = new AudioSource();
-    public AudioSource WinAudio { get; set; } = new AudioSource();
-    public AudioSource BackgroundMusic { get; set; } = new AudioSource();
-    public AudioSource SpinWheelAudio { get; set; } = new AudioSource();
-    public AudioSource WheelEngineAudio { get; set; } = new AudioSource();
-
     private string path = "Sounds/";
 
     public void PlayBackgroundMusic() {
