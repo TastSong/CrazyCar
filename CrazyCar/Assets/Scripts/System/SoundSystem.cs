@@ -19,7 +19,6 @@ public interface ISoundSystem : ISystem {
     void PlayBackgroundMusic();
     void PlaySpinWheekSound();
     void PlayWheelEngineSound();
-    void StopWheelEngineSound();
     void SetSound(bool isOn);
     void SetBackgroundMusic(bool isOn);
 }
@@ -33,65 +32,47 @@ public class SoundSystem : AbstractSystem, ISoundSystem {
     public AudioSource SpinWheelAudio { get; set; } = new AudioSource();
     public AudioSource WheelEngineAudio { get; set; } = new AudioSource();
 
+    private string path = "Sounds/";
+
     public void PlayBackgroundMusic() {
-        BackgroundMusic.Play();
+        AudioKit.PlayMusic(path + "BackgroundMusic");
     }
 
     public void PlayClickSound() {
-        ClickAudio.Play();
+        AudioKit.PlaySound(path + "Button_Low");
     }
 
     public void PlayCloseSound() {
-        CloseAudio.Play();
+        AudioKit.PlaySound(path + "Close");
     }
 
     public void PlayLoseSound() {
-        LoseAudio.Play();
+        AudioKit.PlaySound(path + "Lose");
     }
 
     public void PlaySpinWheekSound() {
-        SpinWheelAudio.Play();
+        AudioKit.PlaySound(path + "SpinWheel");
     }
 
     public void PlayWheelEngineSound() {
-        WheelEngineAudio.Play();
+        AudioKit.PlaySound(path + "WheelEngine");
     }
 
     public void PlayWinSound() {
-        WinAudio.Play();
+        AudioKit.PlaySound(path + "Win");
     }
 
     public void SetBackgroundMusic(bool isOn) {
+        AudioKit.Settings.IsMusicOn.Value = isOn;
         if (isOn) {
-            BackgroundMusic.volume = 1;
-            BackgroundMusic.Play();
-        } else {
-            BackgroundMusic.volume = 0;
-            BackgroundMusic.Pause();
+            PlayBackgroundMusic();
         }
     }
 
     public void SetSound(bool isOn) {
-        if (isOn) {
-            ClickAudio.volume = 1;
-            CloseAudio.volume = 1;
-            LoseAudio.volume = 1;
-            WinAudio.volume = 1;
-            SpinWheelAudio.volume = 1;
-            WheelEngineAudio.volume = 1;
-        } else {
-            ClickAudio.volume = 0;
-            CloseAudio.volume = 0;
-            LoseAudio.volume = 0;
-            WinAudio.volume = 0;
-            SpinWheelAudio.volume = 0;
-            WheelEngineAudio.volume = 0;
-        }
+        AudioKit.Settings.IsSoundOn.Value = isOn;
     }
 
-    public void StopWheelEngineSound() {
-        WheelEngineAudio.Pause();
-    }
 
     protected override void OnInit() {
         this.RegisterEvent<ChangeSettingEvent>((e) => {

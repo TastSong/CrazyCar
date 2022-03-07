@@ -49,14 +49,14 @@ namespace QFramework.Example
             {
                 AudioKit.Config.AudioLoaderPool = new DefaultAudioLoaderPool();
             
-                btnPlayHome.onClick.AddListener(() => { AudioKit.PlayMusic("home_bg"); });
+                btnPlayHome.onClick.AddListener(() => { AudioKit.PlayMusic("Sounds/home_bg"); });
 
 
-                btnPlayGame.onClick.AddListener(() => { AudioKit.PlayMusic("game_bg"); });
+                btnPlayGame.onClick.AddListener(() => { AudioKit.PlayMusic("Sounds/game_bg"); });
 
-                btnPlaySound.onClick.AddListener(() => { AudioKit.PlaySound("game_bg"); });
+                btnPlaySound.onClick.AddListener(() => { AudioKit.PlaySound("Sounds/game_bg"); });
 
-                btnPlayVoiceA.onClick.AddListener(() => { AudioKit.PlayVoice("game_bg"); });                
+                btnPlayVoiceA.onClick.AddListener(() => { AudioKit.PlayVoice("Sounds/game_bg"); });                
             }
 
             btnSoundOn.onClick.AddListener(() => { AudioKit.Settings.IsSoundOn.Value = true; });
