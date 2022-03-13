@@ -26,7 +26,11 @@
   </a>
 </div>
 <div  align="center">  
+<p></p>
+<b>主体功能演示</b>
   <a><img src="./SamplePictures/Preview.gif"></a>
+<p></p>
+<b>比赛演示</b>
   <a><img src="./SamplePictures/Match.gif"></a>
 </div> 
 
