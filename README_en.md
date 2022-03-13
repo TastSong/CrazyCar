@@ -26,7 +26,11 @@
   </a>
 </div>
 <div  align="center">  
+  <p></p>
+<b>Main Function Demonstration</b>
   <a><img src="./SamplePictures/Preview.gif"></a>
+<p></p>
+<b>Competition Function Demonstration</b>
   <a><img src="./SamplePictures/Match.gif"></a>
 </div> 
 
