@@ -64,6 +64,8 @@
 
 :video_game:  计时赛和多人比赛两种竞技模式
 
+:roller_coaster: 路线规划功能，自定义路线
+
 :seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前:running:
 
 :kissing_heart: Enjoy~

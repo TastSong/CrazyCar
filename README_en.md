@@ -65,6 +65,8 @@
 
 :video_game:  Time trial and multiplayer competition two modes
 
+:roller_coaster: Route planning function, custom route
+
 :seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
 
 :kissing_heart: Enjoy~
