@@ -50,6 +50,10 @@ public class MPlayerStyle : MonoBehaviour, IController {
                     Destroy(car);
                 }
                 car = Instantiate(obj.Result);
+                if (car == null) {
+                    // 傻逼Addressable
+                    return;
+                }
                 car.transform.SetParent(carPos.transform, false);
                 car.transform.localPosition = carPos.localPosition;
             }

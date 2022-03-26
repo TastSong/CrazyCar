@@ -85,7 +85,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         Debug.Log("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
-        playerStateMsg.pos = new Vector3((float)jsonData["pos_x"], (float)jsonData["pos_y"], (float)jsonData["pos_z"]);
+        playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
         playerStateMsg.speed = (int)(float)jsonData["speed"];
         playerStateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
         playerStateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
