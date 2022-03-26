@@ -38,6 +38,8 @@ public class TimeTrialNet : MonoBehaviour, IController {
                 w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.z);
                 w.WritePropertyName("speed");
                 w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.x);
+                w.WritePropertyName("timestamp");
+                w.Write(Util.GetTime());
                 w.WritePropertyName("user_info");
                 w.WriteObjectStart();
                 w.WritePropertyName("name");
