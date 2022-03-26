@@ -39,7 +39,8 @@ public class MPlayer : MonoBehaviour, IController {
     public float groundDistance = 0.7f;//根据车模型自行调节
     public float driftPower = 0;
 
-    private long lastRecvStatusStamp = 0;
+    public long lastRecvStatusStamp = 0;
+
     private Vector3 peerTargetPos = new Vector3();
 
     private MPlayerStyle mPlayerStyle;

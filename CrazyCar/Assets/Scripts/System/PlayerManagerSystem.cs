@@ -9,6 +9,7 @@ public class PlayerStateMsg {
     public UserInfo userInfo = new UserInfo();
     public Vector3 pos = new Vector3();
     public int speed;
+    public long timestamp;
 }
 
 public interface IPlayerManagerSystem : ISystem {
@@ -50,7 +51,9 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.userInfo.uid, out peer)) {
             this.SendEvent(new MakeNewPlayerEvent(playerStateMsg));
         } else {
-            peer.AdjustPlayerPosition(playerStateMsg.pos);
+            if (playerStateMsg.timestamp > peer.lastRecvStatusStamp) {
+                peer.AdjustPlayerPosition(playerStateMsg.pos);
+            }
         }
     }
 
