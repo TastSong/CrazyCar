@@ -50,7 +50,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
                     Destroy(car);
                 }
                 car = Instantiate(obj.Result);
-                if (car == null) {
+                if (car == null || carPos == null) {
                     // 傻逼Addressable
                     return;
                 }
