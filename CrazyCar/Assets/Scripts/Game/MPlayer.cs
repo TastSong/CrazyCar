@@ -73,6 +73,21 @@ public class MPlayer : MonoBehaviour, IController {
             rig.AddForce(Vector3.zero, ForceMode.Force);
             return;
         }
+
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
+            if (lastRecvStatusStamp != preRecStatusStamp) {
+                transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+                preRecStatusStamp = lastRecvStatusStamp;
+            }
+            rig.velocity = curSpeed;
+
+            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
+                this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);               
+            }
+            return;
+        }
+
+
         CheckGroundNormal();    
         Turn();
 
@@ -88,19 +103,6 @@ public class MPlayer : MonoBehaviour, IController {
         rig.MoveRotation(rotationStream);
         CalculateForceDir();
         AddForceToMove();
-
-        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
-            if (lastRecvStatusStamp != preRecStatusStamp) {
-                transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
-                preRecStatusStamp = lastRecvStatusStamp;
-            }
-            rig.velocity = curSpeed;
-
-            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
-                this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
-                return;
-            }
-        }
 
         if (IsOutside) {
             Debug.Log("++++++ IsOutside ");
