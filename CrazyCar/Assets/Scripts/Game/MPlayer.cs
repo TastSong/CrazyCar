@@ -40,6 +40,7 @@ public class MPlayer : MonoBehaviour, IController {
     public float driftPower = 0;
 
     public long lastRecvStatusStamp = 0;
+    private long preRecStatusStamp = 0;
 
     private Vector3 peerTargetPos = new Vector3();
 
@@ -50,6 +51,8 @@ public class MPlayer : MonoBehaviour, IController {
     private float playerHigh = 2f;
     private Coroutine speedUpCor;
     private float turnoverOffset = 44;
+    // 比赛中其他人速度
+    private Vector3 curSpeed = new Vector3();
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -87,7 +90,11 @@ public class MPlayer : MonoBehaviour, IController {
         AddForceToMove();
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
-            transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+            if (lastRecvStatusStamp != preRecStatusStamp) {
+                transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+                preRecStatusStamp = lastRecvStatusStamp;
+            }
+            rig.velocity = curSpeed;
 
             if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
                 this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
@@ -105,8 +112,9 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    public void AdjustPlayerPosition(Vector3 pos) {
+    public void AdjustPlayerPosition(Vector3 pos, Vector3 speed) {
         peerTargetPos = pos;
+        curSpeed = speed;
         lastRecvStatusStamp = Util.GetTime();
     }
 

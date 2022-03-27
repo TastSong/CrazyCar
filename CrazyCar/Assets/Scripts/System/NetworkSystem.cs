@@ -86,7 +86,8 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
         playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
-        playerStateMsg.speed = (int)(float)jsonData["speed"];
+        string[] speed = ((string)jsonData["speed"]).Split(',');
+        playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerStateMsg.timestamp = (long)jsonData["timestamp"];
         playerStateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
         playerStateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];

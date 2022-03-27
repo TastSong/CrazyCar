@@ -38,7 +38,9 @@ public class MatchNet : MonoBehaviour,IController {
             w.WritePropertyName("pos_z");
             w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.z);
             w.WritePropertyName("speed");
-            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.x);
+            w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.x.ToString("f2") + "," + 
+                this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.y.ToString("f2") + "," +
+                this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.z.ToString("f2"));
             w.WritePropertyName("timestamp");
             w.Write(Util.GetTime());
             w.WritePropertyName("user_info");
