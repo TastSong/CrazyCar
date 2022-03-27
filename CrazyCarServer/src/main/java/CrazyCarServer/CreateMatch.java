@@ -51,7 +51,7 @@ public class CreateMatch extends HttpServlet {
 		long enrollTime =  System.currentTimeMillis()/1000;
 		long startTime = enrollTime + 60;
 		String sql = "insert into match_class (star, map_id, limit_time, class_name, times, start_time, enroll_time) values "
-				+ "(2, 0, 60, " + "\"TastSong\"" + ", 1, " +  startTime + ", " + enrollTime + ");";
+				+ "(2, 0, 120, " + "\"TastSong\"" + ", 1, " +  startTime + ", " + enrollTime + ");";
 		Util.JDBC.executeInsert(sql);
 	}
 
