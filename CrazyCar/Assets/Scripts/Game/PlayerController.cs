@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour, IController {
         } else {
             pos = startPos.position - new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
         }
-        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  position = " + pos);
+        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + startPos.position +  "  position = " + pos);
         return pos;
     }
 
