@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, IController {
     public Transform firstAngle;
     public Transform thirdAngle;
 
-    private float widthUnit = 1.6f;
+    private float widthUnit = 2.4f;
 
     private void Start() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour, IController {
         } else {
             pos = startPos.position - new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
         }
-        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  position = " + startPos.position.x);
+        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  position = " + pos);
         return pos;
     }
 
