@@ -23,7 +23,7 @@ public interface IPlayerManagerSystem : ISystem {
 public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
     public Dictionary<int, MPlayer> peers { get; set; } = new Dictionary<int, MPlayer>();
 
-    public MPlayer SelfPlayer { get; set; } = new MPlayer();
+    public MPlayer SelfPlayer { get; set; }
 
     public MPlayer GetPlayerByUid(int uid) {
         if (uid == SelfPlayer.userInfo.uid) {

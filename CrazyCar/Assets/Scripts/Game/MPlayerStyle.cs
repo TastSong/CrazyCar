@@ -21,7 +21,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
     public GameObject plexusVFX;
 
     private float screenEffectTime = 0;
-    private MPlayer mPlayer = new MPlayer();
+    private MPlayer mPlayer;
 
     private void Start() {
         if (GetComponent<MPlayer>() != null) {
@@ -37,7 +37,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
     }
 
     private void FixedUpdate() {
-        if (mPlayer.isDrifting) {
+        if (mPlayer != null && mPlayer.isDrifting) {
             ChangeDriftColor();
         }
     }
@@ -50,10 +50,6 @@ public class MPlayerStyle : MonoBehaviour, IController {
                     Destroy(car);
                 }
                 car = Instantiate(obj.Result);
-                if (car == null || carPos == null) {
-                    // 傻逼Addressable
-                    return;
-                }
                 car.transform.SetParent(carPos.transform, false);
                 car.transform.localPosition = carPos.localPosition;
             }

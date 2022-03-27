@@ -30,10 +30,10 @@ public class GameControllerModel : AbstractModel, IGameControllerModel {
     public BindableProperty<float> SendMsgOffTime { get; } = new BindableProperty<float>();
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
-    public WarningAlert WarningAlert { get; set; } = new WarningAlert();
-    public InfoConfirmAlert InfoConfirmAlert { get; set; } = new InfoConfirmAlert();
-    public GameHelper GameHelper { get; set; } = new GameHelper();
-    public LoadingUI LoadingUI { get; set; } = new LoadingUI();
+    public WarningAlert WarningAlert { get; set; }
+    public InfoConfirmAlert InfoConfirmAlert { get; set; }
+    public GameHelper GameHelper { get; set; }
+    public LoadingUI LoadingUI { get; set; }
 
     protected override void OnInit() {
         SceneLoaded.Value = false;

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, IController {
     public Transform firstAngle;
     public Transform thirdAngle;
 
-    private float widthUnit = 2.4f;
+    private float widthUnit = 4.4f;
 
     private void Start() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
@@ -54,12 +54,14 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private Vector3 GetStartPosition() {
-        Vector3 pos = new Vector3();
+        Vector3 pos = startPos.position;
         double num = this.GetModel<IRoomMsgModel>().Num;
         if (num % 2 == 0) {
-            pos = startPos.position + new Vector3((int)(num / 2 * widthUnit), 0, 0);
+            pos += new Vector3((int)(num / 2 * widthUnit), 0, 0);
         } else {
-            pos = startPos.position - new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
+            
+            pos -= new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
+            Debug.LogError("++++++ " + pos + "    " + new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0));
         }
         Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + startPos.position +  "  position = " + pos);
         return pos;
