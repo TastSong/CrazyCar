@@ -49,6 +49,9 @@ public class MPlayerStyle : MonoBehaviour, IController {
                     car.transform.SetParent(null);
                     Destroy(car);
                 }
+                if (obj.Result == null || carPos == null) {
+                    return;
+                }
                 car = Instantiate(obj.Result);
                 car.transform.SetParent(carPos.transform, false);
                 car.transform.localPosition = carPos.localPosition;
