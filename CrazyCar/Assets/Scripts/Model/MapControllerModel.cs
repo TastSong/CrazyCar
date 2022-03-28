@@ -11,6 +11,6 @@ public class MapControllerModel : AbstractModel, IMapControllerModel {
     public float RoadWidth { get; set; }
 
     protected override void OnInit() {
-        RoadWidth = 24;
+        RoadWidth = 34;
     }
 }
