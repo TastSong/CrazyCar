@@ -29,7 +29,9 @@ public class CountDownAnim : MonoBehaviour, IController {
 
     private IEnumerator CountDown(int time) {
         while(time > 0) {
-            countDownText.text = time.ToString();
+            if (countDownText != null) {
+                countDownText.text = time.ToString();
+            }
             yield return new WaitForSecondsRealtime(1.0f);
             time--;
         }
