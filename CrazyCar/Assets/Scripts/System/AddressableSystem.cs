@@ -108,7 +108,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         downloadHandle.Completed += OnDonloadComplete;
         if (totalDownloadSize > 0) {
             while (!downloadHandle.IsDone) {
-                float percent = downloadHandle.PercentComplete;
+                float percent = downloadHandle.GetDownloadStatus().Percent;
                 OnUpdate?.Invoke(percent, totalDownloadSize);
                 yield return null;
             }
