@@ -22,7 +22,7 @@ public interface IAddressableSystem : ISystem {
 
 public class AddressableSystem : AbstractSystem, IAddressableSystem {
     private int downloadFailedTimes = 0;
-    private static List<object> downloadKeys;
+    private static IEnumerable downloadKeys;
     private long totalDownloadSize;
     private Action<float, float> OnUpdate;
     private Action<long> OnCheckCompleteUpdate;
@@ -48,7 +48,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     void OnInitAA(AsyncOperationHandle<IResourceLocator> handle) {
-        downloadKeys = handle.Result.Keys.ToList();
+        downloadKeys = handle.Result.Keys;
 
         var checkHandle = Addressables.CheckForCatalogUpdates(false);
         checkHandle.Completed += OnCheckCatalogUpdate;
@@ -74,10 +74,6 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
 
     void OnUpdateCatalogs(AsyncOperationHandle<List<IResourceLocator>> handle) {
         Debug.Log("OnUpdateFinish");
-        downloadKeys.Clear();
-        foreach (var loc in handle.Result) {
-            downloadKeys.AddRange(loc.Keys);
-        }
         Addressables.GetDownloadSizeAsync(downloadKeys).Completed += OnCheckDownload;
         Addressables.Release(handle);
     }
@@ -100,8 +96,9 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
 
     IEnumerator DownloadAssets() {
         string str = "";
-        for (int i = 0; i < downloadKeys.Count; i++) {
-            str += downloadKeys[i] + "; ";
+        foreach (var item in downloadKeys) {
+            str += "    ";
+            str += item.ToString();
         }
         Debug.Log("DownloadAssets " + str);
         downloadHandle = Addressables.DownloadDependenciesAsync(downloadKeys, Addressables.MergeMode.Union);
