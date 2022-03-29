@@ -389,16 +389,10 @@ insert into equip_uid ( eid, uid )
 				   (2, 1);
 insert into equip_uid ( eid, uid )
 				   values
-				   (4, 1);
-insert into equip_uid ( eid, uid )
-				   values
 				   (1, 2);
 insert into equip_uid ( eid, uid )
 				   values
-				   (1, 3);
-insert into equip_uid ( eid, uid )
-				   values
-				   (1, 4);                   
+				   (1, 3);                
 select eid from equip_uid where uid = 1;
 
 /*match class*/
