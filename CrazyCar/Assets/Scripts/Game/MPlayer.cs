@@ -50,7 +50,7 @@ public class MPlayer : MonoBehaviour, IController {
     private PathCreator pathCreator;
     private float playerHigh = 2f;
     private Coroutine speedUpCor;
-    private float turnoverOffset = 44;
+    private float turnoverOffset = 14;
     // 比赛中其他人速度
     private Vector3 curSpeed = new Vector3();
 
@@ -160,22 +160,9 @@ public class MPlayer : MonoBehaviour, IController {
 
     private bool IsTurnover {
         get {
-            float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-            var nor = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop);
-            float targetZ = (nor.eulerAngles.z + 90) % 360;
-            float z = transform.localRotation.eulerAngles.z;
-            
-            if (z < 0) {
-                z = 360 + z;
-            }
-
-            z = z % 360;
-
-            if (Mathf.Abs(z - targetZ) > 180) {
-                return (360 - Mathf.Abs(z - targetZ)) > turnoverOffset;
-            } else {
-                return Mathf.Abs(z - targetZ) > turnoverOffset;
-            }
+            float time = pathCreator.path.GetClosestTimeOnPath(transform.position);
+            Vector3 pathNor = pathCreator.path.GetNormal(time);
+            return Mathf.Abs(Util.GetAngle(pathNor, transform.up)) > (turnoverOffset + 90);
         }
     }
 
