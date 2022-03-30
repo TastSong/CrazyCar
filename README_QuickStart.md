@@ -94,13 +94,15 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 1. 安卓和PC都是直接点击**Window--> Build -->Local**，进行打版。(过程中会让你选择目标文件夹)
 
-2. IOS选择文件时，要确保文件夹下有**CrazyCarXCode**文件夹
+2. IOS选择文件时，要确保文件夹下有**CrazyCarXCode**文件夹，即选中的文件夹下需要有**CrazyCarXCode**子文件夹
 
    ```c#
     BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCarXCode"), BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
    ```
 
 3. 如果没有服务器，游戏支持单机模式，但是只能使用主功能，直接使用**File --> BuildSettings --> Build**即可
+
+3. 当然也可以直接去File -> Build ，使用系统打板。
 
 ## 添加装备
 
