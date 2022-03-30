@@ -35,7 +35,7 @@ public class Util {
 
 		// 数据库的用户名与密码，需要根据自己的设置
 		static final String USER = "root";
-		static final String PASS = "164728";
+		static final String PASS = "1647283556";
 
 		public static String executeSelectString(String sql, String key) {
 			//System.out.println("ExecuteSelect sql = " + sql);
