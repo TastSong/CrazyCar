@@ -61,7 +61,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 ### 五、安装MySQL
 
 1. 下载并安装[MySQL](https://dev.mysql.com/downloads/mysql/)
-2. 根据下载的版本，下载相关[JDBC](https://mvnrepository.com/artifact/mysql/mysql-connector-java)
+2. 根据下载的版本，下载相关[JDBC](https://mvnrepository.com/artifact/mysql/mysql-connector-java) （账户：root ；密码：1647283556）
 3. 将下载好的JAR包，一份复制到Eclipse中的Web项目下，并导入项目中；一份复制到Tomcat下的Lib文件夹
 4. 根据测试项目进行连接测试，[菜鸟教程](https://www.runoob.com/java/java-mysql-connect.html)
 
