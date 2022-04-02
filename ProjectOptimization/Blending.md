@@ -6,7 +6,7 @@
 
 在后续的绘制过程中，一次性提交整个合并模型的顶点数据，根据引擎的场景管理系统判断各个子模型的可见性。然后设置一次渲染状态，调用多次Draw call分别绘制每一个子模型。
 
-Static batching并**不减少Draw call的数量（**但是在编辑器时由于计算方法区别Draw call数量是会显示减少了的[[2\]](https://zhuanlan.zhihu.com/p/98642798#ref_2)），但是由于我们预先把所有的子模型的顶点变换到了世界空间下，所以在运行时cpu不需要再次执行顶点变换操作，节约了少量的计算资源，并且这些子模型共享材质，所以在多次Draw call调用之间并没有渲染状态的切换，渲染API（Command Buffer）会缓存绘制命令，起到了渲染优化的目的 。
+Static batching并**不减少Draw call的数量**（*但是在编辑器时由于计算方法区别Draw call数量是会显示减少了的*），但是由于我们预先把所有的子模型的顶点变换到了世界空间下，所以在运行时cpu不需要再次执行顶点变换操作，节约了少量的计算资源，并且这些子模型共享材质，所以在多次Draw call调用之间并没有渲染状态的切换，渲染API（Command Buffer）会缓存绘制命令，起到了渲染优化的目的 。
 
 `在每次调用Draw Call 之前， CPU 需要向GPU 发送很多内容，包括数据、状态和命令等。在这一阶段， CPU 需要完成很多工作，例如检查渲染状态等。而一旦CPU 完成了这些准备工作， GPU 就可以开始本次的渲染。GPU 的渲染能力是很强的，渲染200 个还是2 000 个三角网格通常没有什么区别，因此渲染速度往往快于CPU 提交命令的速度。如果Draw Call 的数量太多， CPU 就会把大量时间花费在提交Draw Call 上，造成CPU 的过载。`
 
@@ -25,7 +25,7 @@ Static batching并**不减少Draw call的数量（**但是在编辑器时由于�
 
 - **流程原理**
 
-![Draw call_static](.\Image\Draw call_static.jpg)
+![Draw call_static](./Image/Drawcall_static.jpg)
 
 ------
 
@@ -58,7 +58,7 @@ Dynamic batching在降低Draw call的同时会导致额外的CPU性能消耗，�
 
 - **流程原理**
 
-![Drawcall_D](.\Image\Drawcall_D.jpg)
+![Drawcall_D](./Image/Drawcall_D.jpg)
 
 ------
 
@@ -83,7 +83,7 @@ Dynamic batching在降低Draw call的同时会导致额外的CPU性能消耗，�
 
 - **流程原理**
 
-![Drewcall_GPU](.\Image\Drewcall_GPU.jpg)
+![Drewcall_GPU](./Image/Drewcall_GPU.jpg)
 
 ------
 
@@ -104,4 +104,4 @@ Dynamic batching在降低Draw call的同时会导致额外的CPU性能消耗，�
 
 - **流程原理**
 
-![Drewcall_SRP](.\Image\Drewcall_SRP.jpg)
+![Drewcall_SRP](./Image/Drewcall_SRP.jpg)
