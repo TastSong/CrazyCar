@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Utils;
 using System;
 using QFramework;
+using System.Collections.Generic;
 
 public enum ConfirmAlertType {
     Double = 0,
@@ -22,32 +23,70 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
     private Action success;
     private Action fail;
 
-    void Start() {
+    private class InfoConfirmInfo {
+        public string title;
+        public string content;
+        public Action succ;
+        public Action fail;
+        public string confirmText;
+        public string cancelText;
+        public ConfirmAlertType type;
+
+        public InfoConfirmInfo(string title = "Tips", string content = "", Action success = null, Action fail = null,
+        string confirmText = "Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
+            this.title = title;
+            this.content = content;
+            this.succ = success;
+            this.fail = fail;
+            this.confirmText = confirmText;
+            this.cancelText = cancelText;
+            this.type = type;
+        }
+    }
+    private Queue<InfoConfirmInfo> queue = new Queue<InfoConfirmInfo>();
+
+    private void Start() {
         cancelBtn.onClick.AddListener(() => {
             fail?.Invoke();
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            gameObject.SetActive(false);
+            if (queue.Count == 0) {
+                gameObject.SetActive(false);
+            } else {
+                UpdateUI(queue.Dequeue());
+            }
         });
+
         confirmBtn.onClick.AddListener(() => {
             success?.Invoke();
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            gameObject.SetActive(false);
+            if (queue.Count == 0) {
+                gameObject.SetActive(false);
+            } else {
+                UpdateUI(queue.Dequeue());
+            }
         });
     }
 
     public void ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
         string confirmText ="Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
-        contentText.text = content;
-        contentText.text = content;
-        gameObject.SetActiveFast(true);
-        this.success = success;
-        this.fail = fail;
-        cancelBtn.gameObject.SetActive(type == ConfirmAlertType.Double && fail != null);
-
-        this.confirmText.text = GetI18NText("Confirm", confirmText);
-        this.cancelText.text = GetI18NText("Cancel", cancelText);
-        titleText.text = GetI18NText("Tips", title);
+        InfoConfirmInfo info = new InfoConfirmInfo(title: title, content: content, success: success, fail: fail, confirmText: confirmText, cancelText: cancelText, type: type);
+        queue.Enqueue(info);
+        if (!gameObject.activeInHierarchy) {
+            UpdateUI(queue.Dequeue());
+        }       
         return;
+    }
+
+    private void UpdateUI(InfoConfirmInfo info) {
+        gameObject.SetActiveFast(true);
+
+        contentText.text = info.content;
+        this.success = info.succ;
+        this.fail = info.fail;
+        cancelBtn.gameObject.SetActive(info.type == ConfirmAlertType.Double && fail != null);
+        this.confirmText.text = GetI18NText("Confirm", info.confirmText);
+        this.cancelText.text = GetI18NText("Cancel", info.cancelText);
+        titleText.text = GetI18NText("Tips", info.title);
     }
 
     public string GetI18NText(string normalText, string showText) {
