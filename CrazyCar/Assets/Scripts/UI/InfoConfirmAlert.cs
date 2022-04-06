@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Utils;
 using System;
 using QFramework;
+using System.Collections.Generic;
 
 public enum ConfirmAlertType {
     Double = 0,
@@ -18,49 +19,74 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
     public Button confirmBtn;
     public Text confirmText;
     public Text cancelText;
-    //public Image Bg;
 
     private Action success;
     private Action fail;
-    private int dialogID = 0;
 
-    void Start() {
+    private class InfoConfirmInfo {
+        public string title;
+        public string content;
+        public Action succ;
+        public Action fail;
+        public string confirmText;
+        public string cancelText;
+        public ConfirmAlertType type;
+
+        public InfoConfirmInfo(string title = "Tips", string content = "", Action success = null, Action fail = null,
+        string confirmText = "Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
+            this.title = title;
+            this.content = content;
+            this.succ = success;
+            this.fail = fail;
+            this.confirmText = confirmText;
+            this.cancelText = cancelText;
+            this.type = type;
+        }
+    }
+    private Queue<InfoConfirmInfo> queue = new Queue<InfoConfirmInfo>();
+
+    private void Start() {
         cancelBtn.onClick.AddListener(() => {
             fail?.Invoke();
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            gameObject.SetActive(false);
+            if (queue.Count == 0) {
+                gameObject.SetActive(false);
+            } else {
+                UpdateUI(queue.Dequeue());
+            }
         });
+
         confirmBtn.onClick.AddListener(() => {
             success?.Invoke();
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            gameObject.SetActive(false);
+            if (queue.Count == 0) {
+                gameObject.SetActive(false);
+            } else {
+                UpdateUI(queue.Dequeue());
+            }
         });
     }
 
-    public int ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
+    public void ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
         string confirmText ="Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
-        if (SceneManager.GetActiveScene().buildIndex == (int)SceneID.Loading) {
-            // 在场景正在loading时 延迟加载
-            CoroutineController.manager.StartCoroutine(DelayShow(title, content, success, fail, confirmText, cancelText, type));
-            return 0;
-        }
-        contentText.text = content;
-        if (content == "") {
-            Debug.LogError("没内容弹啥弹窗！！！！！！！！！！！！！！！！");
-        }
-        contentText.text = content;
-        gameObject.SetActiveFast(true);
-        this.success = success;
-        this.fail = fail;
-        cancelBtn.gameObject.SetActive(type == ConfirmAlertType.Double && fail != null);
+        InfoConfirmInfo info = new InfoConfirmInfo(title: title, content: content, success: success, fail: fail, confirmText: confirmText, cancelText: cancelText, type: type);
+        queue.Enqueue(info);
+        if (!gameObject.activeInHierarchy) {
+            UpdateUI(queue.Dequeue());
+        }       
+        return;
+    }
 
-        this.confirmText.text = GetI18NText("Confirm", confirmText);
-        this.cancelText.text = GetI18NText("Cancel", cancelText);
-        titleText.text = GetI18NText("Tips", title);
-        //Bg.rectTransform.sizeDelta = new Vector2(Bg.rectTransform.sizeDelta.x, bgHeight);
-        dialogID += 1;
-        dialogID %= 25535;
-        return dialogID;
+    private void UpdateUI(InfoConfirmInfo info) {
+        gameObject.SetActiveFast(true);
+
+        contentText.text = info.content;
+        this.success = info.succ;
+        this.fail = info.fail;
+        cancelBtn.gameObject.SetActive(info.type == ConfirmAlertType.Double && fail != null);
+        this.confirmText.text = GetI18NText("Confirm", info.confirmText);
+        this.cancelText.text = GetI18NText("Cancel", info.cancelText);
+        titleText.text = GetI18NText("Tips", info.title);
     }
 
     public string GetI18NText(string normalText, string showText) {
@@ -75,18 +101,6 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
         }
     }
 
-    // 延迟出现Alert
-    private IEnumerator DelayShow(string title, string content, Action success, Action fail,
-        string confirmText, string cancelText, ConfirmAlertType type) {
-        yield return new WaitForSeconds(0.5f);
-        ShowWithText(title, content, success, fail, confirmText, cancelText, type);
-    }
-
-    public void Close(int id) {
-        if (dialogID == id) {
-            gameObject.SetActiveFast(false);
-        }
-    }
 
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
