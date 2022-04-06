@@ -104,6 +104,7 @@
 8. [Path-Creator: Path creation asset for Unity game development ](https://github.com/SebLague/Path-Creator)
 10. [AudioKit](https://github.com/liangxiegame/AudioKit)
 10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
+10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
 
 
 ## License
