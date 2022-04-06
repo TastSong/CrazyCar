@@ -451,7 +451,6 @@ namespace Utils {
             // b 到 a 的夹角
             float sign = Mathf.Sign(Vector3.Dot(c.normalized, Vector3.Cross(a.normalized, b.normalized)));
             float signed_angle = angle * sign;
-            Debug.Log("b -> a :" + signed_angle + " ; a " + a + " b " + b);
             return signed_angle;
         }
     }
