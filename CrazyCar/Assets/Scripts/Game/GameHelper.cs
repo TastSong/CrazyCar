@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using Utils;
+using QFramework;
 
-public class GameHelper : MonoBehaviour {
+public class GameHelper : MonoBehaviour, IController {
 	#region Log
 	public KeyCode toggleKey = KeyCode.BackQuote;
 	public bool openOnStart = false;
@@ -80,6 +82,34 @@ public class GameHelper : MonoBehaviour {
 				if (showAllBtn) {
 					if (GUILayout.Button("Show", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
 						SetLogPanelStatus(true);
+					}
+
+					if (GUILayout.Button("上传本次记录", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
+						// SetLogPanelStatus(true);
+						var targetDir = Path.Combine(Application.persistentDataPath, this.GetModel<IUserModel>().Uid.ToString());
+						if (!Directory.Exists(targetDir)) {
+							Directory.CreateDirectory(targetDir);
+						}
+
+						var d = DateTime.Now;
+						var fileName = "MATCH_LOG_FILE"
+							+ this.GetModel<IUserModel>().Uid + "-"
+							+ this.GetModel<IUserModel>().Name + "-"
+							+ d.ToString("yyyy-MM-dd-HH-mm-ss") + ".txt";
+						var FullName = Path.Combine(targetDir, fileName);
+
+						using (StreamWriter f = new StreamWriter(FullName)) {
+							foreach (var l in logs) {
+								f.WriteLine(l.type);
+								f.WriteLine(l.message);
+								f.WriteLine(l.stackTrace);
+							}
+						}
+
+						NativeShare s = new NativeShare();
+						s.AddFile(FullName);
+						s.Share();
+
 					}
 				}
 				showAllBtn = GUILayout.Toggle(showAllBtn, "    Show All Btn");
@@ -230,7 +260,11 @@ public class GameHelper : MonoBehaviour {
 		};
 		queuedLogs.Enqueue(log);
 	}
-	/************************************* Log ****************************************/
+
+    public IArchitecture GetArchitecture() {
+		return CrazyCar.Interface;
+    }
+    /************************************* Log ****************************************/
 }
 
 public class LogInfo {
