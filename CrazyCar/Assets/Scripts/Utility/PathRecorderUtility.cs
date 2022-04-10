@@ -24,6 +24,8 @@ public static class RequestUrl {
     public static string createMatchUrl = "CreateMatch";
     public static string kcpServerUrl = "KCPRttServer";
     public static string enterRoomUrl = "EnterRoom";
+
+    public static string aiUrl = "AI";
 }
 
 public static class PrefKeys {

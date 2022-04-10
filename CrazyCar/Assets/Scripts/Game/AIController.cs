@@ -4,6 +4,7 @@ using UnityEngine;
 using QFramework;
 using PathCreation;
 using Utils;
+using LitJson;
 
 public class AIInfo{
     public int id;
@@ -11,10 +12,15 @@ public class AIInfo{
     public float startMoveTime;
     public bool isStartGame = false;
     public Vector3 startPos;  
-    public float speed;
     public PathCreator pathCreator;  
     public float distanceTravelled = 0;
     public MPlayer mPlayer;
+    
+    public void InitAI(float startMoveTime, Vector3 startPos, PathCreator pathCreator){
+        this.startMoveTime = startMoveTime;
+        this.startPos = startPos;
+        this.pathCreator = pathCreator;
+    }
 }
 
 public class AIController : MonoBehaviour, IController {
@@ -27,15 +33,22 @@ public class AIController : MonoBehaviour, IController {
         this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
     }
 
+    private UserInfo GetUserInfo()
+    {
+        UserInfo userInfo = new UserInfo();
+        TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.aiUrl);
+        userInfo = JsonMapper.ToObject<UserInfo>(ta.text);
+        return userInfo;
+    }
+
     private void OnMakeAIPlayer(MakeAIPlayerEvent e)
     {
         AIInfo aiInfo = new AIInfo();
         aiInfo.id = id++;
-        aiInfo.userInfo = e.aiInfo.userInfo;
+        aiInfo.userInfo = GetUserInfo();
         aiInfo.startMoveTime = e.aiInfo.startMoveTime;
         aiInfo.isStartGame = e.aiInfo.isStartGame;
         aiInfo.startPos = e.aiInfo.startPos;
-        aiInfo.speed = e.aiInfo.speed;
         aiInfo.pathCreator = e.aiInfo.pathCreator;
         aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
         aiInfo.mPlayer.transform.SetParent(transform, false);
@@ -56,7 +69,7 @@ public class AIController : MonoBehaviour, IController {
         {
             if (item.Value.isStartGame)
             {
-                item.Value.distanceTravelled += item.Value.speed * Time.deltaTime;
+                item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
                 item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
                 item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + new Vector3(0, 0, 90));
             }
