@@ -50,6 +50,14 @@
 
 :hammer:游戏采用QFramework，易于扩展
 
+:foggy:使用URP渲染管线
+
+:blue_book:资源热更新方式为Addressable
+
+:video_game:采用Unity新版本Input System，支持多款手柄
+
+:alien:机器人
+
 :sunrise: 支持头像和装备的资源热更新
 
 :rocket:  登录页面可以一键切换单机模式 
@@ -62,7 +70,7 @@
 
 :page_facing_up:  个人信息页面，记录个人成就
 
-:video_game:  计时赛和多人比赛两种竞技模式
+:gemini: 计时赛和多人比赛两种竞技模式
 
 :roller_coaster: 路线规划功能，自定义路线
 

@@ -51,19 +51,27 @@
 
 :hammer:The game uses QFramework, easy to expand
 
+:foggy:Using the URP Render Pipeline
+
+:blue_book:The resource hot update method is Addressable
+
+:video_game:Adopt Unity's new version of Input System, support a variety of controllers
+
+:alien:Robot
+
 :sunrise: Support avatar and equipment resource hot update
 
-:rocket:  On the login page, you can switch the single-machine mode with one click
+:rocket: On the login page, you can switch the single-machine mode with one click
 
-:car:  You can buy and wear avatars and racing cars
+:car: You can buy and wear avatars and racing cars
 
 :computer: You can use this client on **Windows**、 **Android** and** IOS** devices
 
-:earth_asia:  Support for multiple languag,Multiple languages can be created in one click with **translateeditor. cs**
+:earth_asia: Support for multiple languag,Multiple languages can be created in one click with **translateeditor. cs**
 
-:page_facing_up:  Personal information page, record personal achievements
+:page_facing_up: Personal information page, record personal achievements
 
-:video_game:  Time trial and multiplayer competition two modes
+:gemini:Time trial and multiplayer competition two modes
 
 :roller_coaster: Route planning function, custom route
 
