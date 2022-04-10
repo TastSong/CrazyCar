@@ -1,0 +1,75 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using QFramework;
+using PathCreation;
+using Utils;
+
+public class AIInfo{
+    public int id;
+    public UserInfo userInfo;
+    public float startMoveTime;
+    public bool isStartGame = false;
+    public Vector3 startPos;  
+    public float speed;
+    public PathCreator pathCreator;  
+    public float distanceTravelled = 0;
+    public MPlayer mPlayer;
+}
+
+public class AIController : MonoBehaviour, IController {
+    public MPlayer mPlayerPrefab;
+    private int id = 0;
+    private Dictionary<int, AIInfo> aiInfoDic = new Dictionary<int, AIInfo>();
+
+    private void Start()
+    {
+        this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
+    }
+
+    private void OnMakeAIPlayer(MakeAIPlayerEvent e)
+    {
+        AIInfo aiInfo = new AIInfo();
+        aiInfo.id = id++;
+        aiInfo.userInfo = e.aiInfo.userInfo;
+        aiInfo.startMoveTime = e.aiInfo.startMoveTime;
+        aiInfo.isStartGame = e.aiInfo.isStartGame;
+        aiInfo.startPos = e.aiInfo.startPos;
+        aiInfo.speed = e.aiInfo.speed;
+        aiInfo.pathCreator = e.aiInfo.pathCreator;
+        aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
+        aiInfo.mPlayer.transform.SetParent(transform, false);
+        aiInfo.mPlayer.userInfo = e.aiInfo.userInfo;
+        aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
+            aiInfo.userInfo.equipInfo.rid);
+        aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);
+        aiInfoDic.Add(aiInfo.id, aiInfo);
+
+        Util.DelayExecuteWithSecond(aiInfo.startMoveTime, () => {
+            aiInfoDic[aiInfo.id].isStartGame = true;
+        });
+    }
+
+    private void Update() {
+        
+        foreach (var item in aiInfoDic)
+        {
+            if (item.Value.isStartGame)
+            {
+                item.Value.distanceTravelled += item.Value.speed * Time.deltaTime;
+                item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
+                item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + new Vector3(0, 0, 90));
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        this.UnRegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return CrazyCar.Interface;
+    }
+}
