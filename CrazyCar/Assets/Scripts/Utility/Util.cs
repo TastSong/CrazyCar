@@ -453,5 +453,7 @@ namespace Utils {
             float signed_angle = angle * sign;
             return signed_angle;
         }
+
+        public static Vector3 pathRotateOffset = new Vector3(0, 0, 90);
     }
 }

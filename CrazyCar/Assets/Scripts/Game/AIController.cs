@@ -71,7 +71,7 @@ public class AIController : MonoBehaviour, IController {
             {
                 item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
                 item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
-                item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + new Vector3(0, 0, 90));
+                item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + Util.pathRotateOffset);
             }
         }
     }

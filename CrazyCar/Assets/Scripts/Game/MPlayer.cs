@@ -173,7 +173,7 @@ public class MPlayer : MonoBehaviour, IController {
         transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
         rotationStream = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
-                 new Vector3(0, 0, 90));
+                 Util.pathRotateOffset);
     }
 
 

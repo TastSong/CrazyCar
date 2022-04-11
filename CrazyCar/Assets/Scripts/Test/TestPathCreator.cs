@@ -30,7 +30,7 @@ public class TestPathCreator : MonoBehaviour {
         //if (Input.GetKeyDown(KeyCode.A) && IsTurnover()) {
         //    float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
         //    transform.rotation = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
-        //         new Vector3(0, 0, 90));
+        //         Util.pathRotateOffset);
         //}
     }
 
