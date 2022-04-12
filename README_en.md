@@ -111,9 +111,9 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 8. [UnityNativeShare: A Unity plugin to natively share files ](https://github.com/yasirkula/UnityNativeShare)
 8. [Path-Creator: Path creation asset for Unity game development ](https://github.com/SebLague/Path-Creator)
-10. [AudioKit](https://github.com/liangxiegame/AudioKit)
-10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
-10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
+10. [AudioKit](https://github.com/liangxiegame/AudioKit)：Audio control plug-in
+10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)：Mesh Merge
+10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)：Automatically generate lower Mesh and generate LOD
 
 
 ## License

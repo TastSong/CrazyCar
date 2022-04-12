@@ -110,9 +110,9 @@
 6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 8. [UnityNativeShare: A Unity plugin to natively share files ](https://github.com/yasirkula/UnityNativeShare)
 8. [Path-Creator: Path creation asset for Unity game development ](https://github.com/SebLague/Path-Creator)
-10. [AudioKit](https://github.com/liangxiegame/AudioKit)
-10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
-10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
+10. [AudioKit](https://github.com/liangxiegame/AudioKit)：音频控制插件
+10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)：Mesh合并
+10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)：自动生成降低Mesh并生成LOD
 
 
 ## License
