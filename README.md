@@ -97,9 +97,21 @@
 
 
 ## 贡献
-我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 
+我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 ’
 
-## Reference
+## 项目优化
+
+### 优化方案总览
+
+[详细文档地址](./ProjectOptimization/ProjectOptimization.md)
+
+### 已完成的优化
+
+1. 动态合批、静态合批、手动合批、GPU Instancing、SRP Batcher，[方案地址](./ProjectOptimization/Blending.md)
+2. LOD，[方案地址](./ProjectOptimization/LOD.md)
+3. Mipmap，[方案地址](./ProjectOptimization/Mipmap.md)
+
+## 引用
 
 1. [UnityWebSocket: The Best Unity WebSocket Plugin for All Platforms. ](https://github.com/psygames/UnityWebSocket)
 2. [QFramework: Unity3D System Design Architecture ](https://github.com/liangxiegame/QFramework)
@@ -110,11 +122,11 @@
 6. [UIEffect: UIEffect is an effect component for uGUI element in Unity](https://github.com/mob-sakai/UIEffect)
 8. [UnityNativeShare: A Unity plugin to natively share files ](https://github.com/yasirkula/UnityNativeShare)
 8. [Path-Creator: Path creation asset for Unity game development ](https://github.com/SebLague/Path-Creator)
-10. [AudioKit](https://github.com/liangxiegame/AudioKit)：音频控制插件
-10. [Same Material - Static Mesh Combiner ](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)：Mesh合并
-10. [AutoLOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)：自动生成降低Mesh并生成LOD
+10. [AudioKit：音频控制插件](https://github.com/liangxiegame/AudioKit)
+10. [Same Material - Static Mesh Combiner ：Mesh合并](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
+10. [AutoLOD：自动生成降低Mesh并生成LOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
 
 
-## License
+## 证书
 [MIT](https://github.com/TastSong/CrazyCar/blob/master/LICENSE)
 
