@@ -40,3 +40,7 @@ public class LODExample : MonoBehaviour {
 ### 四、使用LOD的注意事项：
 
 ​		只有最高层次细节的模型才会参与静态光照的烘焙，如果我们希望细节程度较低的模型看起来也正常，需要在周围放置Light Probe Group 即光照探针，以获取烘焙过程中的间接光照。
+
+### 五、工具推荐
+
+使用[AutoLOD](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)进行自动生成简模
