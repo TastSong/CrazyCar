@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Runtime.InteropServices;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
@@ -10,14 +11,17 @@ public class AIInfo{
     public int id;
     public UserInfo userInfo;
     public float startMoveTime;
+    public int needPassTimes;
+    public bool isFinishGame = false;
     public bool isStartGame = false;
     public Vector3 startPos;  
     public PathCreator pathCreator;  
     public float distanceTravelled = 0;
     public MPlayer mPlayer;
     
-    public void InitAI(float startMoveTime, Vector3 startPos, PathCreator pathCreator){
+    public void InitAI(float startMoveTime, int needPassTimes, Vector3 startPos, PathCreator pathCreator){
         this.startMoveTime = startMoveTime;
+        this.needPassTimes = needPassTimes;
         this.startPos = startPos;
         this.pathCreator = pathCreator;
     }
@@ -47,6 +51,7 @@ public class AIController : MonoBehaviour, IController {
         aiInfo.id = id++;
         aiInfo.userInfo = GetUserInfo();
         aiInfo.startMoveTime = e.aiInfo.startMoveTime;
+        aiInfo.needPassTimes = e.aiInfo.needPassTimes;
         aiInfo.isStartGame = e.aiInfo.isStartGame;
         aiInfo.startPos = e.aiInfo.startPos;
         aiInfo.pathCreator = e.aiInfo.pathCreator;
@@ -68,10 +73,18 @@ public class AIController : MonoBehaviour, IController {
         foreach (var item in aiInfoDic)
         {
             if (item.Value.isStartGame)
-            {
-                item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
-                item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
-                item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + Util.pathRotateOffset);
+            {    
+                if (item.Value.isFinishGame){
+                    break;
+                }           
+                if (item.Value.needPassTimes == item.Value.mPlayer.passEndSignTimes){
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("AI玩家" + item.Value.userInfo.name + "获胜"); 
+                    item.Value.isFinishGame = true;       
+                } else{
+                    item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
+                    item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
+                    item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + Util.pathRotateOffset);
+                }
             }
         }
     }

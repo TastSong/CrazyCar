@@ -38,7 +38,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
 
     private void MakeAI(){
         AIInfo aiInfo = new AIInfo();
-        aiInfo.InitAI(3, this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), this.GetModel<IMapControllerModel>().PathCreator);
+        aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), this.GetModel<IMapControllerModel>().PathCreator);
         this.SendCommand<MakeAIPlayerCommand>(new MakeAIPlayerCommand(aiInfo));
     }
 

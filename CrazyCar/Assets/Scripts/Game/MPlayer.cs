@@ -54,6 +54,9 @@ public class MPlayer : MonoBehaviour, IController {
     // 比赛中其他人速度
     private Vector3 curSpeed = new Vector3();
 
+    // 记录通过拱门的次数
+    public int passEndSignTimes = 0;
+
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
@@ -321,6 +324,12 @@ public class MPlayer : MonoBehaviour, IController {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
         gravity = userInfo.equipInfo.mass;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "EndSign") {
+            passEndSignTimes++;
+        }
     }
 
     public void DestroySelf() {
