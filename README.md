@@ -125,6 +125,7 @@
 10. [AudioKit：音频控制插件](https://github.com/liangxiegame/AudioKit)
 10. [Same Material - Static Mesh Combiner ：Mesh合并](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
 10. [AutoLOD：自动生成降低Mesh并生成LOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
+10. [UniTask: Provides an efficient allocation free async/await integration for Unity.](https://github.com/Cysharp/UniTask)
 
 
 ## 证书
