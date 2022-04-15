@@ -26,7 +26,25 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 7. Tomcat 8.0.52
 8. Nginx  1.20.1
 
-## 服务器环境配置
+## 环境配置
+
+* 服务器配置流程（windows）
+
+  ```mermaid
+  graph LR
+  start-->购买服务器-->配置Java环境-->配置Web服务器(Tomcat)-->配置Mysql
+  ```
+
+  
+
+* 客户端配置流程（Windows/Mac）
+
+  ```mermaid
+  graph LR
+  start-->配置Java环境-->配置Web服务器(Tomcat)-->配置Mysql-->安装Unity-->安装Eclipsep_使用VScode也可以
+  ```
+
+  
 
 ### 一、配置服务器基本属性
 
