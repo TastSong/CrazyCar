@@ -79,8 +79,13 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
             if (lastRecvStatusStamp != preRecStatusStamp) {
-                transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
-                preRecStatusStamp = lastRecvStatusStamp;
+                if (IsOutside || IsTurnover) {
+                    Debug.Log("++++++ reset peer");
+                    ResetPeerCar();
+                } else {
+                    transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+                    preRecStatusStamp = lastRecvStatusStamp;
+                }               
             }
             rig.velocity = curSpeed;
 
@@ -109,11 +114,11 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (IsOutside) {
             Debug.Log("++++++ IsOutside ");
-            ResetCar();
+            ResetSelfCar();
         } 
         if (IsTurnover) {
             Debug.Log("++++++ IsTurnover " );
-            ResetCar();
+            ResetSelfCar();
         }
     }
 
@@ -169,7 +174,14 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    private void ResetCar() {
+    private void ResetPeerCar() {
+        transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
+        float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
+        transform.rotation = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
+                 Util.pathRotateOffset);
+    }
+
+    private void ResetSelfCar() {
         StopSpeedUp();
         currentForce = 0;
         rig.velocity = Vector3.zero;
