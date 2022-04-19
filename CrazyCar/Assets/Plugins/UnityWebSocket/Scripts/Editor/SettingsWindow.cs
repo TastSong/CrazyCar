@@ -8,10 +8,8 @@ namespace UnityWebSocket.Editor
 {
     internal class SettingsWindow : EditorWindow
     {
-        internal static readonly int[] ASM_MEMORY_SIZE = new int[] { 256, 512, 1024 };
-        internal static readonly int[] LINKER_TARGET = new int[] { 0, 2 };
         static SettingsWindow window = null;
-        [MenuItem("Tools/UnityWebSocket/Preferences...", priority = 100)]
+        [MenuItem("Tools/UnityWebSocket", priority = 100)]
         internal static void Open()
         {
             if (window != null)
@@ -30,23 +28,26 @@ namespace UnityWebSocket.Editor
             DrawLogo();
             DrawVersion();
             DrawSeparator(80);
-            DrawFixSettings();
-            DrawMemorySelector();
-            DrawLinkerTargetSelector();
             DrawSeparator(186);
             DrawHelper();
             DrawFooter();
         }
 
+        Texture2D logoTex = null;
         private void DrawLogo()
         {
-            var logo = new Texture2D(1200, 1200);
-            logo.LoadImage(Convert.FromBase64String(LOGO_BASE64.VALUE));
-            var logoPos = new Rect(10, 10, 66, 66);
-            GUI.DrawTexture(logoPos, logo);
+            if (logoTex == null)
+            {
+                logoTex = new Texture2D(66, 66);
+                logoTex.LoadImage(Convert.FromBase64String(LOGO_BASE64.VALUE));
+                for (int i = 0; i < 66; i++) for (int j = 0; j < 15; j++) logoTex.SetPixel(i, j, Color.clear);
+                logoTex.Apply();
+            }
 
+            var logoPos = new Rect(10, 10, 66, 66);
+            GUI.DrawTexture(logoPos, logoTex);
             var title = "<color=#3A9AD8><b>UnityWebSocket</b></color>";
-            var titlePos = new Rect(80, 28, 500, 50);
+            var titlePos = new Rect(80, 20, 500, 50);
             GUI.Label(titlePos, title, TextStyle(24));
         }
 
@@ -100,11 +101,11 @@ namespace UnityWebSocket.Editor
 
         private void ShowUpdateDialog()
         {
-            var code = EditorUtility.DisplayDialog("UnityWebSocket",
+            var isOK = EditorUtility.DisplayDialog("UnityWebSocket",
                 "Update UnityWebSocket now?\n" + changeLog,
                 "Update Now", "Cancel");
 
-            if (code)
+            if (isOK)
             {
                 UpdateVersion();
             }
@@ -112,119 +113,7 @@ namespace UnityWebSocket.Editor
 
         private void UpdateVersion()
         {
-            var packagePath = Path.Combine(Application.dataPath, "../Packages/manifest.json");
-            if (File.Exists(packagePath))
-            {
-                var txt = File.ReadAllText(packagePath);
-                // via git
-                var index = txt.IndexOf("\"" + Settings.PACKAGE_NAME + "\": \"" + Settings.GITHUB + ".git");
-                if (index != -1)
-                {
-                    var end_index = txt.IndexOf("\"", index + 1);
-                    end_index = txt.IndexOf("\"", end_index + 1);
-                    end_index = txt.IndexOf("\"", end_index + 1);
-                    var old_str = txt.Substring(index, end_index - index + 1);
-                    var new_str = string.Format("\"{0}\": \"{1}#{2}\"", Settings.PACKAGE_NAME, Settings.UPM_URL, latestVersion);
-                    txt = txt.Replace(old_str, new_str);
-                    File.WriteAllText(packagePath, txt);
-                    AssetDatabase.Refresh();
-                    return;
-                }
-            }
-
-            // via releases
             Application.OpenURL(Settings.GITHUB + "/releases");
-        }
-
-        private void DrawMemorySelector()
-        {
-            var ms_index = -1;
-            var memoryArrayStr = new string[ASM_MEMORY_SIZE.Length];
-            for (int i = 0; i < ASM_MEMORY_SIZE.Length; i++)
-            {
-                if (ASM_MEMORY_SIZE[i] == PlayerSettings.WebGL.memorySize)
-                    ms_index = i;
-                memoryArrayStr[i] = ASM_MEMORY_SIZE[i].ToString();
-            }
-            GUI.Label(new Rect(330, 90, 100, 18), "Memory Size:", TextStyle(10, TextAnchor.MiddleRight));
-            ms_index = EditorGUI.Popup(new Rect(440, 90, 150, 18), ms_index, memoryArrayStr);
-            if (ms_index >= 0 && ASM_MEMORY_SIZE[ms_index] != PlayerSettings.WebGL.memorySize)
-            {
-                PlayerSettings.WebGL.memorySize = ASM_MEMORY_SIZE[ms_index];
-            }
-        }
-
-        private void DrawLinkerTargetSelector()
-        {
-            var _index = -1;
-            var lstStr = new string[LINKER_TARGET.Length];
-            for (int i = 0; i < LINKER_TARGET.Length; i++)
-            {
-                if (LINKER_TARGET[i] == (int)PlayerSettings.WebGL.linkerTarget)
-                    _index = i;
-                lstStr[i] = ((WebGLLinkerTarget)LINKER_TARGET[i]).ToString();
-            }
-            GUI.Label(new Rect(330, 110, 100, 18), "Linker Target:", TextStyle(10, TextAnchor.MiddleRight));
-            _index = EditorGUI.Popup(new Rect(440, 110, 150, 18), _index, lstStr);
-            if (_index >= 0 && LINKER_TARGET[_index] != (int)PlayerSettings.WebGL.linkerTarget)
-            {
-                PlayerSettings.WebGL.linkerTarget = (WebGLLinkerTarget)LINKER_TARGET[_index];
-            }
-        }
-
-        private void DrawFixSettings()
-        {
-            bool isLinkTargetFixed;
-            bool isMemorySizeFixed;
-            bool isDecompressionFallbackFixed;
-            PlayerSettingsChecker.GetSettingsFixed(out isLinkTargetFixed, out isMemorySizeFixed, out isDecompressionFallbackFixed);
-            bool isAllFixed = isLinkTargetFixed && isMemorySizeFixed && isDecompressionFallbackFixed;
-            if (isAllFixed)
-            {
-                var str = "All Settings Fixed:";
-                str += "\n√  PlayerSettings.WebGL.linkerTarget = " + PlayerSettings.WebGL.linkerTarget + ";";
-                str += "\n√  PlayerSettings.WebGL.memorySize = " + PlayerSettings.WebGL.memorySize + ";";
-                str += "\n√  PlayerSettings.WebGL.decompressionFallback = true;";
-                EditorGUI.HelpBox(new Rect(10, 90, 330, 86), str, MessageType.Info);
-                GUI.enabled = false;
-                GUI.Button(new Rect(440, 158, 150, 18), "All Fixed");
-                GUI.enabled = true;
-                return;
-            }
-
-            var fixStr = "In order to run UnityWebSocket normally, we must fix some SETTINGS below:";
-            if (isLinkTargetFixed)
-                fixStr += "\n√  PlayerSettings.WebGL.linkerTarget = " + PlayerSettings.WebGL.linkerTarget + ";";
-            else
-                fixStr += "\n×  PlayerSettings.WebGL.linkerTarget = [Appropriate Value];";
-
-            if (isMemorySizeFixed)
-                fixStr += "\n√  PlayerSettings.WebGL.memorySize = " + PlayerSettings.WebGL.memorySize + ";";
-            else
-                fixStr += "\n×  PlayerSettings.WebGL.memorySize = [Appropriate Value];";
-
-            if (isDecompressionFallbackFixed)
-                fixStr += "\n√  PlayerSettings.WebGL.decompressionFallback = true;";
-            else
-                fixStr += "\n×  PlayerSettings.WebGL.decompressionFallback = false;";
-
-            EditorGUI.HelpBox(new Rect(10, 90, 330, 86), fixStr, MessageType.Warning);
-
-            if (GUI.Button(new Rect(440, 158, 150, 18), "Auto Fix"))
-            {
-#if UNITY_2018_1_OR_NEWER
-                if (!isLinkTargetFixed)
-                    PlayerSettings.WebGL.linkerTarget = (WebGLLinkerTarget)2;
-#endif
-
-                if (!isMemorySizeFixed)
-                    PlayerSettings.WebGL.memorySize = ASM_MEMORY_SIZE[0];
-
-#if UNITY_2020_1_OR_NEWER
-                if (!isDecompressionFallbackFixed)
-                    PlayerSettings.WebGL.decompressionFallback = true;
-#endif
-            }
         }
 
         private void DrawHelper()
@@ -244,7 +133,7 @@ namespace UnityWebSocket.Editor
             GUI.Label(new Rect(330, 250, 100, 18), "Email:", TextStyle(10, TextAnchor.MiddleRight));
             if (GUI.Button(new Rect(440, 250, 150, 18), Settings.EMAIL))
             {
-                var uri = new System.Uri(string.Format("mailto:{0}?subject={1}", Settings.EMAIL, "UnityWebSocket Feedback"));
+                var uri = new Uri(string.Format("mailto:{0}?subject={1}", Settings.EMAIL, "UnityWebSocket Feedback"));
                 Application.OpenURL(uri.AbsoluteUri);
             }
 
@@ -266,15 +155,16 @@ namespace UnityWebSocket.Editor
         string latestVersion = "";
         void BeginCheck()
         {
-            req = UnityWebRequest.Get(Settings.GITHUB + "/releases/latest");
             EditorApplication.update -= VersionCheckUpdate;
             EditorApplication.update += VersionCheckUpdate;
+
+            req = UnityWebRequest.Get(Settings.GITHUB + "/releases/latest");
             req.SendWebRequest();
         }
 
         private void VersionCheckUpdate()
         {
-#if UNITY_2021_1_OR_NEWER
+#if UNITY_2020_3_OR_NEWER
             if (req == null
                 || req.result == UnityWebRequest.Result.ConnectionError
                 || req.result == UnityWebRequest.Result.DataProcessingError
@@ -313,61 +203,6 @@ namespace UnityWebSocket.Editor
                 Repaint();
             }
         }
-    }
-
-
-    internal static class PlayerSettingsChecker
-    {
-        [InitializeOnLoadMethod]
-        internal static void OnInit()
-        {
-            bool isLinkTargetFixed;
-            bool isMemorySizeFixed;
-            bool isDecompressionFallbackFixed;
-            GetSettingsFixed(out isLinkTargetFixed, out isMemorySizeFixed, out isDecompressionFallbackFixed);
-            bool isAllFixed = isLinkTargetFixed && isMemorySizeFixed && isDecompressionFallbackFixed;
-
-            if (!isAllFixed)
-            {
-                EditorApplication.update -= DelayOpenWindow;
-                EditorApplication.update += DelayOpenWindow;
-            }
-        }
-
-        private static void DelayOpenWindow()
-        {
-            EditorApplication.update -= DelayOpenWindow;
-            //SettingsWindow.Open();
-        }
-
-
-        internal static bool _IsInArray(int[] array, int val)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (val == array[i])
-                    return true;
-            }
-            return false;
-        }
-
-        internal static void GetSettingsFixed(out bool isLinkTargetFixed, out bool isMemorySizeFixed, out bool isDecompressionFallbackFixed)
-        {
-            isLinkTargetFixed = true;
-            isMemorySizeFixed = true;
-            isDecompressionFallbackFixed = true;
-
-#if UNITY_2018_1_OR_NEWER
-            isLinkTargetFixed = _IsInArray(SettingsWindow.LINKER_TARGET, (int)PlayerSettings.WebGL.linkerTarget);
-#endif
-
-            isMemorySizeFixed = _IsInArray(SettingsWindow.ASM_MEMORY_SIZE, PlayerSettings.WebGL.memorySize);
-
-#if UNITY_2020_1_OR_NEWER
-            isDecompressionFallbackFixed = PlayerSettings.WebGL.decompressionFallback;
-#endif
-        }
-
     }
 
     internal static class LOGO_BASE64

@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityWebSocket;
 
 namespace UnityWebSocket.Demo
 {
     public class UnityWebSocketDemo : MonoBehaviour
     {
-        public string address = "ws://127.0.0.1";
+        public string address = "ws://127.0.0.1:8080";
         public string sendText = "Hello World!";
         public bool logMessage = true;
 
@@ -15,13 +14,9 @@ namespace UnityWebSocket.Demo
         private int sendCount;
         private int receiveCount;
         private Vector2 scrollPos;
-
-#if !UNITY_EDITOR && UNITY_WEBGL
-    private void Awake()
-    {
-        address = "wss://echo.websocket.org";
-    }
-#endif
+        private Color green = new Color(0.1f, 1, 0.1f);
+        private Color red = new Color(1f, 0.1f, 0.1f);
+        private Color wait = new Color(0.7f, 0.3f, 0.3f);
 
         private void OnGUI()
         {
@@ -31,10 +26,19 @@ namespace UnityWebSocket.Demo
 
             WebSocketState state = socket == null ? WebSocketState.Closed : socket.ReadyState;
 
-            GUILayout.Label("SDK Version: 2.5.0", width);
-            var stateColor = state == WebSocketState.Closed ? "red" : state == WebSocketState.Open ? "#11ff11" : "#aa4444";
-            var richText = new GUIStyle() { richText = true };
-            GUILayout.Label(string.Format(" <color=white>State:</color> <color={1}>{0}</color>", state, stateColor), richText);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("SDK Version: " + Settings.VERSION, GUILayout.Width(Screen.width / scale - 100));
+            GUI.color = green;
+            GUILayout.Label($"FPS: {fps:F2}", GUILayout.Width(80));
+            GUI.color = Color.white;
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("State: ", GUILayout.Width(36));
+            GUI.color = WebSocketState.Closed == state ? red : WebSocketState.Open == state ? green : wait;
+            GUILayout.Label($"{state}", GUILayout.Width(120));
+            GUI.color = Color.white;
+            GUILayout.EndHorizontal();
 
             GUI.enabled = state == WebSocketState.Closed;
             GUILayout.Label("Address: ", width);
@@ -49,14 +53,14 @@ namespace UnityWebSocket.Demo
                 socket.OnMessage += Socket_OnMessage;
                 socket.OnClose += Socket_OnClose;
                 socket.OnError += Socket_OnError;
-                AddLog(string.Format("Connecting...\n"));
+                AddLog(string.Format("Connecting..."));
                 socket.ConnectAsync();
             }
 
             GUI.enabled = state == WebSocketState.Open;
             if (GUILayout.Button(state == WebSocketState.Closing ? "Closing..." : "Close"))
             {
-                AddLog(string.Format("Closing...\n"));
+                AddLog(string.Format("Closing..."));
                 socket.CloseAsync();
             }
             GUILayout.EndHorizontal();
@@ -65,58 +69,41 @@ namespace UnityWebSocket.Demo
             sendText = GUILayout.TextArea(sendText, GUILayout.MinHeight(50), width);
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Send"))
+            if (GUILayout.Button("Send") && !string.IsNullOrEmpty(sendText))
             {
-                if (!string.IsNullOrEmpty(sendText))
+                socket.SendAsync(sendText);
+                AddLog(string.Format("Send: {0}", sendText));
+                sendCount += 1;
+            }
+            if (GUILayout.Button("Send Bytes") && !string.IsNullOrEmpty(sendText))
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(sendText);
+                socket.SendAsync(bytes);
+                AddLog(string.Format("Send Bytes ({1}): {0}", sendText, bytes.Length));
+                sendCount += 1;
+            }
+            if (GUILayout.Button("Send x100") && !string.IsNullOrEmpty(sendText))
+            {
+                for (int i = 0; i < 100; i++)
                 {
-                    socket.SendAsync(sendText);
-                    if (logMessage)
-                        AddLog(string.Format("Send: {0}\n", sendText));
+                    var text = (i + 1).ToString() + ". " + sendText;
+                    socket.SendAsync(text);
+                    AddLog(string.Format("Send: {0}", text));
                     sendCount += 1;
                 }
             }
-            if (GUILayout.Button("Send Bytes"))
+            if (GUILayout.Button("Send Bytes x100") && !string.IsNullOrEmpty(sendText))
             {
-                if (!string.IsNullOrEmpty(sendText))
+                for (int i = 0; i < 100; i++)
                 {
-                    var bytes = System.Text.Encoding.UTF8.GetBytes(sendText);
+                    var text = (i + 1).ToString() + ". " + sendText;
+                    var bytes = System.Text.Encoding.UTF8.GetBytes(text);
                     socket.SendAsync(bytes);
-
-                    if (logMessage)
-                        AddLog(string.Format("Send Bytes ({1}): {0}\n", sendText, bytes.Length));
+                    AddLog(string.Format("Send Bytes ({1}): {0}", text, bytes.Length));
                     sendCount += 1;
                 }
             }
-            if (GUILayout.Button("Send x100"))
-            {
-                if (!string.IsNullOrEmpty(sendText))
-                {
-                    for (int i = 0; i < 100; i++)
-                    {
-                        var text = (i + 1).ToString() + ". " + sendText;
-                        socket.SendAsync(text);
 
-                        if (logMessage)
-                            AddLog(string.Format("Send: {0}\n", text));
-                        sendCount += 1;
-                    }
-                }
-            }
-            if (GUILayout.Button("Send Bytes x100"))
-            {
-                if (!string.IsNullOrEmpty(sendText))
-                {
-                    for (int i = 0; i < 100; i++)
-                    {
-                        var text = (i + 1).ToString() + ". " + sendText;
-                        var bytes = System.Text.Encoding.UTF8.GetBytes(text);
-                        socket.SendAsync(bytes);
-                        if (logMessage)
-                            AddLog(string.Format("Send Bytes ({1}): {0}\n", text, bytes.Length));
-                        sendCount += 1;
-                    }
-                }
-            }
             GUILayout.EndHorizontal();
 
             GUI.enabled = true;
@@ -140,42 +127,42 @@ namespace UnityWebSocket.Demo
 
         private void AddLog(string str)
         {
-            log += str;
-            // max log
-            if (log.Length > 32 * 1024)
+            if (!logMessage) return;
+            if (str.Length > 100) str = str.Substring(0, 100) + "...";
+            log += str + "\n";
+            if (log.Length > 22 * 1024)
             {
-                log = log.Substring(16 * 1024);
+                log = log.Substring(log.Length - 22 * 1024);
             }
+            scrollPos.y = int.MaxValue;
         }
 
         private void Socket_OnOpen(object sender, OpenEventArgs e)
         {
-            AddLog(string.Format("Connected: {0}\n", address));
+            AddLog(string.Format("Connected: {0}", address));
         }
 
         private void Socket_OnMessage(object sender, MessageEventArgs e)
         {
             if (e.IsBinary)
             {
-                if (logMessage)
-                    AddLog(string.Format("Receive Bytes ({1}): {0}\n", e.Data, e.RawData.Length));
+                AddLog(string.Format("Receive Bytes ({1}): {0}", e.Data, e.RawData.Length));
             }
             else if (e.IsText)
             {
-                if (logMessage)
-                    AddLog(string.Format("Receive: {0}\n", e.Data));
+                AddLog(string.Format("Receive: {0}", e.Data));
             }
             receiveCount += 1;
         }
 
         private void Socket_OnClose(object sender, CloseEventArgs e)
         {
-            AddLog(string.Format("Closed: StatusCode: {0}, Reason: {1}\n", e.StatusCode, e.Reason));
+            AddLog(string.Format("Closed: StatusCode: {0}, Reason: {1}", e.StatusCode, e.Reason));
         }
 
         private void Socket_OnError(object sender, ErrorEventArgs e)
         {
-            AddLog(string.Format("Error: {0}\n", e.Message));
+            AddLog(string.Format("Error: {0}", e.Message));
         }
 
         private void OnApplicationQuit()
@@ -183,6 +170,21 @@ namespace UnityWebSocket.Demo
             if (socket != null && socket.ReadyState != WebSocketState.Closed)
             {
                 socket.CloseAsync();
+            }
+        }
+
+        private int frame = 0;
+        private float time = 0;
+        private float fps = 0;
+        private void Update()
+        {
+            frame += 1;
+            time += Time.deltaTime;
+            if (time >= 0.5f)
+            {
+                fps = frame / time;
+                frame = 0;
+                time = 0;
             }
         }
     }

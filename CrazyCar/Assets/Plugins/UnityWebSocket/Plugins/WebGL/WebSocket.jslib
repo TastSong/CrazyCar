@@ -18,12 +18,9 @@ var WebSocketLibrary =
 
 		/* Event listeners */
 		onOpen: null,
-		onMesssage: null,
+		onMessage: null,
 		onError: null,
 		onClose: null,
-
-		/* Debug mode */
-		debug: false
 	},
 
 	/**
@@ -83,8 +80,8 @@ var WebSocketLibrary =
 	 */
 	WebSocketAllocate: function(url)
 	{
-		var urlStr = Pointer_stringify(url);
-		var id = webSocketManager.lastId++;
+		var urlStr = UTF8ToString(url);
+		var id = ++webSocketManager.lastId;
 		webSocketManager.instances[id] = {
 			url: urlStr,
 			ws: null
@@ -114,7 +111,7 @@ var WebSocketLibrary =
 
 		return 0;
 	},
-
+	
 	/**
 	 * Connect WebSocket to the server
 	 *
@@ -124,25 +121,18 @@ var WebSocketLibrary =
 	{
 		var instance = webSocketManager.instances[instanceId];
 		if (!instance) return -1;
-
-		if (instance.ws !== null)
-			return -2;
+		if (instance.ws !== null) return -2;
 
 		instance.ws = new WebSocket(instance.url);
 
 		instance.ws.onopen = function()
 		{
-			if (webSocketManager.debug)
-				console.log("[JSLIB WebSocket] Connected.");
 			if (webSocketManager.onOpen)
-				Runtime.dynCall('vi', webSocketManager.onOpen, [ instanceId ]);
+				Module.dynCall_vi(webSocketManager.onOpen, instanceId);
 		};
 
 		instance.ws.onmessage = function(ev)
 		{
-			if (webSocketManager.debug)
-				console.log("[JSLIB WebSocket] Received message: ", ev.data);
-
 			if (webSocketManager.onMessage === null)
 				return;
 
@@ -153,7 +143,7 @@ var WebSocketLibrary =
 				HEAPU8.set(dataBuffer, buffer);
 				try
 				{
-					Runtime.dynCall('viii', webSocketManager.onMessage, [ instanceId, buffer, dataBuffer.length ]);
+					Module.dynCall_viii(webSocketManager.onMessage, instanceId, buffer, dataBuffer.length);
 				}
 				finally
 				{
@@ -165,18 +155,18 @@ var WebSocketLibrary =
 				var reader = new FileReader();
 				reader.addEventListener("loadend", function()
 				{
-						var dataBuffer = new Uint8Array(reader.result);
-						var buffer = _malloc(dataBuffer.length);
-						HEAPU8.set(dataBuffer, buffer);
-						try
-						{
-							Runtime.dynCall('viii', webSocketManager.onMessage, [ instanceId, buffer, dataBuffer.length ]);
-						}
-						finally
-						{
-							reader = null;
-							_free(buffer);
-						}
+					var dataBuffer = new Uint8Array(reader.result);
+					var buffer = _malloc(dataBuffer.length);
+					HEAPU8.set(dataBuffer, buffer);
+					try
+					{
+						Module.dynCall_viii(webSocketManager.onMessage, instanceId, buffer, dataBuffer.length);
+					}
+					finally
+					{
+						reader = null;
+						_free(buffer);
+					}
 				});
 				reader.readAsArrayBuffer(ev.data);
 			}
@@ -187,7 +177,7 @@ var WebSocketLibrary =
 				stringToUTF8(ev.data, buffer, length);
 				try
 				{
-					Runtime.dynCall('vii', webSocketManager.onMessageStr, [ instanceId, buffer ]);
+					Module.dynCall_vii(webSocketManager.onMessageStr, instanceId, buffer);
 				}
 				finally
 				{
@@ -202,9 +192,6 @@ var WebSocketLibrary =
 
 		instance.ws.onerror = function(ev)
 		{
-			if (webSocketManager.debug)
-				console.log("[JSLIB WebSocket] Error occured.");
-
 			if (webSocketManager.onError)
 			{
 				var msg = "WebSocket error.";
@@ -213,7 +200,7 @@ var WebSocketLibrary =
 				stringToUTF8(msg, buffer, length);
 				try
 				{
-					Runtime.dynCall('vii', webSocketManager.onError, [ instanceId, buffer ]);
+					Module.dynCall_vii(webSocketManager.onError, instanceId, buffer);
 				}
 				finally
 				{
@@ -224,9 +211,6 @@ var WebSocketLibrary =
 
 		instance.ws.onclose = function(ev)
 		{
-			if (webSocketManager.debug)
-				console.log("[JSLIB WebSocket] Closed, Code: " + ev.code + ", Reason: " + ev.reason);
-
 			if (webSocketManager.onClose)
 			{
 				var msg = ev.reason;
@@ -235,7 +219,7 @@ var WebSocketLibrary =
 				stringToUTF8(msg, buffer, length);
 				try
 				{
-					Runtime.dynCall('viii', webSocketManager.onClose, [ instanceId, ev.code, buffer ]);
+					Module.dynCall_viii(webSocketManager.onClose, instanceId, ev.code, buffer);
 				}
 				finally
 				{
@@ -259,18 +243,11 @@ var WebSocketLibrary =
 	{
 		var instance = webSocketManager.instances[instanceId];
 		if (!instance) return -1;
+		if (instance.ws === null) return -3;
+		if (instance.ws.readyState === 2) return -4;
+		if (instance.ws.readyState === 3) return -5;
 
-		if (instance.ws === null)
-			return -3;
-
-		if (instance.ws.readyState === 2)
-			return -4;
-
-		if (instance.ws.readyState === 3)
-			return -5;
-
-		var reason = ( reasonPtr ? Pointer_stringify(reasonPtr) : undefined );
-
+		var reason = ( reasonPtr ? UTF8ToString(reasonPtr) : undefined );
 		try
 		{
 			instance.ws.close(code, reason);
@@ -279,7 +256,6 @@ var WebSocketLibrary =
 		{
 			return -7;
 		}
-
 		return 0;
 	},
 
@@ -290,18 +266,14 @@ var WebSocketLibrary =
 	 * @param bufferPtr Pointer to the message buffer
 	 * @param length Length of the message in the buffer
 	 */
-	WebSocketSend: function(instanceId, bufferPtr, length) 
+	WebSocketSend: function(instanceId, bufferPtr, length)
 	{
 		var instance = webSocketManager.instances[instanceId];
 		if (!instance) return -1;
+		if (instance.ws === null) return -3;
+		if (instance.ws.readyState !== 1) return -6;
 
-		if (instance.ws === null)
-			return -3;
-
-		if (instance.ws.readyState !== 1)
-			return -6;
-
-		instance.ws.send(HEAPU8.buffer.slice(bufferPtr, bufferPtr + length));
+		instance.ws.send(HEAPU8.slice(bufferPtr, bufferPtr + length));
 
 		return 0;
 	},
@@ -312,18 +284,14 @@ var WebSocketLibrary =
 	 * @param instanceId Instance ID
 	 * @param stringPtr Pointer to the message string
 	 */
-	WebSocketSendStr: function(instanceId, stringPtr) 
+	WebSocketSendStr: function(instanceId, stringPtr)
 	{
 		var instance = webSocketManager.instances[instanceId];
 		if (!instance) return -1;
+		if (instance.ws === null) return -3;
+		if (instance.ws.readyState !== 1) return -6;
 
-		if (instance.ws === null)
-			return -3;
-
-		if (instance.ws.readyState !== 1)
-			return -6;
-
-		instance.ws.send(Pointer_stringify(stringPtr));
+		instance.ws.send(UTF8ToString(stringPtr));
 
 		return 0;
 	},
@@ -337,11 +305,9 @@ var WebSocketLibrary =
 	{
 		var instance = webSocketManager.instances[instanceId];
 		if (!instance) return -1;
-
-		if (instance.ws)
-			return instance.ws.readyState;
-		else
-			return 3;
+		if (instance.ws === null) return 3;
+		
+		return instance.ws.readyState;
 	}
 };
 
