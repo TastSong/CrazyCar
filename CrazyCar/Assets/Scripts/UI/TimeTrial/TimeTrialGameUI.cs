@@ -33,22 +33,24 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         MakeAI();
         limitTimeText.text = this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime.ToString();
 
-        this.RegisterEvent<CompleteTimeTrialEvent>(OnCompleteTimeTrial);
+        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
     }
 
     private void MakeAI(){
         AIInfo aiInfo = new AIInfo();
-        aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), this.GetModel<IMapControllerModel>().PathCreator);
+        aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, 
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), 
+            this.GetModel<IMapControllerModel>().PathCreator);
         this.SendCommand<MakeAIPlayerCommand>(new MakeAIPlayerCommand(aiInfo));
     }
 
-    private void OnCompleteTimeTrial(CompleteTimeTrialEvent e) {
+    private void OnEndTimeTrial(EndTimeTrialEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
     }
 
     private void OnDestroy() {
-        this.UnRegisterEvent<CompleteTimeTrialEvent>(OnCompleteTimeTrial);
+        this.UnRegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
     }
 
     public IArchitecture GetArchitecture() {

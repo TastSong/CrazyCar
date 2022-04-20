@@ -99,11 +99,11 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
         });
         EndTime.Register((v) => {
             IsComplete.Value = true;
-            this.SendEvent(new CompleteTimeTrialEvent());
+            this.SendEvent(new EndTimeTrialEvent());
         });
         IsArriveLimitTime.Register((v) => {
             if (IsArriveLimitTime.Value) {
-                this.SendEvent(new CompleteTimeTrialEvent());
+                this.SendEvent(new EndTimeTrialEvent());
             }
         });
     }

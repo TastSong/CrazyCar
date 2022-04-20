@@ -32,9 +32,20 @@ public class AIController : MonoBehaviour, IController {
     private int id = 0;
     private Dictionary<int, AIInfo> aiInfoDic = new Dictionary<int, AIInfo>();
 
+    private bool playerFinishTimeTrial = false;
+
+    private void OnEnable() {
+        playerFinishTimeTrial = false;
+    }
+
     private void Start()
     {
         this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
+        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
+    }
+
+    private void OnEndTimeTrial(EndTimeTrialEvent e) {
+        playerFinishTimeTrial = true;
     }
 
     private UserInfo GetUserInfo()
@@ -69,7 +80,12 @@ public class AIController : MonoBehaviour, IController {
     }
 
     private void Update() {
-        
+        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+            if (playerFinishTimeTrial) {
+                return;
+            }
+        }
+
         foreach (var item in aiInfoDic)
         {
             if (item.Value.isStartGame)
@@ -79,7 +95,8 @@ public class AIController : MonoBehaviour, IController {
                 }           
                 if (item.Value.needPassTimes == item.Value.mPlayer.passEndSignTimes){
                     this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("AI玩家" + item.Value.userInfo.name + "获胜"); 
-                    item.Value.isFinishGame = true;       
+                    item.Value.isFinishGame = true;
+                    this.SendCommand<EndTimeTrialCommand>();
                 } else{
                     item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
                     item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
@@ -92,6 +109,7 @@ public class AIController : MonoBehaviour, IController {
     private void OnDestroy()
     {
         this.UnRegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
+        this.UnRegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
     }
 
     public IArchitecture GetArchitecture()
