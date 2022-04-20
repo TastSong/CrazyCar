@@ -11,6 +11,7 @@ public interface ISoundSystem : ISystem {
     void PlayBackgroundMusic();
     void PlaySpinWheekSound();
     void PlayWheelEngineSound();
+    void StopAllSound();
     void SetSound(bool isOn);
     void SetBackgroundMusic(bool isOn);
 }
@@ -44,6 +45,10 @@ public class SoundSystem : AbstractSystem, ISoundSystem {
 
     public void PlayWinSound() {
         AudioKit.PlaySound(path + "Win");
+    }
+
+    public void StopAllSound() {
+        AudioKit.StopAllSound();
     }
 
     public void SetBackgroundMusic(bool isOn) {

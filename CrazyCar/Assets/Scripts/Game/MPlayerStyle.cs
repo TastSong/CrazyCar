@@ -71,6 +71,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
         } else {
             DisableScreenEffect();
             StopDriftParticle();
+            this.GetSystem<ISoundSystem>().StopAllSound();
         }
     }
 
