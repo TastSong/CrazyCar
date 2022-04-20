@@ -57,7 +57,7 @@
 
 :video_game:Adopt Unity's new version of Input System, support a variety of controllers
 
-:alien:Robot
+:alien:Robot,Robots can compete with players in Time trial
 
 :sunrise: Support avatar and equipment resource hot update
 

@@ -56,7 +56,7 @@
 
 :video_game:采用Unity新版本Input System，支持多款手柄
 
-:alien:机器人
+:alien:机器人，计时赛中机器人可与玩家共同竞技
 
 :sunrise: 支持头像和装备的资源热更新
 
