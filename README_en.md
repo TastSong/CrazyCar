@@ -28,9 +28,7 @@
 <div  align="center">  
   <p></p>
 <b>Main Function Demonstration</b>
-  <a> <video id="video">
-<source id="mp4" src="./SamplePictures/Preview.mp4" type="video/mp4">
-</video> </a>
+	<a><img src="./SamplePictures/Preview.gif"></a>
 <p></p>
 <b>Competition Function Demonstration</b>
   <a><img src="./SamplePictures/Match.gif"></a>
