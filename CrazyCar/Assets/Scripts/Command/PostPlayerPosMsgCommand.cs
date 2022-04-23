@@ -6,6 +6,10 @@ using QFramework;
 
 public class PostPlayerPosMsgCommand : AbstractCommand{
     protected override void OnExecute() {
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == null)
+        {
+            return;
+        }
         StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();

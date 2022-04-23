@@ -71,10 +71,13 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
     private void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
         MPlayer peer = null;
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-            Debug.LogError("[PlayerManagerSystem] AdjustPeerPlayer: peer not found");
+            Debug.Log("[PlayerManagerSystem] AdjustPeerPlayer: peer not found");
             GetUserInfo(playerStateMsg.uid, (userInfo) => {
-                PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
-                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+                if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
+                {
+                    PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
+                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+                }
             });
         } else {
             if (playerStateMsg.timestamp > peer.lastRecvStatusStamp) {
