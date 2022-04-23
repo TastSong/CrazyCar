@@ -9,7 +9,7 @@ public class EnableStandAloneCommand : AbstractCommand {
         TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.loginUrl);
         JsonData data = JsonMapper.ToObject(ta.text);
         this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
-        this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
+        this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
 
         this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
             callback: () => {

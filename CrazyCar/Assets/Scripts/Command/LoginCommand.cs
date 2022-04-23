@@ -29,7 +29,7 @@ public class LoginCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
                 this.GetModel<IGameControllerModel>().Token.Value = (string)data["token"];
-                this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
+                this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {

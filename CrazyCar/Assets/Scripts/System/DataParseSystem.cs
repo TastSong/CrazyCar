@@ -7,7 +7,7 @@ using System;
 
 public interface IDataParseSystem : ISystem {
     void ParseAvatarRes(JsonData jsonData, Action success = null);
-    void ParseUserInfo(JsonData jsonData);
+    void ParseSelfUserInfo(JsonData jsonData);
     void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
     void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     void ParseTimeTrialResult(JsonData jsonData, Action success = null);
@@ -32,7 +32,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         success?.Invoke();
     }
 
-    public void ParseUserInfo(JsonData jsonData) {
+    public void ParseSelfUserInfo(JsonData jsonData) {
         var userModel = this.GetModel<IUserModel>();
         userModel.Name.Value = (string)jsonData["user_info"]["name"];
         userModel.Uid.Value = (int)jsonData["user_info"]["uid"];
