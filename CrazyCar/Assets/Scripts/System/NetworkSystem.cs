@@ -17,7 +17,6 @@ public interface INetworkSystem : ISystem {
     void RespondAction(JsonData recJD);
     void CloseConnect();
     IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
-    PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     System.Object MsgLock { get; set; }
     void EnterRoom(GameType gameType, int cid, Action succ = null);
@@ -83,7 +82,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+    private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
         Debug.Log("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
@@ -118,13 +117,13 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void RespondAction(JsonData recJD){
-        if ((int)recJD["msg_type"] == (int)MsgType.PlayerPos) {
-            playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
+        if ((int)recJD["msg_type"] == (int)MsgType.PlayerState) {
+            playerStateMsg = ParsePlayerStateMsg(recJD);
             if (netType == NetType.WebSocket) {               
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
             } else{
-                lock (this.GetSystem<INetworkSystem>().MsgLock) {
-                    this.GetSystem<INetworkSystem>().PlayerStateMsgs.Enqueue(playerStateMsg);
+                lock (MsgLock) {
+                    PlayerStateMsgs.Enqueue(playerStateMsg);
                 }
             }
         }

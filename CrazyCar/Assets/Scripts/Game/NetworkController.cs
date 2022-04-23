@@ -16,7 +16,7 @@ public enum NetType {
 
 public enum MsgType{
     CreatePlayer = 0,
-    PlayerPos,
+    PlayerState,
     DelPlayer
 }
 
