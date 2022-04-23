@@ -51,7 +51,7 @@ public class GetUserInfo extends HttpServlet {
 			int uid = getJB.getInteger("uid");
             String userName = Util.getStringDataByUid(uid, "user_name");
             outJB.put("code", 200);
-            userInfoJB.put("name", userName);
+            userInfoJB.put("user_name", userName);
             userInfoJB.put("uid", uid);
             userInfoJB.put("aid", Util.getDataByName(userName, "aid"));
             int eid = Util.getDataByName(userName, "eid");

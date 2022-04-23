@@ -95,7 +95,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
             data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value, succData: (data) => {
-                succ.Invoke(ParseUserInfo(uid));
+                succ.Invoke(ParseUserInfo(data));
             }, code: (code) => {
                 Debug.Log("get user info error code = " + code);
             }));
