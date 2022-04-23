@@ -84,7 +84,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     private PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {
-        Debug.Log("Rec = " + jsonData.ToJson());
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
         playerCreateMsg.cid = (int)jsonData["cid"];
         playerCreateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
@@ -103,7 +103,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
-        Debug.Log("Rec = " + jsonData.ToJson());
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
         playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));

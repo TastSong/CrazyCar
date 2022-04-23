@@ -15,16 +15,7 @@ public class CommonGameUI : MonoBehaviour, IController {
 
     private void Start() {
         exitBtn.onClick.AddListener(() => {
-            Time.timeScale = 0;
-            this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(
-                content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
-                success: () => {
-                    Time.timeScale = 1;
-                    Util.LoadingScene(SceneID.Index);
-                },
-                fail: () => {
-                    Time.timeScale = 1;
-                });
+            this.SendCommand<ExitGameSceneCommand>();
         });
 
         angleViewBtn.onClick.AddListener(() => {

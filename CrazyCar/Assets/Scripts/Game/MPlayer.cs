@@ -45,7 +45,7 @@ public class MPlayer : MonoBehaviour, IController {
     private Vector3 peerTargetPos = new Vector3();
 
     private MPlayerStyle mPlayerStyle;
-    private int destroyTimeLimit = 10000; // micro seconds
+    private int destroyTimeLimit = 3000; // micro seconds
     // 出界 翻车判断
     private PathCreator pathCreator;
     private float playerHigh = 2f;

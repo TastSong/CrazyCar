@@ -6,7 +6,9 @@ using UnityEngine;
 using Utils;
 using QFramework;
 
-public class MatchNet : MonoBehaviour,IController {
+public class MatchNet : MonoBehaviour, IController {
+    private Coroutine matchNerCor;
+
     private void Start() {
         if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
             string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
@@ -21,8 +23,18 @@ public class MatchNet : MonoBehaviour,IController {
             }
 
             Util.DelayExecuteWithSecond(3, () => { this.SendCommand<PostCreatePlayerMsgCommand>(); });
-            Util.DelayExecuteWithSecond(4.5f, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 
-        }           
+            Util.DelayExecuteWithSecond(4.5f, () => { matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg()); }); 
+        }
+
+        this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
+
+    private void OnExitGameScene(ExitGameSceneEvent e)
+    {
+        if (matchNerCor != null)
+        {
+            CoroutineController.manager.StopCoroutine(matchNerCor);
+        }
     }
 
     private IEnumerator SendMsg() {

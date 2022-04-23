@@ -339,6 +339,7 @@ namespace Utils {
                 return loadingTargetSceneID;
             }
         }
+
         public static void LoadingScene(SceneID sceneID) {
             loadingTargetSceneID = sceneID;
             SceneManager.LoadScene((int)SceneID.Loading);
