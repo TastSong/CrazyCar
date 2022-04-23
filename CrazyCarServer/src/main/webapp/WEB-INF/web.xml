@@ -65,6 +65,12 @@
   	<servlet-class>CrazyCarServer.Login</servlet-class>
   </servlet>
   <servlet>
+  	<servlet-name>GetUserInfo</servlet-name>
+  	<display-name>GetUserInfo</display-name>
+  	<description></description>
+  	<servlet-class>CrazyCarServer.Login</servlet-class>
+  </servlet>
+  <servlet>
   	<servlet-name>MatchDetail</servlet-name>
   	<display-name>MatchDetail</display-name>
   	<description></description>
@@ -169,6 +175,10 @@
   <servlet-mapping>
   	<servlet-name>Login</servlet-name>
   	<url-pattern>/Login</url-pattern>
+  </servlet-mapping> 
+  <servlet-mapping>
+  	<servlet-name>GetUserInfo</servlet-name>
+  	<url-pattern>/GetUserInfo</url-pattern>
   </servlet-mapping> 
        <servlet-mapping>
   	<servlet-name>MatchDetail</servlet-name>

@@ -20,7 +20,8 @@ public class MatchNet : MonoBehaviour,IController {
                 this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
             }
 
-            Util.DelayExecuteWithSecond(3, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 
+            Util.DelayExecuteWithSecond(3, () => { this.SendCommand<PostCreatePlayerMsgCommand>(); });
+            Util.DelayExecuteWithSecond(4.5f, () => { CoroutineController.manager.StartCoroutine(SendMsg()); }); 
         }           
     }
 

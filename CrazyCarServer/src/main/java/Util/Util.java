@@ -346,6 +346,13 @@ public class Util {
 				+ uid + ";";
 		return Util.JDBC.executeSelectInt(sql, id);
 	}	
+
+	public static String getStringDataByUid(int uid, String id){
+		String sql = "select " + id + " from all_user where uid = "
+				+ uid + ";";
+		String rs = Util.JDBC.executeSelectString(sql, id);
+		return rs;
+	}
 	
 	public static JSONObject getMsgData(HttpServletRequest request) throws ServletException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));

@@ -46,6 +46,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public string HttpBaseUrl { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
     public object MsgLock { get; set; } = new object();
+    private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
@@ -82,6 +83,25 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
+    private PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {
+        Debug.Log("Rec = " + jsonData.ToJson());
+        PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
+        playerCreateMsg.cid = (int)jsonData["cid"];
+        playerCreateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
+        string[] speed = ((string)jsonData["speed"]).Split(',');
+        playerCreateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
+        playerCreateMsg.timestamp = (long)jsonData["timestamp"];
+        playerCreateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
+        playerCreateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
+        playerCreateMsg.userInfo.aid = (int)jsonData["user_info"]["aid"];
+        playerCreateMsg.userInfo.star = (int)jsonData["user_info"]["star"];
+        playerCreateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
+        playerCreateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
+        playerCreateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
+        success?.Invoke();
+        return playerCreateMsg;
+    }
+
     private PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
         Debug.Log("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
@@ -90,16 +110,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         string[] speed = ((string)jsonData["speed"]).Split(',');
         playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerStateMsg.timestamp = (long)jsonData["timestamp"];
-        playerStateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
-        playerStateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
-        playerStateMsg.userInfo.aid = (int)jsonData["user_info"]["aid"];
-        playerStateMsg.userInfo.star = (int)jsonData["user_info"]["star"];
-        playerStateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
-        playerStateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
-        playerStateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
+        playerStateMsg.uid = (int)jsonData["uid"];
         success?.Invoke();
         return playerStateMsg;
     }
+
     public void Connect(string url) {
         if (netType == NetType.WebSocket) {
             this.GetSystem<IWebSocketSystem>().Connect(url);
@@ -126,6 +141,14 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                     PlayerStateMsgs.Enqueue(playerStateMsg);
                 }
             }
+        } else if ((int)recJD["msg_type"] == (int)MsgType.CreatePlayer){
+            playerCreateMsg = ParsePlayerCreateMsg(recJD);
+            MPlayer peer = null;
+            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
+                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+            }          
+        } else if ((int)recJD["msg_type"] == (int)MsgType.DelPlayer){
+
         }
     }
 

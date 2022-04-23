@@ -1,7 +1,7 @@
 ﻿public class MakeNewPlayerEvent {
-    public PlayerStateMsg playerStateMsg;
+    public PlayerCreateMsg playerCreateMsg;
 
-    public MakeNewPlayerEvent(PlayerStateMsg msg) {
-        playerStateMsg = msg;
+    public MakeNewPlayerEvent(PlayerCreateMsg msg) {
+        playerCreateMsg = msg;
     }
 }

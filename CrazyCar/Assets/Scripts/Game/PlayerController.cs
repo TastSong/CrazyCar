@@ -35,14 +35,14 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnMakeNewPlayer(MakeNewPlayerEvent e) {
-        UserInfo userInfo = e.playerStateMsg.userInfo;
-        MPlayer mPlayer = Instantiate(mPlayerPrefab, e.playerStateMsg.pos, Quaternion.identity);
+        UserInfo userInfo = e.playerCreateMsg.userInfo;
+        MPlayer mPlayer = Instantiate(mPlayerPrefab, e.playerCreateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
         mPlayer.userInfo = userInfo;
-        mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(e.playerStateMsg.userInfo.equipInfo.eid,
-            e.playerStateMsg.userInfo.equipInfo.rid);
-        this.GetSystem<IPlayerManagerSystem>().peers.Add(userInfo.uid, mPlayer);
+        mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(e.playerCreateMsg.userInfo.equipInfo.eid,
+            e.playerCreateMsg.userInfo.equipInfo.rid);
         mPlayer.GetComponent<MPlayerStyle>().SetNameText(userInfo.name, userInfo.isVIP);
+        this.GetSystem<IPlayerManagerSystem>().peers.Add(userInfo.uid, mPlayer);
     }
 
     private void OnChangeAngleView(ChangeAngleViewEvent e) {
