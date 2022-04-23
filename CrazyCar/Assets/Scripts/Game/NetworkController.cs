@@ -14,6 +14,12 @@ public enum NetType {
     KCP
 }
 
+public enum MsgType{
+    CreatePlayer = 0,
+    PlayerPos,
+    DelPlayer
+}
+
 
 public class NetworkController : MonoBehaviour, IController {
     public ServerType serverType;

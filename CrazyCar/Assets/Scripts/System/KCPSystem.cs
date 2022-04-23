@@ -51,14 +51,7 @@ public class KCPManager : KcpClient, IController {
     protected override void HandleReceive(ByteBuf bb) {
         recStr = System.Text.Encoding.UTF8.GetString(bb.GetRaw());
         recJD = JsonMapper.ToObject(recStr);
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
-            this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
-            playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
-
-            lock (this.GetSystem<INetworkSystem>().MsgLock) {
-                this.GetSystem<INetworkSystem>().PlayerStateMsgs.Enqueue(playerStateMsg);
-            }
-        }
+        this.GetSystem<INetworkSystem>().RespondAction(recJD);
     }
 
     protected override void HandleException(Exception ex) {

@@ -50,11 +50,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
             Debug.Log(string.Format("Receive Bytes ({1}): {0}\n", e.Data, e.RawData.Length));
         } else if (e.IsText) {
             recJD = JsonMapper.ToObject(e.Data);
-            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial ||
-                this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
-                playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
-                this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
-            }
+            this.GetSystem<INetworkSystem>().RespondAction(recJD);
         }
         receiveCount += 1;
     }

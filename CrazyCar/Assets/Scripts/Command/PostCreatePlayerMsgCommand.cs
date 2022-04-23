@@ -1,16 +1,16 @@
-using LitJson;
+﻿using LitJson;
 using System.Text;
 using Utils;
 using QFramework;
 
-
-public class PostPlayerPosMsgCommand : AbstractCommand{
-    protected override void OnExecute() {
+public class PostCreatePlayerMsgCommand : AbstractCommand {
+    protected override void OnExecute()
+    {
         StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
             w.WritePropertyName("msg_type");
-            w.Write((int)MsgType.PlayerPos);
+            w.Write((int)MsgType.CreatePlayer);
             w.WritePropertyName("cid");
             if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
                 w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);

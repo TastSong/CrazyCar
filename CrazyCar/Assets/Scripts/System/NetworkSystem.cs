@@ -14,6 +14,7 @@ public interface INetworkSystem : ISystem {
     string HttpBaseUrl { get; set; }
     void Connect(string url);
     void SendMsgToServer(string msg);
+    void RespondAction(JsonData recJD);
     void CloseConnect();
     IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
@@ -46,6 +47,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public string HttpBaseUrl { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
     public object MsgLock { get; set; } = new object();
+    private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
         if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
@@ -112,6 +114,19 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(msg);
         } else if (netType == NetType.KCP) {
             this.GetSystem<IKCPSystem>().SendMsgToServer(msg);
+        }
+    }
+
+    public void RespondAction(JsonData recJD){
+        if ((int)recJD["msg_type"] == (int)MsgType.PlayerPos) {
+            playerStateMsg = this.GetSystem<INetworkSystem>().ParsePlayerStateMsg(recJD);
+            if (netType == NetType.WebSocket) {               
+                this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
+            } else{
+                lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                    this.GetSystem<INetworkSystem>().PlayerStateMsgs.Enqueue(playerStateMsg);
+                }
+            }
         }
     }
 
