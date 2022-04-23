@@ -71,8 +71,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
     private void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
         MPlayer peer = null;
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-            Debug.Log("[PlayerManagerSystem] AdjustPeerPlayer: peer not found");
-            GetUserInfo(playerStateMsg.uid, (userInfo) => {
+            this.GetSystem<INetworkSystem>().GetUserInfo(playerStateMsg.uid, (userInfo) => {
                 if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
                 {
                     PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
@@ -84,52 +83,6 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
                 peer.AdjustPlayerPosition(playerStateMsg.pos, playerStateMsg.speed);
             }
         }
-    }
-
-    private void GetUserInfo(int uid, Action<UserInfo> succ)
-    {  
-        StringBuilder sb = new StringBuilder();
-        JsonWriter w = new JsonWriter(sb);
-        w.WriteObjectStart();
-        w.WritePropertyName("uid");
-        w.Write(uid);
-        w.WriteObjectEnd();
-        Debug.Log("++++++ " + sb.ToString());
-        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
-            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value, succData: (data) => {
-                succ.Invoke(ParseUserInfo(data));
-            }, code: (code) => {
-                Debug.Log("get user info error code = " + code);
-            }));
-    }
-
-    private UserInfo ParseUserInfo(JsonData jsonData)
-    {
-        UserInfo userInfo = new UserInfo();
-        userInfo.name = (string)jsonData["user_info"]["name"];
-        userInfo.uid = (int)jsonData["user_info"]["uid"];
-        userInfo.aid = (int)jsonData["user_info"]["aid"];
-        userInfo.star = (int)jsonData["user_info"]["star"];
-        userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
-        userInfo.isSuperuser = (bool)jsonData["user_info"]["is_superuser"];
-        userInfo.avatarNum = (int)jsonData["user_info"]["avatar_num"];
-        userInfo.travelTimes = (int)jsonData["user_info"]["travel_times"];
-        userInfo.mapNum = (int)jsonData["user_info"]["map_num"];
-
-        JsonData equipData = jsonData["user_info"]["equip_info"];
-        EquipInfo info = new EquipInfo();
-        info.eid = (int)equipData["eid"];
-        info.rid = (string)equipData["rid"];
-        info.equipName = (string)equipData["equip_name"];
-        info.star = (int)equipData["star"];
-        info.mass = (int)equipData["mass"];
-        info.speed = (int)equipData["speed"];
-        info.maxSpeed = (int)equipData["max_speed"];
-        info.isHas = (bool)equipData["is_has"];
-        info.isShow = (bool)equipData["is_show"];
-        userInfo.equipInfo = info;
-        return userInfo;
     }
 
     public void RemovePlayer(int uid) {

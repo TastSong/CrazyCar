@@ -8,6 +8,7 @@ using System;
 public interface IDataParseSystem : ISystem {
     void ParseAvatarRes(JsonData jsonData, Action success = null);
     void ParseSelfUserInfo(JsonData jsonData);
+    UserInfo ParseUserInfo(JsonData jsonData);
     void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
     void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     void ParseTimeTrialResult(JsonData jsonData, Action success = null);
@@ -56,6 +57,34 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.isHas = (bool)data["is_has"];
         info.isShow = (bool)data["is_show"];
         userModel.EquipInfo.Value = info;
+    }
+
+    public UserInfo ParseUserInfo(JsonData jsonData)
+    {
+        UserInfo userInfo = new UserInfo();
+        userInfo.name = (string)jsonData["user_info"]["name"];
+        userInfo.uid = (int)jsonData["user_info"]["uid"];
+        userInfo.aid = (int)jsonData["user_info"]["aid"];
+        userInfo.star = (int)jsonData["user_info"]["star"];
+        userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
+        userInfo.isSuperuser = (bool)jsonData["user_info"]["is_superuser"];
+        userInfo.avatarNum = (int)jsonData["user_info"]["avatar_num"];
+        userInfo.travelTimes = (int)jsonData["user_info"]["travel_times"];
+        userInfo.mapNum = (int)jsonData["user_info"]["map_num"];
+
+        JsonData equipData = jsonData["user_info"]["equip_info"];
+        EquipInfo info = new EquipInfo();
+        info.eid = (int)equipData["eid"];
+        info.rid = (string)equipData["rid"];
+        info.equipName = (string)equipData["equip_name"];
+        info.star = (int)equipData["star"];
+        info.mass = (int)equipData["mass"];
+        info.speed = (int)equipData["speed"];
+        info.maxSpeed = (int)equipData["max_speed"];
+        info.isHas = (bool)equipData["is_has"];
+        info.isShow = (bool)equipData["is_show"];
+        userInfo.equipInfo = info;
+        return userInfo;
     }
 
     public void ParseTimeTrialClassData(JsonData jsonData, Action success = null) {

@@ -20,6 +20,7 @@ public interface INetworkSystem : ISystem {
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     System.Object MsgLock { get; set; }
     void EnterRoom(GameType gameType, int cid, Action succ = null);
+    void GetUserInfo(int uid, Action<UserInfo> succ);
 }
 
 public class NetworkSystem : AbstractSystem, INetworkSystem {
@@ -189,6 +190,27 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 }
             }
         }));
+    }
+
+    public void GetUserInfo(int uid, Action<UserInfo> succ)
+    {
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("uid");
+        w.Write(uid);
+        w.WriteObjectEnd();
+        Debug.Log("++++++ " + sb.ToString());
+        byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
+            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value, succData: (data) => {
+                succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
+            }, code: (code) => {
+                if (code != 200)
+                {
+                    Debug.Log("get user info error code = " + code);
+                }
+            }));
     }
 
     protected override void OnInit() {
