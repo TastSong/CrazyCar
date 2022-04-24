@@ -126,6 +126,7 @@
 10. [Same Material - Static Mesh Combiner ：Mesh合并](https://assetstore.unity.com/packages/tools/modeling/same-material-static-mesh-combiner-139565)
 10. [AutoLOD：自动生成降低Mesh并生成LOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
 10. [UniTask: Provides an efficient allocation free async/await integration for Unity.](https://github.com/Cysharp/UniTask)
+10. [全部免费字体大全 (chaziti.cn)](https://chaziti.cn/free/)
 
 
 ## 证书
