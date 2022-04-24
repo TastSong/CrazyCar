@@ -23,25 +23,7 @@ public class HomepageUI : MonoBehaviour, IController {
     public Button changeCarBtn;
     public Button rankBtn;
     public Button settingBtn;
-    public GameObject matchGO;
     public Button matchBtn;
-    public Button createMatchBtn;
-
-    private void OnEnable() {
-        OnUpdataMatchDetail(new UpdataMatchDetailEvent());
-    }
-
-    private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
-        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-           RequestUrl.matchDetailUrl,
-          token: this.GetModel<IGameControllerModel>().Token.Value,
-          succData: (data) => {
-              this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
-                  matchGO.SetActiveFast(this.GetModel<IMatchModel>().MatchDic.Count > 0);
-              });
-          }));
-    }
 
     private void Start() {
         if (this.GetModel<IUserModel>().IsSuperuser) {
@@ -71,22 +53,13 @@ public class HomepageUI : MonoBehaviour, IController {
                 return;
             }
 
-            this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));   
-        });
-
-        createMatchBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
-                ShowStandAlone();
-                return;
-            }
-
-            if (this.GetModel<IUserModel>().IsSuperuser) {
+            if (this.GetModel<IUserModel>().IsVIP) {
                 this.SendCommand<CreateMatchCommand>();
             } else {
-                OnUpdataMatchDetail(new UpdataMatchDetailEvent());
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("This feature is for VIPs only"));
             }
         });
+
         //--------- option ---------
         optionBtnsGO.SetActiveFast(false);
         optionCloseBtn.gameObject.SetActiveFast(false);
@@ -154,6 +127,22 @@ public class HomepageUI : MonoBehaviour, IController {
         OnUpdataUI(new UpdateHomepageUIEvent());
         this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
         this.RegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail);
+    }
+
+    private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
+        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
+        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+           RequestUrl.matchDetailUrl,
+          token: this.GetModel<IGameControllerModel>().Token.Value,
+          succData: (data) => {
+              this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
+                  if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
+                      this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
+                  } else {
+                      this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("No game"));
+                  }
+              });
+          }));
     }
 
     private void ShowStandAlone() {
