@@ -43,7 +43,7 @@ public class TimeTrialNet : MonoBehaviour, IController {
     private IEnumerator SendMsg() {
         while (true) {
             if (this.GetModel<ITimeTrialModel>().IsStartGame) {
-                this.SendCommand<PostPlayerPosMsgCommand>();
+                this.SendCommand<PostPlayerStateMsgCommand>();
             }
             yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }

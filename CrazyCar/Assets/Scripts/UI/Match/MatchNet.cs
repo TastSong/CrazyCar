@@ -39,7 +39,7 @@ public class MatchNet : MonoBehaviour, IController {
 
     private IEnumerator SendMsg() {
         while (true) {
-            this.SendCommand<PostPlayerPosMsgCommand>();
+            this.SendCommand<PostPlayerStateMsgCommand>();
             yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
         }
     }
