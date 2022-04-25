@@ -52,7 +52,7 @@ public class RectGuidanceController : MonoBehaviour
 
 	private void SetTaget(Image image) {
 		if (_eventPenetrate != null)
-			_eventPenetrate.SetTargetImage(image);
+			_eventPenetrate.SetTargetImage(image, true);
 		Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 		//获取高亮区域四个顶点的世界坐标
 		image.rectTransform.GetWorldCorners(_corners);

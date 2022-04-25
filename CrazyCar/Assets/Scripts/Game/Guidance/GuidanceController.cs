@@ -46,7 +46,7 @@ public class GuidanceController : MonoBehaviour, IController {
 		_canvas = GetComponentInParent<Canvas>();
 		_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
 		_material = GetComponent<Image>().material;
-		_eventPenetrate.maxIndex = (guidanceInfos.Length - 1);
+		_eventPenetrate.maxIndex = guidanceInfos.Length;
 		_eventPenetrate.shrinkTime = _shrinkTime;
 		if (guidanceInfos.Length > 0) {
 			SetTaget(guidanceInfos[0]);
@@ -77,8 +77,12 @@ public class GuidanceController : MonoBehaviour, IController {
 		}
 
 		if (_eventPenetrate != null && _eventPenetrate.index != index) {
-			SetTaget(guidanceInfos[_eventPenetrate.index]);
-			index = _eventPenetrate.index;
+			if (_eventPenetrate.index == guidanceInfos.Length) {
+				gameObject.SetActiveFast(false);
+            } else {
+				SetTaget(guidanceInfos[_eventPenetrate.index]);
+				index = _eventPenetrate.index;
+			}			
 		}
 	}
 
@@ -92,7 +96,7 @@ public class GuidanceController : MonoBehaviour, IController {
 
 	private void SetRectTaget(GuidanceInfo guidanceInfo) {
 		if (_eventPenetrate != null) {
-			_eventPenetrate.SetTargetImage(guidanceInfo.image);
+			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick);
 		}
 
 		guidanceInfo.image.rectTransform.GetWorldCorners(_corners);
@@ -124,6 +128,10 @@ public class GuidanceController : MonoBehaviour, IController {
 	}
 
 	private void SetCircleTaget(GuidanceInfo guidanceInfo) {
+		if (_eventPenetrate != null) {
+			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick);
+		}
+
 		guidanceInfo.image.rectTransform.GetWorldCorners(_corners);
 		_radius = Vector2.Distance(WorldToCanvasPos(_canvas, _corners[0]), WorldToCanvasPos(_canvas, _corners[2])) / 2f;
 		float x = _corners[0].x + ((_corners[3].x - _corners[0].x) / 2f);

@@ -10,22 +10,24 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
     public int maxIndex = 0;
     public float shrinkTime = 0;
 
-
     private Image _targetImage;
-    private bool isCanClick = true;
+    private bool clicking = false;
+    private bool _isCanClick;
 
-	public void SetTargetImage(Image target)
-	{
+	public void SetTargetImage(Image target, bool isCanClick) {
 		_targetImage = target;
-	}
+        this._isCanClick = isCanClick;
+    }
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!RectTransformUtility.RectangleContainsScreenPoint(_targetImage.rectTransform, Input.mousePosition, Camera.main)) {
-            if (isCanClick) {
-                isCanClick = false;
-                Util.DelayExecuteWithSecond(shrinkTime, () => { isCanClick = true; });
+            if (!clicking) {
+                clicking = true;
+                Util.DelayExecuteWithSecond(shrinkTime, () => { clicking = false; });
                 index = Mathf.Min(index + 1, maxIndex);
-                Psss(eventData, ExecuteEvents.pointerClickHandler);
+                if (_isCanClick) {
+                    Psss(eventData, ExecuteEvents.pointerClickHandler);
+                }  
             }
 		} 
     }
@@ -42,6 +44,7 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
         GameObject current = data.pointerCurrentRaycast.gameObject;
 
         for (int i = 0; i < results.Count; i++) {
+            
             if (current != results[i].gameObject) {
                 if (ExecuteEvents.Execute(results[i].gameObject, data, function)) {
                     break;
