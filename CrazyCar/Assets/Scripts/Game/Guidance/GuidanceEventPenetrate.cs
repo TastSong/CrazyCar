@@ -43,9 +43,9 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
         EventSystem.current.RaycastAll(data, results);
         GameObject current = data.pointerCurrentRaycast.gameObject;
 
-        for (int i = 0; i < results.Count; i++) {
-            
+        for (int i = 0; i < results.Count; i++) {           
             if (current != results[i].gameObject) {
+                Debug.LogError("++++ " + results[i].gameObject + "  " + i);
                 if (ExecuteEvents.Execute(results[i].gameObject, data, function)) {
                     break;
                 }
