@@ -28,7 +28,6 @@ public class GuidanceController : MonoBehaviour, IController {
 
 	private Canvas _canvas;
 	private Vector3[] _corners = new Vector3[4];
-	private Vector4 _center;
 	private float _radius;
 	private float _currentRadius;
 
@@ -48,6 +47,7 @@ public class GuidanceController : MonoBehaviour, IController {
 		_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
 		_material = GetComponent<Image>().material;
 		_eventPenetrate.maxIndex = (guidanceInfos.Length - 1);
+		_eventPenetrate.shrinkTime = _shrinkTime;
 		if (guidanceInfos.Length > 0) {
 			SetTaget(guidanceInfos[0]);
 		}

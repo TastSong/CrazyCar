@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Utils;
 
 public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
 	public int index = 0;
     public int maxIndex = 0;
+    public float shrinkTime = 0;
 
-	private Image _targetImage;
+
+    private Image _targetImage;
+    private bool isCanClick = true;
 
 	public void SetTargetImage(Image target)
 	{
@@ -17,8 +21,12 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData) {
         if (!RectTransformUtility.RectangleContainsScreenPoint(_targetImage.rectTransform, Input.mousePosition, Camera.main)) {
-            index = Mathf.Min(index + 1, maxIndex);
-			Psss(eventData, ExecuteEvents.pointerClickHandler);
+            if (isCanClick) {
+                isCanClick = false;
+                Util.DelayExecuteWithSecond(shrinkTime, () => { isCanClick = true; });
+                index = Mathf.Min(index + 1, maxIndex);
+                Psss(eventData, ExecuteEvents.pointerClickHandler);
+            }
 		} 
     }
 
