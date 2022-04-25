@@ -4,6 +4,7 @@ using UnityEngine;
 using QFramework;
 using System;
 using UnityEngine.UI;
+using Utils;
 
 public enum GuidanceType {
     Circle = 0,

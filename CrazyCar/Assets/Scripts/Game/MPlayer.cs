@@ -170,7 +170,7 @@ public class MPlayer : MonoBehaviour, IController {
         get {
             float time = pathCreator.path.GetClosestTimeOnPath(transform.position);
             Vector3 pathNor = pathCreator.path.GetNormal(time);
-            return Mathf.Abs(Util.GetAngle(pathNor, transform.up)) > (turnoverOffset + 90);
+            return Mathf.Abs(Util.GetAngle(pathNor, transform.up)) > (turnoverOffset + Util.pathRotateOffset.magnitude);
         }
     }
 
