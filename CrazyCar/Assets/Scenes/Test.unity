@@ -641,6 +641,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &428644023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 428644024}
+  m_Layer: 0
+  m_Name: Guidance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428644024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428644023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 991.5937, y: 444.45612, z: -32.221165}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1725981979}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &491877246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,7 +2835,7 @@ GameObject:
   - component: {fileID: 1725981977}
   - component: {fileID: 1725981976}
   m_Layer: 5
-  m_Name: Guidance
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2885,8 +2916,8 @@ RectTransform:
   - {fileID: 1519230826}
   - {fileID: 583651808}
   - {fileID: 2107553289}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 428644024}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3385,7 +3416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0487b2d9de7564a41b947e814a6aef07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 51416199}
+  Target:
+  - {fileID: 51416199}
+  - {fileID: 1519230828}
+  but: {fileID: 51416198}
+  index: 0
 --- !u!114 &2107553291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3435,6 +3470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebd76afc237147f1ac6b4ee40a64dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
+  maxIndex: 0
 --- !u!224 &281532321444891927 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1007277491266537985, guid: 35b064e649fa9634399f620ef442b5af,
