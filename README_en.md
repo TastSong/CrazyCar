@@ -73,6 +73,8 @@
 
 :gemini:Time trial and multiplayer competition two modes
 
+:baby:Tutorial function, provide visual configuration tutorial scheme
+
 :roller_coaster: Route planning function, custom route
 
 :seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
