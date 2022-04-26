@@ -456,5 +456,12 @@ namespace Utils {
         }
 
         public static Vector3 pathRotateOffset = new Vector3(0, 0, 90);
+
+        public static Vector2 WorldToCanvasPos(Canvas canvas, Vector3 world) {
+            Vector2 position;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, world,
+                canvas.GetComponent<Camera>(), out position);
+            return position;
+        }
     }
 }

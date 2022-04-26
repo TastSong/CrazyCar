@@ -111,16 +111,16 @@ public class GuidanceController : MonoBehaviour, IController {
 
 	private void SetRectTaget(GuidanceInfo guidanceInfo) {
 		if (_eventPenetrate != null) {
-			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick);
+			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick, _canvas);
 		}
 
 		guidanceInfo.image.rectTransform.GetWorldCorners(_corners);
-		_targetOffsetX = Vector2.Distance(WorldToCanvasPos(_canvas, _corners[0]), WorldToCanvasPos(_canvas, _corners[3])) / 2f;
-		_targetOffsetY = Vector2.Distance(WorldToCanvasPos(_canvas, _corners[0]), WorldToCanvasPos(_canvas, _corners[1])) / 2f;
+		_targetOffsetX = Vector2.Distance(Util.WorldToCanvasPos(_canvas, _corners[0]), Util.WorldToCanvasPos(_canvas, _corners[3])) / 2f;
+		_targetOffsetY = Vector2.Distance(Util.WorldToCanvasPos(_canvas, _corners[0]), Util.WorldToCanvasPos(_canvas, _corners[1])) / 2f;
 		float x = _corners[0].x + ((_corners[3].x - _corners[0].x) / 2f);
 		float y = _corners[0].y + ((_corners[1].y - _corners[0].y) / 2f);
 		Vector3 centerWorld = new Vector3(x, y, 0);
-		Vector2 center = WorldToCanvasPos(_canvas, centerWorld);
+		Vector2 center = Util.WorldToCanvasPos(_canvas, centerWorld);
 		Vector4 centerMat = new Vector4(center.x, center.y, 0, 0);
 		_material.SetVector("_Center", centerMat);
 		_material.SetFloat("_IsRect", 1);
@@ -130,9 +130,9 @@ public class GuidanceController : MonoBehaviour, IController {
 			canvasRectTransform.GetWorldCorners(_corners);
 			for (int i = 0; i < _corners.Length; i++) {
 				if (i % 2 == 0)
-					_currentOffsetX = Mathf.Max(Vector3.Distance(WorldToCanvasPos(_canvas, _corners[i]), center), _currentOffsetX);
+					_currentOffsetX = Mathf.Max(Vector3.Distance(Util.WorldToCanvasPos(_canvas, _corners[i]), center), _currentOffsetX);
 				else
-					_currentOffsetY = Mathf.Max(Vector3.Distance(WorldToCanvasPos(_canvas, _corners[i]), center), _currentOffsetY);
+					_currentOffsetY = Mathf.Max(Vector3.Distance(Util.WorldToCanvasPos(_canvas, _corners[i]), center), _currentOffsetY);
 			}
 		}
 
@@ -144,15 +144,15 @@ public class GuidanceController : MonoBehaviour, IController {
 
 	private void SetCircleTaget(GuidanceInfo guidanceInfo) {
 		if (_eventPenetrate != null) {
-			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick);
+			_eventPenetrate.SetTargetImage(guidanceInfo.image, guidanceInfo.isClick, _canvas);
 		}
 
 		guidanceInfo.image.rectTransform.GetWorldCorners(_corners);
-		_radius = Vector2.Distance(WorldToCanvasPos(_canvas, _corners[0]), WorldToCanvasPos(_canvas, _corners[2])) / 2f;
+		_radius = Vector2.Distance(Util.WorldToCanvasPos(_canvas, _corners[0]), Util.WorldToCanvasPos(_canvas, _corners[2])) / 2f;
 		float x = _corners[0].x + ((_corners[3].x - _corners[0].x) / 2f);
 		float y = _corners[0].y + ((_corners[1].y - _corners[0].y) / 2f);
 		Vector3 centerWorld = new Vector3(x, y, 0);
-		Vector2 center = WorldToCanvasPos(_canvas, centerWorld);
+		Vector2 center = Util.WorldToCanvasPos(_canvas, centerWorld);
 		Vector4 centerMat = new Vector4(center.x, center.y, 0, 0);		
 		_material.SetVector("_Center", centerMat);
 		_material.SetFloat("_IsRect", 0);
@@ -160,7 +160,7 @@ public class GuidanceController : MonoBehaviour, IController {
 		if (canRectTransform != null) {
 			canRectTransform.GetWorldCorners(_corners);
 			foreach (Vector3 corner in _corners) {
-				_currentRadius = Mathf.Max(Vector3.Distance(WorldToCanvasPos(_canvas, corner), center), _currentRadius);
+				_currentRadius = Mathf.Max(Vector3.Distance(Util.WorldToCanvasPos(_canvas, corner), center), _currentRadius);
 			}
 		}
 		_material.SetFloat("_Slider", _currentRadius);
@@ -173,13 +173,6 @@ public class GuidanceController : MonoBehaviour, IController {
 		contentText.color = guidanceInfo.contentColor;
 		contentText.GetComponent<RectTransform>().localPosition = (center - new Vector2(0, offset));
 		contentText.gameObject.SetActiveFast(true);
-	}
-
-	private Vector2 WorldToCanvasPos(Canvas canvas, Vector3 world) {
-		Vector2 position;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, world,
-			canvas.GetComponent<Camera>(), out position);
-		return position;
 	}
 
 	public IArchitecture GetArchitecture() {

@@ -13,14 +13,16 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
     private Image _targetImage;
     private bool clicking = false;
     private bool _isCanClick;
+    private Canvas targetCanvas;
 
-	public void SetTargetImage(Image target, bool isCanClick) {
+	public void SetTargetImage(Image target, bool isCanClick, Canvas canvas) {
 		_targetImage = target;
         this._isCanClick = isCanClick;
+        targetCanvas = canvas;
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        if (!RectTransformUtility.RectangleContainsScreenPoint(_targetImage.rectTransform, Input.mousePosition, Camera.main)) {
+        if (RectTransformUtility.RectangleContainsScreenPoint(_targetImage.rectTransform, eventData.position)) {
             if (!clicking) {
                 clicking = true;
                 Util.DelayExecuteWithSecond(shrinkTime, () => { clicking = false; });
