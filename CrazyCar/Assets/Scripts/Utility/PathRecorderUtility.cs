@@ -34,6 +34,7 @@ public static class PrefKeys {
     public const string userName = "userName";
     public const string password = "password";
     public const string rememberPassword = "rememberPassword";
+    public const string isCompleteGuidance = "isCompleteGuidance";
 }
 
 public static class LocalUrl {

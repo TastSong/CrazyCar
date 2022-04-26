@@ -43,6 +43,9 @@ public class HomepageUI : MonoBehaviour, IController {
         });
 
         joinGameBtn.onClick.AddListener(() => {
+            if (!this.GetModel<IUserModel>().IsCompleteGuidance) {
+                this.GetModel<IUserModel>().IsCompleteGuidance.Value = true;
+            }
             this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand(new ShowPageCommand(UIPageType.TimeTrialDetailUI));
         });

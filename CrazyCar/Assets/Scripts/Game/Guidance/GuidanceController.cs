@@ -37,7 +37,7 @@ public class GuidanceController : MonoBehaviour, IController {
 	private Material _material;
 	private float _currentOffsetX = 0f;
 	private float _currentOffsetY = 0f;
-	private float _shrinkTime = 0.5f;
+	private float _shrinkTime = 0.1f;
 
 	private float _shrinkVelocityX = 0f;
 	private float _shrinkVelocityY = 0f;
@@ -45,13 +45,17 @@ public class GuidanceController : MonoBehaviour, IController {
 
 	private bool isInit = false;
 
+	private void Awake() {
+		gameObject.SetActiveFast(!this.GetModel<IUserModel>().IsCompleteGuidance);
+    }
+
 	private void Start() {
 		_material = GetComponent<Image>().material;
 		_material.SetFloat("_SliderX", 0);
 		_material.SetFloat("_SliderY", 0);
 		_material.SetFloat("_Slider", 0);
 		contentText.gameObject.SetActiveFast(false);
-		Util.DelayExecuteWithSecond(1, () => {
+		Util.DelayExecuteWithSecond(0.5f, () => {
 			_canvas = this.GetSystem<IGuidanceSystem>().GetTargetCanvas(canvasType);
 			_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
 			_eventPenetrate.maxIndex = guidanceInfos.Length;

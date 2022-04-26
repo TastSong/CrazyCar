@@ -15,6 +15,7 @@ public class UserInfo {
     public int travelTimes;
     public int avatarNum;
     public int mapNum;
+    public bool isNewbie;
     public EquipInfo equipInfo = new EquipInfo();
 }
 
@@ -31,7 +32,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> MapNum { get; }
     BindableProperty<EquipInfo> EquipInfo { get; }
     BindableProperty<int> RememberPassword { get; }
-
+    BindableProperty<bool> IsCompleteGuidance { get; }
     void SetUserInfoPart(UserInfo userInfo);
 }
 
@@ -49,6 +50,7 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<int> RememberPassword { get; } = new BindableProperty<int>();
 
     public BindableProperty<bool> IsSuperuser { get; } = new BindableProperty<bool>();
+    public BindableProperty<bool> IsCompleteGuidance { get; } = new BindableProperty<bool>();
 
     public void SetUserInfoPart(UserInfo userInfo) {
         Name.Value = userInfo.name;
@@ -82,6 +84,11 @@ public class UserModel : AbstractModel, IUserModel {
         RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);
         RememberPassword.Register(v =>
             storage.SaveInt(PrefKeys.rememberPassword, v)
-        ); 
+        );
+
+        IsCompleteGuidance.Value = storage.LoadInt(PrefKeys.isCompleteGuidance) == 1;
+        IsCompleteGuidance.Register(v =>
+            storage.SaveInt(PrefKeys.isCompleteGuidance, v ? 1 : 0)
+        );
     }
 }
