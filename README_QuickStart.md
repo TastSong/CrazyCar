@@ -176,8 +176,13 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 ## 添加多语言
 
 1. 打开**Tools --> Translate**窗口
+
+   <img src="./SamplePictures/Translate.png" alt="Guidance0" style="zoom:54%;" />
+
 2. 输入要翻译的文案数量以及内容，点击**显示翻译**按钮
+
 3. 查看翻译内容是否合适
+
 4. 点击添加**翻译按钮**，文案就会自动添加到**CrazyCar\CrazyCar\Assets\Resources\Language\Locales**对应的文件里
 
 ## 添加新手教程
