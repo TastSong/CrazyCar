@@ -46,10 +46,14 @@ public class GuidanceController : MonoBehaviour, IController {
 	private bool isInit = false;
 
 	private void Start() {
+		_material = GetComponent<Image>().material;
+		_material.SetFloat("_SliderX", 0);
+		_material.SetFloat("_SliderY", 0);
+		_material.SetFloat("_Slider", 0);
+		contentText.gameObject.SetActiveFast(false);
 		Util.DelayExecuteWithSecond(1, () => {
 			_canvas = this.GetSystem<IGuidanceSystem>().GetTargetCanvas(canvasType);
 			_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
-			_material = GetComponent<Image>().material;
 			_eventPenetrate.maxIndex = guidanceInfos.Length;
 			_eventPenetrate.shrinkTime = _shrinkTime;
 			if (guidanceInfos.Length > 0) {
@@ -168,6 +172,7 @@ public class GuidanceController : MonoBehaviour, IController {
 		contentText.text = guidanceInfo.content;
 		contentText.color = guidanceInfo.contentColor;
 		contentText.GetComponent<RectTransform>().localPosition = (center - new Vector2(0, offset));
+		contentText.gameObject.SetActiveFast(true);
 	}
 
 	private Vector2 WorldToCanvasPos(Canvas canvas, Vector3 world) {

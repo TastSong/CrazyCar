@@ -45,7 +45,7 @@ public class GuidanceEventPenetrate : MonoBehaviour, IPointerClickHandler {
 
         for (int i = 0; i < results.Count; i++) {           
             if (current != results[i].gameObject) {
-                Debug.LogError("++++ " + results[i].gameObject + "  " + i);
+                Debug.Log("++++ GuidanceEventPenetrate " + results[i].gameObject + "  " + i);
                 if (ExecuteEvents.Execute(results[i].gameObject, data, function)) {
                     break;
                 }
