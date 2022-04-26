@@ -179,3 +179,28 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 2. 输入要翻译的文案数量以及内容，点击**显示翻译**按钮
 3. 查看翻译内容是否合适
 4. 点击添加**翻译按钮**，文案就会自动添加到**CrazyCar\CrazyCar\Assets\Resources\Language\Locales**对应的文件里
+
+## 添加新手教程
+
+1. 在需要添加新手教程的页面添加**Guidance**预制体
+
+   <img src="./SamplePictures/Guidance0.png" alt="Guidance0" style="zoom:54%;" />
+
+2. 设置**Guidance**参数
+
+   <img src="./SamplePictures/Guidance1.png" alt="Guidance0" style="zoom:80%;" /> 
+
+   * **CanvasType**
+     **Guidance**组件需要提供UI所在的父物体**Canvas**组件，在**Index**场景是通过**UIController**脚本管理所以页面，如果新增页面，有新的Canvas，需要在**GuidanceSystem**脚本进行添加并赋值，可以参考**UIController**操作过程
+
+   * **GuidanceType**
+
+     可以设置点击区域是圆形还是矩形
+
+   * **IsClick**
+
+     区域是否需要点击功能，如**AvatarUI**的这个关闭按钮不需要实现关闭**AvatarUI**页面功能，则不勾选
+     
+   * 每个**Guidance**都需要新建一个**Material**(复制一份现有的**AvatarGuidanceMat**重命名就可以)
+   
+   *注：完成标识符为**UserModel**中的**IsCompleteGuidance**，完成条件为点击**计时赛按钮***
