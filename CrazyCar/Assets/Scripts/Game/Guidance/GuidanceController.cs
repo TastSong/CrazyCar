@@ -21,6 +21,7 @@ public class GuidanceInfo {
 }
 
 public class GuidanceController : MonoBehaviour, IController {
+	public GuidanceCanvasType canvasType = GuidanceCanvasType.UIController;
 	public GuidanceInfo[] guidanceInfos;
 	public int index = 0;
 	public Text contentText;
@@ -42,18 +43,28 @@ public class GuidanceController : MonoBehaviour, IController {
 	private float _shrinkVelocityY = 0f;
 	private float _shrinkVelocity = 0f;
 
-	private void Awake() {
-		_canvas = GetComponentInParent<Canvas>();
-		_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
-		_material = GetComponent<Image>().material;
-		_eventPenetrate.maxIndex = guidanceInfos.Length;
-		_eventPenetrate.shrinkTime = _shrinkTime;
-		if (guidanceInfos.Length > 0) {
-			SetTaget(guidanceInfos[0]);
-		}
+	private bool isInit = false;
+
+	private void Start() {
+		Util.DelayExecuteWithSecond(1, () => {
+			_canvas = this.GetSystem<IGuidanceSystem>().GetTargetCanvas(canvasType);
+			_eventPenetrate = GetComponent<GuidanceEventPenetrate>();
+			_material = GetComponent<Image>().material;
+			_eventPenetrate.maxIndex = guidanceInfos.Length;
+			_eventPenetrate.shrinkTime = _shrinkTime;
+			if (guidanceInfos.Length > 0) {
+				SetTaget(guidanceInfos[0]);
+			}
+
+			isInit = true;
+		});		
 	}
 
 	private void Update() {
+		if (!isInit) {
+			return;
+        }
+
 		//从当前偏移值到目标偏移值差值显示收缩动画
 		if (guidanceInfos[index].guidanceType == GuidanceType.Rect) {
 			float valueX = Mathf.SmoothDamp(_currentOffsetX, _targetOffsetX, ref _shrinkVelocityX, _shrinkTime);

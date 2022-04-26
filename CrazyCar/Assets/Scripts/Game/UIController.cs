@@ -25,6 +25,7 @@ public class UIController : MonoBehaviour, IController {
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
+        this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         string urlStr = Resources.Load<TextAsset>(basePageUrl + "url").text;
         JsonData data = JsonMapper.ToObject(urlStr);
         IDictionary dict = data;

@@ -651,7 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 428644024}
   m_Layer: 0
-  m_Name: Guidance
+  m_Name: c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2949,6 +2949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1725981979}
+  - component: {fileID: 1725981980}
   - component: {fileID: 1725981978}
   - component: {fileID: 1725981977}
   - component: {fileID: 1725981976}
@@ -3042,6 +3043,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1725981980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725981975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc75d1c4f507114b9b0240f864385b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1796097909
 Mesh:
   m_ObjectHideFlags: 0
@@ -24050,6 +24063,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guidance
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574762473540019925, guid: 3bf5c2a9a2746e34386e4e020bb712ab,
+        type: 3}
+      propertyPath: canvasType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6574762473540019925, guid: 3bf5c2a9a2746e34386e4e020bb712ab,
         type: 3}
