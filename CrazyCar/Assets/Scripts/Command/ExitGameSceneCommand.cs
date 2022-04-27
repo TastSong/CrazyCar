@@ -8,7 +8,6 @@ public class ExitGameSceneCommand : AbstractCommand
 {
     protected override void OnExecute()
     {
-
         Time.timeScale = 0;
         this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(
             content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
