@@ -6,6 +6,7 @@ using QFramework;
 
 
 public class PlayerController : MonoBehaviour, IController {
+    public EasyObjectsFade easyObjectsFade;
     public MPlayer mPlayerPrefab;
     public Transform startPos;
     public Transform cinemachineTF;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour, IController {
         firstAngle.SetParent(selfPlayer.transform, false);
         thirdAngle.SetParent(selfPlayer.transform, false);
         selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value, this.GetModel<IUserModel>().IsVIP.Value);
+        easyObjectsFade.playerTransform = selfPlayer.GetComponent<Transform>();
     }
 
     private void OnMakeNewPlayer(MakeNewPlayerEvent e) {

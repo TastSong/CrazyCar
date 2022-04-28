@@ -28,7 +28,7 @@ public class EasyObjectsFade : MonoBehaviour
     [Tooltip("Opacity of the object when fully faded")]
     [SerializeField, Range(0, 1f)] private float minimalOpacity = 0.1f;
 
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] public Transform playerTransform;
 
     private List<Material> fadedOut = new List<Material>();
 

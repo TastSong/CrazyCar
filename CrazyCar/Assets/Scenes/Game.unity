@@ -2081,6 +2081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 727146239}
   - component: {fileID: 727146242}
+  - component: {fileID: 727146245}
   - component: {fileID: 727146238}
   - component: {fileID: 727146237}
   - component: {fileID: 727146240}
@@ -2316,6 +2317,27 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &727146245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727146236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923e1d6d94a052749bbb4f861ee0df28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshDetectionType: 2
+  allowSkinnedMeshRenderes: 1
+  detectFromInsideCollider: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 262144
+  time: 0.1459999978542328
+  minimalOpacity: 0.1
+  playerTransform: {fileID: 933877984}
 --- !u!1 &735654424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4781,6 +4803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e1f8f091a5e0642904fa9678229b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  easyObjectsFade: {fileID: 727146245}
   mPlayerPrefab: {fileID: 3226108444913594260, guid: 78a737ddc9462964f9c1327c59aa580e,
     type: 3}
   startPos: {fileID: 933877984}
