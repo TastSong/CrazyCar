@@ -129,6 +129,7 @@
 10. [AutoLOD：自动生成降低Mesh并生成LOD ](https://assetstore.unity.com/packages/tools/utilities/autolod-185662?locale=zh-CN)
 10. [UniTask: Provides an efficient allocation free async/await integration for Unity.](https://github.com/Cysharp/UniTask)
 10. [全部免费字体大全 (chaziti.cn)](https://chaziti.cn/free/)
+10. [Transparent Culling System (URP) 遮挡剔除插件 ](https://assetstore.unity.com/packages/tools/camera/transparent-culling-system-urp-212951)
 
 
 ## 证书
