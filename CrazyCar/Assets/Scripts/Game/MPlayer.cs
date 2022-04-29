@@ -57,6 +57,7 @@ public class MPlayer : MonoBehaviour, IController {
 
     // 记录通过拱门的次数
     public int passEndSignTimes = 0;
+    private bool isCanCalculatePassEndSignTimes = true;
 
     void Start() {
         mPlayerStyle = GetComponent<MPlayerStyle>();
@@ -340,8 +341,12 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "EndSign") {
-            passEndSignTimes++;
+        if (other.tag == TagName.endSign) {
+            if (isCanCalculatePassEndSignTimes) {
+                isCanCalculatePassEndSignTimes = false;
+                passEndSignTimes++;
+                Util.DelayExecuteWithSecond(3, () => { isCanCalculatePassEndSignTimes = true; });
+            }
         }
     }
 

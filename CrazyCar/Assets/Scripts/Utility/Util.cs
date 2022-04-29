@@ -27,6 +27,10 @@ namespace Utils {
         Game = 3
     }
 
+    public static class TagName {
+        public const string endSign = "EndSign";
+    }
+
     public static class Util {
         public delegate void NoneParamFunction();
 
