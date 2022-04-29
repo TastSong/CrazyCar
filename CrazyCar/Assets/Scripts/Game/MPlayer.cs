@@ -33,6 +33,7 @@ public class MPlayer : MonoBehaviour, IController {
     Quaternion m_DriftOffset = Quaternion.identity;
     public DriftLevel driftLevel;
     //地面检测
+    public LayerMask groundMask = 0;
     public Transform frontHitTrans;
     public Transform rearHitTrans;
     public bool isGround;
@@ -196,13 +197,13 @@ public class MPlayer : MonoBehaviour, IController {
     private void CheckGroundNormal() {
         //从车头中心附近往下打射线,长度比发射点到车底的距离长一点
         RaycastHit frontHit;
-        bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, LayerMask.GetMask("Ground"));
+        bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, groundMask);
         if (hasFrontHit) {
             Debug.DrawLine(frontHitTrans.position, frontHitTrans.position - transform.up * groundDistance, Color.red);
         }
 
         RaycastHit rearHit;
-        bool hasRearHit = Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance, LayerMask.GetMask("Ground"));
+        bool hasRearHit = Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance, groundMask);
         if (hasRearHit) {
             Debug.DrawLine(rearHitTrans.position, rearHitTrans.position - transform.up * groundDistance, Color.red);
         }

@@ -247,6 +247,7 @@ MonoBehaviour:
     travelTimes: 0
     avatarNum: 0
     mapNum: 0
+    isNewbie: 0
   rig: {fileID: 3226108444913594266}
   vInput: 0
   hInput: 0
@@ -262,12 +263,16 @@ MonoBehaviour:
   rotationStream: {x: 0, y: 0, z: 0, w: 0}
   turnSpeed: 60
   driftLevel: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 16384
   frontHitTrans: {fileID: 4545162490441987236}
   rearHitTrans: {fileID: 3870048221326471708}
   isGround: 0
   groundDistance: 0.7
   driftPower: 0
   lastRecvStatusStamp: 0
+  passEndSignTimes: 0
 --- !u!114 &9136838119040640985
 MonoBehaviour:
   m_ObjectHideFlags: 0
