@@ -73,7 +73,7 @@
 
 :gemini:Time trial and multiplayer competition two modes
 
-:baby:Tutorial function, provide visual configuration tutorial scheme
+:baby:[Tutorial function](./README_QuickStart.md), provide visual configuration tutorial scheme
 
 :roller_coaster: Route planning function, custom route
 

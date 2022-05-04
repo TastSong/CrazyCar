@@ -60,19 +60,19 @@
 
 :sunrise: 支持头像和装备的资源热更新
 
-:rocket:  登录页面可以一键切换单机模式 
+:rocket: 登录页面可以一键切换单机模式 
 
-:car:  可以进行头像和赛车的购买和穿戴
+:car: 可以进行头像和赛车的购买和穿戴
 
-:computer:  你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
+:computer: 你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
 
-:earth_asia:  支持多语言，通过**TranslateEditor.cs**可以一键创建多国语言
+:earth_asia: 支持多语言，通过**TranslateEditor.cs**可以一键创建多国语言
 
-:page_facing_up:  个人信息页面，记录个人成就
+:page_facing_up: 个人信息页面，记录个人成就
 
 :gemini: 计时赛和多人比赛两种竞技模式
 
-:baby:新手教程功能，提供可视化配置新手教程方案
+:baby:[新手教程功能](./README_QuickStart.md)，提供可视化配置新手教程方案
 
 :roller_coaster: 路线规划功能，自定义路线
 
