@@ -22,6 +22,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
     private EquipInfo curEquipInfo;
     private List<ChangeCarItem> changeCarItems = new List<ChangeCarItem>();
+    private bool isFirstTime = true;
 
     private void OnEnable() {
         this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
@@ -29,6 +30,15 @@ public class ChangeCarUI : MonoBehaviour, IController {
             RequestUrl.equipUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
+            // Addressable第一次加载资源会慢
+            if (isFirstTime) {
+                isFirstTime = false;
+                this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
+                Util.DelayExecuteWithSecond(1.4f, () => {
+                    this.GetModel<IGameControllerModel>().LoadingUI.HideLoading();
+                });
+            }
+
             this.GetSystem<IDataParseSystem>().ParseEquipRes(data, SetItemContent);       
         }));
     }
