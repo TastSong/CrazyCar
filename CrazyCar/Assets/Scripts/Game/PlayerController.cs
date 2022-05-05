@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour, IController {
         firstAngle.SetParent(selfPlayer.transform, false);
         thirdAngle.SetParent(selfPlayer.transform, false);
         selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value, this.GetModel<IUserModel>().IsVIP.Value);
+
+        // 遮挡透视功能
         Camera.main.GetComponent<EasyObjectsFade>().playerTransform = selfPlayer.GetComponent<Transform>();
     }
 
