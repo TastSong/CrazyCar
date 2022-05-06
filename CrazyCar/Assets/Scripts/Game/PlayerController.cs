@@ -7,7 +7,6 @@ using QFramework;
 
 public class PlayerController : MonoBehaviour, IController {
     public MPlayer mPlayerPrefab;
-    public Transform startPos;
     public Transform cinemachineTF;
     public Transform firstAngle;
     public Transform thirdAngle;
@@ -57,7 +56,7 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private Vector3 GetStartPosition() {
-        Vector3 pos = startPos.position;
+        Vector3 pos = this.GetModel<IMapControllerModel>().StartPos;
         double num = this.GetModel<IRoomMsgModel>().Num;
         if (num % 2 == 0) {
             pos += new Vector3((int)(num / 2 * widthUnit), 0, 0);
@@ -65,7 +64,7 @@ public class PlayerController : MonoBehaviour, IController {
             
             pos -= new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
         }
-        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + startPos.position +  "  position = " + pos);
+        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + pos +  "  position = " + pos);
         return pos;
     }
 

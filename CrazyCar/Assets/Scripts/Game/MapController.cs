@@ -7,6 +7,7 @@ using PathCreation;
 
 public class MapController : MonoBehaviour, IController {
     public GameObject[] mapsGO;
+    public Transform[] startPos;
     public int mapId;
 
     public IArchitecture GetArchitecture() {
@@ -24,6 +25,8 @@ public class MapController : MonoBehaviour, IController {
         if (selectMapId >= mapsGO.Length) {
             selectMapId = 0;
         }
+
+        this.GetModel<IMapControllerModel>().StartPos = startPos[selectMapId].position;
 
         for (int i = 0; i < mapsGO.Length; i++) {
             mapsGO[i].SetActiveFast(i == selectMapId);
