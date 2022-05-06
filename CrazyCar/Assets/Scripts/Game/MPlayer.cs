@@ -78,8 +78,13 @@ public class MPlayer : MonoBehaviour, IController {
             rig.AddForce(Vector3.zero, ForceMode.Force);
             return;
         }
+        
+        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial && this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
+            return;
+        }
 
-        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
+        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match &&
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
             if (lastRecvStatusStamp != preRecStatusStamp) {
                 if (IsOutside || IsTurnover) {
                     Debug.Log("++++++ reset peer");
@@ -147,7 +152,7 @@ public class MPlayer : MonoBehaviour, IController {
         //计算合力
         Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
 
-        if (!this.GetSystem<IPlayerManagerSystem>().SelfPlayer.isGround) {
+        if (!isGround) {
             this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
             this.GetSystem<IVibrationSystem>().Haptic();
             tempForce = tempForce + gravity * Vector3.down;
