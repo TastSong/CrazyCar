@@ -20,10 +20,9 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 1. Unity 2021.3.1
 2. VS 2019
 3. Eclipse 4.21.0
-4. JDK 1.8.0_91
-5. JRE 1.8.0_91
-6. MySQL 8.0.26
-7. Tomcat 8.0.52
+4. JDK 11.0.12
+5. MySQL 8.0.26
+6. Tomcat 8.0.52
 8. Nginx  1.20.1
 
 ## 环境配置
