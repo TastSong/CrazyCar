@@ -54,13 +54,13 @@ public class ForcedUpdating extends HttpServlet {
 	private boolean isForcedUpdating(String version, String platform) {
 		String sql = "select version from forced_updating where platform = " + "\"" + platform + "\";";
 		String rs = Util.JDBC.executeSelectString(sql, "version");
-		String[] latestVersionStr = rs.split("\\.");
+		String[] minVersionStr = rs.split("\\.");
 		String[] curVersionStr = version.split("\\.");
-		int latestVersion = Util.getSum(latestVersionStr);
+		int minVersion = Util.getSum(minVersionStr);
 		int curVersion = Util.getSum(curVersionStr);
-		sql = "select rule from forced_updating where platform = " + "\"" + platform + "\";";
-		int rule = Util.JDBC.executeSelectInt(sql, "rule");
-		return (latestVersion - curVersion) >  rule || (latestVersion - curVersion) < 0;
+		//sql = "select rule from forced_updating where platform = " + "\"" + platform + "\";";
+		//int rule = Util.JDBC.executeSelectInt(sql, "rule");
+		return (minVersion - curVersion) > 0;
 	}
 	
 	private String getURL(String platform) {

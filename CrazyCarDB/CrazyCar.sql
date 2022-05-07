@@ -17,7 +17,7 @@ insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_
 					   (1, "Tast", "111111", 1629544628, 0, 99, 1, 0);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "song", "111111", 1629544634, 1, 14, 1, 1);
+					   (2, "song", "111111", 1629544634, 1, 88, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
 					   (3, "阿宋小娇妻", "111111", 1629544655, 2, 11, 1, 1);        
@@ -329,13 +329,13 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("Android", "10.1.0", 10000, "https://files.gitee.com/group1/M00/20/00/CgAAEmFRdG6ACOlqAZGFJRM2SG4483.apk?token=d24d65a215815b5515a043a376644c6e&ts=1632728179&attname=CrazyCar.apk&disposition=attachment");
+				   ("Android", "8.0.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("ios", "10.1.0", 10000, "https://gitee.com/TastSong/CrazyCar");
+				   ("ios", "8.0.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("PC", "10.1.0", 10000, "https://gitee.com/TastSong/CrazyCar");                   
+				   ("PC", "8.0.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");                   
 select * from forced_updating;
 
 /*all_equip*/
