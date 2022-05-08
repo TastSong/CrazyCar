@@ -16,7 +16,8 @@ public enum UIPageType {
     RankUI,
     TimeTrialRankUI,
     ChangeCarUI,
-    MatchDetailUI
+    MatchDetailUI,
+    MatchRoomUI
 }
 
 public class UIController : MonoBehaviour, IController {
