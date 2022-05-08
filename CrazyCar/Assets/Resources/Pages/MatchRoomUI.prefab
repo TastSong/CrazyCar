@@ -4039,6 +4039,7 @@ GameObject:
   - component: {fileID: 4135002128903941661}
   - component: {fileID: 4135002128917388060}
   - component: {fileID: 4135002128917388061}
+  - component: {fileID: 227309176746144434}
   m_Layer: 5
   m_Name: CreateRoomUI
   m_TagString: Untagged
@@ -4100,6 +4101,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4135002128917388063}
   m_CullTransparentMesh: 1
+--- !u!114 &227309176746144434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4135002128917388063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5116887a62b1642eebeeced80576e354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveAnimType: 0
+  moveAnimInfos:
+  - direction: 2
+    moveDistance: 144
+    target: {fileID: 227309175519795725}
+  - direction: 0
+    moveDistance: 144
+    target: {fileID: 1206956902806248562}
+  - direction: 1
+    moveDistance: 144
+    target: {fileID: 7223548206439793774}
+  duration: 0.2
 --- !u!1 &4410424219378362291
 GameObject:
   m_ObjectHideFlags: 0
