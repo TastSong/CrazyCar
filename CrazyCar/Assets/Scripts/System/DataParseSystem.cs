@@ -13,6 +13,7 @@ public interface IDataParseSystem : ISystem {
     void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     void ParseTimeTrialResult(JsonData jsonData, Action success = null);
     void ParseMatchClassData(JsonData jsonData, Action success = null);
+    public void ParseSelectMatch(JsonData jsonData, Action success = null);
     void ParseMatchRank(JsonData data, Action success = null);
     void ParseEquipRes(JsonData jsonData, Action success = null);
 }
@@ -143,6 +144,19 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.enrollTime = (long)jsonData[i]["enroll_time"];
             matchModel.MatchDic[info.cid] = info;
         }
+        success?.Invoke();
+    }
+
+    public void ParseSelectMatch(JsonData jsonData, Action success = null) {
+        var info = this.GetModel<IMatchModel>().SelectInfo;
+        info.Value.cid = (int)jsonData["cid"];
+        info.Value.name = (string)jsonData["name"];
+        info.Value.star = (int)jsonData["star"];
+        info.Value.mapId = (int)jsonData["map_id"];
+        info.Value.limitTime = (int)jsonData["limit_time"];
+        info.Value.times = (int)jsonData["times"];
+        info.Value.startTime = (long)jsonData["start_time"];
+        info.Value.enrollTime = (long)jsonData["enroll_time"];
         success?.Invoke();
     }
 

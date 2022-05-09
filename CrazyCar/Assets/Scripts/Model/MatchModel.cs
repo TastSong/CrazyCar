@@ -24,6 +24,12 @@ public class MatchRankInfo {
     public int completeTime;
 }
 
+public class MatchRoomMemberInfo {
+    public string memberName;
+    public int aid;
+    public bool isHouseOwner;
+}
+
 public interface IMatchModel : IModel {
     BindableProperty<int> RewardStar { get; }
     Dictionary<int, MatchInfo> MatchDic { get; set; }
@@ -31,13 +37,15 @@ public interface IMatchModel : IModel {
     List<MatchRankInfo> MatchRankList { get; set; }
     BindableProperty<bool> IsComplete { get; }
     BindableProperty<int> CompleteTime { get; }
-
     BindableProperty<long> StartTime { get; }
     BindableProperty<long> EndTime { get; }
     BindableProperty<bool> IsArriveLimitTime { get; }
     bool IsStartGame { get; }
     bool IsEndGame { get; }
     bool InGame { get; }
+    BindableProperty<int> RoomId { get; }
+    bool IsHouseOwner { get; }
+    Dictionary<uint, MatchRoomMemberInfo> MemberInfoDic { get; set; }
 
     int GetCompleteTime();
     void CleanData();
@@ -63,6 +71,13 @@ public class MatchModel : AbstractModel, IMatchModel {
     public bool IsStartGame { get { return StartTime * 1000 < Util.GetTime(); }}
     public bool IsEndGame { get { return IsComplete || IsArriveLimitTime;}}
     public bool InGame { get { return IsStartGame && !IsEndGame; } }
+
+    public BindableProperty<int> RoomId { get; } = new BindableProperty<int>();
+
+    public bool IsHouseOwner { get; }
+
+    public Dictionary<uint, MatchRoomMemberInfo> MemberInfoDic { get; set; }
+
 
     public void CleanData() {
         IsComplete.Value = false;
