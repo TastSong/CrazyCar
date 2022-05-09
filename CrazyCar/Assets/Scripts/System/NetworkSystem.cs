@@ -133,7 +133,8 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void RespondAction(JsonData recJD){
-        if ((int)recJD["msg_type"] == (int)MsgType.PlayerState) {
+        MsgType msgType = (MsgType)(int)recJD["msg_type"];
+        if (msgType == MsgType.PlayerState) {
             playerStateMsg = ParsePlayerStateMsg(recJD);
             if (netType == NetType.WebSocket) {               
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
@@ -142,14 +143,24 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                     PlayerStateMsgs.Enqueue(playerStateMsg);
                 }
             }
-        } else if ((int)recJD["msg_type"] == (int)MsgType.CreatePlayer){
+        } else if (msgType == MsgType.CreatePlayer){
             playerCreateMsg = ParsePlayerCreateMsg(recJD);
             MPlayer peer = null;
             if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
                 this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
             }          
-        } else if ((int)recJD["msg_type"] == (int)MsgType.DelPlayer){
+        } else if (msgType == MsgType.DelPlayer){
 
+        } else if (msgType == MsgType.MatchRoomCreate) {
+            this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);
+        } else if (msgType == MsgType.MatchRoomJoin) {
+            this.GetSystem<IMatchRoomSystem>().OnJoinMsg(recJD);
+        } else if (msgType == MsgType.MatchRoomStart) {
+            this.GetSystem<IMatchRoomSystem>().OnStartMsg(recJD);
+        } else if (msgType == MsgType.MatchRoomStatus) {
+            this.GetSystem<IMatchRoomSystem>().OnStatusMsg(recJD);
+        } else if (msgType == MsgType.MatchRoomExit) {
+            this.GetSystem<IMatchRoomSystem>().OnExitMsg(recJD);
         }
     }
 

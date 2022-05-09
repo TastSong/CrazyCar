@@ -43,7 +43,7 @@ public interface IMatchModel : IModel {
     bool IsStartGame { get; }
     bool IsEndGame { get; }
     bool InGame { get; }
-    BindableProperty<int> RoomId { get; }
+    BindableProperty<string> RoomId { get; }
     bool IsHouseOwner { get; }
     Dictionary<uint, MatchRoomMemberInfo> MemberInfoDic { get; set; }
 
@@ -72,7 +72,7 @@ public class MatchModel : AbstractModel, IMatchModel {
     public bool IsEndGame { get { return IsComplete || IsArriveLimitTime;}}
     public bool InGame { get { return IsStartGame && !IsEndGame; } }
 
-    public BindableProperty<int> RoomId { get; } = new BindableProperty<int>();
+    public BindableProperty<string> RoomId { get; } = new BindableProperty<string>();
 
     public bool IsHouseOwner { get; }
 
