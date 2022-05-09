@@ -122,9 +122,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("·¿¼äÒÑ´æÔÚ");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½");
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("·¿¼äÊýÒÑ´ïÉÏÏÞ£¬ÇëÉÔºóÔÙÊÔ");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -138,9 +138,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("·¿¼ä²»´æÔÚ");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("ï¿½ï¿½ï¿½ä²»ï¿½ï¿½ï¿½ï¿½");
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("·¿¼äÈËÊýÒÑÂú");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -154,8 +154,10 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             for (int i = 0; i < players.Count; i++) {
                 MatchRoomMemberInfo info = new MatchRoomMemberInfo();
                 info.memberName = (string)players[i]["member_name"];
-                info.isHouseOwner = ((uint)players[i]["is_house_owner"] == 1);
+                info.isHouseOwner = (bool)players[i]["is_house_owner"];
                 info.aid = (int)players[i]["aid"];
+                info.uid = (uint)players[i]["uid"];
+                infos.Add(info.uid, info);
             }
         }
     }

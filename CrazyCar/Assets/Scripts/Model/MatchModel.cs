@@ -28,6 +28,7 @@ public class MatchRoomMemberInfo {
     public string memberName;
     public int aid;
     public bool isHouseOwner;
+    public uint uid;
 }
 
 public interface IMatchModel : IModel {

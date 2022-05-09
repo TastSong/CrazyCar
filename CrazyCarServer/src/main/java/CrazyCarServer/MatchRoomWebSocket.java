@@ -103,13 +103,13 @@ public class MatchRoomWebSocket {
             sendToUser(data.toString(), roomId);
         } else{              
             JSONArray jsonArray = new JSONArray();
-            playerLists.clear();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
             for (int i = 0; i < playerLists.size(); i++){
                 JSONObject jbItem = new JSONObject();
                 jbItem.put("member_name", playerLists.get(i).memberName);
                 jbItem.put("is_house_owner", playerLists.get(i).isHouseOwner);
                 jbItem.put("aid", playerLists.get(i).aid);
+                jbItem.put("uid", playerLists.get(i).uid);
                 jsonArray.add(jbItem);
             }		
             data.put("players", jsonArray);

@@ -11,6 +11,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     public MatchRoomPlayerItem[] playerItems;
 
     private Coroutine updateStatusCor;
+    private int maxNum = 2;
 
     private void OnEnable() {
         startBtn.interactable = false;
@@ -56,14 +57,15 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
                 }
             }
 
-            int i = 0;
-            foreach (var info in this.GetModel<IMatchModel>().MemberInfoDic) {
-                if (i > 1) {
-                    break;
+            
+            List<MatchRoomMemberInfo> infos = new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
+            for (int i = 0; i < playerItems.Length; i++) {
+                if (i < infos.Count) {
+                    playerItems[i].SetContent(infos[i]);
+                } else {
+                    playerItems[i].CleanItem();
                 }
-                playerItems[i].SetContent(info.Value);
-                i++;
-            } 
+            }
         }
     }
 

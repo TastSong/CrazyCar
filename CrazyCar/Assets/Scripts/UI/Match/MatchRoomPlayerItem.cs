@@ -18,6 +18,15 @@ public class MatchRoomPlayerItem : MonoBehaviour, IController {
         });
     }
 
+    public void CleanItem() {
+        nickName.text = "等待加入...";
+        this.GetSystem<IAddressableSystem>().GetAvatarResource(10, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
+        });
+    }
+
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
     }
