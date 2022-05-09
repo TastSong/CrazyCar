@@ -76,7 +76,7 @@ public class MatchModel : AbstractModel, IMatchModel {
 
     public bool IsHouseOwner { get; }
 
-    public Dictionary<uint, MatchRoomMemberInfo> MemberInfoDic { get; set; }
+    public Dictionary<uint, MatchRoomMemberInfo> MemberInfoDic { get; set; } = new Dictionary<uint, MatchRoomMemberInfo>();
 
 
     public void CleanData() {

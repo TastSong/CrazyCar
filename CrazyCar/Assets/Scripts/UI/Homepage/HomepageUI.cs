@@ -57,7 +57,8 @@ public class HomepageUI : MonoBehaviour, IController {
             }
 
             if (this.GetModel<IUserModel>().IsVIP) {
-                this.SendCommand<CreateMatchCommand>();
+                //this.SendCommand<CreateMatchCommand>();
+                this.SendCommand<ShowPageCommand>(new ShowPageCommand(UIPageType.MatchRoomUI));
             } else {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("This feature is for VIPs only"));
             }

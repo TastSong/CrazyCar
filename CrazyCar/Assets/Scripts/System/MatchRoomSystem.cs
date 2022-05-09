@@ -30,20 +30,22 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomCreate() {
         MatchRoomConnect();
-        StringBuilder sb = new StringBuilder();
-        JsonWriter w = new JsonWriter(sb);
-        w.WriteObjectStart();
-        w.WritePropertyName("msg_type");
-        w.Write((int)MsgType.MatchRoomCreate);   
-        w.WritePropertyName("timestamp");
-        w.Write(Util.GetTime());
-        w.WritePropertyName("room_id");
-        w.Write(this.GetModel<IMatchModel>().RoomId);
-        w.WritePropertyName("uid");
-        w.Write(this.GetModel<IUserModel>().Uid);
-        w.WriteObjectEnd();
-        Debug.LogError("MatchRoomCreate : " + sb.ToString());
-        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        Util.DelayExecuteWithSecond(1.4f, () => {
+            StringBuilder sb = new StringBuilder();
+            JsonWriter w = new JsonWriter(sb);
+            w.WriteObjectStart();
+            w.WritePropertyName("msg_type");
+            w.Write((int)MsgType.MatchRoomCreate);
+            w.WritePropertyName("timestamp");
+            w.Write(Util.GetTime());
+            w.WritePropertyName("room_id");
+            w.Write(this.GetModel<IMatchModel>().RoomId);
+            w.WritePropertyName("uid");
+            w.Write(this.GetModel<IUserModel>().Uid);
+            w.WriteObjectEnd();
+            Debug.LogError("MatchRoomCreate : " + sb.ToString());
+            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        });  
     }
 
     public void MatchRoomEixt() {
@@ -132,7 +134,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void OnJoinMsg(JsonData recJD) {
         int code = (int)recJD["code"];
-        Debug.LogError("OnJoinMsg = " + code);
+        Debug.LogError("OnJoinMsg = " + recJD.ToJson());
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
@@ -143,18 +145,23 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void OnStatusMsg(JsonData recJD) {
-        JsonData players = recJD["players"];
-        var infos = this.GetModel<IMatchModel>().MemberInfoDic;
-        infos.Clear();
-        for (int i = 0; i < players.Count; i++) {
-            MatchRoomMemberInfo info = new MatchRoomMemberInfo();
-            info.memberName = (string)players[i]["member_name"];
-            info.isHouseOwner = ((uint)players[i]["type"] == 1);
-            info.aid = (int)players[i]["aid"];
+        int code = (int)recJD["code"];
+        Debug.LogError("OnStatusMsg = " + recJD.ToJson());
+        if (code == 200) {
+            JsonData players = recJD["players"];
+            var infos = this.GetModel<IMatchModel>().MemberInfoDic;
+            infos.Clear();
+            for (int i = 0; i < players.Count; i++) {
+                MatchRoomMemberInfo info = new MatchRoomMemberInfo();
+                info.memberName = (string)players[i]["member_name"];
+                info.isHouseOwner = ((uint)players[i]["is_house_owner"] == 1);
+                info.aid = (int)players[i]["aid"];
+            }
         }
     }
 
     public void OnStartMsg(JsonData recJD) {
+        Debug.LogError("OnStartMsg = " + recJD.ToJson());
         if ((int)recJD["code"] == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
             this.SendEvent<MatchRoomStartEvent>();
