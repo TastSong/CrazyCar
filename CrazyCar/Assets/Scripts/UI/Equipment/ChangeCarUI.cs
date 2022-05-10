@@ -25,7 +25,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private bool isFirstTime = true;
 
     private void OnEnable() {
-        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
+        this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.equipUrl,
         token: this.GetModel<IGameControllerModel>().Token.Value,
@@ -33,9 +33,9 @@ public class ChangeCarUI : MonoBehaviour, IController {
             // Addressable第一次加载资源会慢
             if (isFirstTime) {
                 isFirstTime = false;
-                this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
+                this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
                 Util.DelayExecuteWithSecond(1.4f, () => {
-                    this.GetModel<IGameControllerModel>().LoadingUI.HideLoading();
+                    this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(false));
                 });
             }
 

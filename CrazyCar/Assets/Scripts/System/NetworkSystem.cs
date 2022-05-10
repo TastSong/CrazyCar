@@ -71,7 +71,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         if (request.isNetworkError || request.isHttpError) {
             Debug.LogError("Is Network Error url = " + url);
         } else {
-            this.GetModel<IGameControllerModel>().LoadingUI.HideLoading();
+            this.SendEvent<SetLoadingUIEvent>(new SetLoadingUIEvent(false));
             byte[] results = request.downloadHandler.data;
             string s = Encoding.UTF8.GetString(results);
             Debug.Log(url + " : " + s);

@@ -15,10 +15,10 @@ public class GameController : MonoBehaviour, IController {
         DontDestroyOnLoad(gameObject);
 
         this.GetModel<IGameControllerModel>().GameHelper = gameHelper;
-        this.GetModel<IGameControllerModel>().LoadingUI = loadingUI;
 
         this.RegisterEvent<ShowWarningAlertEvent>(OnWarningAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ShowInfoConfirmAlertEvent>(OnInfoConfirmAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<SetLoadingUIEvent>(OnSetLoadingUI).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnWarningAlert(ShowWarningAlertEvent e) {
@@ -29,11 +29,19 @@ public class GameController : MonoBehaviour, IController {
         infoConfirmAlert.ShowWithText(e.title, e.content, e.succ, e.fail, e.confirmText, e.cancelText, e.type);
     }
 
+    private void OnSetLoadingUI(SetLoadingUIEvent e) {
+        if (e.isShow) {
+            loadingUI.ShowLoading();
+        } else {
+            loadingUI.HideLoading();
+        }
+    }
+
     private void Start() {
         this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(false);
         warningAlert.gameObject.SetActiveFast(false);
         infoConfirmAlert.gameObject.SetActiveFast(false);
-        this.GetModel<IGameControllerModel>().LoadingUI.HideLoading();
+        loadingUI.HideLoading();
         this.GetSystem<II18NSystem>().InitTranslation();
         InitSettingsInfo();
     }

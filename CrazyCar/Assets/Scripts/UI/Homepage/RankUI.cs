@@ -11,7 +11,7 @@ public class RankUI : MonoBehaviour, IController {
     public Button closeBtn;
 
     private void OnEnable() {
-        this.GetModel<IGameControllerModel>().LoadingUI.ShowLoading();
+        this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.timeTrialDetailUrl,
            token: this.GetModel<IGameControllerModel>().Token.Value,
