@@ -121,10 +121,10 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             this.GetModel<IMatchModel>().IsHouseOwner = true;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间已存在");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Room already exists"));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("当前房间数已达上限");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The number of rooms has reached the upper limit"));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
@@ -140,10 +140,10 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             this.GetModel<IMatchModel>().IsHouseOwner = false;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("无此房间");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Without this room"));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间人数已满");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The room is full"));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }

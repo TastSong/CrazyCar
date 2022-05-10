@@ -201,9 +201,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         code: (code) => {
             if (code == 423) {
                 if (gameType == GameType.Match) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("The match is currently open only to VIP users");
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The match is currently open only to VIP users"));
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("Do not own this course");
+                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Do not own this course"));
                 }
             }
         }));
