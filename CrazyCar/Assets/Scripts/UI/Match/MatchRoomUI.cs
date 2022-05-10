@@ -15,6 +15,7 @@ public class MatchRoomUI : MonoBehaviour, IController {
     private void OnEnable() {
         createBtn.interactable = true;
         joinBtn.interactable = true;
+        inputField.text = "";
         statusUI.gameObject.SetActiveFast(false);
     }
 
@@ -47,6 +48,9 @@ public class MatchRoomUI : MonoBehaviour, IController {
     }
 
     private void OnMatchRoomCreateOrJoinSucc(MatchRoomCreateOrJoinSuccEvent e) {
+        inputField.text = "";
+        createBtn.interactable = true;
+        joinBtn.interactable = true;
         statusUI.gameObject.SetActiveFast(true);
     }
 

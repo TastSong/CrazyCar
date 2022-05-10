@@ -54,20 +54,22 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomJoin() {
         MatchRoomConnect();
-        StringBuilder sb = new StringBuilder();
-        JsonWriter w = new JsonWriter(sb);
-        w.WriteObjectStart();
-        w.WritePropertyName("msg_type");
-        w.Write((int)MsgType.MatchRoomCreate);
-        w.WritePropertyName("timestamp");
-        w.Write(Util.GetTime());
-        w.WritePropertyName("room_id");
-        w.Write(this.GetModel<IMatchModel>().RoomId);
-        w.WritePropertyName("uid");
-        w.Write(this.GetModel<IUserModel>().Uid);
-        w.WriteObjectEnd();
-        Debug.LogError("MatchRoomJoin : " + sb.ToString());
-        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        Util.DelayExecuteWithSecond(1.4f, () => {
+            StringBuilder sb = new StringBuilder();
+            JsonWriter w = new JsonWriter(sb);
+            w.WriteObjectStart();
+            w.WritePropertyName("msg_type");
+            w.Write((int)MsgType.MatchRoomJoin);
+            w.WritePropertyName("timestamp");
+            w.Write(Util.GetTime());
+            w.WritePropertyName("room_id");
+            w.Write(this.GetModel<IMatchModel>().RoomId);
+            w.WritePropertyName("uid");
+            w.Write(this.GetModel<IUserModel>().Uid);
+            w.WriteObjectEnd();
+            Debug.LogError("MatchRoomJoin : " + sb.ToString());
+            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        });
     }
 
     public void MatchRoomStatus() {
