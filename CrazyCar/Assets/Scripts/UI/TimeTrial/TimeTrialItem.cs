@@ -27,13 +27,13 @@ public class TimeTrialItem : MonoBehaviour, IController {
                 });
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
-                    this.GetModel<IGameControllerModel>().InfoConfirmAlert.ShowWithText(content: string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
+                    this.SendCommand<ShowInfoConfirmAlertCommand>(new ShowInfoConfirmAlertCommand(content: string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
                     success: () => {
                         this.SendCommand(new BuyTimeTrialClassCommand(timeTrialInfo));
                     },
                     fail: () => {
                         Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
-                    });
+                    }));
                 } else {
                     this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(string.Format(this.GetSystem<II18NSystem>().GetText("This course requires {0} star"), timeTrialInfo.star)));
                 }

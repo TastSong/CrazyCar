@@ -14,7 +14,6 @@ public interface IGameControllerModel : IModel {
     GameType CurGameType { get; set; }
     BindableProperty<float> SendMsgOffTime { get; }
     BindableProperty<bool> StandAlone { get; }
-    InfoConfirmAlert InfoConfirmAlert { get; set; }
     GameHelper GameHelper { get; set; }
     LoadingUI LoadingUI { get; set; }
 }
@@ -29,7 +28,6 @@ public class GameControllerModel : AbstractModel, IGameControllerModel {
     public BindableProperty<float> SendMsgOffTime { get; } = new BindableProperty<float>();
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
-    public InfoConfirmAlert InfoConfirmAlert { get; set; }
     public GameHelper GameHelper { get; set; }
     public LoadingUI LoadingUI { get; set; }
 
