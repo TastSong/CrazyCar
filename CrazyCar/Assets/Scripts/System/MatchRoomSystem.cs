@@ -30,7 +30,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomCreate() {
         MatchRoomConnect();
-        Util.DelayExecuteWithSecond(1.4f, () => {
+        Util.DelayExecuteWithSecond(1f, () => {
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -54,7 +54,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomJoin() {
         MatchRoomConnect();
-        Util.DelayExecuteWithSecond(1.4f, () => {
+        Util.DelayExecuteWithSecond(1f, () => {
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -118,11 +118,14 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.LogError("OnCreateMsg = " + code);
         if (code == 200) {
+            this.GetModel<IMatchModel>().IsHouseOwner = true;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
             this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间已存在");
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
             this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("当前房间数已达上限");
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
 
@@ -134,11 +137,14 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.LogError("OnJoinMsg = " + recJD.ToJson());
         if (code == 200) {
+            this.GetModel<IMatchModel>().IsHouseOwner = false;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
             this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("无此房间");
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
             this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间人数已满");
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
 
@@ -154,7 +160,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                 info.memberName = (string)players[i]["member_name"];
                 info.isHouseOwner = (bool)players[i]["is_house_owner"];
                 info.aid = (int)players[i]["aid"];
-                info.uid = (uint)players[i]["uid"];
+                info.uid = (int)players[i]["uid"];
+                info.index = i;
                 infos.Add(info.uid, info);
             }
         }

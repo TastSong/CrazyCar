@@ -122,7 +122,7 @@ public class MatchRoomWebSocket {
             info.uid = uid;
             info.memberName = Util.getStringDataByUid(uid, "user_name");
             info.aid = Util.getDataByUid(uid, "aid");
-            info.isHouseOwner = true;
+            info.isHouseOwner = false;
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.put("code", 200);    
         }

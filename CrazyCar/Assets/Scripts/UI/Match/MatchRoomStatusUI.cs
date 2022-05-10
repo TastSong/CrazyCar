@@ -15,6 +15,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         startBtn.interactable = false;
+        startBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
         if (updateStatusCor != null) {
             StopCoroutine(updateStatusCor);
         }

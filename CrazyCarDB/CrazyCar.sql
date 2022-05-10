@@ -75,9 +75,6 @@ insert into avatar_name ( aid, avatar_name, star )
 				   (9, "Avatar9", 3);
 insert into avatar_name ( aid, avatar_name, star )
 				   values
-				   (10, "Avatar10", 4);
-insert into avatar_name ( aid, avatar_name, star )
-				   values
 				   (11, "Avatar11", 3);
 insert into avatar_name ( aid, avatar_name, star )
 				   values

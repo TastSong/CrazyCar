@@ -13,10 +13,14 @@ public class MatchRoomUI : MonoBehaviour, IController {
     public MatchRoomStatusUI statusUI;
 
     private void OnEnable() {
+        ResetUI();
+        statusUI.gameObject.SetActiveFast(false);
+    }
+
+    private void ResetUI() {
         createBtn.interactable = true;
         joinBtn.interactable = true;
         inputField.text = "";
-        statusUI.gameObject.SetActiveFast(false);
     }
 
     private void Start() {
@@ -31,6 +35,7 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetSystem<IMatchRoomSystem>().MatchRoomCreate();
             } else {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Please enter a 4-digit room number"));
+                ResetUI();
             }
         });
 
@@ -41,17 +46,21 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetSystem<IMatchRoomSystem>().MatchRoomJoin();
             } else {
                 this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Please enter a 4-digit room number"));
+                ResetUI();
             }
         });
 
         this.RegisterEvent<MatchRoomCreateOrJoinSuccEvent>(OnMatchRoomCreateOrJoinSucc).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomCreateOrJoinFailEvent>(OnMatchRoomCreateOrJoinFail).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnMatchRoomCreateOrJoinSucc(MatchRoomCreateOrJoinSuccEvent e) {
-        inputField.text = "";
-        createBtn.interactable = true;
-        joinBtn.interactable = true;
+        ResetUI();
         statusUI.gameObject.SetActiveFast(true);
+    }
+
+    private void OnMatchRoomCreateOrJoinFail(MatchRoomCreateOrJoinFailEvent e) {
+        ResetUI();
     }
 
     public IArchitecture GetArchitecture() {

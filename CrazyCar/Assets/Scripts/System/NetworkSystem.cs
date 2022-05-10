@@ -189,7 +189,13 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         data: bytes,
         token: this.GetModel<IGameControllerModel>().Token.Value,
         succData: (data) => {
-            this.GetModel<IRoomMsgModel>().Num = (int)data["num"];
+            if (gameType == GameType.Match) {
+                this.GetModel<IRoomMsgModel>().Num = this.GetModel<IMatchModel>().
+                  MemberInfoDic[this.GetModel<IUserModel>().Uid].index;
+            } else {
+                this.GetModel<IRoomMsgModel>().Num = (int)data["num"];
+            }
+            
             succ?.Invoke();
         },
         code: (code) => {
