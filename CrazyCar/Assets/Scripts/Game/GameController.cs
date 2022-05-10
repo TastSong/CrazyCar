@@ -14,11 +14,10 @@ public class GameController : MonoBehaviour, IController {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
 
-        this.GetModel<IGameControllerModel>().GameHelper = gameHelper;
-
         this.RegisterEvent<ShowWarningAlertEvent>(OnWarningAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ShowInfoConfirmAlertEvent>(OnInfoConfirmAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<SetLoadingUIEvent>(OnSetLoadingUI).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<SetGameHelperEvent>(OnSetGameHelper).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnWarningAlert(ShowWarningAlertEvent e) {
@@ -37,8 +36,12 @@ public class GameController : MonoBehaviour, IController {
         }
     }
 
+    private void OnSetGameHelper(SetGameHelperEvent e) {
+        gameHelper.gameObject.SetActiveFast(e.isShow);
+    }
+
     private void Start() {
-        this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(false);
+        gameHelper.gameObject.SetActiveFast(false);
         warningAlert.gameObject.SetActiveFast(false);
         infoConfirmAlert.gameObject.SetActiveFast(false);
         loadingUI.HideLoading();

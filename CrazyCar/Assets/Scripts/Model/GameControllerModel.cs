@@ -14,7 +14,6 @@ public interface IGameControllerModel : IModel {
     GameType CurGameType { get; set; }
     BindableProperty<float> SendMsgOffTime { get; }
     BindableProperty<bool> StandAlone { get; }
-    GameHelper GameHelper { get; set; }
 }
 
 public class GameControllerModel : AbstractModel, IGameControllerModel {
@@ -27,7 +26,6 @@ public class GameControllerModel : AbstractModel, IGameControllerModel {
     public BindableProperty<float> SendMsgOffTime { get; } = new BindableProperty<float>();
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
-    public GameHelper GameHelper { get; set; }
 
     protected override void OnInit() {
         SceneLoaded.Value = false;
