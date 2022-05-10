@@ -148,15 +148,16 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     }
 
     public void ParseSelectMatch(JsonData jsonData, Action success = null) {
-        var info = this.GetModel<IMatchModel>().SelectInfo;
-        info.Value.cid = (int)jsonData["cid"];
-        info.Value.name = (string)jsonData["name"];
-        info.Value.star = (int)jsonData["star"];
-        info.Value.mapId = (int)jsonData["map_id"];
-        info.Value.limitTime = (int)jsonData["limit_time"];
-        info.Value.times = (int)jsonData["times"];
-        info.Value.startTime = (long)jsonData["start_time"];
-        info.Value.enrollTime = (long)jsonData["enroll_time"];
+        MatchInfo info = new MatchInfo();
+        info.cid = (int)jsonData["cid"];
+        info.name = (string)jsonData["name"];
+        info.star = (int)jsonData["star"];
+        info.mapId = (int)jsonData["map_id"];
+        info.limitTime = (int)jsonData["limit_time"];
+        info.times = (int)jsonData["times"];
+        info.startTime = (long)jsonData["start_time"];
+        info.enrollTime = (long)jsonData["enroll_time"];
+        this.GetModel<IMatchModel>().SelectInfo.Value = info;
         success?.Invoke();
     }
 

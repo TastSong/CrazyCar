@@ -400,6 +400,7 @@ create table if not exists `match_class`(
    `cid` int unsigned auto_increment,
    `star` int not null,  /*同Star*/
    `map_id` int not null,
+   `room_id` VARCHAR(40) not null,
    `limit_time` int not null,
    `class_name` VARCHAR(40) not null,
    `times` int not null,
@@ -407,12 +408,13 @@ create table if not exists `match_class`(
    `enroll_time` long not null,
    primary key ( `cid` )
    )engine = innodb default charset = utf8;
-insert into match_class (star, map_id, limit_time, class_name, times, start_time, enroll_time)
+insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time)
 				   values
-				   (2, 0, 60, "基地卡通", 1, 1633519472, 1633519472);
-insert into match_class (star, map_id, limit_time, class_name, times, start_time, enroll_time )
+				   (2, 0, '1111', 60, "基地卡通", 1, 1633519470, 1633519470);
+insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time )
 				   values
-				   (1, 1, 70, "几何风光", 3, 1633519472, 1633519472);
+				   (1, 1, '0011', 70, "几何风光", 3, 1633519472, 1633519472);
+select cid from match_class where room_id = '0011' and start_time = 1633519472;
 select* from match_class;
 
 /*match_record*/

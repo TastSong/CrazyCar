@@ -34,7 +34,7 @@ public class MatchRoomMemberInfo {
 public interface IMatchModel : IModel {
     BindableProperty<int> RewardStar { get; }
     Dictionary<int, MatchInfo> MatchDic { get; set; }
-    BindableProperty<MatchInfo> SelectInfo { get; }
+    BindableProperty<MatchInfo> SelectInfo { get; set; }
     List<MatchRankInfo> MatchRankList { get; set; }
     BindableProperty<bool> IsComplete { get; }
     BindableProperty<int> CompleteTime { get; }

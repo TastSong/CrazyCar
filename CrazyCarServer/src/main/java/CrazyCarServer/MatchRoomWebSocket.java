@@ -29,12 +29,17 @@ public class MatchRoomWebSocket {
     private String id = "";
     private JSONObject sendMsg = new JSONObject(); 
     private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
+    private int maxNum = 2;
+    private int curUid;
+    private String roomId = "";
     
     // id = uid + "," + room_id
     @OnOpen
     public void onOpen(@PathParam(value = "id") String param, Session WebSocketsession, EndpointConfig config) {
         System.out.println(param);
         id = param;//接收到发送消息的人员编号
+        curUid = Integer.parseInt(id.split(",")[0]);
+        roomId = id.split(",")[1];
         this.WebSocketsession = WebSocketsession;
         webSocketSet.put(param, this);
         addOnlineCount();           
@@ -46,6 +51,18 @@ public class MatchRoomWebSocket {
     public void onClose() {
         if (!id.equals("")) {
             webSocketSet.remove(id); 
+            if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
+                for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
+                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
+                        MatchRoomWebSocket.roomMap.get(roomId).remove(i);
+                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
+                            MatchRoomWebSocket.roomMap.remove(roomId);
+                        }
+                        break;
+                    }
+                }
+                System.out.println("onClose : " + MatchRoomWebSocket.roomMap.size());
+            } 
             subOnlineCount();           
             System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
         }
@@ -57,26 +74,25 @@ public class MatchRoomWebSocket {
         sendMsg = JSONObject.parseObject(message);
     	Integer msgType = sendMsg.getInteger("msg_type");
         if (msgType == Util.msgType.MatchRoomCreate) {
-            OnCreateRoom(sendMsg);
+            onCreateRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
-            
+            onJoinRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomExit) {
 
         } else if (msgType == Util.msgType.MatchRoomStart) {
-
+            onStartRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomStatus) {
-            OnStatusRoom(sendMsg);
+            onStatusRoom(sendMsg);
         }
     }
 
-    private void OnCreateRoom(JSONObject message) {
+    private void onCreateRoom(JSONObject message) {
         Integer uid = message.getInteger("uid");
         String roomId = message.getString("room_id");
         JSONObject data = new JSONObject();			
         data.put("msg_type", Util.msgType.MatchRoomCreate);
         if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.put("code", 421);
-            sendToUser(data.toString(), roomId);
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = uid;
@@ -87,20 +103,39 @@ public class MatchRoomWebSocket {
             list.add(info);
             MatchRoomWebSocket.roomMap.put(roomId, list);
             data.put("code", 200);
-            System.out.println("OnCreateRoom : " + data.toString());
-            sendToUser(data.toString(), roomId);
         }
+        System.out.println("OnCreateRoom : " + data.toString());
+        sendToUser(data.toString(), roomId);
     }
 
-    private void OnStatusRoom(JSONObject message) {
+    private void onJoinRoom(JSONObject message) {
         Integer uid = message.getInteger("uid");
+        String roomId = message.getString("room_id");
+        JSONObject data = new JSONObject();			
+        data.put("msg_type", Util.msgType.MatchRoomJoin);
+        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
+			data.put("code", 404);
+        } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
+            data.put("code", 422);
+        } else{
+            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
+            info.uid = uid;
+            info.memberName = Util.getStringDataByUid(uid, "user_name");
+            info.aid = Util.getDataByUid(uid, "aid");
+            info.isHouseOwner = true;
+            MatchRoomWebSocket.roomMap.get(roomId).add(info);
+            data.put("code", 200);    
+        }
+        System.out.println("OnCreateRoom : " + data.toString());  
+        sendToUser(data.toString(), roomId);
+    }
+
+    private void onStatusRoom(JSONObject message) {
         String roomId = message.getString("room_id");
         JSONObject data = new JSONObject();			
         data.put("msg_type", Util.msgType.MatchRoomStatus);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.put("code", 404);
-            System.out.println("OnStatusRoom size : " + MatchRoomWebSocket.roomMap.size());
-            sendToUser(data.toString(), roomId);
+			data.put("code", 404);     
         } else{              
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
@@ -114,10 +149,48 @@ public class MatchRoomWebSocket {
             }		
             data.put("players", jsonArray);
             data.put("code", 200);
-            System.out.println("OnStatusRoom : " + data.toString());
-            sendToUser(data.toString(), roomId);
         }
+        System.out.println("OnStatusRoom : " + data.toString());
+        sendToUser(data.toString(), roomId);
     }
+
+    private void onStartRoom(JSONObject message) {
+        String roomId = message.getString("room_id");
+        Integer mapId = message.getInteger("map_id");
+        Integer limitTime = message.getInteger("limit_time");
+        Integer times = message.getInteger("times");
+        long startTime = message.getLong("start_time");
+        long enrollTime =  System.currentTimeMillis()/1000;
+        String mapName = "TastSong";
+        Integer star = 2;
+        String sql = "insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time) values "
+				+ "(" + star + ", " + mapId + ", "+ "\"" +  roomId + "\"" + "," + limitTime + ", " + "\"" + mapName + "\"" + ", " + times + ", " +  startTime + ", " + enrollTime + ");";
+		Util.JDBC.executeInsert(sql);
+        Integer cid = getCid(roomId, startTime);
+        JSONObject data = new JSONObject();			
+        data.put("msg_type", Util.msgType.MatchRoomStart);
+        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
+			data.put("code", 404);   
+        } else{              	
+            data.put("cid", cid);
+            data.put("name", mapName);
+            data.put("star", star);
+            data.put("map_id", mapId);
+            data.put("limit_time", limitTime);
+            data.put("times", times);
+            data.put("start_time", startTime);
+            data.put("enroll_time", enrollTime);
+            data.put("code", 200); 
+        }
+        System.out.println("OnStatusRoom : " + data.toString());
+        sendToUser(data.toString(), roomId);
+    }
+
+    private int getCid(String roomId, long startTime) {
+		String sql = "select cid from match_class where room_id = " 
+        + "\"" + roomId + "\"" +  " and " + "start_time = " + startTime + ";";
+		return Util.JDBC.executeSelectInt(sql, "cid");
+	}
 
     public void sendToUser(String message, String roomId) {  	
         //String now = getNowTime();

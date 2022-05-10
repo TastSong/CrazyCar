@@ -47,7 +47,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         while (true) {
             this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
             yield return new WaitForSeconds(1.0f);
-            if (this.GetModel<IMatchModel>().MemberInfoDic.Count == 2) {
+            if (this.GetModel<IMatchModel>().MemberInfoDic.Count > 0) {
                 if (!startBtn.interactable) {
                     startBtn.interactable = true;
                 }

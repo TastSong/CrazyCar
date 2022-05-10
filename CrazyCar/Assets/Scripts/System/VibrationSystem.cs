@@ -9,9 +9,11 @@ public interface IVibrationSystem : ISystem {
 
 public class VibrationSystem : AbstractSystem, IVibrationSystem {
     public void Haptic() {
+#if !UNITY_EDITOR
         if (this.GetModel<ISettingsModel>().IsOnVibration) {
             Handheld.Vibrate();
         }
+#endif
     }
 
     protected override void OnInit() {

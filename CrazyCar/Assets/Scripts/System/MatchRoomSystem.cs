@@ -88,32 +88,28 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void MatchRoomStart() {
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                  RequestUrl.createMatchUrl,
-                  token: this.GetModel<IGameControllerModel>().Token.Value,
-                  succData: (data) => {
-                      int cid = (int)data["cid"];
-                      StringBuilder sb = new StringBuilder();
-                      JsonWriter w = new JsonWriter(sb);
-                      w.WriteObjectStart();
-                      w.WritePropertyName("msg_type");
-                      w.Write((int)MsgType.MatchRoomStart);
-                      w.WritePropertyName("timestamp");
-                      w.Write(Util.GetTime());
-                      w.WritePropertyName("room_id");
-                      w.Write(this.GetModel<IMatchModel>().RoomId);
-                      w.WritePropertyName("uid");
-                      w.Write(this.GetModel<IUserModel>().Uid);
-                      w.WritePropertyName("cid");
-                      w.Write(cid);
-                      w.WriteObjectEnd();
-                      Debug.LogError("MatchRoomStart : " + sb.ToString());
-                      this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
-                  },
-                  code: (code) => {
-
-                  }
-              ));
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("msg_type");
+        w.Write((int)MsgType.MatchRoomStart);
+        w.WritePropertyName("timestamp");
+        w.Write(Util.GetTime());
+        w.WritePropertyName("room_id");
+        w.Write(this.GetModel<IMatchModel>().RoomId);
+        w.WritePropertyName("uid");
+        w.Write(this.GetModel<IUserModel>().Uid);
+        w.WritePropertyName("map_id");
+        w.Write(0);
+        w.WritePropertyName("limit_time");
+        w.Write(120);
+        w.WritePropertyName("times");
+        w.Write(1);
+        w.WritePropertyName("start_time");
+        w.Write(Util.GetTime() / 1000 + 30);
+        w.WriteObjectEnd();
+        Debug.LogError("MatchRoomStart : " + sb.ToString());
+        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void OnCreateMsg(JsonData recJD) {
@@ -122,9 +118,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("�����Ѵ���");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间已存在");
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("�������Ѵ����ޣ����Ժ�����");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("当前房间数已达上限");
         }
     }
 
@@ -138,9 +134,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("���䲻����");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("无此房间");
         } else if (code == 422) {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("������������");
+            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText("房间人数已满");
         }
     }
 
