@@ -14,7 +14,6 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     private int maxNum = 2;
 
     private void OnEnable() {
-        startBtn.interactable = false;
         startBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
         if (updateStatusCor != null) {
             StopCoroutine(updateStatusCor);
@@ -24,7 +23,11 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
 
     private void Start() {
         startBtn.onClick.AddListener(() => {
-            this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
+            if (this.GetModel<IMatchModel>().MemberInfoDic.Count >= maxNum) {
+                this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
+            } else {
+                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Other players are not in position"));
+            }  
         });
 
         closeBtn.onClick.AddListener(() => {
@@ -48,16 +51,6 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         while (true) {
             this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
             yield return new WaitForSeconds(1.0f);
-            if (this.GetModel<IMatchModel>().MemberInfoDic.Count > 0) {
-                if (!startBtn.interactable) {
-                    startBtn.interactable = true;
-                }
-            } else {
-                if (startBtn.interactable) {
-                    startBtn.interactable = false;
-                }
-            }
-
             
             List<MatchRoomMemberInfo> infos = new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
             for (int i = 0; i < playerItems.Length; i++) {
