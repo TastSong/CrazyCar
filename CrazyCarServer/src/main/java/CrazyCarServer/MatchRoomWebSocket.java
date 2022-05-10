@@ -208,6 +208,21 @@ public class MatchRoomWebSocket {
     @OnError
     public void onError(Session session, Throwable error) {
         System.out.println("发生错误");
+        if (webSocketSet.containsKey(id)) {
+            webSocketSet.remove(id); 
+            if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
+                for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
+                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
+                        MatchRoomWebSocket.roomMap.get(roomId).remove(i);
+                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
+                            MatchRoomWebSocket.roomMap.remove(roomId);
+                        }
+                        break;
+                    }
+                }
+            } 
+            subOnlineCount();    
+        }  
         error.printStackTrace();
     }
 

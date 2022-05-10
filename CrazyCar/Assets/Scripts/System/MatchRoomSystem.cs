@@ -43,7 +43,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.WritePropertyName("uid");
             w.Write(this.GetModel<IUserModel>().Uid);
             w.WriteObjectEnd();
-            Debug.LogError("MatchRoomCreate : " + sb.ToString());
+            Debug.Log("MatchRoomCreate : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
         });  
     }
@@ -67,7 +67,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.WritePropertyName("uid");
             w.Write(this.GetModel<IUserModel>().Uid);
             w.WriteObjectEnd();
-            Debug.LogError("MatchRoomJoin : " + sb.ToString());
+            Debug.Log("MatchRoomJoin : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
         });
     }
@@ -85,7 +85,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid);
         w.WriteObjectEnd();
-        Debug.LogError("MatchRoomStatus : " + sb.ToString());
+        Debug.Log("MatchRoomStatus : " + sb.ToString());
         this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
     }
 
@@ -110,13 +110,13 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WritePropertyName("start_time");
         w.Write(Util.GetTime() / 1000 + 30);
         w.WriteObjectEnd();
-        Debug.LogError("MatchRoomStart : " + sb.ToString());
+        Debug.Log("MatchRoomStart : " + sb.ToString());
         this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void OnCreateMsg(JsonData recJD) {
         int code = (int)recJD["code"];
-        Debug.LogError("OnCreateMsg = " + code);
+        Debug.Log("OnCreateMsg = " + code);
         if (code == 200) {
             this.GetModel<IMatchModel>().IsHouseOwner = true;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
@@ -135,7 +135,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void OnJoinMsg(JsonData recJD) {
         int code = (int)recJD["code"];
-        Debug.LogError("OnJoinMsg = " + recJD.ToJson());
+        Debug.Log("OnJoinMsg = " + recJD.ToJson());
         if (code == 200) {
             this.GetModel<IMatchModel>().IsHouseOwner = false;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
@@ -150,7 +150,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void OnStatusMsg(JsonData recJD) {
         int code = (int)recJD["code"];
-        Debug.LogError("OnStatusMsg = " + recJD.ToJson());
+        Debug.Log("OnStatusMsg = " + recJD.ToJson());
         if (code == 200) {
             JsonData players = recJD["players"];
             var infos = this.GetModel<IMatchModel>().MemberInfoDic;
