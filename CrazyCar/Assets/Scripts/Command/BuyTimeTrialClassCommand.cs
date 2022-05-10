@@ -22,7 +22,7 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
         data: bytes,
-        token: this.GetModel<IGameControllerModel>().Token.Value,
+        token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
             this.GetModel<IUserModel>().Star.Value = (int)data["star"];
             mTimeTrialInfo.isHas = true;

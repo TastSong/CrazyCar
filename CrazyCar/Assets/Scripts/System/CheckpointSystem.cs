@@ -36,13 +36,13 @@ public class CheckpointSystem : AbstractSystem, ICheckpointSystem {
         PassTimes.Register((passTimes) => {
             this.SendEvent<ResetCheckpointEvent>();
             this.SendEvent<UpdateCylinderNumEvent>();
-            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+            if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
                 if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
                     this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++TimeTrial EndTime = " + this.GetModel<ITimeTrialModel>().EndTime +
                          "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
                 }
-            } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+            } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
                 if (passTimes >= this.GetModel<IMatchModel>().SelectInfo.Value.times) {
                     this.GetModel<IMatchModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++Match EndTime = " + this.GetModel<IMatchModel>().EndTime +

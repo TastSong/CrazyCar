@@ -15,7 +15,7 @@ public class EnterTimeTrialCommand : AbstractCommand {
         Debug.Log("进入课程 = " + mTimeTrialInfo.cid);
         this.GetModel<ITimeTrialModel>().CleanData();
         this.GetModel<ITimeTrialModel>().SelectInfo.Value = mTimeTrialInfo;
-        this.GetModel<IGameControllerModel>().CurGameType = GameType.TimeTrial;
+        this.GetModel<IGameModel>().CurGameType = GameType.TimeTrial;
         Util.LoadingScene(SceneID.Game);
     }
 }

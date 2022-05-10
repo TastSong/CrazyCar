@@ -13,7 +13,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
     private Coroutine limitTimeCor;
 
     private void OnEnable() {
-        if (!this.GetModel<IGameControllerModel>().SceneLoaded.Value) {
+        if (!this.GetModel<IGameModel>().SceneLoaded.Value) {
             return;
         }
 

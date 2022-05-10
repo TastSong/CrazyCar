@@ -11,7 +11,7 @@ public class PostDelPlayerMsgCommand: AbstractCommand {
             w.WritePropertyName("msg_type");
             w.Write((int)MsgType.DelPlayer);
             w.WritePropertyName("cid");
-            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+            if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
                 w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);
             } else {
                 w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);

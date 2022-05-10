@@ -22,9 +22,9 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     private bool IsStartGame {
         get {
-            if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+            if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
                 return this.GetModel<ITimeTrialModel>().IsStartGame;
-            } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+            } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
                 return this.GetModel<IMatchModel>().IsStartGame;
             }
             return false;

@@ -15,7 +15,7 @@ public class EnterMatchCommand : AbstractCommand {
             Debug.Log("进入课程 = " + mMatchInfo.cid);
             this.GetModel<IMatchModel>().CleanData();
             this.GetModel<IMatchModel>().SelectInfo.Value = mMatchInfo;
-            this.GetModel<IGameControllerModel>().CurGameType = GameType.Match;
+            this.GetModel<IGameModel>().CurGameType = GameType.Match;
             Util.LoadingScene(SceneID.Game);
         } else {
             this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The game is over")));

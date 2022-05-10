@@ -51,7 +51,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
-        if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+        if (this.GetModel<IGameModel>().StandAlone.Value) {
             yield break;
         }
 
@@ -187,7 +187,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
         data: bytes,
-        token: this.GetModel<IGameControllerModel>().Token.Value,
+        token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
             if (gameType == GameType.Match) {
                 this.GetModel<IRoomMsgModel>().Num = this.GetModel<IMatchModel>().
@@ -220,7 +220,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
-            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value, succData: (data) => {
+            data: bytes, token: this.GetModel<IGameModel>().Token.Value, succData: (data) => {
                 succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
             }, code: (code) => {
                 if (code != 200)

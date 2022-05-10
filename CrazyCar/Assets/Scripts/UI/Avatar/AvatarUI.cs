@@ -23,7 +23,7 @@ public class AvatarUI : MonoBehaviour, IController {
         avatarModel = this.GetModel<IAvatarModel>();
         this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
-        token: this.GetModel<IGameControllerModel>().Token.Value,
+        token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
             curAid = this.GetModel<IUserModel>().Aid.Value;
             this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, UpdataUI);

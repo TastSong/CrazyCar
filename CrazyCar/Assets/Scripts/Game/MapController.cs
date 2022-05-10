@@ -16,9 +16,9 @@ public class MapController : MonoBehaviour, IController {
 
     private void OnEnable() {
         int selectMapId = 0;
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
             selectMapId = this.GetModel<ITimeTrialModel>().SelectInfo.Value.mapId;
-        } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+        } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             selectMapId = this.GetModel<IMatchModel>().SelectInfo.Value.mapId;
         }
 

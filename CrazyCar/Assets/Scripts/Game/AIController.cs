@@ -80,7 +80,7 @@ public class AIController : MonoBehaviour, IController {
     }
 
     private void Update() {
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
             if (playerFinishTimeTrial) {
                 return;
             }

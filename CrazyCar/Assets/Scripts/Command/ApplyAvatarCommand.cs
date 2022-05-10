@@ -20,7 +20,7 @@ public class ApplyAvatarCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.changeAvatarUrl,
-            data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
+            data: bytes, token: this.GetModel<IGameModel>().Token.Value,
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
                 this.SendEvent(new UpdataAvatarUIEvent(this.GetModel<IUserModel>().Aid));

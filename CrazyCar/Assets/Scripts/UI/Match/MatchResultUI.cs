@@ -43,7 +43,7 @@ public class MatchResultUI : MonoBehaviour, IController {
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.matchResultUrl,
             data: bytes,
-            token: this.GetModel<IGameControllerModel>().Token.Value,
+            token: this.GetModel<IGameModel>().Token.Value,
             succData: (data) => {
                 this.GetSystem<IDataParseSystem>().ParseMatchRank(data, UpdateUI);
             }));

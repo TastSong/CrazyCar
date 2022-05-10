@@ -8,7 +8,7 @@ public enum GameType {
     Match
 }
 
-public interface IGameControllerModel : IModel {
+public interface IGameModel : IModel {
     BindableProperty<bool> SceneLoaded { get; }
     BindableProperty<string> Token { get; }
     GameType CurGameType { get; set; }
@@ -16,7 +16,7 @@ public interface IGameControllerModel : IModel {
     BindableProperty<bool> StandAlone { get; }
 }
 
-public class GameControllerModel : AbstractModel, IGameControllerModel {
+public class GameModel : AbstractModel, IGameModel {
     public BindableProperty<bool> SceneLoaded { get; } = new BindableProperty<bool>();
 
     public BindableProperty<string> Token { get; } = new BindableProperty<string>();

@@ -32,7 +32,7 @@ public class HomepageUI : MonoBehaviour, IController {
 
         avatarBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -49,7 +49,7 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         matchBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -97,7 +97,7 @@ public class HomepageUI : MonoBehaviour, IController {
         // --------- Bottom Btns ---------
         psrofileBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -110,7 +110,7 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         rankBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -118,7 +118,7 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         changeCarBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+            if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
@@ -135,7 +135,7 @@ public class HomepageUI : MonoBehaviour, IController {
         this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
            RequestUrl.matchDetailUrl,
-          token: this.GetModel<IGameControllerModel>().Token.Value,
+          token: this.GetModel<IGameModel>().Token.Value,
           succData: (data) => {
               this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
                   if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {

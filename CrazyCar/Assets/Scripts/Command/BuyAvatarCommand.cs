@@ -23,7 +23,7 @@ public class BuyAvatarCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP
             (url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
         data: bytes,
-        token: this.GetModel<IGameControllerModel>().Token.Value,
+        token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
             this.GetModel<IUserModel>().Star.Value = (int)data["star"];
             mAvatarInfo.isHas = true;

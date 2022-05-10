@@ -79,11 +79,11 @@ public class MPlayer : MonoBehaviour, IController {
             return;
         }
         
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial && this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial && this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
             return;
         }
 
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match &&
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
             if (lastRecvStatusStamp != preRecStatusStamp) {
                 if (IsOutside || IsTurnover) {

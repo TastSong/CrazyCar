@@ -22,7 +22,7 @@ public class ApplyEquipCommand : AbstractCommand {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.changeEquipUrl,
-                data: bytes, token: this.GetModel<IGameControllerModel>().Token.Value,
+                data: bytes, token: this.GetModel<IGameModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
                     this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Successfully Set")));

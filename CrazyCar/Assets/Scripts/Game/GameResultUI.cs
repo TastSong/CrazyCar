@@ -9,8 +9,8 @@ public class GameResultUI : MonoBehaviour, IController {
     public MatchResultUI matchResultUI;
 
     private void OnEnable() {
-        timeTrialResultUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
-        matchResultUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
+        timeTrialResultUI.gameObject.SetActiveFast(this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial);
+        matchResultUI.gameObject.SetActiveFast(this.GetModel<IGameModel>().CurGameType == GameType.Match);
     }
 
     public IArchitecture GetArchitecture() {

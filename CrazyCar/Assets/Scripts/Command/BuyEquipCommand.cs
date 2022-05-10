@@ -27,7 +27,7 @@ public class BuyEquipCommand : AbstractCommand {
                 CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.buyEquipUrl,
                 data: bytes,
-                token: this.GetModel<IGameControllerModel>().Token.Value,
+                token: this.GetModel<IGameModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().Star.Value = (int)data["star"];
                     this.SendEvent<BuyEquipEvent>();

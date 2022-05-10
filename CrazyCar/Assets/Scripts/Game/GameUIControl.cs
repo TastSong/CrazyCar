@@ -25,12 +25,12 @@ public class GameUIControl : MonoBehaviour, IController {
     private void OnSelectGameUI(SelectGameUIEvent e) {
         commonGameUI.gameObject.SetActiveFast(true);
         controlPanel.gameObject.SetActiveFast(true);
-        timeTrialGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial);
-        matchGameUI.gameObject.SetActiveFast(this.GetModel<IGameControllerModel>().CurGameType == GameType.Match);
+        timeTrialGameUI.gameObject.SetActiveFast(this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial);
+        matchGameUI.gameObject.SetActiveFast(this.GetModel<IGameModel>().CurGameType == GameType.Match);
     }
 
     private void OnShowResultUI(ShowResultUIEvent e) {
-        if (this.GetModel<IGameControllerModel>().StandAlone.Value) {
+        if (this.GetModel<IGameModel>().StandAlone.Value) {
             this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Game Over"), 2.0f));
             Util.DelayExecuteWithSecond(2.0f, () => {
                 Util.LoadingScene(SceneID.Index);

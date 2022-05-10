@@ -19,7 +19,7 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterSystem<IAddressableSystem>(new AddressableSystem());
         RegisterSystem<IGuidanceSystem>(new GuidanceSystem());
         RegisterSystem<IMatchRoomSystem>(new MatchRoomSystem());
-        RegisterModel<IGameControllerModel>(new GameControllerModel());
+        RegisterModel<IGameModel>(new GameModel());
         RegisterModel<IUserModel>(new UserModel());
         RegisterModel<IAvatarModel>(new AvatarModel());
         RegisterModel<ITimeTrialModel>(new TimeTrialModel());

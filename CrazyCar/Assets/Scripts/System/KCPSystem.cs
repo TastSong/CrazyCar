@@ -70,7 +70,7 @@ public class KCPManager : KcpClient, IController {
         }
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.kcpServerUrl,
-            token: this.GetModel<IGameControllerModel>().Token.Value,
+            token: this.GetModel<IGameModel>().Token.Value,
             succData : (d) => {
                 client = new KCPManager();
                 client.NoDelay(1, 10, 2, 1);

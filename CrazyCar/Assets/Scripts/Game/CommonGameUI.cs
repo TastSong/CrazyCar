@@ -33,10 +33,10 @@ public class CommonGameUI : MonoBehaviour, IController {
     }
 
     private void UpdateCylinderNum(UpdateCylinderNumEvent e) {
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
             cylinderNumText.text = this.GetSystem<ICheckpointSystem>().PassTimes.ToString() + "/" +
                 this.GetModel<ITimeTrialModel>().SelectInfo.Value.times;
-        } else if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+        } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             cylinderNumText.text = this.GetSystem<ICheckpointSystem>().PassTimes.ToString() + "/" +
                 this.GetModel<IMatchModel>().SelectInfo.Value.times;
         }

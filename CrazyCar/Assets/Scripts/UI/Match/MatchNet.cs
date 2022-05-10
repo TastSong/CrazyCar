@@ -10,7 +10,7 @@ public class MatchNet : MonoBehaviour, IController {
     private Coroutine matchNerCor;
 
     private void Start() {
-        if (this.GetModel<IGameControllerModel>().CurGameType == GameType.Match) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
                 "websocket/MatchWebSocket/" +
                 this.GetModel<IUserModel>().Uid.Value + "," +
@@ -40,7 +40,7 @@ public class MatchNet : MonoBehaviour, IController {
     private IEnumerator SendMsg() {
         while (true) {
             this.SendCommand<PostPlayerStateMsgCommand>();
-            yield return new WaitForSeconds(this.GetModel<IGameControllerModel>().SendMsgOffTime.Value);
+            yield return new WaitForSeconds(this.GetModel<IGameModel>().SendMsgOffTime.Value);
         }
     }
 
