@@ -35,7 +35,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
                     });
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(this.GetSystem<II18NSystem>().GetText("This course requires {0} star"), timeTrialInfo.star));
+                    this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(string.Format(this.GetSystem<II18NSystem>().GetText("This course requires {0} star"), timeTrialInfo.star)));
                 }
             }
         });

@@ -14,15 +14,20 @@ public class GameController : MonoBehaviour, IController {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
 
-        this.GetModel<IGameControllerModel>().WarningAlert = warningAlert;
         this.GetModel<IGameControllerModel>().InfoConfirmAlert = infoConfirmAlert;
         this.GetModel<IGameControllerModel>().GameHelper = gameHelper;
         this.GetModel<IGameControllerModel>().LoadingUI = loadingUI;
+
+        this.RegisterEvent<ShowWarningAlertEvent>(OnWarningAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
+
+    private void OnWarningAlert(ShowWarningAlertEvent e) {
+        warningAlert.ShowWithText(e.text, e.time, e.callback);
     }
 
     private void Start() {
         this.GetModel<IGameControllerModel>().GameHelper.gameObject.SetActiveFast(false);
-        this.GetModel<IGameControllerModel>().WarningAlert.gameObject.SetActiveFast(false);
+        warningAlert.gameObject.SetActiveFast(false);
         this.GetModel<IGameControllerModel>().InfoConfirmAlert.gameObject.SetActiveFast(false);
         this.GetModel<IGameControllerModel>().LoadingUI.HideLoading();
         this.GetSystem<II18NSystem>().InitTranslation();

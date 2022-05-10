@@ -18,7 +18,7 @@ public class EnterMatchCommand : AbstractCommand {
             this.GetModel<IGameControllerModel>().CurGameType = GameType.Match;
             Util.LoadingScene(SceneID.Game);
         } else {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("The game is over"));
+            this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The game is over")));
         }
     }
 

@@ -30,8 +30,8 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
                     Debug.Log("放弃购买");
                 });
             } else {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText
-                    (string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star));
+                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand
+                    (string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star)));
             }
         }
     }

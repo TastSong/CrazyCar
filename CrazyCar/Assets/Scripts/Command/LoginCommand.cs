@@ -33,19 +33,19 @@ public class LoginCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
                             Util.LoadingScene(SceneID.Index);
-                        });
+                        }));
 
                 } else if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Password Error"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Password Error")));
                 } else if (code == 404) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("User not registered"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User not registered")));
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Unknown Error"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Unknown Error")));
                 }
             }));
     }

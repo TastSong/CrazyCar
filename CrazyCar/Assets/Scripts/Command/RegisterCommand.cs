@@ -33,15 +33,15 @@ public class RegisterCommand : AbstractCommand {
             }, code: (code) => {
                 if (code == 200) {
                     this.GetSystem<IVibrationSystem>().Haptic();
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
                         Util.LoadingScene(SceneID.Index);
-                    });
+                    }));
                 } else if (code == 423) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("User registered"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User registered")));
                 } else if (code == 425) {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Incorrect information format"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Incorrect information format")));
                 } else {
-                    this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Unknown Error"));
+                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Unknown Error")));
                 }
             }));
     }

@@ -38,8 +38,8 @@ public class BuyEquipCommand : AbstractCommand {
                 Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
             });
         } else {
-            this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(string.Format(this.GetSystem<II18NSystem>().GetText("This equip requires {0} star"),
-                mEquipInfo.star));
+            this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(string.Format(this.GetSystem<II18NSystem>().GetText("This equip requires {0} star"),
+                mEquipInfo.star)));
         }
     }
 }

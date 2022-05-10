@@ -26,7 +26,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
             if (this.GetModel<IMatchModel>().MemberInfoDic.Count >= maxNum) {
                 this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
             } else {
-                this.GetModel<IGameControllerModel>().WarningAlert.ShowWithText(this.GetSystem<II18NSystem>().GetText("Other players are not in position"));
+                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Other players are not in position")));
             }  
         });
 
