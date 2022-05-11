@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4294690576501024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4371414968041172}
   - component: {fileID: 108827479173104408}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4942334912062604}
   - component: {fileID: 33937602583993852}
   - component: {fileID: 23588200877008978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel_BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4184755578200110}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: Componets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4419029732130716}
   - component: {fileID: 108794219381028122}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,8 +349,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4842307892578096}
-  - component: {fileID: 54896917430634492}
-  m_Layer: 0
+  - component: {fileID: 2503887776503949422}
+  m_Layer: 8
   m_Name: R_Car_SprintCar_White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ Transform:
   m_GameObject: {fileID: 1710308616726968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 699.6604, y: 0.26139212, z: -37.95575}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4352303398810878}
@@ -375,22 +375,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54896917430634492
-Rigidbody:
+--- !u!114 &2503887776503949422
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710308616726968}
-  serializedVersion: 2
-  m_Mass: 2000
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 2
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de73f051dff3fc41b2691bfcc2fb43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theIcon: {fileID: 21300000, guid: 6ac792aba91cd9f4983579564f1186a3, type: 3}
+  animation: {fileID: 0}
+  rid: R_Car_SprintCar_White
 --- !u!1 &1766933911090944
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +401,7 @@ GameObject:
   - component: {fileID: 4941826183244768}
   - component: {fileID: 33740335090213792}
   - component: {fileID: 23899988435195716}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel_BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +485,7 @@ GameObject:
   - component: {fileID: 4197252078591152}
   - component: {fileID: 33808430707683676}
   - component: {fileID: 23266346080088174}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel_FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,7 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4109744278773308}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: ReverseLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4890395839740338}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: RedLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -635,7 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4076197869446682}
   - component: {fileID: 108637318926456022}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +729,7 @@ GameObject:
   - component: {fileID: 4819909591394674}
   - component: {fileID: 33486381330268620}
   - component: {fileID: 23206373888156164}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel_FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +813,7 @@ GameObject:
   - component: {fileID: 4352303398810878}
   - component: {fileID: 33669683314997486}
   - component: {fileID: 23889633709224070}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,7 +895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4860381429767980}
   - component: {fileID: 108242103086081192}
-  m_Layer: 1
+  m_Layer: 8
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
