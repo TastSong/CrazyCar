@@ -10,6 +10,8 @@ public interface IWebSocketSystem : ISystem {
     void Connect(string url);
     void SendMsgToServer(string msg);
     void CloseConnect();
+    Action ConnectSuccAction { get; set; }
+    Action CloseSuccAction { get; set; }
 }
 
 public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
@@ -18,6 +20,9 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     private IWebSocket socket;
     private JsonData recJD = new JsonData();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
+
+    public Action ConnectSuccAction { get; set; }
+    public Action CloseSuccAction { get; set; }
 
     public void Connect(string url) {
         address = url;
@@ -43,6 +48,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     private void Socket_OnOpen(object sender, OpenEventArgs e) {
         Debug.Log(string.Format("Connected: {0}\n", address));
+        ConnectSuccAction?.Invoke();
     }
 
     private void Socket_OnMessage(object sender, MessageEventArgs e) {
@@ -57,6 +63,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     private void Socket_OnClose(object sender, CloseEventArgs e) {
         Debug.Log(string.Format("Closed: StatusCode: {0}, Reason: {1}\n", e.StatusCode, e.Reason));
+        CloseSuccAction?.Invoke();
     }
 
     private void Socket_OnError(object sender, ErrorEventArgs e) {

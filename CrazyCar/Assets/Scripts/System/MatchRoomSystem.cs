@@ -5,6 +5,7 @@ using QFramework;
 using System.Text;
 using LitJson;
 using Utils;
+using System;
 
 public interface IMatchRoomSystem : ISystem {
     void MatchRoomCreate();
@@ -20,17 +21,17 @@ public interface IMatchRoomSystem : ISystem {
 }
 
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
-    private void MatchRoomConnect() {
+    private void MatchRoomConnect(Action succ) {
         string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
             "websocket/MatchRoomWebSocket/" +
             this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<IMatchModel>().RoomId;
 
         this.GetSystem<IWebSocketSystem>().Connect(ws);
+        this.GetSystem<IWebSocketSystem>().ConnectSuccAction = succ;
     }
 
     public void MatchRoomCreate() {
-        MatchRoomConnect();
-        Util.DelayExecuteWithSecond(1f, () => {
+        MatchRoomConnect(() => {
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -45,7 +46,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.WriteObjectEnd();
             Debug.Log("MatchRoomCreate : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
-        });  
+        });   
     }
 
     public void MatchRoomEixt() {
@@ -53,8 +54,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void MatchRoomJoin() {
-        MatchRoomConnect();
-        Util.DelayExecuteWithSecond(1f, () => {
+        MatchRoomConnect(() => {
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
