@@ -10,7 +10,7 @@ public class PostPlayerStateMsgCommand : AbstractCommand{
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("msg_type");
-        w.Write((int)MsgType.PlayerOperat);
+        w.Write((int)MsgType.PlayerState);
         w.WritePropertyName("cid");
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);

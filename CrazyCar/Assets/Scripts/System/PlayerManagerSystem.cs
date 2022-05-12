@@ -22,6 +22,14 @@ public class PlayerCreateMsg {
         this.timestamp = playerStateMsg.timestamp;
     }
 
+    public PlayerCreateMsg(PlayerOperatMsg playerOperatMsg, UserInfo userInfo) {
+        this.cid = playerOperatMsg.cid;
+        this.userInfo = userInfo;
+        this.pos = Vector3.zero;
+        this.speed = Vector3.zero;
+        this.timestamp = playerOperatMsg.timestamp;
+    }
+
     public PlayerCreateMsg(){
     }
 }
@@ -34,11 +42,20 @@ public class PlayerStateMsg {
     public long timestamp;
 }
 
+public class PlayerOperatMsg {
+    public int cid;
+    public int uid;
+    public ControllerType controllerType;
+    public int value;
+    public long timestamp;
+}
+
 public interface IPlayerManagerSystem : ISystem {
     MPlayer SelfPlayer { get; set; }
     MPlayer GetPlayerByUid(int uid);
     Dictionary<int, MPlayer> peers { get; set; }
-    void RespondAction(PlayerStateMsg playerStateMsg);
+    void RespondStateAction(PlayerStateMsg playerStateMsg);
+    void RespondOperatAction(PlayerOperatMsg playerOperatMsg);
     void RemovePlayer(int uid);
 }
 
@@ -60,11 +77,19 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
         return null;
     }
 
-    public void RespondAction(PlayerStateMsg playerStateMsg) {
+    public void RespondStateAction(PlayerStateMsg playerStateMsg) {
         if (playerStateMsg.uid == this.GetModel<IUserModel>().Uid.Value) {
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer.ConfirmStatus(playerStateMsg);
         } else {
             AdjustPeerPlayer(playerStateMsg);
+        }
+    }
+
+    public void RespondOperatAction(PlayerOperatMsg playerOperatMsg) {
+        if (playerOperatMsg.uid == this.GetModel<IUserModel>().Uid.Value) {
+            
+        } else {
+            AdjustPeerPlayer(playerOperatMsg);
         }
     }
 
@@ -82,6 +107,20 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
             if (playerStateMsg.timestamp > peer.lastRecvStatusStamp) {
                 peer.AdjustPlayerPosition(playerStateMsg.pos, playerStateMsg.speed);
             }
+        }
+    }
+
+    private void AdjustPeerPlayer(PlayerOperatMsg playerOperatMsg) {
+        MPlayer peer = null;
+        if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerOperatMsg.uid, out peer)) {
+            this.GetSystem<INetworkSystem>().GetUserInfo(playerOperatMsg.uid, (userInfo) => {
+                if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerOperatMsg.uid, out peer)) {
+                    PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerOperatMsg, userInfo);
+                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+                }
+            });
+        } else {
+            this.SendEvent<PeerControllerEvent>(new PeerControllerEvent(playerOperatMsg));
         }
     }
 

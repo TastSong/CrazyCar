@@ -18,6 +18,7 @@ public interface INetworkSystem : ISystem {
     void CloseConnect();
     IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
+    Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; }
     System.Object MsgLock { get; set; }
     void EnterRoom(GameType gameType, int cid, Action succ = null);
     void GetUserInfo(int uid, Action<UserInfo> succ);
@@ -46,9 +47,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
     public string HttpBaseUrl { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
+    public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; } = new Queue<PlayerOperatMsg>();
     public object MsgLock { get; set; } = new object();
     private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
+    private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
@@ -116,6 +119,18 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         return playerStateMsg;
     }
 
+    private PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null) {
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
+        PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
+        playerOperatMsg.cid = (int)jsonData["cid"];
+        playerOperatMsg.controllerType = (ControllerType)(int)jsonData["controller_type"];
+        playerOperatMsg.value = (int)jsonData["value"];
+        playerOperatMsg.timestamp = (long)jsonData["timestamp"];
+        playerOperatMsg.uid = (int)jsonData["uid"];
+        success?.Invoke();
+        return playerOperatMsg;
+    }
+
     public void Connect(string url) {
         if (netType == NetType.WebSocket) {
             this.GetSystem<IWebSocketSystem>().Connect(url);
@@ -134,10 +149,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
-        if (msgType == MsgType.PlayerOperat) {
+        Debug.LogError("+++++++ RespondAction " + recJD.ToJson());
+        if (msgType == MsgType.PlayerState) {
             playerStateMsg = ParsePlayerStateMsg(recJD);
             if (netType == NetType.WebSocket) {               
-                this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
+                this.GetSystem<IPlayerManagerSystem>().RespondStateAction(playerStateMsg);
             } else{
                 lock (MsgLock) {
                     PlayerStateMsgs.Enqueue(playerStateMsg);
@@ -149,8 +165,15 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
                 this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
             }          
-        } else if (msgType == MsgType.DelPlayer){
-
+        } else if (msgType == MsgType.PlayerOperat){
+            playerOperatMsg = ParsePlayerOperatMsg(recJD);
+            if (netType == NetType.WebSocket) {
+                this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(playerOperatMsg);
+            } else {
+                lock (MsgLock) {
+                    PlayerOperatMsgs.Enqueue(playerOperatMsg);
+                }
+            }
         } else if (msgType == MsgType.MatchRoomCreate) {
             this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);
         } else if (msgType == MsgType.MatchRoomJoin) {

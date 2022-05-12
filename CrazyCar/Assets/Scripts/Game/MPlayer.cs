@@ -83,24 +83,24 @@ public class MPlayer : MonoBehaviour, IController {
             return;
         }
 
-        if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
-            if (lastRecvStatusStamp != preRecStatusStamp) {
-                if (IsOutside || IsTurnover) {
-                    Debug.Log("++++++ reset peer");
-                    ResetPeerCar();
-                } else {
-                    transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
-                    preRecStatusStamp = lastRecvStatusStamp;
-                }               
-            }
-            rig.velocity = curSpeed;
+        //if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
+        //    this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
+        //    if (lastRecvStatusStamp != preRecStatusStamp) {
+        //        if (IsOutside || IsTurnover) {
+        //            Debug.Log("++++++ reset peer");
+        //            ResetPeerCar();
+        //        } else {
+        //            transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
+        //            preRecStatusStamp = lastRecvStatusStamp;
+        //        }               
+        //    }
+        //    rig.velocity = curSpeed;
 
-            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
-                this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);               
-            }
-            return;
-        }
+        //    if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
+        //        this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);               
+        //    }
+        //    return;
+        //}
 
 
         CheckGroundNormal();    

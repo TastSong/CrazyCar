@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, IController {
     private void Start() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
         this.RegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView);
+        this.RegisterEvent<PeerControllerEvent>(OnPeerController).UnRegisterWhenGameObjectDestroyed(gameObject);
         MakeSelfPlayer();       
     }
 
@@ -53,6 +54,10 @@ public class PlayerController : MonoBehaviour, IController {
         } else {
             cinemachineTF.localPosition = thirdAngle.localPosition;
         }
+    }
+
+    private void OnPeerController(PeerControllerEvent e) {
+        this.SendCommand<PlayerControllerCommand>(new PlayerControllerCommand(e.playerOperatMsg.uid, e.playerOperatMsg.controllerType, e.playerOperatMsg.value));
     }
 
     private Vector3 GetStartPosition() {

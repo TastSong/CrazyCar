@@ -11,10 +11,12 @@ public enum ControllerType {
 }
 
 class PlayerControllerCommand : AbstractCommand {
+    private int uid;
     private ControllerType controllerType;
     private int value;
 
-    public PlayerControllerCommand(ControllerType controllerType, int value) {
+    public PlayerControllerCommand(int uid, ControllerType controllerType, int value) {
+        this.uid = uid;
         this.controllerType = controllerType;
         this.value = value;
     }
@@ -24,8 +26,14 @@ class PlayerControllerCommand : AbstractCommand {
             this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
         }
 
-        Debug.LogError("++++++ " + controllerType + " v = " + value);
-        MPlayer mPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
+        MPlayer mPlayer;
+        if (uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
+            mPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
+        } else {
+            Debug.LogError("+++++++ uid = " + uid + " controllerType = " + controllerType + " valus " + value);
+            mPlayer = this.GetSystem<IPlayerManagerSystem>().peers[uid];
+        }
+        
         if (controllerType == ControllerType.Horizontal) {
             mPlayer.hInput = value;
         } else if (controllerType == ControllerType.Vertical) {

@@ -16,13 +16,14 @@ public enum NetType {
 
 public enum MsgType{
     CreatePlayer = 0,
-    PlayerOperat = 1,
+    PlayerState = 1,
     DelPlayer = 2,
     MatchRoomCreate = 3,
     MatchRoomJoin = 4,
     MatchRoomStatus = 5,
     MatchRoomExit = 6,
-    MatchRoomStart = 7
+    MatchRoomStart = 7,
+    PlayerOperat = 8
 }
 
 
@@ -41,9 +42,17 @@ public class NetworkController : MonoBehaviour, IController {
         // KCP 开了线程所以只能把 RespondAction放进主线程
         if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
             lock (this.GetSystem<INetworkSystem>().MsgLock) {
-                this.GetSystem<IPlayerManagerSystem>().RespondAction(
+                this.GetSystem<IPlayerManagerSystem>().RespondStateAction(
                     this.GetSystem<INetworkSystem>().PlayerStateMsgs.Peek());
                 this.GetSystem<INetworkSystem>().PlayerStateMsgs.Dequeue();
+            }
+        }
+
+        if (this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Count > 0) {
+            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(
+                    this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Peek());
+                this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Dequeue();
             }
         }
     }
