@@ -168,7 +168,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void OnStartMsg(JsonData recJD) {
-        Debug.LogError("OnStartMsg = " + recJD.ToJson());
+        Debug.Log("OnStartMsg = " + recJD.ToJson());
         if ((int)recJD["code"] == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
             this.SendEvent<MatchRoomStartEvent>();
