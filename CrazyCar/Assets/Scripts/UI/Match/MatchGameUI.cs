@@ -41,7 +41,7 @@ public class MatchGameUI : MonoBehaviour, IController {
     }
 
     private void StartGame() {
-        this.GetSystem<IPlayerManagerSystem>().SelfPlayer.vInput = 1;
+        this.SendCommand<PlayerControllerCommand>(new PlayerControllerCommand(this.GetModel<IUserModel>().Uid, ControllerType.Vertical, 1));
         Debug.Log("++++++ StartTime = " + this.GetModel<IMatchModel>().StartTime);
         limitTimeCor = StartCoroutine(Util.CountdownCor(this.GetModel<IMatchModel>().SelectInfo.Value.limitTime,
             () => {

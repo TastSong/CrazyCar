@@ -22,7 +22,7 @@ class PlayerControllerCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match && uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
             this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
         }
 

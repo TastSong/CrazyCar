@@ -36,7 +36,7 @@ public class PostPlayerOperatMsgCommand : AbstractCommand {
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WriteObjectEnd();
-        //Debug.Log("Post Server : " + sb.ToString());
+        Debug.LogError("PostPlayerOperatMsgCommand : " + sb.ToString());
         this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
     }
 }
