@@ -12,14 +12,15 @@ public enum ControllerType {
 
 class PlayerControllerCommand : AbstractCommand {
     private ControllerType controllerType;
-    private float value;
+    private int value;
 
-    public PlayerControllerCommand(ControllerType controllerType, float value) {
+    public PlayerControllerCommand(ControllerType controllerType, int value) {
         this.controllerType = controllerType;
         this.value = value;
     }
 
     protected override void OnExecute() {
+        this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
         MPlayer mPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         if (controllerType == ControllerType.Horizontal) {
             mPlayer.hInput = value;

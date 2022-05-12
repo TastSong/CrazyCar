@@ -134,7 +134,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
-        if (msgType == MsgType.PlayerState) {
+        if (msgType == MsgType.PlayerOperat) {
             playerStateMsg = ParsePlayerStateMsg(recJD);
             if (netType == NetType.WebSocket) {               
                 this.GetSystem<IPlayerManagerSystem>().RespondAction(playerStateMsg);
