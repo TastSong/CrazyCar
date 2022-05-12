@@ -20,7 +20,11 @@ class PlayerControllerCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
+            this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
+        }
+
+        Debug.LogError("++++++ " + controllerType + " v = " + value);
         MPlayer mPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         if (controllerType == ControllerType.Horizontal) {
             mPlayer.hInput = value;

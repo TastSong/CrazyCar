@@ -63,9 +63,22 @@ public class InputSystemPanel : MonoBehaviour, IController {
         }
 
         if (isUseKeyboard && IsStartGame) {
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("Vertical")));
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("Horizontal")));
-            
+            if (Input.GetAxisRaw("Vertical") > 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 1));
+            } else if (Input.GetAxisRaw("Vertical") < 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 0));
+            }
+
+            if (Input.GetAxisRaw("Horizontal") > 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 1));
+            } else if (Input.GetAxisRaw("Horizontal") < 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
+            }
+
             if (Input.GetKey(KeyCode.Space)) {
                 this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 1));
             }
@@ -87,11 +100,31 @@ public class InputSystemPanel : MonoBehaviour, IController {
                 PlayDisconnectAnim();
             }
         }
-
+        
         if (isConnectXBOX && IsStartGame) {
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, Input.GetAxisRaw("XBOX_Vertical_Left")));
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, Input.GetAxisRaw("XBOX_Horizontal_Right")));
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, Input.GetAxis("XBOX_LRT")));
+            if (Input.GetAxis("XBOX_Vertical_Left") > 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 1));
+            } else if (Input.GetAxis("XBOX_Vertical_Left") < 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 0));
+            }
+
+            if (Input.GetAxis("XBOX_Horizontal_Right") > 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 1));
+            } else if (Input.GetAxis("XBOX_Horizontal_Right") < 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
+            }
+
+            if (Input.GetAxis("XBOX_LRT") > 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 1));
+            } else if (Input.GetAxis("XBOX_LRT") < 0) {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 0));
+            }
         }
     }
 
