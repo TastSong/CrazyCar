@@ -32,24 +32,24 @@ public class InputSystemPanel : MonoBehaviour, IController {
     }
 
     private void Start() {
-        frontBtn.SetClick((float time) => {
+        frontBtn.SetClick(() => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, 1));
         });
-        backBtn.SetClick((float time) => {
+        backBtn.SetClick(() => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Vertical, -1));
         });
-        leftBtn.SetClick((float time) => {
+        leftBtn.SetClick(() => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, -1));
         }, () => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
-        rightBtn.SetClick((float time) => {
+        rightBtn.SetClick(() => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 1));
         }, () => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Horizontal, 0));
         });
-        spaceBtn.SetClick((float time) => {
-            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, Mathf.Clamp01(Time.fixedTime - time)));
+        spaceBtn.SetClick(() => {
+            this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, 1));
         }, () => {
             this.SendCommand(new PlayerControllerCommand(ControllerType.Speed, -1));
         });
