@@ -10,19 +10,20 @@ public enum ControllerType {
     Speed
 }
 
-public class PlayerControllerCommand : AbstractCommand {
+public class ExecuteOperateCommand : AbstractCommand {
     private int uid;
     private ControllerType controllerType;
     private int value;
 
-    public PlayerControllerCommand(int uid, ControllerType controllerType, int value) {
+    public ExecuteOperateCommand(int uid, ControllerType controllerType, int value) {
         this.uid = uid;
         this.controllerType = controllerType;
         this.value = value;
     }
 
     protected override void OnExecute() {
-        if (this.GetModel<IGameModel>().CurGameType == GameType.Match && uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match && 
+            uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
             this.SendCommand(new PostPlayerOperatMsgCommand(controllerType, value));
         }
 
@@ -39,7 +40,8 @@ public class PlayerControllerCommand : AbstractCommand {
             mPlayer.vInput = value;
         } else if (controllerType == ControllerType.Speed){
             if (value > 0) {
-                if (mPlayer.currentForce > 0 && mPlayer.isGround && !mPlayer.isDrifting && mPlayer.rig.velocity.sqrMagnitude > 10) {
+                if (mPlayer.currentForce > 0 && mPlayer.isGround && !mPlayer.isDrifting &&
+                    mPlayer.rig.velocity.sqrMagnitude > 10) {
                     mPlayer.StartDrift();
                 }
             } else {

@@ -19,7 +19,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
 
         countDownAnim.PlayAnim(3, () => {
             this.GetModel<ITimeTrialModel>().StartTime.Value = Util.GetTime() / 1000;
-            this.SendCommand(new PlayerControllerCommand(this.GetModel<IUserModel>().Uid, ControllerType.Vertical, 1));
+            this.SendCommand(new ExecuteOperateCommand(this.GetModel<IUserModel>().Uid, ControllerType.Vertical, 1));
             Debug.Log("++++++ StartTime = " + this.GetModel<ITimeTrialModel>().StartTime);
             limitTimeCor = StartCoroutine(Util.CountdownCor(this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime,
                 () => {

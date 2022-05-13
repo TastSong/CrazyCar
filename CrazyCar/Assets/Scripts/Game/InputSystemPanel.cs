@@ -35,25 +35,25 @@ public class InputSystemPanel : MonoBehaviour, IController {
     private void Start() {
         uid = this.GetModel<IUserModel>().Uid;
         frontBtn.SetClick(() => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
         });
         backBtn.SetClick(() => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
         });
         leftBtn.SetClick(() => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
         }, () => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
         });
         rightBtn.SetClick(() => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
         }, () => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
         });
         spaceBtn.SetClick(() => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1));
         }, () => {
-            this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
         });
 
     }
@@ -66,31 +66,31 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
         if (isUseKeyboard && IsStartGame) {
             if (Input.GetKeyDown(KeyCode.W)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
             } 
             
             if (Input.GetKeyDown(KeyCode.S)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
             } 
 
             if (Input.GetKeyDown(KeyCode.A)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
             } 
             
             if (Input.GetKeyDown(KeyCode.D)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
             } 
             
             if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
             }
 
             if (Input.GetKey(KeyCode.Space)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1));
             }
 
             if (Input.GetKeyUp(KeyCode.Space)) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
             }
         }
 
@@ -109,23 +109,23 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
         if (isConnectXBOX && IsStartGame) {
             if (Input.GetAxis("XBOX_Vertical_Left") > 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
             } else if (Input.GetAxis("XBOX_Vertical_Left") < 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
             } 
 
             if (Input.GetAxis("XBOX_Horizontal_Right") > 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
             } else if (Input.GetAxis("XBOX_Horizontal_Right") < 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
             } else {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
             }
 
             if (Input.GetAxis("XBOX_LRT") > 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1));
             } else if (Input.GetAxis("XBOX_LRT") < 0) {
-                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
             } 
         }
     }
