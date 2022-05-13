@@ -102,6 +102,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         playerCreateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
         playerCreateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
         playerCreateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
+        playerCreateMsg.userInfo.equipInfo.mass = (int)jsonData["user_info"]["equip_info"]["mass"];
+        playerCreateMsg.userInfo.equipInfo.speed = (int)jsonData["user_info"]["equip_info"]["speed"];
+        playerCreateMsg.userInfo.equipInfo.maxSpeed = (int)jsonData["user_info"]["equip_info"]["max_speed"];
         success?.Invoke();
         return playerCreateMsg;
     }
@@ -149,8 +152,13 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
-        Debug.LogError("+++++++ RespondAction " + recJD.ToJson());
-        if (msgType == MsgType.PlayerState) {
+        if (msgType == MsgType.CreatePlayer) {
+            playerCreateMsg = ParsePlayerCreateMsg(recJD);
+            MPlayer peer = null;
+            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
+                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+            }
+        } else if(msgType == MsgType.PlayerState) {
             playerStateMsg = ParsePlayerStateMsg(recJD);
             if (netType == NetType.WebSocket) {               
                 this.GetSystem<IPlayerManagerSystem>().RespondStateAction(playerStateMsg);
@@ -159,12 +167,6 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                     PlayerStateMsgs.Enqueue(playerStateMsg);
                 }
             }
-        } else if (msgType == MsgType.CreatePlayer){
-            playerCreateMsg = ParsePlayerCreateMsg(recJD);
-            MPlayer peer = null;
-            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
-            }          
         } else if (msgType == MsgType.PlayerOperat){
             playerOperatMsg = ParsePlayerOperatMsg(recJD);
             if (netType == NetType.WebSocket) {

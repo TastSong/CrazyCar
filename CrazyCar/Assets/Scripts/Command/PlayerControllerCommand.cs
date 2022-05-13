@@ -30,7 +30,6 @@ class PlayerControllerCommand : AbstractCommand {
         if (uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
             mPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         } else {
-            Debug.LogError("+++++++ uid = " + uid + " controllerType = " + controllerType + " valus " + value);
             mPlayer = this.GetSystem<IPlayerManagerSystem>().peers[uid];
         }
         

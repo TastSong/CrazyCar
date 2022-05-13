@@ -24,7 +24,7 @@ public class MatchNet : MonoBehaviour, IController {
 
             //等待都进入后 再发送创建人物消息
             Util.DelayExecuteWithSecond(3, () => { this.SendCommand<PostCreatePlayerMsgCommand>(); });
-            //Util.DelayExecuteWithSecond(4.5f, () => { matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg()); }); 
+            Util.DelayExecuteWithSecond(4.5f, () => { matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg()); }); 
         }
 
         this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);

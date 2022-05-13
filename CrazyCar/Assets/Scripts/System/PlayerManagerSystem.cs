@@ -95,6 +95,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
 
     private void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
         MPlayer peer = null;
+        
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
             this.GetSystem<INetworkSystem>().GetUserInfo(playerStateMsg.uid, (userInfo) => {
                 if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
@@ -104,9 +105,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
                 }
             });
         } else {
-            if (playerStateMsg.timestamp > peer.lastRecvStatusStamp) {
-                peer.AdjustPlayerPosition(playerStateMsg.pos, playerStateMsg.speed);
-            }
+            peer.AdjustPlayerPosition(playerStateMsg.pos, playerStateMsg.speed);
         }
     }
 

@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour, IController {
         MPlayer selfPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = this.SendQuery(new UserInfoQuery());
-        selfPlayer.UpdateSelfParameter();
+        selfPlayer.UpdateParameter();
         selfPlayer.GetComponent<MPlayerStyle>().ChangeEquip(this.GetModel<IUserModel>().EquipInfo.Value.eid,
             this.GetModel<IUserModel>().EquipInfo.Value.rid);
         cinemachineTF.SetParent(selfPlayer.transform, false);
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, IController {
         MPlayer mPlayer = Instantiate(mPlayerPrefab, e.playerCreateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
         mPlayer.userInfo = userInfo;
+        mPlayer.UpdateParameter();
         mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(e.playerCreateMsg.userInfo.equipInfo.eid,
             e.playerCreateMsg.userInfo.equipInfo.rid);
         mPlayer.GetComponent<MPlayerStyle>().SetNameText(userInfo.name, userInfo.isVIP);

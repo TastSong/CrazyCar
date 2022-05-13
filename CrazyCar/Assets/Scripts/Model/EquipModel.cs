@@ -5,6 +5,7 @@ using QFramework;
 using LitJson;
 using System;
 
+[Serializable]
 public class EquipInfo {
     public int eid;
     public string rid;

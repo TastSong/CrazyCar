@@ -60,74 +60,74 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void Update() {
-        //if (Input.GetKeyDown(KeyCode.K)) {
-        //    isUseKeyboard = !isUseKeyboard;
-        //}
+        if (Input.GetKeyDown(KeyCode.K)) {
+            isUseKeyboard = !isUseKeyboard;
+        }
 
-        //if (isUseKeyboard && IsStartGame) {
-        //    if (Input.GetAxisRaw("Vertical") > 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
-        //    } else if (Input.GetAxisRaw("Vertical") < 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
-        //    } else {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 0));
-        //    }
+        if (isUseKeyboard && IsStartGame) {
+            if (Input.GetKeyDown(KeyCode.W)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
+            } 
+            
+            if (Input.GetKeyDown(KeyCode.S)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
+            } 
 
-        //    if (Input.GetAxisRaw("Horizontal") > 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
-        //    } else if (Input.GetAxisRaw("Horizontal") < 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
-        //    } else {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
-        //    }
+            if (Input.GetKeyDown(KeyCode.A)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
+            } 
+            
+            if (Input.GetKeyDown(KeyCode.D)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
+            } 
+            
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+            }
 
-        //    if (Input.GetKey(KeyCode.Space)) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
-        //    }
+            if (Input.GetKey(KeyCode.Space)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
+            }
 
-        //    if (Input.GetKeyUp(KeyCode.Space)) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
-        //    }
-        //}
+            if (Input.GetKeyUp(KeyCode.Space)) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
+            }
+        }
 
-        //isConnectXBOX = (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0] != "");
+        isConnectXBOX = (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames()[0] != "");
 
-        //if (isConnectXBOX != curIsConnectXBOX) {
-        //    curIsConnectXBOX = isConnectXBOX;
-        //    if (curIsConnectXBOX) {
-        //        uiController.SetActiveFast(false);
-        //        PlayConnectAnim();
-        //    } else {
-        //        uiController.SetActiveFast(true);
-        //        PlayDisconnectAnim();
-        //    }
-        //}
-        
-        //if (isConnectXBOX && IsStartGame) {
-        //    if (Input.GetAxis("XBOX_Vertical_Left") > 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
-        //    } else if (Input.GetAxis("XBOX_Vertical_Left") < 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
-        //    } else {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 0));
-        //    }
+        if (isConnectXBOX != curIsConnectXBOX) {
+            curIsConnectXBOX = isConnectXBOX;
+            if (curIsConnectXBOX) {
+                uiController.SetActiveFast(false);
+                PlayConnectAnim();
+            } else {
+                uiController.SetActiveFast(true);
+                PlayDisconnectAnim();
+            }
+        }
 
-        //    if (Input.GetAxis("XBOX_Horizontal_Right") > 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
-        //    } else if (Input.GetAxis("XBOX_Horizontal_Right") < 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
-        //    } else {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
-        //    }
+        if (isConnectXBOX && IsStartGame) {
+            if (Input.GetAxis("XBOX_Vertical_Left") > 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, 1));
+            } else if (Input.GetAxis("XBOX_Vertical_Left") < 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Vertical, -1));
+            } 
 
-        //    if (Input.GetAxis("XBOX_LRT") > 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
-        //    } else if (Input.GetAxis("XBOX_LRT") < 0) {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
-        //    } else {
-        //        this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 0));
-        //    }
-        //}
+            if (Input.GetAxis("XBOX_Horizontal_Right") > 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 1));
+            } else if (Input.GetAxis("XBOX_Horizontal_Right") < 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, -1));
+            } else {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Horizontal, 0));
+            }
+
+            if (Input.GetAxis("XBOX_LRT") > 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, 1));
+            } else if (Input.GetAxis("XBOX_LRT") < 0) {
+                this.SendCommand(new PlayerControllerCommand(uid, ControllerType.Speed, -1));
+            } 
+        }
     }
 
     [Obsolete]

@@ -41,19 +41,15 @@ public class MPlayer : MonoBehaviour, IController {
     public float driftPower = 0;
 
     public long lastRecvStatusStamp = 0;
-    private long preRecStatusStamp = 0;
-
-    private Vector3 peerTargetPos = new Vector3();
-
     private MPlayerStyle mPlayerStyle;
-    private int destroyTimeLimit = 3000; // micro seconds
+    private int destroyTimeLimit = 4000; // micro seconds
     // 出界 翻车判断
     private PathCreator pathCreator;
     private float playerHigh = 2f;
     private Coroutine speedUpCor;
     private float turnoverOffset = 14;
-    // 比赛中其他人速度
-    private Vector3 curSpeed = new Vector3();
+    private float checkTime = 1.4f;
+    private float checkTimer = 0;
 
     // 记录通过拱门的次数
     public int passEndSignTimes = 0;
@@ -64,7 +60,7 @@ public class MPlayer : MonoBehaviour, IController {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
-       
+
         StopDrift();
     }
 
@@ -78,32 +74,21 @@ public class MPlayer : MonoBehaviour, IController {
             rig.AddForce(Vector3.zero, ForceMode.Force);
             return;
         }
-        
-        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial && this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
+
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial && 
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
+            // 为AI终止
             return;
         }
 
-        //if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
-        //    this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
-        //    if (lastRecvStatusStamp != preRecStatusStamp) {
-        //        if (IsOutside || IsTurnover) {
-        //            Debug.Log("++++++ reset peer");
-        //            ResetPeerCar();
-        //        } else {
-        //            transform.position = Vector3.Lerp(transform.position, peerTargetPos, Time.deltaTime);
-        //            preRecStatusStamp = lastRecvStatusStamp;
-        //        }               
-        //    }
-        //    rig.velocity = curSpeed;
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {     
+            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
+                this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
+            }
+        }
 
-        //    if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
-        //        this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);               
-        //    }
-        //    return;
-        //}
-
-
-        CheckGroundNormal();    
+        CheckGroundNormal();
         Turn();
 
         //起步时力大小递增
@@ -119,19 +104,26 @@ public class MPlayer : MonoBehaviour, IController {
         CalculateForceDir();
         AddForceToMove();
 
-        if (IsOutside) {
-            Debug.Log("++++++ IsOutside ");
-            ResetSelfCar();
-        } 
-        if (IsTurnover) {
-            Debug.Log("++++++ IsTurnover " );
-            ResetSelfCar();
+        checkTimer += Time.fixedDeltaTime;
+        if (checkTimer > checkTime) {
+            checkTimer = 0;
+            if (IsOutside) {
+                Debug.Log("++++++ IsOutside ");
+                ResetSelfCar();
+            }
+            if (IsTurnover) {
+                Debug.Log("++++++ IsTurnover ");
+                ResetSelfCar();
+            }
         }
     }
 
     public void AdjustPlayerPosition(Vector3 pos, Vector3 speed) {
-        peerTargetPos = pos;
-        curSpeed = speed;
+        if (isLockSpeed) {
+            return;
+        }
+        transform.position = pos;
+        rig.velocity = speed;
         lastRecvStatusStamp = Util.GetTime();
     }
 
@@ -152,7 +144,7 @@ public class MPlayer : MonoBehaviour, IController {
         //计算合力
         Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
 
-        if (!isGround) {
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this && !isGround) {
             this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
             this.GetSystem<IVibrationSystem>().Haptic();
             tempForce = tempForce + gravity * Vector3.down;
@@ -237,7 +229,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (currentForce <= normalForce) {
             mPlayerStyle.DisableTrail();
-        } 
+        }
 
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime);//每秒60递减，可调
     }
@@ -339,7 +331,7 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    public void UpdateSelfParameter() {
+    public void UpdateParameter() {
         normalForce = userInfo.equipInfo.speed;
         boostForce = userInfo.equipInfo.maxSpeed;
         gravity = userInfo.equipInfo.mass;

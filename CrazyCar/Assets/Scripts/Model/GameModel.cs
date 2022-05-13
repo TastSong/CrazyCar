@@ -30,7 +30,7 @@ public class GameModel : AbstractModel, IGameModel {
     protected override void OnInit() {
         SceneLoaded.Value = false;
         CurGameType = GameType.TimeTrial;
-        SendMsgOffTime.Value = 0.1f;
+        SendMsgOffTime.Value = 0.4f;
         StandAlone.Value = false;
     }
 }
