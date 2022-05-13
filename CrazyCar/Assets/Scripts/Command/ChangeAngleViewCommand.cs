@@ -1,6 +1,6 @@
 ﻿using QFramework;
 
-class ChangeAngleViewCommand : AbstractCommand {
+public class ChangeAngleViewCommand : AbstractCommand {
     private AngleView mAngleView;
 
     public ChangeAngleViewCommand(AngleView angleView) {

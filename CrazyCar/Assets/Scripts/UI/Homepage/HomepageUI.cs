@@ -26,7 +26,7 @@ public class HomepageUI : MonoBehaviour, IController {
     public Button matchBtn;
 
     private void Start() {
-        this.SendCommand<SetGameHelperCommand>(new SetGameHelperCommand(this.GetModel<IUserModel>().IsSuperuser));
+        this.SendCommand(new SetGameHelperCommand(this.GetModel<IUserModel>().IsSuperuser));
 
         nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
@@ -56,9 +56,9 @@ public class HomepageUI : MonoBehaviour, IController {
 
             if (this.GetModel<IUserModel>().IsVIP) {
                 //this.SendCommand<CreateMatchCommand>();
-                this.SendCommand<ShowPageCommand>(new ShowPageCommand(UIPageType.MatchRoomUI));
+                this.SendCommand(new ShowPageCommand(UIPageType.MatchRoomUI));
             } else {
-                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This feature is for VIPs only")));
+                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This feature is for VIPs only")));
             }
         });
 
@@ -82,11 +82,11 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         infoBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.SendCommand<ShowInfoConfirmAlertCommand>(new ShowInfoConfirmAlertCommand(title: "Version", content: "当前版本为：" + Application.version));
+            this.SendCommand(new ShowInfoConfirmAlertCommand(title: "Version", content: "当前版本为：" + Application.version));
         });
         questionBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.SendCommand<ShowInfoConfirmAlertCommand>(new ShowInfoConfirmAlertCommand(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com"));
+            this.SendCommand(new ShowInfoConfirmAlertCommand(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com"));
         });
         exitBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
@@ -132,7 +132,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
-        this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
+        this.SendCommand(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
            RequestUrl.matchDetailUrl,
           token: this.GetModel<IGameModel>().Token.Value,
@@ -141,14 +141,14 @@ public class HomepageUI : MonoBehaviour, IController {
                   if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
                       this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
                   } else {
-                      this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("No game")));
+                      this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("No game")));
                   }
               });
           }));
     }
 
     private void ShowStandAlone() {
-        this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This function is unavailable in single-machine mode")));
+        this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This function is unavailable in single-machine mode")));
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {

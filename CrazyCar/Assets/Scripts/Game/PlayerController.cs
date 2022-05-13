@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnPeerController(PeerControllerEvent e) {
-        this.SendCommand<PlayerControllerCommand>(new PlayerControllerCommand(e.playerOperatMsg.uid, e.playerOperatMsg.controllerType, e.playerOperatMsg.value));
+        this.SendCommand(new PlayerControllerCommand(e.playerOperatMsg.uid, e.playerOperatMsg.controllerType, e.playerOperatMsg.value));
     }
 
     private Vector3 GetStartPosition() {

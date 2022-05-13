@@ -22,7 +22,7 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        this.SendCommand<SetLoadingUICommand>(new SetLoadingUICommand(true));
+        this.SendCommand(new SetLoadingUICommand(true));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialRankUrl,
             data: bytes,
             token: this.GetModel<IGameModel>().Token.Value,

@@ -31,7 +31,7 @@ public class GameUIControl : MonoBehaviour, IController {
 
     private void OnShowResultUI(ShowResultUIEvent e) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Game Over"), 2.0f));
+            this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Game Over"), 2.0f));
             Util.DelayExecuteWithSecond(2.0f, () => {
                 Util.LoadingScene(SceneID.Index);
             });           

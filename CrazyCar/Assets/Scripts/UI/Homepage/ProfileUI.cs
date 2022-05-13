@@ -49,7 +49,7 @@ public class ProfileUI : MonoBehaviour, IController {
         });
         userNameBtn.onClick.AddListener(() => {
             if (userNameInput.text == this.GetModel<IUserModel>().Name.Value) {
-                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original nickname")));
+                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original nickname")));
             } else {
 
             }
@@ -57,9 +57,9 @@ public class ProfileUI : MonoBehaviour, IController {
         passwordBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
-                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original password")));
+                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original password")));
             } else if (passwordInput.text.Length < 6) {
-                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("The password must contain more than six characters")));
+                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("The password must contain more than six characters")));
             } else {
                 this.SendCommand(new ChangePasswordCommand(passwordInput.text));
             }

@@ -9,7 +9,7 @@ public class ExitGameSceneCommand : AbstractCommand
     protected override void OnExecute()
     {
         Time.timeScale = 0;
-        this.SendCommand<ShowInfoConfirmAlertCommand>(new ShowInfoConfirmAlertCommand(
+        this.SendCommand(new ShowInfoConfirmAlertCommand(
             content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
             success: () => {
                 this.SendEvent<ExitGameSceneEvent>();

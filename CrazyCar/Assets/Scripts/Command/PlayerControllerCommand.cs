@@ -10,7 +10,7 @@ public enum ControllerType {
     Speed
 }
 
-class PlayerControllerCommand : AbstractCommand {
+public class PlayerControllerCommand : AbstractCommand {
     private int uid;
     private ControllerType controllerType;
     private int value;
@@ -23,7 +23,7 @@ class PlayerControllerCommand : AbstractCommand {
 
     protected override void OnExecute() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match && uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
-            this.SendCommand<PostPlayerOperatMsgCommand>(new PostPlayerOperatMsgCommand(controllerType, value));
+            this.SendCommand(new PostPlayerOperatMsgCommand(controllerType, value));
         }
 
         MPlayer mPlayer;

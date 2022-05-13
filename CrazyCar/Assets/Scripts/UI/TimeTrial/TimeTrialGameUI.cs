@@ -19,7 +19,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
 
         countDownAnim.PlayAnim(3, () => {
             this.GetModel<ITimeTrialModel>().StartTime.Value = Util.GetTime() / 1000;
-            this.SendCommand<PlayerControllerCommand>(new PlayerControllerCommand(this.GetModel<IUserModel>().Uid, ControllerType.Vertical, 1));
+            this.SendCommand(new PlayerControllerCommand(this.GetModel<IUserModel>().Uid, ControllerType.Vertical, 1));
             Debug.Log("++++++ StartTime = " + this.GetModel<ITimeTrialModel>().StartTime);
             limitTimeCor = StartCoroutine(Util.CountdownCor(this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime,
                 () => {
@@ -41,7 +41,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, 
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), 
             this.GetModel<IMapControllerModel>().PathCreator);
-        this.SendCommand<MakeAIPlayerCommand>(new MakeAIPlayerCommand(aiInfo));
+        this.SendCommand(new MakeAIPlayerCommand(aiInfo));
     }
 
     private void OnEndTimeTrial(EndTimeTrialEvent e) {

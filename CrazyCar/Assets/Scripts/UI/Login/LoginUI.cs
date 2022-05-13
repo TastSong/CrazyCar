@@ -27,7 +27,7 @@ public class LoginUI : MonoBehaviour, IController {
         loginBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             if (userNameInput.text == "" || passwordInput.text == "") {
-                this.SendCommand<ShowWarningAlertCommand>(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Please enter the content")));
+                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Please enter the content")));
                 return;
             }
 
