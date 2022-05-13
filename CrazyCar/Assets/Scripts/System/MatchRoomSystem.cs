@@ -164,6 +164,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                 info.index = i;
                 infos.Add(info.uid, info);
             }
+            this.SendEvent<MatchRoomUpdateStatusEvent>();
         }
     }
 

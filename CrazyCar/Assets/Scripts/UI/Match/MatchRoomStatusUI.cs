@@ -10,15 +10,16 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     public Button startBtn;
     public MatchRoomPlayerItem[] playerItems;
 
-    private Coroutine updateStatusCor;
     private int maxNum = 2;
+
+    private void Awake() {
+        this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomStartEvent>(OnMatchRoomStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
 
     private void OnEnable() {
         startBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
-        if (updateStatusCor != null) {
-            StopCoroutine(updateStatusCor);
-        }
-        StartCoroutine(UpdateStatus());
+        this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
     }
 
     private void Start() {
@@ -32,35 +33,25 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
 
         closeBtn.onClick.AddListener(() => {
             gameObject.SetActiveFast(false);
-        });
+        }); 
+    }
 
-        this.RegisterEvent<MatchRoomStartEvent>(OnMatchRoomStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+    private void OnMatchRoomUpdateStatus(MatchRoomUpdateStatusEvent e) {
+        List<MatchRoomMemberInfo> infos = new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
+        for (int i = 0; i < playerItems.Length; i++) {
+            if (i < infos.Count) {
+                playerItems[i].SetContent(infos[i]);
+            } else {
+                playerItems[i].CleanItem();
+            }
+        }
     }
 
     private void OnMatchRoomStart(MatchRoomStartEvent e) {
-        if (updateStatusCor != null) {
-            StopCoroutine(updateStatusCor);
-        }
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
         this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid, () => {
             this.SendCommand(new EnterMatchCommand(matchInfo));
         });
-    }
-
-    private IEnumerator UpdateStatus() {
-        while (true) {
-            this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
-            yield return new WaitForSeconds(1.0f);
-            
-            List<MatchRoomMemberInfo> infos = new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
-            for (int i = 0; i < playerItems.Length; i++) {
-                if (i < infos.Count) {
-                    playerItems[i].SetContent(infos[i]);
-                } else {
-                    playerItems[i].CleanItem();
-                }
-            }
-        }
     }
 
     private void OnDisable() {
