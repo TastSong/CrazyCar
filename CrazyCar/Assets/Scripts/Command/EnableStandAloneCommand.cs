@@ -11,7 +11,7 @@ public class EnableStandAloneCommand : AbstractCommand {
         this.GetModel<IGameModel>().Token.Value = (string)data["token"];
         this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
 
-        this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
+        this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
             callback: () => {
                 Util.LoadingScene(SceneID.Index);
             }));

@@ -8,6 +8,6 @@ public class SetLoadingUICommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<SetLoadingUIEvent>(new SetLoadingUIEvent(isShow));
+        this.SendEvent(new SetLoadingUIEvent(isShow));
     }
 }

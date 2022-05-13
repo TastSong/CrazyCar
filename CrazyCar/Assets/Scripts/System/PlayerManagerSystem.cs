@@ -119,7 +119,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
                 }
             });
         } else {
-            this.SendEvent<PeerControllerEvent>(new PeerControllerEvent(playerOperatMsg));
+            this.SendEvent(new PeerControllerEvent(playerOperatMsg));
         }
     }
 

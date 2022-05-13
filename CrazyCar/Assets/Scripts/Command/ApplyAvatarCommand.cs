@@ -24,11 +24,11 @@ public class ApplyAvatarCommand : AbstractCommand {
             succData: (data) => {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
                 this.SendEvent(new UpdataAvatarUIEvent(this.GetModel<IUserModel>().Aid));
-                this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Successfully Set")));
+                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Successfully Set")));
             },
             code: (code) => {
                 if (code == 423) {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Did not have")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Did not have")));
                 }
             }));
     }

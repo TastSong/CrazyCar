@@ -7,6 +7,6 @@ public class SetGameHelperCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<SetGameHelperEvent>(new SetGameHelperEvent(isShow));
+        this.SendEvent(new SetGameHelperEvent(isShow));
     }
 }

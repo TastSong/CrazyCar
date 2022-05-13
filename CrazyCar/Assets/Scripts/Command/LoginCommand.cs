@@ -33,7 +33,7 @@ public class LoginCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             }, code: (code) => {
                 if (code == 200) {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
+                    this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
@@ -41,11 +41,11 @@ public class LoginCommand : AbstractCommand {
                         }));
 
                 } else if (code == 423) {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Password Error")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Password Error")));
                 } else if (code == 404) {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User not registered")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User not registered")));
                 } else {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Unknown Error")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Unknown Error")));
                 }
             }));
     }

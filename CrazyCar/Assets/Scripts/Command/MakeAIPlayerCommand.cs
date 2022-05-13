@@ -11,7 +11,7 @@ public class MakeAIPlayerCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<MakeAIPlayerEvent>(new MakeAIPlayerEvent(mAIInfo));
+        this.SendEvent(new MakeAIPlayerEvent(mAIInfo));
     }
 }
    

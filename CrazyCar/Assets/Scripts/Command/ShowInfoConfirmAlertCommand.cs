@@ -25,6 +25,6 @@ public class ShowInfoConfirmAlertCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<ShowInfoConfirmAlertEvent>(new ShowInfoConfirmAlertEvent(title, content, succ, fail, confirmText, cancelText, type));
+        this.SendEvent(new ShowInfoConfirmAlertEvent(title, content, succ, fail, confirmText, cancelText, type));
     }
 }

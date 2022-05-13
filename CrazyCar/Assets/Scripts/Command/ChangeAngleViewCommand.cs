@@ -8,6 +8,6 @@ public class ChangeAngleViewCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<ChangeAngleViewEvent>(new ChangeAngleViewEvent(mAngleView));
+        this.SendEvent(new ChangeAngleViewEvent(mAngleView));
     }
 }

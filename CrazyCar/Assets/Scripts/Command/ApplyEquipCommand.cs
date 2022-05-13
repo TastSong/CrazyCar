@@ -25,12 +25,12 @@ public class ApplyEquipCommand : AbstractCommand {
                 data: bytes, token: this.GetModel<IGameModel>().Token.Value,
                 succData: (data) => {
                     this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Successfully Set")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Successfully Set")));
                     this.SendEvent<ApplyEquipEvent>();
                 },
                 code: (code) => {
                     if (code == 423) {
-                        this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Did not have")));
+                        this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Did not have")));
                     }
                 }));
     }

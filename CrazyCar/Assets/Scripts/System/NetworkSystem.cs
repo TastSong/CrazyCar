@@ -74,7 +74,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         if (request.isNetworkError || request.isHttpError) {
             Debug.LogError("Is Network Error url = " + url);
         } else {
-            this.SendEvent<SetLoadingUIEvent>(new SetLoadingUIEvent(false));
+            this.SendEvent(new SetLoadingUIEvent(false));
             byte[] results = request.downloadHandler.data;
             string s = Encoding.UTF8.GetString(results);
             Debug.Log(url + " : " + s);
@@ -226,9 +226,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         code: (code) => {
             if (code == 423) {
                 if (gameType == GameType.Match) {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The match is currently open only to VIP users")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The match is currently open only to VIP users")));
                 } else {
-                    this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Do not own this course")));
+                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Do not own this course")));
                 }
             }
         }));

@@ -13,6 +13,6 @@ public class ShowWarningAlertCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        this.SendEvent<ShowWarningAlertEvent>(new ShowWarningAlertEvent(text, time, callback));
+        this.SendEvent(new ShowWarningAlertEvent(text, time, callback));
     }
 }
