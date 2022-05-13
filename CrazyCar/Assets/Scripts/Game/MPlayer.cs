@@ -42,7 +42,6 @@ public class MPlayer : MonoBehaviour, IController {
 
     public long lastRecvStatusStamp = 0;
     private MPlayerStyle mPlayerStyle;
-    private int destroyTimeLimit = 4000; // micro seconds
     // 出界 翻车判断
     private PathCreator pathCreator;
     private float playerHigh = 2f;
@@ -83,7 +82,7 @@ public class MPlayer : MonoBehaviour, IController {
 
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {     
-            if (Util.GetTime() - lastRecvStatusStamp > destroyTimeLimit) {
+            if (Util.GetTime() - lastRecvStatusStamp > this.GetModel<IGameModel>().MaxSyncDelay) {
                 this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
             }
         }

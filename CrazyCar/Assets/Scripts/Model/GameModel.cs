@@ -14,6 +14,8 @@ public interface IGameModel : IModel {
     GameType CurGameType { get; set; }
     BindableProperty<float> SendMsgOffTime { get; }
     BindableProperty<bool> StandAlone { get; }
+    BindableProperty<int> MaxSyncDelay { get; }
+    BindableProperty<int> MatchStartGameTime { get; }
 }
 
 public class GameModel : AbstractModel, IGameModel {
@@ -27,10 +29,16 @@ public class GameModel : AbstractModel, IGameModel {
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
 
+    public BindableProperty<int> MaxSyncDelay { get; } = new BindableProperty<int>();
+
+    public BindableProperty<int> MatchStartGameTime { get; } = new BindableProperty<int>();
+
     protected override void OnInit() {
         SceneLoaded.Value = false;
         CurGameType = GameType.TimeTrial;
         SendMsgOffTime.Value = 0.4f;
         StandAlone.Value = false;
+        MaxSyncDelay.Value = 4000;
+        MatchStartGameTime.Value = 16;
     }
 }

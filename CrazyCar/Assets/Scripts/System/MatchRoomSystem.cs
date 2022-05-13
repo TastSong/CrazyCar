@@ -108,7 +108,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WritePropertyName("times");
         w.Write(1);
         w.WritePropertyName("start_time");
-        w.Write(Util.GetTime() / 1000 + 15);
+        w.Write(Util.GetTime() / 1000 + this.GetModel<IGameModel>().MatchStartGameTime);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStart : " + sb.ToString());
         this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
