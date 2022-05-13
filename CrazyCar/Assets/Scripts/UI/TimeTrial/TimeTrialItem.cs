@@ -40,7 +40,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
             }
         });
 
-        this.RegisterEvent<UnlockTimeTrialEvent>(OnUnlockTimeTrial);
+        this.RegisterEvent<UnlockTimeTrialEvent>(OnUnlockTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnUnlockTimeTrial(UnlockTimeTrialEvent e) {
@@ -60,10 +60,6 @@ public class TimeTrialItem : MonoBehaviour, IController {
             }
         }
         lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<UnlockTimeTrialEvent>(OnUnlockTimeTrial);
     }
 
     public IArchitecture GetArchitecture() {

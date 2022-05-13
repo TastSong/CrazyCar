@@ -18,8 +18,8 @@ public class GameUIControl : MonoBehaviour, IController {
         gameResultUI.gameObject.SetActiveFast(false);
         timeTrialGameUI.gameObject.SetActiveFast(false);
         matchGameUI.gameObject.SetActiveFast(false);
-        this.RegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
-        this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI);
+        this.RegisterEvent<SelectGameUIEvent>(OnSelectGameUI).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<ShowResultUIEvent>(OnShowResultUI).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnSelectGameUI(SelectGameUIEvent e) {
@@ -39,11 +39,6 @@ public class GameUIControl : MonoBehaviour, IController {
             controlPanel.gameObject.SetActiveFast(false);
             gameResultUI.gameObject.SetActiveFast(true);
         }
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<SelectGameUIEvent>(OnSelectGameUI);
-        this.UnRegisterEvent<ShowResultUIEvent>(OnShowResultUI);
     }
 
     public IArchitecture GetArchitecture() {

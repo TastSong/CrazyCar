@@ -127,8 +127,8 @@ public class HomepageUI : MonoBehaviour, IController {
         // --------- Bottom Btns ---------
 
         OnUpdataUI(new UpdateHomepageUIEvent());
-        this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
-        this.RegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail);
+        this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
@@ -159,11 +159,6 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         starText.text = this.GetModel<IUserModel>().Star.Value.ToString();
         vipImage.gameObject.SetActiveFast(this.GetModel<IUserModel>().IsVIP.Value);
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI);
-        this.UnRegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail);
     }
 
     public IArchitecture GetArchitecture() {

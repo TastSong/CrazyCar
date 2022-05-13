@@ -76,9 +76,9 @@ public class ChangeCarUI : MonoBehaviour, IController {
             this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));           
         });
 
-        this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
-        this.RegisterEvent<BuyEquipEvent>(OnBuyEquip);
-        this.RegisterEvent<ApplyEquipEvent>(OnApplyEquip);
+        this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<BuyEquipEvent>(OnBuyEquip).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<ApplyEquipEvent>(OnApplyEquip).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnChangeCarEvent(ChangeCarEvent e) {
@@ -114,12 +114,6 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
     private void OnApplyEquip(ApplyEquipEvent e) {
         applyBtn.interactable = false;
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<ChangeCarEvent>(OnChangeCarEvent);
-        this.UnRegisterEvent<BuyEquipEvent>(OnBuyEquip);
-        this.UnRegisterEvent<ApplyEquipEvent>(OnApplyEquip);
     }
 
     public IArchitecture GetArchitecture() {

@@ -29,7 +29,7 @@ public class CommonGameUI : MonoBehaviour, IController {
         });
 
         UpdateCylinderNum(new UpdateCylinderNumEvent());
-        this.RegisterEvent<UpdateCylinderNumEvent>(UpdateCylinderNum);
+        this.RegisterEvent<UpdateCylinderNumEvent>(UpdateCylinderNum).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void UpdateCylinderNum(UpdateCylinderNumEvent e) {
@@ -40,10 +40,6 @@ public class CommonGameUI : MonoBehaviour, IController {
             cylinderNumText.text = this.GetSystem<ICheckpointSystem>().PassTimes.ToString() + "/" +
                 this.GetModel<IMatchModel>().SelectInfo.Value.times;
         }
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<UpdateCylinderNumEvent>(UpdateCylinderNum);
     }
 
     public IArchitecture GetArchitecture() {

@@ -40,8 +40,8 @@ public class AIController : MonoBehaviour, IController {
 
     private void Start()
     {
-        this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
-        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
+        this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnEndTimeTrial(EndTimeTrialEvent e) {
@@ -104,12 +104,6 @@ public class AIController : MonoBehaviour, IController {
                 }
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        this.UnRegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer);
-        this.UnRegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
     }
 
     public IArchitecture GetArchitecture()

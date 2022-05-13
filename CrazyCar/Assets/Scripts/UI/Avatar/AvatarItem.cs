@@ -48,11 +48,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
             }
         });
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
-        this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar);
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar);
+        this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     public IArchitecture GetArchitecture() {

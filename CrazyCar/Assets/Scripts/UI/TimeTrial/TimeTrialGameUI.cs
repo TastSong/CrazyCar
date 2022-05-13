@@ -33,7 +33,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         MakeAI();
         limitTimeText.text = this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime.ToString();
 
-        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
+        this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void MakeAI(){
@@ -47,10 +47,6 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
     private void OnEndTimeTrial(EndTimeTrialEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial);
     }
 
     public IArchitecture GetArchitecture() {

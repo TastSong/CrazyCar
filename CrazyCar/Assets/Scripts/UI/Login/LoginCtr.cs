@@ -14,9 +14,9 @@ public class LoginCtr : MonoBehaviour, IController {
         loginUI.gameObject.SetActiveFast(false);
         registerUI.gameObject.SetActiveFast(false);
 
-        this.RegisterEvent<OpenLoginEvent>(OnOpenLogin);
-        this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister);
-        this.RegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish);
+        this.RegisterEvent<OpenLoginEvent>(OnOpenLogin).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnOpenLogin(OpenLoginEvent e) {
@@ -31,12 +31,6 @@ public class LoginCtr : MonoBehaviour, IController {
         downloadResUI.gameObject.SetActiveFast(false);
         loginUI.gameObject.SetActiveFast(true);
         registerUI.gameObject.SetActiveFast(false);
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<OpenLoginEvent>(OnOpenLogin);
-        this.UnRegisterEvent<OpenRegisterEvent>(OnOpenRegister);
-        this.UnRegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish);
     }
 
     public IArchitecture GetArchitecture() {

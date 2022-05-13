@@ -14,7 +14,7 @@ public class Checkpoint : MonoBehaviour, IController {
     private void Start() {
         MeshRenderer mr = GetComponent<MeshRenderer>();
         material = mr.material;
-        this.RegisterEvent<ResetCheckpointEvent>(ResetCheckpoint);
+        this.RegisterEvent<ResetCheckpointEvent>(ResetCheckpoint).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void Update() {
@@ -45,10 +45,6 @@ public class Checkpoint : MonoBehaviour, IController {
     private void ResetCheckpoint(ResetCheckpointEvent e) {
         amount = 0;
         gameObject.SetActiveFast(true);
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<ResetCheckpointEvent>(ResetCheckpoint);
     }
 
     public IArchitecture GetArchitecture() {

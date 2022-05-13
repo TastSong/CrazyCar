@@ -53,16 +53,12 @@ public class MatchGameUI : MonoBehaviour, IController {
     private void Start() {
         limitTimeText.text = this.GetModel<IMatchModel>().SelectInfo.Value.limitTime.ToString();
 
-        this.RegisterEvent<CompleteMatchEvent>(OnCompleteMatch);
+        this.RegisterEvent<CompleteMatchEvent>(OnCompleteMatch).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnCompleteMatch(CompleteMatchEvent e) {
         StopCoroutine(limitTimeCor);
         this.SendCommand(new ShowResultUICommand());
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<CompleteMatchEvent>(OnCompleteMatch);
     }
 
     public IArchitecture GetArchitecture() {

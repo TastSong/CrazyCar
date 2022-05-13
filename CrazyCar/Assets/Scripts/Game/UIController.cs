@@ -37,8 +37,8 @@ public class UIController : MonoBehaviour, IController {
             urlDict[key] = value;
         }
 
-        this.RegisterEvent<HidePageEvent>(HidePage);
-        this.RegisterEvent<ShowPageEvent>(ShowPage);
+        this.RegisterEvent<HidePageEvent>(HidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<ShowPageEvent>(ShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     public void HidePage(HidePageEvent e) {
@@ -113,9 +113,6 @@ public class UIController : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        this.UnRegisterEvent<HidePageEvent>(HidePage);
-        this.UnRegisterEvent<ShowPageEvent>(ShowPage);
-
         foreach (var kv in pagesDict) {
             if (kv.Value != null) {
                 Destroy(kv.Value);

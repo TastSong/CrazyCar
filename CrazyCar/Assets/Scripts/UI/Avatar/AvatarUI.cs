@@ -58,7 +58,7 @@ public class AvatarUI : MonoBehaviour, IController {
             this.SendCommand<UpdateHomepageUICommand>();
         });
 
-        this.RegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent);
+        this.RegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
@@ -74,10 +74,6 @@ public class AvatarUI : MonoBehaviour, IController {
         });
         curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent);
     }
 
     public IArchitecture GetArchitecture() {

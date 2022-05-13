@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour, IController {
     private float widthUnit = 4.4f;
 
     private void Start() {
-        this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
-        this.RegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView);
+        this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PeerControllerEvent>(OnPeerController).UnRegisterWhenGameObjectDestroyed(gameObject);
         MakeSelfPlayer();       
     }
@@ -72,11 +72,6 @@ public class PlayerController : MonoBehaviour, IController {
         }
         Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + pos +  "  position = " + pos);
         return pos;
-    }
-
-    private void OnDestroy() {
-        this.UnRegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer);
-        this.UnRegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView);
     }
 
     public IArchitecture GetArchitecture() {
