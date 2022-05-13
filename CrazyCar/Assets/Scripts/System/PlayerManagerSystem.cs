@@ -105,7 +105,7 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
                 }
             });
         } else {
-            peer.AdjustPlayerPosition(playerStateMsg.pos, playerStateMsg.speed);
+            peer.AdjustPosition(playerStateMsg.pos, playerStateMsg.speed);
         }
     }
 

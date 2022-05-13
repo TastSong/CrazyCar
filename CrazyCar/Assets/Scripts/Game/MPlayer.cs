@@ -118,7 +118,7 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    public void AdjustPlayerPosition(Vector3 pos, Vector3 speed) {
+    public void AdjustPosition(Vector3 pos, Vector3 speed) {
         if (isLockSpeed) {
             return;
         }
