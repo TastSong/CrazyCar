@@ -60,22 +60,24 @@ public class AIController : MonoBehaviour, IController {
     {
         AIInfo aiInfo = new AIInfo();
         aiInfo.id = id++;
-        aiInfo.userInfo = GetUserInfo();
-        aiInfo.startMoveTime = e.aiInfo.startMoveTime;
-        aiInfo.needPassTimes = e.aiInfo.needPassTimes;
-        aiInfo.isStartGame = e.aiInfo.isStartGame;
-        aiInfo.startPos = e.aiInfo.startPos;
-        aiInfo.pathCreator = e.aiInfo.pathCreator;
-        aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
-        aiInfo.mPlayer.transform.SetParent(transform, false);
-        aiInfo.mPlayer.userInfo = e.aiInfo.userInfo;
-        aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
-            aiInfo.userInfo.equipInfo.rid);
-        aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);
-        aiInfoDic.Add(aiInfo.id, aiInfo);
+        this.GetSystem<INetworkSystem>().GetUserInfo(4, (userInfo) => {
+            aiInfo.userInfo = userInfo;
+            aiInfo.startMoveTime = e.aiInfo.startMoveTime;
+            aiInfo.needPassTimes = e.aiInfo.needPassTimes;
+            aiInfo.isStartGame = e.aiInfo.isStartGame;
+            aiInfo.startPos = e.aiInfo.startPos;
+            aiInfo.pathCreator = e.aiInfo.pathCreator;
+            aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
+            aiInfo.mPlayer.transform.SetParent(transform, false);
+            aiInfo.mPlayer.userInfo = e.aiInfo.userInfo;
+            aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
+                aiInfo.userInfo.equipInfo.rid);
+            aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);
+            aiInfoDic.Add(aiInfo.id, aiInfo);
 
-        Util.DelayExecuteWithSecond(aiInfo.startMoveTime, () => {
-            aiInfoDic[aiInfo.id].isStartGame = true;
+            Util.DelayExecuteWithSecond(aiInfo.startMoveTime, () => {
+                aiInfoDic[aiInfo.id].isStartGame = true;
+            });
         });
     }
 
@@ -98,7 +100,7 @@ public class AIController : MonoBehaviour, IController {
                     item.Value.isFinishGame = true;
                     this.SendCommand<EndTimeTrialCommand>();
                 } else{
-                    item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed * Time.deltaTime;
+                    item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed / 4 * Time.deltaTime;
                     item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
                     item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + Util.pathRotateOffset);
                 }

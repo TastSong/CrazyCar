@@ -63,7 +63,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     public UserInfo ParseUserInfo(JsonData jsonData)
     {
         UserInfo userInfo = new UserInfo();
-        userInfo.name = (string)jsonData["user_info"]["name"];
+        userInfo.name = (string)jsonData["user_info"]["user_name"];
         userInfo.uid = (int)jsonData["user_info"]["uid"];
         userInfo.aid = (int)jsonData["user_info"]["aid"];
         userInfo.star = (int)jsonData["user_info"]["star"];

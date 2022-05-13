@@ -74,11 +74,11 @@ public class InputSystemPanel : MonoBehaviour, IController {
             } 
 
             if (Input.GetKeyDown(KeyCode.A)) {
-                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
             } 
             
             if (Input.GetKeyDown(KeyCode.D)) {
-                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
+                this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
             } 
             
             if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
