@@ -15,6 +15,7 @@ public class EquipInfo {
     public int speed;
     public int maxSpeed;
     public bool isHas;
+    public bool canWade;
     public bool isShow;
 }
 

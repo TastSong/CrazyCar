@@ -69,6 +69,7 @@ public class GetUserInfo extends HttpServlet {
             equipInfoJB.put("mass", getIntDataByEid(eid, "mass"));
             equipInfoJB.put("speed", getIntDataByEid(eid, "speed"));
             equipInfoJB.put("max_speed", getIntDataByEid(eid, "max_speed"));
+			equipInfoJB.put("can_wade", getIntDataByEid(eid, "can_wade") == 1);
             equipInfoJB.put("is_show", getIntDataByEid(eid, "is_show") == 1);
             equipInfoJB.put("is_has", isHasEquip(eid, uid));
             

@@ -56,6 +56,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.speed = (int)data["speed"];
         info.maxSpeed = (int)data["max_speed"];
         info.isHas = (bool)data["is_has"];
+        info.canWade = (bool)data["can_wade"];
         info.isShow = (bool)data["is_show"];
         userModel.EquipInfo.Value = info;
     }
@@ -83,6 +84,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.speed = (int)equipData["speed"];
         info.maxSpeed = (int)equipData["max_speed"];
         info.isHas = (bool)equipData["is_has"];
+        info.canWade = (bool)equipData["can_wade"];
         info.isShow = (bool)equipData["is_show"];
         userInfo.equipInfo = info;
         return userInfo;
@@ -99,6 +101,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];
             info.isHas = (bool)jsonData[i]["is_has"];
+            info.hasWater = (bool)jsonData[i]["has_water"];
             info.times = (int)jsonData[i]["times"];
             timeTrialModel.TimeTrialDic[info.cid] = info;
         }
@@ -190,6 +193,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.speed = (int)data[i]["speed"];
             info.maxSpeed = (int)data[i]["max_speed"];
             info.isHas = (bool)data[i]["is_has"];
+            info.canWade = (bool)data[i]["can_wade"];
             info.isShow = (bool)data[i]["is_show"];
 
             equipModel.EquipDic[info.eid] = info;

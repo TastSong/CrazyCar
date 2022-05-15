@@ -11,6 +11,7 @@ public class TimeTrialInfo {
     public int cid;
     public int star;
     public int mapId;
+    public bool hasWater;
     public int limitTime;
     public bool isHas;
     public int times;
