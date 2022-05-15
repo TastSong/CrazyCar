@@ -132,6 +132,8 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 10. [全部免费字体大全 (chaziti.cn)](https://chaziti.cn/free/)
 10. [Transparent Culling System (URP) Occlusion elimination plug-in ](https://assetstore.unity.com/packages/tools/camera/transparent-culling-system-urp-212951)
 10. [Simple Spin Blur](https://assetstore.unity.com/packages/tools/integration/simple-spin-blur-202273)
+10. [LearnUnityShader: 记录学习Unity Shader过程中实现过的一些Demo)](https://github.com/csdjk/LearnUnityShader)
+18. [Simple Water Shader URP](https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-urp-191449)
 
 
 ## License
