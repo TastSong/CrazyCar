@@ -352,33 +352,34 @@ create table if not exists `all_equip`(
    `mass` int not null,
    `speed` int not null,
    `max_speed` int not null,
+   `can_wade` int not null,
    `is_show` int not null,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 70, 96, 1);
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 70, 96, 0, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (1, "R_Car_MonsterTruck_Red", "Monster Red", 2, 20, 78, 86, 1);
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (1, "R_Car_MonsterTruck_Red", "Monster Red", 2, 20, 78, 86, 0, 1);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (2, "R_Car_OffRoadTruck_Orange", "RoadTruck Orange", 4, 21, 98, 93, 1);                
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (2, "R_Car_OffRoadTruck_Orange", "RoadTruck Orange", 12, 21, 98, 93, 1, 1);                
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (3, "R_Car_SprintCar_White", "SprintCar White", 5, 20, 96, 92, 1);                 
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (3, "R_Car_SprintCar_White", "SprintCar White", 10, 20, 96, 92, 1, 1);                 
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0);
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0, 0);
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1);   
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1, 1);   
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (6, "R_Car_OffRoadTruck_Orange_2", "RoadTruck Orange2", 4, 21, 80, 93, 1);   
-insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, is_show )
+				   (6, "R_Car_OffRoadTruck_Orange_2", "RoadTruck Orange2", 4, 21, 80, 93, 0, 1);   
+insert into all_equip ( eid, rid, equip_name, star, mass, speed, max_speed, can_wade, is_show )
 				   values
-				   (7, "R_Car_SprintCar_White_2", "SprintCar White2", 5, 20, 82, 92, 1);                     
+				   (7, "R_Car_SprintCar_White_2", "SprintCar White2", 5, 20, 82, 92, 0, 1);                     
 select* from all_equip;
 
 /*equip_uid*/
