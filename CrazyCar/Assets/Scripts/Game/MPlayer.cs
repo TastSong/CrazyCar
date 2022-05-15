@@ -47,7 +47,7 @@ public class MPlayer : MonoBehaviour, IController {
     private float playerHigh = 2f;
     private Coroutine speedUpCor;
     private float turnoverOffset = 14;
-    private float checkTime = 1.4f;
+    private float checkTime = 0.4f;
     private float checkTimer = 0;
 
     // 记录通过拱门的次数
