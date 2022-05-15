@@ -13,6 +13,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
     public ParticleSystem[] wheelsParticeles;
     public TrailRenderer leftTrail;
     public TrailRenderer rightTrail;
+    public GameObject waterWaveParticle;
     //漂移颜色有关
     public Color[] driftColors;
     public float driftPower = 0;
@@ -29,6 +30,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
         } 
         //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
         DisableTrail();
+        waterWaveParticle.gameObject.SetActiveFast(false);
     }
 
     private void Update() {
@@ -113,6 +115,18 @@ public class MPlayerStyle : MonoBehaviour, IController {
         foreach (var tempParticle in wheelsParticeles) {
             var t = tempParticle.main;
             t.startColor = driftColors[(int)mPlayer.driftLevel];
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == TagName.waterWave) {
+            waterWaveParticle.SetActiveFast(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.tag == TagName.waterWave) {
+            waterWaveParticle.SetActiveFast(false);
         }
     }
 

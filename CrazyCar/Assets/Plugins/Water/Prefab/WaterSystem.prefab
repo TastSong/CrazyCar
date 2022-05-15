@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 4736158571116558350}
   - component: {fileID: 4736158571116558449}
   - component: {fileID: 4736158571116558448}
-  - component: {fileID: 4736158571116558450}
   m_Layer: 0
   m_Name: WaterBlock_50m
-  m_TagString: Untagged
+  m_TagString: WaterWave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4736158571116558450
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4736158571116558451}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3da23cdf512599b42881988944f3918c, type: 2}
 --- !u!1 &5063948910505557283
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +226,7 @@ Transform:
   m_Children:
   - {fileID: 1120206959480773080}
   m_Father: {fileID: 6149107445786323196}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6149107445430538310
 MeshFilter:
@@ -335,8 +320,8 @@ GameObject:
   - component: {fileID: 6149107445696686678}
   - component: {fileID: 6149107445696686679}
   m_Layer: 0
-  m_Name: Ground
-  m_TagString: Untagged
+  m_Name: WaterTrigger
+  m_TagString: WaterWave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,12 +334,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6149107445696686676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.2437515, y: 8.29, z: -8.256094}
-  m_LocalScale: {x: 0.25, y: 1, z: 0.24390244}
+  m_LocalPosition: {x: 53.99, y: -0.23, z: 133.86}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7200619885248284993}
-  m_RootOrder: 6
+  m_Father: {fileID: 6149107445786323196}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6149107445696686673
 MeshFilter:
@@ -414,10 +399,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6149107445696686676}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 3da23cdf512599b42881988944f3918c, type: 2}
 --- !u!1 &6149107445786323197
@@ -451,6 +436,7 @@ Transform:
   - {fileID: 5063948910505557282}
   - {fileID: 7200619885248284993}
   - {fileID: 4736158571116558350}
+  - {fileID: 6149107445696686672}
   - {fileID: 6149107445430538305}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -655,7 +641,6 @@ Transform:
   - {fileID: 7200619886274064526}
   - {fileID: 7200619885183114013}
   - {fileID: 7200619885455131215}
-  - {fileID: 6149107445696686672}
   m_Father: {fileID: 6149107445786323196}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
