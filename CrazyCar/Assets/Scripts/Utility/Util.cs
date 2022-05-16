@@ -30,6 +30,7 @@ namespace Utils {
     public static class TagName {
         public const string endSign = "EndSign";
         public const string waterWave = "WaterWave";
+        public const string player = "Player";
     }
 
     public static class Util {

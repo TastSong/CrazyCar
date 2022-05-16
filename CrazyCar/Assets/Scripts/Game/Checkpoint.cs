@@ -23,7 +23,7 @@ public class Checkpoint : MonoBehaviour, IController {
 
     private void OnTriggerEnter(Collider other) {
         var checkpointSystem = this.GetSystem<ICheckpointSystem>();
-        if (other.tag == "Player" && 
+        if (other.tag == TagName.player && 
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer == other.GetComponent<MPlayer>()) {
             if (isEndSign) {
                 if (checkpointSystem.CheckpointCount * (checkpointSystem.PassTimes + 1) ==

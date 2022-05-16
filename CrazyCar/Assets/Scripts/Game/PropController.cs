@@ -14,7 +14,8 @@ public class PropController : MonoBehaviour, IController {
     public float time = 1;
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other.tag == TagName.player &&
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer == other.GetComponent<MPlayer>()) {
             if (propType == PropType.SpeedUp) {
                 this.GetSystem<IPlayerManagerSystem>().SelfPlayer.SpeedUp(time);
             }
