@@ -55,10 +55,10 @@ public class HomepageUI : MonoBehaviour, IController {
             }
 
             StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                  RequestUrl.matchDetailUrl,
+                  RequestUrl.matchMapUrl,
                 token: this.GetModel<IGameModel>().Token.Value,
                 succData: (data) => {
-                    this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
+                    this.GetSystem<IDataParseSystem>().ParseMatchMapData(data, () => {
                         if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
                             this.SendCommand(new ShowPageCommand(UIPageType.MatchRoomUI));
                         } else {
