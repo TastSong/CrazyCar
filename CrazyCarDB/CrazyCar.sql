@@ -184,6 +184,38 @@ insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_n
 select* from time_trial_class;
 select cid from time_trial_class;
 
+/*match map*/
+create table if not exists `match_map`(
+   `cid` int not null,
+   `star` int not null,  /*同Star*/
+   `map_id` int not null,
+   `has_water` int not null,
+   `limit_time` int not null,
+   `class_name` VARCHAR(40) not null,
+   `times` int not null,
+   primary key ( `cid` )
+   )engine = innodb default charset = utf8;
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (0, 2, 0, 0, 88, "基地卡通", 2);
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (1, 14, 1, 1, 96, "水上乐园", 2);
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (2, 3, 2, 0, 80, "曲折前行", 2);
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (3, 22, 3, 0, 100, "蜿蜒驰骋", 2);
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (4, 4, 4, 0, 90, "砥砺前行", 2);        
+insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   values
+				   (5, 1, 5, 0, 90, "几何风光", 2);                     
+select* from match_map;
+select cid from match_map;
+
 /*time_trial_user_map*/
 create table if not exists `time_trial_user_map`(
    `id` int unsigned auto_increment,

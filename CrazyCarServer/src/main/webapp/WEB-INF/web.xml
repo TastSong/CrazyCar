@@ -100,6 +100,12 @@
   	<description></description>
   	<servlet-class>CrazyCarServer.TimeTrialDetail</servlet-class>
   </servlet>
+    <servlet>
+  	<servlet-name>MatchMap</servlet-name>
+  	<display-name>MatchMap</display-name>
+  	<description></description>
+  	<servlet-class>CrazyCarServer.MatchMap</servlet-class>
+  </servlet>
   <servlet>
   	<servlet-name>TimeTrialRank</servlet-name>
   	<display-name>TimeTrialRank</display-name>
@@ -199,6 +205,10 @@
   <servlet-mapping>
   	<servlet-name>TimeTrialDetail</servlet-name>
   	<url-pattern>/TimeTrialDetail</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>MatchMap</servlet-name>
+  	<url-pattern>/MatchMap</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>TimeTrialRank</servlet-name>
