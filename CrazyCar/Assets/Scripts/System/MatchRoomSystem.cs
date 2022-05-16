@@ -184,7 +184,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
             this.SendEvent<MatchRoomStartEvent>();
-        } else if (code == 423) {
+        } else {
             this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("This map requires all player vehicles to be able to wade")));
         }
     }

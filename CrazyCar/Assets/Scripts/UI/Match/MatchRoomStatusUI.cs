@@ -27,7 +27,11 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     private void Start() {
         startBtn.onClick.AddListener(() => {
             if (this.GetModel<IMatchModel>().MemberInfoDic.Count >= maxNum) {
-                this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
+                if (IsLegalMap()) {
+                    this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
+                } else {
+                    this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This map requires all player vehicles to be able to wade")));
+                }
             } else {
                 this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Other players are not in position")));
             }  
@@ -40,6 +44,19 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         mapBtn.onClick.AddListener(() => {
             mapUI.gameObject.SetActiveFast(true);
         });
+    }
+
+    private bool IsLegalMap() {
+        if (this.GetModel<IMatchModel>().SelectInfo.Value.hasWater) {
+            foreach (var item in this.GetModel<IMatchModel>().MemberInfoDic) {
+                if (!item.Value.canWade) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return true;
+        }
     }
 
     private void OnMatchRoomUpdateStatus(MatchRoomUpdateStatusEvent e) {
