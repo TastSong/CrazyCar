@@ -9,6 +9,8 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     public Button closeBtn;
     public Button startBtn;
     public MatchRoomPlayerItem[] playerItems;
+    public Button mapBtn;
+    public MatchRoomMapUI mapUI;
 
     private int maxNum = 2;
 
@@ -33,7 +35,11 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
 
         closeBtn.onClick.AddListener(() => {
             gameObject.SetActiveFast(false);
-        }); 
+        });
+
+        mapBtn.onClick.AddListener(() => {
+            mapUI.gameObject.SetActiveFast(true);
+        });
     }
 
     private void OnMatchRoomUpdateStatus(MatchRoomUpdateStatusEvent e) {

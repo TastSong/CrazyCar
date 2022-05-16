@@ -19,6 +19,7 @@ public class MatchRoomWebSocket {
         public String memberName;
         public Integer aid;
         public boolean isHouseOwner;
+        public boolean canWade;
     }
 
     private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
@@ -98,6 +99,7 @@ public class MatchRoomWebSocket {
             info.uid = uid;
             info.memberName = Util.getStringDataByUid(uid, "user_name");
             info.aid = Util.getDataByUid(uid, "aid");
+            info.canWade = getIntDataByEid(message.getInteger("eid"), "can_wade") == 1;
             info.isHouseOwner = true;
             ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
             list.add(info);
@@ -107,6 +109,12 @@ public class MatchRoomWebSocket {
         System.out.println("OnCreateRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
+
+    private int getIntDataByEid(int eid, String key) {
+		String sql = "select " + key + " from all_equip where eid = "
+				+  eid + ";";
+		return Util.JDBC.executeSelectInt(sql, key);
+	}
 
     private void onJoinRoom(JSONObject message) {
         Integer uid = message.getInteger("uid");
@@ -122,6 +130,7 @@ public class MatchRoomWebSocket {
             info.uid = uid;
             info.memberName = Util.getStringDataByUid(uid, "user_name");
             info.aid = Util.getDataByUid(uid, "aid");
+            info.canWade = getIntDataByEid(message.getInteger("eid"), "can_wade") == 1;
             info.isHouseOwner = false;
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.put("code", 200);    
@@ -145,6 +154,7 @@ public class MatchRoomWebSocket {
                 jbItem.put("is_house_owner", playerLists.get(i).isHouseOwner);
                 jbItem.put("aid", playerLists.get(i).aid);
                 jbItem.put("uid", playerLists.get(i).uid);
+                jbItem.put("can_wade", playerLists.get(i).canWade);
                 jsonArray.add(jbItem);
             }		
             data.put("players", jsonArray);

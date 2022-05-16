@@ -43,6 +43,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IMatchModel>().RoomId);
             w.WritePropertyName("uid");
             w.Write(this.GetModel<IUserModel>().Uid);
+            w.WritePropertyName("eid");
+            w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomCreate : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
@@ -66,6 +68,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IMatchModel>().RoomId);
             w.WritePropertyName("uid");
             w.Write(this.GetModel<IUserModel>().Uid);
+            w.WritePropertyName("eid");
+            w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomJoin : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
@@ -84,12 +88,15 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.Write(this.GetModel<IMatchModel>().RoomId);
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid);
+        w.WritePropertyName("eid");
+        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStatus : " + sb.ToString());
         this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void MatchRoomStart() {
+        MatchInfo info = this.GetModel<IMatchModel>().SelectInfo.Value;
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -102,11 +109,13 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid);
         w.WritePropertyName("map_id");
-        w.Write(0);
+        w.Write(info.mapId);
+        w.WritePropertyName("cid");
+        w.Write(info.cid);
         w.WritePropertyName("limit_time");
-        w.Write(120);
+        w.Write(info.limitTime);
         w.WritePropertyName("times");
-        w.Write(1);
+        w.Write(info.times);
         w.WritePropertyName("start_time");
         w.Write(Util.GetTime() / 1000 + this.GetModel<IGameModel>().MatchStartGameTime);
         w.WriteObjectEnd();
@@ -161,6 +170,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                 info.isHouseOwner = (bool)players[i]["is_house_owner"];
                 info.aid = (int)players[i]["aid"];
                 info.uid = (int)players[i]["uid"];
+                info.canWade = (bool)players[i]["can_wade"];
                 info.index = i;
                 infos.Add(info.uid, info);
             }
@@ -170,9 +180,12 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void OnStartMsg(JsonData recJD) {
         Debug.Log("OnStartMsg = " + recJD.ToJson());
-        if ((int)recJD["code"] == 200) {
+        int code = (int)recJD["code"];
+        if (code == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
             this.SendEvent<MatchRoomStartEvent>();
+        } else if (code == 423) {
+            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("This map requires all player vehicles to be able to wade")));
         }
     }
 

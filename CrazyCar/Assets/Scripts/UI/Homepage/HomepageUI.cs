@@ -54,12 +54,18 @@ public class HomepageUI : MonoBehaviour, IController {
                 return;
             }
 
-            if (this.GetModel<IUserModel>().IsVIP) {
-                //this.SendCommand<CreateMatchCommand>();
-                this.SendCommand(new ShowPageCommand(UIPageType.MatchRoomUI));
-            } else {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This feature is for VIPs only")));
-            }
+            StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                  RequestUrl.matchDetailUrl,
+                token: this.GetModel<IGameModel>().Token.Value,
+                succData: (data) => {
+                    this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
+                        if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
+                            this.SendCommand(new ShowPageCommand(UIPageType.MatchRoomUI));
+                        } else {
+                            this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("No game")));
+                        }
+                    });
+                }));
         });
 
         //--------- option ---------

@@ -13,6 +13,7 @@ public class MatchInfo {
     public int mapId;
     public int limitTime;
     public int times;
+    public bool hasWater;
     public long startTime;
     public long enrollTime;
 }
@@ -29,6 +30,7 @@ public class MatchRoomMemberInfo {
     public int aid;
     public bool isHouseOwner;
     public int uid;
+    public bool canWade;
     public int index;
 }
 

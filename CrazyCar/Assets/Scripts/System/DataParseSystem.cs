@@ -135,6 +135,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     public void ParseMatchClassData(JsonData jsonData, Action success = null) {
         var matchModel = this.GetModel<IMatchModel>();
         matchModel.MatchDic.Clear();
+        int defaultSelect = 0;
         for (int i = 0; i < jsonData.Count; i++) {
             MatchInfo info = new MatchInfo();
             info.cid = (int)jsonData[i]["cid"];
@@ -142,10 +143,13 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.star = (int)jsonData[i]["star"];
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];
+            info.hasWater = (bool)jsonData[i]["has_water"];
             info.times = (int)jsonData[i]["times"];
-            info.startTime = (long)jsonData[i]["start_time"];
-            info.enrollTime = (long)jsonData[i]["enroll_time"];
             matchModel.MatchDic[info.cid] = info;
+
+            if (i == defaultSelect) {
+                matchModel.SelectInfo.Value = info;
+            }
         }
         success?.Invoke();
     }
