@@ -12,7 +12,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     public Button mapBtn;
     public MatchRoomMapUI mapUI;
 
-    private int maxNum = 2;
+    private int maxNum = 1;
 
     private void Awake() {
         this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus).UnRegisterWhenGameObjectDestroyed(gameObject);

@@ -108,16 +108,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.Write(this.GetModel<IMatchModel>().RoomId);
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid);
-        w.WritePropertyName("map_id");
-        w.Write(info.mapId);
         w.WritePropertyName("cid");
         w.Write(info.cid);
-        w.WritePropertyName("limit_time");
-        w.Write(info.limitTime);
-        w.WritePropertyName("times");
-        w.Write(info.times);
-        w.WritePropertyName("start_time");
-        w.Write(Util.GetTime() / 1000 + this.GetModel<IGameModel>().MatchStartGameTime);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStart : " + sb.ToString());
         this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());

@@ -32,6 +32,7 @@ public class MatchRoomWebSocket {
     private int maxNum = 2;
     private int curUid;
     private String roomId = "";
+    private Integer startOffsetTime = 16;
     
     // id = uid + "," + room_id
     @OnOpen
@@ -165,10 +166,11 @@ public class MatchRoomWebSocket {
 
     private void onStartRoom(JSONObject message) {
         String roomId = message.getString("room_id");
-        Integer mapId = message.getInteger("map_id");
-        Integer limitTime = message.getInteger("limit_time");
-        Integer times = message.getInteger("times");
-        long startTime = message.getLong("start_time");
+        Integer mapCid = message.getInteger("cid");
+        Integer mapId = getIntData(mapCid, "map_id");
+        Integer limitTime = getIntData(mapCid, "limit_time");
+        Integer times = getIntData(mapCid, "times");
+        long startTime = System.currentTimeMillis()/1000 + startOffsetTime;
         long enrollTime =  System.currentTimeMillis()/1000;
         String mapName = "TastSong";
         Integer star = 2;
@@ -191,7 +193,7 @@ public class MatchRoomWebSocket {
             data.put("enroll_time", enrollTime);
             data.put("code", 200); 
         }
-        System.out.println("OnStatusRoom : " + data.toString());
+        System.out.println("onStartRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 
@@ -199,6 +201,12 @@ public class MatchRoomWebSocket {
 		String sql = "select cid from match_class where room_id = " 
         + "\"" + roomId + "\"" +  " and " + "start_time = " + startTime + ";";
 		return Util.JDBC.executeSelectInt(sql, "cid");
+	}
+
+    private int getIntData(int cid, String key) {
+		String sql = "select " + key + " from match_map where cid = "
+				+  cid + ";";
+		return Util.JDBC.executeSelectInt(sql, key);
 	}
 
     public void sendToUser(String message, String roomId) {  	
