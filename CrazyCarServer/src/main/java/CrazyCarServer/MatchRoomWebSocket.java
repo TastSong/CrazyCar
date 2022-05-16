@@ -1,6 +1,5 @@
 package CrazyCarServer;
 
-import javax.print.DocFlavor.INPUT_STREAM;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;

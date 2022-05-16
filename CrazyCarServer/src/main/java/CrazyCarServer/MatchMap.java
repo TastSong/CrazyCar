@@ -35,13 +35,10 @@ public class MatchMap extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		System.out.println("MatchMap ...");
 		String token = request.getHeader("Authorization");
-		int uid;
 		if  (token == null || !Util.JWT.isLegalJWT(token)){
 			System.out.println("illegal JWT");
 			return;
-		} else{
-			uid = Util.JWT.getJWTId(token);
-		}		
+		} 	
 	
 		PrintWriter out = response.getWriter();	
 		
