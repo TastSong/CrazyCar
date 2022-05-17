@@ -8,6 +8,7 @@ using Utils;
 public class MatchRoomStatusUI : MonoBehaviour, IController {
     public Button closeBtn;
     public Button startBtn;
+    public GameObject waitingText;
     public MatchRoomPlayerItem[] playerItems;
     public Button mapBtn;
     public MatchRoomMapUI mapUI;
@@ -21,6 +22,8 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         startBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
+        mapBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
+        waitingText.SetActiveFast(!this.GetModel<IMatchModel>().IsHouseOwner);
         this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
     }
 
