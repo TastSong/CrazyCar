@@ -18,6 +18,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     private void Awake() {
         this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<MatchRoomStartEvent>(OnMatchRoomStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomExitEvent>(OnMatchRoomExit).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnEnable() {
@@ -41,7 +42,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         });
 
         closeBtn.onClick.AddListener(() => {
-            gameObject.SetActiveFast(false);
+            this.GetSystem<IMatchRoomSystem>().MatchRoomEixt();
         });
 
         mapBtn.onClick.AddListener(() => {
@@ -73,6 +74,11 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         }
     }
 
+    private void OnMatchRoomExit(MatchRoomExitEvent e) {
+        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        gameObject.SetActiveFast(false);
+    }
+
     private void OnMatchRoomStart(MatchRoomStartEvent e) {
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
         this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid, () => {
@@ -80,8 +86,8 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         });
     }
 
-    private void OnDisable() {
-        this.GetSystem<IMatchRoomSystem>().MatchRoomEixt();
+    private void OnDestroy() {
+        this.GetSystem<IWebSocketSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {

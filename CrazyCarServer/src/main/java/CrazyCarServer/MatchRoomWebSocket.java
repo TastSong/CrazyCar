@@ -79,7 +79,7 @@ public class MatchRoomWebSocket {
         } else if (msgType == Util.msgType.MatchRoomJoin) {
             onJoinRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomExit) {
-
+            onExitRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomStart) {
             onStartRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomStatus) {
@@ -161,6 +161,33 @@ public class MatchRoomWebSocket {
             data.put("code", 200);
         }
         System.out.println("OnStatusRoom : " + data.toString());
+        sendToUser(data.toString(), roomId);
+    }
+
+    private void onExitRoom(JSONObject message) {
+        String roomId = message.getString("room_id");
+        JSONObject data = new JSONObject();			
+        data.put("msg_type", Util.msgType.MatchRoomExit);
+        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
+			data.put("code", 404);     
+        } else if (message.getInteger("is_house_owner") == 1){
+            data.put("code", 423);
+        } else{              
+            JSONArray jsonArray = new JSONArray();
+            playerLists = MatchRoomWebSocket.roomMap.get(roomId);
+            for (int i = 0; i < playerLists.size(); i++){
+                JSONObject jbItem = new JSONObject();
+                jbItem.put("member_name", playerLists.get(i).memberName);
+                jbItem.put("is_house_owner", playerLists.get(i).isHouseOwner);
+                jbItem.put("aid", playerLists.get(i).aid);
+                jbItem.put("uid", playerLists.get(i).uid);
+                jbItem.put("can_wade", playerLists.get(i).canWade);
+                jsonArray.add(jbItem);
+            }		
+            data.put("players", jsonArray);
+            data.put("code", 200);
+        }
+        System.out.println("onExitRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 

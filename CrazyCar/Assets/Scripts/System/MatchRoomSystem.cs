@@ -52,7 +52,24 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void MatchRoomEixt() {
-        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        StringBuilder sb = new StringBuilder();
+        JsonWriter w = new JsonWriter(sb);
+        w.WriteObjectStart();
+        w.WritePropertyName("msg_type");
+        w.Write((int)MsgType.MatchRoomExit);
+        w.WritePropertyName("timestamp");
+        w.Write(Util.GetTime());
+        w.WritePropertyName("room_id");
+        w.Write(this.GetModel<IMatchModel>().RoomId);
+        w.WritePropertyName("uid");
+        w.Write(this.GetModel<IUserModel>().Uid);
+        w.WritePropertyName("eid");
+        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
+        w.WritePropertyName("is_house_owner");
+        w.Write(this.GetModel<IMatchModel>().IsHouseOwner ? 1 : 0);
+        w.WriteObjectEnd();
+        Debug.Log("MatchRoomStatus : " + sb.ToString());
+        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void MatchRoomJoin() {
@@ -131,7 +148,36 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     }
 
     public void OnExitMsg(JsonData recJD) {
-
+        int code = (int)recJD["code"];
+        Debug.Log("OnExitMsg = " + recJD.ToJson());
+        if (code == 404) {
+            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Without this room"))));
+        } else if (code == 423) {
+            if (this.GetModel<IMatchModel>().IsHouseOwner) {
+                this.SendEvent<MatchRoomExitEvent>();
+            } else {
+                this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("The owner quits and the room dissolves"),
+                    success: () => {
+                        this.SendEvent<MatchRoomExitEvent>();
+                    }, type: ConfirmAlertType.Single));
+            }
+        } else if (code == 200) {
+            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Members of the exit"))));
+            JsonData players = recJD["players"];
+            var infos = this.GetModel<IMatchModel>().MemberInfoDic;
+            infos.Clear();
+            for (int i = 0; i < players.Count; i++) {
+                MatchRoomMemberInfo info = new MatchRoomMemberInfo();
+                info.memberName = (string)players[i]["member_name"];
+                info.isHouseOwner = (bool)players[i]["is_house_owner"];
+                info.aid = (int)players[i]["aid"];
+                info.uid = (int)players[i]["uid"];
+                info.canWade = (bool)players[i]["can_wade"];
+                info.index = i;
+                infos.Add(info.uid, info);
+            }
+            this.SendEvent<MatchRoomUpdateStatusEvent>();
+        }
     }
 
     public void OnJoinMsg(JsonData recJD) {
