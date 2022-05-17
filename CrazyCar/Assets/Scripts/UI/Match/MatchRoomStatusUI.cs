@@ -14,6 +14,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     public MatchRoomMapUI mapUI;
 
     private int maxNum = 1;
+    private Coroutine getRoomStatusCor;
 
     private void Awake() {
         this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -25,7 +26,17 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         startBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
         mapBtn.gameObject.SetActiveFast(this.GetModel<IMatchModel>().IsHouseOwner);
         waitingText.SetActiveFast(!this.GetModel<IMatchModel>().IsHouseOwner);
-        this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
+        if (getRoomStatusCor != null) {
+            StopCoroutine(getRoomStatusCor);
+        }
+        StartCoroutine(GetRoomStatus());
+    }
+
+    private IEnumerator GetRoomStatus() {
+        while (true) {
+            this.GetSystem<IMatchRoomSystem>().MatchRoomStatus();
+            yield return new WaitForSeconds(4.0f);
+        }
     }
 
     private void Start() {
@@ -75,11 +86,17 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     }
 
     private void OnMatchRoomExit(MatchRoomExitEvent e) {
+        if (getRoomStatusCor != null) {
+            StopCoroutine(getRoomStatusCor);
+        }
         this.GetSystem<IWebSocketSystem>().CloseConnect();
         gameObject.SetActiveFast(false);
     }
 
     private void OnMatchRoomStart(MatchRoomStartEvent e) {
+        if (getRoomStatusCor != null) {
+            StopCoroutine(getRoomStatusCor);
+        }
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
         this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid, () => {
             this.SendCommand(new EnterMatchCommand(matchInfo));

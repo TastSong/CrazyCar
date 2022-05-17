@@ -51,7 +51,6 @@ public class MatchRoomWebSocket {
     @OnClose
     public void onClose() {
         if (!id.equals("")) {
-            webSocketSet.remove(id); 
             if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
                 for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
                     if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
@@ -64,6 +63,7 @@ public class MatchRoomWebSocket {
                 }
                 System.out.println("onClose : " + MatchRoomWebSocket.roomMap.size());
             } 
+            webSocketSet.remove(id); 
             subOnlineCount();           
             System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
         }
@@ -79,7 +79,7 @@ public class MatchRoomWebSocket {
         } else if (msgType == Util.msgType.MatchRoomJoin) {
             onJoinRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomExit) {
-            onExitRoom(sendMsg);
+            onExitRoom();
         } else if (msgType == Util.msgType.MatchRoomStart) {
             onStartRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomStatus) {
@@ -164,17 +164,16 @@ public class MatchRoomWebSocket {
         sendToUser(data.toString(), roomId);
     }
 
-    private void onExitRoom(JSONObject message) {
-        String roomId = message.getString("room_id");
+    private void onExitRoom() {
         JSONObject data = new JSONObject();			
         data.put("msg_type", Util.msgType.MatchRoomExit);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.put("code", 404);     
-        } else if (message.getInteger("is_house_owner") == 1){
-            data.put("code", 423);
-        } else{              
+        } else{    
+            data.put("exit_uid", curUid);            
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
+            // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
             for (int i = 0; i < playerLists.size(); i++){
                 JSONObject jbItem = new JSONObject();
                 jbItem.put("member_name", playerLists.get(i).memberName);
@@ -182,7 +181,9 @@ public class MatchRoomWebSocket {
                 jbItem.put("aid", playerLists.get(i).aid);
                 jbItem.put("uid", playerLists.get(i).uid);
                 jbItem.put("can_wade", playerLists.get(i).canWade);
-                jsonArray.add(jbItem);
+                if (curUid != playerLists.get(i).uid){
+                    jsonArray.add(jbItem);
+                }
             }		
             data.put("players", jsonArray);
             data.put("code", 200);
@@ -251,23 +252,7 @@ public class MatchRoomWebSocket {
 
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
-        if (webSocketSet.containsKey(id)) {
-            webSocketSet.remove(id); 
-            if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
-                for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
-                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
-                        MatchRoomWebSocket.roomMap.get(roomId).remove(i);
-                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
-                            MatchRoomWebSocket.roomMap.remove(roomId);
-                        }
-                        break;
-                    }
-                }
-            } 
-            subOnlineCount();    
-        }  
-        error.printStackTrace();
+        System.out.println("onError app strong back");
     }
 
     public void sendMessage(String message) throws IOException {

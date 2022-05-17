@@ -32,6 +32,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomCreate() {
         MatchRoomConnect(() => {
+            this.GetModel<IMatchModel>().IsHouseOwner = true;
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -48,7 +49,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.WriteObjectEnd();
             Debug.Log("MatchRoomCreate : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
-        });   
+        });
     }
 
     public void MatchRoomEixt() {
@@ -74,6 +75,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void MatchRoomJoin() {
         MatchRoomConnect(() => {
+            this.GetModel<IMatchModel>().IsHouseOwner = false;
             StringBuilder sb = new StringBuilder();
             JsonWriter w = new JsonWriter(sb);
             w.WriteObjectStart();
@@ -136,7 +138,6 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnCreateMsg = " + code);
         if (code == 200) {
-            this.GetModel<IMatchModel>().IsHouseOwner = true;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
             this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Room already exists")));
@@ -151,32 +152,36 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnExitMsg = " + recJD.ToJson());
         if (code == 404) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Without this room"))));
-        } else if (code == 423) {
-            if (this.GetModel<IMatchModel>().IsHouseOwner) {
+            this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("Without this room"),
+                    success: () => {
+                        this.SendEvent<MatchRoomExitEvent>();
+                    }, type: ConfirmAlertType.Single));
+        } else if (code == 200) {
+            int exitUid = (int)recJD["exit_uid"];
+            if (exitUid == this.GetModel<IUserModel>().Uid) {
                 this.SendEvent<MatchRoomExitEvent>();
-            } else {
+            } else if (this.GetModel<IMatchModel>().MemberInfoDic[exitUid].isHouseOwner) {
                 this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("The owner quits and the room dissolves"),
                     success: () => {
                         this.SendEvent<MatchRoomExitEvent>();
                     }, type: ConfirmAlertType.Single));
+            } else {
+                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Members of the exit"))));
+                JsonData players = recJD["players"];
+                var infos = this.GetModel<IMatchModel>().MemberInfoDic;
+                infos.Clear();
+                for (int i = 0; i < players.Count; i++) {
+                    MatchRoomMemberInfo info = new MatchRoomMemberInfo();
+                    info.memberName = (string)players[i]["member_name"];
+                    info.isHouseOwner = (bool)players[i]["is_house_owner"];
+                    info.aid = (int)players[i]["aid"];
+                    info.uid = (int)players[i]["uid"];
+                    info.canWade = (bool)players[i]["can_wade"];
+                    info.index = i;
+                    infos.Add(info.uid, info);
+                }
+                this.SendEvent<MatchRoomUpdateStatusEvent>();
             }
-        } else if (code == 200) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Members of the exit"))));
-            JsonData players = recJD["players"];
-            var infos = this.GetModel<IMatchModel>().MemberInfoDic;
-            infos.Clear();
-            for (int i = 0; i < players.Count; i++) {
-                MatchRoomMemberInfo info = new MatchRoomMemberInfo();
-                info.memberName = (string)players[i]["member_name"];
-                info.isHouseOwner = (bool)players[i]["is_house_owner"];
-                info.aid = (int)players[i]["aid"];
-                info.uid = (int)players[i]["uid"];
-                info.canWade = (bool)players[i]["can_wade"];
-                info.index = i;
-                infos.Add(info.uid, info);
-            }
-            this.SendEvent<MatchRoomUpdateStatusEvent>();
         }
     }
 
@@ -184,7 +189,6 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnJoinMsg = " + recJD.ToJson());
         if (code == 200) {
-            this.GetModel<IMatchModel>().IsHouseOwner = false;
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
             this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Without this room")));
@@ -202,17 +206,33 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             JsonData players = recJD["players"];
             var infos = this.GetModel<IMatchModel>().MemberInfoDic;
             infos.Clear();
+            bool hasHouseOwner = false;
             for (int i = 0; i < players.Count; i++) {
                 MatchRoomMemberInfo info = new MatchRoomMemberInfo();
                 info.memberName = (string)players[i]["member_name"];
                 info.isHouseOwner = (bool)players[i]["is_house_owner"];
+                if (info.isHouseOwner) {
+                    hasHouseOwner = true;
+                }
                 info.aid = (int)players[i]["aid"];
                 info.uid = (int)players[i]["uid"];
                 info.canWade = (bool)players[i]["can_wade"];
                 info.index = i;
                 infos.Add(info.uid, info);
             }
-            this.SendEvent<MatchRoomUpdateStatusEvent>();
+            if (hasHouseOwner) {
+                this.SendEvent<MatchRoomUpdateStatusEvent>();
+            } else {
+                this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("The owner quits and the room dissolves"),
+                    success: () => {
+                        this.SendEvent<MatchRoomExitEvent>();
+                    }, type: ConfirmAlertType.Single));
+            }  
+        } else if (code == 404) {
+            this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("Without this room"),
+                    success: () => {
+                        this.SendEvent<MatchRoomExitEvent>();
+                    }, type: ConfirmAlertType.Single));
         }
     }
 
