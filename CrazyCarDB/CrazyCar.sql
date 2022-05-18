@@ -197,10 +197,10 @@ create table if not exists `match_map`(
    )engine = innodb default charset = utf8;
 insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 0, 88, "基地卡通", 2);
+				   (0, 2, 0, 0, 88, "基地卡通", 1);
 insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 14, 1, 1, 96, "水上乐园", 2);
+				   (1, 14, 1, 1, 96, "水上乐园", 1);
 insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
 				   (2, 3, 2, 0, 80, "曲折前行", 2);
