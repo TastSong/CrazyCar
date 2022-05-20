@@ -41,12 +41,6 @@
   	<servlet-class>CrazyCarServer.ChangeEquip</servlet-class>
   </servlet> 
   <servlet>
-  	<servlet-name>CreateMatch</servlet-name>
-  	<display-name>CreateMatch</display-name>
-  	<description></description>
-  	<servlet-class>CrazyCarServer.CreateMatch</servlet-class>
-  </servlet>
-       <servlet>
   	<servlet-name>Equip</servlet-name>
   	<display-name>Equip</display-name>
   	<description></description>
@@ -69,12 +63,6 @@
   	<display-name>GetUserInfo</display-name>
   	<description></description>
   	<servlet-class>CrazyCarServer.GetUserInfo</servlet-class>
-  </servlet>
-  <servlet>
-  	<servlet-name>MatchDetail</servlet-name>
-  	<display-name>MatchDetail</display-name>
-  	<description></description>
-  	<servlet-class>CrazyCarServer.MatchDetail</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>MatchResult</servlet-name>
@@ -166,10 +154,6 @@
   	<servlet-name>ChangeEquip</servlet-name>
   	<url-pattern>/ChangeEquip</url-pattern>
   </servlet-mapping> 
-       <servlet-mapping>
-  	<servlet-name>CreateMatch</servlet-name>
-  	<url-pattern>/CreateMatch</url-pattern>
-  </servlet-mapping>  
   <servlet-mapping>
   	<servlet-name>Equip</servlet-name>
   	<url-pattern>/Equip</url-pattern>
@@ -186,10 +170,6 @@
   	<servlet-name>GetUserInfo</servlet-name>
   	<url-pattern>/GetUserInfo</url-pattern>
   </servlet-mapping> 
-       <servlet-mapping>
-  	<servlet-name>MatchDetail</servlet-name>
-  	<url-pattern>/MatchDetail</url-pattern>
-  </servlet-mapping>  
   <servlet-mapping>
   	<servlet-name>MatchResult</servlet-name>
   	<url-pattern>/MatchResult</url-pattern>
