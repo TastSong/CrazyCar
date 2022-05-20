@@ -13,6 +13,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     public Text massText;
     public Text maxSpeedText;
     public Text speedText;
+    public Text canWadeText;
     public Button closeBtn;
     public Button applyBtn;
     public Text applyBtnText;
@@ -88,6 +89,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
         massText.text = curEquipInfo.mass.ToString();
         speedText.text = curEquipInfo.speed.ToString();
         maxSpeedText.text = curEquipInfo.maxSpeed.ToString();
+        canWadeText.text = curEquipInfo.canWade ? "Y" : "N";
         for (int i = 0; i < changeCarItems.Count; i++) {
             changeCarItems[i].SetSelectState(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);
         }
