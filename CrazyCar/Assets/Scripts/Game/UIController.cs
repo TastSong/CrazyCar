@@ -16,7 +16,6 @@ public enum UIPageType {
     RankUI,
     TimeTrialRankUI,
     ChangeCarUI,
-    MatchDetailUI,
     MatchRoomUI
 }
 

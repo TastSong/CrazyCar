@@ -19,10 +19,8 @@ public static class RequestUrl {
     public static string equipUrl = "Equip";
     public static string buyEquipUrl = "BuyEquip";
     public static string changeEquipUrl = "ChangeEquip";
-    public static string matchDetailUrl = "MatchDetail";
     public static string matchMapUrl = "MatchMap";
     public static string matchResultUrl = "MatchResult";
-    public static string createMatchUrl = "CreateMatch";
     public static string kcpServerUrl = "KCPRttServer";
     public static string enterRoomUrl = "EnterRoom";
     public static string getUserInfo = "GetUserInfo";

@@ -12,7 +12,6 @@ public interface IDataParseSystem : ISystem {
     void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
     void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     void ParseTimeTrialResult(JsonData jsonData, Action success = null);
-    void ParseMatchClassData(JsonData jsonData, Action success = null);
     void ParseMatchMapData(JsonData jsonData, Action success = null);
     public void ParseSelectMatch(JsonData jsonData, Action success = null);
     void ParseMatchRank(JsonData data, Action success = null);
@@ -130,24 +129,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         timeTrialModel.Rank.Value = (int)jsonData["rank"];
         timeTrialModel.IsBreakRecord.Value = (bool)jsonData["is_break_record"];
         timeTrialModel.RewardStar.Value = (int)jsonData["reward"];
-        success?.Invoke();
-    }
-
-    public void ParseMatchClassData(JsonData jsonData, Action success = null) {
-        var matchModel = this.GetModel<IMatchModel>();
-        matchModel.MatchDic.Clear();
-        for (int i = 0; i < jsonData.Count; i++) {
-            MatchInfo info = new MatchInfo();
-            info.cid = (int)jsonData[i]["cid"];
-            info.name = (string)jsonData[i]["name"];
-            info.star = (int)jsonData[i]["star"];
-            info.mapId = (int)jsonData[i]["map_id"];
-            info.limitTime = (int)jsonData[i]["limit_time"];
-            info.times = (int)jsonData[i]["times"];
-            info.startTime = (long)jsonData[i]["start_time"];
-            info.enrollTime = (long)jsonData[i]["enroll_time"];
-            matchModel.MatchDic[info.cid] = info;
-        }
         success?.Invoke();
     }
 

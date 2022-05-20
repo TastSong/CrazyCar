@@ -134,23 +134,6 @@ public class HomepageUI : MonoBehaviour, IController {
 
         OnUpdataUI(new UpdateHomepageUIEvent());
         this.RegisterEvent<UpdateHomepageUIEvent>(OnUpdataUI).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<UpdataMatchDetailEvent>(OnUpdataMatchDetail).UnRegisterWhenGameObjectDestroyed(gameObject);
-    }
-
-    private void OnUpdataMatchDetail(UpdataMatchDetailEvent e) {
-        this.SendCommand(new SetLoadingUICommand(true));
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-           RequestUrl.matchDetailUrl,
-          token: this.GetModel<IGameModel>().Token.Value,
-          succData: (data) => {
-              this.GetSystem<IDataParseSystem>().ParseMatchClassData(data, () => {
-                  if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
-                      this.SendCommand(new ShowPageCommand(UIPageType.MatchDetailUI));
-                  } else {
-                      this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("No game")));
-                  }
-              });
-          }));
     }
 
     private void ShowStandAlone() {
