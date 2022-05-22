@@ -74,6 +74,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayCloseSound();
+            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
             this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));           
         });
 
