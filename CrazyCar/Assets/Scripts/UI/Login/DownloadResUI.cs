@@ -29,20 +29,23 @@ public class DownloadResUI : MonoBehaviour, IController {
         Debug.Log("++++++ " + sb.ToString());
         Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-            data: bytes, succData: (data) => {
-                if ((bool)data["is_forced_updating"]) {
-                    this.SendCommand(new ShowInfoConfirmAlertCommand(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
-                        success: () => {
-                            Application.OpenURL((string)data["url"]);
-                            Application.Quit();
-                        },
-                        confirmText: this.GetSystem<II18NSystem>().GetText("Download")));
-                } else {
-                    AddressableInfo.BaseUrl = this.GetSystem<INetworkSystem>().HttpBaseUrl;
-                    DownloadRes();
-                }
-            }));
+        // Unity 2021 不能开启游戏就发送HTTP会有报错
+        Util.DelayExecuteWithSecond(0.4f, () => {
+            StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+                data: bytes, succData: (data) => {
+                    if ((bool)data["is_forced_updating"]) {
+                        this.SendCommand(new ShowInfoConfirmAlertCommand(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
+                            success: () => {
+                                Application.OpenURL((string)data["url"]);
+                                Application.Quit();
+                            },
+                            confirmText: this.GetSystem<II18NSystem>().GetText("Download")));
+                    } else {
+                        AddressableInfo.BaseUrl = this.GetSystem<INetworkSystem>().HttpBaseUrl;
+                        DownloadRes();
+                    }
+                }));
+        });
     }
 
     private void DownloadRes() {
