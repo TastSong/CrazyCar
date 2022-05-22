@@ -129,6 +129,7 @@ public class HomepageUI : MonoBehaviour, IController {
                 return;
             }
             this.SendCommand(new ShowPageCommand(UIPageType.ChangeCarUI));
+            this.SendCommand(new HidePageCommand(UIPageType.HomepageUI));
         });
         // --------- Bottom Btns ---------
 
