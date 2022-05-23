@@ -71,7 +71,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
         yield return request.SendWebRequest();
 
-        if (request.isNetworkError || request.isHttpError) {
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
             Debug.LogError("Is Network Error url = " + url);
         } else {
             this.SendEvent(new SetLoadingUIEvent(false));

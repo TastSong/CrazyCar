@@ -30,8 +30,7 @@ public class DownloadResUI : MonoBehaviour, IController {
         Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         // Unity 2021 不能开启游戏就发送HTTP会有报错
-        Util.DelayExecuteWithSecond(0.4f, () => {
-            StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
+        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
                 data: bytes, succData: (data) => {
                     if ((bool)data["is_forced_updating"]) {
                         this.SendCommand(new ShowInfoConfirmAlertCommand(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
@@ -45,7 +44,6 @@ public class DownloadResUI : MonoBehaviour, IController {
                         DownloadRes();
                     }
                 }));
-        });
     }
 
     private void DownloadRes() {
