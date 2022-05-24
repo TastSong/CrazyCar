@@ -46,6 +46,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IUserModel>().Uid);
             w.WritePropertyName("eid");
             w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
+            w.WritePropertyName("token");
+            w.Write(this.GetModel<IGameModel>().Token);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomCreate : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
@@ -89,6 +91,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IUserModel>().Uid);
             w.WritePropertyName("eid");
             w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
+            w.WritePropertyName("token");
+            w.Write(this.GetModel<IGameModel>().Token);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomJoin : " + sb.ToString());
             this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
@@ -145,6 +149,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         } else if (code == 422) {
             this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The number of rooms has reached the upper limit")));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
+        } else if (code == 423) {
+            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Token Past Due")));
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
 
@@ -195,6 +202,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
             this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The room is full")));
+            this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
+        } else if (code == 423) {
+            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Token Past Due")));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }

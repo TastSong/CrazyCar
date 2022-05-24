@@ -90,9 +90,12 @@ public class MatchRoomWebSocket {
     private void onCreateRoom(JSONObject message) {
         Integer uid = message.getInteger("uid");
         String roomId = message.getString("room_id");
+        String token = message.getString("token");
         JSONObject data = new JSONObject();			
         data.put("msg_type", Util.msgType.MatchRoomCreate);
-        if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
+        if(!Util.JWT.isLegalJWT(token)){
+            data.put("code", 423);
+        } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.put("code", 421);
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
@@ -119,12 +122,15 @@ public class MatchRoomWebSocket {
     private void onJoinRoom(JSONObject message) {
         Integer uid = message.getInteger("uid");
         String roomId = message.getString("room_id");
+        String token = message.getString("token");
         JSONObject data = new JSONObject();			
         data.put("msg_type", Util.msgType.MatchRoomJoin);
-        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
+        if(!Util.JWT.isLegalJWT(token)){
+            data.put("code", 422);
+        } else if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.put("code", 404);
         } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
-            data.put("code", 422);
+            data.put("code", 423);
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = uid;
