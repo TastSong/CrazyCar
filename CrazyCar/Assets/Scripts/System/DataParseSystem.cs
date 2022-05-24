@@ -16,6 +16,9 @@ public interface IDataParseSystem : ISystem {
     public void ParseSelectMatch(JsonData jsonData, Action success = null);
     void ParseMatchRank(JsonData data, Action success = null);
     void ParseEquipRes(JsonData jsonData, Action success = null);
+    PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
+    PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
+    PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {
@@ -203,6 +206,53 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             equipModel.EquipDic[info.eid] = info;
         }
         success?.Invoke();
+    }
+
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
+        PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
+        playerCreateMsg.cid = (int)jsonData["cid"];
+        playerCreateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
+        string[] speed = ((string)jsonData["speed"]).Split(',');
+        playerCreateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
+        playerCreateMsg.timestamp = (long)jsonData["timestamp"];
+        playerCreateMsg.userInfo.name = (string)jsonData["user_info"]["name"];
+        playerCreateMsg.userInfo.uid = (int)jsonData["user_info"]["uid"];
+        playerCreateMsg.userInfo.aid = (int)jsonData["user_info"]["aid"];
+        playerCreateMsg.userInfo.star = (int)jsonData["user_info"]["star"];
+        playerCreateMsg.userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
+        playerCreateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
+        playerCreateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
+        playerCreateMsg.userInfo.equipInfo.mass = (int)jsonData["user_info"]["equip_info"]["mass"];
+        playerCreateMsg.userInfo.equipInfo.speed = (int)jsonData["user_info"]["equip_info"]["speed"];
+        playerCreateMsg.userInfo.equipInfo.maxSpeed = (int)jsonData["user_info"]["equip_info"]["max_speed"];
+        success?.Invoke();
+        return playerCreateMsg;
+    }
+
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
+        PlayerStateMsg playerStateMsg = new PlayerStateMsg();
+        playerStateMsg.cid = (int)jsonData["cid"];
+        playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
+        string[] speed = ((string)jsonData["speed"]).Split(',');
+        playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
+        playerStateMsg.timestamp = (long)jsonData["timestamp"];
+        playerStateMsg.uid = (int)jsonData["uid"];
+        success?.Invoke();
+        return playerStateMsg;
+    }
+
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null) {
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
+        PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
+        playerOperatMsg.cid = (int)jsonData["cid"];
+        playerOperatMsg.controllerType = (ControllerType)(int)jsonData["controller_type"];
+        playerOperatMsg.value = (int)jsonData["value"];
+        playerOperatMsg.timestamp = (long)jsonData["timestamp"];
+        playerOperatMsg.uid = (int)jsonData["uid"];
+        success?.Invoke();
+        return playerOperatMsg;
     }
 
     protected override void OnInit() {
