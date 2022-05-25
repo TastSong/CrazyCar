@@ -63,6 +63,7 @@ public class MatchResultUI : MonoBehaviour, IController {
 
     private void UpdateUI(UpdateMatchResultUIEvent e) {
         refreshBtn.onClick.Invoke();
+        this.GetSystem<IPlayerManagerSystem>().peers[e.playerCompleteMsg.uid].isLockSpeed = true;
     }
 
     public IArchitecture GetArchitecture() {

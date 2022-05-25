@@ -52,6 +52,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
     private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
+    private PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
@@ -130,8 +131,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 }
             }
         } else if (msgType == MsgType.PlayerCompleteGame) {
+            playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
             if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-                this.SendEvent<UpdateMatchResultUIEvent>();
+                this.SendEvent(new UpdateMatchResultUIEvent(playerCompleteMsg));
             }
         } else if (msgType == MsgType.MatchRoomCreate) {
             this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);

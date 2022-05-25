@@ -50,6 +50,12 @@ public class PlayerOperatMsg {
     public long timestamp;
 }
 
+public class PlayerCompleteMsg {
+    public int cid;
+    public int uid;
+    public long completeTime;
+}
+
 public interface IPlayerManagerSystem : ISystem {
     MPlayer SelfPlayer { get; set; }
     MPlayer GetPlayerByUid(int uid);

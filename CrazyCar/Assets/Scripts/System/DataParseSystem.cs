@@ -19,6 +19,7 @@ public interface IDataParseSystem : ISystem {
     PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
     PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
     PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
+    PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {
@@ -253,6 +254,16 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerOperatMsg.uid = (int)jsonData["uid"];
         success?.Invoke();
         return playerOperatMsg;
+    }
+
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null) {
+        Debug.LogWarning("Rec = " + jsonData.ToJson());
+        PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
+        playerCompleteMsg.cid = (int)jsonData["cid"];
+        playerCompleteMsg.completeTime = (int)jsonData["complete_time"];
+        playerCompleteMsg.uid = (int)jsonData["uid"];
+        success?.Invoke();
+        return playerCompleteMsg;
     }
 
     protected override void OnInit() {
