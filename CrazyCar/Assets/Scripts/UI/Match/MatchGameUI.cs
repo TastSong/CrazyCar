@@ -37,7 +37,6 @@ public class MatchGameUI : MonoBehaviour, IController {
             StartGame();
             Debug.LogError("比赛结束");
         }
-        
     }
 
     private void StartGame() {
@@ -58,6 +57,7 @@ public class MatchGameUI : MonoBehaviour, IController {
 
     private void OnCompleteMatch(CompleteMatchEvent e) {
         StopCoroutine(limitTimeCor);
+        this.SendCommand<PostPlayerCompleteGameMsgCommand>();
         this.SendCommand(new ShowResultUICommand());
     }
 

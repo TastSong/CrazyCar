@@ -129,6 +129,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                     PlayerOperatMsgs.Enqueue(playerOperatMsg);
                 }
             }
+        } else if (msgType == MsgType.PlayerCompleteGame) {
+            if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
+                this.SendEvent<UpdateMatchResultUIEvent>();
+            }
         } else if (msgType == MsgType.MatchRoomCreate) {
             this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);
         } else if (msgType == MsgType.MatchRoomJoin) {

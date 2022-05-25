@@ -23,7 +23,9 @@ public enum MsgType{
     MatchRoomStatus = 5,
     MatchRoomExit = 6,
     MatchRoomStart = 7,
-    PlayerOperat = 8
+    // 用户操作
+    PlayerOperat = 8,
+    PlayerCompleteGame = 9
 }
 
 

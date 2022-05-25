@@ -57,6 +57,12 @@ public class MatchResultUI : MonoBehaviour, IController {
         refreshBtn.onClick.AddListener(() => {
             FetchData();
         });
+
+        this.RegisterEvent<UpdateMatchResultUIEvent>(UpdateUI).UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
+
+    private void UpdateUI(UpdateMatchResultUIEvent e) {
+        refreshBtn.onClick.Invoke();
     }
 
     public IArchitecture GetArchitecture() {
