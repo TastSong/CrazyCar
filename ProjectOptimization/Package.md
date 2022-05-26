@@ -101,7 +101,7 @@ StreamingAssets打包时是直接复制的文件，jpg还是原来的jpg，png�
 
 2. 16bit
 
-   16bit,只包含16位色，因为颜色较少，一些渐变会出现过度不均匀，质量较差，大小比truecolor小。一般用于16位色质量可接受的图片上，或者需要alpha通道的3D贴图上。
+   16bit,只包含16位色，因为颜色较少，一些渐变会出现过度不均匀，质量较差，大小比TrueColor小。一般用于16位色质量可接受的图片上，或者需要alpha通道的3D贴图上。
 
    16bit格式包含rgb16bit,rgba16bit,argb16bit,所包含的通道按照以上名字规律，**需要注意的是格式大小只和bit数有关**，也就是说rgb16bit,argb16bit虽然通道不一样，但都是16bit，所以大小一样，但argb16bit颜色更少，质量也越差，所以在重复一遍，不需要透明就不要保留alpha，透明不仅带来空间增大，质量也会变差。
 
@@ -109,7 +109,7 @@ StreamingAssets打包时是直接复制的文件，jpg还是原来的jpg，png�
 
    压缩格式，根据显卡需要的格式进行压缩，如iOS设备使用PowerVR处理器，则适合的贴图格式是PVRTC等，Android手机根据芯片不同有ETC，ATC，DXT，PVRTC等，但一般不会根据具体的手机打不同的包，所以一般选择ETC，**需要注意最好不要手动选择压缩格式**，应该选择auto Compress，Unity会自动选择最适合该平台的格式。如果选错格式，那么在运行时会对贴图进行转码，大大拉大加载时间。
 
-   压缩格式的图片大小，取决于不同的格式，但一般都会比trueColor或16bit小很多，质量一般还行，因此是3D贴图的首选，大部分压缩格式要求为2的n次幂，且大部分压缩格式不支持alpha或者支持alpha但效果不好。部分2D图片使用起来会稍微麻烦，比如强制为2的n次幂时sprite不能用。
+   压缩格式的图片大小，取决于不同的格式，但一般都会比TrueColor或16bit小很多，质量一般还行，因此是3D贴图的首选，大部分压缩格式要求为2的n次幂，且大部分压缩格式不支持alpha或者支持alpha但效果不好。部分2D图片使用起来会稍微麻烦，比如强制为2的n次幂时sprite不能用。
 
 4. Mipmap
 
@@ -131,9 +131,7 @@ StreamingAssets打包时是直接复制的文件，jpg还是原来的jpg，png�
 
 * 16bit的优化
 
-  使用16bit时，会出现明显的颜色过度不均匀，可以通过RGBA4444和dithering优化显示效果，详细请看（翻墙才见图片）
-
-  http://electronic-blue.herokuapp.com/blog/2013/05/reduce-memory-usage-by-dithering/?utm_source=tuicool&utm_medium=referral
+  使用16bit时，会出现明显的颜色过度不均匀，可以通过RGBA4444和dithering优化显示效果
 
 * 利用StreamingAssets的优化
 
@@ -147,7 +145,7 @@ StreamingAssets打包时是直接复制的文件，jpg还是原来的jpg，png�
 
 #### 3.3.3 声音
 
-声音资源在Unity打包时以流资源存在（待验证），也就是说文件大小会影响打包大小，Unity预览窗口中显示的大小是内存占用。在Unity中调节声音文件参数不会影响打包大小。
+声音资源在Unity打包时以流资源存在，也就是说文件大小会影响打包大小，Unity预览窗口中显示的大小是内存占用。在Unity中调节声音文件参数不会影响打包大小。
 
 影响声音文件大小的因素 **待补充**
 
