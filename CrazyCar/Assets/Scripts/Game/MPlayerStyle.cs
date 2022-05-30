@@ -33,15 +33,16 @@ public class MPlayerStyle : MonoBehaviour, IController {
         waterWaveParticle.gameObject.SetActiveFast(false);
     }
 
-    private void Update() {
-        //this.GetSystem<IScreenEffectsSystem>().MotionBlurEffects.Intensity = 0.5f;
-        ShowVFX();
-    }
-
     private void FixedUpdate() {
-        if (mPlayer != null && mPlayer.isDrifting) {
+        if (mPlayer == null || mPlayer.isLockSpeed) {
+            return;
+        }
+
+        if (mPlayer.isDrifting) {
             ChangeDriftColor();
         }
+
+        ShowVFX();
     }
 
     public void ChangeEquip(int eid, string rid) {
