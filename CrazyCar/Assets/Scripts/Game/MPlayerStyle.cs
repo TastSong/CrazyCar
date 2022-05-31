@@ -38,10 +38,6 @@ public class MPlayerStyle : MonoBehaviour, IController {
             return;
         }
 
-        if (mPlayer.isDrifting) {
-            ChangeDriftColor();
-        }
-
         ShowVFX();
     }
 
@@ -70,6 +66,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
         if (leftTrail.enabled == true) {
             EnableScreenEffect();
             PlayDriftParticle();
+            ChangeDriftColor();
             this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
         } else {
             DisableScreenEffect();
@@ -80,14 +77,18 @@ public class MPlayerStyle : MonoBehaviour, IController {
 
     private void PlayDriftParticle() {
         foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Play();
+            if (!tempParticle.isPlaying) {
+                tempParticle.Play();
+            }
         }
         plexusVFX.gameObject.SetActiveFast(true);
     }
 
     private void StopDriftParticle() {
         foreach (var tempParticle in wheelsParticeles) {
-            tempParticle.Stop();
+            if (tempParticle.isPlaying) {
+                tempParticle.Stop();
+            }
         }
         plexusVFX.gameObject.SetActiveFast(false);
     }

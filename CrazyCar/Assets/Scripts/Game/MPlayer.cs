@@ -288,6 +288,7 @@ public class MPlayer : MonoBehaviour, IController {
     //计算漂移等级
     private void CalculateDriftingLevel() {
         driftPower += Time.fixedDeltaTime;
+        Debug.LogError("+++++++driftPower = " + driftPower + "  driftLevel = " + driftLevel);
         //0.7秒提升一个漂移等级
         if (driftPower < 0.7) {
             driftLevel = DriftLevel.One;
