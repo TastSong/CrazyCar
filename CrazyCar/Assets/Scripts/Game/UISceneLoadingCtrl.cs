@@ -10,7 +10,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     public Text progressText;
 
     private float timer;
-    public float minLoadingTime = 3f;
+    public float minLoadingTime = 0.1f;
 
     private void Start() {
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
@@ -46,7 +46,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         }
         // 2019加载完场景并不能直接显示
         Destroy(gameObject);
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(0.1f);
         this.GetModel<IGameModel>().SceneLoaded.Value = true;
         this.SendCommand(new SelectGameUICommand());
     }

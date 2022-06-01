@@ -10,7 +10,7 @@ public class IndexCameraController : MonoBehaviour {
     private void Update() {
 #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
 
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && Input.mousePosition.y > (Screen.height / 3)) {
             x = Mathf.Lerp(x, Mathf.Clamp(Input.GetAxis("Mouse X"), -2, 2) * cameraRotateSpeed, Time.deltaTime * 5.0f);
             Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 50, 60);
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50, Time.deltaTime);
