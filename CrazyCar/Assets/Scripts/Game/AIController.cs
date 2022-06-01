@@ -69,7 +69,7 @@ public class AIController : MonoBehaviour, IController {
             aiInfo.pathCreator = e.aiInfo.pathCreator;
             aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
             aiInfo.mPlayer.transform.SetParent(transform, false);
-            aiInfo.mPlayer.userInfo = e.aiInfo.userInfo;
+            aiInfo.mPlayer.userInfo = aiInfo.userInfo;
             aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
                 aiInfo.userInfo.equipInfo.rid);
             aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);

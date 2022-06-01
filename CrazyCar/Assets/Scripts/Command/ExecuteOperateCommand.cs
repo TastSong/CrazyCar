@@ -47,6 +47,7 @@ public class ExecuteOperateCommand : AbstractCommand {
             } else {
                 if (mPlayer.isDrifting) {
                     mPlayer.Boost(mPlayer.boostForce);
+                    this.SendEvent(new StartDriftEvent(mPlayer.userInfo.uid));
                     mPlayer.StopDrift();
                 }
             }

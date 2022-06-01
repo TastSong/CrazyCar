@@ -226,10 +226,6 @@ public class MPlayer : MonoBehaviour, IController {
             targetForce = normalForce;
         }
 
-        if (currentForce <= normalForce) {
-            mPlayerStyle.DisableTrail();
-        }
-
         currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime);//每秒60递减，可调
     }
 
@@ -288,7 +284,7 @@ public class MPlayer : MonoBehaviour, IController {
     //计算漂移等级
     private void CalculateDriftingLevel() {
         driftPower += Time.fixedDeltaTime;
-        Debug.LogError("+++++++driftPower = " + driftPower + "  driftLevel = " + driftLevel);
+        //Debug.LogError("+++++++driftPower = " + driftPower + "  driftLevel = " + driftLevel);
         //0.7秒提升一个漂移等级
         if (driftPower < 0.7) {
             driftLevel = DriftLevel.One;
@@ -309,7 +305,6 @@ public class MPlayer : MonoBehaviour, IController {
     public void Boost(float boostForce) {
         //按照漂移等级加速：1 / 1.1 / 1.2
         currentForce = (1 + (int)driftLevel / 10) * boostForce;
-        mPlayerStyle.EnableTrail();
     }
 
     public void SpeedUp(float time) {

@@ -15,7 +15,6 @@ public class UserInfo {
     public int travelTimes;
     public int avatarNum;
     public int mapNum;
-    public bool isNewbie;
     public EquipInfo equipInfo = new EquipInfo();
 }
 
@@ -34,6 +33,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> RememberPassword { get; }
     BindableProperty<bool> IsCompleteGuidance { get; }
     void SetUserInfoPart(UserInfo userInfo);
+    UserInfo GetUserInfo();
 }
 
 public class UserModel : AbstractModel, IUserModel {
@@ -51,6 +51,21 @@ public class UserModel : AbstractModel, IUserModel {
 
     public BindableProperty<bool> IsSuperuser { get; } = new BindableProperty<bool>();
     public BindableProperty<bool> IsCompleteGuidance { get; } = new BindableProperty<bool>();
+
+    public UserInfo GetUserInfo() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.uid = Uid;
+        userInfo.aid = Aid;
+        userInfo.avatarNum = AvatarNum;
+        userInfo.equipInfo = EquipInfo.Value;
+        userInfo.isSuperuser = IsSuperuser;
+        userInfo.isVIP = IsVIP;
+        userInfo.mapNum = MapNum;
+        userInfo.name = Name;
+        userInfo.star = Star;
+        userInfo.travelTimes = TravelTimes;
+        return userInfo;
+    }
 
     public void SetUserInfoPart(UserInfo userInfo) {
         Name.Value = userInfo.name;

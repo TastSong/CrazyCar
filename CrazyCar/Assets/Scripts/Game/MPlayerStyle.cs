@@ -23,14 +23,26 @@ public class MPlayerStyle : MonoBehaviour, IController {
 
     private float screenEffectTime = 0;
     private MPlayer mPlayer;
+    private bool isStartDrift = false;
 
     private void Start() {
         if (GetComponent<MPlayer>() != null) {
             mPlayer = GetComponent<MPlayer>();
-        } 
-        //wheelsParticeles = wheelsParticeleTrans.GetComponentsInChildren<ParticleSystem>();
-        DisableTrail();
+        }
+        this.RegisterEvent<StartDriftEvent>(OnStartDrift).UnRegisterWhenGameObjectDestroyed(gameObject);
+        EndDrift();
         waterWaveParticle.gameObject.SetActiveFast(false);
+    }
+
+    private void OnStartDrift(StartDriftEvent e) {
+        if (e.uid == mPlayer.userInfo.uid) {
+            EnableTrail();
+            EnableScreenEffect();
+            PlayDriftParticle();
+            ChangeDriftColor();
+            this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
+            isStartDrift = true;
+        }
     }
 
     private void FixedUpdate() {
@@ -38,7 +50,9 @@ public class MPlayerStyle : MonoBehaviour, IController {
             return;
         }
 
-        ShowVFX();
+        if (isStartDrift && mPlayer.currentForce <= mPlayer.normalForce) {
+            EndDrift();
+        }
     }
 
     public void ChangeEquip(int eid, string rid) {
@@ -62,17 +76,12 @@ public class MPlayerStyle : MonoBehaviour, IController {
         nameText.text = name;
     }
 
-    private void ShowVFX() {
-        if (leftTrail.enabled == true) {
-            EnableScreenEffect();
-            PlayDriftParticle();
-            ChangeDriftColor();
-            this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
-        } else {
-            DisableScreenEffect();
-            StopDriftParticle();
-            this.GetSystem<ISoundSystem>().StopAllSound();
-        }
+    private void EndDrift() {
+        DisableTrail();
+        DisableScreenEffect();
+        StopDriftParticle();
+        this.GetSystem<ISoundSystem>().StopAllSound();
+        isStartDrift = false;
     }
 
     private void PlayDriftParticle() {
@@ -93,12 +102,12 @@ public class MPlayerStyle : MonoBehaviour, IController {
         plexusVFX.gameObject.SetActiveFast(false);
     }
 
-    public void EnableTrail() {
+    private void EnableTrail() {
         leftTrail.enabled = true;
         rightTrail.enabled = true;
     }
 
-    public void DisableTrail() {
+    private void DisableTrail() {
         leftTrail.enabled = false;
         rightTrail.enabled = false;
     }
