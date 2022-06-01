@@ -41,7 +41,6 @@ public class MPlayer : MonoBehaviour, IController {
     public float driftPower = 0;
 
     public long lastRecvStatusStamp = 0;
-    private MPlayerStyle mPlayerStyle;
     // 出界 翻车判断
     private PathCreator pathCreator;
     private float playerHigh = 2f;
@@ -55,7 +54,6 @@ public class MPlayer : MonoBehaviour, IController {
     private bool isCanCalculatePassEndSignTimes = true;
 
     void Start() {
-        mPlayerStyle = GetComponent<MPlayerStyle>();
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
@@ -67,7 +65,6 @@ public class MPlayer : MonoBehaviour, IController {
 
     }
 
-    private bool isLock = false;
     private void FixedUpdate() {
         if (isLockSpeed) {
             rig.AddForce(Vector3.zero, ForceMode.Force);
