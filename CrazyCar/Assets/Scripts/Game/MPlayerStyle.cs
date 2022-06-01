@@ -53,6 +53,11 @@ public class MPlayerStyle : MonoBehaviour, IController {
         if (isStartDrift && mPlayer.currentForce <= mPlayer.normalForce) {
             EndDrift();
         }
+
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == mPlayer && !mPlayer.isGround) {
+            this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
+            this.GetSystem<IVibrationSystem>().Haptic();
+        }
     }
 
     public void ChangeEquip(int eid, string rid) {

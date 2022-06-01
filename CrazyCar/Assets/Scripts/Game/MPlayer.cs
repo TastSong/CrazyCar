@@ -141,8 +141,6 @@ public class MPlayer : MonoBehaviour, IController {
         Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this && !isGround) {
-            this.GetSystem<IScreenEffectsSystem>().ShakeCamera();
-            this.GetSystem<IVibrationSystem>().Haptic();
             tempForce = tempForce + gravity * Vector3.down;
         }
 
