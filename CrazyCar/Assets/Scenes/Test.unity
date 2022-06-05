@@ -316,10 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c90a0e60ea023b4382e02501359a16c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchItem: {fileID: 2420462388331884200, guid: cb955b1856e948d4c8a5bfda78960aae,
-    type: 3}
-  itemParent: {fileID: 3989525704169158179}
-  backBtn: {fileID: 8143963619967534766}
 --- !u!1 &51416196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,31 +2096,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 916642219}
-  - component: {fileID: 916642218}
-  m_Layer: 8
-  m_Name: Post
+  - component: {fileID: 916642220}
+  m_Layer: 20
+  m_Name: PostProcess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &916642218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916642217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 55db4fe336a0c4945ad985a73a3a306a, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
+  m_IsActive: 1
 --- !u!4 &916642219
 Transform:
   m_ObjectHideFlags: 0
@@ -2140,6 +2119,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &916642220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916642217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: fe5d359e63b7b4404a19e73bedc96592, type: 2}
 --- !u!1 &974880065
 GameObject:
   m_ObjectHideFlags: 0
@@ -3424,7 +3420,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1624431502}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1048576
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 1
@@ -3436,7 +3432,7 @@ MonoBehaviour:
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
-    fastMode: 0
+    fastMode: 1
     keepAlpha: 0
   fog:
     enabled: 1
@@ -3489,10 +3485,10 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1048576
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -27262,19 +27258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b130240de9a7504eb0e415d5c62629c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfBtn: {fileID: 8233018424132681968}
-  nameText: {fileID: 6582081918070704091}
-  limiteText: {fileID: 9037281519709018357}
-  timesText: {fileID: 2765186521447983231}
-  difficultyImages:
-  - {fileID: 7813689594890295423}
-  - {fileID: 6991126843698422494}
-  - {fileID: 1783200381642610752}
-  difficultySprites:
-  - {fileID: 21300000, guid: 1099c643b0b224d70939088534f67340, type: 3}
-  - {fileID: 21300000, guid: 77f356499436245caab55dafd6a3006b, type: 3}
-  startTimeText: {fileID: 5700985106230771874}
-  enrollTimeText: {fileID: 8745316839985473156}
 --- !u!1 &7261925702772845722
 GameObject:
   m_ObjectHideFlags: 0
