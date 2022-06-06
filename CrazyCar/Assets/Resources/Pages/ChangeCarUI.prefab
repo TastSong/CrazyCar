@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 3668860316967654562}
   - component: {fileID: 3668860316967654563}
   m_Layer: 5
-  m_Name: SpeedText
+  m_Name: PowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 3668860316995477439}
   - component: {fileID: 4782284730618275818}
   m_Layer: 5
-  m_Name: Speed
+  m_Name: Power
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -682,7 +682,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Speed:'
+  m_Text: 'Power:'
 --- !u!114 &3668860316995477439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892036eceb1f26e4d99e668b48627f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 'Speed:'
+  key: 'Power:'
 --- !u!1 &3668860317454298823
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 3668860317992838075}
   - component: {fileID: 6670913537561435844}
   m_Layer: 5
-  m_Name: MaxSpeed
+  m_Name: MaxPower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,7 +872,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'MaxSpeed:'
+  m_Text: 'Max Power:'
 --- !u!114 &3668860317992838075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892036eceb1f26e4d99e668b48627f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 'MaxSpeed:'
+  key: 'Max Power:'
 --- !u!1 &3668860318648412730
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,7 +912,7 @@ GameObject:
   - component: {fileID: 3668860318648412735}
   - component: {fileID: 3668860318648412732}
   m_Layer: 5
-  m_Name: MaxSpeedText
+  m_Name: MaxPowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1349,8 +1349,8 @@ MonoBehaviour:
   nameText: {fileID: 3905240876830663734}
   starText: {fileID: 4811184553648727022}
   massText: {fileID: 3668860317454298873}
-  maxSpeedText: {fileID: 3668860318648412732}
-  speedText: {fileID: 3668860316967654563}
+  maxPowerText: {fileID: 3668860318648412732}
+  powerText: {fileID: 3668860316967654563}
   canWadeText: {fileID: 3472356127492862417}
   closeBtn: {fileID: 8557589691641520120}
   applyBtn: {fileID: 7123864035058230709}
