@@ -88,8 +88,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
         nameText.text = curEquipInfo.equipName;
         starText.text = curEquipInfo.star.ToString();
         massText.text = curEquipInfo.mass.ToString();
-        powerText.text = curEquipInfo.speed.ToString();
-        maxPowerText.text = curEquipInfo.maxSpeed.ToString();
+        powerText.text = curEquipInfo.power.ToString();
+        maxPowerText.text = curEquipInfo.maxPower.ToString();
         canWadeText.text = curEquipInfo.canWade ? "Y" : "N";
         for (int i = 0; i < changeCarItems.Count; i++) {
             changeCarItems[i].SetSelectState(changeCarItems[i].equipInfo.eid == curEquipInfo.eid);

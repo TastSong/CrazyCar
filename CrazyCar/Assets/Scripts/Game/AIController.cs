@@ -100,7 +100,7 @@ public class AIController : MonoBehaviour, IController {
                     item.Value.isFinishGame = true;
                     this.SendCommand<EndTimeTrialCommand>();
                 } else{
-                    item.Value.distanceTravelled += item.Value.userInfo.equipInfo.speed / 4 * Time.deltaTime;
+                    item.Value.distanceTravelled += item.Value.userInfo.equipInfo.power / 4 * Time.deltaTime;
                     item.Value.mPlayer.transform.position = item.Value.pathCreator.path.GetPointAtDistance(item.Value.distanceTravelled);
                     item.Value.mPlayer.transform.rotation = Quaternion.Euler(item.Value.pathCreator.path.GetRotationAtDistance(item.Value.distanceTravelled).eulerAngles + Util.pathRotateOffset);
                 }

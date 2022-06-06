@@ -49,9 +49,9 @@ public class PostCreatePlayerMsgCommand : AbstractCommand {
         w.WritePropertyName("mass");
         w.Write(this.GetModel<IUserModel>().EquipInfo.Value.mass);
         w.WritePropertyName("speed");
-        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.speed);
+        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.power);
         w.WritePropertyName("max_speed");
-        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.maxSpeed);
+        w.Write(this.GetModel<IUserModel>().EquipInfo.Value.maxPower);
         w.WriteObjectEnd();
         w.WriteObjectEnd();
         w.WriteObjectEnd();

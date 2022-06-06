@@ -12,8 +12,8 @@ public class EquipInfo {
     public string equipName;
     public int star;
     public int mass;
-    public int speed;
-    public int maxSpeed;
+    public int power;
+    public int maxPower;
     public bool isHas;
     public bool canWade;
     public bool isShow;

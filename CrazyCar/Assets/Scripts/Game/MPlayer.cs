@@ -322,8 +322,8 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     public void UpdateParameter() {
-        normalForce = userInfo.equipInfo.speed;
-        boostForce = userInfo.equipInfo.maxSpeed;
+        normalForce = userInfo.equipInfo.power;
+        boostForce = userInfo.equipInfo.maxPower;
         gravity = userInfo.equipInfo.mass;
     }
 
