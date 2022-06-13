@@ -57,8 +57,8 @@ public class Equip extends HttpServlet {
 			jbItem.put("equip_name", getStrDataByEid(allEid.get(i), "equip_name"));
 			jbItem.put("star", getIntDataByEid(allEid.get(i), "star"));
 			jbItem.put("mass", getIntDataByEid(allEid.get(i), "mass"));
-			jbItem.put("speed", getIntDataByEid(allEid.get(i), "speed"));
-			jbItem.put("max_speed", getIntDataByEid(allEid.get(i), "max_speed"));
+			jbItem.put("power", getIntDataByEid(allEid.get(i), "power"));
+			jbItem.put("max_power", getIntDataByEid(allEid.get(i), "max_power"));
 			jbItem.put("can_wade", getIntDataByEid(allEid.get(i), "can_wade") == 1);
 			jbItem.put("is_show", getIntDataByEid(allEid.get(i), "is_show") == 1);
 			jbItem.put("is_has", isHasEquip(allEid.get(i), uid));

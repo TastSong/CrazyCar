@@ -193,8 +193,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }));
     }
 
-    public void GetUserInfo(int uid, Action<UserInfo> succ)
-    {
+    public void GetUserInfo(int uid, Action<UserInfo> succ) {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();

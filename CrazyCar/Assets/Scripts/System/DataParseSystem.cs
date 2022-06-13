@@ -57,16 +57,15 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.equipName = (string)data["equip_name"];
         info.star = (int)data["star"];
         info.mass = (int)data["mass"];
-        info.power = (int)data["speed"];
-        info.maxPower = (int)data["max_speed"];
+        info.power = (int)data["power"];
+        info.maxPower = (int)data["max_power"];
         info.isHas = (bool)data["is_has"];
         info.canWade = (bool)data["can_wade"];
         info.isShow = (bool)data["is_show"];
         userModel.EquipInfo.Value = info;
     }
 
-    public UserInfo ParseUserInfo(JsonData jsonData)
-    {
+    public UserInfo ParseUserInfo(JsonData jsonData) {
         UserInfo userInfo = new UserInfo();
         userInfo.name = (string)jsonData["user_info"]["user_name"];
         userInfo.uid = (int)jsonData["user_info"]["uid"];
@@ -85,8 +84,8 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.equipName = (string)equipData["equip_name"];
         info.star = (int)equipData["star"];
         info.mass = (int)equipData["mass"];
-        info.power = (int)equipData["speed"];
-        info.maxPower = (int)equipData["max_speed"];
+        info.power = (int)equipData["power"];
+        info.maxPower = (int)equipData["max_power"];
         info.isHas = (bool)equipData["is_has"];
         info.canWade = (bool)equipData["can_wade"];
         info.isShow = (bool)equipData["is_show"];
@@ -198,8 +197,8 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.equipName = (string)data[i]["equip_name"];
             info.star = (int)data[i]["star"];
             info.mass = (int)data[i]["mass"];
-            info.power = (int)data[i]["speed"];
-            info.maxPower = (int)data[i]["max_speed"];
+            info.power = (int)data[i]["power"];
+            info.maxPower = (int)data[i]["max_power"];
             info.isHas = (bool)data[i]["is_has"];
             info.canWade = (bool)data[i]["can_wade"];
             info.isShow = (bool)data[i]["is_show"];
@@ -225,8 +224,8 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerCreateMsg.userInfo.equipInfo.eid = (int)jsonData["user_info"]["equip_info"]["eid"];
         playerCreateMsg.userInfo.equipInfo.rid = (string)jsonData["user_info"]["equip_info"]["rid"];
         playerCreateMsg.userInfo.equipInfo.mass = (int)jsonData["user_info"]["equip_info"]["mass"];
-        playerCreateMsg.userInfo.equipInfo.power = (int)jsonData["user_info"]["equip_info"]["speed"];
-        playerCreateMsg.userInfo.equipInfo.maxPower = (int)jsonData["user_info"]["equip_info"]["max_speed"];
+        playerCreateMsg.userInfo.equipInfo.power = (int)jsonData["user_info"]["equip_info"]["power"];
+        playerCreateMsg.userInfo.equipInfo.maxPower = (int)jsonData["user_info"]["equip_info"]["max_power"];
         success?.Invoke();
         return playerCreateMsg;
     }
