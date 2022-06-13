@@ -155,7 +155,7 @@ namespace Utils {
         }
 
         public static string GetDateTime(long timeStamp, string format){
-            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            DateTime dtStart = TimeZoneInfo.ConvertTimeToUtc(new DateTime(1970, 1, 1));
             long lTime = (timeStamp * 10000000);
             TimeSpan toNow = new TimeSpan(lTime);
             DateTime targetDt = dtStart.Add(toNow);
@@ -180,7 +180,7 @@ namespace Utils {
             UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Version", Application.version);
             yield return request.SendWebRequest();
-            if (request.isNetworkError) {
+            if (request.result == UnityWebRequest.Result.ConnectionError) {
             } else if (request.isDone) {
                 try {
                     byte[] bytes = request.downloadHandler.data;
@@ -215,7 +215,7 @@ namespace Utils {
             UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Version", Application.version);
             yield return request.SendWebRequest();
-            if (request.isNetworkError) {
+            if (request.result == UnityWebRequest.Result.ConnectionError) {
                 //Debug.LogError("+++++++ActivityUI 下载失败" + aid);
             } else if (request.isDone) {
                 try {
@@ -257,7 +257,7 @@ namespace Utils {
             DownloadHandlerTexture dHT = new DownloadHandlerTexture(true);
             uWR.downloadHandler = dHT;
             yield return uWR.SendWebRequest();
-            if (uWR.isNetworkError || uWR.isHttpError) {
+            if (uWR.result == UnityWebRequest.Result.ConnectionError || uWR.result == UnityWebRequest.Result.ProtocolError) {
                 yield break;
             }
             Texture2D tex2d = dHT.texture;
