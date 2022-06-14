@@ -13,7 +13,7 @@ public interface IDataParseSystem : ISystem {
     void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     void ParseTimeTrialResult(JsonData jsonData, Action success = null);
     void ParseMatchMapData(JsonData jsonData, Action success = null);
-    public void ParseSelectMatch(JsonData jsonData, Action success = null);
+    void ParseSelectMatch(JsonData jsonData, Action success = null);
     void ParseMatchRank(JsonData data, Action success = null);
     void ParseEquipRes(JsonData jsonData, Action success = null);
     PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
