@@ -34,8 +34,6 @@ namespace Utils {
     }
 
     public static class Util {
-        public delegate void NoneParamFunction();
-
         public static string baseLanguagePath = "Language/Locales/";
         public static string baseFlagPath = "Language/Flag/";
 
@@ -78,11 +76,11 @@ namespace Utils {
             return time;
         }
 
-        public static Coroutine DelayExecute(NoneParamFunction f, Func<bool> pre) {
+        public static Coroutine DelayExecute(Action f, Func<bool> pre) {
             return CoroutineController.manager.StartCoroutine(DelayExecuting(f, pre));
         }
 
-        private static IEnumerator DelayExecuting(NoneParamFunction f, Func<bool> pre) {
+        private static IEnumerator DelayExecuting(Action f, Func<bool> pre) {
             // at least wait for two frame
             yield return null;
             yield return null;
@@ -90,11 +88,11 @@ namespace Utils {
             f();
         }
 
-        public static void DelayExecuteWithSecond(float sec, NoneParamFunction func) {
+        public static void DelayExecuteWithSecond(float sec, Action func) {
             CoroutineController.manager.StartCoroutine(DelayExecutingWithSecond(sec, func));
         }
 
-        private static IEnumerator DelayExecutingWithSecond(float sec, NoneParamFunction func) {
+        private static IEnumerator DelayExecutingWithSecond(float sec, Action func) {
             yield return new WaitForSeconds(sec);
             func?.Invoke();
         }
@@ -164,7 +162,7 @@ namespace Utils {
 
         public static Dictionary<string, Sprite> cachedImageDic = new Dictionary<string, Sprite>();
 
-        public static IEnumerator DownloadImage(string url, Image img, NoneParamFunction func = null) {
+        public static IEnumerator DownloadImage(string url, Image img, Action func = null) {
             if (!url.StartsWith("http")) {
                 yield break;
             }
@@ -199,7 +197,7 @@ namespace Utils {
             }
         }
 
-        public static IEnumerator DownloadImageToLocal(string url, string path, Image image, NoneParamFunction func = null) {
+        public static IEnumerator DownloadImageToLocal(string url, string path, Image image, Action func = null) {
             if (!url.StartsWith("http")) {
                 yield break;
             }
@@ -237,7 +235,7 @@ namespace Utils {
             }
         }
 
-        public static IEnumerator LoadImageFormLocal(string path, Image image, NoneParamFunction finishCallback = null) {
+        public static IEnumerator LoadImageFormLocal(string path, Image image, Action finishCallback = null) {
             if (cachedImageDic.ContainsKey(path)) {
                 if (image != null) {
                     image.sprite = cachedImageDic[path];
