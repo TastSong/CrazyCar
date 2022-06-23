@@ -111,10 +111,11 @@
 
 ### 已完成的优化
 
-1. 动态合批、静态合批、手动合批、GPU Instancing、SRP Batcher，[方案地址](./ProjectOptimization/Blending.md)
-2. LOD，[方案地址](./ProjectOptimization/LOD.md)
-3. Mipmap，[方案地址](./ProjectOptimization/Mipmap.md)
-3. 包体优化，[方案地址](./ProjectOptimization/Package.md)
+1. [动态合批、静态合批、手动合批、GPU Instancing、SRP Batcher](./ProjectOptimization/Blending.md)
+2. [LOD](./ProjectOptimization/LOD.md)
+3. [Mipmap](./ProjectOptimization/Mipmap.md)
+3. [包体优化](./ProjectOptimization/Mipmap.md)
+3. [网络同步算法](./ProjectOptimization/NetworkSync.md)
 
 ## 引用
 

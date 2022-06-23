@@ -112,10 +112,11 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 
 ### Completed optimizations
 
-1. Dynamic batching、Staticbatching、Manualbatching、GPU Instancing、SRP Batcher，[Solutions address](./ProjectOptimization/Blending.md)
-2. LOD，[Solutions address](./ProjectOptimization/LOD.md)
-3. Mipmap，[Solutions address](./ProjectOptimization/Mipmap.md)
-3. Package，[Solutions address](./ProjectOptimization/Package.md)
+1. [Dynamic batching、Staticbatching、Manualbatching、GPU Instancing、SRP Batcher](./ProjectOptimization/Blending.md)
+2. [LOD](./ProjectOptimization/LOD.md)
+3. [Mipmap](./ProjectOptimization/Mipmap.md)
+3. [Package](./ProjectOptimization/Package.md)
+3. [Network synchronization algorithm](./ProjectOptimization/NetworkSync.md)
 
 ## Reference
 
