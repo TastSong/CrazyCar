@@ -47,7 +47,9 @@
 ## Features :point_down:
 :pushpin:Mandatory version update is supported
 
-:telephone:Supports switching between KCP and WebSocket  
+:satellite: Networked physics is used
+
+:telephone:Supports KCP and WebSocket 
 
 :hammer:The game uses QFramework, easy to expand
 

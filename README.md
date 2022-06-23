@@ -46,7 +46,9 @@
 ## 特性 :point_down:
 :pushpin:支持版本强制更新
 
-:telephone:支持KCP和WebSocket两种网络传输协议切换
+:satellite:采用物理同步方式
+
+:telephone:支持KCP和WebSocket两种网络传输协议
 
 :hammer:游戏采用QFramework，易于扩展
 
