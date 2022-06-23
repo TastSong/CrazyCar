@@ -47,7 +47,7 @@
 ## Features :point_down:
 :pushpin:Mandatory version update is supported
 
-:satellite: Networked physics is used
+:satellite: The network synchronization mode is Networked physics
 
 :telephone:Supports KCP and WebSocket 
 

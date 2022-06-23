@@ -46,7 +46,7 @@
 ## 特性 :point_down:
 :pushpin:支持版本强制更新
 
-:satellite:采用物理同步方式
+:satellite:网络同步采用物理同步方式
 
 :telephone:支持KCP和WebSocket两种网络传输协议
 
