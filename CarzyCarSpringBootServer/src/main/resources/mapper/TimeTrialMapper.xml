@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.TimeTrialMapper">
+    <select id="getTimeTrialRecordByUid" resultType="TimeTrialRecordModel">
+        select
+        *
+        from time_trial_record 
+        where uid = #{uid};
+    </select>
+
+    <select id="getTimeTrialMapNumByUid" resultType="Integer">
+        select
+        Count(*)
+        from time_trial_user_map 
+        where uid = #{uid};
+    </select>
+</mapper>
