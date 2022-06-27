@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,7 +16,6 @@ import com.tastsong.crazycar.service.ForcedUpdatingService;
 
 @RestController
 @Scope("prototype")
-@RequestMapping("")
 public class ForcedUpdatingController {
     @Autowired
     private ForcedUpdatingService forcedUpdatingService;
