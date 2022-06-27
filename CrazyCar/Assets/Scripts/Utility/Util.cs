@@ -45,6 +45,8 @@ namespace Utils {
                     return "http://localhost:8080/CrazyCarServer/";
                 case ServerType.Remote:
                     return "http://139.9.103.145:8080/CrazyCarServer/";
+                case ServerType.LocalSpringBoot:
+                    return "http://localhost:8080/CrazyCarSpringBootServer/";
                 default:
                     return "http://localhost:8080/CrazyCarServer/";
             }
@@ -56,6 +58,8 @@ namespace Utils {
                     return "127.0.0.1";
                 case ServerType.Remote:
                     return "139.9.103.145";
+                case ServerType.LocalSpringBoot:
+                    return "127.0.0.1";
                 default:
                     return "127.0.0.1";
             }
