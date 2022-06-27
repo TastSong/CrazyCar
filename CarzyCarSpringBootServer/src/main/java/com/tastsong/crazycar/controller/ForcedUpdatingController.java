@@ -17,7 +17,7 @@ import com.tastsong.crazycar.service.ForcedUpdatingService;
 
 @RestController
 @Scope("prototype")
-@RequestMapping("CrazyCarSpringBootServer")
+@RequestMapping("")
 public class ForcedUpdatingController {
     @Autowired
     private ForcedUpdatingService forcedUpdatingService;

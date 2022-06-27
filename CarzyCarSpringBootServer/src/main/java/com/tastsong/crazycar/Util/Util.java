@@ -28,4 +28,6 @@ public class Util {
 		}
 		return result;
 	}
+
+	public static String getRequestName = "/CrazyCarSpringBootServer";
 }
