@@ -30,4 +30,6 @@ public class Util {
 	}
 
 	public static String getRequestName = "/CrazyCarSpringBootServer";
+
+	public static final String  JWT  = "authorization";
 }

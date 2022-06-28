@@ -7,6 +7,12 @@
         from all_user 
         where uid = #{uid};
     </select>
+    <select id="getUserByName" resultType="UserModel">
+        select
+        *
+        from all_user 
+        where user_name = #{userName};
+    </select>
     <select id="isSuperuser" resultType="Integer">
         select exists(
         select

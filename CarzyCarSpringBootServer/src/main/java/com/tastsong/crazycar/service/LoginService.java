@@ -21,8 +21,8 @@ public class LoginService {
     @Autowired
     private EquipMapper equipMapper;
 
-    public UserModel getUserByUid(Integer uid){
-        return userMapper.getUserByUid(uid);
+    public UserModel getUserByName(String userName){
+        return userMapper.getUserByName(userName);
     }
 
     public Integer getTimeTrialTimes(Integer uid){
