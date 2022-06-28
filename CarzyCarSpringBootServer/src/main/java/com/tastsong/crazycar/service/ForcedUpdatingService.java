@@ -12,16 +12,25 @@ public class ForcedUpdatingService {
     private ForcedUpdatingMapper forcedUpdatingMapper;
 
     public boolean isForcedUpdating(String version, String platform) {
-		String rs = forcedUpdatingMapper.getVersion(platform);
-		String[] minVersionStr = rs.split("\\.");
-		String[] curVersionStr = version.split("\\.");
-		int minVersion = Util.getSum(minVersionStr);
-		int curVersion = Util.getSum(curVersionStr);
-		return (minVersion - curVersion) > 0;
+		try {
+			String rs = forcedUpdatingMapper.getVersion(platform);
+			String[] minVersionStr = rs.split("\\.");
+			String[] curVersionStr = version.split("\\.");
+			int minVersion = Util.getSum(minVersionStr);
+			int curVersion = Util.getSum(curVersionStr);
+			return (minVersion - curVersion) > 0;
+		} catch (Exception e) {
+			return true;
+		} 
+		
 	}
 	
 	public String getURL(String platform) {
 		String rs = forcedUpdatingMapper.getUrl(platform);
-		return rs;
+		if (rs== null){
+			return forcedUpdatingMapper.getUrl("Defeat");
+		} else{
+			return rs;
+		}
 	}
 }
