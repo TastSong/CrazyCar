@@ -24,6 +24,8 @@ public enum ResultCode {
     /**access_denied**/
     RC423(423,"认证失败"),
     /**access_denied**/
+    RC425(425,"无效请求"),
+    /**access_denied**/
     RC401(401,"匿名用户访问无权限资源时的异常"),
     /**服务异常**/
     RC500(500,"系统异常，请稍后重试"),

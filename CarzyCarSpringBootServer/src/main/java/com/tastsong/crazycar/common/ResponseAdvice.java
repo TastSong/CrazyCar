@@ -21,6 +21,8 @@ public class ResponseAdvice  implements ResponseBodyAdvice<Object> {
         Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)  {
         if (body instanceof String){
             return JSON.toJSONString(Result.success(ResultCode.RC200.getMessage(),body));
+        } else if(body instanceof Result){
+            return body;
         }
         return Result.success(ResultCode.RC200.getMessage(),body);
     }

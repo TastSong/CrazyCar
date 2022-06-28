@@ -59,4 +59,40 @@ public class LoginController {
 		System.out.println(Util.getUidByToken(token));
 		return Util.isLegalToken(token);
 	}
+
+	@PostMapping (value = "/Register")
+	public Object register(@RequestBody JSONObject body) throws Exception{
+		if(body != null && body.containsKey("UserName") && body.containsKey("Password")){
+			String userName = body.getString("UserName");
+			String password = body.getString("Password");
+			System.out.println("Register : UserName = " + userName + "; password  = " + password);
+			if (loginService.isExistsUser(userName)){		
+				return Result.failure(ResultCode.RC423);
+			} else{
+				loginService.registerUser(userName, password);
+				if (loginService.isExistsUser(userName)){	
+					UserInfoModel userInfoModel = new UserInfoModel();
+					UserModel userModel = loginService.getUserByName(userName);			
+					userInfoModel.user_name = userModel.user_name;
+					userInfoModel.uid = userModel.uid;
+					userInfoModel.aid = userModel.aid;
+					userInfoModel.star = userModel.star;
+					userInfoModel.is_vip = userModel.is_vip;
+					userInfoModel.token = Util.createToken(userModel.uid);
+					Integer uid = userModel.uid;
+					userInfoModel.is_superuser = loginService.isSuperuser(uid);
+					userInfoModel.travel_times = loginService.getTimeTrialTimes(uid);
+					userInfoModel.avatar_num = loginService.getAvatarNumByUid(uid);
+					userInfoModel.map_num = loginService.getTimeTrialMapNum(uid);
+					userInfoModel.equip_info = loginService.getEquipByEid(userModel.eid);
+					userInfoModel.equip_info.is_has = loginService.isHasEquip(userModel.eid, uid);
+					return userInfoModel;
+				} else{
+			        return Result.failure(ResultCode.RC425);
+				}
+			}
+		} else{
+			return Result.failure(ResultCode.RC425);
+		}
+	}
 }

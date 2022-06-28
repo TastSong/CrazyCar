@@ -13,4 +13,12 @@
         from avatar_uid 
         where uid = #{uid};
     </select>
+
+    <insert id="addAvatarForUser">
+        insert into avatar_uid (
+          aid, uid
+        ) VALUES (
+         #{aid}, #{uid}
+        )
+    </insert>
 </mapper>

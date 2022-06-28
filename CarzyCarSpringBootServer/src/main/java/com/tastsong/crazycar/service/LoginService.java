@@ -10,6 +10,10 @@ import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserModel;
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+
 @Service
 public class LoginService {
     @Autowired
@@ -51,5 +55,30 @@ public class LoginService {
 
     public boolean isExistsUser(String userName){
         return userMapper.isExistsUser(userName) == 1;
+    }
+
+    public void registerUser (String userName, String password){
+        int defaultAid = 1;
+		int defaultCid = 0;
+		int defaultStar = 14;
+		boolean defaultVIP = false;
+		int defaultEid = 1;
+
+        UserModel userModel = new UserModel();
+        userModel.user_name = userName;
+        userModel.user_password = password;
+        userModel.aid = defaultAid;
+        userModel.star = defaultStar;
+        userModel.eid = defaultEid;
+        userModel.is_vip = defaultVIP;
+        userModel.login_time = (int) (System.currentTimeMillis()/1000);
+        System.out.println("++++++ " + JSONUtil.toJsonStr(userModel));
+        userMapper.insertUser(userModel);
+
+		int uid = userMapper.getUserByName(userName).uid;
+        avatarMapper.addAvatarForUser(uid, defaultAid);
+        timeTrialMapper.addTimeTrialMapForUser(uid, defaultCid);
+        equipMapper.addEquipForUser(uid, defaultEid);
+		return;
     }
 }

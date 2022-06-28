@@ -8,4 +8,5 @@ public interface EquipMapper {
     public EquipModel getEquipByEid(Integer eid);
     public List<Integer> getEidsByUid(Integer uid);
     public Integer isHasEquip(Integer uid, Integer eid);
+    public Integer addEquipForUser(Integer uid, Integer eid);
 }

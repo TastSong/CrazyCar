@@ -8,4 +8,5 @@ public interface TimeTrialMapper {
     public List<TimeTrialRecordModel> getTimeTrialRecordByUid(Integer uid);
     public Integer getTimeTrialTimesByUid(Integer uid);
     public Integer getTimeTrialMapNumByUid(Integer uid);
+    public Integer addTimeTrialMapForUser(Integer uid, Integer cid);
 }

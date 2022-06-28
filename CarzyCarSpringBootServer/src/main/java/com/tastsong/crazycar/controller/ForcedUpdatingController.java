@@ -22,6 +22,7 @@ public class ForcedUpdatingController {
 		if (body != null && body.containsKey("platform") && body.containsKey("version")) {
 			String version = body.getString("version");
 			String platform = body.getString("platform");
+			System.out.println("ForcedUpdating version = " + version + "; platform = " + platform);
 			JSONObject data = new JSONObject();
 			data.put("is_forced_updating", forcedUpdatingService.isForcedUpdating(version, platform));
 			data.put("url", forcedUpdatingService.getURL(platform));

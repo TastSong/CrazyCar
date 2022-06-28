@@ -20,4 +20,12 @@
         from equip_uid 
         where uid = #{uid} and eid = #{eid});
     </select>
+
+    <insert id="addEquipForUser">
+        insert into equip_uid (
+          eid, uid
+        ) VALUES (
+         #{eid}, #{uid}
+        )
+    </insert>
 </mapper>

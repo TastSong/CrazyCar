@@ -27,4 +27,11 @@
         from all_user 
         where user_name = #{userName});
     </select>
+    <insert id="insertUser" parameterType="UserModel">
+        insert into all_user (
+          user_name, user_password, login_time, aid, star, is_vip, eid
+        ) VALUES (
+         #{user_name}, #{user_password}, #{login_time}, #{aid}, #{star}, #{is_vip}, #{eid}
+        )
+    </insert>
 </mapper>

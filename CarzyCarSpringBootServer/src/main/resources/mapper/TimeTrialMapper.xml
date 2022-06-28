@@ -21,4 +21,12 @@
         from time_trial_user_map 
         where uid = #{uid};
     </select>
+
+    <insert id="addTimeTrialMapForUser">
+        insert into time_trial_user_map (
+          cid, uid
+        ) VALUES (
+         #{cid}, #{uid}
+        )
+    </insert>
 </mapper>

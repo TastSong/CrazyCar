@@ -7,4 +7,5 @@ public interface UserMapper {
     public UserModel getUserByName(String userName);
     public Integer isSuperuser(Integer uid);
     public Integer isExistsUser(String userName);
+    public Integer insertUser(UserModel userModel);
 }
