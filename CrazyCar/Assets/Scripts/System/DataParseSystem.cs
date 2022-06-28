@@ -40,17 +40,18 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
 
     public void ParseSelfUserInfo(JsonData jsonData) {
         var userModel = this.GetModel<IUserModel>();
-        userModel.Name.Value = (string)jsonData["user_info"]["name"];
-        userModel.Uid.Value = (int)jsonData["user_info"]["uid"];
-        userModel.Aid.Value = (int)jsonData["user_info"]["aid"];
-        userModel.Star.Value = (int)jsonData["user_info"]["star"];
-        userModel.IsVIP.Value = (bool)jsonData["user_info"]["is_vip"];
-        userModel.IsSuperuser.Value = (bool)jsonData["user_info"]["is_superuser"];
-        userModel.AvatarNum.Value = (int)jsonData["user_info"]["avatar_num"];
-        userModel.TravelTimes.Value = (int)jsonData["user_info"]["travel_times"];
-        userModel.MapNum.Value = (int)jsonData["user_info"]["map_num"];
+        userModel.Name.Value = (string)jsonData["user_name"];
+        userModel.Uid.Value = (int)jsonData["uid"];
+        userModel.Aid.Value = (int)jsonData["aid"];
+        userModel.Star.Value = (int)jsonData["star"];
+        userModel.IsVIP.Value = (bool)jsonData["is_vip"];
+        userModel.IsSuperuser.Value = (bool)jsonData["is_superuser"];
+        userModel.AvatarNum.Value = (int)jsonData["avatar_num"];
+        userModel.TravelTimes.Value = (int)jsonData["travel_times"];
+        userModel.MapNum.Value = (int)jsonData["map_num"];
+        this.GetModel<IGameModel>().Token.Value = (string)jsonData["token"];
 
-        JsonData data = jsonData["user_info"]["equip_info"];
+        JsonData data = jsonData["equip_info"];
         EquipInfo info = new EquipInfo();
         info.eid = (int)data["eid"];
         info.rid = (string)data["rid"];

@@ -8,6 +8,7 @@ public class EquipModel {
     public Integer mass;
     public Integer power;
     public Integer max_power;
-    public Integer can_wade;
-    public Integer is_show;
+    public boolean can_wade;
+    public boolean is_show;
+    public boolean is_has;
 }

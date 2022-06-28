@@ -1,7 +1,7 @@
 package com.tastsong.crazycar.model;
 
 public class UserInfoModel {
-    public String name;
+    public String user_name;
     public Integer uid;
     public Integer aid;
     public Integer star;

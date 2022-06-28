@@ -7,6 +7,6 @@ public class UserModel {
     public Integer login_time;
     public Integer aid;
     public Integer star;
-    public int is_vip;
+    public boolean is_vip;
     public int eid;
 }
