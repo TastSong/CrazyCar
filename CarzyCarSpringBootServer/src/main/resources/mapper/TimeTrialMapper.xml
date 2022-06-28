@@ -8,6 +8,13 @@
         where uid = #{uid};
     </select>
 
+    <select id="getTimeTrialTimesByUid" resultType="Integer">
+        select
+        Count(*)
+        from time_trial_record 
+        where uid = #{uid};
+    </select>
+
     <select id="getTimeTrialMapNumByUid" resultType="Integer">
         select
         Count(*)

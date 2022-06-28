@@ -7,4 +7,18 @@
         from all_user 
         where uid = #{uid};
     </select>
+    <select id="isSuperuser" resultType="Integer">
+        select exists(
+        select
+        uid
+        from superuser 
+        where uid = #{uid});
+    </select>
+    <select id="isExistsUser" resultType="Integer">
+        select exists(
+        select
+        *
+        from all_user 
+        where user_name = #{userName});
+    </select>
 </mapper>

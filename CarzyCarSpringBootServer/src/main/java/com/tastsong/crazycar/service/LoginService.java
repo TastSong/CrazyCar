@@ -26,7 +26,7 @@ public class LoginService {
     }
 
     public Integer getTimeTrialTimes(Integer uid){
-        return timeTrialMapper.getTimeTrialRecordByUid(uid).size();
+        return timeTrialMapper.getTimeTrialTimesByUid(uid);
     }
 
     public Integer getTimeTrialMapNum(Integer uid){
@@ -34,10 +34,22 @@ public class LoginService {
     }
 
     public Integer getAvatarNumByUid(Integer uid){
-        return avatarMapper.getAvatarListByUid(uid).size();
+        return avatarMapper.getAvatarNumByUid(uid);
     }
 
-    public EquipModel getEquipByEquipModel(Integer eid){
+    public EquipModel getEquipByEid(Integer eid){
         return equipMapper.getEquipByEid(eid);
     } 
+
+    public boolean isHasEquip (Integer eid, Integer uid){
+        return equipMapper.isHasEquip(uid, eid) == 1;
+    }
+
+    public boolean isSuperuser(Integer uid){
+        return userMapper.isSuperuser(uid) == 1;
+    }
+
+    public boolean isExistsUser(String userName){
+        return userMapper.isExistsUser(userName) == 1;
+    }
 }

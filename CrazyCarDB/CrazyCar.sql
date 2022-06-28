@@ -535,6 +535,8 @@ insert into superuser ( uid)
                 
 select* from superuser;
 
+select exists (select uid from superuser where uid = 2);
+
 
 
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
 
@@ -25,7 +26,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping(value = "/Login")
-    public UserModel login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+    public Result<String> login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
 
         // response.setContentType("text/html;charset=UTF-8");
 		// JSONObject getJB = new JSONObject();
@@ -87,7 +88,12 @@ public class LoginController {
         System.out.println("getTimeTrialTimes : " + loginService.getTimeTrialTimes(1));    
         System.out.println("getTimeTrialMapNum : " + loginService.getTimeTrialMapNum(1));    
         System.out.println("getAvatarNumByUid : " + loginService.getAvatarNumByUid(1));    
-        System.out.println("getEquipByEquipModel : " + JSON.toJSONString(loginService.getEquipByEquipModel(1)));    
-        return loginService.getUserByUid(1);
+        System.out.println("getEquipByEquipModel : " + JSON.toJSONString(loginService.getEquipByEid(1)));    
+        System.out.println("getUserByUid : " + JSON.toJSONString(loginService.getUserByUid(44))); 
+        System.out.println("isExistsUser = " + loginService.isExistsUser("Tast"));   
+        System.out.println("isHasEquip = " + loginService.isHasEquip(1, 10));   
+        System.out.println("isSuperuser = " + loginService.isSuperuser(1));   
+        //return loginService.getUserByUid(1);
+        return Result.success("Succ", "ceshi");
     }
 }
