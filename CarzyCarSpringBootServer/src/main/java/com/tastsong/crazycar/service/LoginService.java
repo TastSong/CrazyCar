@@ -10,8 +10,6 @@ import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserModel;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
 @Service
