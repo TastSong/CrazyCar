@@ -13,14 +13,22 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 
+import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.mapper.UserMapper;
+
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Order(1)
-@WebFilter(filterName = "tokenFilter", urlPatterns = {"/Avatar/*"})
+@WebFilter(filterName = "tokenFilter", urlPatterns = {"/*"})
 public class TokenFilter implements Filter{
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("过滤器初始化");
@@ -28,17 +36,31 @@ public class TokenFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("请求处理");
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        log.info("MyFilter, URL：{}", request.getRequestURI());
-        if (request.getRequestURI().contains("login")) {
+        log.info("TokenFilter, URL：{}", request.getRequestURI());
+        String url = request.getRequestURI().toLowerCase();
+        if (url.contains("login") || url.contains("register") 
+        || url.contains("addressable") | url.contains("forcedupdating")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            log.info("非法URL：{}", request.getRequestURI());
-            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            PrintWriter writer = response.getWriter();
-            writer.print("no access");
+            try {
+                String token = request.getHeader(Util.TOKEN);
+                Integer uid = Util.getUidByToken(token);
+                if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
+                    filterChain.doFilter(servletRequest, servletResponse);
+                } else{
+                    log.info("非法URL：{}", request.getRequestURI());
+                    response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+                    PrintWriter writer = response.getWriter();
+                    writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC204)));
+                }
+            } catch (Exception e) {
+                log.info("缺失Token，非法URL：{}", request.getRequestURI());
+                response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+                PrintWriter writer = response.getWriter();
+                writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));
+            }
         }
     }
 

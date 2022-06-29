@@ -72,7 +72,7 @@ public class LoginService {
     }
 
     public boolean isExistsUser(String userName){
-        return userMapper.isExistsUser(userName) == 1;
+        return userMapper.isExistsUser(userName);
     }
 
     public void registerUser (String userName, String password){

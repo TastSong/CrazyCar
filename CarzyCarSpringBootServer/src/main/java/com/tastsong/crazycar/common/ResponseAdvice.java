@@ -12,7 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
@@ -22,15 +24,14 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, 
         Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)  {
-        if (body instanceof String || body instanceof JSONObject){
-            return Result.success(ResultCode.RC200.getMessage(),body);
-        } else if(body instanceof Result){
+        if(body instanceof Result){
             return body;
         } else if (body instanceof LinkedHashMap) {
+            // Spring boot 捕获异常
             return Result.failure(ResultCode.RC500);
         } else {
-            System.out.println("ResponseAdvice : " + body.getClass() + "---" + JSONUtil.toJsonStr(body));
-            return Result.failure(ResultCode.RC999);
+            log.info("ResponseAdvice : " + body.getClass() + "---" + JSONUtil.toJsonStr(body));
+            return Result.success(ResultCode.RC200.getMessage(),body);
         }
     }
 }
