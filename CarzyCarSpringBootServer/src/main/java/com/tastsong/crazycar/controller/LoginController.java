@@ -16,10 +16,12 @@ import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
 
 import cn.hutool.json.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1")
+@Slf4j
 public class LoginController {
 	@Autowired
 	private LoginService loginService;
@@ -31,7 +33,7 @@ public class LoginController {
 			String userName = body.getStr("UserName")		;
 			String password = body.getStr("Password");
 			UserModel userModel = loginService.getUserByName(userName);
-			System.out.println("login : userName = " + userName + "; password  = " + password);
+			log.info("login : userName = " + userName + "; password  = " + password);
 			if (password.equals(userModel.user_password)){
 				return loginService.getUserInfo(userName);
 			} else{
@@ -44,7 +46,7 @@ public class LoginController {
 
 	@GetMapping (value = "/TestJWT")
 	public Object testJWT(@RequestHeader(Util.TOKEN) String token){
-		System.out.println(Util.getUidByToken(token));
+		log.info(Util.getUidByToken(token).toString());
 		return Util.isLegalToken(token);
 	}
 
@@ -53,7 +55,7 @@ public class LoginController {
 		if(body != null && body.containsKey("UserName") && body.containsKey("Password")){
 			String userName = body.getStr("UserName");
 			String password = body.getStr("Password");
-			System.out.println("Register : UserName = " + userName + "; password  = " + password);
+			log.info("Register : UserName = " + userName + "; password  = " + password);
 			if (loginService.isExistsUser(userName)){		
 				return Result.failure(ResultCode.RC423);
 			} else{

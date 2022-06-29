@@ -12,10 +12,12 @@ import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.service.ForcedUpdatingService;
 
 import cn.hutool.json.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1")
+@Slf4j
 public class ForcedUpdatingController {
     @Autowired
     private ForcedUpdatingService forcedUpdatingService;
@@ -25,7 +27,7 @@ public class ForcedUpdatingController {
 		if (body != null && body.containsKey("platform") && body.containsKey("version")) {
 			String version = body.getStr("version");
 			String platform = body.getStr("platform");
-			System.out.println("ForcedUpdating version = " + version + "; platform = " + platform);
+			log.info("ForcedUpdating version = " + version + "; platform = " + platform);
 			JSONObject data = new JSONObject();
 			data.putOpt("is_forced_updating", forcedUpdatingService.isForcedUpdating(version, platform));
 			data.putOpt("url", forcedUpdatingService.getURL(platform));

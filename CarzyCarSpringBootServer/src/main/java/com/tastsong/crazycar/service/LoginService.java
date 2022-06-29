@@ -13,7 +13,9 @@ import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserModel;
 
 import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 @Service
+@Slf4j
 public class LoginService {
     @Autowired
     private UserMapper userMapper;
@@ -90,7 +92,7 @@ public class LoginService {
         userModel.eid = defaultEid;
         userModel.is_vip = defaultVIP;
         userModel.login_time = (int) (System.currentTimeMillis()/1000);
-        System.out.println("++++++ " + JSONUtil.toJsonStr(userModel));
+        log.info("++++++ " + JSONUtil.toJsonStr(userModel));
         userMapper.insertUser(userModel);
 
 		int uid = userMapper.getUserByName(userName).uid;
