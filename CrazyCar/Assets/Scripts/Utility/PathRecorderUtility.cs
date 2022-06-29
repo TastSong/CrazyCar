@@ -8,7 +8,7 @@ public static class RequestUrl {
     public static string addressableUrl = "Addressable";
     public static string loginUrl = "v1/Login";
     public static string registerUrl = "v1/Register";
-    public static string avatarUrl = "v2/Avatar";
+    public static string avatarUrl = "v2/Avatar/Detail";
     public static string changeAvatarUrl = "v2/ChangeAvatar";
     public static string buyAvatarUrl = "v2/BuyAvatar";
     public static string resourceUrl = "Resource";

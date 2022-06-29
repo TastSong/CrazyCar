@@ -30,7 +30,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         for (int i = 0; i < data.Count; i++) {
             AvatarInfo info = new AvatarInfo();
             info.aid = (int)data[i]["aid"];
-            info.name = (string)data[i]["name"];
+            info.name = (string)data[i]["avatar_name"];
             info.isHas = (bool)data[i]["is_has"];
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
