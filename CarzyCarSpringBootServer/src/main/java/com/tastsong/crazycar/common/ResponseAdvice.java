@@ -2,7 +2,6 @@ package com.tastsong.crazycar.common;
 
 import java.util.LinkedHashMap;
 
-import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
