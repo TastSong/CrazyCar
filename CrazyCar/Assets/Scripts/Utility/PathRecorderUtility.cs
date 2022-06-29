@@ -4,27 +4,27 @@ using UnityEngine;
 using QFramework;
 
 public static class RequestUrl {
-    public static string forcedUpdatingUrl = "ForcedUpdating";
+    public static string forcedUpdatingUrl = "v1/ForcedUpdating";
     public static string addressableUrl = "Addressable";
-    public static string loginUrl = "Login";
-    public static string registerUrl = "Register";
-    public static string avatarUrl = "Avatar";
-    public static string changeAvatarUrl = "ChangeAvatar";
-    public static string buyAvatarUrl = "BuyAvatar";
+    public static string loginUrl = "v1/Login";
+    public static string registerUrl = "v1/Register";
+    public static string avatarUrl = "v2/Avatar";
+    public static string changeAvatarUrl = "v2/ChangeAvatar";
+    public static string buyAvatarUrl = "v2/BuyAvatar";
     public static string resourceUrl = "Resource";
-    public static string timeTrialDetailUrl = "TimeTrialDetail";
-    public static string buyTimeTrialClassUrl = "BuyTimeTrialClass";
-    public static string timeTrialResultUrl = "TimeTrialResult";
-    public static string timeTrialRankUrl = "TimeTrialRank";
-    public static string modifyPersonalInfoUrl = "ModifyPersonalInfo";
-    public static string equipUrl = "Equip";
-    public static string buyEquipUrl = "BuyEquip";
-    public static string changeEquipUrl = "ChangeEquip";
-    public static string matchMapUrl = "MatchMap";
-    public static string matchResultUrl = "MatchResult";
-    public static string kcpServerUrl = "KCPRttServer";
-    public static string enterRoomUrl = "EnterRoom";
-    public static string getUserInfo = "GetUserInfo";
+    public static string timeTrialDetailUrl = "v2/TimeTrialDetail";
+    public static string buyTimeTrialClassUrl = "v2/BuyTimeTrialClass";
+    public static string timeTrialResultUrl = "v2/TimeTrialResult";
+    public static string timeTrialRankUrl = "v2/TimeTrialRank";
+    public static string modifyPersonalInfoUrl = "v2/ModifyPersonalInfo";
+    public static string equipUrl = "v2/Equip";
+    public static string buyEquipUrl = "v2/BuyEquip";
+    public static string changeEquipUrl = "v2/ChangeEquip";
+    public static string matchMapUrl = "v2/MatchMap";
+    public static string matchResultUrl = "v2/MatchResult";
+    public static string kcpServerUrl = "v2/KCPRttServer";
+    public static string enterRoomUrl = "v2/EnterRoom";
+    public static string getUserInfo = "v2/GetUserInfo";
 
     public static string aiUrl = "AI";
 }

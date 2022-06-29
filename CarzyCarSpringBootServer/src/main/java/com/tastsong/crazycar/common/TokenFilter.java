@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Order(1)
-@WebFilter(filterName = "tokenFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "tokenFilter", urlPatterns = {"/v2/*"})
 public class TokenFilter implements Filter{
     @Autowired
     private UserMapper userMapper;
@@ -38,29 +38,23 @@ public class TokenFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        log.info("TokenFilter, URL：{}", request.getRequestURI());
-        String url = request.getRequestURI().toLowerCase();
-        if (url.contains("/login") || url.contains("/register") 
-        || url.contains("/addressable") || url.contains("/forcedupdating")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            try {
-                String token = request.getHeader(Util.TOKEN);
-                Integer uid = Util.getUidByToken(token);
-                if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
-                    filterChain.doFilter(servletRequest, servletResponse);
-                } else{
-                    log.info("非法URL：{}", request.getRequestURI());
-                    response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-                    PrintWriter writer = response.getWriter();
-                    writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC204)));
-                }
-            } catch (Exception e) {
-                log.info("缺失Token，非法URL：{}", request.getRequestURI());
+        log.info("TokenFilter, URL：{}", request.getRequestURI());      
+        try {
+            String token = request.getHeader(Util.TOKEN);
+            Integer uid = Util.getUidByToken(token);
+            if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else{
+                log.info("非法URL：{}", request.getRequestURI());
                 response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                 PrintWriter writer = response.getWriter();
-                writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));
+                writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC204)));
             }
+        } catch (Exception e) {
+            log.info("缺失Token，非法URL：{}", request.getRequestURI());
+            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            PrintWriter writer = response.getWriter();
+            writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));
         }
     }
 
