@@ -5,6 +5,7 @@ using QFramework;
 
 public static class RequestUrl {
     public static string forcedUpdatingUrl = "ForcedUpdating";
+    public static string addressableUrl = "Addressable";
     public static string loginUrl = "Login";
     public static string registerUrl = "Register";
     public static string avatarUrl = "Avatar";
