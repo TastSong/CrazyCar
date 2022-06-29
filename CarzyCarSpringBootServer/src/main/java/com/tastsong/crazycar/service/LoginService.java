@@ -64,11 +64,11 @@ public class LoginService {
     } 
 
     private boolean isHasEquip (Integer eid, Integer uid){
-        return equipMapper.isHasEquip(uid, eid) == 1;
+        return equipMapper.isHasEquip(uid, eid);
     }
 
     private boolean isSuperuser(Integer uid){
-        return userMapper.isSuperuser(uid) == 1;
+        return userMapper.isSuperuser(uid);
     }
 
     public boolean isExistsUser(String userName){

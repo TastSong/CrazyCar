@@ -40,8 +40,8 @@ public class TokenFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("TokenFilter, URL：{}", request.getRequestURI());
         String url = request.getRequestURI().toLowerCase();
-        if (url.contains("login") || url.contains("register") 
-        || url.contains("addressable") || url.contains("forcedupdating")) {
+        if (url.contains("/login") || url.contains("/register") 
+        || url.contains("/addressable") || url.contains("/forcedupdating")) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             try {

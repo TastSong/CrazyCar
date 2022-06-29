@@ -13,7 +13,7 @@
         from equip_uid 
         where uid = #{uid};
     </select>
-    <select id="isHasEquip" resultType="Integer">
+    <select id="isHasEquip" resultType="boolean">
         select exists(
         select
         id

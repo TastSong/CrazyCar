@@ -13,7 +13,7 @@
         from all_user 
         where user_name = #{userName};
     </select>
-    <select id="isSuperuser" resultType="Integer">
+    <select id="isSuperuser" resultType="boolean">
         select exists(
         select
         uid
