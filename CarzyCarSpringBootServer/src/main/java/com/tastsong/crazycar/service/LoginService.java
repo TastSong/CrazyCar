@@ -3,15 +3,16 @@ package com.tastsong.crazycar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.EquipModel;
+import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserModel;
 
 import cn.hutool.json.JSONUtil;
-
 @Service
 public class LoginService {
     @Autowired
@@ -27,6 +28,25 @@ public class LoginService {
         return userMapper.getUserByName(userName);
     }
 
+    public UserInfoModel getUserInfo(String userName){
+        UserInfoModel userInfoModel = new UserInfoModel();
+        UserModel userModel = getUserByName(userName);			
+        userInfoModel.user_name = userModel.user_name;
+        userInfoModel.uid = userModel.uid;
+        userInfoModel.aid = userModel.aid;
+        userInfoModel.star = userModel.star;
+        userInfoModel.is_vip = userModel.is_vip;
+        userInfoModel.token = Util.createToken(userModel.uid);
+        Integer uid = userModel.uid;
+        userInfoModel.is_superuser = isSuperuser(uid);
+        userInfoModel.travel_times = getTimeTrialTimes(uid);
+        userInfoModel.avatar_num = getAvatarNumByUid(uid);
+        userInfoModel.map_num = getTimeTrialMapNum(uid);
+        userInfoModel.equip_info = getEquipByEid(userModel.eid);
+        userInfoModel.equip_info.is_has = isHasEquip(userModel.eid, uid);
+        return userInfoModel;
+    }
+
     public Integer getTimeTrialTimes(Integer uid){
         return timeTrialMapper.getTimeTrialTimesByUid(uid);
     }
@@ -35,19 +55,19 @@ public class LoginService {
         return timeTrialMapper.getTimeTrialMapNumByUid(uid);
     }
 
-    public Integer getAvatarNumByUid(Integer uid){
+    private Integer getAvatarNumByUid(Integer uid){
         return avatarMapper.getAvatarNumByUid(uid);
     }
 
-    public EquipModel getEquipByEid(Integer eid){
+    private EquipModel getEquipByEid(Integer eid){
         return equipMapper.getEquipByEid(eid);
     } 
 
-    public boolean isHasEquip (Integer eid, Integer uid){
+    private boolean isHasEquip (Integer eid, Integer uid){
         return equipMapper.isHasEquip(uid, eid) == 1;
     }
 
-    public boolean isSuperuser(Integer uid){
+    private boolean isSuperuser(Integer uid){
         return userMapper.isSuperuser(uid) == 1;
     }
 

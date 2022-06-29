@@ -1,5 +1,8 @@
 package com.tastsong.crazycar.common;
 
+import java.util.LinkedHashMap;
+
+import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -23,7 +26,10 @@ public class ResponseAdvice  implements ResponseBodyAdvice<Object> {
             return JSON.toJSONString(Result.success(ResultCode.RC200.getMessage(),body));
         } else if(body instanceof Result){
             return body;
+        } else if (body instanceof LinkedHashMap) {
+            return Result.failure(ResultCode.RC500);
+        } else {
+            return Result.failure(ResultCode.RC999);
         }
-        return Result.success(ResultCode.RC200.getMessage(),body);
     }
 }
