@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
+
+import cn.hutool.json.JSONObject;
 
 @RestController
 @Scope("prototype")
@@ -24,9 +25,9 @@ public class LoginController {
 	@PostMapping(value = "/Login")
 	public Object login(@RequestBody JSONObject body) throws Exception {
 		if (body != null && body.containsKey("UserName") && body.containsKey("Password")
-				&& loginService.isExistsUser(body.getString("UserName"))) {
-			String userName = body.getString("UserName")		;
-			String password = body.getString("Password");
+				&& loginService.isExistsUser(body.getStr("UserName"))) {
+			String userName = body.getStr("UserName")		;
+			String password = body.getStr("Password");
 			UserModel userModel = loginService.getUserByName(userName);
 			System.out.println("login : userName = " + userName + "; password  = " + password);
 			if (password.equals(userModel.user_password)){
@@ -48,8 +49,8 @@ public class LoginController {
 	@PostMapping (value = "/Register")
 	public Object register(@RequestBody JSONObject body) throws Exception{
 		if(body != null && body.containsKey("UserName") && body.containsKey("Password")){
-			String userName = body.getString("UserName");
-			String password = body.getString("Password");
+			String userName = body.getStr("UserName");
+			String password = body.getStr("Password");
 			System.out.println("Register : UserName = " + userName + "; password  = " + password);
 			if (loginService.isExistsUser(userName)){		
 				return Result.failure(ResultCode.RC423);

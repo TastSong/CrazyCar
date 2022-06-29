@@ -1,14 +1,5 @@
 package com.tastsong.crazycar.Util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
-import com.alibaba.fastjson.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,17 +9,6 @@ import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
 
 public class Util {
-    public static JSONObject getMsgData(HttpServletRequest request) throws ServletException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));
-		String line = null;
-		StringBuilder sb = new StringBuilder();
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
-		}
-		System.out.println(sb.toString());
-		return JSONObject.parseObject(sb.toString());
-	}
-
 	public static int getSum(String[] str) {
 		int result = 0;
 		for (int i = 0; i < str.length; i++){
