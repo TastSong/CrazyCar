@@ -9,8 +9,8 @@ public static class RequestUrl {
     public static string loginUrl = "v1/Login";
     public static string registerUrl = "v1/Register";
     public static string avatarUrl = "v2/Avatar/Detail";
-    public static string changeAvatarUrl = "v2/ChangeAvatar";
-    public static string buyAvatarUrl = "v2/BuyAvatar";
+    public static string changeAvatarUrl = "v2/Avatar/Change";
+    public static string buyAvatarUrl = "v2/Avatar/Buy";
     public static string resourceUrl = "Resource";
     public static string timeTrialDetailUrl = "v2/TimeTrialDetail";
     public static string buyTimeTrialClassUrl = "v2/BuyTimeTrialClass";

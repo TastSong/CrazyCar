@@ -6,6 +6,14 @@
         *
         from avatar_name;
     </select>
+
+    <select id="getAvatarByAid" resultType="AvatarModel">
+        select
+        *
+        from avatar_name
+        where aid= #{aid};
+    </select>
+
     <select id="getAvatarNumByUid" resultType="Integer">
         select
         Count(*)

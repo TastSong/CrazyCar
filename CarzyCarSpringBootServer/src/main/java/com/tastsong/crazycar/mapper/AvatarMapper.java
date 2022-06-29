@@ -9,4 +9,6 @@ public interface AvatarMapper {
     public Integer getAvatarNumByUid(Integer uid);
     public Integer addAvatarForUser(Integer uid, Integer aid);
     public boolean isHasAvatar(Integer uid, Integer aid);
+
+    public AvatarModel getAvatarByAid(Integer aid);
 }

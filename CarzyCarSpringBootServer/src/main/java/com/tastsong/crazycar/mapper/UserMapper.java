@@ -9,4 +9,5 @@ public interface UserMapper {
     public boolean isExistsUser(String userName);
     public boolean isExistsUserByUid(Integer uid);
     public Integer insertUser(UserModel userModel);
+    public Integer updateUserStar(Integer uid, Integer star);
 }

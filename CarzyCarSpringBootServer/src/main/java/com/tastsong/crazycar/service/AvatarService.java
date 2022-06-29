@@ -25,11 +25,29 @@ public class AvatarService {
         return avatarModels;
     }
 
-    private boolean isHasAvatar(Integer uid, Integer aid){
+    public boolean isHasAvatar(Integer uid, Integer aid){
         return avatarMapper.isHasAvatar(uid, aid);
     }
 
     public Integer getCurAidByUid(Integer uid){
         return userMapper.getUserByUid(uid).aid;
+    }
+
+    public Integer getUserStar(Integer uid){
+        return userMapper.getUserByUid(uid).star;
+    }
+
+    public Integer getNeedStar(Integer aid){
+        return avatarMapper.getAvatarByAid(aid).star;
+    }
+
+    public boolean canBuyAvatar(int uid, int aid) {
+		return getUserStar(uid) >= getNeedStar(aid);		
+	}
+
+    public void buyAvatar(Integer uid, Integer aid){
+        Integer curStar = getUserStar(uid) - getNeedStar(aid);
+        userMapper.updateUserStar(uid, curStar);
+        avatarMapper.addAvatarForUser(uid, aid);
     }
 }
