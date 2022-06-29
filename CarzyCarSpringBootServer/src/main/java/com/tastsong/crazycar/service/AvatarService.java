@@ -37,7 +37,7 @@ public class AvatarService {
         return userMapper.getUserByUid(uid).star;
     }
 
-    public Integer getNeedStar(Integer aid){
+    private Integer getNeedStar(Integer aid){
         return avatarMapper.getAvatarByAid(aid).star;
     }
 
@@ -49,5 +49,9 @@ public class AvatarService {
         Integer curStar = getUserStar(uid) - getNeedStar(aid);
         userMapper.updateUserStar(uid, curStar);
         avatarMapper.addAvatarForUser(uid, aid);
+    }
+
+    public void changeAvatar(Integer uid, Integer aid){
+        userMapper.updateUserAid(uid, aid);
     }
 }

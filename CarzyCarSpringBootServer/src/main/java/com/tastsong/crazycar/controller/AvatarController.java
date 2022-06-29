@@ -1,7 +1,6 @@
 package com.tastsong.crazycar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,5 +45,23 @@ public class AvatarController {
         } else {
             return Result.failure(ResultCode.RC423);
         }		
+    }
+
+    @PostMapping(value = "/Change")
+    public Object changeAvatar(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token) throws Exception{
+        Integer uid = Util.getUidByToken(token);
+        if (body != null && body.containsKey("aid")) {
+			int aid = body.getInt("aid");
+			if (avatarService.isHasAvatar(uid, aid)) {
+				avatarService.changeAvatar(uid, aid);
+                JSONObject data = new JSONObject();
+                data.putOpt("aid", aid);
+                return data;
+			} else {
+                return Result.failure(ResultCode.RC423);
+			}
+		} else {
+            return Result.failure(ResultCode.RC404);
+		}	
     }
 }

@@ -41,11 +41,28 @@
          #{user_name}, #{user_password}, #{login_time}, #{aid}, #{star}, #{is_vip}, #{eid}
         )
     </insert>
-    
-    
+
     <update id="updateUserStar">
         update all_user
         set star = #{star}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserEid">
+        update all_user
+        set eid = #{eid}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserAid">
+        update all_user
+        set aid = #{aid}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserPassword">
+        update all_user
+        set user_password = #{password}
         where uid = #{uid}
     </update>
 </mapper>
