@@ -26,20 +26,24 @@ public class ProfileUI : MonoBehaviour, IController {
     }
 
     private void OnEnable() {
-        UserInfo userInfo = this.SendQuery(new UserInfoQuery());
-        vipImage.gameObject.SetActiveFast(userInfo.isVIP);
-        userNameInput.text = userInfo.name;
-        starText.text = userInfo.star.ToString();
-        travelTimesText.text = userInfo.travelTimes.ToString();
-        avatarText.text = userInfo.avatarNum.ToString();
-        mapsText.text = userInfo.mapNum.ToString();
+        var userModel = this.GetModel<IUserModel>();
+        this.GetSystem<INetworkSystem>().GetUserInfo(userModel.Uid, (data) => {
+            userModel.SetUserInfoPart(data);
 
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
+            vipImage.gameObject.SetActiveFast(userModel.IsVIP);
+            userNameInput.text = userModel.Name;
+            starText.text = userModel.Star.ToString();
+            travelTimesText.text = userModel.TravelTimes.ToString();
+            avatarText.text = userModel.AvatarNum.ToString();
+            mapsText.text = userModel.MapNum.ToString();
+
+            this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+                if (obj.Status == AsyncOperationStatus.Succeeded) {
+                    avatarImage.sprite = Instantiate(obj.Result, transform, false);
+                }
+            });
+            passwordInput.text = userModel.Password.Value;
         });
-        passwordInput.text = this.GetModel<IUserModel>().Password.Value;
     }
 
     private void Start() {
