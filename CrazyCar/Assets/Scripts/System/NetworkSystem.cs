@@ -59,35 +59,32 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             yield break;
         }
 
-        UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-        if (data != null) {
-            try {
+        using (UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST)) {
+            if (data != null) {
                 request.uploadHandler = new UploadHandlerRaw(data);
-            } catch {
-                Debug.LogError("PploadHandler : " + Encoding.UTF8.GetString(data));
             }
-        }
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Accept", "application/json");
-        if (!string.IsNullOrEmpty(token)) {
-            request.SetRequestHeader("Authorization", token);
-        }
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Accept", "application/json");
+            if (!string.IsNullOrEmpty(token)) {
+                request.SetRequestHeader("Authorization", token);
+            }
 
-        yield return request.SendWebRequest();
+            yield return request.SendWebRequest();
 
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
-            Debug.LogError("Is Network Error url = " + url);
-        } else {
-            this.SendEvent(new SetLoadingUIEvent(false));
-            byte[] results = request.downloadHandler.data;
-            string s = Encoding.UTF8.GetString(results);
-            Debug.Log(url + " : " + s);
-            JsonData d = JsonMapper.ToObject(s);
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
+                Debug.LogError("Is Network Error url = " + url);
+            } else {
+                this.SendEvent(new SetLoadingUIEvent(false));
+                byte[] results = request.downloadHandler.data;
+                string s = Encoding.UTF8.GetString(results);
+                Debug.Log(url + " : " + s);
+                JsonData d = JsonMapper.ToObject(s);
 
-            code?.Invoke((int)d["code"]);
-            if ((int)d["code"] == 200) {
-                succData?.Invoke(d["data"]);
+                code?.Invoke((int)d["code"]);
+                if ((int)d["code"] == 200) {
+                    succData?.Invoke(d["data"]);
+                }
             }
         }
     }
