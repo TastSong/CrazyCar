@@ -9,4 +9,6 @@ public interface TimeTrialMapper {
     public Integer getTimeTrialTimesByUid(Integer uid);
     public Integer getTimeTrialMapNumByUid(Integer uid);
     public Integer addTimeTrialMapForUser(Integer uid, Integer cid);
+    public Integer initTimeTrialRank(Integer cid);
+    public Integer delTimeTrialRank(Integer cid);
 }
