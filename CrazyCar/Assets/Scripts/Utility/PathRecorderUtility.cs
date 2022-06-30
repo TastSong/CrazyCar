@@ -17,9 +17,9 @@ public static class RequestUrl {
     public static string timeTrialResultUrl = "v2/TimeTrialResult";
     public static string timeTrialRankUrl = "v2/TimeTrialRank";
     public static string modifyPersonalInfoUrl = "v2/ModifyPersonalInfo";
-    public static string equipUrl = "v2/Equip";
-    public static string buyEquipUrl = "v2/BuyEquip";
-    public static string changeEquipUrl = "v2/ChangeEquip";
+    public static string equipUrl = "v2/Equip/Detail";
+    public static string buyEquipUrl = "v2/Equip/Buy";
+    public static string changeEquipUrl = "v2/Equip/Change";
     public static string matchMapUrl = "v2/MatchMap";
     public static string matchResultUrl = "v2/MatchResult";
     public static string kcpServerUrl = "v2/KCPRttServer";

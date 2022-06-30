@@ -7,12 +7,20 @@
         from all_equip 
         where eid = #{eid};
     </select>
+
+    <select id="getEquipList" resultType="EquipModel">
+        select
+        *
+        from all_equip;
+    </select>
+
     <select id="getEidsByUid" resultType="Integer">
         select
         eid
         from equip_uid 
         where uid = #{uid};
     </select>
+
     <select id="isHasEquip" resultType="boolean">
         select exists(
         select
