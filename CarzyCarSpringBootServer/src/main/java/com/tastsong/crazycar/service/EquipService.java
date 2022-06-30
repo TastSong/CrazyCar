@@ -28,4 +28,26 @@ public class EquipService {
     public Integer getCurEid(Integer uid){
         return userMapper.getUserByUid(uid).eid;
     }
+
+    public boolean isHasEquip(Integer uid, Integer eid){
+        return equipMapper.isHasEquip(uid, eid);
+    }
+
+    public boolean canBuyEquip(Integer uid, Integer eid){
+        return getUserCurStar(uid) >= getEquipNeedStar(eid);
+    }
+
+    public void bugEquip(Integer uid, Integer eid){
+        Integer curStar = getUserCurStar(uid) - getEquipNeedStar(eid);
+        userMapper.updateUserStar(uid, curStar);
+        equipMapper.addEquipForUser(uid, eid);
+    }
+
+    public Integer getUserCurStar(Integer uid){
+        return userMapper.getUserByUid(uid).star;
+    }
+
+    private Integer getEquipNeedStar(Integer eid){
+        return equipMapper.getEquipByEid(eid).star;
+    }
 }
