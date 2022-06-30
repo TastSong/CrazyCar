@@ -68,17 +68,17 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
 
     public UserInfo ParseUserInfo(JsonData jsonData) {
         UserInfo userInfo = new UserInfo();
-        userInfo.name = (string)jsonData["user_info"]["user_name"];
-        userInfo.uid = (int)jsonData["user_info"]["uid"];
-        userInfo.aid = (int)jsonData["user_info"]["aid"];
-        userInfo.star = (int)jsonData["user_info"]["star"];
-        userInfo.isVIP = (bool)jsonData["user_info"]["is_vip"];
-        userInfo.isSuperuser = (bool)jsonData["user_info"]["is_superuser"];
-        userInfo.avatarNum = (int)jsonData["user_info"]["avatar_num"];
-        userInfo.travelTimes = (int)jsonData["user_info"]["travel_times"];
-        userInfo.mapNum = (int)jsonData["user_info"]["map_num"];
+        userInfo.name = (string)jsonData["user_name"];
+        userInfo.uid = (int)jsonData["uid"];
+        userInfo.aid = (int)jsonData["aid"];
+        userInfo.star = (int)jsonData["star"];
+        userInfo.isVIP = (bool)jsonData["is_vip"];
+        userInfo.isSuperuser = (bool)jsonData["is_superuser"];
+        userInfo.avatarNum = (int)jsonData["avatar_num"];
+        userInfo.travelTimes = (int)jsonData["travel_times"];
+        userInfo.mapNum = (int)jsonData["map_num"];
 
-        JsonData equipData = jsonData["user_info"]["equip_info"];
+        JsonData equipData = jsonData["equip_info"];
         EquipInfo info = new EquipInfo();
         info.eid = (int)equipData["eid"];
         info.rid = (string)equipData["rid"];

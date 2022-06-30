@@ -101,4 +101,16 @@ public class LoginService {
         equipMapper.addEquipForUser(uid, defaultEid);
 		return;
     }
+
+    public void changePassword(Integer uid, String password){
+        userMapper.updateUserPassword(uid, password);
+    }
+
+    public UserModel getUserByUid(Integer uid){
+        return userMapper.getUserByUid(uid);
+    }
+
+    public boolean isExistsUserByUid(Integer uid){
+        return userMapper.isExistsUserByUid(uid);
+    }
 }

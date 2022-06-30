@@ -11,7 +11,6 @@ public static class RequestUrl {
     public static string avatarUrl = "v2/Avatar/Detail";
     public static string changeAvatarUrl = "v2/Avatar/Change";
     public static string buyAvatarUrl = "v2/Avatar/Buy";
-    public static string resourceUrl = "Resource";
     public static string timeTrialDetailUrl = "v2/TimeTrialDetail";
     public static string buyTimeTrialClassUrl = "v2/BuyTimeTrialClass";
     public static string timeTrialResultUrl = "v2/TimeTrialResult";
@@ -24,7 +23,7 @@ public static class RequestUrl {
     public static string matchResultUrl = "v2/MatchResult";
     public static string kcpServerUrl = "v2/KCPRttServer";
     public static string enterRoomUrl = "v2/EnterRoom";
-    public static string getUserInfo = "v2/GetUserInfo";
+    public static string getUserInfo = "v2/UserInfo/GetUser";
 
     public static string aiUrl = "AI";
 }
