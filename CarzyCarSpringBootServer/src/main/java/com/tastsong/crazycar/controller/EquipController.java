@@ -51,4 +51,22 @@ public class EquipController {
             return Result.failure(ResultCode.RC404);
 		}			
     }
+
+    @PostMapping(value = "/Change")
+    public Object changeEquip(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception{
+        Integer uid = Util.getUidByToken(token);
+        if (body != null && body.containsKey("eid")) {
+			Integer eid = body.getInt("eid");
+			if (equipService.isHasEquip(uid, eid)) {
+				equipService.changeEquip(uid, eid);
+                JSONObject data = new JSONObject();
+                data.putOpt("eid", eid);
+                return data;
+			} else {
+                return Result.failure(ResultCode.RC423);
+			}
+		} else {
+            return Result.failure(ResultCode.RC404);
+		}	
+    }
 }

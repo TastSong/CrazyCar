@@ -2,6 +2,7 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
+import org.springframework.aop.IntroductionAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,9 @@ public class EquipService {
 
     private Integer getEquipNeedStar(Integer eid){
         return equipMapper.getEquipByEid(eid).star;
+    }
+
+    public void changeEquip(Integer uid, Integer eid){
+        userMapper.updateUserEid(uid, eid);
     }
 }
