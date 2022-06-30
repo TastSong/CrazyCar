@@ -15,7 +15,7 @@ public static class RequestUrl {
     public static string buyTimeTrialClassUrl = "v2/BuyTimeTrialClass";
     public static string timeTrialResultUrl = "v2/TimeTrialResult";
     public static string timeTrialRankUrl = "v2/TimeTrialRank";
-    public static string modifyPersonalInfoUrl = "v2/ModifyPersonalInfo";
+    public static string modifyPersonalInfoUrl = "v2/UserInfo/ModifyPassword";
     public static string equipUrl = "v2/Equip/Detail";
     public static string buyEquipUrl = "v2/Equip/Buy";
     public static string changeEquipUrl = "v2/Equip/Change";

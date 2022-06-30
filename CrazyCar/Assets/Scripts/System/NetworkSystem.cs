@@ -61,7 +61,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
         UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
         if (data != null) {
-            request.uploadHandler = new UploadHandlerRaw(data);
+            try {
+                request.uploadHandler = new UploadHandlerRaw(data);
+            } catch {
+                Debug.LogError("PploadHandler : " + Encoding.UTF8.GetString(data));
+            }
         }
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
