@@ -1,8 +1,5 @@
 package com.tastsong.crazycar.controller;
 
-import javax.websocket.OnClose;
-import javax.xml.crypto.Data;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.service.LoginService;
 import com.tastsong.crazycar.Util.Util;
 
@@ -19,7 +15,6 @@ import cn.hutool.json.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-
 
 @RestController
 @Scope("prototype")
