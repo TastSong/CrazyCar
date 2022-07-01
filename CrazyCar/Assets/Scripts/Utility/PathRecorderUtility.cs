@@ -19,7 +19,7 @@ public static class RequestUrl {
     public static string equipUrl = "v2/Equip/Detail";
     public static string buyEquipUrl = "v2/Equip/Buy";
     public static string changeEquipUrl = "v2/Equip/Change";
-    public static string matchMapUrl = "v2/MatchMap";
+    public static string matchMapUrl = "v2/Match/Map";
     public static string matchResultUrl = "v2/MatchResult";
     public static string kcpServerUrl = "v2/KCPRttServer";
     public static string enterRoomUrl = "v2/Game/EnterGame";

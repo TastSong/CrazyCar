@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.MatchMapper">
+    <insert id="insertMatchClass">
+        insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time)
+				   values
+				   (#{star}, #{map_id}, #{room_id}, #{limit_time}, #{class_name}, #{times}, #{start_time}, #{enroll_time});
+    </insert>
+
+    <select id="getMatchRoomInfo" resultType="MatchRoomInfoModel">
+        select * 
+        from match_class 
+        where room_id = #{roomId} and start_time = #{startTime};
+    </select>
+
+    <select id="getMatchMapInfo" resultType="MatchMapInfoModel">
+        select * 
+        from match_map 
+        where cid = #{cid};
+    </select>
+
+    <select id="getMatchMapDetail" resultType="MatchMapInfoModel">
+        select * 
+        from match_map;
+    </select>
+</mapper>

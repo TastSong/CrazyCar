@@ -53,4 +53,17 @@ public class Util {
 		cn.hutool.jwt.JWT jwt = JWTUtil.parseToken(token);
 		return (Integer) jwt.getPayload("uid");
 	}
+	
+	public static class MsgType {
+		public int CreatePlayer = 0,
+		PlayerState = 1,
+		DelPlayer = 2,
+		MatchRoomCreate = 3,
+		MatchRoomJoin = 4,
+		MatchRoomStatus = 5,
+		MatchRoomExit = 6,
+		MatchRoomStart = 7;
+	}
+
+	public static MsgType msgType = new MsgType();
 }
