@@ -4,10 +4,11 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.common.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
 import com.tastsong.crazycar.service.MatchService;
 
@@ -49,8 +50,7 @@ public class MatchRoomWebSocket {
     private String roomId = "";
     private Integer startOffsetTime = 16;
 
-    @Autowired
-    private MatchService matchRoomService;
+    private MatchService matchService;
     
     // id = uid + "," + room_id
     @OnOpen
@@ -61,7 +61,10 @@ public class MatchRoomWebSocket {
         roomId = id.split(",")[1];
         this.WebSocketsession = WebSocketsession;
         webSocketSet.put(param, this);
-        addOnlineCount();           
+        addOnlineCount();     
+        
+        ApplicationContext act = ApplicationContextRegister.getApplicationContext();
+        matchService = act.getBean(MatchService.class);
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
     }
  
@@ -116,12 +119,11 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 421);
         } else{
-            System.out.println("++++++");
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = uid;
-            info.memberName = matchRoomService.getUserName(uid);
-            info.aid = matchRoomService.getAid(uid);
-            info.canWade = matchRoomService.canWade(message.getInt("eid"));
+            info.memberName = matchService.getUserName(uid);
+            info.aid = matchService.getAid(uid);
+            info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
             ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
             list.add(info);
@@ -147,9 +149,9 @@ public class MatchRoomWebSocket {
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = uid;
-            info.memberName = matchRoomService.getUserName(uid);
-            info.aid = matchRoomService.getAid(uid);
-            info.canWade = matchRoomService.canWade(message.getInt("eid"));
+            info.memberName = matchService.getUserName(uid);
+            info.aid = matchService.getAid(uid);
+            info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = false;
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);    
@@ -160,7 +162,8 @@ public class MatchRoomWebSocket {
 
     private void onStatusRoom(JSONObject message) {
         String roomId = message.getStr("room_id");
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();		
+        System.out.println("+++onStatusRoom+++");	
         data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 404);     
@@ -212,18 +215,19 @@ public class MatchRoomWebSocket {
     }
 
     private void onStartRoom(JSONObject message) {
+        System.out.println("On start Room");
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
         Integer mapCid = message.getInt("cid");
-        infoModel.map_id = matchRoomService.getMatchMapId(mapCid);
-        infoModel.limit_time = matchRoomService.getMatchMapLimitTime(mapCid);
-        infoModel.times = matchRoomService.getMatchMapTimes(mapCid);
+        infoModel.map_id = matchService.getMatchMapId(mapCid);
+        infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
+        infoModel.times = matchService.getMatchMapTimes(mapCid);
         infoModel.start_time = System.currentTimeMillis()/1000 + startOffsetTime;
         infoModel.enroll_time =  System.currentTimeMillis()/1000;
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
-        matchRoomService.insertMatchClass(infoModel);
-        Integer cid = matchRoomService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
+        matchService.insertMatchClass(infoModel);
+        Integer cid = matchService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
