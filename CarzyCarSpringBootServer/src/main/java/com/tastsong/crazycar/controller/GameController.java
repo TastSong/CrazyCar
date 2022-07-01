@@ -43,8 +43,7 @@ public class GameController {
 
 			if(netType == NetType.WebSocket){
 				System.out.println("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
-				//data.putOpt("num", MatchWebSocket.getOnlineCount());
-                data.putOpt("num", 0);
+				data.putOpt("num", MatchWebSocket.getOnlineCount());
                 return data;
 			} else{
 				data.putOpt("num", 0);
