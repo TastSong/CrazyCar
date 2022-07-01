@@ -5,6 +5,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
@@ -13,6 +14,8 @@ import com.tastsong.crazycar.service.MatchService;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @ServerEndpoint("/websocket/MatchRoomWebSocket/{id}")
+@Data
+@NoArgsConstructor
+@Component
 public class MatchRoomWebSocket {
     public class MatchRoomPlayerInfo{
         public Integer uid;
@@ -110,6 +116,7 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 421);
         } else{
+            System.out.println("++++++");
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = uid;
             info.memberName = matchRoomService.getUserName(uid);
