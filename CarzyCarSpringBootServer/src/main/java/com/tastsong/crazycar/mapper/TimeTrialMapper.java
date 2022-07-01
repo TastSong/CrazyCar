@@ -17,4 +17,7 @@ public interface TimeTrialMapper {
     public List<TimeTrialInfoModel> getTimeTrialInfos();
     public boolean isHasTimeTrialClass(Integer uid, Integer cid);
     public TimeTrialInfoModel getTimeTrialInfo(Integer cid);
+    public Integer getMiniCompleteTime(Integer uid, Integer cid);
+    public Integer insertRecord(TimeTrialRecordModel recordModel);
+    public Integer getRank(Integer uid, Integer cid);
 }

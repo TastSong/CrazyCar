@@ -249,7 +249,7 @@ select cid from
 	time_trial_user_map 
 	where cid = 0 and uid = 1;
 select cid from time_trial_user_map 
-	where uid = 5;
+	where uid = 1;
 select * from time_trial_user_map;
 
 
@@ -286,7 +286,7 @@ insert into time_trial_record ( uid, cid, complete_time, record_time)
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
 				   (4, 0, 16, 1629544644);
-select record_time from time_trial_record where uid = 1 ;			
+select * from time_trial_record where uid = 1 ;			
 
 /*查询自己的成绩排名*/
 select
@@ -333,6 +333,20 @@ from
 	) as user_rank,
 	(select @rank_num:= 0) r;
 
+select complete_time 
+        from
+        (
+            select
+                record.*, @rownum  := @rownum + 1 as rownum
+            from
+                (
+                    select uid, complete_time
+                    from time_trial_record
+                        where uid = 1 and cid = 2
+                        order by complete_time asc
+                ) as record,
+                (select @rownum:= 0) r
+        ) as history_rank where rownum = 1 and complete_time != -1;
 
 drop table if exists time_trial_rank_0;
 create table  time_trial_rank_0 as

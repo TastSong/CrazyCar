@@ -51,7 +51,7 @@ public class TokenFilter implements Filter{
                 writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC204)));
             }
         } catch (Exception e) {
-            log.info("缺失Token，非法URL：{}", request.getRequestURI());
+            log.info("缺失Token，或者接口报错：{}", request.getRequestURI());
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
             PrintWriter writer = response.getWriter();
             writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));

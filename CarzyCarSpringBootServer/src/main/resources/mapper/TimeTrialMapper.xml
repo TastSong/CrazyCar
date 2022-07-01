@@ -23,11 +23,15 @@
     </select>
 
     <insert id="addTimeTrialMapForUser">
-        insert into time_trial_user_map (
-          cid, uid
-        ) VALUES (
-         #{cid}, #{uid}
-        )
+        insert into time_trial_user_map ( cid, uid )
+				   values
+				   (#{cid}, #{uid});
+    </insert>
+
+    <insert id="insertRecord" parameterType="TimeTrialRecordModel">
+        insert into time_trial_record ( uid, cid, complete_time, record_time)
+				   values
+				   (#{uid}, #{cid}, #{complete_time}, #{record_time});
     </insert>
 
     <update id="initTimeTrialRank">  
@@ -76,5 +80,28 @@
         id
         from time_trial_user_map 
         where uid = #{uid} and cid = #{cid});
+    </select>
+
+    <select id="getMiniCompleteTime" resultType="Integer">
+        select complete_time 
+        from
+        (
+            select
+                record.*, @rownum  := @rownum + 1 as rownum
+            from
+                (
+                    select uid, complete_time
+                    from time_trial_record
+                        where uid = #{uid} and cid = #{cid}
+                        order by complete_time asc
+                ) as record,
+                (select @rownum:= 0) r
+        ) as history_rank where rownum = 1 and complete_time != -1;
+    </select>
+
+    <select id="getRank" resultType="Integer">
+        select rank_num 
+        from time_trial_rank_${cid} 
+        where uid = #{uid};  
     </select>
 </mapper>
