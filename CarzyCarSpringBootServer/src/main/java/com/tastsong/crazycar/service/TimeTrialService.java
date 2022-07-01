@@ -36,10 +36,32 @@ public class TimeTrialService {
     }
 
     public List<TimeTrialInfoModel> getTimeTrialDetail(Integer uid){
-        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfo();
+        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfos();
         for(Integer i = 0; i < timeTrialInfoModels.size(); i++){
             timeTrialInfoModels.get(i).is_has = timeTrialMapper.isHasTimeTrialClass(uid, timeTrialInfoModels.get(i).cid);
         }
         return timeTrialInfoModels;
     }
+
+    public boolean isHasClass(Integer uid, Integer cid){
+        return timeTrialMapper.isHasTimeTrialClass(uid, cid);
+    }
+
+    public Integer getUserStar(Integer uid){
+        return userMapper.getUserByUid(uid).star;
+    }
+
+    private Integer getNeedStar(Integer cid){
+        return timeTrialMapper.getTimeTrialInfo(cid).star;
+    }
+
+    public boolean canBuyClass(int uid, int cid) {
+		return getUserStar(uid) >= getNeedStar(cid);		
+	}
+
+    public void buyClass(Integer uid, Integer cid){
+        Integer curStar = getUserStar(uid) - getNeedStar(cid);
+        userMapper.updateUserStar(uid, curStar);
+        timeTrialMapper.addTimeTrialMapForUser(uid, cid);
+    } 
 }

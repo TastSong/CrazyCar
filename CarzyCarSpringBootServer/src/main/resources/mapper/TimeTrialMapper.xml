@@ -57,10 +57,17 @@
         from time_trial_rank_${cid};
     </select>
 
-    <select id="getTimeTrialInfo" resultType="TimeTrialInfoModel">
+    <select id="getTimeTrialInfos" resultType="TimeTrialInfoModel">
         select
         *
         from time_trial_class;
+    </select>
+
+    <select id="getTimeTrialInfo" resultType="TimeTrialInfoModel">
+        select
+        *
+        from time_trial_class
+        where cid = #{cid};
     </select>
 
     <select id="isHasTimeTrialClass" resultType="boolean">

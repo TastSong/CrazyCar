@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.service.TimeTrialService;
 import com.tastsong.crazycar.Util.Util;
 
@@ -31,5 +32,26 @@ public class TimeTrialController {
     public Object getDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
         Integer uid = Util.getUidByToken(token);
         return timeTrialService.getTimeTrialDetail(uid);
+    }
+
+    @PostMapping(value = "/BuyClass")
+    public Object budClass(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception{
+        Integer uid = Util.getUidByToken(token);
+        if (body != null && body.containsKey("cid")) {
+			int cid = body.getInt("cid");
+            JSONObject data = new JSONObject();
+			if (timeTrialService.isHasClass(cid, uid)) {
+				data.putOpt("star", timeTrialService.getUserStar(uid));
+                return data;
+			} else if (timeTrialService.canBuyClass(uid, cid)) {
+				timeTrialService.buyClass(uid, cid);
+				data.putOpt("star", timeTrialService.getUserStar(uid));
+                return data;
+			} else {
+                return Result.failure(ResultCode.RC423);
+			}
+		} else {
+			return Result.failure(ResultCode.RC404);
+		}	
     }
 }

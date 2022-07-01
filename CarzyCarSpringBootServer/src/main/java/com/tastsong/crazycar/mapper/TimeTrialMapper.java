@@ -14,6 +14,7 @@ public interface TimeTrialMapper {
     public Integer initTimeTrialRank(Integer cid);
     public Integer delTimeTrialRank(Integer cid);
     public List<TimeTrialRankModel> getTimeTrialRank(Integer cid);
-    public List<TimeTrialInfoModel> getTimeTrialInfo();
+    public List<TimeTrialInfoModel> getTimeTrialInfos();
     public boolean isHasTimeTrialClass(Integer uid, Integer cid);
+    public TimeTrialInfoModel getTimeTrialInfo(Integer cid);
 }
