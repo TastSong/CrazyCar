@@ -57,4 +57,8 @@ public class MatchService {
     public List<MatchMapInfoModel> getMatchMapDetail(){
         return matchMapper.getMatchMapDetail();
     }
+
+    public boolean isVIP(Integer uid){
+        return userMapper.getUserByUid(uid).is_vip;
+    }
 }

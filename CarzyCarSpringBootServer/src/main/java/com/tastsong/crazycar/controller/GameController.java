@@ -15,6 +15,7 @@ import com.tastsong.crazycar.common.GameType;
 import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.service.TimeTrialService;
 
 @RestController
@@ -23,6 +24,9 @@ import com.tastsong.crazycar.service.TimeTrialService;
 public class GameController {
     @Autowired
     private TimeTrialService timeTrialService;
+
+    @Autowired
+    private MatchService matchService;
 
     @PostMapping(value = "/EnterGame")
     public Object enterGame(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body)  throws Exception{
@@ -33,8 +37,19 @@ public class GameController {
 
         JSONObject data = new JSONObject();
 		if (gameType == GameType.Match){
-            System.out.println("+++++++ " + netType);
-            return Result.failure(ResultCode.RC999);
+            if(!matchService.isVIP(uid)) {
+                return Result.failure(ResultCode.RC423);
+			} 
+
+			if(netType == NetType.WebSocket){
+				System.out.println("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
+				//data.putOpt("num", MatchWebSocket.getOnlineCount());
+                data.putOpt("num", 0);
+                return data;
+			} else{
+				data.putOpt("num", 0);
+                return data;
+			}	
 		} else{
 			if(timeTrialService.isHasClass(uid, cid)) {
                 data.putOpt("num", 0);
