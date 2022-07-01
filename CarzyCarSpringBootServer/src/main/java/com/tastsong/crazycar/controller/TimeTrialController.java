@@ -22,7 +22,6 @@ public class TimeTrialController {
     @PostMapping(value = "/Rank")
     public Object getRank(@RequestBody JSONObject body) throws Exception{
         Integer cid = body.getInt("cid");
-        timeTrialService.initRank(cid);
-        return Result.success();
+        return timeTrialService.getRankList(cid);
     }
 }

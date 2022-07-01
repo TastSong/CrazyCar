@@ -117,10 +117,10 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         timeTrialModel.TimeTrialRankList.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialRankInfo info = new TimeTrialRankInfo();
-            info.name = (string)jsonData[i]["name"];
+            info.name = (string)jsonData[i]["user_name"];
             info.aid = (int)jsonData[i]["aid"];
             info.completeTime = (int)jsonData[i]["complete_time"];
-            info.rank = (int)jsonData[i]["rank"];
+            info.rank = (int)jsonData[i]["rank_num"];
             timeTrialModel.TimeTrialRankList.Add(info);
         }
         success?.Invoke();

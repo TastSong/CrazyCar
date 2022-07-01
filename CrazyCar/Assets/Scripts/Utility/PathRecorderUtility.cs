@@ -11,10 +11,10 @@ public static class RequestUrl {
     public static string avatarUrl = "v2/Avatar/Detail";
     public static string changeAvatarUrl = "v2/Avatar/Change";
     public static string buyAvatarUrl = "v2/Avatar/Buy";
-    public static string timeTrialDetailUrl = "v2/TimeTrialDetail";
-    public static string buyTimeTrialClassUrl = "v2/BuyTimeTrialClass";
-    public static string timeTrialResultUrl = "v2/TimeTrialResult";
-    public static string timeTrialRankUrl = "v2/TimeTrialRank";
+    public static string timeTrialDetailUrl = "v2/TimeTrial/Detail";
+    public static string buyTimeTrialClassUrl = "v2/TimeTrial/BuyClass";
+    public static string timeTrialResultUrl = "v2/TimeTrial/Result";
+    public static string timeTrialRankUrl = "v2/TimeTrial/Rank";
     public static string modifyPersonalInfoUrl = "v2/UserInfo/ModifyPassword";
     public static string equipUrl = "v2/Equip/Detail";
     public static string buyEquipUrl = "v2/Equip/Buy";

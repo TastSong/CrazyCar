@@ -50,4 +50,10 @@
     <update id="delTimeTrialRank">  
         drop table if exists time_trial_rank_${cid};
     </update> 
+
+    <select id="getTimeTrialRank" resultType="TimeTrialRankModel">
+        select
+        *
+        from time_trial_rank_${cid};
+    </select>
 </mapper>
