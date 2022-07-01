@@ -100,7 +100,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         for (int i = 0; i < jsonData.Count; i++) {
             TimeTrialInfo info = new TimeTrialInfo();
             info.cid = (int)jsonData[i]["cid"];
-            info.name = (string)jsonData[i]["name"];
+            info.name = (string)jsonData[i]["class_name"];
             info.star = (int)jsonData[i]["star"];
             info.mapId = (int)jsonData[i]["map_id"];
             info.limitTime = (int)jsonData[i]["limit_time"];

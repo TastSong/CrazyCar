@@ -56,4 +56,18 @@
         *
         from time_trial_rank_${cid};
     </select>
+
+    <select id="getTimeTrialInfo" resultType="TimeTrialInfoModel">
+        select
+        *
+        from time_trial_class;
+    </select>
+
+    <select id="isHasTimeTrialClass" resultType="boolean">
+        select exists(
+        select
+        id
+        from time_trial_user_map 
+        where uid = #{uid} and cid = #{cid});
+    </select>
 </mapper>

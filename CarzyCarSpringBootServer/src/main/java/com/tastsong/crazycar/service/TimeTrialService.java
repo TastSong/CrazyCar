@@ -2,13 +2,13 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
-import javax.print.DocFlavor.INPUT_STREAM;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
+import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 
 @Service
@@ -33,5 +33,13 @@ public class TimeTrialService {
             timeTrialRankModels.get(i).user_name = userMapper.getUserByUid(uid).user_name;
         }
         return timeTrialRankModels;
+    }
+
+    public List<TimeTrialInfoModel> getTimeTrialDetail(Integer uid){
+        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfo();
+        for(Integer i = 0; i < timeTrialInfoModels.size(); i++){
+            timeTrialInfoModels.get(i).is_has = timeTrialMapper.isHasTimeTrialClass(uid, timeTrialInfoModels.get(i).cid);
+        }
+        return timeTrialInfoModels;
     }
 }
