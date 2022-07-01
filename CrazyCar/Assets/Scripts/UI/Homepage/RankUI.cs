@@ -32,7 +32,7 @@ public class RankUI : MonoBehaviour, IController {
     private void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayCloseSound();
-            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
+            this.SendCommand(new HidePageCommand(UIPageType.RankUI));
         });
     }
 

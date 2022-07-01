@@ -7,12 +7,14 @@
         from all_user 
         where uid = #{uid};
     </select>
+    
     <select id="getUserByName" resultType="UserModel">
         select
         *
         from all_user 
         where user_name = #{userName};
     </select>
+
     <select id="isSuperuser" resultType="boolean">
         select exists(
         select
@@ -20,6 +22,7 @@
         from superuser 
         where uid = #{uid});
     </select>
+
     <select id="isExistsUser" resultType="boolean">
         select exists(
         select
@@ -27,6 +30,7 @@
         from all_user 
         where user_name = #{userName});
     </select>
+
     <select id="isExistsUserByUid" resultType="boolean">
         select exists(
         select
@@ -34,6 +38,7 @@
         from all_user 
         where uid = #{uid});
     </select>
+
     <insert id="insertUser" parameterType="UserModel">
         insert into all_user (
           user_name, user_password, login_time, aid, star, is_vip, eid
