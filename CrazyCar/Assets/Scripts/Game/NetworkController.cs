@@ -6,8 +6,7 @@ using QFramework;
 
 public enum ServerType {
     Local = 0,
-    Remote,
-    LocalSpringBoot
+    Remote
 }
 
 public enum NetType {
