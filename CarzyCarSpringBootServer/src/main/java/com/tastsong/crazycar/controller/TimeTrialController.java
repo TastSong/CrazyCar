@@ -24,9 +24,10 @@ public class TimeTrialController {
     private TimeTrialService timeTrialService;
 
     @PostMapping(value = "/Rank")
-    public Object getRank(@RequestBody JSONObject body) throws Exception {
+    public Object getRank(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+        Integer uid = Util.getUidByToken(token);
         Integer cid = body.getInt("cid");
-        return timeTrialService.getRankList(cid);
+        return timeTrialService.getRankList(uid, cid);
     }
 
     @PostMapping(value = "/Detail")

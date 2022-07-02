@@ -35,7 +35,7 @@
     </insert>
 
     <update id="initTimeTrialRank">  
-        create table  time_trial_rank_${cid} as
+        create table  time_trial_rank_${uid}_${cid} as
         select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
                         from
                             (
@@ -52,13 +52,13 @@
     </update> 
 
     <update id="delTimeTrialRank">  
-        drop table if exists time_trial_rank_${cid};
+        drop table if exists time_trial_rank_${uid}_${cid};
     </update> 
 
     <select id="getTimeTrialRank" resultType="TimeTrialRankModel">
         select
         *
-        from time_trial_rank_${cid};
+        from time_trial_rank_${uid}_${cid};
     </select>
 
     <select id="getTimeTrialInfos" resultType="TimeTrialInfoModel">
@@ -101,7 +101,7 @@
 
     <select id="getRank" resultType="Integer">
         select rank_num 
-        from time_trial_rank_${cid} 
+        from time_trial_rank_${uid}_${cid} 
         where uid = #{uid};  
     </select>
 </mapper>
