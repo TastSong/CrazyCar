@@ -178,10 +178,10 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         JsonData jsonData = data["rank"];
         for (int i = 0; i < jsonData.Count; i++) {
             MatchRankInfo info = new MatchRankInfo();
-            info.name = (string)jsonData[i]["name"];
+            info.name = (string)jsonData[i]["user_name"];
             info.aid = (int)jsonData[i]["aid"];
             info.completeTime = (int)jsonData[i]["complete_time"];
-            info.rank = (int)jsonData[i]["rank"];
+            info.rank = (int)jsonData[i]["rank_num"];
             matchModel.MatchRankList.Add(info);
         }
         success?.Invoke();

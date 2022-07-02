@@ -17,6 +17,9 @@ public class PostPlayerStateMsgCommand : AbstractCommand{
         } else {
             w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
         }
+        if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == null) {
+            return;
+        }
         w.WritePropertyName("pos_x");
         w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.x);
         w.WritePropertyName("pos_y");

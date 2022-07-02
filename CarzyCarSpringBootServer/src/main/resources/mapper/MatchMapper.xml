@@ -13,14 +13,70 @@
         where room_id = #{roomId} and start_time = #{startTime};
     </select>
 
-    <select id="getMatchMapInfo" resultType="MatchMapInfoModel">
+    <select id="getMatchRoomInfoByCid" resultType="MatchRoomInfoModel">
         select * 
-        from match_map 
+        from match_class 
         where cid = #{cid};
     </select>
 
     <select id="getMatchMapDetail" resultType="MatchMapInfoModel">
         select * 
         from match_map;
+    </select>
+
+    <select id="getMatchMapInfo" resultType="MatchMapInfoModel">
+        select * 
+        from match_map
+        where cid = #{cid};
+    </select>
+
+    <insert id="insertRecord" parameterType="MatchRecordModel">
+        insert into match_record ( uid, cid, complete_time, record_time)
+				   values
+				   (#{uid}, #{cid}, #{complete_time}, #{record_time});
+    </insert>
+
+    <update id="initMatchRank">  
+        create table  match_rank_${uid}_${cid} as
+        select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
+                        from
+                            (
+                                select *
+                                from
+                                (select uid, min(complete_time) as complete_time
+                                from
+                                    match_record
+                                    where cid = ${cid} and complete_time != -1 
+                                    group by uid) as min_time
+                                order by complete_time asc
+                            ) as user_rank,
+                            (select @rank_num:= 0) r)  as all_user_rank;
+    </update> 
+
+    <update id="delMatchRank">  
+        drop table if exists match_rank_${uid}_${cid};
+    </update> 
+
+    <select id="getMatchRankList" resultType="MatchRankModel">
+        select
+        *
+        from match_rank_${uid}_${cid};
+    </select>
+
+    <select id="getMiniCompleteTime" resultType="Integer">
+        select complete_time 
+        from
+        (
+            select
+                record.*, @rownum  := @rownum + 1 as rownum
+            from
+                (
+                    select uid, complete_time
+                    from match_record
+                        where uid = #{uid} and cid = #{cid}
+                        order by complete_time asc
+                ) as record,
+                (select @rownum:= 0) r
+        ) as history_rank where rownum = 1 and complete_time != -1;
     </select>
 </mapper>

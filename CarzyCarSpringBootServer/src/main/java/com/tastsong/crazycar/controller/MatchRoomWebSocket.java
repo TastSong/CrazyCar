@@ -219,7 +219,7 @@ public class MatchRoomWebSocket {
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
         Integer mapCid = message.getInt("cid");
-        infoModel.map_id = matchService.getMatchMapId(mapCid);
+        infoModel.map_id = matchService.getMatchMapMapId(mapCid);
         infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
         infoModel.times = matchService.getMatchMapTimes(mapCid);
         infoModel.start_time = System.currentTimeMillis()/1000 + startOffsetTime;
@@ -228,7 +228,6 @@ public class MatchRoomWebSocket {
         infoModel.star = 2;
         System.out.println("++++++ " + JSONUtil.toJsonStr(infoModel));
         matchService.insertMatchClass(infoModel);
-        System.out.println("++++++qqqqq ");
         Integer cid = matchService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
         System.out.println("++++++cid " + cid);
         JSONObject data = new JSONObject();			
