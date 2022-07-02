@@ -21,7 +21,7 @@ public static class RequestUrl {
     public static string changeEquipUrl = "v2/Equip/Change";
     public static string matchMapUrl = "v2/Match/Map";
     public static string matchResultUrl = "v2/Match/Result";
-    public static string kcpServerUrl = "v2/KCPRttServer";
+    public static string kcpServerUrl = "v2/KCP/RttServer";
     public static string enterRoomUrl = "v2/Game/EnterGame";
     public static string getUserInfo = "v2/UserInfo/GetUser";
 

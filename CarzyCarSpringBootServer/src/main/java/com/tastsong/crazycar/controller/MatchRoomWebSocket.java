@@ -226,10 +226,8 @@ public class MatchRoomWebSocket {
         infoModel.enroll_time =  System.currentTimeMillis()/1000;
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
-        System.out.println("++++++ " + JSONUtil.toJsonStr(infoModel));
         matchService.insertMatchClass(infoModel);
         Integer cid = matchService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
-        System.out.println("++++++cid " + cid);
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
