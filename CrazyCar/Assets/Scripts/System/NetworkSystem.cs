@@ -17,8 +17,10 @@ public interface INetworkSystem : ISystem {
     void RespondAction(JsonData recJD);
     void CloseConnect();
     IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
+    Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; }
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; }
+    Queue<PlayerCompleteMsg> PlayerCompleteMsgs { get; set; }
     System.Object MsgLock { get; set; }
     void EnterRoom(GameType gameType, int cid, Action succ = null);
     void GetUserInfo(int uid, Action<UserInfo> succ);
@@ -46,8 +48,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
     public string HttpBaseUrl { get; set; }
+    public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; } = new Queue<PlayerCreateMsg>();
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
     public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; } = new Queue<PlayerOperatMsg>();
+    public Queue<PlayerCompleteMsg> PlayerCompleteMsgs { get; set; } = new Queue<PlayerCompleteMsg>();
     public object MsgLock { get; set; } = new object();
     private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
@@ -109,12 +113,22 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
         if (msgType == MsgType.CreatePlayer) {
             playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
+            if (playerCreateMsg.userInfo.uid == this.GetModel<IUserModel>().Uid) {
+                return;
+            }
             MPlayer peer = null;
             if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+                if (netType == NetType.WebSocket) {
+                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+                } else {
+                    PlayerCreateMsgs.Enqueue(playerCreateMsg);
+                }
             }
         } else if(msgType == MsgType.PlayerState) {
             playerStateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerStateMsg(recJD);
+            if (playerStateMsg.uid == this.GetModel<IUserModel>().Uid) {
+                return;
+            }
             if (netType == NetType.WebSocket) {               
                 this.GetSystem<IPlayerManagerSystem>().RespondStateAction(playerStateMsg);
             } else{
@@ -124,6 +138,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
         } else if (msgType == MsgType.PlayerOperat){
             playerOperatMsg = this.GetSystem<IDataParseSystem>().ParsePlayerOperatMsg(recJD);
+            if (playerOperatMsg.uid == this.GetModel<IUserModel>().Uid) {
+                return;
+            }
             if (netType == NetType.WebSocket) {
                 this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(playerOperatMsg);
             } else {
@@ -133,8 +150,15 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
         } else if (msgType == MsgType.PlayerCompleteGame) {
             playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
+            if (playerCompleteMsg.uid == this.GetModel<IUserModel>().Uid) {
+                return;
+            }
             if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-                this.SendEvent(new UpdateMatchResultUIEvent(playerCompleteMsg));
+                if (netType == NetType.WebSocket) {
+                    this.SendEvent(new UpdateMatchResultUIEvent(playerCompleteMsg));
+                } else {
+                    PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
+                }
             }
         } else if (msgType == MsgType.MatchRoomCreate) {
             this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);

@@ -42,6 +42,13 @@ public class NetworkController : MonoBehaviour, IController {
 
     private void Update() {
         // KCP 开了线程所以只能把 RespondAction放进主线程
+        if (this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Count > 0) {
+            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                this.SendCommand(new MakeNewPlayerCommand(this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Peek()));
+                this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Dequeue();
+            }
+        }
+
         if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
             lock (this.GetSystem<INetworkSystem>().MsgLock) {
                 this.GetSystem<IPlayerManagerSystem>().RespondStateAction(
@@ -55,6 +62,13 @@ public class NetworkController : MonoBehaviour, IController {
                 this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(
                     this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Peek());
                 this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Dequeue();
+            }
+        }
+
+        if (this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Count > 0) {
+            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+                this.SendCommand(new UpdateMatchResultUICommand(this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Peek()));
+                this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Dequeue();
             }
         }
     }

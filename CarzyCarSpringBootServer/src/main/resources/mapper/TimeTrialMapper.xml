@@ -55,7 +55,7 @@
         drop table if exists time_trial_rank_${uid}_${cid};
     </update> 
 
-    <select id="getTimeTrialRank" resultType="TimeTrialRankModel">
+    <select id="getTimeTrialRankList" resultType="TimeTrialRankModel">
         select
         *
         from time_trial_rank_${uid}_${cid};

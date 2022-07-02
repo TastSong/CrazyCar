@@ -27,7 +27,7 @@ public class TimeTrialService {
 
     public List<TimeTrialRankModel> getRankList(Integer uid, Integer cid){
         initRank(uid, cid);
-        List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRank(uid, cid);
+        List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankList(uid, cid);
         for (Integer i = 0; i< timeTrialRankModels.size(); i++){
             Integer userId = timeTrialRankModels.get(i).uid;
             timeTrialRankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
