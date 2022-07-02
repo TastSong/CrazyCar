@@ -12,10 +12,7 @@ import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class TimeTrialService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;

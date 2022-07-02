@@ -12,7 +12,6 @@ import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserModel;
 
-import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
