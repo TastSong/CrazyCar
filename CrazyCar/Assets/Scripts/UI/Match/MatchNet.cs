@@ -12,7 +12,7 @@ public class MatchNet : MonoBehaviour, IController {
     private void Start() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
-                "websocket/MatchWebSocket/" +
+                RequestUrl.matchWSUrl +
                 this.GetModel<IUserModel>().Uid.Value + "," +
                 this.GetModel<IMatchModel>().SelectInfo.Value.cid;
 

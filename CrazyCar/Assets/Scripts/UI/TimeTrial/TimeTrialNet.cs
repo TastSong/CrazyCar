@@ -10,18 +10,14 @@ public class TimeTrialNet : MonoBehaviour, IController {
     private Coroutine timeTrialNetCor;
 
     private void Start() {
-        //if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial)
-        //{
+        //if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
         //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-        //        "websocket/TimeTrialWebSocket/" +
+        //        RequestUrl.timeTrialWSUrl +
         //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
         //    Debug.Log("+++ " + ws);
-        //    if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket)
-        //    {
+        //    if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
         //        this.GetSystem<INetworkSystem>().Connect(ws);
-        //    }
-        //    else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP)
-        //    {
+        //    } else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP) {
         //        this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
         //    }
 
