@@ -17,6 +17,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/websocket/MatchRoomWebSocket/{id}")
 @Data
+@Slf4j
 @NoArgsConstructor
 @Component
 public class MatchRoomWebSocket {
@@ -55,7 +57,6 @@ public class MatchRoomWebSocket {
     // id = uid + "," + room_id
     @OnOpen
     public void onOpen(@PathParam(value = "id") String param, Session WebSocketsession, EndpointConfig config) {
-        System.out.println(param);
         id = param;//接收到发送消息的人员编号
         curUid = Integer.parseInt(id.split(",")[0]);
         roomId = id.split(",")[1];
@@ -65,7 +66,7 @@ public class MatchRoomWebSocket {
         
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
-        System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+        log.info("Match Room onOpen, num = " + getOnlineCount() + "   uid = " + curUid + " roomId = " + roomId);
     }
  
 
@@ -82,17 +83,17 @@ public class MatchRoomWebSocket {
                         break;
                     }
                 }
-                System.out.println("onClose : " + MatchRoomWebSocket.roomMap.size());
+                log.info("onClose : " + MatchRoomWebSocket.roomMap.size());
             } 
             webSocketSet.remove(id); 
             subOnlineCount();           
-            System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+            log.info("Match Room onClose, num = " + getOnlineCount());
         }
     }
  
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("onMessage : " + message);
+        log.info("Match Room onMessage : " + message);
         sendMsg = JSONUtil.parseObj(message);
     	Integer msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.MatchRoomCreate) {
@@ -130,7 +131,7 @@ public class MatchRoomWebSocket {
             MatchRoomWebSocket.roomMap.put(roomId, list);
             data.putOpt("code", 200);
         }
-        System.out.println("OnCreateRoom : " + data.toString());
+        log.info("OnCreateRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 
@@ -156,14 +157,13 @@ public class MatchRoomWebSocket {
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);    
         }
-        System.out.println("OnCreateRoom : " + data.toString());  
+        log.info("OnCreateRoom : " + data.toString());  
         sendToUser(data.toString(), roomId);
     }
 
     private void onStatusRoom(JSONObject message) {
         String roomId = message.getStr("room_id");
-        JSONObject data = new JSONObject();		
-        System.out.println("+++onStatusRoom+++");	
+        JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 404);     
@@ -182,7 +182,7 @@ public class MatchRoomWebSocket {
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
-        System.out.println("OnStatusRoom : " + data.toString());
+        log.info("OnStatusRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 
@@ -210,12 +210,11 @@ public class MatchRoomWebSocket {
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
-        System.out.println("onExitRoom : " + data.toString());
+        log.info("onExitRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 
     private void onStartRoom(JSONObject message) {
-        System.out.println("On start Room");
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
         Integer mapCid = message.getInt("cid");
@@ -243,7 +242,7 @@ public class MatchRoomWebSocket {
             data.putOpt("enroll_time", infoModel.enroll_time);
             data.putOpt("code", 200); 
         }
-        System.out.println("onStartRoom : " + data.toString());
+        log.info("onStartRoom : " + data.toString());
         sendToUser(data.toString(), roomId);
     }
 
@@ -262,7 +261,7 @@ public class MatchRoomWebSocket {
 
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("onError app strong back");
+        log.info("onError app strong back");
     }
 
     public void sendMessage(String message) throws IOException {

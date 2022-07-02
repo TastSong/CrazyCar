@@ -12,7 +12,10 @@ import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class TimeTrialService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;
@@ -63,7 +66,6 @@ public class TimeTrialService {
     public void buyClass(Integer uid, Integer cid){
         Integer curStar = getUserStar(uid) - getNeedStar(cid);
         userMapper.updateUserStar(uid, curStar);
-        System.out.println("______" + timeTrialMapper.addTimeTrialMapForUser(uid, cid)); 
     } 
 
     public Integer getLimitTime(Integer cid){

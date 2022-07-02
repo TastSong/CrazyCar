@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.hutool.json.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.GameType;
@@ -20,6 +21,7 @@ import com.tastsong.crazycar.service.TimeTrialService;
 
 @RestController
 @Scope("prototype")
+@Slf4j
 @RequestMapping(value = "/v2/Game")
 public class GameController {
     @Autowired
@@ -42,7 +44,7 @@ public class GameController {
 			} 
 
 			if(netType == NetType.WebSocket){
-				System.out.println("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
+				log.info("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
 				data.putOpt("num", MatchWebSocket.getOnlineCount());
                 return data;
 			} else{

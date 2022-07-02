@@ -31,7 +31,7 @@ public class TokenFilter implements Filter{
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("过滤器初始化");
+        log.info("Init Filter");
     }
 
     @Override
@@ -45,13 +45,13 @@ public class TokenFilter implements Filter{
             if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
                 filterChain.doFilter(servletRequest, servletResponse);
             } else{
-                log.info("非法URL：{}", request.getRequestURI());
+                log.info("illegality URL：{}", request.getRequestURI());
                 response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                 PrintWriter writer = response.getWriter();
                 writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC204)));
             }
         } catch (Exception e) {
-            log.info("缺失Token，或者接口报错：{}", request.getRequestURI());
+            log.info("missing Token，or interface error：{}", request.getRequestURI());
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
             PrintWriter writer = response.getWriter();
             writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));
@@ -60,6 +60,6 @@ public class TokenFilter implements Filter{
 
     @Override
     public void destroy() {
-        log.info("过滤器销毁");
+        log.info("Des Filter");
     }
 }

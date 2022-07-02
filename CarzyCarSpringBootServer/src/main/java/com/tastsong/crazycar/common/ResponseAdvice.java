@@ -10,10 +10,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
@@ -29,7 +25,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
             // Spring boot 捕获异常
             return Result.failure(ResultCode.RC500);
         } else {
-            log.info("ResponseAdvice Type : " + body.getClass() + "; data : " + JSONUtil.toJsonStr(body));
+            //log.info("ResponseAdvice Type : " + body.getClass() + "; data : " + JSONUtil.toJsonStr(body));
             return Result.success(ResultCode.RC200.getMessage(), body);
         }
     }

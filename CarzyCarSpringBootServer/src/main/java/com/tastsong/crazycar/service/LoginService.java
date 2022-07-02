@@ -92,7 +92,6 @@ public class LoginService {
         userModel.eid = defaultEid;
         userModel.is_vip = defaultVIP;
         userModel.login_time = (int) (System.currentTimeMillis()/1000);
-        log.info("++++++ " + JSONUtil.toJsonStr(userModel));
         userMapper.insertUser(userModel);
 
 		int uid = userMapper.getUserByName(userName).uid;

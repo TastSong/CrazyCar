@@ -17,10 +17,12 @@ import kcp.ChannelConfig;
 import kcp.KcpListener;
 import kcp.KcpServer;
 import kcp.Ukcp;
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestController
 @Scope("prototype")
+@Slf4j
 @RequestMapping(value = "/v2/KCP")
 public class KCPRttController extends HttpServlet implements KcpListener {
 	private static final long serialVersionUID = 1L;
@@ -66,7 +68,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
         
         if (!kcpSet.contains(arr)) {
             onlineCount++;
-            System.out.println("Connected : " + arr + " onlineCount = " + onlineCount);
+            log.info("Connected : " + arr + " onlineCount = " + onlineCount);
             kcpSet.put(arr, uKcp);//加入map中
         }
     }
@@ -88,7 +90,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
 
     @Override
     public void handleClose(Ukcp uKcp) {
-        System.out.println("handleClose " + Snmp.snmp.toString());
+        log.info("handleClose " + Snmp.snmp.toString());
         Snmp.snmp  = new Snmp();
         String arr =  uKcp.user().getRemoteAddress().toString();
         if (kcpSet.contains(arr)) {

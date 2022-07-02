@@ -10,12 +10,14 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/websocket/TimeTrialWebSocket/{id}")
 @Data
+@Slf4j
 @NoArgsConstructor
 @Component
 public class TimeTrialWebSocket {
@@ -36,12 +38,11 @@ public class TimeTrialWebSocket {
     */
    @OnOpen
    public void onOpen(@PathParam(value = "id") String param, Session WebSocketsession, EndpointConfig config) {
-       System.out.println(param);
        id = param;//接收到发送消息的人员编号
        this.WebSocketsession = WebSocketsession;
        webSocketSet.put(param, this);//加入map中
        addOnlineCount();           //在线数加1
-       System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+       log.info("Time Trial onOpen num = " + getOnlineCount() + " id = " + id);
    }
 
    /**
@@ -52,7 +53,7 @@ public class TimeTrialWebSocket {
        if (!id.equals("")) {
            webSocketSet.remove(id);  //从set中删除
            subOnlineCount();           //在线数减1
-           System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+           log.info("onclse num = " + getOnlineCount());
        }
    }
 
@@ -95,7 +96,7 @@ public class TimeTrialWebSocket {
     */
    @OnError
    public void onError(Session session, Throwable error) {
-       System.out.println("发生错误");
+       log.info("Time Trial onError");
        error.printStackTrace();
    }
    /**
