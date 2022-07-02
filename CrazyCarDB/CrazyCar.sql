@@ -379,13 +379,13 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("Android", "8.3.0", 10000, "https://www.pgyer.com/xlbk");
+				   ("Android", "8.4.0", 10000, "https://www.pgyer.com/xlbk");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("ios", "8.3.0", 10000, "https://www.pgyer.com/rRut");
+				   ("ios", "8.4.0", 10000, "https://www.pgyer.com/rRut");
 insert into forced_updating ( platform, version, rule, url)
 				   values
-				   ("PC", "8.3.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");    
+				   ("PC", "8.4.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");    
 insert into forced_updating ( platform, version, rule, url)
 				   values
 				   ("Defeat", "0.0.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");                                         
