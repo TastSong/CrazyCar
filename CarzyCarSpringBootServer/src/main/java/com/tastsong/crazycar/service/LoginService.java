@@ -12,9 +12,7 @@ import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserModel;
 
-import lombok.extern.slf4j.Slf4j;
 @Service
-@Slf4j
 public class LoginService {
     @Autowired
     private UserMapper userMapper;
