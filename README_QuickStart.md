@@ -13,7 +13,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
 
-6. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)
+6. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)、Lombok
 
 7. VS code配置Java和Maven路径，Mac 和Windows示例如下：
 
