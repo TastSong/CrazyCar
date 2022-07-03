@@ -4,23 +4,35 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 ## 运行
 
 1. 用**Unity**(2021.3.1及以上)打开**CrazyCar -> CrazyCar**项目；
-2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
-3. 搭建服务器环境 **下文提供简单参考**
-4. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库
-5. 用**Eclipse**打开**CrazyCar -> CrazyCarServer**项目，如果是首次打开，**Maven**需要自动下载依赖包(**右键项目->Maven->Update Maven**)，这个可能需要点时间，**Eclipse4.21.0**已经自带**Maven**环境所以等着就行；
-6. 更新完Maven后，**Project->Clean**，然后**Project->BuildAll**(注意关闭**Project->Automatic**)
-7. 运行**Eclipse**，如果是首次运行，系统会提示你添加**Tomcat**，添加即可；(如果你只是本地测试，不需要再启动**Nginx**)
-8. 后台运行成功后，即可运行**Unity**客户端；
 
-> 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、Eclipse添加Tomcat、Maven环境加载失败等问题，请自行百度！
+2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
+
+3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意账号和密码需要和[配置文件](./CarzyCarSpringBootServer/src/main/resources/application.properties)保持一致
+
+4. 配置Java环境(JDK17)：[官网下载JDK7](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
+
+5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
+
+6. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)
+
+7. VS code配置Java和Maven路径，Mac 和Windows示例如下：
+
+   ![](./SamplePictures/VSCODE1.png)
+
+   ![](./SamplePictures/VSCODE2.png)
+
+8. 使用VScode打开文件夹：CarzyCarSpringBootServer，F5启动项目
+
+9. 后台运行成功后，即可运行**Unity**客户端；
+
+> 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、VScode配置Java、Maven环境加载失败等问题，请自行Google！
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
 
 ## 环境版本
 
 1. Unity 2021.3.1
 2. VS 2019
-3. Eclipse 4.21.0
-4. JDK 11.0.12
+4. JDK 17
 5. MySQL 8.0.26
 6. Tomcat 8.0.52
 8. Nginx  1.20.1
@@ -40,47 +52,16 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
   ```mermaid
   graph LR
-  start-->配置Java环境-->配置Web服务器(Tomcat)-->配置Mysql-->安装Unity-->安装Eclipsep_使用VScode也可以
+  start-->配置Java环境-->配置Maven环境-->配置Web服务器(Tomcat)-->配置Mysql-->配置VScode开发环境-->安装Unity
   ```
 
   
 
-### 一、配置服务器基本属性
+* 配置服务器基本属性
 
-1. 购买云服务器 [华为云](https://www.huaweicloud.com/?locale=zh-cn)
-2. 设置云服务的安全组[入口](https://console.huaweicloud.com/lcs/?agencyId=0d551b5ba600f5841fd4c0182c6aa4b6&region=cn-south-1&locale=zh-cn#/lcs/manager/vmList/vmDetail/securitygroups?instanceId=410b1a5b-ee07-434a-8fea-c2c6e3b54a7d) ，华为云初始化会有三个安全组，其中有一个Web Server组是用来做Web开发的，它已经把80、443等网络端口开放，当然也可以自己去设定比如开放8080
+  1. 购买云服务器 [华为云](https://www.huaweicloud.com/?locale=zh-cn)
 
-### 二、配置Java环境
-
-1. 下载JDK[安装](https://www.jdkdownload.com/) ，注意不是JRE，JDK中包含JRE
-2. 配置Java的环境变量
-3. 在CMD输入JVAV进行测试配置是否成功
-
-### 三、配置Web服务器
-
-1. 下载并安装[Tomcat](https://www.jdkdownload.com/)
-2. 启动Tomcat
-3. 浏览器输入localhost:8080，进行测试安装是否成功
-4. 下载[Nginx](http://nginx.org/en/download.html)
-5. 启动Nginx
-6. 浏览器输入localhost:80，进行测试安装是否成功
-7. 配置Nginx，将80端口映射成8080
-8. 此时就可以直接通过访问IP地址，实现对8080端口的Tomcat下的Web项目
-
-### 四、安装Eclipse Java EE
-
-1. 官网已经停止此安装包，只能通过三方下载
-2. 创建Servlet Web项目进行测试，注意此时的Eclipse可能只支持Tomcat8.0，不支持8.5，两个版本差别只在于，8.0多了一个图像界面
-3. 服务器本地测试运行正常后，将项目打包成WAR包，复制到Tomcat的webapps文件夹下
-4. 重启Tomcat后，Tomcat会自动解压文件夹
-5. 此时应该可以从本地访问服务器，通过类似于http://IP/TestServlet/TestServlet的地址访问服务器
-
-### 五、安装MySQL
-
-1. 下载并安装[MySQL](https://dev.mysql.com/downloads/mysql/)
-2. 根据下载的版本，下载相关[JDBC](https://mvnrepository.com/artifact/mysql/mysql-connector-java) （账户：root ；密码：1647283556；此账户密码应该与**CrazyCar\CrazyCarServer\src\main\java\Util\Util.java** 中的一致）
-3. 将下载好的JAR包复制到Tomcat下的Lib文件夹
-4. 根据测试项目进行连接测试，[菜鸟教程](https://www.runoob.com/java/java-mysql-connect.html)
+  2. 设置云服务的安全组[入口](https://console.huaweicloud.com/lcs/?agencyId=0d551b5ba600f5841fd4c0182c6aa4b6&region=cn-south-1&locale=zh-cn#/lcs/manager/vmList/vmDetail/securitygroups?instanceId=410b1a5b-ee07-434a-8fea-c2c6e3b54a7d) ，华为云初始化会有三个安全组，其中有一个Web Server组是用来做Web开发的，它已经把80、443等网络端口开放，当然也可以自己去设定比如开放8080(Tomcat)、8081(Spring Boot后台)、50001(KCP设置端口)、3389(Mysql)
 
 ## 游戏引擎
 
