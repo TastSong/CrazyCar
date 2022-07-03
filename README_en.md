@@ -54,6 +54,8 @@
 
 :hammer:The game uses QFramework, easy to expand
 
+:computer:The background adopts Spring Boot + Mybatis architecture:
+
 :foggy:Using the URP Render Pipeline
 
 :blue_book:The resource hot update method is Addressable
@@ -68,7 +70,7 @@
 
 :car: You can buy and wear avatars and racing cars
 
-:computer: You can use this client on **Windows**、 **Android** and** IOS** devices
+ :iphone:You can use this client on **Windows**、 **Android** and** IOS** devices
 
 :earth_asia: Support for multiple languag,Multiple languages can be created in one click with **translateeditor. cs**
 

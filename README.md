@@ -53,6 +53,8 @@
 
 :hammer:游戏采用QFramework，易于扩展
 
+:computer:后台采用Spring Boot + Mybatis架构
+
 :foggy:使用URP渲染管线
 
 :blue_book:资源热更新方式为Addressable
@@ -65,9 +67,9 @@
 
 :rocket: 登录页面可以一键切换单机模式 
 
-:car: 可以进行头像和赛车的购买和穿戴
+:car: 可以进行头像和赛车的购买和穿戴 
 
-:computer: 你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
+:iphone:你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
 
 :earth_asia: 支持多语言，通过**TranslateEditor.cs**可以一键创建多国语言
 
