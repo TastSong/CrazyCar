@@ -30,9 +30,10 @@
 <b>主体功能演示</b>
 	<a><img src="./SamplePictures/Preview.gif"></a>
 <p></p>
-<b>比赛演示</b>
+<b>比赛模块演示</b>
   <a><img src="./SamplePictures/Match.gif"></a>
 </div> 
+
 
 
 [开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[设计文档](./Document)&nbsp;  | &nbsp;[English](./README_en.md)
