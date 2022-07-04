@@ -27,6 +27,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 > 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、VScode配置Java、Maven环境加载失败等问题，请自行Google！
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
+> 2. [Apifox](https://www.apifox.cn/apidoc/shared-f1aa2fc5-8e30-46a8-9218-6c1cb96da3b7)接口测试分享
 
 ## 环境版本
 
