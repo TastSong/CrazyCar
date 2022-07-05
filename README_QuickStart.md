@@ -9,7 +9,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意账号和密码需要和[配置文件](./CarzyCarSpringBootServer/src/main/resources/application.properties)保持一致
 
-4. 配置Java环境(JDK17)：[官网下载JDK7](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
+4. 配置Java环境(JDK17)：[官网下载JDK7](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg不要下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
 5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
 
