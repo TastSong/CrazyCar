@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
 
@@ -28,19 +29,20 @@ public class LoginController {
 
 	@PostMapping(value = "/Login")
 	public Object login(@RequestBody JSONObject body) throws Exception {
-		if (body != null && body.containsKey("UserName") && body.containsKey("Password")
-				&& loginService.isExistsUser(body.getStr("UserName"))) {
-			String userName = body.getStr("UserName")		;
-			String password = body.getStr("Password");
-			UserModel userModel = loginService.getUserByName(userName);
-			log.info("login : userName = " + userName + "; password  = " + password);
-			if (password.equals(userModel.user_password)){
-				return loginService.getUserInfo(userName);
-			} else{
-				return Result.failure(ResultCode.RC423);
-			}
-		} else {
-			return Result.failure(ResultCode.RC404);
+		String userName = body.getStr("UserName")		;
+		String password = body.getStr("Password");
+		UserModel userModel = loginService.getUserByName(userName);
+		log.info("login : userName = " + userName + "; password  = " + password);
+		if (password.equals(userModel.user_password)){
+			UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
+			userLoginRecordModel.user_name = userName;
+			userLoginRecordModel.login_time = (int) (System.currentTimeMillis()/1000);
+			userLoginRecordModel.device = body.getStr("device");
+			userLoginRecordModel.place = body.getStr("place");
+			loginService.recordLoginInfo(userLoginRecordModel);
+			return loginService.getUserInfo(userName);
+		} else{
+			return Result.failure(ResultCode.RC423);
 		}
 	}
 
@@ -52,22 +54,18 @@ public class LoginController {
 
 	@PostMapping (value = "/Register")
 	public Object register(@RequestBody JSONObject body) throws Exception{
-		if(body != null && body.containsKey("UserName") && body.containsKey("Password")){
-			String userName = body.getStr("UserName");
-			String password = body.getStr("Password");
-			log.info("Register : UserName = " + userName + "; password  = " + password);
-			if (loginService.isExistsUser(userName)){		
-				return Result.failure(ResultCode.RC423);
-			} else{
-				loginService.registerUser(userName, password);
-				if (loginService.isExistsUser(userName)){	
-					return loginService.getUserInfo(userName);
-				} else{
-			        return Result.failure(ResultCode.RC425);
-				}
-			}
+		String userName = body.getStr("UserName");
+		String password = body.getStr("Password");
+		log.info("Register : UserName = " + userName + "; password  = " + password);
+		if (loginService.isExistsUser(userName)){		
+			return Result.failure(ResultCode.RC423);
 		} else{
-			return Result.failure(ResultCode.RC425);
+			loginService.registerUser(userName, password);
+			if (loginService.isExistsUser(userName)){	
+				return loginService.getUserInfo(userName);
+			} else{
+				return Result.failure(ResultCode.RC425);
+			}
 		}
 	}
 }

@@ -1,5 +1,8 @@
 package com.tastsong.crazycar.mapper;
 
+import java.util.List;
+
+import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 
 public interface UserMapper {
@@ -13,4 +16,6 @@ public interface UserMapper {
     public Integer updateUserAid(Integer uid, Integer aid);
     public Integer updateUserPassword(Integer uid, String password);
     public Integer updateUserEid(Integer uid, Integer eid);
+    public Integer insertUserLoginRecord(UserLoginRecordModel userLoginRecordModel);
+    public List<UserLoginRecordModel> getLoginRecordAfterTime(Integer time);
 }

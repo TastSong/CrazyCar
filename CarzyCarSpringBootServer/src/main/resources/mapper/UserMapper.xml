@@ -7,7 +7,7 @@
         from all_user 
         where uid = #{uid};
     </select>
-    
+
     <select id="getUserByName" resultType="UserModel">
         select
         *
@@ -70,4 +70,19 @@
         set user_password = #{password}
         where uid = #{uid}
     </update>
+
+    <insert id="insertUserLoginRecord" parameterType="UserLoginRecordModel">
+        insert into user_login_record (
+          user_name, login_time, place, device
+        ) VALUES (
+         #{user_name}, #{login_time}, #{place}, #{device}
+        )
+    </insert>
+
+    <select id="getLoginRecordAfterTime" parameterType="Integer">
+        select
+        *
+        from user_login_record 
+        where login_time > #{time};
+    </select>
 </mapper>

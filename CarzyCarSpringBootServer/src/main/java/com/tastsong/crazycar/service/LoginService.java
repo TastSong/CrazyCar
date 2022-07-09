@@ -10,6 +10,7 @@ import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserInfoModel;
+import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 
 @Service
@@ -108,5 +109,9 @@ public class LoginService {
 
     public boolean isExistsUserByUid(Integer uid){
         return userMapper.isExistsUserByUid(uid);
+    }
+
+    public void recordLoginInfo(UserLoginRecordModel userLoginRecordModel){
+        userMapper.insertUserLoginRecord(userLoginRecordModel);
     }
 }

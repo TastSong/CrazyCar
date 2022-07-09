@@ -567,6 +567,8 @@ insert into user_login_record (user_name, login_time, place, device)
                        values
 					   ("Tast", 1629544628, "山东，青岛", "ios");                   
 select* from user_login_record;
+select* from user_login_record
+where login_time > 1629544627;
 
 
 
