@@ -555,6 +555,20 @@ select* from superuser;
 select exists (select uid from superuser where uid = 2);
 
 
+create table if not exists `user_login_record`(
+   `id` int unsigned auto_increment,
+   `user_name` varchar(100) not null,
+   `login_time` int not null,
+    `place` varchar(100),
+    `device` varchar(100),
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Tast", 1629544628, "山东，青岛", "ios");                   
+select* from user_login_record;
+
+
 
 
 
