@@ -36,7 +36,7 @@ public class LoginController {
 		if (password.equals(userModel.user_password)){
 			UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
 			userLoginRecordModel.user_name = userName;
-			userLoginRecordModel.login_time = (int) (System.currentTimeMillis()/1000);
+			userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
 			userLoginRecordModel.device = body.getStr("device");
 			userLoginRecordModel.place = body.getStr("place");
 			loginService.recordLoginInfo(userLoginRecordModel);

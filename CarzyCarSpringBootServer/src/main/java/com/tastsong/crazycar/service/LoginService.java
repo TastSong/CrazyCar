@@ -89,7 +89,7 @@ public class LoginService {
         userModel.star = defaultStar;
         userModel.eid = defaultEid;
         userModel.is_vip = defaultVIP;
-        userModel.login_time = (int) (System.currentTimeMillis()/1000);
+        userModel.login_time = System.currentTimeMillis()/1000;
         userMapper.insertUser(userModel);
 
 		int uid = userMapper.getUserByName(userName).uid;

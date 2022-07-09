@@ -5,7 +5,7 @@ create table if not exists `all_user`(
    `uid` int unsigned auto_increment,
    `user_name` varchar(100) not null,
    `user_password` VARCHAR(40) not null,
-   `login_time` int not null,
+   `login_time` long not null,
     `aid` INT(4)  not null,
     `star` int not null,
     `is_vip` int not null,
@@ -259,7 +259,7 @@ create table if not exists `time_trial_record`(
 	`uid` int not null,
     `cid` int not null,
     `complete_time` int not null,
-    `record_time` int not null,
+    `record_time` long not null,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
 insert into time_trial_record ( uid, cid, complete_time, record_time)
@@ -499,7 +499,7 @@ create table if not exists `match_record`(
 	`uid` int not null,
     `cid` int not null,
     `complete_time` int not null,
-    `record_time` int not null,
+    `record_time` long not null,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
 insert into match_record ( uid, cid, complete_time, record_time)
@@ -558,7 +558,7 @@ select exists (select uid from superuser where uid = 2);
 create table if not exists `user_login_record`(
    `id` int unsigned auto_increment,
    `user_name` varchar(100) not null,
-   `login_time` int not null,
+   `login_time` long not null,
     `place` varchar(100),
     `device` varchar(100),
    primary key ( `id` )

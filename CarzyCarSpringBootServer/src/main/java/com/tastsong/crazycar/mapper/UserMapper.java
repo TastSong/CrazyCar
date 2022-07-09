@@ -17,5 +17,5 @@ public interface UserMapper {
     public Integer updateUserPassword(Integer uid, String password);
     public Integer updateUserEid(Integer uid, Integer eid);
     public Integer insertUserLoginRecord(UserLoginRecordModel userLoginRecordModel);
-    public List<UserLoginRecordModel> getLoginRecordAfterTime(Integer time);
+    public List<UserLoginRecordModel> getLoginRecordAfterTime(Long time);
 }

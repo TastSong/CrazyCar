@@ -79,7 +79,7 @@
         )
     </insert>
 
-    <select id="getLoginRecordAfterTime" parameterType="Integer">
+    <select id="getLoginRecordAfterTime" parameterType="Long" resultType="UserLoginRecordModel">
         select
         *
         from user_login_record 
