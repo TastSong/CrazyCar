@@ -22,7 +22,7 @@ public class LoginUI : MonoBehaviour, IController {
         if (rememberToggle.isOn) {
             userNameInput.text = this.GetModel<IUserModel>().Name.Value;
             passwordInput.text = this.GetModel<IUserModel>().Password;
-        } 
+        }
 
         loginBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();

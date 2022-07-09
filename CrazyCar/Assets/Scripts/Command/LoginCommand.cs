@@ -16,6 +16,12 @@ public class LoginCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
+        CoroutineController.manager.StartCoroutine(Util.GetPlace((place) => {
+            Login(place);
+        }));
+    }
+
+    private void Login(string place) {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -23,6 +29,10 @@ public class LoginCommand : AbstractCommand {
         w.Write(mUserName);
         w.WritePropertyName("Password");
         w.Write(mPassword);
+        w.WritePropertyName("device");
+        w.Write(SystemInfo.deviceModel);
+        w.WritePropertyName("place");
+        w.Write(place);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());

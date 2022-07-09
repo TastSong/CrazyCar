@@ -467,5 +467,35 @@ namespace Utils {
                 canvas.GetComponent<Camera>(), out position);
             return position;
         }
+
+        public static IEnumerator GetPlace(Action<string> finishAction) {
+            using (UnityWebRequest request = new UnityWebRequest("http://ip-api.com/json/?lang=zh-CN", UnityWebRequest.kHttpVerbPOST)) {
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
+                    finishAction.Invoke("Unknown");
+                } else {
+                    byte[] results = request.downloadHandler.data;
+                    string s = Encoding.UTF8.GetString(results);
+                    JsonData d = JsonMapper.ToObject(s);
+                    string regionName;
+                    try {
+                        regionName = (string)d["regionName"];
+                    } catch {
+                        regionName = "";
+                    }
+                    string city;
+                    try {
+                        city = (string)d["city"];
+                    } catch {
+                        city = "";
+                    }
+                    finishAction.Invoke(regionName + "," + city);
+                }
+            }
+        }
     }
 }
