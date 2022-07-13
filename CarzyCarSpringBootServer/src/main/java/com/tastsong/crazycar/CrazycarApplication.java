@@ -1,8 +1,5 @@
 package com.tastsong.crazycar;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,5 +25,4 @@ public class CrazycarApplication {
 		System.out.println("                         |___/                                                     ");
         System.out.println("----------------------服务启动---------------------                                 ");
 	}
-
 }
