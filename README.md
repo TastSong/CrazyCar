@@ -40,7 +40,7 @@
 
 :clap:  欢迎使用 **Crazy Car** ！ 
 
-:sparkles:  **Crazy Car** 一个联机赛车游戏，利用Unity游戏引擎开发，使用Java后台和MySQL数据库
+:sparkles:VIP账号 ：Tast；密码：111111  
 
 :loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置
 
@@ -104,7 +104,7 @@
 
 
 ## 贡献
-我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 ’
+我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 
 
 ## 项目优化
 

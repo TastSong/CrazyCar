@@ -41,7 +41,7 @@
 
 :clap:  Welcome **Crazy Car** ！ 
 
-:sparkles: **Crazy Car** An online racing game, using Unity game engine development, using Java background and MySQL database 
+:sparkles:VIP Username ：Tast；Password：111111  
 
 :loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly
 
