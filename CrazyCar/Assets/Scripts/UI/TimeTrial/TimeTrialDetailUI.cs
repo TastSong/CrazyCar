@@ -13,7 +13,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.timeTrialDetailUrl);
+            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
             JsonData data = JsonMapper.ToObject(ta.text);
             this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data, UpdateUI);
         } else {

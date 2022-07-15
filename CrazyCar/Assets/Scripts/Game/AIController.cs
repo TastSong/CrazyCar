@@ -38,8 +38,7 @@ public class AIController : MonoBehaviour, IController {
         playerFinishTimeTrial = false;
     }
 
-    private void Start()
-    {
+    private void Start() {
         this.RegisterEvent<MakeAIPlayerEvent>(OnMakeAIPlayer).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }

@@ -38,6 +38,9 @@ namespace Utils {
         public static string baseFlagPath = "Language/Flag/";
 
         public static string baseStandAlone = "StandAlone/";
+        public static string standAloneLogin = "Login";
+        public static string standAloneTimeTrialDetail = "TimeTrialDetail";
+        public static string standAloneAI = "AI";
 
         public static string GetServerBaseUrl(ServerType serverType) {
             switch (serverType) {

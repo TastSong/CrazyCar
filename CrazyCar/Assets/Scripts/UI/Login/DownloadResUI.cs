@@ -17,6 +17,7 @@ public class DownloadResUI : MonoBehaviour, IController {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             this.SendCommand<EnableStandAloneCommand>();
         });
+        //this.SendCommand<EnableStandAloneCommand>();
 
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);

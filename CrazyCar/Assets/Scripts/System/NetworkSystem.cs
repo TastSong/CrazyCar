@@ -182,6 +182,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void EnterRoom(GameType gameType, int cid, Action succ = null) {
+        if (this.GetModel<IGameModel>().StandAlone.Value) {
+            this.GetModel<IRoomMsgModel>().Num = 0;
+            succ?.Invoke();
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -219,6 +224,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void GetUserInfo(int uid, Action<UserInfo> succ) {
+        if (this.GetModel<IGameModel>().StandAlone.Value) {
+            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
+            JsonData data = JsonMapper.ToObject(ta.text);
+            succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
