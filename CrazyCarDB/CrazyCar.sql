@@ -154,7 +154,7 @@ select aid from avatar_uid where uid = 1;
 
 /*time trail class*/
 create table if not exists `time_trial_class`(
-   `cid` int not null,
+   `cid` int unsigned auto_increment,
    `star` int not null,  /*同Star*/
    `map_id` int not null,
    `has_water` int not null,
@@ -165,22 +165,22 @@ create table if not exists `time_trial_class`(
    )engine = innodb default charset = utf8;
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 0, 88, "基地卡通", 2);
+				   (1, 2, 0, 0, 88, "基地卡通", 2);
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 14, 1, 1, 96, "水上乐园", 2);
+				   (2, 14, 1, 1, 96, "水上乐园", 2);
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (2, 3, 2, 0, 80, "曲折前行", 2);
+				   (3, 3, 2, 0, 80, "曲折前行", 2);
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (3, 22, 3, 0, 100, "蜿蜒驰骋", 2);
+				   (4, 22, 3, 0, 100, "蜿蜒驰骋", 2);
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (4, 4, 4, 0, 90, "砥砺前行", 2);        
+				   (5, 4, 4, 0, 90, "砥砺前行", 2);        
 insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (5, 1, 5, 0, 90, "几何风光", 2);                     
+				   (6, 1, 5, 0, 90, "几何风光", 2);                     
 select* from time_trial_class;
 select cid from time_trial_class;
 
@@ -225,29 +225,29 @@ create table if not exists `time_trial_user_map`(
    )engine = innodb default charset = utf8;
 insert into time_trial_user_map ( cid, uid )
 				   values
-				   (0, 1);
-insert into time_trial_user_map ( cid, uid )
-				   values
 				   (1, 1);
 insert into time_trial_user_map ( cid, uid )
 				   values
 				   (2, 1);
+insert into time_trial_user_map ( cid, uid )
+				   values
+				   (3, 1);
  insert into time_trial_user_map ( cid, uid )
 				   values
-				   (0, 2);
+				   (1, 2);
 insert into time_trial_user_map ( cid, uid )
 				   values
-				   (0, 3);
+				   (1, 3);
 insert into time_trial_user_map ( cid, uid )
 				   values
-				   (0, 5);                   
+				   (1, 5);                   
 insert into time_trial_user_map ( cid, uid )
 				   values
-				   (0, 4);
+				   (1, 4);
                    
 select cid from
 	time_trial_user_map 
-	where cid = 0 and uid = 1;
+	where cid = 1 and uid = 1;
 select cid from time_trial_user_map 
 	where uid = 1;
 select * from time_trial_user_map;
@@ -264,28 +264,28 @@ create table if not exists `time_trial_record`(
    )engine = innodb default charset = utf8;
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (1, 0, 22, 1629544628);
+				   (1, 1, 22, 1629544628);
+insert into time_trial_record ( uid, cid, complete_time, record_time)
+				   values
+				   (1, 1, 14, 1629544644);
+insert into time_trial_record ( uid, cid, complete_time, record_time)
+				   values
+				   (1, 1, -1, 1629544628);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
 				   (1, 0, 14, 1629544644);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (1, 0, -1, 1629544628);
+				   (2, 1, 15, 1629544644);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (1, 0, 14, 1629544644);
+				   (2, 1, 14, 1629544644);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (2, 0, 15, 1629544644);
+				   (3, 1, 10, 1629544644);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (2, 0, 14, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (3, 0, 10, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (4, 0, 16, 1629544644);
+				   (4, 1, 16, 1629544644);
 select * from time_trial_record where uid = 1 ;			
 
 /*查询自己的成绩排名*/
@@ -296,7 +296,7 @@ from
 		select uid, complete_time
 		from time_trial_record
 
-		where uid = 1 and cid = 0
+		where uid = 1 and cid = 1
 		order by complete_time asc
 	) AS ta,
 	(select @rownum:= 0) r;
@@ -311,7 +311,7 @@ from
 		(
 			select uid, complete_time
 			from time_trial_record
-				where uid = 1 and cid = 0
+				where uid = 1 and cid = 1
 				order by complete_time asc
 		) as record,
 		(select @rownum:= 0) r
@@ -327,7 +327,7 @@ from
 		(select uid, min(complete_time) as complete_time
 		from
 			 time_trial_record
-			 where cid = 0 and complete_time != -1 
+			 where cid = 1 and complete_time != -1 
 			 group by uid) as min_time
 		order by complete_time asc
 	) as user_rank,
@@ -358,7 +358,7 @@ select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
 						(select uid, min(complete_time) as complete_time
 						from
 							 time_trial_record
-							 where cid = 0 and complete_time != -1 
+							 where cid = 1 and complete_time != -1 
 							 group by uid) as min_time
 						order by complete_time asc
 					) as user_rank,

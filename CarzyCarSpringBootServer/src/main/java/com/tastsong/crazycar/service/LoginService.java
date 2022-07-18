@@ -77,7 +77,7 @@ public class LoginService {
 
     public void registerUser (String userName, String password){
         int defaultAid = 1;
-		int defaultCid = 0;
+		int defaultCid = 1;
 		int defaultStar = 14;
 		boolean defaultVIP = false;
 		int defaultEid = 1;
