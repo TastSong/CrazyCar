@@ -14,16 +14,16 @@ create table if not exists `all_user`(
    )engine = innodb default charset = utf8;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "111111", 1629544628, 0, 99, 1, 0);
+					   (1, "Tast", "111111", 1629544628, 0, 99, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "song", "111111", 1629544634, 1, 88, 1, 1);
+					   (2, "song", "111111", 1629544634, 1, 88, 1, 2);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (3, "阿宋小娇妻", "111111", 1629544655, 2, 66, 1, 5);        
+					   (3, "阿宋小娇妻", "111111", 1629544655, 2, 66, 1, 3);        
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (4, "Lory", "111111", 1629544666, 3, 12, 0, 0);                       
+					   (4, "Lory", "111111", 1629544666, 3, 12, 0, 1);                       
 select* from all_user;
 
 select user_password 
@@ -393,8 +393,7 @@ select * from forced_updating;
 
 /*all_equip*/
 create table if not exists `all_equip`(
-   `id` int unsigned auto_increment,
-   `eid` int not null,
+   `eid` int unsigned auto_increment,
    `rid` VARCHAR(100) not null,
    `equip_name` VARCHAR(100) not null,
    `star` int not null,
@@ -403,32 +402,32 @@ create table if not exists `all_equip`(
    `max_power` int not null,
    `can_wade` int not null,
    `is_show` int not null,
-   primary key ( `id` )
+   primary key ( `eid` )
    )engine = innodb default charset = utf8;
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (0, "R_Car_F1_Blue", "F1 Blue", 3, 20, 70, 96, 0, 1);
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_F1_Blue", "F1 Blue", 3, 20, 70, 96, 0, 1);
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (1, "R_Car_MonsterTruck_Red", "Monster Red", 2, 20, 78, 86, 0, 1);
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_MonsterTruck_Red", "Monster Red", 2, 20, 78, 86, 0, 1);
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (2, "R_Car_OffRoadTruck_Orange", "RoadTruck Orange", 12, 21, 98, 93, 1, 1);                
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_OffRoadTruck_Orange", "RoadTruck Orange", 12, 21, 98, 93, 1, 1);                
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (3, "R_Car_SprintCar_White", "SprintCar White", 10, 20, 96, 92, 1, 1);                 
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_SprintCar_White", "SprintCar White", 10, 20, 96, 92, 1, 1);                 
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (4, "R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0, 0);
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0, 0);
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (5, "R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1, 1);   
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1, 1);   
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (6, "R_Car_OffRoadTruck_Orange_2", "RoadTruck Orange2", 4, 21, 80, 93, 0, 1);   
-insert into all_equip ( eid, rid, equip_name, star, mass, power, max_power, can_wade, is_show )
+				   ("R_Car_OffRoadTruck_Orange_2", "RoadTruck Orange2", 4, 21, 80, 93, 0, 1);   
+insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   (7, "R_Car_SprintCar_White_2", "SprintCar White2", 5, 20, 82, 92, 0, 1);                     
+				   ("R_Car_SprintCar_White_2", "SprintCar White2", 5, 20, 82, 92, 0, 1);                     
 select* from all_equip;
 
 /*equip_uid*/
@@ -440,34 +439,34 @@ create table if not exists `equip_uid`(
    )engine = innodb default charset = utf8;
 insert into equip_uid ( eid, uid )
 				   values
-				   (0, 1);
+				   (1, 1);
 insert into equip_uid ( eid, uid )
 				   values
-				   (1, 1);                   
+				   (2, 1);                   
 insert into equip_uid ( eid, uid )
 				   values
-				   (2, 1);
+				   (3, 1);
 insert into equip_uid ( eid, uid )
 				   values
-				   (0, 2);                   
+				   (1, 2);                   
 insert into equip_uid ( eid, uid )
 				   values
-				   (1, 2);
+				   (2, 2);
 insert into equip_uid ( eid, uid )
 				   values
-				   (0, 3);   
+				   (1, 3);   
 insert into equip_uid ( eid, uid )
 				   values
-				   (1, 3);    
+				   (3, 3);    
 insert into equip_uid ( eid, uid )
 				   values
 				   (5, 3);                    
 insert into equip_uid ( eid, uid )
 				   values
-				   (0, 4);   
+				   (1, 4);   
 insert into equip_uid ( eid, uid )
 				   values
-				   (1, 4);                      
+				   (2, 4);                      
 select eid from equip_uid where uid = 1;
 
 /*match class*/
