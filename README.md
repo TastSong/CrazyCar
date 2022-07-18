@@ -40,9 +40,9 @@
 
 :clap:  欢迎使用 **Crazy Car** ！ 
 
-:sparkles:VIP账号 ：Tast；密码：111111  
+:sparkles:VIP账号 ：Tast；密码：111111 
 
-:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置
+:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置；mater分支不是发布分支，建议使用最新[releases](https://github.com/TastSong/CrazyCar/releases/latest)版本进行本地测试
 
 ## 特性 :point_down:
 :pushpin:支持版本强制更新
