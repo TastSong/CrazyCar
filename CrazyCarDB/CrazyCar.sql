@@ -163,30 +163,30 @@ create table if not exists `time_trial_class`(
    `times` int not null,
    primary key ( `cid` )
    )engine = innodb default charset = utf8;
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 2, 0, 0, 88, "基地卡通", 2);
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (2, 0, 0, 88, "基地卡通", 2);
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (2, 14, 1, 1, 96, "水上乐园", 2);
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (14, 1, 1, 96, "水上乐园", 2);
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (3, 3, 2, 0, 80, "曲折前行", 2);
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (3, 2, 0, 80, "曲折前行", 2);
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (4, 22, 3, 0, 100, "蜿蜒驰骋", 2);
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (22, 3, 0, 100, "蜿蜒驰骋", 2);
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (5, 4, 4, 0, 90, "砥砺前行", 2);        
-insert into time_trial_class ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (4, 4, 0, 90, "砥砺前行", 2);        
+insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (6, 1, 5, 0, 90, "几何风光", 2);                     
+				   (1, 5, 0, 90, "几何风光", 2);                     
 select* from time_trial_class;
 select cid from time_trial_class;
 
 /*match map*/
 create table if not exists `match_map`(
-   `cid` int not null,
+   `cid` int unsigned auto_increment,
    `star` int not null,  /*同Star*/
    `map_id` int not null,
    `has_water` int not null,
@@ -195,24 +195,24 @@ create table if not exists `match_map`(
    `times` int not null,
    primary key ( `cid` )
    )engine = innodb default charset = utf8;
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (0, 2, 0, 0, 88, "基地卡通", 1);
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (2, 0, 0, 88, "基地卡通", 1);
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 14, 1, 1, 96, "水上乐园", 1);
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (14, 1, 1, 96, "水上乐园", 1);
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (2, 3, 2, 0, 80, "曲折前行", 2);
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (3, 2, 0, 80, "曲折前行", 2);
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (3, 22, 3, 0, 100, "蜿蜒驰骋", 2);
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (22, 3, 0, 100, "蜿蜒驰骋", 2);
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (4, 4, 4, 0, 90, "砥砺前行", 2);        
-insert into match_map ( cid, star, map_id, has_water, limit_time, class_name, times )
+				   (4, 4, 0, 90, "砥砺前行", 2);        
+insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (5, 1, 5, 0, 90, "几何风光", 2);                     
+				   (1, 5, 0, 90, "几何风光", 2);                     
 select* from match_map;
 select cid from match_map;
 
