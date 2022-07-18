@@ -125,7 +125,17 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     public void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoaded) {
-        Addressables.LoadAssetAsync<Sprite>("Assets/AB/Avatar/" + aid + ".png").Completed += OnLoaded;
+        if (!this.GetModel<IAvatarModel>().AvatarDic.ContainsKey(aid)) {
+           CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
+                token: this.GetModel<IGameModel>().Token.Value,
+                succData: (data) => {
+                    this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, () => {
+                        Addressables.LoadAssetAsync<Sprite>("Assets/AB/Avatar/" + this.GetModel<IAvatarModel>().AvatarDic[aid].rid + ".png").Completed += OnLoaded;
+                    });
+                }));
+        } else {
+            Addressables.LoadAssetAsync<Sprite>("Assets/AB/Avatar/" + this.GetModel<IAvatarModel>().AvatarDic[aid].rid + ".png").Completed += OnLoaded;
+        }
     }
 
     public void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded) {

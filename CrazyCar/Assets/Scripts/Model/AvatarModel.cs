@@ -7,6 +7,7 @@ using System;
 
 public class AvatarInfo {
     public int aid;
+    public string rid;
     public string name;
     public bool isHas;
     public int star;

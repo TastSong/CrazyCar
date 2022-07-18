@@ -14,16 +14,16 @@ create table if not exists `all_user`(
    )engine = innodb default charset = utf8;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "111111", 1629544628, 0, 99, 1, 1);
+					   (1, "Tast", "111111", 1629544628, 1, 99, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "song", "111111", 1629544634, 1, 88, 1, 2);
+					   (2, "song", "111111", 1629544634, 2, 88, 1, 2);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (3, "阿宋小娇妻", "111111", 1629544655, 2, 66, 1, 3);        
+					   (3, "阿宋小娇妻", "111111", 1629544655, 3, 66, 1, 3);        
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (4, "Lory", "111111", 1629544666, 3, 12, 0, 1);                       
+					   (4, "Lory", "111111", 1629544666, 4, 12, 0, 1);                       
 select* from all_user;
 
 select user_password 
@@ -37,69 +37,69 @@ alter table all_user drop column aid;
 
 /*avatar_name*/
 create table if not exists `avatar_name`(
-   `id` int unsigned auto_increment,
-   `aid` int not null,
+   `aid` int unsigned auto_increment,
+   `rid` VARCHAR(100) not null,
    `avatar_name` VARCHAR(40) not null,
    `star` int not null,
-   primary key ( `id` )
+   primary key ( `aid` )
    )engine = innodb default charset = utf8;
-insert into avatar_name ( aid, avatar_name, star )
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (0, "Tast 0", 3);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("0", "Tast 0", 3);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (1, "Black 1", 2);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("1", "Black 1", 2);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (2, "Write 2", 4);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("2", "Write 2", 4);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (3, "Write 3", 5);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("3", "Write 3", 5);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (4, "Write 4", 6);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("4", "Write 4", 6);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (5, "Write 5", 4);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("5", "Write 5", 4);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (6, "Avatar6", 2);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("6", "Avatar6", 2);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (7, "Avatar7", 100);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("7", "Avatar7", 100);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (8, "Avatar8", 1);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("8", "Avatar8", 1);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (9, "Avatar9", 3);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("9", "Avatar9", 3);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (11, "Avatar11", 3);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("11", "Avatar11", 3);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (12, "Avatar12", 5);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("12", "Avatar12", 5);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (13, "Avatar13", 6);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("13", "Avatar13", 6);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (14, "Avatar14", 5);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("14", "Avatar14", 5);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (15, "Avatar15", 2);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("15", "Avatar15", 2);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (16, "Avatar160", 3);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("16", "Avatar160", 3);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (17, "Avatar17", 5);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("17", "Avatar17", 5);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (18, "Avatar18", 2);
-insert into avatar_name ( aid, avatar_name, star )
+				   ("18", "Avatar18", 2);
+insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   (19, "Avatar19", 4);
+				   ("19", "Avatar19", 4);
 select* from avatar_name;
 
 select* from all_user;
@@ -116,19 +116,16 @@ create table if not exists `avatar_uid`(
    )engine = innodb default charset = utf8;
 insert into avatar_uid ( aid, uid )
 				   values
-				   (0, 1);
+				   (1, 1);
 insert into avatar_uid ( aid, uid )
 				   values
 				   (2, 1);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (4, 1);
+				   (5, 1);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (8, 1);
-insert into avatar_uid ( aid, uid )
-				   values
-				   (16, 1);
+				   (9, 1);
 insert into avatar_uid ( aid, uid )
 				   values
 				   (17, 1);
@@ -137,19 +134,22 @@ insert into avatar_uid ( aid, uid )
 				   (18, 1);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (19, 1);
+				   (15, 1);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (1, 2);
+				   (16, 1);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (2, 3);
+				   (2, 2);
 insert into avatar_uid ( aid, uid )
 				   values
-				   (3, 4);                   
+				   (3, 3);
+insert into avatar_uid ( aid, uid )
+				   values
+				   (4, 4);                   
 select aid from
  avatar_uid 
- where aid = 0 and uid = 1;
+ where aid = 1 and uid = 1;
 select aid from avatar_uid where uid = 1;
 
 /*time trail class*/
