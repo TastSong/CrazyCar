@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getTestComplexTableData(query) {
   return request({
-    url: '/vue-element-admin/table/test-complex/list',
+    url: '/CrazyCarSpringBootServer/v2/Background/table/test-complex/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function getTestComplexTableData(query) {
 
 export function createTestComplexTable(data) {
   return request({
-    url: '/vue-element-admin/table/test-complex/create',
+    url: '/CrazyCarSpringBootServer/v2/Background/table/test-complex/create',
     method: 'post',
     data
   })
@@ -18,7 +18,7 @@ export function createTestComplexTable(data) {
 
 export function updateTestComplexTable(data) {
   return request({
-    url: '/vue-element-admin/table/test-complex/update',
+    url: '/CrazyCarSpringBootServer/v2/Background/table/test-complex/update',
     method: 'post',
     data
   })

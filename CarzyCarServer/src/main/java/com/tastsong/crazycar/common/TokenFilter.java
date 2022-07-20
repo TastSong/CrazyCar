@@ -2,6 +2,7 @@ package com.tastsong.crazycar.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,7 +41,16 @@ public class TokenFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("TokenFilter, URL：{}", request.getRequestURI());      
         try {
+            log.info("00000000000{}", request.getRequestURI());
             String token = request.getHeader(Util.TOKEN);
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while(headerNames.hasMoreElements()) {//判断是否还有下一个元素
+                String nextElement = headerNames.nextElement();//获取headerNames集合中的请求头
+                String header2 = request.getHeader(nextElement);//通过请求头得到请求内容
+                log.info("请求头=========={}" + nextElement + ":" + header2);
+                //System.out.println(nextElement+":"+header2);
+            }
+            log.info("++++++++{}accept", request.getHeader("accept"));
             Integer uid = Util.getUidByToken(token);
             if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
                 filterChain.doFilter(servletRequest, servletResponse);
