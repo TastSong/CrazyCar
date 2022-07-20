@@ -154,7 +154,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        path: 'https://github.com/TastSong/CrazyCar',
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
