@@ -54,7 +54,9 @@
 
 :hammer:The game uses QFramework, easy to expand
 
-:computer:The background adopts Spring Boot + Mybatis architecture:
+:computer:The server uses Spring Boot + Mybatis architecture
+
+:tv:The background uses Vue + Element
 
 :foggy:Using the URP Render Pipeline
 
@@ -142,6 +144,10 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 10. [LearnUnityShader: 记录学习Unity Shader过程中实现过的一些Demo)](https://github.com/csdjk/LearnUnityShader)
 18. [Simple Water Shader URP](https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-urp-191449)
 18. [Metaverse Full-Body Online 3D Avatar Creator | Ready Player Me](https://readyplayer.me/)
+18. [spring-boot: Spring Boot](https://github.com/spring-projects/spring-boot)
+21. [Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.](https://github.com/vuejs/vue)
+22. [element: A Vue.js 2.0 UI Toolkit for Web](https://github.com/ElemeFE/element)
+23. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
 
 
 ## License

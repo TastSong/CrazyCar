@@ -35,7 +35,6 @@
 </div> 
 
 
-
 [开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[设计文档](./Document)&nbsp;  | &nbsp;[English](./README_en.md)
 
 :clap:  欢迎使用 **Crazy Car** ！ 
@@ -53,7 +52,9 @@
 
 :hammer:游戏采用QFramework，易于扩展
 
-:computer:后台采用Spring Boot + Mybatis架构
+:computer:服务端采用Spring Boot + Mybatis架构
+
+:tv:后台采用Vue + element
 
 :foggy:使用URP渲染管线
 
@@ -141,6 +142,10 @@
 10. [LearnUnityShader: 记录学习Unity Shader过程中实现过的一些Demo)](https://github.com/csdjk/LearnUnityShader)
 10. [Simple Water Shader URP](https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-urp-191449)
 10. [Metaverse Full-Body Online 3D Avatar Creator | Ready Player Me](https://readyplayer.me/)
+10. [spring-boot: Spring Boot](https://github.com/spring-projects/spring-boot)
+10. [Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.](https://github.com/vuejs/vue)
+10. [element: A Vue.js 2.0 UI Toolkit for Web](https://github.com/ElemeFE/element)
+10. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
 
 
 ## 证书
