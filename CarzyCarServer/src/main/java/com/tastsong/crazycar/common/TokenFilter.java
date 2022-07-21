@@ -41,7 +41,7 @@ public class TokenFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("TokenFilter, URL：{}", request.getRequestURI());      
         try {
-            // ------解决跨域问题------
+            // ------解决跨域问题 正式发布时需要注释一下代码------
             Enumeration<String> headerNames = request.getHeaderNames();
             while(headerNames.hasMoreElements()) {
                 String nextElement = headerNames.nextElement();
