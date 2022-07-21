@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '400px'
     }
   },
   data() {
@@ -59,7 +59,7 @@ export default {
             name: 'WEEKLY WRITE ARTICLES',
             type: 'pie',
             roseType: 'radius',
-            radius: [15, 95],
+            radius: [15, 140],
             center: ['50%', '38%'],
             data: [
               { value: 10, name: 'Industries' },
