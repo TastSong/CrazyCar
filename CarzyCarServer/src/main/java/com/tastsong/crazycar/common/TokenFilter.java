@@ -41,16 +41,22 @@ public class TokenFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("TokenFilter, URL：{}", request.getRequestURI());      
         try {
-            log.info("00000000000{}", request.getRequestURI());
-            String token = request.getHeader(Util.TOKEN);
+            // ------解决跨域问题------
             Enumeration<String> headerNames = request.getHeaderNames();
-            while(headerNames.hasMoreElements()) {//判断是否还有下一个元素
-                String nextElement = headerNames.nextElement();//获取headerNames集合中的请求头
-                String header2 = request.getHeader(nextElement);//通过请求头得到请求内容
-                log.info("请求头=========={}" + nextElement + ":" + header2);
-                //System.out.println(nextElement+":"+header2);
+            while(headerNames.hasMoreElements()) {
+                String nextElement = headerNames.nextElement();
+                String headerContent = request.getHeader(nextElement);
+                log.info(nextElement + ":" + headerContent);
+                if(headerContent.startsWith("localhost")){
+                    log.info("skip filter : ", request.getRequestURI());
+                    filterChain.doFilter(servletRequest, servletResponse);
+                    return;
+                }
             }
-            log.info("++++++++{}accept", request.getHeader("accept"));
+            // -------------
+
+            String token = request.getHeader(Util.TOKEN);
+
             Integer uid = Util.getUidByToken(token);
             if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
                 filterChain.doFilter(servletRequest, servletResponse);
