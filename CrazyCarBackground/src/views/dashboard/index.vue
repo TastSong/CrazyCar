@@ -1,8 +1,5 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleUpdate">
-      Update
-    </el-button>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
@@ -32,12 +29,14 @@
 import LineChart from './components/LineChart'
 import { getLineData } from '@/api/chart'
 import PieChart from './components/PieChart'
+import PanelGroup from './components/PanelGroup'
 
 export default {
   name: 'DashboardAdmin',
   components: {
     LineChart,
-    PieChart
+    PieChart,
+    PanelGroup
   },
   data() {
     return {
