@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <panel-group :panel-info-data="panelInfoData" @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group :panel-info-data="panelInfoData" @handleSetLineChartData="handleGetDashboardData" />
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row>
@@ -27,7 +27,7 @@
 
 <script>
 import LineChart from './components/LineChart'
-import { getLineData } from '@/api/chart'
+import { getDashboardData } from '@/api/dashboard'
 import PieChart from './components/PieChart'
 import PanelGroup from './components/PanelGroup'
 
@@ -40,32 +40,41 @@ export default {
   },
   data() {
     return {
-      lineChartData: { data: [1, 2, 3, 4, 5, 6, 7], actualData: [240, 10, 91, 154, 162, 140, 145] },
-      panelInfoData: [24, 48, 96, 125]
+      lineChartData: { name: 'login user num', data: [1, 2, 3, 4, 5, 6, 7], actualData: [0, 0, 0, 0, 0, 0, 0] },
+      panelInfoData: [0, 0, 0, 0]
     }
   },
   created() {
+    this.handleGetDashboardData()
   },
   methods: {
-    handleSetLineChartData() {
+    handleGetDashboardData() {
       this.loading = true
-      this.panelInfoData = [1, 2, 3, 3]
-      getLineData().then(response => {
-        console.log('++++++ get line data : ' + JSON.stringify(response.data.items))
+      getDashboardData().then(response => {
+        // --------panel data
+        var panelInfoData = []
+        panelInfoData.push(response.user_num)
+        panelInfoData.push(response.equip_num)
+        panelInfoData.push(response.avatar_num)
+        panelInfoData.push(response.map_num)
+        this.panelInfoData = panelInfoData
+        // ---------login user num
+        var login_user_num = response.login_user_num
         var date = []
         var actualData = []
         var x
-        for (x in response.data.items) {
-          var time = new Date(response.data.items[x].timestamp)
-          console.log(time)
+        for (x in login_user_num) {
+          var time = new Date(login_user_num[x].timestamp)
           date.push(time.getMonth() + '.' + time.getDay())
-          actualData.push(response.data.items[x].data)
+          actualData.push(login_user_num[x].data)
         }
-        this.lineChartData = { date: date, actualData: actualData }
+        console.log('==+++++' + date)
+        this.lineChartData = { name: '用户登录数', date: date, actualData: actualData }
+        // ------------t----------
       })
     },
     handleUpdate() {
-      this.handleSetLineChartData()
+      this.getDashboardData()
     }
   }
 }

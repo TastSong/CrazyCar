@@ -14,8 +14,6 @@ import cn.hutool.json.JSONObject;
 public class BackgroundDashboardController {
     @GetMapping(value = "getDashboardData")
     public Object getDashboardData() throws Exception {
-        JSONObject result  = new JSONObject();
-        result.putOpt("code", 200);
         JSONObject data = new JSONObject();
         data.putOpt("user_num", 5);
         data.putOpt("equip_num", 9);
@@ -25,33 +23,32 @@ public class BackgroundDashboardController {
         data.putOpt("match_times", 44);
         int size = 7;
         data.putOpt("tatal", size);
-        JSONArray items = new JSONArray();
+        JSONArray loginItems = new JSONArray();
         for (int i = 0; i < size; i++){
             JSONObject item = new JSONObject();
             item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
             item.putOpt("data", (i + 1) * 14);
-            items.add(item);
+            loginItems.add(item);
         }
-        data.putOpt("login_user_num", items);
+        data.putOpt("login_user_num", loginItems);
 
-        items.clear();
+        JSONArray timeTrialItems = new JSONArray();
         for (int i = 0; i < size; i++){
             JSONObject item = new JSONObject();
             item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
             item.putOpt("data", (i + 1) * 6);
-            items.add(item);
+            timeTrialItems.add(item);
         }
-        data.putOpt("time_trial_num", items);
+        data.putOpt("time_trial_num", timeTrialItems);
 
-        items.clear();
+        JSONArray matchItems = new JSONArray();
         for (int i = 0; i < size; i++){
             JSONObject item = new JSONObject();
             item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
             item.putOpt("data", (i + 1) * 8);
-            items.add(item);
+            matchItems.add(item);
         }
-        data.putOpt("match_num", items);
-        result.putOpt("data", data);
-        return result;
+        data.putOpt("match_num", matchItems);
+        return data;
     }
 }
