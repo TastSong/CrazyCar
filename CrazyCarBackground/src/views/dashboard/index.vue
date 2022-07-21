@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group :panel-info-data="panelInfoData" @handleSetLineChartData="handleSetLineChartData" />
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row>
@@ -40,7 +40,8 @@ export default {
   },
   data() {
     return {
-      lineChartData: { data: [1, 2, 3, 4, 5, 6, 7], actualData: [240, 10, 91, 154, 162, 140, 145] }
+      lineChartData: { data: [1, 2, 3, 4, 5, 6, 7], actualData: [240, 10, 91, 154, 162, 140, 145] },
+      panelInfoData: [24, 48, 96, 125]
     }
   },
   created() {
@@ -48,6 +49,7 @@ export default {
   methods: {
     handleSetLineChartData() {
       this.loading = true
+      this.panelInfoData = [1, 2, 3, 3]
       getLineData().then(response => {
         console.log('++++++ get line data : ' + JSON.stringify(response.data.items))
         var date = []
