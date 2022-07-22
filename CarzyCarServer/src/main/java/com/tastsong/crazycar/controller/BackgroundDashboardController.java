@@ -24,11 +24,12 @@ public class BackgroundDashboardController {
         data.putOpt("equip_num", dashboardService.getEquipNum());
         data.putOpt("avatar_num", dashboardService.getAvatarNum());
         data.putOpt("map_num", dashboardService.getMapNum());
-        data.putOpt("time_trial_times", 99);
-        data.putOpt("match_times", 44);
-        data.putOpt("login_user_num", dashboardService.getUserLoginData(7));
-        data.putOpt("time_trial_num", dashboardService.getTimeTrialData(7));
-        data.putOpt("match_num", dashboardService.getMatchData(7));
+        Integer offsetTime = 7;
+        data.putOpt("time_trial_times", dashboardService.getTimeTrialTimes(offsetTime));
+        data.putOpt("match_times", dashboardService.getMatchTimes(offsetTime));
+        data.putOpt("login_user_num", dashboardService.getUserLoginData(offsetTime));
+        data.putOpt("time_trial_num", dashboardService.getTimeTrialData(offsetTime));
+        data.putOpt("match_num", dashboardService.getMatchData(offsetTime));
         return data;
     }
 }
