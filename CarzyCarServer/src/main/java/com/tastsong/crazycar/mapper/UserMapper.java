@@ -6,6 +6,7 @@ import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 
 public interface UserMapper {
+    public Integer getAllUserNum();
     public UserModel getUserByUid(Integer uid);
     public UserModel getUserByName(String userName);
     public boolean isSuperuser(Integer uid);
