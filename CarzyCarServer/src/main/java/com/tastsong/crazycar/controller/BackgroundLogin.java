@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 
 import cn.hutool.json.JSONObject;
 
@@ -16,14 +18,14 @@ import cn.hutool.json.JSONObject;
 
 public class BackgroundLogin {
     @PostMapping(value = "/login")
-    public JSONObject login(@RequestBody JSONObject body){
-        System.out.println("++++++login name = " + body.getStr("username"));
-        JSONObject result = new JSONObject();
-        result.putOpt("code", 200);
-        JSONObject data = new JSONObject();
-        data.putOpt("token", Util.createToken(1));
-        result.putOpt("data", data);
-        System.out.println("+++++login " + result.toString());
-        return result;
+    public Object login(@RequestBody JSONObject body){
+        if(body.getStr("username").equals("Admin") && body.getStr("password").equals("123456")){
+            JSONObject data = new JSONObject();
+            data.putOpt("token", Util.createToken(1));
+            return data; 
+        } else{
+            return Result.failure(ResultCode.RC404);
+        }
+        
     }
 }
