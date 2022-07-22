@@ -62,6 +62,7 @@ export default {
       this.setOptions(this.chartData)
     },
     setOptions(val) {
+      this.chart.clear()
       this.chart.setOption({
         title: {
           text: val.name,

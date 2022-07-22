@@ -18,7 +18,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart :chart-data="timeTrialMatchData" />
         </div>
       </el-col>
     </el-row>
@@ -40,10 +40,11 @@ export default {
   },
   data() {
     return {
-      loginUserChartData: null,
-      timeTrialChartData: null,
-      matchChartData: null,
-      panelInfoData: [0, 0, 0, 0]
+      loginUserChartData: { name: '', data: [0], actualData: [0] },
+      timeTrialChartData: { name: '', data: [0], actualData: [0] },
+      matchChartData: { name: '', data: [0], actualData: [0] },
+      panelInfoData: [0, 0, 0, 0],
+      timeTrialMatchData: [0, 0]
     }
   },
   created() {
@@ -94,6 +95,10 @@ export default {
         }
         this.matchChartData = { name: '计时赛使用次数', date: time_trial_date, actualData: time_trial_actualData }
         // ----------------------
+        var timeTrialMatchData = []
+        timeTrialMatchData.push(response.time_trial_times)
+        timeTrialMatchData.push(response.match_times)
+        this.timeTrialMatchData = timeTrialMatchData
       })
     },
     handleUpdate() {

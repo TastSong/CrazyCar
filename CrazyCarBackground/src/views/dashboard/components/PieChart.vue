@@ -21,11 +21,23 @@ export default {
     height: {
       type: String,
       default: '400px'
+    },
+    chartData: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       chart: null
+    }
+  },
+  watch: {
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(val)
+      }
     }
   },
   mounted() {
@@ -43,7 +55,9 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
+      this.setOptions(this.chartData)
+    },
+    setOptions(val) {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
@@ -52,7 +66,7 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: ['Time Trial', 'Match']
         },
         series: [
           {
@@ -62,11 +76,8 @@ export default {
             radius: [15, 140],
             center: ['50%', '38%'],
             data: [
-              { value: 10, name: 'Industries' },
-              { value: 20, name: 'Technology' },
-              { value: 30, name: 'Forex' },
-              { value: 20, name: 'Gold' },
-              { value: 20, name: 'Forecasts' }
+              { value: val[0], name: 'Time Trial' },
+              { value: val[1], name: 'Match' }
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
