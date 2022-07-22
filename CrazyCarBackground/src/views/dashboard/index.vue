@@ -68,7 +68,7 @@ export default {
         var login_user_x
         for (login_user_x in login_user_num) {
           var login_user_time = new Date(login_user_num[login_user_x].timestamp * 1000)
-          login_user_date.push(login_user_time.getMonth() + '.' + login_user_time.getDay())
+          login_user_date.push(login_user_time.getMonth() + 1 + '.' + login_user_time.getDate())
           login_user_actualData.push(login_user_num[login_user_x].count)
         }
         this.loginUserChartData = { name: '用户登录数', date: login_user_date, actualData: login_user_actualData }
@@ -79,7 +79,7 @@ export default {
         var match_x
         for (match_x in match_num) {
           var match_time = new Date(match_num[match_x].timestamp * 1000)
-          match_date.push(match_time.getMonth() + '.' + match_time.getDay())
+          match_date.push(match_time.getMonth() + 1 + '.' + match_time.getDate())
           match_actualData.push(match_num[match_x].count)
         }
         this.timeTrialChartData = { name: '比赛使用次数', date: match_date, actualData: match_actualData }
@@ -90,7 +90,7 @@ export default {
         var time_trial_x
         for (time_trial_x in time_trial_num) {
           var time_trial_time = new Date(time_trial_num[time_trial_x].timestamp * 1000)
-          time_trial_date.push(time_trial_time.getMonth() + '.' + time_trial_time.getDay())
+          time_trial_date.push(time_trial_time.getMonth() + 1 + '.' + time_trial_time.getDate())
           time_trial_actualData.push(time_trial_num[time_trial_x].count)
         }
         this.matchChartData = { name: '计时赛使用次数', date: time_trial_date, actualData: time_trial_actualData }
