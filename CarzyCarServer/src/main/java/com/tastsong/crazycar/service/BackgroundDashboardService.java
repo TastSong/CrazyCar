@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
+import com.tastsong.crazycar.mapper.MatchMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.DataStatisticsModel;
@@ -24,6 +25,9 @@ public class BackgroundDashboardService {
 
     @Autowired
     private TimeTrialMapper timeTrialMapper;
+
+    @Autowired
+    private MatchMapper matchMapper;
 
     public Integer getUserNum(){
         return userMapper.getAllUserNum();
@@ -47,5 +51,9 @@ public class BackgroundDashboardService {
 
     public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime){
         return timeTrialMapper.getTimeTrialData(offsetTime);
+    }
+
+    public List<DataStatisticsModel> getMatchData(Integer offsetTime){
+        return matchMapper.getMatchData(offsetTime);
     }
 }

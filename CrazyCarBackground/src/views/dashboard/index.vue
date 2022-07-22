@@ -78,7 +78,7 @@ export default {
         var match_actualData = []
         var match_x
         for (match_x in match_num) {
-          var match_time = new Date(match_num[match_x].timestamp)
+          var match_time = new Date(match_num[match_x].timestamp * 1000)
           match_date.push(match_time.getMonth() + '.' + match_time.getDay())
           match_actualData.push(match_num[match_x].count)
         }

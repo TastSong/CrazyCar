@@ -524,8 +524,14 @@ insert into match_record ( uid, cid, complete_time, record_time)
 				   (3, 1, 10, 1629544644);
 insert into match_record ( uid, cid, complete_time, record_time)
 				   values
-				   (4, 1, 16, 1629544644);
+				   (4, 1, 16, 1658476385);
 select record_time from match_record where uid = 1 ;	
+
+select COUNT(*) as count, record_time as timestamp
+from match_record 
+where record_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
+group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
+order by record_time limit 2;
 
 drop table if exists match_rank_0;
 create table  match_rank_0 as
