@@ -91,4 +91,12 @@
         from user_login_record 
         where login_time > #{time};
     </select>
+
+    <select id="getUserLoginData" parameterType="Integer" resultType="DataStatisticsModel">
+        select COUNT(*) as count, login_time as timestamp
+        from user_login_record 
+        where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * ${offsetTime}) 
+        group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
+        order by login_time limit ${offsetTime};
+    </select>
 </mapper>

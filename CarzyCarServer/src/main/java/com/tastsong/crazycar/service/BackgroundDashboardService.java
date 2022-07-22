@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
+import com.tastsong.crazycar.model.DataStatisticsModel;
 
 @Service
 public class BackgroundDashboardService {
@@ -36,5 +39,9 @@ public class BackgroundDashboardService {
 
     public Integer getMapNum(){
         return timeTrialMapper.getTimeTrialInfos().size();
+    }
+
+    public List<DataStatisticsModel> getUserLoginData(Integer offsetTime){
+        return userMapper.getUserLoginData(offsetTime);
     }
 }

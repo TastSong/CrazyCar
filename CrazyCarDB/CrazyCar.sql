@@ -564,10 +564,34 @@ create table if not exists `user_login_record`(
    )engine = innodb default charset = utf8;
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Tast", 1629544628, "山东，青岛", "ios");                   
+					   ("Lrrrr", 1658471682, "山东，青岛", "ios");  
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Tast", 1658385282, "山东，青岛", "ios");                
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Song", 1658288609, "山东，青岛", "ios"); 
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Tast", 1658202210, "山东，青岛", "ios"); 
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Fete", 1658202210, "山东，青岛", "ios");                          
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Song", 1658202210, "山东，青岛", "ios");      
+insert into user_login_record (user_name, login_time, place, device)
+                       values
+					   ("Fete", 1658332801, "山东，青岛", "ios");                           
 select* from user_login_record;
 select* from user_login_record
 where login_time > 1629544627;
+
+select COUNT(*) as count, login_time as timestamp
+from user_login_record 
+where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 1) 
+group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
+order by login_time limit 2;
 
 
 

@@ -28,21 +28,13 @@ public class BackgroundDashboardController {
         data.putOpt("time_trial_times", 99);
         data.putOpt("match_times", 44);
         int size = 7;
-        data.putOpt("tatal", size);
-        JSONArray loginItems = new JSONArray();
-        for (int i = 0; i < size; i++){
-            JSONObject item = new JSONObject();
-            item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
-            item.putOpt("data", (i + 1) * 14);
-            loginItems.add(item);
-        }
-        data.putOpt("login_user_num", loginItems);
+        data.putOpt("login_user_num", dashboardService.getUserLoginData(7));
 
         JSONArray timeTrialItems = new JSONArray();
         for (int i = 0; i < size; i++){
             JSONObject item = new JSONObject();
             item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
-            item.putOpt("data", (i + 1) * 6);
+            item.putOpt("count", (i + 1) * 6);
             timeTrialItems.add(item);
         }
         data.putOpt("time_trial_num", timeTrialItems);
@@ -51,7 +43,7 @@ public class BackgroundDashboardController {
         for (int i = 0; i < size; i++){
             JSONObject item = new JSONObject();
             item.putOpt("timestamp", System.currentTimeMillis() - 1000 * 60 * 60 *24 * (7 - i));
-            item.putOpt("data", (i + 1) * 8);
+            item.putOpt("count", (i + 1) * 8);
             matchItems.add(item);
         }
         data.putOpt("match_num", matchItems);
