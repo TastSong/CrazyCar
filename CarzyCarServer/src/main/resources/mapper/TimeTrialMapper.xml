@@ -104,4 +104,12 @@
         from time_trial_rank_${uid}_${cid} 
         where uid = #{uid};  
     </select>
+
+    <select id="getTimeTrialData" parameterType="Integer" resultType="DataStatisticsModel">
+        select COUNT(*) as count, record_time as timestamp
+        from time_trial_record 
+        where record_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * ${offsetTime}) 
+        group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
+        order by record_time limit ${offsetTime};
+    </select>
 </mapper>

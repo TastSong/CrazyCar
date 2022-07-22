@@ -282,11 +282,17 @@ insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   (2, 1, 14, 1629544644);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (3, 1, 10, 1629544644);
+				   (3, 1, 10, 1658332800);
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
-				   (4, 1, 16, 1629544644);
-select * from time_trial_record where uid = 1 ;			
+				   (4, 1, 16, 1658474034);
+select * from time_trial_record where uid = 1 ;
+
+select COUNT(*) as count, record_time as timestamp
+from time_trial_record 
+where record_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
+group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
+order by record_time limit 2;			
 
 /*查询自己的成绩排名*/
 select
@@ -589,7 +595,7 @@ where login_time > 1629544627;
 
 select COUNT(*) as count, login_time as timestamp
 from user_login_record 
-where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 1) 
+where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
 group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
 order by login_time limit 2;
 

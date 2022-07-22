@@ -44,4 +44,8 @@ public class BackgroundDashboardService {
     public List<DataStatisticsModel> getUserLoginData(Integer offsetTime){
         return userMapper.getUserLoginData(offsetTime);
     }
+
+    public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime){
+        return timeTrialMapper.getTimeTrialData(offsetTime);
+    }
 }

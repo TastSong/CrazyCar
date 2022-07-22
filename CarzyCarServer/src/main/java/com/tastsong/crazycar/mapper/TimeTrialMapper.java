@@ -2,6 +2,7 @@ package com.tastsong.crazycar.mapper;
 
 import java.util.List;
 
+import com.tastsong.crazycar.model.DataStatisticsModel;
 import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
@@ -20,4 +21,5 @@ public interface TimeTrialMapper {
     public Integer getMiniCompleteTime(Integer uid, Integer cid);
     public Integer insertRecord(TimeTrialRecordModel recordModel);
     public Integer getRank(Integer uid, Integer cid);
+    public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime); 
 }

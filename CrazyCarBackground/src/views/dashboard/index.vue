@@ -89,7 +89,7 @@ export default {
         var time_trial_actualData = []
         var time_trial_x
         for (time_trial_x in time_trial_num) {
-          var time_trial_time = new Date(time_trial_num[time_trial_x].timestamp)
+          var time_trial_time = new Date(time_trial_num[time_trial_x].timestamp * 1000)
           time_trial_date.push(time_trial_time.getMonth() + '.' + time_trial_time.getDay())
           time_trial_actualData.push(time_trial_num[time_trial_x].count)
         }
