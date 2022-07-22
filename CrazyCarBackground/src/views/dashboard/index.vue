@@ -1,19 +1,19 @@
 <template>
   <div class="dashboard-editor-container">
-    <panel-group :panel-info-data="panelInfoData" @handleSetLineChartData="handleGetDashboardData" />
+    <panel-group :panel-info-data="panelInfoData" />
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+      <line-chart :chart-data="loginUserChartData" />
     </el-row>
 
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <line-chart :chart-data="lineChartData" />
+          <line-chart :chart-data="timeTrialChartData" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <line-chart :chart-data="lineChartData" />
+          <line-chart :chart-data="matchChartData" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
@@ -40,7 +40,9 @@ export default {
   },
   data() {
     return {
-      lineChartData: { name: 'login user num', data: [1, 2, 3, 4, 5, 6, 7], actualData: [0, 0, 0, 0, 0, 0, 0] },
+      loginUserChartData: null,
+      timeTrialChartData: null,
+      matchChartData: null,
       panelInfoData: [0, 0, 0, 0]
     }
   },
@@ -60,17 +62,38 @@ export default {
         this.panelInfoData = panelInfoData
         // ---------login user num
         var login_user_num = response.login_user_num
-        var date = []
-        var actualData = []
-        var x
-        for (x in login_user_num) {
-          var time = new Date(login_user_num[x].timestamp)
-          date.push(time.getMonth() + '.' + time.getDay())
-          actualData.push(login_user_num[x].data)
+        var login_user_date = []
+        var login_user_actualData = []
+        var login_user_x
+        for (login_user_x in login_user_num) {
+          var login_user_time = new Date(login_user_num[login_user_x].timestamp)
+          login_user_date.push(login_user_time.getMonth() + '.' + login_user_time.getDay())
+          login_user_actualData.push(login_user_num[login_user_x].data)
         }
-        console.log('==+++++' + date)
-        this.lineChartData = { name: '用户登录数', date: date, actualData: actualData }
-        // ------------t----------
+        this.loginUserChartData = { name: '用户登录数', date: login_user_date, actualData: login_user_actualData }
+        // ---------
+        var match_num = response.match_num
+        var match_date = []
+        var match_actualData = []
+        var match_x
+        for (match_x in match_num) {
+          var match_time = new Date(match_num[match_x].timestamp)
+          match_date.push(match_time.getMonth() + '.' + match_time.getDay())
+          match_actualData.push(match_num[match_x].data)
+        }
+        this.timeTrialChartData = { name: '比赛使用次数', date: match_date, actualData: match_actualData }
+        // ---------
+        var time_trial_num = response.time_trial_num
+        var time_trial_date = []
+        var time_trial_actualData = []
+        var time_trial_x
+        for (time_trial_x in time_trial_num) {
+          var time_trial_time = new Date(time_trial_num[time_trial_x].timestamp)
+          time_trial_date.push(time_trial_time.getMonth() + '.' + time_trial_time.getDay())
+          time_trial_actualData.push(time_trial_num[time_trial_x].data)
+        }
+        this.matchChartData = { name: '计时赛使用次数', date: time_trial_date, actualData: time_trial_actualData }
+        // ----------------------
       })
     },
     handleUpdate() {
