@@ -59,13 +59,18 @@ export default {
     },
     setOptions(val) {
       this.chart.setOption({
+        title: {
+          text: '计时赛和比赛近7天使用对比',
+          x: 'center',
+          y: 'bottom'
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         legend: {
           left: 'center',
-          bottom: '10',
+          bottom: '40',
           data: ['Time Trial', 'Match']
         },
         series: [

@@ -67,7 +67,7 @@ export default {
         title: {
           text: val.name,
           x: 'center',
-          y: 'bottom'
+          bottom: '-6'
         },
         xAxis: {
           data: val.date,

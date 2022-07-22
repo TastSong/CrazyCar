@@ -2,12 +2,12 @@
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-user">
+          <svg-icon icon-class="user" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            New Visits
+            User Number
           </div>
           <count-to :start-val="0" :end-val="panelInfoData[0]" :duration="2600" class="card-panel-num" />
         </div>
@@ -15,12 +15,12 @@
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-car">
+          <svg-icon icon-class="car" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Messages
+            Equip Number
           </div>
           <count-to :start-val="0" :end-val="panelInfoData[1]" :duration="3000" class="card-panel-num" />
         </div>
@@ -28,12 +28,12 @@
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-avatar">
+          <svg-icon icon-class="avatar" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Purchases
+            Avatar Number
           </div>
           <count-to :start-val="0" :end-val="panelInfoData[2]" :duration="3200" class="card-panel-num" />
         </div>
@@ -41,12 +41,12 @@
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+        <div class="card-panel-icon-wrapper icon-map">
+          <svg-icon icon-class="map" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Shoppings
+            Map Number
           </div>
           <count-to :start-val="0" :end-val="panelInfoData[3]" :duration="3600" class="card-panel-num" />
         </div>
