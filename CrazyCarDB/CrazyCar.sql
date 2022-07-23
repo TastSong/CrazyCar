@@ -599,7 +599,7 @@ select* from user_login_record;
 select* from user_login_record
 where login_time > 1629544627;
 
-select COUNT(*) as count, login_time as timestamp
+select *
 from user_login_record 
 where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
 group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
