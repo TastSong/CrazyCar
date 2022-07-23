@@ -1,5 +1,6 @@
 create database crazy_car;
 use crazy_car;
+SET SQL_SAFE_UPDATES = false;
 
 create table if not exists `all_user`(
    `uid` int unsigned auto_increment,
@@ -380,22 +381,26 @@ create table if not exists `forced_updating`(
 	`platform` VARCHAR(100) not null,
     `version` VARCHAR(100) not null,
     `rule` int not null,
+	`updata_time` long not null,
     `url` VARCHAR(1000) not null,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
-insert into forced_updating ( platform, version, rule, url)
+insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("Android", "8.4.0", 10000, "https://www.pgyer.com/xlbk");
-insert into forced_updating ( platform, version, rule, url)
+				   ("Android", "8.4.0", 10000, 1633519472000, "https://www.pgyer.com/xlbk");
+insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("ios", "8.4.0", 10000, "https://www.pgyer.com/rRut");
-insert into forced_updating ( platform, version, rule, url)
+				   ("ios", "8.4.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("PC", "8.4.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");    
-insert into forced_updating ( platform, version, rule, url)
+				   ("PC", "8.4.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");    
+insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("Defeat", "0.0.0", 10000, "https://github.com/TastSong/CrazyCar/releases/latest");                                         
+				   ("Defeat", "0.0.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");                                         
 select * from forced_updating;
+update forced_updating
+set version = "8.5.0", rule = 9999, url = "https://github.com/TastSong/CrazyCar/releases/latest"
+where platform = "PC";
 
 /*all_equip*/
 create table if not exists `all_equip`(
@@ -599,7 +604,7 @@ select* from user_login_record;
 select* from user_login_record
 where login_time > 1629544627;
 
-select *
+select COUNT(*) as count, login_time as timestamp
 from user_login_record 
 where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
 group by FROM_UNIXTIME(login_time, '%y-%m-%d') 

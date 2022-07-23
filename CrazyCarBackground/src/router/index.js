@@ -56,14 +56,14 @@ export const constantRoutes = [
   },
 
   {
-    path: '/assets',
+    path: '/version',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Assets',
-        component: () => import('@/views/assets/index'),
-        meta: { title: 'Assets', icon: 'zip' }
+        name: 'Version',
+        component: () => import('@/views/version/index'),
+        meta: { title: 'Version', icon: 'guide' }
       }
     ]
   },
