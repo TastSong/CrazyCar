@@ -1,5 +1,11 @@
 <template>
   <div class="app-container">
+    <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        Add
+      </el-button>
+    </div>
+
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -20,9 +26,9 @@
           <span>{{ row.version }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Url" min-width="150px">
+      <el-table-column label="Link" min-width="150px">
         <template slot-scope="{row}">
-          <span>{{ row.url }}</span>
+          <span>{{ row.link }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Platform" class-name="status-col" width="100">
@@ -32,7 +38,7 @@
       </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.updata_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
@@ -46,13 +52,13 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-    <el-dialog title="Update" :visible.sync="dialogFormVisible">
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="Version" prop="version">
           <el-input v-model="temp.version" />
         </el-form-item>
-        <el-form-item label="Url" prop="url">
-          <el-input v-model="temp.url" />
+        <el-form-item label="Link" prop="link">
+          <el-input v-model="temp.link" />
         </el-form-item>
         <el-form-item label="Platform">
           <el-select v-model="temp.platform" class="filter-item" placeholder="Please select">
@@ -64,7 +70,7 @@
         <el-button @click="dialogFormVisible = false">
           Cancel
         </el-button>
-        <el-button type="primary" @click="updateData()">
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
           Confirm
         </el-button>
       </div>
@@ -86,7 +92,7 @@
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getVersionList, updateVersion } from '@/api/version'
+import { getTestComplexTableData, createTestComplexTable, updateTestComplexTable } from '@/api/table'
 
 export default {
   name: 'ComplexTable',
@@ -108,17 +114,23 @@ export default {
         type: undefined,
         sort: '+id'
       },
+      importanceOptions: [1, 2, 3],
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       platformOptions: ['ios', 'Android', 'PC'],
       showReviewer: false,
       temp: {
         id: undefined,
         version: '1.0.0',
-        url: 'htt://',
+        link: 'htt://',
         platform: 'ios',
         timestamp: new Date()
       },
       dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
       dialogPvVisible: false,
       pvData: [],
       rules: {
@@ -135,11 +147,14 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getVersionList(this.listQuery).then(response => {
-        this.list = response.items
-        this.total = response.total
+      getTestComplexTableData(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
 
-        this.listLoading = false
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
       })
     },
     handleFilter() {
@@ -164,7 +179,7 @@ export default {
       this.temp = {
         id: undefined,
         version: '1.0.0',
-        url: 'http://',
+        link: 'http://',
         platform: 'ios',
         timestamp: new Date()
       }
@@ -175,6 +190,22 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          createTestComplexTable(this.temp).then(response => {
+            this.list.unshift(response.data)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Created Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
       })
     },
     handleUpdate(row) {
@@ -191,9 +222,9 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateVersion(tempData).then(response => {
-            const index = this.list.findIndex(v => v.id === response.id)
-            this.list.splice(index, 1, response)
+          updateTestComplexTable(tempData).then(response => {
+            const index = this.list.findIndex(v => v.id === response.data.id)
+            this.list.splice(index, 1, response.data)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
