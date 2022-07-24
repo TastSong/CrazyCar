@@ -22,3 +22,19 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUserByUserName(query) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getUserByUserName',
+    method: 'get',
+    params: query
+  })
+}
+
+export function updateUser(data) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/updateUser',
+    method: 'post',
+    data
+  })
+}
