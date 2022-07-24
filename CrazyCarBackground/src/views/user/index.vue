@@ -14,22 +14,22 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="UID" prop="uid" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="UID" prop="uid" sortable="custom" align="center" min-width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
           <span>{{ row.uid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="User Name" width="110px" align="center">
+      <el-table-column label="User Name" min-width="110px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.user_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Star" min-width="150px">
+      <el-table-column label="Star" align="center" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="VIP" class-name="status-col" width="100">
+      <el-table-column label="VIP" align="center" class-name="status-col" min-width="100">
         <template slot-scope="{row}">
           {{ row.is_vip }}
         </template>
@@ -47,11 +47,14 @@
 
     <el-dialog title="Update User" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="Name" prop="user_name">
+          {{ temp.user_name }}
+        </el-form-item>
         <el-form-item label="Star" prop="star">
           <el-input v-model.number="temp.star" />
         </el-form-item>
         <el-form-item label="VIP" prop="is_vip">
-          <el-input v-model="temp.is_vip" />
+          <el-switch v-model="temp.is_vip" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -115,7 +118,8 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        uid: [{ required: false, message: 'type is not required', trigger: 'change' }],
+        uid: [{ required: false, message: 'type is not required', trigger: 'change', readonly: true }],
+        user_name: [{ required: false, message: 'type is not required', trigger: 'change', readonly: true }],
         star: [{ required: true, message: 'star is required', type: 'number', trigger: 'change' }],
         is_vip: [{ required: true, message: 'vip is required', trigger: 'blur' }]
       },
