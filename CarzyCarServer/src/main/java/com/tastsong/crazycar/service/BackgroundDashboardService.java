@@ -50,17 +50,17 @@ public class BackgroundDashboardService {
     }
 
     public List<DataStatisticsModel> getUserLoginData(Integer offsetTime){
-        var data = userMapper.getUserLoginData(offsetTime);
+        List<DataStatisticsModel> data = userMapper.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
     public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime){
-        var data = timeTrialMapper.getTimeTrialData(offsetTime);
+        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
     public List<DataStatisticsModel> getMatchData(Integer offsetTime){
-        var data = matchMapper.getMatchData(offsetTime);
+        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
 
