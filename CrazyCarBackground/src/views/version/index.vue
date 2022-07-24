@@ -25,6 +25,11 @@
           <span>{{ row.url }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="Rule" min-width="150px">
+        <template slot-scope="{row}">
+          <span>{{ row.rule }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Platform" class-name="status-col" width="100">
         <template slot-scope="{row}">
           {{ row.platform }}
@@ -47,12 +52,15 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog title="Update Version" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Version" prop="version">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="88px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="Version" placeholder="格式 *.*.*" prop="version">
           <el-input v-model="temp.version" />
         </el-form-item>
         <el-form-item label="Url" prop="url">
           <el-input v-model="temp.url" />
+        </el-form-item>
+        <el-form-item label="Rule" prop="rule">
+          <el-input v-model.number="temp.rule" />
         </el-form-item>
         <el-form-item label="Platform">
           <el-select v-model="temp.platform" class="filter-item" placeholder="Please select">
@@ -116,6 +124,7 @@ export default {
         id: undefined,
         version: '1.0.0',
         url: 'htt://',
+        rule: 0,
         platform: 'ios',
         timestamp: new Date()
       },
@@ -123,9 +132,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        url: [{ required: true, message: 'url is required', trigger: 'change' }],
+        rule: [{ required: true, message: 'rule is required', trigger: 'change' }],
+        version: [{ required: true, message: 'version is required', trigger: 'blur' }]
       },
       downloadLoading: false,
       parseTime: parseTime
