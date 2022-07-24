@@ -56,9 +56,7 @@ public class TokenFilter implements Filter{
             // -------------
 
             String token = request.getHeader(Util.TOKEN);
-
-            Integer uid = Util.getUidByToken(token);
-            if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(uid)){
+            if(token != null && Util.isLegalToken(token) && userMapper.isExistsUserByUid(Util.getUidByToken(token))){
                 filterChain.doFilter(servletRequest, servletResponse);
             } else{
                 log.info("illegality URL：{}", request.getRequestURI());
