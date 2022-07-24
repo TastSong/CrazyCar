@@ -100,6 +100,9 @@
     <a><img src="./SamplePictures/Setting.png" width="316px" height="146px" title="Setting"></a>
     <a><img src="./SamplePictures/TimeTrial.png" width="316px" height="146px" title="TimeTrial"></a>
     <a><img src="./SamplePictures/Match.png" width="316px" height="146px" title="Login"></a>
+    <a><img src="./SamplePictures/Dashboard.png" width="316px" height="146px" title="Setting"></a>
+    <a><img src="./SamplePictures/User.png" width="316px" height="146px" title="TimeTrial"></a>
+    <a><img src="./SamplePictures/Version.png" width="316px" height="146px" title="Login"></a>
 </div> 
 
 
