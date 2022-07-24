@@ -1,9 +1,12 @@
 <template>
   <div class="app-container">
-    <el-input v-model="listQuery.user_name" placeholder="User Name" style="width: 200px;" class="filter-item" />
-    <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-      Search
-    </el-button>
+    <div class="filter-container">
+      <el-input v-model="listQuery.user_name" placeholder="User Name" style="width: 200px;" class="filter-item" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        Search
+      </el-button>
+    </div>
+
     <el-table
       :key="tableKey"
       v-loading="listLoading"
