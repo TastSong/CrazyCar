@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-input v-model="listQuery.user_name" placeholder="User Name" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+    <el-input v-model="listQuery.user_name" placeholder="User Name" style="width: 200px;" class="filter-item" />
     <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
       Search
     </el-button>
@@ -29,7 +29,7 @@
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="is_vip" class-name="status-col" width="100">
+      <el-table-column label="VIP" class-name="status-col" width="100">
         <template slot-scope="{row}">
           {{ row.is_vip }}
         </template>
@@ -48,9 +48,9 @@
     <el-dialog title="Update User" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="Star" prop="star">
-          <el-input v-model="temp.star" />
+          <el-input v-model.number="temp.star" />
         </el-form-item>
-        <el-form-item label="Vip" prop="url">
+        <el-form-item label="VIP" prop="is_vip">
           <el-input v-model="temp.is_vip" />
         </el-form-item>
       </el-form>
@@ -104,10 +104,10 @@ export default {
       },
       importanceOptions: [1, 2, 3],
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      platformOptions: ['ios', 'Android', 'PC'],
       showReviewer: false,
       temp: {
         uid: undefined,
+        user_name: undefined,
         star: 0,
         is_vip: false
       },
@@ -115,9 +115,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        uid: [{ required: false, message: 'type is not required', trigger: 'change' }],
+        star: [{ required: true, message: 'star is required', type: 'number', trigger: 'change' }],
+        is_vip: [{ required: true, message: 'vip is required', trigger: 'blur' }]
       },
       downloadLoading: false,
       parseTime: parseTime
@@ -126,6 +126,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      this.list = null
+      this.total = 0
       getUserByUserName(this.listQuery).then(response => {
         this.list = response.items
         this.total = response.total
@@ -153,13 +155,13 @@ export default {
     resetTemp() {
       this.temp = {
         uid: undefined,
+        user_name: '',
         star: 0,
         is_vip: false
       }
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
@@ -169,7 +171,6 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateUser(tempData).then(response => {
             const index = this.list.findIndex(v => v.id === response.uid)
             this.list.splice(index, 1, response)

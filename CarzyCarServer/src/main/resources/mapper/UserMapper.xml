@@ -59,6 +59,12 @@
         where uid = #{uid}
     </update>
 
+    <update id="updateUserVip">
+        update all_user
+        set is_vip = #{is_vip}
+        where uid = #{uid}
+    </update>
+
     <update id="updateUserEid">
         update all_user
         set eid = #{eid}

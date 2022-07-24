@@ -114,4 +114,9 @@ public class LoginService {
     public void recordLoginInfo(UserLoginRecordModel userLoginRecordModel){
         userMapper.insertUserLoginRecord(userLoginRecordModel);
     }
+
+    public void updateUser(UserModel userModel){
+        userMapper.updateUserStar(userModel.uid, userModel.star);
+        userMapper.updateUserVip(userModel.uid, userModel.is_vip);
+    }
 }

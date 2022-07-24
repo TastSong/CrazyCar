@@ -15,6 +15,7 @@ public interface UserMapper {
     public boolean isExistsUserByUid(Integer uid);
     public Integer insertUser(UserModel userModel);
     public Integer updateUserStar(Integer uid, Integer star);
+    public Integer updateUserVip(Integer uid, Boolean is_vip);
     public Integer updateUserAid(Integer uid, Integer aid);
     public Integer updateUserPassword(Integer uid, String password);
     public Integer updateUserEid(Integer uid, Integer eid);
