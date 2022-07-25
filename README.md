@@ -4,57 +4,48 @@
   </h2>
   <h2 align="center">
     Crazy Car
-  </h1>
-  <h3 align="center">
-    联机赛车游戏
-  </h3>
-    <a href = "https://github.com/TastSong/CrazyCar/releases">下 载</a> | <a href = "https://github.com/TastSong/CrazyCar/releases">主 页</a> <br>
-<a>
+  </h2>
+  <h2 align="center">
+    网络联机游戏解决方案
+  </h2>  
     <img src="https://img.shields.io/github/stars/TastSong/CrazyCar?style=plastic" alt="">
-    </a>
-<a>
     <img src="https://img.shields.io/github/forks/TastSong/CrazyCar?color=09F709&label=forks&style=plastic" alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/license/TastSong/CrazyCar?color=22DDB8&label=license&style=plastic" alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/commit-activity/m/TastSong/CrazyCar?color=AA8855&label=commit-activity&style=plasticc"alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/last-commit/TastSong/Crazycar?color=%231AE66B&label=last-commit&style=plastic" alt="">
-  </a>
 </div>
-<div  align="center">  
-<p></p>
-<b>主体功能演示</b>
-	<a><img src="./SamplePictures/Preview.gif"></a>
-<p></p>
-<b>比赛模块演示</b>
-  <a><img src="./SamplePictures/Match.gif"></a>
-</div> 
 
+中文  | &nbsp;[English](./README_en.md)
 
-[开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[设计文档](./Document)&nbsp;  | &nbsp;[English](./README_en.md)
+------
+
+## 简介
+
+**Crazy Car**是一款联机赛车游戏，她的整体架构为：[QFramework](https://github.com/liangxiegame/QFramework) & [Addressable](https://github.com/Unity-Technologies/Addressables-Sample)(游戏端) + [Spring Boot](https://github.com/spring-projects/spring-boot) & [Mybatis](https://github.com/mybatis/mybatis-3)(服务端) + [KCP](https://github.com/l42111996/java-Kcp) / [WebSocket](https://github.com/psygames/UnityWebSocket) (网络)  + [Vue & Element](https://github.com/PanJiaChen/vue-element-admin)(后台) ，借助于此架构，开发者只要稍作修改就可完成一款定制化的网络联机游戏。
+
+主要提供的演示功能有：登录注册、热更头像与装备、计时赛、双人比赛、版本控制(后台)、用户信息管理(后台)等功能。
+
+<figure class="half"><img src="./SamplePictures/Preview.gif" ><img src="./SamplePictures/Match.gif"> </figure>
+
+下载：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP账号 ：**Tast**；密码：**111111** )*
+
+[开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[设计文档](./Document)&nbsp;
 
 :clap:  欢迎使用 **Crazy Car** ！ 
 
-:sparkles:VIP账号 ：Tast；密码：111111 
+:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置；mater不是发布分支，建议使用最新[releases](https://github.com/TastSong/CrazyCar/releases/latest)进行本地测试
 
-:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置；mater分支不是发布分支，建议使用最新[releases](https://github.com/TastSong/CrazyCar/releases/latest)版本进行本地测试
+------
 
 ## 特性 :point_down:
+
+### Finish
+
 :pushpin:支持版本强制更新
 
 :satellite:网络同步采用物理同步方式
 
 :telephone:支持KCP和WebSocket两种网络传输协议
-
-:hammer:游戏采用QFramework，易于扩展
-
-:computer:服务端采用Spring Boot + Mybatis架构
-
-:tv:后台采用Vue + element
 
 :foggy:使用URP渲染管线
 
@@ -82,12 +73,25 @@
 
 :roller_coaster: 路线规划功能，自定义路线
 
-:seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前:running:
+### TODO 
 
-:kissing_heart: Enjoy~
+ - [ ] 使用UniTask优化回调逻辑
+ - [ ] 优化机器人逻辑
+ - [ ] 赛车加入悬挂系统
+ - [ ] 优化比赛界面，加入速度仪表盘等
+ - [ ] 引入Timeline，实现对话系统
+ - [ ] 后台：装备与头像资源配置
+ - [ ] 使用网格破碎实现翻车效果
+ - [ ] 热修复：lua 
+ - [ ] 优化入水效果
+ - [ ] VIP购买
+
+------
 
 ## 联系
 :email: ： TastSong@163.com
+
+------
 
 ## 示例截图
 <div  align="center">  
@@ -104,11 +108,15 @@
     <a><img src="./SamplePictures/User.png" width="316px" height="146px" title="TimeTrial"></a>
     <a><img src="./SamplePictures/Version.png" width="316px" height="146px" title="Login"></a>
 </div> 
-
+------
 
 
 ## 贡献
 我们欢迎任何形式的贡献。你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。 
+
+:seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前:running:
+
+------
 
 ## 项目优化
 
@@ -121,8 +129,10 @@
 1. [动态合批、静态合批、手动合批、GPU Instancing、SRP Batcher](./ProjectOptimization/Blending.md)
 2. [LOD](./ProjectOptimization/LOD.md)
 3. [Mipmap](./ProjectOptimization/Mipmap.md)
-3. [包体优化](./ProjectOptimization/Mipmap.md)
-3. [网络同步算法](./ProjectOptimization/NetworkSync.md)
+4. [包体优化](./ProjectOptimization/Mipmap.md)
+5. [网络同步算法](./ProjectOptimization/NetworkSync.md)
+
+------
 
 ## 引用
 
@@ -149,6 +159,8 @@
 10. [Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.](https://github.com/vuejs/vue)
 10. [element: A Vue.js 2.0 UI Toolkit for Web](https://github.com/ElemeFE/element)
 10. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
+
+------
 
 
 ## 证书
