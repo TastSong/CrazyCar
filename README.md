@@ -3,9 +3,6 @@
     <img src="./SamplePictures/CrazyCarIcon.png"  width="80px" height="80px">
   </h2>
   <h2 align="center">
-    Crazy Car
-  </h2>
-  <h2 align="center">
     网络联机游戏解决方案
   </h2>  
     <img src="https://img.shields.io/github/stars/TastSong/CrazyCar?style=plastic" alt="">
