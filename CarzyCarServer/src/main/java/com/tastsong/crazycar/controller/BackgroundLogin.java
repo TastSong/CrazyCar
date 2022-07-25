@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,10 @@ import com.tastsong.crazycar.common.ResultCode;
 
 import cn.hutool.json.JSONObject;
 
+@CrossOrigin
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1/Background")
-
 public class BackgroundLogin {
     @PostMapping(value = "/login")
     public Object login(@RequestBody JSONObject body){
