@@ -8,7 +8,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user-icon" />
         </span>
         <el-input
           ref="username"
