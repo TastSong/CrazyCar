@@ -12,6 +12,7 @@
     <img src="https://img.shields.io/github/last-commit/TastSong/Crazycar?color=%231AE66B&label=last-commit&style=plastic" alt="">
 </div>
 
+
 中文  | &nbsp;[English](./README_en.md)
 
 ------
@@ -79,7 +80,7 @@
  - [ ] 引入Timeline，实现对话系统
  - [ ] 后台：装备与头像资源配置
  - [ ] 使用网格破碎实现翻车效果
- - [ ] 热修复：lua 
+ - [ ] 热修复：Lua 
  - [ ] 优化入水效果
  - [ ] VIP购买
 

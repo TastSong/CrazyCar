@@ -3,60 +3,44 @@
     <img src="./SamplePictures/CrazyCarIcon.png"  width="80px" height="80px">
   </h2>
   <h2 align="center">
-    Crazy Car
-  </h1>
-  <h3 align="center">
-    Online racing game
-  </h3>
-    <a href = "https://github.com/TastSong/CrazyCar/releases">Download</a> | <a href = "https://github.com/TastSong/CrazyCar/releases">Homepage</a> <br>
-<a>
+    Network online game solutions
+  </h2>  
     <img src="https://img.shields.io/github/stars/TastSong/CrazyCar?style=plastic" alt="">
-    </a>
-<a>
     <img src="https://img.shields.io/github/forks/TastSong/CrazyCar?color=09F709&label=forks&style=plastic" alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/license/TastSong/CrazyCar?color=22DDB8&label=license&style=plastic" alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/commit-activity/m/TastSong/CrazyCar?color=AA8855&label=commit-activity&style=plasticc"alt="">
-  </a> 
-<a>
     <img src="https://img.shields.io/github/last-commit/TastSong/Crazycar?color=%231AE66B&label=last-commit&style=plastic" alt="">
-  </a>
 </div>
-<div  align="center">  
-  <p></p>
-<b>Main Function Demonstration</b>
-	<a><img src="./SamplePictures/Preview.gif"></a>
-<p></p>
-<b>Match Function Demonstration</b>
-  <a><img src="./SamplePictures/Match.gif"></a>
-</div> 
 
+English  | &nbsp;[中文](./README.md)
 
+------
 
+## overview
 
-[Quick Start](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[Design Document](./Document)&nbsp;   | &nbsp;[中文](./README.md)
+**Crazy Car** is an online racing game, its overall structure is：[QFramework](https://github.com/liangxiegame/QFramework) & [Addressable](https://github.com/Unity-Technologies/Addressables-Sample)(Game) + [Spring Boot](https://github.com/spring-projects/spring-boot) & [Mybatis](https://github.com/mybatis/mybatis-3)(Server) + [KCP](https://github.com/l42111996/java-Kcp) / [WebSocket](https://github.com/psygames/UnityWebSocket) (Network)  + [Vue & Element](https://github.com/PanJiaChen/vue-element-admin)(Background) ,with this architecture, developers can complete a customized online game with only a few modifications.
+
+The main demonstration functions are: login registration, hot change picture and equipment, time trial, two-person competition, version control (Background), user information management (Background) and other functions.
+
+<figure class="half"><img src="./SamplePictures/Preview.gif" ><img src="./SamplePictures/Match.gif"> </figure>
+
+Download：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP ID：**Tast**；Password：**111111** )*
+
+[Quick Start](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[Design Document](./Document)&nbsp;
 
 :clap:  Welcome **Crazy Car** ！ 
-
-:sparkles:VIP Username ：Tast；Password：111111  
 
 :loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly;The Mater branch is not a release branch and it is recommended to use the [latest Releases](https://github.com/TastSong/CrazyCar/releases/latest) version for local testing 
 
 ## Features :point_down:
+
+### Finish
+
 :pushpin:Mandatory version update is supported
 
 :satellite: The network synchronization mode is Networked physics
 
 :telephone:Supports KCP and WebSocket 
-
-:hammer:The game uses QFramework, easy to expand
-
-:computer:The server uses Spring Boot + Mybatis architecture
-
-:tv:The background uses Vue + Element
 
 :foggy:Using the URP Render Pipeline
 
@@ -84,9 +68,18 @@
 
 :roller_coaster: Route planning function, custom route
 
-:seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
+### TODO 
 
-:kissing_heart: Enjoy~
+ - [ ] Optimize the callback logic using UniTask
+ - [ ] Optimized robot logic
+ - [ ] The car joins the suspension
+ - [ ] Optimized race interface, added speed dashboard, etc
+ - [ ] Timeline is introduced to realize the dialogue system
+ - [ ] Background: Equipment and profile picture resource configuration
+ - [ ] Use mesh crushing to achieve rollover effect效果
+ - [ ] Hot fix: Lua
+ - [ ] Optimize water entering effect
+ - [ ] Buy VIP
 
 ## Connection
 :email: ： TastSong@163.com
@@ -111,6 +104,8 @@
 
 ## contribution
 You can submit questions in the  [pull requests](https://github.com/TastSong/CrazyCar/pulls) or [issues](https://github.com/TastSong/CrazyCar/issues) format.
+
+:seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
 
 ## Project Optimization
 
