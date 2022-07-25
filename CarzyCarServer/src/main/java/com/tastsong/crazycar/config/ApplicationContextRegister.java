@@ -1,4 +1,4 @@
-package com.tastsong.crazycar.common;
+package com.tastsong.crazycar.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

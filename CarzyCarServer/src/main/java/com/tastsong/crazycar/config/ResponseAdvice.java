@@ -1,4 +1,4 @@
-package com.tastsong.crazycar.common;
+package com.tastsong.crazycar.config;
 
 import java.util.LinkedHashMap;
 
@@ -9,6 +9,9 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {

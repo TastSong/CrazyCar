@@ -1,4 +1,4 @@
-package com.tastsong.crazycar.common;
+package com.tastsong.crazycar.config;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 
 import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.mapper.UserMapper;
 
 import cn.hutool.json.JSONUtil;

@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.Util.Util;
-import com.tastsong.crazycar.common.ApplicationContextRegister;
+import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
 import com.tastsong.crazycar.service.MatchService;
 
