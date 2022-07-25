@@ -9,7 +9,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意账号和密码需要和[配置文件](./CarzyCarSpringBootServer/src/main/resources/application.properties)保持一致
 
-4. 配置Java环境(JDK17)：[官网下载JDK7](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg不要下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
+4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg不要下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
 5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
 
@@ -23,11 +23,13 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 8. 使用VScode打开文件夹：CarzyCarSpringBootServer，F5启动项目
 
-9. 后台运行成功后，即可运行**Unity**客户端；
+9. 服务端运行成功后，即可运行**Unity**客户端；
 
 > 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、VScode配置Java、Maven环境加载失败等问题，请自行Google！
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
 > 2. [Apifox](https://www.apifox.cn/apidoc/shared-f1aa2fc5-8e30-46a8-9218-6c1cb96da3b7)接口测试分享
+
+10. 安装[nodejs](https://nodejs.org/en/)，使用VScode打开文件夹：CrazyCarBackground，然后在终端运行npm install安装依赖，最后使用npm run dev运行即可 (此模块按需求部署即可，[详细操作文档](https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/))
 
 ## 环境版本
 
@@ -37,6 +39,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 5. MySQL 8.0.26
 6. Tomcat 8.0.52
 8. Nginx  1.20.1
+8. Nodejs 16.16.0
 
 ## 环境配置
 
@@ -62,7 +65,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
   1. 购买云服务器 [华为云](https://www.huaweicloud.com/?locale=zh-cn)
 
-  2. 设置云服务的安全组[入口](https://console.huaweicloud.com/lcs/?agencyId=0d551b5ba600f5841fd4c0182c6aa4b6&region=cn-south-1&locale=zh-cn#/lcs/manager/vmList/vmDetail/securitygroups?instanceId=410b1a5b-ee07-434a-8fea-c2c6e3b54a7d) ，华为云初始化会有三个安全组，其中有一个Web Server组是用来做Web开发的，它已经把80、443等网络端口开放，当然也可以自己去设定比如开放8080(Tomcat)、8081(Spring Boot后台)、50001(KCP设置端口)、3389(Mysql)
+  2. 设置云服务的安全组[入口](https://console.huaweicloud.com/lcs/?agencyId=0d551b5ba600f5841fd4c0182c6aa4b6&region=cn-south-1&locale=zh-cn#/lcs/manager/vmList/vmDetail/securitygroups?instanceId=410b1a5b-ee07-434a-8fea-c2c6e3b54a7d) ，华为云初始化会有三个安全组，其中有一个Web Server组是用来做Web开发的，它已经把80、443等网络端口开放，当然也可以自己去设定比如开放8080(Tomcat)、8081(Spring Boot服务端)、50001(KCP设置端口)、3389(Mysql)
 
 ## 游戏引擎
 
