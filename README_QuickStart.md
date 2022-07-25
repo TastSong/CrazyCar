@@ -15,7 +15,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 6. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)、Lombok
 
-7. VS code配置Java和Maven路径，Mac 和Windows示例如下：
+7. VS code配置Java和Maven路径*(此路径为在Editor运行时的加载路径，打包时需要本地环境变量配置好maven与jdk相关路径)*，Mac 和Windows示例如下：
 
    ![](./SamplePictures/VSCODE1.png)
 
