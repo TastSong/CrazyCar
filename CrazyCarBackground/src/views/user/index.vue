@@ -49,7 +49,7 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog title="Update User" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="min-width: 140px; max-width: 400px; margin-left:50px;">
         <el-form-item label="Name" prop="user_name">
           {{ temp.user_name }}
         </el-form-item>
