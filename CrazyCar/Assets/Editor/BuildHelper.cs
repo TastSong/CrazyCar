@@ -97,10 +97,9 @@ public static class BuildHelper {
         BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCar.apk"), BuildTarget.Android, BuildOptions.None);
 #elif UNITY_IOS
         // year baby! olol
-        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "IosOutput"), BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, path, BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
 #elif UNITY_STANDALONE
-        string exeName = "CrazyCar.exe";
-        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, exeName), BuildTarget.StandaloneWindows,
+        BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCar.exe"), BuildTarget.StandaloneWindows,
             BuildOptions.Development | BuildOptions.ConnectWithProfiler);
 #endif
     }
