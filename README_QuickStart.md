@@ -1,6 +1,4 @@
 # CrazyCar
-unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
-
 ## 运行
 
 1. 用**Unity**(2021.3.1及以上)打开**CrazyCar -> CrazyCar**项目；
