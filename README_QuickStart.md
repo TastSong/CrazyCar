@@ -9,7 +9,7 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意账号和密码需要和[配置文件](./CarzyCarSpringBootServer/src/main/resources/application.properties)保持一致
 
-4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg不要下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
+4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg**不要**下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
 5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
 
@@ -94,17 +94,8 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 
 ## 自动化打版
 
-1. 安卓和PC都是直接点击**Window--> Build -->Local**，进行打版。(过程中会让你选择目标文件夹)
-
-2. IOS选择文件时，要确保文件夹下有**CrazyCarXCode**文件夹，即选中的文件夹下需要有**CrazyCarXCode**子文件夹
-
-   ```c#
-    BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, Path.Combine(path, "CrazyCarXCode"), BuildTarget.iOS, BuildOptions.AcceptExternalModificationsToPlayer);
-   ```
-
-3. 如果没有服务器，游戏支持单机模式，但是只能使用主功能，直接使用**File --> BuildSettings --> Build**即可
-
-3. 当然也可以直接去File -> Build ，使用系统打板。
+1. Android、PC和IOS都是直接点击**Window--> Build -->Local**(过程中会让你选择目标文件夹)，进行打版，**Remote**为使用线上服务器。
+2. 如果没有服务器，游戏支持单机模式，但是只能使用主功能，直接使用**File --> BuildSettings --> Build**即可。
 
 ## 添加装备
 
