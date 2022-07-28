@@ -27,8 +27,9 @@ The main demonstration functions are: login registration, hot change picture and
     <img src="./SamplePictures/Match.gif">
     <img src="./SamplePictures/Background.gif" style="zoom:44%;" >
 </div>
+Download：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  (Due to the certificate issue, if you want to experience ios, you need to contact the author separately)  
 
-Download：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP ID：**Tast**；Password：**111111** )*
+ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 [Quick Start](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[Design Document](./Document)&nbsp;
 

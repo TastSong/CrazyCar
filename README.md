@@ -28,8 +28,9 @@
     <img src="./SamplePictures/Match.gif">
     <img src="./SamplePictures/Background.gif" style="zoom:44%;" >
 </div>
+下载：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut) (由于证书问题，如果想体验ios需要单独联系作者)  
 
-下载：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP账号 ：**Tast**；密码：**111111** )*
+ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 [开始使用](./README_QuickStart.md)&nbsp; | &nbsp;[技术文档](./README_Dev.md)&nbsp; | &nbsp;[更新日志](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[设计文档](./Document)&nbsp;
 
