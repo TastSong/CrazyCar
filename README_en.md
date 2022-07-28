@@ -22,7 +22,11 @@ English  | &nbsp;[中文](./README.md)
 
 The main demonstration functions are: login registration, hot change picture and equipment, time trial, two-person competition, version control (Background), user information management (Background) and other functions.
 
-<figure class="half"><img src="./SamplePictures/Preview.gif" ><img src="./SamplePictures/Match.gif"> </figure>
+<div>
+    <img src="./SamplePictures/Preview.gif" >
+    <img src="./SamplePictures/Match.gif">
+    <img src="./SamplePictures/Background.gif" style="zoom:44%;" >
+</div>
 
 Download：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP ID：**Tast**；Password：**111111** )*
 

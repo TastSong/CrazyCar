@@ -23,7 +23,11 @@
 
 主要提供的演示功能有：登录注册、热更头像与装备、计时赛、双人比赛、版本控制(后台)、用户信息管理(后台)等功能。
 
-<figure class="half"><img src="./SamplePictures/Preview.gif" ><img src="./SamplePictures/Match.gif"> </figure>
+<div>
+    <img src="./SamplePictures/Preview.gif" >
+    <img src="./SamplePictures/Match.gif">
+    <img src="./SamplePictures/Background.gif" style="zoom:44%;" >
+</div>
 
 下载：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut)  *(VIP账号 ：**Tast**；密码：**111111** )*
 
