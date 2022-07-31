@@ -26,9 +26,10 @@
 <div>
     <img src="./SamplePictures/Preview.gif" >
     <img src="./SamplePictures/Match.gif">
-    <img src="./SamplePictures/Background.gif" style="zoom:44%;" >
+    <img src="./SamplePictures/Background.gif" >
 </div>
-下载：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/rRut) (由于证书问题，如果想体验ios需要单独联系作者)  
+
+下载：[Android](https://www.pgyer.com/xlbk) 、[IOS](https://www.pgyer.com/rRut)  (由于证书问题，如果想体验ios需要单独联系作者)  
 
 ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
