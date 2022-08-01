@@ -610,8 +610,21 @@ where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2)
 group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
 order by login_time limit 2;
 
-
-
+/*addressable*/
+create table if not exists `assets_updating`(
+    `id` int not null,
+	`updata_time` long not null,
+    `is_on` int not null,
+    `url` VARCHAR(1000) not null,
+   primary key ( `id` )
+   )engine = innodb default charset = utf8;
+insert into assets_updating (id, is_on, updata_time, url)
+				   values
+				   (0, 0, 1633519472000, "https://www.pgyer.com/xlbk");                                     
+update assets_updating
+set is_on = 1
+where id = 0;
+select * from assets_updating;
 
 
 
