@@ -15,6 +15,7 @@ using System;
 public static class BuildHelper {
     public static void BuildGame(string type, string path = null) {
         ConfigBundleID();
+        BuildBundleToAsset();
         BuildConfig(type, () => {
             BuildGameApplication(path);
         });
@@ -23,6 +24,11 @@ public static class BuildHelper {
     public static void ConfigBundleID() {
         PlayerSettings.productName = "CrazyCar";
         PlayerSettings.applicationIdentifier = "com.TastSong.CrazyCar";
+    }
+
+    public static void BuildBundleToAsset() {
+        Debug.Log("BuildBundleToAsset......");
+        AddressableAssetSettings.BuildPlayerContent();
     }
 
     public static void BuildConfig(string type, Action successCallback = null) {
@@ -53,31 +59,14 @@ public static class BuildHelper {
         // 设置打板Unity参数
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
-        Debug.Log("BuildConfig...OVER...");
-        successCallback?.Invoke();
-    }
 
-    /// <summary>
-    /// 拷贝目录内容
-    /// </summary>
-    /// <param name="source">源目录</param>
-    /// <param name="destination">目的目录</param>
-    /// <param name="copySubDirs">是否拷贝子目录</param>
-    private static void CopyDirectory(DirectoryInfo source, DirectoryInfo destination, bool copySubDirs) {
-        if (!destination.Exists) {
-            destination.Create(); //目标目录若不存在就创建
-        }
-        FileInfo[] files = source.GetFiles();
-        foreach (FileInfo file in files) {
-            file.CopyTo(Path.Combine(destination.FullName, file.Name), true); //复制目录中所有文件
-        }
-        if (copySubDirs) {
-            DirectoryInfo[] dirs = source.GetDirectories();
-            foreach (DirectoryInfo dir in dirs) {
-                string destinationDir = Path.Combine(destination.FullName, dir.Name);
-                CopyDirectory(dir, new DirectoryInfo(destinationDir), copySubDirs); //复制子目录
-            }
-        }
+        GameObject.DestroyImmediate(go);
+        EditorUtility.SetDirty(nc);
+        UnityEditor.SceneManagement.EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+        GameObject.DestroyImmediate(go);
+
+        successCallback?.Invoke();
+        Debug.Log("Build OVER...");
     }
 
     // path set to another value to set the target folder directly
