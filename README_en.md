@@ -125,6 +125,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 3. [Mipmap](./ProjectOptimization/Mipmap.md)
 3. [Package](./ProjectOptimization/Package.md)
 3. [Network synchronization algorithm](./ProjectOptimization/NetworkSync.md)
+3. [Addressable](./ProjectOptimization/Addressable.md)
 
 ## Reference
 

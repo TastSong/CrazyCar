@@ -137,6 +137,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 3. [Mipmap](./ProjectOptimization/Mipmap.md)
 4. [包体优化](./ProjectOptimization/Mipmap.md)
 5. [网络同步算法](./ProjectOptimization/NetworkSync.md)
+5. [Addressable](./ProjectOptimization/Addressable.md)
 
 ------
 
