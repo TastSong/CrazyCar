@@ -78,8 +78,9 @@
 3. 打开**Windows -> Asset Management -> Groups**窗口
 4. 点击**Create**创建新的**Group**，命名为**Medal**
 5. 将资源拖入此分组
-6. 点击**Build -> Update a previous Build**，进行生成增量包  (请自行百度**Addressable**了解生成新包和增量包的区别)
-7. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
+6. 点击**Build -> New Build**，进行生成增量包  (请自行百度**Addressable**了解生成新包和增量包的区别)
+7. 将**CrazyCar\CrazyCar\Assets\StreamingAssets**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War/Jar**包发布到服务端即可
+7. 具体分组的参数设置可以查看[此文章](./ProjectOptimization/Addressable.md)
 
 ## 添加头像
 
@@ -87,8 +88,8 @@
 2. 将新头像拖入**Windows -> Asset Management -> Groups**窗口，中的**Avatar**分组
 3. 在数据库**avatar_name**表中添加新的头像信息，ID字段为头像名
 4. 运行Unity，进行查看
-5. 点击**Build -> Update a previous Build**，进行生成增量包 
-6. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
+5. 点击**Build -> New Build**，进行生成新包
+6. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War/Jar**包发布到服务端即可
 
 ## 自动化打版
 
@@ -103,8 +104,8 @@
 4. 将新装备**prefab**拖入**Windows -> Asset Management -> Groups**窗口，中的**Equip**分组
 5. 在数据库**all_equip**表中添加装备信息
 6. 运行Unity，进行查看
-7. 点击**Build -> Update a previous Build**，进行生成增量包 
-8. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War**包发布到服务端即可
+7. 点击**Build -> New Build**，进行生成新包
+8. 将**CrazyCar\CrazyCar\ServerData**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War/Jar**包发布到服务端即可
 
 ## 增加TimeTrial关卡
 

@@ -60,3 +60,7 @@ Bundle Mode ：打成一个包，好管理
 Build & Load Paths：此分组设置成远程分组，如果有要更新的资源，需要放至此分组
 
 Asset Bundle CRC：远程分组最好进行CRC校验，即使不同计算机打包不一样，也无所谓，因为每次更新资源此包都会被整包重新下载
+
+![image-20220802185919250](./Image/image-20220802185919250.png)
+
+打包直接使用**New Build**即可，无用进行**Update a previous Build**
