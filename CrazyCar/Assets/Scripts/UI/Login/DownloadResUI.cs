@@ -41,8 +41,7 @@ public class DownloadResUI : MonoBehaviour, IController {
                             },
                             confirmText: this.GetSystem<II18NSystem>().GetText("Download")));
                     } else {
-                        AddressableInfo.BaseUrl = this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl;
-                        DownloadRes();
+                        this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => { DownloadRes(); });
                     }
                 }));
     }

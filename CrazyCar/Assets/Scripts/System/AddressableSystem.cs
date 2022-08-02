@@ -18,6 +18,7 @@ public interface IAddressableSystem : ISystem {
     void DownloadAsset();
     void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoad);
     void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded);
+    void SetUpdateInfo(Action finish);
 }
 
 public class AddressableSystem : AbstractSystem, IAddressableSystem {
@@ -141,6 +142,18 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     public void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded) {
         rid = rid.Trim();
         Addressables.LoadAssetAsync<GameObject>("Assets/AB/Equip/Items/" + rid + ".prefab").Completed += OnLoaded;
+    }
+
+    public void SetUpdateInfo(Action finish) {
+       CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl,
+                succData: (data) => { 
+                    if ((bool)data["is_on"]) {
+                        AddressableInfo.BaseUrl = (string)data["url"];
+                    } else {
+                        AddressableInfo.BaseUrl = Application.streamingAssetsPath;
+                    }
+                    finish.Invoke();
+                }));
     }
 
     protected override void OnInit() {
