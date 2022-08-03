@@ -95,6 +95,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/avatar',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Avatar',
+        component: () => import('@/views/avatar/index'),
+        meta: { title: 'Avatar', icon: 'avatar0' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     hidden: true,
