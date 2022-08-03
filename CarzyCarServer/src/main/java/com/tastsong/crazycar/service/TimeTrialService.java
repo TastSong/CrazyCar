@@ -44,6 +44,15 @@ public class TimeTrialService {
         return timeTrialInfoModels;
     }
 
+    public List<TimeTrialInfoModel> getTimeTrialInfos(){
+        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfos();
+        return timeTrialInfoModels;
+    }
+
+    public boolean updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel){
+        return timeTrialMapper.updateTimeTrialInfo(timeTrialInfoModel) == 1;
+    }
+
     public boolean isHasClass(Integer uid, Integer cid){
         return timeTrialMapper.isHasTimeTrialClass(uid, cid);
     }

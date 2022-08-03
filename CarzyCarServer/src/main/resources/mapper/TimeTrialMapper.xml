@@ -112,4 +112,11 @@
         group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
         order by record_time limit ${offsetTime};
     </select>
+
+    <update id="updateTimeTrialInfo" parameterType="TimeTrialInfoModel">
+        update time_trial_class
+        set map_id = #{map_id}, has_water = #{has_water}, star = #{star}, 
+         limit_time = #{limit_time}, class_name = #{class_name}, times = #{times}
+        where cid = #{cid}
+    </update>
 </mapper>
