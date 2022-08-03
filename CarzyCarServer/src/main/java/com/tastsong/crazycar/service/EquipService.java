@@ -54,4 +54,12 @@ public class EquipService {
     public void changeEquip(Integer uid, Integer eid){
         userMapper.updateUserEid(uid, eid);
     }
+
+    public List<EquipModel> getEqiupInfos(){
+        return equipMapper.getEquipList();
+    }
+    
+    public boolean updtaeEquipInfo(EquipModel equipModel){
+        return equipMapper.updateEquipInfo(equipModel) == 1;
+    }
 }

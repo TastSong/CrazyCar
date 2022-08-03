@@ -10,4 +10,5 @@ public interface EquipMapper {
     public List<Integer> getEidsByUid(Integer uid);
     public boolean isHasEquip(Integer uid, Integer eid);
     public Integer addEquipForUser(Integer uid, Integer eid);
+    public Integer updateEquipInfo(EquipModel equipModel);
 }

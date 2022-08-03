@@ -36,4 +36,12 @@
          #{eid}, #{uid}
         )
     </insert>
+
+    <update id="updateEquipInfo" parameterType="EquipModel">
+        update all_equip
+        set rid = #{rid}, equip_name = #{equip_name}, star = #{star},
+         mass = #{mass}, power = #{power}, max_power = #{max_power}, 
+         can_wade = #{can_wade}, is_show = #{is_show}
+        where eid = #{eid}
+    </update>
 </mapper>
