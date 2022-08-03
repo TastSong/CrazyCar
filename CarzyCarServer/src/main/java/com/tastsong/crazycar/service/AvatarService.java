@@ -25,6 +25,15 @@ public class AvatarService {
         return avatarModels;
     }
 
+    public List<AvatarModel> getAvatarInfos(){
+        List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
+        return avatarModels;
+    }
+
+    public boolean updateAvatarInfo(AvatarModel avatarModel){
+        return avatarMapper.updateAvatarInfo(avatarModel) == 1;
+    }
+
     public boolean isHasAvatar(Integer uid, Integer aid){
         return avatarMapper.isHasAvatar(uid, aid);
     }

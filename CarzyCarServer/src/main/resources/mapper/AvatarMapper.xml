@@ -36,4 +36,10 @@
         from avatar_uid 
         where uid = #{uid} and aid = #{aid});
     </select>
+
+    <update id="updateAvatarInfo" parameterType="AvatarModel">
+        update avatar_name
+        set rid = #{rid}, avatar_name = #{avatar_name}, star = #{star}
+        where aid = #{aid}
+    </update>
 </mapper>

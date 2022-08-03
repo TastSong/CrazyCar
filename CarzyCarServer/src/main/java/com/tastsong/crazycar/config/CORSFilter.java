@@ -47,6 +47,7 @@ public class CORSFilter implements Filter{
             if(token != null){
                 filterChain.doFilter(servletRequest, servletResponse);
             } else{
+                log.info("missing Token ：{}", request.getRequestURI());
                 return;
             }
         } catch (Exception e) {
