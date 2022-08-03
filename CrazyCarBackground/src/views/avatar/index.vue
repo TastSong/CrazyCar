@@ -77,7 +77,6 @@
 
 <script>
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { getAvatarInfos, updateAvatarInfo } from '@/api/avatar'
 
@@ -117,8 +116,7 @@ export default {
         avatar_name: [{ required: true, message: 'avatar_name is required', trigger: 'change' }],
         star: [{ required: true, message: 'star is required', type: 'number', trigger: 'change' }]
       },
-      downloadLoading: false,
-      parseTime: parseTime
+      downloadLoading: false
     }
   },
   created() {
@@ -183,15 +181,6 @@ export default {
           })
         }
       })
-    },
-    formatJson(filterVal) {
-      return this.list.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
