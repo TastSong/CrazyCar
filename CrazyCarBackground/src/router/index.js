@@ -134,6 +134,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/match',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Match',
+        component: () => import('@/views/match/index'),
+        meta: { title: 'Match', icon: 'match' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     hidden: true,
