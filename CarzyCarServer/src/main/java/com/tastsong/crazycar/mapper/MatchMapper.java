@@ -20,4 +20,5 @@ public interface MatchMapper {
     public List<MatchRankModel> getMatchRankList(Integer uid, Integer cid);
     public Integer initMatchRank(Integer uid, Integer cid);
     public List<DataStatisticsModel> getMatchData(Integer offsetTime); 
+    public Integer updateMatchMapInfo(MatchMapInfoModel mapInfoModel);
 }

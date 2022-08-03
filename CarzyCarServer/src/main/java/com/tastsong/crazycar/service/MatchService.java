@@ -64,6 +64,10 @@ public class MatchService {
         return matchMapper.getMatchMapDetail();
     }
 
+    public boolean updateMatchMapInfo(MatchMapInfoModel mapInfoModel){
+        return matchMapper.updateMatchMapInfo(mapInfoModel) == 1;
+    }
+
     public boolean isVIP(Integer uid){
         return userMapper.getUserByUid(uid).is_vip;
     }
