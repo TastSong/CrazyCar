@@ -121,6 +121,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/trial',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Trial',
+        component: () => import('@/views/trial/index'),
+        meta: { title: 'Trial', icon: 'trial' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     hidden: true,
