@@ -62,6 +62,12 @@ public class LoginController {
 		} else{
 			loginService.registerUser(userName, password);
 			if (loginService.isExistsUser(userName)){	
+				UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
+				userLoginRecordModel.user_name = userName;
+				userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
+				userLoginRecordModel.device = body.getStr("device");
+				userLoginRecordModel.place = body.getStr("place");
+				loginService.recordLoginInfo(userLoginRecordModel);
 				return loginService.getUserInfo(userName);
 			} else{
 				return Result.failure(ResultCode.RC425);
