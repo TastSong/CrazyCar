@@ -31,9 +31,11 @@ public class LoginController {
 	public Object login(@RequestBody JSONObject body) throws Exception {
 		String userName = body.getStr("UserName");
 		String password = body.getStr("Password");
-		UserModel userModel = loginService.getUserByName(userName);
 		log.info("login : userName = " + userName + "; password  = " + password);
-		if (password.equals(userModel.user_password)){
+		UserModel userModel = loginService.getUserByName(userName);
+		if(userModel == null){
+			return Result.failure(ResultCode.RC404);
+		} else if (password.equals(userModel.user_password)){
 			return loginService.getUserInfo(userName);
 		} else{
 			return Result.failure(ResultCode.RC423);
