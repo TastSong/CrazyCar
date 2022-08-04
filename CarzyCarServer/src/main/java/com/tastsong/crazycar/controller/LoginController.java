@@ -29,21 +29,26 @@ public class LoginController {
 
 	@PostMapping(value = "/Login")
 	public Object login(@RequestBody JSONObject body) throws Exception {
-		String userName = body.getStr("UserName")		;
+		String userName = body.getStr("UserName");
 		String password = body.getStr("Password");
 		UserModel userModel = loginService.getUserByName(userName);
 		log.info("login : userName = " + userName + "; password  = " + password);
 		if (password.equals(userModel.user_password)){
-			UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
-			userLoginRecordModel.user_name = userName;
-			userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
-			userLoginRecordModel.device = body.getStr("device");
-			userLoginRecordModel.place = body.getStr("place");
-			loginService.recordLoginInfo(userLoginRecordModel);
 			return loginService.getUserInfo(userName);
 		} else{
 			return Result.failure(ResultCode.RC423);
 		}
+	}
+
+	@PostMapping(value = "/recodeLogin")
+	public Object recodeLogin(@RequestBody JSONObject body) throws Exception {
+		UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
+		userLoginRecordModel.user_name = body.getStr("UserName");
+		userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
+		userLoginRecordModel.device = body.getStr("device");
+		userLoginRecordModel.place = body.getStr("place");
+		loginService.recordLoginInfo(userLoginRecordModel);
+		return Result.success();
 	}
 
 	@GetMapping (value = "/TestJWT")
@@ -62,12 +67,6 @@ public class LoginController {
 		} else{
 			loginService.registerUser(userName, password);
 			if (loginService.isExistsUser(userName)){	
-				UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
-				userLoginRecordModel.user_name = userName;
-				userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
-				userLoginRecordModel.device = body.getStr("device");
-				userLoginRecordModel.place = body.getStr("place");
-				loginService.recordLoginInfo(userLoginRecordModel);
 				return loginService.getUserInfo(userName);
 			} else{
 				return Result.failure(ResultCode.RC425);

@@ -14,12 +14,6 @@ public class RegisterCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        CoroutineController.manager.StartCoroutine(Util.GetPlace((place) => {
-            Register(place);
-        })); 
-    }
-
-    private void Register(string place) {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -27,10 +21,6 @@ public class RegisterCommand : AbstractCommand {
         w.Write(mUserName);
         w.WritePropertyName("Password");
         w.Write(Util.GetMd5(mPassword));
-        w.WritePropertyName("device");
-        w.Write(SystemInfo.deviceModel);
-        w.WritePropertyName("place");
-        w.Write(place);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
@@ -43,6 +33,7 @@ public class RegisterCommand : AbstractCommand {
                 if (code == 200) {
                     this.GetSystem<IVibrationSystem>().Haptic();
                     this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
+                        this.SendCommand<RecodeLoginCommand>();
                         this.SendCommand(new LoadSceneCommand(SceneID.Index));
                     }));
                 } else if (code == 423) {

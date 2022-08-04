@@ -16,12 +16,6 @@ public class LoginCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        CoroutineController.manager.StartCoroutine(Util.GetPlace((place) => {
-            Login(place);
-        }));
-    }
-
-    private void Login(string place) {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -29,10 +23,6 @@ public class LoginCommand : AbstractCommand {
         w.Write(mUserName);
         w.WritePropertyName("Password");
         w.Write(Util.GetMd5(mPassword));
-        w.WritePropertyName("device");
-        w.Write(SystemInfo.deviceModel);
-        w.WritePropertyName("place");
-        w.Write(place);
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
@@ -46,6 +36,7 @@ public class LoginCommand : AbstractCommand {
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
+                            this.SendCommand<RecodeLoginCommand>();
                             this.SendCommand(new LoadSceneCommand(SceneID.Index));
                         }));
 
