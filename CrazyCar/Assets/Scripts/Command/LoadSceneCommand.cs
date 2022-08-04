@@ -12,6 +12,9 @@ public class LoadSceneCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
+        if (this.GetModel<IGameModel>().SceneLoading) {
+            return;
+        }
         this.GetModel<IGameModel>().LoadingTargetSceneID.Value = mSceneID;
         SceneManager.LoadScene((int)SceneID.Loading);
     }

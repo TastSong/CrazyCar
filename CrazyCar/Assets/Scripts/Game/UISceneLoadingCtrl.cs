@@ -13,6 +13,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     public float minLoadingTime = 0.1f;
 
     private void Start() {
+        this.GetModel<IGameModel>().SceneLoading.Value = true;
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = "0%";
@@ -25,7 +26,6 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     }
 
     private IEnumerator LoadScene() {
-        this.GetModel<IGameModel>().SceneLoading.Value = true;
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = (int)(progressSlider.value * 100) + "%";
