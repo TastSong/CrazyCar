@@ -16,7 +16,7 @@ public class ChangePasswordCommand : AbstractCommand {
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
         w.WritePropertyName("password");
-        w.Write(mPassword);
+        w.Write(Util.GetMd5(mPassword));
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
