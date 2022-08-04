@@ -28,7 +28,7 @@ public class LoginCommand : AbstractCommand {
         w.WritePropertyName("UserName");
         w.Write(mUserName);
         w.WritePropertyName("Password");
-        w.Write(mPassword);
+        w.Write(Util.GetMd5(mPassword));
         w.WritePropertyName("device");
         w.Write(SystemInfo.deviceModel);
         w.WritePropertyName("place");

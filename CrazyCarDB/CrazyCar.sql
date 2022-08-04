@@ -15,16 +15,16 @@ create table if not exists `all_user`(
    )engine = innodb default charset = utf8;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "111111", 1629544628, 1, 99, 1, 1);
+					   (1, "Tast", "96e79218965eb72c92a549dd5a330112", 1629544628, 1, 99, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "song", "111111", 1629544634, 2, 88, 1, 2);
+					   (2, "song", "96e79218965eb72c92a549dd5a330112", 1629544634, 2, 88, 1, 2);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (3, "阿宋小娇妻", "111111", 1629544655, 3, 66, 1, 3);        
+					   (3, "阿宋小娇妻", "96e79218965eb72c92a549dd5a330112", 1629544655, 3, 66, 1, 3);        
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (4, "Lory", "111111", 1629544666, 4, 12, 0, 1);                       
+					   (4, "Lory", "96e79218965eb72c92a549dd5a330112", 1629544666, 4, 12, 0, 1);                       
 select* from all_user;
 
 select user_password 

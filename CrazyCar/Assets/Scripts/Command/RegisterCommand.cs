@@ -20,7 +20,7 @@ public class RegisterCommand : AbstractCommand {
         w.WritePropertyName("UserName");
         w.Write(mUserName);
         w.WritePropertyName("Password");
-        w.Write(mPassword);
+        w.Write(Util.GetMd5(mPassword));
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
