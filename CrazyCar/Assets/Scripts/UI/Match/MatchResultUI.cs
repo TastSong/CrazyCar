@@ -51,7 +51,7 @@ public class MatchResultUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            Util.LoadingScene(SceneID.Index);
+            this.SendCommand(new LoadSceneCommand(SceneID.Index));
         });
 
         refreshBtn.onClick.AddListener(() => {

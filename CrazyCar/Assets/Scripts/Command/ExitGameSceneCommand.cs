@@ -15,7 +15,7 @@ public class ExitGameSceneCommand : AbstractCommand
                 this.SendEvent<ExitGameSceneEvent>();
                 this.GetSystem<IPlayerManagerSystem>().peers.Clear();
                 Time.timeScale = 1;
-                Util.LoadingScene(SceneID.Index);
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
             },
             fail: () => {
                 Time.timeScale = 1;

@@ -64,7 +64,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
 
     private void Start() {
         confirmBtn.onClick.AddListener(() => {
-            Util.LoadingScene(SceneID.Index);
+            this.SendCommand(new LoadSceneCommand(SceneID.Index));
         });
 
         rankBtn.onClick.AddListener(() => {

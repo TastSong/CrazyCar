@@ -13,7 +13,7 @@ public class EnableStandAloneCommand : AbstractCommand {
 
         this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Login Success"),
             callback: () => {
-                Util.LoadingScene(SceneID.Index);
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
             }));
     }
 }

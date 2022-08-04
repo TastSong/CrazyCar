@@ -340,18 +340,6 @@ namespace Utils {
             return (long)((DateTime.Now.ToUniversalTime() - JanFirst1970).TotalMilliseconds + 0.5);
         }
 
-        private static SceneID loadingTargetSceneID;
-        public static SceneID LoadingTargetSceneID {
-            get {
-                return loadingTargetSceneID;
-            }
-        }
-
-        public static void LoadingScene(SceneID sceneID) {
-            loadingTargetSceneID = sceneID;
-            SceneManager.LoadScene((int)SceneID.Loading);
-        }
-
         public static string GetPlatform() {
 #if UNITY_STANDALONE
             return "PC";

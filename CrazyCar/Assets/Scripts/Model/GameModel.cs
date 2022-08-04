@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
+using Utils;
 
 public enum GameType {
     TimeTrial = 0,
@@ -10,6 +11,8 @@ public enum GameType {
 
 public interface IGameModel : IModel {
     BindableProperty<bool> SceneLoaded { get; }
+    BindableProperty<bool> SceneLoading { get; }
+    BindableProperty<SceneID> LoadingTargetSceneID { get; }
     BindableProperty<string> Token { get; }
     GameType CurGameType { get; set; }
     BindableProperty<float> SendMsgOffTime { get; }
@@ -20,7 +23,8 @@ public interface IGameModel : IModel {
 
 public class GameModel : AbstractModel, IGameModel {
     public BindableProperty<bool> SceneLoaded { get; } = new BindableProperty<bool>();
-
+    public BindableProperty<bool> SceneLoading { get; } = new BindableProperty<bool>();
+    public BindableProperty<SceneID> LoadingTargetSceneID { get; } = new BindableProperty<SceneID>();
     public BindableProperty<string> Token { get; } = new BindableProperty<string>();
 
     public GameType CurGameType { get; set; }

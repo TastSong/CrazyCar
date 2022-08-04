@@ -33,7 +33,7 @@ public class GameUIControl : MonoBehaviour, IController {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
             this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Game Over"), 2.0f));
             Util.DelayExecuteWithSecond(2.0f, () => {
-                Util.LoadingScene(SceneID.Index);
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
             });           
         } else {
             controlPanel.gameObject.SetActiveFast(false);

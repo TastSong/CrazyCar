@@ -25,12 +25,13 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     }
 
     private IEnumerator LoadScene() {
+        this.GetModel<IGameModel>().SceneLoading.Value = true;
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = (int)(progressSlider.value * 100) + "%";
         progressSlider.value = 0.1f;
         progressText.text = (int)(progressSlider.value * 100) + "%";
-        var async = SceneManager.LoadSceneAsync((int)Util.LoadingTargetSceneID);
+        var async = SceneManager.LoadSceneAsync((int)this.GetModel<IGameModel>().LoadingTargetSceneID.Value);
 
         while (timer < minLoadingTime) {
             var maxProgress = (timer / minLoadingTime);
@@ -48,6 +49,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
         this.GetModel<IGameModel>().SceneLoaded.Value = true;
+        this.GetModel<IGameModel>().SceneLoading.Value = false;
         this.SendCommand(new SelectGameUICommand());
     }
 

@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour, IController {
         InitSettingsInfo();
     }
 
-    public void InitSettingsInfo() {
+    private void InitSettingsInfo() {
         this.SendCommand<SavaSettingsCommand>();
     }
 

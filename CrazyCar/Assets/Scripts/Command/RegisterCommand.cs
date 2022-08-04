@@ -33,7 +33,7 @@ public class RegisterCommand : AbstractCommand {
                 if (code == 200) {
                     this.GetSystem<IVibrationSystem>().Haptic();
                     this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
-                        Util.LoadingScene(SceneID.Index);
+                        this.SendCommand(new LoadSceneCommand(SceneID.Index));
                     }));
                 } else if (code == 423) {
                     this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User registered")));

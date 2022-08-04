@@ -46,7 +46,7 @@ public class LoginCommand : AbstractCommand {
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
-                            Util.LoadingScene(SceneID.Index);
+                            this.SendCommand(new LoadSceneCommand(SceneID.Index));
                         }));
 
                 } else if (code == 423) {
