@@ -89,7 +89,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'Assets',
         component: () => import('@/views/assets/index'),
-        meta: { title: 'Assets', icon: 'zip' }
+        meta: { title: 'Assets', icon: 'assets' }
       }
     ]
   },
