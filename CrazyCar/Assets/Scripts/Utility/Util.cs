@@ -247,7 +247,7 @@ namespace Utils {
                 yield break;
             }
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
             string filePath = "file:///" + path;
 #elif UNITY_ANDROID
             string filePath = "file:///" + path;
@@ -346,7 +346,9 @@ namespace Utils {
 #elif UNITY_ANDROID
             return "Android";
 #elif UNITY_IOS
-        return "ios";
+            return "ios";
+#elif UNITY_WEBGL
+            return "WebGL";
 #endif
         }
 

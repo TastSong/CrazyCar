@@ -393,6 +393,9 @@ insert into forced_updating ( platform, version, rule, updata_time, url)
 				   ("ios", "8.6.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
+				   ("WebGL", "8.6.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+insert into forced_updating ( platform, version, rule, updata_time, url)
+				   values
 				   ("PC", "8.6.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");    
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
