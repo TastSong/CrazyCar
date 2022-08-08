@@ -1,4 +1,29 @@
 # CrazyCar
+
+## 视频教程
+
+### 一、前端环境
+
+<video src="./SamplePictures/一、前端环境.mp4" width="800px" height="600px" controls="controls"></video>
+
+### 二、服务端环境
+
+#### 2.1数据库
+
+<video src="./SamplePictures/二、服务端环境---数据库.mp4" width="800px" height="600px" controls="controls"></video>
+
+#### 2.2 Java环境
+
+ <video src="./SamplePictures/二、服务端环境---Java环境.mp4" width="800px" height="600px" controls="controls"></video>
+
+#### 2.3 VSCode
+
+<video src="./SamplePictures/二、服务器环境---VSCode.mp4" width="800px" height="600px" controls="controls"></video>
+
+### 三、后台环境
+
+<video src="./SamplePictures/三、后台环境.mp4" width="800px" height="600px" controls="controls"></video>
+
 ## 运行
 
 1. 用**Unity**(2021.3.1及以上)打开**CrazyCar -> CrazyCar**项目；
