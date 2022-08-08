@@ -4,7 +4,7 @@ using UnityEngine;
 using QFramework;
 
 public class UserInfoQuery : AbstractQuery<UserInfo> {
-    public override UserInfo Do() {
+    protected override UserInfo OnDo() {
         var info = this.GetModel<IUserModel>();
         UserInfo userInfo = new UserInfo();
         userInfo.aid = info.Aid.Value;
