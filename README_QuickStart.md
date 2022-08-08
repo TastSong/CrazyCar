@@ -2,25 +2,25 @@
 
 ## 视频教程
 
-### 一、前端环境
+### [一、前端环境](./SamplePictures/一、前端环境.mp4)
 
 <video src="./SamplePictures/一、前端环境.mp4" width="800px" height="600px" controls="controls"></video>
 
 ### 二、服务端环境
 
-#### 2.1数据库
+#### 2.1 [数据库](./SamplePictures/二、服务端环境---数据库.mp4)
 
 <video src="./SamplePictures/二、服务端环境---数据库.mp4" width="800px" height="600px" controls="controls"></video>
 
-#### 2.2 Java环境
+#### 2.2  [Java环境](./SamplePictures/二、服务端环境---Java环境.mp4)
 
  <video src="./SamplePictures/二、服务端环境---Java环境.mp4" width="800px" height="600px" controls="controls"></video>
 
-#### 2.3 VSCode
+#### 2.3  [VSCode](./SamplePictures/二、服务器环境---VSCode.mp4)
 
 <video src="./SamplePictures/二、服务器环境---VSCode.mp4" width="800px" height="600px" controls="controls"></video>
 
-### 三、后台环境
+### 三、[后台环境](./SamplePictures/三、后台环境.mp4)
 
 <video src="./SamplePictures/三、后台环境.mp4" width="800px" height="600px" controls="controls"></video>
 
