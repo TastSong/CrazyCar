@@ -140,6 +140,9 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
 
     public void OnCreateMsg(JsonData recJD) {
         int code = (int)recJD["code"];
+        if (this.GetModel<IUserModel>().Uid != (int)recJD["uid"]) {
+            return;
+        }
         Debug.Log("OnCreateMsg = " + code);
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();

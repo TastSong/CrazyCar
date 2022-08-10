@@ -115,6 +115,7 @@ public class MatchRoomWebSocket {
         String token = message.getStr("token");
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
+        data.putOpt("uid", uid);
         if(!Util.isLegalToken(token)){
             data.putOpt("code", 423);
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
