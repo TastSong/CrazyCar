@@ -23,7 +23,7 @@ public class MatchRoomPlayerItem : MonoBehaviour, IController {
     }
 
     public void CleanItem() {
-        nickName.text = "等待加入...";
+        nickName.text = this.GetSystem<II18NSystem>().GetText("Waiting...");
         defaultImage.gameObject.SetActiveFast(true);
         avatarImage.gameObject.SetActiveFast(false);
     }

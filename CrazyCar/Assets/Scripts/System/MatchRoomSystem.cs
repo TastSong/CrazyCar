@@ -173,7 +173,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                         this.SendEvent<MatchRoomExitEvent>();
                     }, type: ConfirmAlertType.Single));
             } else {
-                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText(this.GetSystem<II18NSystem>().GetText("Members of the exit"))));
+                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Members of the exit")));
                 JsonData players = recJD["players"];
                 var infos = this.GetModel<IMatchModel>().MemberInfoDic;
                 infos.Clear();
