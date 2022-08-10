@@ -111,35 +111,30 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
-        if (msgType == MsgType.CreatePlayer) {
-            playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
-            if (playerCreateMsg.userInfo.uid == this.GetModel<IUserModel>().Uid) {
+        if (msgType == MsgType.CreatePlayer || msgType == MsgType.PlayerState ||
+            msgType == MsgType.PlayerOperat || msgType == MsgType.PlayerCompleteGame) {
+            if ((int)recJD["uid"] == this.GetModel<IUserModel>().Uid) {
                 return;
             }
+        }
+
+        if (msgType == MsgType.CreatePlayer) {
+            playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
             lock (MsgLock) {
                 PlayerCreateMsgs.Enqueue(playerCreateMsg);
             }
         } else if(msgType == MsgType.PlayerState) {
             playerStateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerStateMsg(recJD);
-            if (playerStateMsg.uid == this.GetModel<IUserModel>().Uid) {
-                return;
-            }
             lock (MsgLock) {
                 PlayerStateMsgs.Enqueue(playerStateMsg);
             }
         } else if (msgType == MsgType.PlayerOperat){
             playerOperatMsg = this.GetSystem<IDataParseSystem>().ParsePlayerOperatMsg(recJD);
-            if (playerOperatMsg.uid == this.GetModel<IUserModel>().Uid) {
-                return;
-            }
             lock (MsgLock) {
                 PlayerOperatMsgs.Enqueue(playerOperatMsg);
             }
         } else if (msgType == MsgType.PlayerCompleteGame) {
             playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
-            if (playerCompleteMsg.uid == this.GetModel<IUserModel>().Uid) {
-                return;
-            }
             lock (MsgLock) {
                 PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
             }

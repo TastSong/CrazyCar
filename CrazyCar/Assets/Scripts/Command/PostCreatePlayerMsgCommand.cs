@@ -10,6 +10,8 @@ public class PostCreatePlayerMsgCommand : AbstractCommand {
         w.WriteObjectStart();
         w.WritePropertyName("msg_type");
         w.Write((int)MsgType.CreatePlayer);
+        w.WritePropertyName("uid");
+        w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WritePropertyName("cid");
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             w.Write(this.GetModel<IMatchModel>().SelectInfo.Value.cid);
