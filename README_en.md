@@ -31,7 +31,7 @@ Download：[Android](https://www.pgyer.com/xlbk)、[IOS](https://www.pgyer.com/r
 
 ID：*(VIP ID：**Tast**；Password：**111111** )*
 
-[Quick Start](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[Design Document](./Document)&nbsp;
+[Quick Start(video)](./README_QuickStart.md)&nbsp;  | &nbsp;[Technical Documentation](./README_Dev.md)&nbsp;| &nbsp;[Update Log](https://github.com/TastSong/CrazyCar/releases)&nbsp; | &nbsp;[Design Document](./Document)&nbsp;
 
 :clap:  Welcome **Crazy Car** ！ 
 
