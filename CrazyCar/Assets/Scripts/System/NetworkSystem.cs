@@ -118,9 +118,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
             MPlayer peer = null;
             if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-                if (netType == NetType.WebSocket) {
-                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
-                } else {
+                lock (MsgLock) {
                     PlayerCreateMsgs.Enqueue(playerCreateMsg);
                 }
             }
@@ -129,36 +127,24 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (playerStateMsg.uid == this.GetModel<IUserModel>().Uid) {
                 return;
             }
-            if (netType == NetType.WebSocket) {               
-                this.GetSystem<IPlayerManagerSystem>().RespondStateAction(playerStateMsg);
-            } else{
-                lock (MsgLock) {
-                    PlayerStateMsgs.Enqueue(playerStateMsg);
-                }
+            lock (MsgLock) {
+                PlayerStateMsgs.Enqueue(playerStateMsg);
             }
         } else if (msgType == MsgType.PlayerOperat){
             playerOperatMsg = this.GetSystem<IDataParseSystem>().ParsePlayerOperatMsg(recJD);
             if (playerOperatMsg.uid == this.GetModel<IUserModel>().Uid) {
                 return;
             }
-            if (netType == NetType.WebSocket) {
-                this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(playerOperatMsg);
-            } else {
-                lock (MsgLock) {
-                    PlayerOperatMsgs.Enqueue(playerOperatMsg);
-                }
+            lock (MsgLock) {
+                PlayerOperatMsgs.Enqueue(playerOperatMsg);
             }
         } else if (msgType == MsgType.PlayerCompleteGame) {
             playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
             if (playerCompleteMsg.uid == this.GetModel<IUserModel>().Uid) {
                 return;
             }
-            if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-                if (netType == NetType.WebSocket) {
-                    this.SendEvent(new UpdateMatchResultUIEvent(playerCompleteMsg));
-                } else {
-                    PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
-                }
+            lock (MsgLock) {
+                PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
             }
         } else if (msgType == MsgType.MatchRoomCreate) {
             this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);

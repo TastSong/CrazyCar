@@ -40,7 +40,7 @@ public class NetworkController : MonoBehaviour, IController {
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         // KCP 开了线程所以只能把 RespondAction放进主线程
         if (this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Count > 0) {
             lock (this.GetSystem<INetworkSystem>().MsgLock) {

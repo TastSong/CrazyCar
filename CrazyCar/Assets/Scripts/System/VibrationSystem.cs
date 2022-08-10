@@ -9,7 +9,7 @@ public interface IVibrationSystem : ISystem {
 
 public class VibrationSystem : AbstractSystem, IVibrationSystem {
     public void Haptic() {
-#if !UNITY_EDITOR && !UNITY_WEBGL
+#if !UNITY_EDITOR && !UNITY_WEBGL && !UNITY_STANDALONE
         if (this.GetModel<ISettingsModel>().IsOnVibration) {
             Handheld.Vibrate();
         }
