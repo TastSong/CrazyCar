@@ -116,11 +116,8 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (playerCreateMsg.userInfo.uid == this.GetModel<IUserModel>().Uid) {
                 return;
             }
-            MPlayer peer = null;
-            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-                lock (MsgLock) {
-                    PlayerCreateMsgs.Enqueue(playerCreateMsg);
-                }
+            lock (MsgLock) {
+                PlayerCreateMsgs.Enqueue(playerCreateMsg);
             }
         } else if(msgType == MsgType.PlayerState) {
             playerStateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerStateMsg(recJD);

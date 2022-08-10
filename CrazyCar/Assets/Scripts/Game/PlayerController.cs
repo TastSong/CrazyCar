@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnMakeNewPlayer(MakeNewPlayerEvent e) {
+        if (this.GetSystem<IPlayerManagerSystem>().peers.ContainsKey(e.playerCreateMsg.userInfo.uid)) {
+            return;
+        }
         UserInfo userInfo = e.playerCreateMsg.userInfo;
         MPlayer mPlayer = Instantiate(mPlayerPrefab, e.playerCreateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
