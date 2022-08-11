@@ -27,7 +27,7 @@ public static class RequestUrl {
     public static string getUserInfo = "v2/UserInfo/GetUser";
 
     public static string matchRoomWSUrl = "websocket/MatchRoomWebSocket/";
-    public static string matchWSUrl = "websocket/MatchWebSocket/";
+    public static string matchWSUrl = "websocket/MatchWebSocket";
     public static string timeTrialWSUrl = "websocket/TimeTrialWebSocket/";
 
     public static string aiUrl = "AI";

@@ -11,10 +11,7 @@ public class MatchNet : MonoBehaviour, IController {
 
     private void Start() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-            string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + 
-                RequestUrl.matchWSUrl +
-                this.GetModel<IUserModel>().Uid.Value + "," +
-                this.GetModel<IMatchModel>().SelectInfo.Value.cid;
+            string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + RequestUrl.matchWSUrl;
 
             if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
                 this.GetSystem<INetworkSystem>().Connect(ws);
