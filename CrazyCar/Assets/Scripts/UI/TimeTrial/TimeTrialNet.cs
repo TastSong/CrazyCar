@@ -10,10 +10,9 @@ public class TimeTrialNet : MonoBehaviour, IController {
     private Coroutine timeTrialNetCor;
 
     private void Start() {
-        //if (this.GetModel<IGameControllerModel>().CurGameType == GameType.TimeTrial) {
+        //if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
         //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-        //        RequestUrl.timeTrialWSUrl +
-        //        this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid;
+        //        RequestUrl.timeTrialWSUrl;
         //    Debug.Log("+++ " + ws);
         //    if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
         //        this.GetSystem<INetworkSystem>().Connect(ws);
@@ -21,8 +20,13 @@ public class TimeTrialNet : MonoBehaviour, IController {
         //        this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
         //    }
 
-        //    Util.DelayExecuteWithSecond(3, () => { this.SendCommand<PostCreatePlayerMsgCommand>(); });
-        //    Util.DelayExecuteWithSecond(4.5f, () => { timeTrialNetCor = CoroutineController.manager.StartCoroutine(SendMsg()); });
+        //    StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ: () => {
+        //        Debug.Log("Connect succ");
+        //        this.SendCommand<PostCreatePlayerMsgCommand>();
+        //        timeTrialNetCor = CoroutineController.manager.StartCoroutine(SendMsg());
+        //    }, fail: () => {
+        //        Debug.Log("Connect Fail");
+        //    }));
         //}
 
         //this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
