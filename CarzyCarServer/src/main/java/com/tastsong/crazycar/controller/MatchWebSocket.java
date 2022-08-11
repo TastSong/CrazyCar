@@ -78,7 +78,7 @@ public class MatchWebSocket {
      * 给指定的人发送消息
      * @param message
      */
-    public void sendToUser(JSONObject message) {
+    private void sendToUser(JSONObject message) {
     	String cid = message.getStr("cid");
         Integer uid = message.getInt("uid");
     	
@@ -125,16 +125,19 @@ public class MatchWebSocket {
      * @param message
      * @throws IOException
      */
-    public void sendMessage(JSONObject message) throws IOException {
+    private void sendMessage(JSONObject message) throws IOException {
         this.WebSocketsession.getBasicRemote().sendText(message.toString());
         //this.session.getAsyncRemote().sendText(message);
     }
+    
     public static synchronized int getOnlineCount() {
         return onlineCount;
     }
+
     public static synchronized void addOnlineCount() {
     	MatchWebSocket.onlineCount++;
     }
+
     public static synchronized void subOnlineCount() {
     	MatchWebSocket.onlineCount--;
     }
