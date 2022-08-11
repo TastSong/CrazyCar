@@ -94,11 +94,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public void Connect(string url) {
+    public void Connect(string url = "") {
         if (netType == NetType.WebSocket) {
+            url = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + url;
             this.GetSystem<IWebSocketSystem>().Connect(url);
         } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().Connect(url);
+            this.GetSystem<IKCPSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
         }
     }
 

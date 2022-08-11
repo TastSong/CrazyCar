@@ -54,7 +54,6 @@ public class KCPManager : KcpClient, IController {
     private new KcpClient client;
     private string recStr;
     private JsonData recJD = new JsonData();
-    private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
 
     protected override void HandleReceive(ByteBuf bb) {
         recStr = System.Text.Encoding.UTF8.GetString(bb.GetRaw());
