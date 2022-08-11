@@ -11,14 +11,7 @@ public class TimeTrialNet : MonoBehaviour, IController {
 
     private void Start() {
         //if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
-        //    string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-        //        RequestUrl.timeTrialWSUrl;
-        //    Debug.Log("+++ " + ws);
-        //    if (this.GetSystem<INetworkSystem>().NetType == NetType.WebSocket) {
-        //        this.GetSystem<INetworkSystem>().Connect(ws);
-        //    } else if (this.GetSystem<INetworkSystem>().NetType == NetType.KCP) {
-        //        this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
-        //    }
+        //    this.GetSystem<INetworkSystem>().Connect(RequestUrl.timeTrialWSUrl);
 
         //    StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ: () => {
         //        Debug.Log("Connect succ");
