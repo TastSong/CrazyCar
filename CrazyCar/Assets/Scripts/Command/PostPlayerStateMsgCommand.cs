@@ -2,7 +2,7 @@ using LitJson;
 using System.Text;
 using Utils;
 using QFramework;
-
+using UnityEngine;
 
 public class PostPlayerStateMsgCommand : AbstractCommand{
     protected override void OnExecute() {

@@ -10,6 +10,8 @@ public interface IKCPSystem : ISystem {
     void ConnectKCP(string url);
     void SendMsgToServer(string msg);
     void CloseConnect();
+
+    bool IsConnected { get; }
 }
 
 public class KCPSystem : AbstractSystem, IKCPSystem {
@@ -18,6 +20,12 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     private string host;
     public static string recStr;
     public static bool isRec = false;
+
+    public bool IsConnected {
+        get {
+            return kcpManager.IsRunning;
+        }
+    }
 
     public void CloseConnect() {
         kcpManager.Close();

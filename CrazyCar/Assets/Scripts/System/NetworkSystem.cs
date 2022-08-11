@@ -13,6 +13,7 @@ public interface INetworkSystem : ISystem {
     NetType NetType { get; set; }
     string HttpBaseUrl { get; set; }
     void Connect(string url);
+    IEnumerator OnConnect(Action succ, Action fail);
     void SendMsgToServer(string msg);
     void RespondAction(JsonData recJD);
     void CloseConnect();
@@ -98,6 +99,30 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             this.GetSystem<IWebSocketSystem>().Connect(url);
         } else if (netType == NetType.KCP) {
             this.GetSystem<IKCPSystem>().ConnectKCP(url);
+        }
+    }
+
+    public IEnumerator OnConnect(Action succ, Action fail) {
+        int maxTime = 3;
+        float gap = 0.04f;
+        float timer = 0;
+        WaitForSeconds wait = new WaitForSeconds(gap);
+        if (netType == NetType.WebSocket) {
+            while (!this.GetSystem<IWebSocketSystem>().IsConnected && timer < maxTime) {
+                yield return wait;
+                timer += gap;
+            }
+        } else if (netType == NetType.KCP) {
+            while (!this.GetSystem<IKCPSystem>().IsConnected && timer < maxTime) {
+                yield return wait;
+                timer += gap;
+            }
+        }
+
+        if (timer < maxTime) {
+            succ.Invoke();
+        } else {
+            fail.Invoke();
         }
     }
 

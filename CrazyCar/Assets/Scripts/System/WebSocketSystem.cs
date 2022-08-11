@@ -12,6 +12,7 @@ public interface IWebSocketSystem : ISystem {
     void CloseConnect();
     Action ConnectSuccAction { get; set; }
     Action CloseSuccAction { get; set; }
+    bool IsConnected { get; }
 }
 
 public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
@@ -23,6 +24,12 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
+
+    public bool IsConnected {
+        get {
+            return socket.ReadyState == WebSocketState.Open;
+        }
+    }
 
     public void Connect(string url) {
         address = url;

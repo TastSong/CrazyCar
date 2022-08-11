@@ -22,9 +22,13 @@ public class MatchNet : MonoBehaviour, IController {
                 this.GetSystem<INetworkSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
             }
 
-            //等待都进入后 再发送创建人物消息
-            Util.DelayExecuteWithSecond(3, () => { this.SendCommand<PostCreatePlayerMsgCommand>(); });
-            Util.DelayExecuteWithSecond(4.5f, () => { matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg()); }); 
+            StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ : () => {
+                Debug.Log("Connect succ");
+                this.SendCommand<PostCreatePlayerMsgCommand>();
+                matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg());
+            },  fail : () => {
+                Debug.Log("Connect Fail");
+            }));
         }
 
         this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -40,8 +44,8 @@ public class MatchNet : MonoBehaviour, IController {
 
     private IEnumerator SendMsg() {
         while (true) {
-            this.SendCommand<PostPlayerStateMsgCommand>();
             yield return new WaitForSeconds(this.GetModel<IGameModel>().SendMsgOffTime.Value);
+            this.SendCommand<PostPlayerStateMsgCommand>();
         }
     }
 
