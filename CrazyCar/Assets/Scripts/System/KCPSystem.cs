@@ -7,7 +7,7 @@ using System;
 using LitJson;
 
 public interface IKCPSystem : ISystem {
-    void ConnectKCP(string url);
+    void Connect(string url);
     void SendMsgToServer(string msg);
     void CloseConnect();
 
@@ -31,7 +31,7 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         kcpManager.Close();
     }
 
-    public void ConnectKCP(string url) {
+    public void Connect(string url) {
         host = url;
         kcpManager.ConnectKCP(host, port);
     }

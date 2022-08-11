@@ -98,7 +98,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         if (netType == NetType.WebSocket) {
             this.GetSystem<IWebSocketSystem>().Connect(url);
         } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().ConnectKCP(url);
+            this.GetSystem<IKCPSystem>().Connect(url);
         }
     }
 
@@ -136,12 +136,6 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
-        if (msgType == MsgType.CreatePlayer || msgType == MsgType.PlayerState ||
-            msgType == MsgType.PlayerOperat || msgType == MsgType.PlayerCompleteGame) {
-            if ((int)recJD["uid"] == this.GetModel<IUserModel>().Uid) {
-                return;
-            }
-        }
 
         if (msgType == MsgType.CreatePlayer) {
             playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
