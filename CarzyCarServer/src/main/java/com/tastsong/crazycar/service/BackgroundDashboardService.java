@@ -14,8 +14,6 @@ import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.DataStatisticsModel;
 
-import lombok.var;
-
 @Service
 public class BackgroundDashboardService {
     @Autowired
@@ -86,7 +84,7 @@ public class BackgroundDashboardService {
     }
 
     public Integer getTimeTrialTimes(Integer offsetTime){
-        var data = timeTrialMapper.getTimeTrialData(offsetTime);
+        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
         Integer tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;
@@ -100,7 +98,7 @@ public class BackgroundDashboardService {
     }
 
     public Integer getMatchTimes(Integer offsetTime){
-        var data = matchMapper.getMatchData(offsetTime);
+        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
         Integer tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;
