@@ -9,7 +9,5 @@ using System.IO;
 public class EquipResource : MonoBehaviour {
 
     public Sprite theIcon;
-    public new RuntimeAnimatorController animation;
-
     public string rid;
 }
