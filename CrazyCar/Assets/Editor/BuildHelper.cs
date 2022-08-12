@@ -40,6 +40,9 @@ public static class BuildHelper {
             case "Remote":
                 sType = ServerType.Remote;
                 break;
+            case "TestServer":
+                sType = ServerType.TestServer;
+                break;
             default:
                 break;
         }

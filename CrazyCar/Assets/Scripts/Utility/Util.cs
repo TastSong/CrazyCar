@@ -42,15 +42,11 @@ namespace Utils {
         public static string standAloneTimeTrialDetail = "TimeTrialDetail";
         public static string standAloneAI = "AI";
 
+        private static int port = 8081;
+
         public static string GetServerBaseUrl(ServerType serverType) {
-            switch (serverType) {
-                case ServerType.Local:
-                    return "http://localhost:8081/CrazyCarSpringBootServer/";
-                case ServerType.Remote:
-                    return "http://139.9.103.145:8081/CrazyCarSpringBootServer/";
-                default:
-                    return "http://localhost:8080/CrazyCarServer/";
-            }
+            string host = GetServerHost(serverType);
+            return "http://" + host + ":" + port + "/CrazyCarSpringBootServer/";
         }
 
         public static string GetServerHost(ServerType serverType) {
@@ -59,6 +55,8 @@ namespace Utils {
                     return "127.0.0.1";
                 case ServerType.Remote:
                     return "139.9.103.145";
+                case ServerType.TestServer:
+                    return "43.142.171.220";
                 default:
                     return "127.0.0.1";
             }
