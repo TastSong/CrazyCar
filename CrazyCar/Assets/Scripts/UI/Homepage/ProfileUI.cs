@@ -20,6 +20,7 @@ public class ProfileUI : MonoBehaviour, IController {
     public Text avatarText;
     public Text mapsText;
     public Text starText;
+    public Button guidanceBtn;
 
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
@@ -67,6 +68,11 @@ public class ProfileUI : MonoBehaviour, IController {
             } else {
                 this.SendCommand(new ChangePasswordCommand(passwordInput.text));
             }
+        });
+
+        guidanceBtn.onClick.AddListener(() => {
+            this.GetModel<IUserModel>().IsCompleteGuidance.Value = false;
+            this.SendCommand(new ShowWarningAlertCommand("重新进入，即可重启新手教程"));
         });
     }
 }
