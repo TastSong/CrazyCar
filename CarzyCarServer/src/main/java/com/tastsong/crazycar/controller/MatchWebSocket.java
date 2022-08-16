@@ -33,11 +33,6 @@ public class MatchWebSocket {
     //当前发消息的人员编号
     private String id = "";
  
-    /**
-     * 连接建立成功调用的方法
-     *
-     * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
-     */
     @OnOpen
     public void onOpen(Session WebSocketsession, EndpointConfig config) {
         this.WebSocketsession = WebSocketsession; 
@@ -45,9 +40,6 @@ public class MatchWebSocket {
         log.info("Match onOpen num = " + getOnlineCount());
     }
  
-    /**
-     * 连接关闭调用的方法
-     */ 
     @OnClose
     public void onClose() {
         if (!id.equals("")) {
@@ -58,12 +50,6 @@ public class MatchWebSocket {
         }
     }
  
-    /**
-     * 收到客户端消息后调用的方法
-     *
-     * @param message 客户端发送过来的消息
-     * @param session 可选的参数
-     */
     @OnMessage
     public void onMessage(String message, Session session) {
         JSONObject sendMsg = JSONUtil.parseObj(message);
@@ -74,10 +60,7 @@ public class MatchWebSocket {
             sendToUser(sendMsg);
         }
     }
-    /**
-     * 给指定的人发送消息
-     * @param message
-     */
+
     private void sendToUser(JSONObject message) {
     	String cid = message.getStr("cid");
         Integer uid = message.getInt("uid");
@@ -108,26 +91,14 @@ public class MatchWebSocket {
          }   
     }
 
-    /**
-     * 发生错误时调用
-     *
-     * @param session
-     * @param error
-     */
     @OnError
     public void onError(Session session, Throwable error) {
         log.info("Match Websocket onError");
         error.printStackTrace();
     }
-    /**
-     * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
-     *
-     * @param message
-     * @throws IOException
-     */
+
     private void sendMessage(JSONObject message) throws IOException {
         this.WebSocketsession.getBasicRemote().sendText(message.toString());
-        //this.session.getAsyncRemote().sendText(message);
     }
     
     public static synchronized int getOnlineCount() {

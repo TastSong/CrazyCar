@@ -1,7 +1,6 @@
 package com.tastsong.crazycar.controller;
 
 import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.context.ApplicationContext;
@@ -25,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 
-@ServerEndpoint("/websocket/MatchRoomWebSocket/{id}")
+@ServerEndpoint("/websocket/MatchRoomWebSocket")
 @Data
 @Slf4j
 @NoArgsConstructor
@@ -56,17 +55,13 @@ public class MatchRoomWebSocket {
     
     // id = uid + "," + room_id
     @OnOpen
-    public void onOpen(@PathParam(value = "id") String param, Session WebSocketsession, EndpointConfig config) {
-        id = param;//接收到发送消息的人员编号
-        curUid = Integer.parseInt(id.split(",")[0]);
-        roomId = id.split(",")[1];
+    public void onOpen(Session WebSocketsession, EndpointConfig config) {
         this.WebSocketsession = WebSocketsession;
-        webSocketSet.put(param, this);
         addOnlineCount();     
         
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
-        log.info("Match Room onOpen, num = " + getOnlineCount() + "   uid = " + curUid + " roomId = " + roomId);
+        log.info("Match Room onOpen, num = " + getOnlineCount());
     }
  
 
@@ -110,21 +105,24 @@ public class MatchRoomWebSocket {
     }
 
     private void onCreateRoom(JSONObject message) {
-        Integer uid = message.getInt("uid");
-        String roomId = message.getStr("room_id");
+        curUid = message.getInt("uid");
+        roomId = message.getStr("room_id");
+        id = curUid + "," + roomId;
+        webSocketSet.put(id, this);
+        System.out.println("++++++ " + id);
         String token = message.getStr("token");
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
-        data.putOpt("uid", uid);
+        data.putOpt("uid", curUid);
         if(!Util.isLegalToken(token)){
             data.putOpt("code", 423);
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 421);
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
-            info.uid = uid;
-            info.memberName = matchService.getUserName(uid);
-            info.aid = matchService.getAid(uid);
+            info.uid = curUid;
+            info.memberName = matchService.getUserName(curUid);
+            info.aid = matchService.getAid(curUid);
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
             ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
@@ -137,8 +135,10 @@ public class MatchRoomWebSocket {
     }
 
     private void onJoinRoom(JSONObject message) {
-        Integer uid = message.getInt("uid");
-        String roomId = message.getStr("room_id");
+        curUid = message.getInt("uid");
+        roomId = message.getStr("room_id");
+        id = curUid + "," + roomId;
+        webSocketSet.put(id, this);
         String token = message.getStr("token");
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
@@ -150,9 +150,9 @@ public class MatchRoomWebSocket {
             data.putOpt("code", 423);
         } else{
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
-            info.uid = uid;
-            info.memberName = matchService.getUserName(uid);
-            info.aid = matchService.getAid(uid);
+            info.uid = curUid;
+            info.memberName = matchService.getUserName(curUid);
+            info.aid = matchService.getAid(curUid);
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = false;
             MatchRoomWebSocket.roomMap.get(roomId).add(info);

@@ -23,9 +23,7 @@ public interface IMatchRoomSystem : ISystem {
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     private void MatchRoomConnect(Action succ) {
         string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-            RequestUrl.matchRoomWSUrl +
-            this.GetModel<IUserModel>().Uid.Value + "," + this.GetModel<IMatchModel>().RoomId;
-
+            RequestUrl.matchRoomWSUrl;
         this.GetSystem<IWebSocketSystem>().Connect(ws);
         this.GetSystem<IWebSocketSystem>().ConnectSuccAction = succ;
     }
