@@ -1,41 +1,46 @@
 package com.tastsong.crazycar.controller;
 
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
+import javax.servlet.http.HttpServlet;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.backblaze.erasure.fec.Snmp;
 import com.tastsong.crazycar.Util.Util;
-import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
 import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
+import kcp.ChannelConfig;
+import kcp.KcpListener;
+import kcp.KcpServer;
+import kcp.Ukcp;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-
-@ServerEndpoint("/websocket/MatchRoomWebSocket")
-@Data
+@RestController
+@Scope("prototype")
 @Slf4j
-@NoArgsConstructor
-@Component
-public class MatchRoomWebSocket {
+@RequestMapping(value = "/v2/KCP")
+public class MatchRoomKCPController extends HttpServlet implements KcpListener {
+    private static final long serialVersionUID = 1L;
+    private boolean isInit = false;
+    private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
+
+    private Ukcp uKcp;
+
     private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
     private static int onlineCount = 0;
-    private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchRoomWebSocket>();
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
-    private Session WebSocketsession;
     private String id = "";
-    private JSONObject sendMsg = new JSONObject(); 
     private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
     private int maxNum = 2;
     private int curUid;
@@ -43,45 +48,53 @@ public class MatchRoomWebSocket {
     private Integer startOffsetTime = 16;
 
     private MatchService matchService;
-    
-    // id = uid + "," + room_id
-    @OnOpen
-    public void onOpen(Session WebSocketsession, EndpointConfig config) {
-        this.WebSocketsession = WebSocketsession;
-        addOnlineCount();     
-        
-        ApplicationContext act = ApplicationContextRegister.getApplicationContext();
-        matchService = act.getBean(MatchService.class);
-        log.info("Match Room onOpen, num = " + getOnlineCount());
-    }
- 
 
-    @OnClose
-    public void onClose() {
-        if (!id.equals("")) {
-            if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
-                for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
-                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
-                        MatchRoomWebSocket.roomMap.get(roomId).remove(i);
-                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
-                            MatchRoomWebSocket.roomMap.remove(roomId);
-                        }
-                        break;
-                    }
-                }
-                log.info("onClose : " + MatchRoomWebSocket.roomMap.size());
-            } 
-            webSocketSet.remove(id); 
-            subOnlineCount();           
-            log.info("Match Room onClose, num = " + getOnlineCount());
-        }
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MatchRoomKCPController() {
+        super();
     }
- 
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        log.info("Match Room onMessage : " + message);
-        sendMsg = JSONUtil.parseObj(message);
-    	Integer msgType = sendMsg.getInt("msg_type");
+
+    @PostMapping(value = "/MatchRoom")
+    public Object doGet() throws Exception {
+        JSONObject data = new JSONObject();
+        if (!isInit) {
+            initKCP();
+            isInit = true;
+        }
+        data.putOpt("KCP", "KCP");
+        return data;
+    }
+
+    private void initKCP() {
+        MatchRoomKCPController kcpRttServer = new MatchRoomKCPController();
+
+        ChannelConfig channelConfig = new ChannelConfig();
+        channelConfig.nodelay(true, 10, 2, true);
+        channelConfig.setSndwnd(300);
+        channelConfig.setRcvwnd(300);
+        channelConfig.setMtu(512);
+        channelConfig.setAckNoDelay(true);
+        channelConfig.setTimeoutMillis(10000);
+        channelConfig.setCrc32Check(false);
+        KcpServer kcpServer = new KcpServer();
+        kcpServer.init(kcpRttServer, channelConfig, 50002);
+    }
+
+    @Override
+    public void onConnected(Ukcp uKcp) {
+        onlineCount++;
+        log.info("Connected onlineCount = " + onlineCount);
+        this.uKcp = uKcp;
+    }
+
+    @Override
+    public void handleReceive(ByteBuf buf, Ukcp kcp) {
+        byte[] bytes = new byte[buf.readableBytes()];
+        buf.getBytes(buf.readerIndex(), bytes);
+        JSONObject sendMsg = new JSONObject(buf.toString(CharsetUtil.UTF_8));
+        Integer msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.MatchRoomCreate) {
             onCreateRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
@@ -99,17 +112,17 @@ public class MatchRoomWebSocket {
         curUid = message.getInt("uid");
         roomId = message.getStr("room_id");
         id = curUid + "," + roomId;
-        webSocketSet.put(id, this);
+        kcpSet.put(id, this.uKcp);
         System.out.println("++++++ " + id);
         String token = message.getStr("token");
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
         data.putOpt("uid", curUid);
-        if(!Util.isLegalToken(token)){
+        if (!Util.isLegalToken(token)) {
             data.putOpt("code", 423);
-        } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 421);
-        } else{
+        } else if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
+            data.putOpt("code", 421);
+        } else {
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = curUid;
             info.memberName = matchService.getUserName(curUid);
@@ -118,51 +131,51 @@ public class MatchRoomWebSocket {
             info.isHouseOwner = true;
             ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
             list.add(info);
-            MatchRoomWebSocket.roomMap.put(roomId, list);
+            MatchRoomKCPController.roomMap.put(roomId, list);
             data.putOpt("code", 200);
         }
         log.info("OnCreateRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        sendToUser(data, roomId);
     }
 
     private void onJoinRoom(JSONObject message) {
         curUid = message.getInt("uid");
         roomId = message.getStr("room_id");
         id = curUid + "," + roomId;
-        webSocketSet.put(id, this);
+        kcpSet.put(id, this.uKcp);
         String token = message.getStr("token");
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
-        if(!Util.isLegalToken(token)){
+        if (!Util.isLegalToken(token)) {
             data.putOpt("code", 422);
-        } else if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);
-        } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
+        } else if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
+            data.putOpt("code", 404);
+        } else if (MatchRoomKCPController.roomMap.get(roomId).size() >= maxNum) {
             data.putOpt("code", 423);
-        } else{
+        } else {
             MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
             info.uid = curUid;
             info.memberName = matchService.getUserName(curUid);
             info.aid = matchService.getAid(curUid);
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = false;
-            MatchRoomWebSocket.roomMap.get(roomId).add(info);
-            data.putOpt("code", 200);    
+            MatchRoomKCPController.roomMap.get(roomId).add(info);
+            data.putOpt("code", 200);
         }
-        log.info("OnCreateRoom : " + data.toString());  
-        sendToUser(data.toString(), roomId);
+        log.info("OnCreateRoom : " + data.toString());
+        sendToUser(data, roomId);
     }
 
     private void onStatusRoom(JSONObject message) {
         String roomId = message.getStr("room_id");
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
-        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);     
-        } else{              
+        if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
+            data.putOpt("code", 404);
+        } else {
             JSONArray jsonArray = new JSONArray();
-            playerLists = MatchRoomWebSocket.roomMap.get(roomId);
-            for (int i = 0; i < playerLists.size(); i++){
+            playerLists = MatchRoomKCPController.roomMap.get(roomId);
+            for (int i = 0; i < playerLists.size(); i++) {
                 JSONObject jbItem = new JSONObject();
                 jbItem.putOpt("member_name", playerLists.get(i).memberName);
                 jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
@@ -170,40 +183,40 @@ public class MatchRoomWebSocket {
                 jbItem.putOpt("uid", playerLists.get(i).uid);
                 jbItem.putOpt("can_wade", playerLists.get(i).canWade);
                 jsonArray.add(jbItem);
-            }		
+            }
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
         log.info("OnStatusRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        sendToUser(data, roomId);
     }
 
     private void onExitRoom() {
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomExit);
-        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);     
-        } else{    
-            data.putOpt("exit_uid", curUid);            
+        if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
+            data.putOpt("code", 404);
+        } else {
+            data.putOpt("exit_uid", curUid);
             JSONArray jsonArray = new JSONArray();
-            playerLists = MatchRoomWebSocket.roomMap.get(roomId);
+            playerLists = MatchRoomKCPController.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
-            for (int i = 0; i < playerLists.size(); i++){
+            for (int i = 0; i < playerLists.size(); i++) {
                 JSONObject jbItem = new JSONObject();
                 jbItem.putOpt("member_name", playerLists.get(i).memberName);
                 jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
                 jbItem.putOpt("aid", playerLists.get(i).aid);
                 jbItem.putOpt("uid", playerLists.get(i).uid);
                 jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                if (curUid != playerLists.get(i).uid){
+                if (curUid != playerLists.get(i).uid) {
                     jsonArray.add(jbItem);
                 }
-            }		
+            }
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
         log.info("onExitRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        sendToUser(data, roomId);
     }
 
     private void onStartRoom(JSONObject message) {
@@ -213,17 +226,17 @@ public class MatchRoomWebSocket {
         infoModel.map_id = matchService.getMatchMapMapId(mapCid);
         infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
         infoModel.times = matchService.getMatchMapTimes(mapCid);
-        infoModel.start_time = System.currentTimeMillis()/1000 + startOffsetTime;
-        infoModel.enroll_time =  System.currentTimeMillis()/1000;
+        infoModel.start_time = System.currentTimeMillis() / 1000 + startOffsetTime;
+        infoModel.enroll_time = System.currentTimeMillis() / 1000;
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
         matchService.insertMatchClass(infoModel);
         Integer cid = matchService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
-        JSONObject data = new JSONObject();			
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
-        if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);   
-        } else{              	
+        if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
+            data.putOpt("code", 404);
+        } else {
             data.putOpt("cid", cid);
             data.putOpt("name", infoModel.class_name);
             data.putOpt("star", infoModel.star);
@@ -232,41 +245,47 @@ public class MatchRoomWebSocket {
             data.putOpt("times", infoModel.times);
             data.putOpt("start_time", infoModel.start_time);
             data.putOpt("enroll_time", infoModel.enroll_time);
-            data.putOpt("code", 200); 
+            data.putOpt("code", 200);
         }
         log.info("onStartRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        sendToUser(data, roomId);
     }
 
-    public void sendToUser(String message, String roomId) {  	
-        //String now = getNowTime();
-    	for (String key : webSocketSet.keySet()) {
-          try {
-        	  if (key.split(",")[1].equals(roomId)){
-        		  webSocketSet.get(key).sendMessage(message);
-        	  }              
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-       }     
+    private void sendToUser(JSONObject message, String roomId) {
+        for (String key : kcpSet.keySet()) {
+            if (key.split(",")[1].equals(roomId)) {
+                byte[] bytes = message.toString().getBytes(CharsetUtil.UTF_8);
+                ByteBuf buf = Unpooled.wrappedBuffer(bytes);
+                kcpSet.get(key).write(buf);
+            }
+        }
     }
 
-    @OnError
-    public void onError(Session session, Throwable error) {
-        log.info("onError app strong back");
+    @Override
+    public void handleException(Throwable ex, Ukcp kcp) {
+        ex.printStackTrace();
     }
 
-    public void sendMessage(String message) throws IOException {
-        this.WebSocketsession.getBasicRemote().sendText(message);
-        //this.session.getAsyncRemote().sendText(message);
-    }
-    public static synchronized int getOnlineCount() {
-        return onlineCount;
-    }
-    public static synchronized void addOnlineCount() {
-    	MatchRoomWebSocket.onlineCount++;
-    }
-    public static synchronized void subOnlineCount() {
-    	MatchRoomWebSocket.onlineCount--;
+    @Override
+    public void handleClose(Ukcp uKcp) {
+        log.info("handleClose " + Snmp.snmp.toString());
+        Snmp.snmp = new Snmp();
+        if (!id.equals("")) {
+            if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
+                for (int i = 0; i < MatchRoomKCPController.roomMap.get(roomId).size(); i++) {
+                    if (MatchRoomKCPController.roomMap.get(roomId).get(i).uid == curUid) {
+                        MatchRoomKCPController.roomMap.get(roomId).remove(i);
+                        if (MatchRoomKCPController.roomMap.get(roomId).size() == 0) {
+                            MatchRoomKCPController.roomMap.remove(roomId);
+                        }
+                        break;
+                    }
+                }
+                log.info("onClose : " + MatchRoomKCPController.roomMap.size());
+            }
+            kcpSet.remove(id);
+            onlineCount--; // 在线数减1
+            log.info("onclose sum = " + onlineCount);
+        }
     }
 }

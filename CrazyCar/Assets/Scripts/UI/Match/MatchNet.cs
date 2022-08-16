@@ -11,7 +11,7 @@ public class MatchNet : MonoBehaviour, IController {
 
     private void Start() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-            this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchWSUrl);
+            this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchWSUrl, RequestUrl.matchKCPPort);
 
             StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ : () => {
                 Debug.Log("Connect succ");

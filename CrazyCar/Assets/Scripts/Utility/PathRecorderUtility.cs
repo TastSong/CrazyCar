@@ -28,6 +28,8 @@ public static class RequestUrl {
 
     public static string matchRoomWSUrl = "websocket/MatchRoomWebSocket";
     public static string matchWSUrl = "websocket/MatchWebSocket";
+    public static int matchKCPPort = 50001;
+    public static int matchRoomKCPPort = 50002;
     public static string timeTrialWSUrl = "websocket/TimeTrialWebSocket";
 
     public static string aiUrl = "AI";

@@ -12,7 +12,7 @@ public interface INetworkSystem : ISystem {
     ServerType ServerType { get; set; }
     NetType NetType { get; set; }
     string HttpBaseUrl { get; set; }
-    void Connect(string url);
+    void Connect(string url, int port);
     IEnumerator OnConnect(Action succ, Action fail);
     void SendMsgToServer(string msg);
     void RespondAction(JsonData recJD);
@@ -94,12 +94,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public void Connect(string url = "") {
+    public void Connect(string url = "", int port = 0) {
         if (netType == NetType.WebSocket) {
             url = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + url;
             this.GetSystem<IWebSocketSystem>().Connect(url);
         } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType));
+            this.GetSystem<IKCPSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType), port);
         }
     }
 

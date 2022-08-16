@@ -22,10 +22,13 @@ public interface IMatchRoomSystem : ISystem {
 
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     private void MatchRoomConnect(Action succ) {
-        string ws = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) +
-            RequestUrl.matchRoomWSUrl;
-        this.GetSystem<IWebSocketSystem>().Connect(ws);
-        this.GetSystem<IWebSocketSystem>().ConnectSuccAction = succ;
+        this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchRoomWSUrl, RequestUrl.matchRoomKCPPort);
+        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ: () => {
+            Debug.Log("Connect Room succ");
+            succ.Invoke();
+        }, fail: () => {
+            Debug.Log("Connect Room Fail");
+        }));
     }
 
     public void MatchRoomCreate() {
@@ -48,7 +51,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IGameModel>().Token);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomCreate : " + sb.ToString());
-            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+            this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
         });
     }
 
@@ -70,7 +73,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.Write(this.GetModel<IMatchModel>().IsHouseOwner ? 1 : 0);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStatus : " + sb.ToString());
-        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void MatchRoomJoin() {
@@ -93,7 +96,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             w.Write(this.GetModel<IGameModel>().Token);
             w.WriteObjectEnd();
             Debug.Log("MatchRoomJoin : " + sb.ToString());
-            this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+            this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
         });
     }
 
@@ -113,7 +116,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.Write(this.GetModel<IUserModel>().EquipInfo.Value.eid);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStatus : " + sb.ToString());
-        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void MatchRoomStart() {
@@ -133,7 +136,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.Write(info.cid);
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStart : " + sb.ToString());
-        this.GetSystem<IWebSocketSystem>().SendMsgToServer(sb.ToString());
+        this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
     }
 
     public void OnCreateMsg(JsonData recJD) {

@@ -89,7 +89,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
-        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        this.GetSystem<INetworkSystem>().CloseConnect();
         gameObject.SetActiveFast(false);
     }
 
@@ -104,7 +104,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     }
 
     private void OnDestroy() {
-        this.GetSystem<IWebSocketSystem>().CloseConnect();
+        this.GetSystem<INetworkSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {
