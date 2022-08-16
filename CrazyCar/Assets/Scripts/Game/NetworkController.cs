@@ -71,6 +71,31 @@ public class NetworkController : MonoBehaviour, IController {
                 this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Dequeue();
             }
         }
+
+        if (this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg != null) {
+            this.GetSystem<IMatchRoomSystem>().OnCreateMsg(this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg);
+            this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg = null;
+        }
+
+        if (this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg != null) {
+            this.GetSystem<IMatchRoomSystem>().OnJoinMsg(this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg);
+            this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg = null;
+        }
+
+        if (this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg != null) {
+            this.GetSystem<IMatchRoomSystem>().OnExitMsg(this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg);
+            this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg = null;
+        }
+
+        if (this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg != null) {
+            this.GetSystem<IMatchRoomSystem>().OnStartMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg);
+            this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg = null;
+        }
+
+        if (this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg != null) {
+            this.GetSystem<IMatchRoomSystem>().OnStatusMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg);
+            this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg = null;
+        }
     }
 
     public IArchitecture GetArchitecture() {

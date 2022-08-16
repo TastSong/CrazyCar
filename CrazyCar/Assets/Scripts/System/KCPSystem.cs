@@ -5,6 +5,7 @@ using QFramework;
 using KcpCSharp;
 using System;
 using LitJson;
+using Utils;
 
 public interface IKCPSystem : ISystem {
     void Connect(string url, int port);
@@ -20,6 +21,7 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     private string host;
     public static string recStr;
     public static bool isRec = false;
+    private string url;
 
     public bool IsConnected {
         get {
@@ -32,16 +34,17 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     }
 
     public void Connect(string url, int port) {
-        host = url;
+        host = Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType);
         this.port = port;
-        kcpManager.ConnectKCP(host, port);
+        this.url = url;
+        kcpManager.ConnectKCP(host, port, url);
     }
 
     public void SendMsgToServer(string msg) {
         if (kcpManager.IsRunning) {
             kcpManager.Send(msg);
         } else {
-            kcpManager.ConnectKCP(host, port);
+            kcpManager.ConnectKCP(host, port, url);
         }      
     }
 
@@ -72,12 +75,12 @@ public class KCPManager : KcpClient, IController {
         base.HandleTimeout();
     }
 
-    public void ConnectKCP(string host, int port) {
+    public void ConnectKCP(string host, int port, string url) {
         if (client != null && client.IsRunning()) {
             return;
         }
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
-            url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.kcpServerUrl,
+            url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
             token: this.GetModel<IGameModel>().Token.Value,
             succData : (d) => {
                 client = new KCPManager();

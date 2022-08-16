@@ -12,7 +12,7 @@ public interface INetworkSystem : ISystem {
     ServerType ServerType { get; set; }
     NetType NetType { get; set; }
     string HttpBaseUrl { get; set; }
-    void Connect(string url, int port);
+    void Connect(string wsURL, string kcpURL, int port);
     IEnumerator OnConnect(Action succ, Action fail);
     void SendMsgToServer(string msg);
     void RespondAction(JsonData recJD);
@@ -22,6 +22,11 @@ public interface INetworkSystem : ISystem {
     Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; }
     Queue<PlayerCompleteMsg> PlayerCompleteMsgs { get; set; }
+    JsonData OnMatchRoomCreateMsg { get; set; }
+    JsonData OnMatchRoomJoinMsg { get; set; }
+    JsonData OnMatchRoomExitMsg { get; set; }
+    JsonData OnMatchRoomStatusMsg { get; set; }
+    JsonData OnMatchRoomStartMsg { get; set; }
     System.Object MsgLock { get; set; }
     void EnterRoom(GameType gameType, int cid, Action succ = null);
     void GetUserInfo(int uid, Action<UserInfo> succ);
@@ -53,6 +58,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
     public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; } = new Queue<PlayerOperatMsg>();
     public Queue<PlayerCompleteMsg> PlayerCompleteMsgs { get; set; } = new Queue<PlayerCompleteMsg>();
+    public JsonData OnMatchRoomCreateMsg { get; set; }
+    public JsonData OnMatchRoomJoinMsg { get; set; }
+    public JsonData OnMatchRoomExitMsg { get; set; }
+    public JsonData OnMatchRoomStatusMsg { get; set; }
+    public JsonData OnMatchRoomStartMsg { get; set; }
     public object MsgLock { get; set; } = new object();
     private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
@@ -94,12 +104,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public void Connect(string url = "", int port = 0) {
+    public void Connect(string wsURL = "", string kcpURL = "", int port = 0) {
         if (netType == NetType.WebSocket) {
-            url = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + url;
-            this.GetSystem<IWebSocketSystem>().Connect(url);
+            wsURL = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + wsURL;
+            this.GetSystem<IWebSocketSystem>().Connect(wsURL);
         } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().Connect(Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType), port);
+            this.GetSystem<IKCPSystem>().Connect(kcpURL, port);
         }
     }
 
@@ -159,15 +169,15 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
             }
         } else if (msgType == MsgType.MatchRoomCreate) {
-            this.GetSystem<IMatchRoomSystem>().OnCreateMsg(recJD);
+            OnMatchRoomCreateMsg = recJD;
         } else if (msgType == MsgType.MatchRoomJoin) {
-            this.GetSystem<IMatchRoomSystem>().OnJoinMsg(recJD);
+            OnMatchRoomJoinMsg = recJD;
         } else if (msgType == MsgType.MatchRoomStart) {
-            this.GetSystem<IMatchRoomSystem>().OnStartMsg(recJD);
+            OnMatchRoomStartMsg = recJD;
         } else if (msgType == MsgType.MatchRoomStatus) {
-            this.GetSystem<IMatchRoomSystem>().OnStatusMsg(recJD);
+            OnMatchRoomStatusMsg = recJD;
         } else if (msgType == MsgType.MatchRoomExit) {
-            this.GetSystem<IMatchRoomSystem>().OnExitMsg(recJD);
+            OnMatchRoomExitMsg = recJD;
         }
     }
 

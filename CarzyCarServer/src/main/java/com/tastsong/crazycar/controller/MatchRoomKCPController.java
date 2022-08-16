@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
+import org.springframework.context.ApplicationContext;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backblaze.erasure.fec.Snmp;
 import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
 import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
@@ -85,6 +87,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     @Override
     public void onConnected(Ukcp uKcp) {
         onlineCount++;
+        ApplicationContext act = ApplicationContextRegister.getApplicationContext();
+        matchService = act.getBean(MatchService.class);
         log.info("Connected onlineCount = " + onlineCount);
         this.uKcp = uKcp;
     }
