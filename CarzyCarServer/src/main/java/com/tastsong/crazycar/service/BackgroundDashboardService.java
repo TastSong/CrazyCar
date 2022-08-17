@@ -14,17 +14,15 @@ import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.DataStatisticsModel;
 
-import lombok.var;
-
 @Service
 public class BackgroundDashboardService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired 
+    @Autowired
     private EquipMapper equipMapper;
 
-    @Autowired 
+    @Autowired
     private AvatarMapper avatarMapper;
 
     @Autowired
@@ -67,16 +65,16 @@ public class BackgroundDashboardService {
     private List<DataStatisticsModel> formatData(List<DataStatisticsModel> data, Integer offsetTime){
         ArrayList<DataStatisticsModel> result = new ArrayList<>();
         long current = System.currentTimeMillis() / 1000;
-        Integer oneDay = 60 * 60 * 24;
+        int oneDay = 60 * 60 * 24;
         long curWeeHours = current-(current+ TimeZone.getDefault().getRawOffset()) % oneDay;
         for(int i = 0; i < offsetTime; i++){
             DataStatisticsModel temp = new DataStatisticsModel();
             temp.count = 0;
-            temp.timestamp = curWeeHours - oneDay * (offsetTime - i - 1);
-            long nextTimestaml = curWeeHours - oneDay * (offsetTime - i - 2);
-            for(int k = 0; k < data.size(); k++){
-                if(data.get(k).timestamp >= temp.timestamp && data.get(k).timestamp <= nextTimestaml){
-                    temp.count = data.get(k).count;
+            temp.timestamp = curWeeHours - (long) oneDay * (offsetTime - i - 1);
+            long nextTimestaml = curWeeHours - (long) oneDay * (offsetTime - i - 2);
+            for (DataStatisticsModel datum : data) {
+                if (datum.timestamp >= temp.timestamp && datum.timestamp <= nextTimestaml) {
+                    temp.count = datum.count;
                     break;
                 }
             }

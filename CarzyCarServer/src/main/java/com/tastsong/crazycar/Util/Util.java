@@ -21,12 +21,12 @@ public class Util {
 
 	public static final String  TOKEN  = "authorization";
 
-	private static final String jwtKey = "oeRaQQ7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5";
+	private static final String JWT_KEY = "oeRaQQ7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5";
 	public static String createToken(Integer uid){
 		DateTime now = DateTime.now();
 		DateTime newTime = now.offsetNew(DateField.HOUR, 14);
-		
-		Map<String,Object> payload = new HashMap<String,Object>();
+
+		Map<String,Object> payload = new HashMap<>();
 		//签发时间
 		payload.put(JWTPayload.ISSUED_AT, now);
 		//过期时间
@@ -35,16 +35,15 @@ public class Util {
 		payload.put(JWTPayload.NOT_BEFORE, now);
 		//载荷
 		payload.put("uid", uid);
-		
-		String token = JWTUtil.createToken(payload, jwtKey.getBytes());
-		return token;
+
+		return JWTUtil.createToken(payload, JWT_KEY.getBytes());
 	}
 
 	public static boolean isLegalToken(String token){
 		cn.hutool.jwt.JWT jwt = JWTUtil.parseToken(token);
-		
-		boolean verifyKey = jwt.setKey(jwtKey.getBytes()).verify();
-		
+
+		boolean verifyKey = jwt.setKey(JWT_KEY.getBytes()).verify();
+
 		boolean verifyTime = jwt.validate(0);
 		return verifyKey && verifyTime;
 	}
@@ -53,7 +52,7 @@ public class Util {
 		cn.hutool.jwt.JWT jwt = JWTUtil.parseToken(token);
 		return (Integer) jwt.getPayload("uid");
 	}
-	
+
 	public static class MsgType {
 		public int CreatePlayer = 0,
 		PlayerState = 1,
