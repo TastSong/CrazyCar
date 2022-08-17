@@ -292,7 +292,6 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             log.info("exitRoom id = : " + id);
         }
         kcpSet.remove(id);
-        id = "";
         onlineCount--; // 在线数减1
         log.info("onclose sum = " + onlineCount);
     }
