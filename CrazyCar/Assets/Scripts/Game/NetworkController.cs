@@ -42,60 +42,54 @@ public class NetworkController : MonoBehaviour, IController {
 
     private void FixedUpdate() {
         // KCP 开了线程所以只能把 RespondAction放进主线程
-        if (this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Count > 0) {
-            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+        lock (this.GetSystem<INetworkSystem>().MsgLock) {
+            if (this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Count > 0) {
                 this.SendCommand(new MakeNewPlayerCommand(this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Peek()));
                 this.GetSystem<INetworkSystem>().PlayerCreateMsgs.Dequeue();
             }
-        }
 
-        if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
-            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+            if (this.GetSystem<INetworkSystem>().PlayerStateMsgs.Count > 0) {
                 this.GetSystem<IPlayerManagerSystem>().RespondStateAction(
                     this.GetSystem<INetworkSystem>().PlayerStateMsgs.Peek());
                 this.GetSystem<INetworkSystem>().PlayerStateMsgs.Dequeue();
             }
-        }
 
-        if (this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Count > 0) {
-            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+            if (this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Count > 0) {
                 this.GetSystem<IPlayerManagerSystem>().RespondOperatAction(
                     this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Peek());
                 this.GetSystem<INetworkSystem>().PlayerOperatMsgs.Dequeue();
             }
-        }
 
-        if (this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Count > 0) {
-            lock (this.GetSystem<INetworkSystem>().MsgLock) {
+            if (this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Count > 0) {
                 this.SendCommand(new UpdateMatchResultUICommand(this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Peek()));
                 this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Dequeue();
             }
-        }
 
-        if (this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg != null) {
-            this.GetSystem<IMatchRoomSystem>().OnCreateMsg(this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg);
-            this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg = null;
-        }
+            if (this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg != null) {
+                this.GetSystem<IMatchRoomSystem>().OnCreateMsg(this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg);
+                this.GetSystem<INetworkSystem>().OnMatchRoomCreateMsg = null;
+            }
 
-        if (this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg != null) {
-            this.GetSystem<IMatchRoomSystem>().OnJoinMsg(this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg);
-            this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg = null;
-        }
+            if (this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg != null) {
+                this.GetSystem<IMatchRoomSystem>().OnJoinMsg(this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg);
+                this.GetSystem<INetworkSystem>().OnMatchRoomJoinMsg = null;
+            }
 
-        if (this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg != null) {
-            this.GetSystem<IMatchRoomSystem>().OnExitMsg(this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg);
-            this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg = null;
-        }
+            if (this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg != null) {
+                this.GetSystem<IMatchRoomSystem>().OnExitMsg(this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg);
+                this.GetSystem<INetworkSystem>().OnMatchRoomExitMsg = null;
+            }
 
-        if (this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg != null) {
-            this.GetSystem<IMatchRoomSystem>().OnStartMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg);
-            this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg = null;
-        }
+            if (this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg != null) {
+                this.GetSystem<IMatchRoomSystem>().OnStartMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg);
+                this.GetSystem<INetworkSystem>().OnMatchRoomStartMsg = null;
+            }
 
-        if (this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg != null) {
-            this.GetSystem<IMatchRoomSystem>().OnStatusMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg);
-            this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg = null;
-        }
+            if (this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg != null) {
+                this.GetSystem<IMatchRoomSystem>().OnStatusMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg);
+                this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg = null;
+            }
+        }           
     }
 
     public IArchitecture GetArchitecture() {
