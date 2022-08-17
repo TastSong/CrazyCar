@@ -72,7 +72,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WritePropertyName("is_house_owner");
         w.Write(this.GetModel<IMatchModel>().IsHouseOwner ? 1 : 0);
         w.WriteObjectEnd();
-        Debug.Log("MatchRoomStatus : " + sb.ToString());
+        Debug.Log("MatchRoomEixt : " + sb.ToString());
         this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
     }
 
