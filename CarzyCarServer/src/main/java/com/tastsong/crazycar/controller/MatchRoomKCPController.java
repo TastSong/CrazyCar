@@ -221,6 +221,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         }
         log.info("onExitRoom : " + data.toString());
         sendToUser(data, roomId);
+        exitRoom();
     }
 
     private void onStartRoom(JSONObject message) {
@@ -274,6 +275,10 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     public void handleClose(Ukcp uKcp) {
         log.info("handleClose " + Snmp.snmp.toString());
         Snmp.snmp = new Snmp();
+        log.info("onClose");
+    }
+
+    private void exitRoom(){
         if (!id.equals("")) {
             if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
                 for (int i = 0; i < MatchRoomKCPController.roomMap.get(roomId).size(); i++) {
