@@ -35,7 +35,7 @@ public class SettingsUI : MonoBehaviour, IController {
 
         exitBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            Application.Quit();
+            this.SendCommand(new LoadSceneCommand(SceneID.Login));
         });
 
         languageOptionsList.Clear();
