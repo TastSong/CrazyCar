@@ -102,7 +102,6 @@ public class MatchRoomWebSocket {
         roomId = message.getStr("room_id");
         id = curUid + "," + roomId;
         webSocketSet.put(id, this);
-        System.out.println("++++++ " + id);
         String token = message.getStr("token");
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);

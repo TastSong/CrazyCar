@@ -107,7 +107,6 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String roomId = message.getStr("room_id");
         String id = uid + "," + roomId;
         kcpSet.put(id, kcp);
-        System.out.println("++++++ " + id);
         String token = message.getStr("token");
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
@@ -195,7 +194,6 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             data.putOpt("code", 404);
         } else {
             data.putOpt("exit_uid", message.getInt("uid"));
-            System.out.println("++++++ exit " + message.getInt("uid"));
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
