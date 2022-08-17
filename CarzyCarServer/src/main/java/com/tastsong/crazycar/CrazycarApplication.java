@@ -23,6 +23,6 @@ public class CrazycarApplication {
 		System.out.println("    "+"\\"+"_____|_|  "+"\\"+"__,_/___|"+"\\"+"__, |  "+"\\"+"_____"+"\\"+"__,_|_|    ");
 		System.out.println("                          __/ |                                                    ");
 		System.out.println("                         |___/                                                     ");
-        System.out.println("----------------------Game Start---------------------                                 ");
+        System.out.println("----------------------Game Start---------------------                               ");
 	}
 }
