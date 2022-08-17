@@ -72,6 +72,7 @@ public class MatchRoomWebSocket {
                 log.info("onClose : " + MatchRoomWebSocket.roomMap.size());
             } 
             webSocketSet.remove(id); 
+            id = "";
             subOnlineCount();           
             log.info("Match Room onClose, num = " + getOnlineCount());
         }

@@ -275,6 +275,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     public void handleClose(Ukcp uKcp) {
         log.info("handleClose " + Snmp.snmp.toString());
         Snmp.snmp = new Snmp();
+        exitRoom();
         log.info("onClose");
     }
 
@@ -293,6 +294,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
                 log.info("onClose : " + MatchRoomKCPController.roomMap.size());
             }
             kcpSet.remove(id);
+            id = "";
             onlineCount--; // 在线数减1
             log.info("onclose sum = " + onlineCount);
         }
