@@ -33,16 +33,17 @@ public class MatchRoomWebSocket {
     private static int onlineCount = 0;
     private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchRoomWebSocket>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
-    private Session WebSocketsession;
-    private String id = "";
     private JSONObject sendMsg = new JSONObject(); 
     private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
     private int maxNum = 2;
+    private Integer startOffsetTime = 16;
+    private MatchService matchService;
+
+    // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
+    private Session WebSocketsession;
+    private String id = "";
     private int curUid;
     private String roomId = "";
-    private Integer startOffsetTime = 16;
-
-    private MatchService matchService;
     
     // id = uid + "," + room_id
     @OnOpen
