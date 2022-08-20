@@ -1,0 +1,62 @@
+# spring配置
+spring:
+  # mysql配置
+  datasource:
+#    url: jdbc:mysql://localhost:3306/crazy_car?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT
+#    username: Sakura(wF/aGDyvs0iEQcH/kdvENAVp0vF5I35d0iRsDr3VE6CTK8c3svtS5YAqlLnyD5Zm)  # root
+#    password: Sakura(5Z9rP+zyP3/pKpeb/yiiDwpybtiCwtoANzlW0/JOr/4K6qArhIbNq3xxlQqpxZ/G)  # 1647283556
+#  游戏选中 Local 的时候可以用这个数据库就不用自己单独配置数据库了
+    url: jdbc:mysql://114.132.213.244:3306/crazy_car?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT
+    username: Sakura(HFRrMvYlVCKzfKaslfv1o6lDW56nCVYKKGnSMD5YJt5aKHVPHecwXlpxjpmxUcj4) # CrazyCarU
+    password: Sakura(5KxIdj+Q3LT4J8J6PgZIvosvY+oMFKdM1SZTlKzEqa5Ydf2cnsp+hfGqwURMCgWC) # CrazyCarP
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    check-template: false
+    check-template-location: false
+  # JavaMailSender 邮件发送的配置
+  mail:
+    host: smtp.163.com
+    username: Sakura(L62pp53nZvAMhSwz0RP4bQ9YMiAopw9E8JKanKvoUNAJwY25E+3ul2L+6kaEwbsTO3QdPVyck4UTsZ4m+h/alQ==)  # crazycargame@163.com
+    password: Sakura(0KBWGhi0xHd/KMmZgkQCZPhfoZDPqnMatijVfG+tgfL0r/mOyu8W2CuwugIiXstWuPldtAjOSWyGAskSV3Uk6Q==)  # UARHXSUFOBJKUFKK
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+
+# 服务配置
+server:
+  port: 8081
+  servlet:
+    context-path: /CrazyCarSpringBootServer
+  tomcat:
+    uri-encoding: UTF-8
+
+# MyBatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  # 这个地方写你model存放所在的包路径
+  type-aliases-package: com.tastsong.crazycar.model
+
+# 配置明文加密
+# 可以通过测试用例生成加密数据
+jasypt:
+  encryptor:
+    password: CrazyCar
+    property:
+      prefix: Sakura(
+      suffix: )
+
+# 日志配置
+logging:
+  # 打印格式
+  pattern:
+    console: "%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n"
+    file: "%d{yyyy/MM/dd-HH:mm} [%thread] %-5level %logger- %msg%n"
+  # 日志级别
+  level:
+    web: debug  # warn、info、debug
+  # 日志输出地址
+  file:
+    path: ./logs
