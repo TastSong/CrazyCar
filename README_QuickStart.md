@@ -2,46 +2,22 @@
 
 ## 视频教程
 
-### [一、前端环境](./SamplePictures/一、前端环境.mp4)
-
-
-<div class="bilibili">
-  <iframe src="//player.bilibili.com/player.html?aid=557146369&bvid=BV1se4y1f7fZ&cid=808783279&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> 
-  </iframe>
-</div>
-
-
+### [一、前端环境](https://www.bilibili.com/video/BV1se4y1f7fZ?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
 
 
 ### 二、服务端环境
 
-#### 2.1 [数据库](./SamplePictures/二、服务端环境---数据库.mp4)
+#### 2.1 [数据库](https://www.bilibili.com/video/BV1Ua411V7zV)
 
-<div class="bilibili">
-	<iframe height="405" width="270" src="//player.bilibili.com/player.html?aid=217151718&bvid=BV1Ua411V7zV&cid=808783269&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> 
-  </iframe>
-</div>
 
-#### 2.2  [Java环境](./SamplePictures/二、服务端环境---Java环境.mp4)
+#### 2.2  [Java环境](https://www.bilibili.com/video/BV1pB4y1V7CL)
 
-<div class="bilibili">
-  <iframe height="495" width="270" src="//player.bilibili.com/player.html?aid=602180024&bvid=BV1pB4y1V7CL&cid=808783271&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> 
-  </iframe>
-<div>
 
-#### 2.3  [VSCode](./SamplePictures/二、服务器环境---VSCode.mp4)
+#### 2.3  [VSCode](https://www.bilibili.com/video/BV17g411r7dk?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
 
-<div class="bilibili">
-	<iframe height="495" width="270" src="//player.bilibili.com/player.html?aid=514691442&bvid=BV17g411r7dk&cid=808783272&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
-  </iframe>
-<div>
 
-### 三、[后台环境](./SamplePictures/三、后台环境.mp4)
+### 三、[后台环境](https://www.bilibili.com/video/BV1s14y1t7xS)
 
-<div class="bilibili">
-	<iframe height="495" width="270" src="//player.bilibili.com/player.html?aid=772213065&bvid=BV1s14y1t7xS&cid=808783276&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
-  </iframe>
-<div>
 
 ## 运行
 
