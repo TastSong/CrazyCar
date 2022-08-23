@@ -11,27 +11,27 @@
       @sort-change="sortChange"
     >
       <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" width="110px" align="center">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.is_on }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Url" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.url }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Date" width="150px" align="center">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ parseTime(row.updata_time, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>

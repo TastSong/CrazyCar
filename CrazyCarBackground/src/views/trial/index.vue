@@ -11,42 +11,42 @@
       @sort-change="sortChange"
     >
       <el-table-column label="Cid" prop="cid" sortable="custom" align="center" width="80" :class-name="getSortClass('cid')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.cid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Map Id" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.map_id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Class Name" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.class_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Star" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Limit Time" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.limit_time }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Times" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.times }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Water" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.has_water }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>

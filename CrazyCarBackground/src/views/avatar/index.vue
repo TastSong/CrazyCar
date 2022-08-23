@@ -11,27 +11,27 @@
       @sort-change="sortChange"
     >
       <el-table-column label="Aid" prop="aid" sortable="custom" align="center" width="80" :class-name="getSortClass('aid')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.aid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Rid" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.rid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Avatar Name" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.avatar_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Star" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
