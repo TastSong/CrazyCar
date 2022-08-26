@@ -18,27 +18,27 @@
       @sort-change="sortChange"
     >
       <el-table-column label="UID" prop="uid" sortable="custom" align="center" min-width="80" :class-name="getSortClass('id')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.uid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="User Name" min-width="110px" align="center">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.user_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Star" align="center" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
       <el-table-column label="VIP" align="center" class-name="status-col" min-width="100">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           {{ row.is_vip }}
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>

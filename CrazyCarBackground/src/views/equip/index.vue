@@ -11,52 +11,58 @@
       @sort-change="sortChange"
     >
       <el-table-column label="Eid" prop="eid" sortable="custom" align="center" width="80" :class-name="getSortClass('eid')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.eid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Rid" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.rid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Equip Name" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.equip_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Star" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Mass" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.mass }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Power" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.power }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Max Power" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.max_power }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Wade" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.can_wade }}</span>
+        <template v-slot="{row}">
+          <el-switch
+            v-model="row.can_wade"
+            @change="handleSwitchChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Show" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.is_show }}</span>
+        <template v-slot="{row}">
+          <el-switch
+            v-model="row.is_show"
+            @change="handleSwitchChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -215,6 +221,19 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleSwitchChange(row) {
+      const tempData = Object.assign({}, row)
+      updtaeEquipInfo(tempData).then(response => {
+        const index = this.list.findIndex(v => v.eid === response.eid)
+        this.list.splice(index, 1, response)
+        this.$notify({
+          title: 'Success',
+          message: 'Update Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     updateData() {

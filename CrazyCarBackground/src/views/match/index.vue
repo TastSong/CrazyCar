@@ -11,42 +11,45 @@
       @sort-change="sortChange"
     >
       <el-table-column label="Cid" prop="cid" sortable="custom" align="center" width="80" :class-name="getSortClass('cid')">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.cid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Map Id" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.map_id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Class Name" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.class_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Star" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.star }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Limit Time" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.limit_time }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Times" min-width="150px">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <span>{{ row.times }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Water" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.has_water }}</span>
+        <template v-slot="{row}">
+          <el-switch
+            v-model="row.has_water"
+            @change="handleHasWaterChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template v-slot="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -194,6 +197,19 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleHasWaterChange(row) {
+      const tempData = Object.assign({}, row)
+      updtaeMatchInfo(tempData).then(response => {
+        const index = this.list.findIndex(v => v.cid === response.cid)
+        this.list.splice(index, 1, response)
+        this.$notify({
+          title: 'Success',
+          message: 'Update Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     updateData() {
