@@ -42,7 +42,10 @@
       </el-table-column>
       <el-table-column label="Water" min-width="150px">
         <template v-slot="{row}">
-          <span>{{ row.has_water }}</span>
+          <el-switch
+            v-model="row.has_water"
+            @change="handleHasWaterChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
@@ -194,6 +197,19 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleHasWaterChange(row) {
+      const tempData = Object.assign({}, row)
+      updtaeMatchInfo(tempData).then(response => {
+        const index = this.list.findIndex(v => v.cid === response.cid)
+        this.list.splice(index, 1, response)
+        this.$notify({
+          title: 'Success',
+          message: 'Update Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     updateData() {

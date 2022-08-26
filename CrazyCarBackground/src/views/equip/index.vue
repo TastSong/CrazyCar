@@ -47,12 +47,18 @@
       </el-table-column>
       <el-table-column label="Wade" min-width="150px">
         <template v-slot="{row}">
-          <span>{{ row.can_wade }}</span>
+          <el-switch
+            v-model="row.can_wade"
+            @change="handleSwitchChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Show" min-width="150px">
         <template v-slot="{row}">
-          <span>{{ row.is_show }}</span>
+          <el-switch
+            v-model="row.is_show"
+            @change="handleSwitchChange(row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
@@ -215,6 +221,19 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleSwitchChange(row) {
+      const tempData = Object.assign({}, row)
+      updtaeEquipInfo(tempData).then(response => {
+        const index = this.list.findIndex(v => v.eid === response.eid)
+        this.list.splice(index, 1, response)
+        this.$notify({
+          title: 'Success',
+          message: 'Update Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     updateData() {
