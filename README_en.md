@@ -106,8 +106,12 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 </div> 
 
 
+## Contributors
 
-## contribution
+[liangxie](https://github.com/liangxieq)
+
+[CherryWhite](https://github.com/cherry-white)
+
 You can submit questions in the  [pull requests](https://github.com/TastSong/CrazyCar/pulls) or [issues](https://github.com/TastSong/CrazyCar/issues) format.
 
 :seedling: Of course **Crazy Car** is still young and has many shortcomings, but please believe that it will keep moving forward   :running:
