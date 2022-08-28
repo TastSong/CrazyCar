@@ -35,7 +35,7 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :clap:  Welcome **Crazy Car** ！ 
 
-:loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly;The Mater branch is not a release branch and it is recommended to use the [latest Releases](https://github.com/TastSong/CrazyCar/releases/latest) version for local testing 
+:loudspeaker: **Crazy Car ** during the development phase, the online database is reset irregularly;The Master branch is not a release branch and it is recommended to use the [latest Releases](https://github.com/TastSong/CrazyCar/releases/latest) version for local testing 
 
 ## Features :point_down:
 
