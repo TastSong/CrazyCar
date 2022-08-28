@@ -19,7 +19,7 @@
 
 ## 简介
 
-**Crazy Car**是一款联机赛车游戏，她的整体架构为：[QFramework](https://github.com/liangxiegame/QFramework) & [Addressable](https://github.com/Unity-Technologies/Addressables-Sample)(游戏端) + [Spring Boot](https://github.com/spring-projects/spring-boot) & [Mybatis](https://github.com/mybatis/mybatis-3)(服务端) + [KCP](https://github.com/l42111996/java-Kcp) / [WebSocket](https://github.com/psygames/UnityWebSocket) (网络)  + [Vue & Element](https://github.com/PanJiaChen/vue-element-admin)(后台)，借助于此架构，开发者只要稍作修改就可完成一款定制化的网络联机游戏。
+**Crazy Car**是一款联机赛车游戏，它的整体架构为：[QFramework](https://github.com/liangxiegame/QFramework) & [Addressable](https://github.com/Unity-Technologies/Addressables-Sample)(游戏端) + [Spring Boot](https://github.com/spring-projects/spring-boot) & [Mybatis](https://github.com/mybatis/mybatis-3)(服务端) + [KCP](https://github.com/l42111996/java-Kcp) / [WebSocket](https://github.com/psygames/UnityWebSocket) (网络)  + [Vue & Element](https://github.com/PanJiaChen/vue-element-admin)(后台)，借助于此架构，开发者只要稍作修改就可完成一款定制化的网络联机游戏。
 
 主要提供的演示功能有：登录注册、热更头像与装备、计时赛、双人比赛、版本控制(后台)、用户信息管理(后台)等功能。
 
@@ -37,7 +37,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 :clap:  欢迎使用 **Crazy Car** ！ 
 
-:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置；mater不是发布分支，建议使用最新[releases](https://github.com/TastSong/CrazyCar/releases/latest)进行本地测试
+:loudspeaker: **Crazy Car**处于开发阶段，线上的数据库会不定期重置；master不是发布分支，建议使用最新[releases](https://github.com/TastSong/CrazyCar/releases/latest)进行本地测试
 
 ------
 
