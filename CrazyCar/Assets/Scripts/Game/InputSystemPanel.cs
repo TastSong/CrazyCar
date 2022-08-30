@@ -132,6 +132,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void PlayConnectAnim() {
+        if (xboxConnect == null) return;
         xboxConnect.gameObject.SetActiveFast(true);
         float time = 1;
         Util.DelayExecuteWithSecond(time, () => {
@@ -141,6 +142,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void PlayDisconnectAnim() {
+        if (xboxDisconnect == null) return;
         xboxDisconnect.gameObject.SetActiveFast(true);
         float time = 1;
         Util.DelayExecuteWithSecond(time, () => {
