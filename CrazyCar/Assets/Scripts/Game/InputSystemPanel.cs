@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Utils;
 using QFramework;
 
@@ -20,6 +17,12 @@ public class InputSystemPanel : MonoBehaviour, IController {
     private bool isConnectXBOX = false;
     private bool curIsConnectXBOX = false;
     private int uid;
+    private IInputModel inputModel;
+
+    private void Awake() {
+        inputModel = this.GetModel<IInputModel>();
+        isUseKeyboard = inputModel.IsUseKeyboard.Value == 1;
+    }
 
     private bool IsStartGame {
         get {
@@ -62,6 +65,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.K)) {
             isUseKeyboard = !isUseKeyboard;
+            inputModel.IsUseKeyboard.Value = isUseKeyboard ? 1 : 0;
         }
 
         if (isUseKeyboard && IsStartGame) {
@@ -132,6 +136,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void PlayConnectAnim() {
+        if (xboxConnect == null) return;
         xboxConnect.gameObject.SetActiveFast(true);
         float time = 1;
         Util.DelayExecuteWithSecond(time, () => {
@@ -141,6 +146,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void PlayDisconnectAnim() {
+        if (xboxDisconnect == null) return;
         xboxDisconnect.gameObject.SetActiveFast(true);
         float time = 1;
         Util.DelayExecuteWithSecond(time, () => {
