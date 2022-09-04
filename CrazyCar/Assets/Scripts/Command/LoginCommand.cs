@@ -8,11 +8,13 @@ public class LoginCommand : AbstractCommand {
     private string mUserName;
     private string mPassword;
     private bool mIsRemember;
+    private bool mIsAutoLogin;
 
-    public LoginCommand(string userName, string password, bool isRemember) {
+    public LoginCommand(string userName, string password, bool isRemember, bool isAutoLogin) {
         mUserName = userName;
         mPassword = password;
         mIsRemember = isRemember;
+        mIsAutoLogin = isAutoLogin;
     }
 
     protected override void OnExecute() {
@@ -36,6 +38,7 @@ public class LoginCommand : AbstractCommand {
                         callback: () => {
                             this.GetSystem<IVibrationSystem>().Haptic();
                             this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
+                            this.GetModel<IUserModel>().AutoLogin.Value = mIsAutoLogin ? 1 : 0;
                             this.SendCommand<RecodeLoginCommand>();
                             this.SendCommand(new LoadSceneCommand(SceneID.Index));
                         }));

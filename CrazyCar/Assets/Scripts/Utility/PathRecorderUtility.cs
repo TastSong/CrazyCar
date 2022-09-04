@@ -43,6 +43,7 @@ public static class PrefKeys {
     public const string rememberPassword = "rememberPassword";
     public const string isCompleteGuidance = "isCompleteGuidance";
     public const string isUseKeyboard = "isUseKeyboard";
+    public const string autoLogin = "autoLogin";
 }
 
 public static class LocalUrl {

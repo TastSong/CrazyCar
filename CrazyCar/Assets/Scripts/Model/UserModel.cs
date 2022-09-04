@@ -31,6 +31,7 @@ public interface IUserModel : IModel {
     BindableProperty<int> MapNum { get; }
     BindableProperty<EquipInfo> EquipInfo { get; }
     BindableProperty<int> RememberPassword { get; }
+    BindableProperty<int> AutoLogin { get; }
     BindableProperty<bool> IsCompleteGuidance { get; }
     void SetUserInfoPart(UserInfo userInfo);
     UserInfo GetUserInfo();
@@ -48,6 +49,7 @@ public class UserModel : AbstractModel, IUserModel {
     public BindableProperty<int> MapNum { get; } = new BindableProperty<int>();
     public BindableProperty<EquipInfo> EquipInfo { get; } = new BindableProperty<EquipInfo>();
     public BindableProperty<int> RememberPassword { get; } = new BindableProperty<int>();
+    public BindableProperty<int> AutoLogin { get; } = new BindableProperty<int>();
 
     public BindableProperty<bool> IsSuperuser { get; } = new BindableProperty<bool>();
     public BindableProperty<bool> IsCompleteGuidance { get; } = new BindableProperty<bool>();
@@ -99,6 +101,11 @@ public class UserModel : AbstractModel, IUserModel {
         RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);
         RememberPassword.Register(v =>
             storage.SaveInt(PrefKeys.rememberPassword, v)
+        );
+        
+        AutoLogin.Value = storage.LoadInt(PrefKeys.autoLogin);
+        AutoLogin.Register(v =>
+            storage.SaveInt(PrefKeys.autoLogin, v)
         );
 
         IsCompleteGuidance.Value = storage.LoadInt(PrefKeys.isCompleteGuidance) == 1;
