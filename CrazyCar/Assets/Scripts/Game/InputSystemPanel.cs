@@ -136,22 +136,24 @@ public class InputSystemPanel : MonoBehaviour, IController {
 
     [Obsolete]
     private void PlayConnectAnim() {
-        if (xboxConnect == null) return;
-        xboxConnect.gameObject.SetActiveFast(true);
-        float time = 1;
-        Util.DelayExecuteWithSecond(time, () => {
-            xboxConnect.gameObject.SetActiveFast(false);
-        });
+        if (xboxConnect != null) {
+            xboxConnect.gameObject.SetActiveFast(true);
+            float time = 1;
+            Util.DelayExecuteWithSecond(time, () => {
+                xboxConnect.gameObject.SetActiveFast(false);
+            });
+        }
     }
 
     [Obsolete]
     private void PlayDisconnectAnim() {
-        if (xboxDisconnect == null) return;
-        xboxDisconnect.gameObject.SetActiveFast(true);
-        float time = 1;
-        Util.DelayExecuteWithSecond(time, () => {
-            xboxDisconnect.gameObject.SetActiveFast(false);
-        });
+        if (xboxDisconnect != null) {
+            xboxDisconnect.gameObject.SetActiveFast(true);
+            float time = 1;
+            Util.DelayExecuteWithSecond(time, () => {
+                xboxDisconnect.gameObject.SetActiveFast(false);
+            });
+        }
     }
 
     public IArchitecture GetArchitecture() {
