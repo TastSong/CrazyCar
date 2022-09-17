@@ -17,7 +17,7 @@ import com.tastsong.crazycar.model.UserModel;
 public class LoginService {
     @Autowired
     private UserMapper userMapper;
-    @Autowired 
+    @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
     private AvatarMapper avatarMapper;
@@ -30,7 +30,7 @@ public class LoginService {
 
     public UserInfoModel getUserInfo(String userName){
         UserInfoModel userInfoModel = new UserInfoModel();
-        UserModel userModel = getUserByName(userName);			
+        UserModel userModel = getUserByName(userName);
         userInfoModel.user_name = userModel.user_name;
         userInfoModel.uid = userModel.uid;
         userInfoModel.aid = userModel.aid;
@@ -61,7 +61,7 @@ public class LoginService {
 
     private EquipModel getEquipByEid(Integer eid){
         return equipMapper.getEquipByEid(eid);
-    } 
+    }
 
     private boolean isHasEquip (Integer eid, Integer uid){
         return equipMapper.isHasEquip(uid, eid);
@@ -93,10 +93,17 @@ public class LoginService {
         userMapper.insertUser(userModel);
 
 		int uid = userMapper.getUserByName(userName).uid;
-        avatarMapper.addAvatarForUser(uid, defaultAid);
-        timeTrialMapper.addTimeTrialMapForUser(uid, defaultCid);
-        equipMapper.addEquipForUser(uid, defaultEid);
-		return;
+        if(avatarMapper.isHasAvatar(uid, defaultAid)){
+            avatarMapper.addAvatarForUser(uid, defaultAid);
+        }
+
+        if(!timeTrialMapper.isHasTimeTrialClass(uid, defaultCid)){
+            timeTrialMapper.addTimeTrialMapForUser(uid, defaultCid);
+        }
+
+        if(!equipMapper.isHasEquip(uid, defaultEid)){
+            equipMapper.addEquipForUser(uid, defaultEid);
+        }
     }
 
     public void changePassword(Integer uid, String password){
