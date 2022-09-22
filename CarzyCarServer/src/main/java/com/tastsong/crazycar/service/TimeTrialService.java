@@ -66,13 +66,14 @@ public class TimeTrialService {
     }
 
     public boolean canBuyClass(int uid, int cid) {
-		return getUserStar(uid) >= getNeedStar(cid);		
+		return getUserStar(uid) >= getNeedStar(cid);
 	}
 
     public void buyClass(Integer uid, Integer cid){
         Integer curStar = getUserStar(uid) - getNeedStar(cid);
         userMapper.updateUserStar(uid, curStar);
-    } 
+        timeTrialMapper.addTimeTrialMapForUser(uid, cid);
+    }
 
     public Integer getLimitTime(Integer cid){
         return timeTrialMapper.getTimeTrialInfo(cid).limit_time;
@@ -81,22 +82,22 @@ public class TimeTrialService {
     public boolean isBreakRecord(TimeTrialRecordModel recordModel){
         if (recordModel.complete_time == -1) {
 			return false;
-		} 
+		}
         Integer minTime = timeTrialMapper.getMiniCompleteTime(recordModel.uid, recordModel.cid);
         if(minTime == null){
             minTime = -1;
         }
 		if (minTime == -1 && recordModel.complete_time != -1){
 			return true;
-		}		
-		
+		}
+
 		return recordModel.complete_time < minTime;
     }
 
     public void insertRecord(TimeTrialRecordModel recordModel){
         timeTrialMapper.insertRecord(recordModel);
     }
-    
+
     public Integer getRank(Integer uid, Integer cid){
         initRank(uid, cid);
         return timeTrialMapper.getRank(uid, cid);
