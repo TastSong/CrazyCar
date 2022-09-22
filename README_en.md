@@ -73,19 +73,6 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :roller_coaster: Route planning function, custom route
 
-### TODO 
-
- - [ ] Optimize the callback logic using UniTask
- - [ ] Optimized robot logic
- - [ ] The car joins the suspension
- - [ ] Optimized race interface, added speed dashboard, etc
- - [ ] Timeline is introduced to realize the dialogue system
- - [ ] Background: Equipment and profile picture resource configuration
- - [ ] Use mesh crushing to achieve rollover effect效果
- - [ ] Hot fix: Lua
- - [ ] Optimize water entering effect
- - [ ] Buy VIP
-
 ## Connection
 :email: ： TastSong@163.com
 
