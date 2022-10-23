@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class TestUniTask : MonoBehaviour {
-    async void Start() {
+    void Start() {
         var source = new UniTaskCompletionSource();
         ReadyForCompleted(source).Forget();//只引发不考虑其是否完成
         Debug.Log("Do Something...");
