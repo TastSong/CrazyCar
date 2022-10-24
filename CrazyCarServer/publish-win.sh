@@ -1,5 +1,5 @@
 #!/bin/bash
-# 在windows下使用git bash运行
+# 在windows下使用git bash运行 首先cd 到此脚本所在文件夹即：*/CrazyCar/CrazyCarServer
 mvn clean
 mvn package
 
