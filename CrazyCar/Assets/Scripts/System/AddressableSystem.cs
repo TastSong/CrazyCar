@@ -57,11 +57,12 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     void OnCheckCatalogUpdate(AsyncOperationHandle<List<string>> handle) {
-        string str = "";
-        for (int i = 0; i < handle.Result.ToList().Count; i++) {
-            str += handle.Result.ToList()[i] + "; ";
-        }
-        Debug.Log("对比Catalog " + str);
+        // 耗性能
+        // string str = "";
+        // for (int i = 0; i < handle.Result.ToList().Count; i++) {
+        //     str += handle.Result.ToList()[i] + "; ";
+        // }
+        // Debug.Log("对比Catalog " + str);
         if (handle.Result.Count > 0) {
             Debug.Log("对比Catalog 数量大于0");
             var updateHandle = Addressables.UpdateCatalogs(handle.Result);
