@@ -69,3 +69,17 @@ Fade Range 是调整摄像机距离的显示效果的，可以跟进实际项目
 实用MipMap之后，texture的大小也会随之变大，和Lod同理，在使用了mipmap的同时Unity也会创建出低精度的texture，从而占用内存。
 
 还是那样，具体的利弊，各位看项目的实际情况使用啦~
+
+# 四、优化Mipmap 
+
+场景较大或开放世界类的游戏，其场景中存在的大量的贴图（比如基础颜色纹理贴图、法线贴图、高光贴图、粗糙度贴图等），再加上为了使远景看起来不那么失真和避免摩尔纹，会对贴图采用mipmaps技术，Texture的内存占用会多33%左右。
+
+Texture Streaming系统是基于Texture的Mipmaps的串流系统
+
+贴图开启Generate Mip Maps和Streaming Mipmaps
+
+<img src="./Image/screenshot-20221104-150020.png" alt="img" style="zoom: 100%;" />
+
+开启Texture Streaming（Editor->Project Settings->Quality->Texture Streaming）
+
+<img src="./Image/screenshot-20221104-150134.png" alt="img" style="zoom: 100%;" />
