@@ -48,9 +48,9 @@ namespace Utils {
                 case ServerType.Local:
                     return 8081;
                 case ServerType.Remote:
-                    return 80;
-                case ServerType.TestServer:
                     return 8081;
+                case ServerType.TestServer:
+                    return 80;
                 default:
                     return 8081;
             }
@@ -66,9 +66,9 @@ namespace Utils {
                 case ServerType.Local:
                     return "127.0.0.1";
                 case ServerType.Remote:
-                    return "tastsong.top";
-                case ServerType.TestServer:
                     return "139.9.103.145";
+                case ServerType.TestServer:
+                    return "tastsong.top";
                 default:
                     return "127.0.0.1";
             }

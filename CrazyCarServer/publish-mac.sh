@@ -17,7 +17,7 @@ rm -rf crazycar.zip
 ssh -t huawei "ps -ax | grep crazycar | cut -c 1-5  | xargs kill -9"
 ssh -t huawei "rm -rf /root/crazy_car_game/crazycar.jar"
 ssh -t huawei "unzip /root/crazy_car_game/crazycar.zip -d /root/crazy_car_game/"
-ssh -t huawei "ohup java -jar /root/crazy_car_game/crazycar.jar >/root/crazy_car_game/crazycar.txt &"
+ssh -t huawei "nohup java -jar /root/crazy_car_game/crazycar.jar >/root/crazy_car_game/crazycar.txt &"
 
 
 echo "Finish!!!"
