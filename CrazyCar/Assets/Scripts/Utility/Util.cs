@@ -66,7 +66,7 @@ namespace Utils {
                 case ServerType.Local:
                     return "127.0.0.1";
                 case ServerType.Remote:
-                    return "139.9.103.145";
+                    return "tastsong.xyz";
                 case ServerType.TestServer:
                     return "tastsong.top";
                 default:
