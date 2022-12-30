@@ -48,7 +48,7 @@ namespace Utils {
                 case ServerType.Local:
                     return 8081;
                 case ServerType.Remote:
-                    return 8081;
+                    return 80;
                 case ServerType.TestServer:
                     return 80;
                 default:
