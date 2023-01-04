@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.EquipMapper">
+    <select id="getEquipByEid" resultType="EquipModel">
+        select
+        *
+        from all_equip 
+        where eid = #{eid};
+    </select>
+
+    <select id="getEquipList" resultType="EquipModel">
+        select
+        *
+        from all_equip;
+    </select>
+
+    <select id="getEidsByUid" resultType="Integer">
+        select
+        eid
+        from equip_uid 
+        where uid = #{uid};
+    </select>
+
+    <select id="isHasEquip" resultType="boolean">
+        select exists(
+        select
+        id
+        from equip_uid 
+        where uid = #{uid} and eid = #{eid});
+    </select>
+
+    <insert id="addEquipForUser">
+        insert into equip_uid (
+          eid, uid
+        ) VALUES (
+         #{eid}, #{uid}
+        )
+    </insert>
+
+    <update id="updateEquipInfo" parameterType="EquipModel">
+        update all_equip
+        set rid = #{rid}, equip_name = #{equip_name}, star = #{star},
+         mass = #{mass}, power = #{power}, max_power = #{max_power}, 
+         can_wade = #{can_wade}, is_show = #{is_show}
+        where eid = #{eid}
+    </update>
+</mapper>

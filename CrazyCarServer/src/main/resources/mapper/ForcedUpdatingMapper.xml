@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.ForcedUpdatingMapper">
+    <sql id="Base_Column_List">
+        platform, version, url
+    </sql>
+    <select id="getVersion" parameterType="String" resultType="String">
+        select
+        version
+        from forced_updating 
+        where platform = #{platform};
+    </select>
+
+    <select id="getUrl" parameterType="String" resultType="String">
+        select
+        url
+        from forced_updating 
+        where platform = #{platform};
+    </select>
+</mapper>

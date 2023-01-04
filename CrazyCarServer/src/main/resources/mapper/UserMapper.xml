@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.UserMapper">
+    <select id="getAllUserNum" resultType="Integer">
+        select
+        Count(*)
+        from all_user;
+    </select>
+
+    <select id="getUserByUid" resultType="UserModel">
+        select
+        *
+        from all_user 
+        where uid = #{uid};
+    </select>
+
+    <select id="getUserByName" resultType="UserModel">
+        select
+        *
+        from all_user 
+        where user_name = #{userName};
+    </select>
+
+    <select id="isSuperuser" resultType="boolean">
+        select exists(
+        select
+        uid
+        from superuser 
+        where uid = #{uid});
+    </select>
+
+    <select id="isExistsUser" resultType="boolean">
+        select exists(
+        select
+        *
+        from all_user 
+        where user_name = #{userName});
+    </select>
+
+    <select id="isExistsUserByUid" resultType="boolean">
+        select exists(
+        select
+        *
+        from all_user 
+        where uid = #{uid});
+    </select>
+
+    <insert id="insertUser" parameterType="UserModel">
+        insert into all_user (
+          user_name, user_password, login_time, aid, star, is_vip, eid
+        ) VALUES (
+         #{user_name}, #{user_password}, #{login_time}, #{aid}, #{star}, #{is_vip}, #{eid}
+        )
+    </insert>
+
+    <update id="updateUserStar">
+        update all_user
+        set star = #{star}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserVip">
+        update all_user
+        set is_vip = #{is_vip}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserEid">
+        update all_user
+        set eid = #{eid}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserAid">
+        update all_user
+        set aid = #{aid}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserPassword">
+        update all_user
+        set user_password = #{password}
+        where uid = #{uid}
+    </update>
+
+    <insert id="insertUserLoginRecord" parameterType="UserLoginRecordModel">
+        insert into user_login_record (
+          user_name, login_time, place, device
+        ) VALUES (
+         #{user_name}, #{login_time}, #{place}, #{device}
+        )
+    </insert>
+
+    <select id="getLoginRecordAfterTime" parameterType="Long" resultType="UserLoginRecordModel">
+        select
+        *
+        from user_login_record 
+        where login_time > #{time};
+    </select>
+
+    <select id="getUserLoginData" parameterType="Integer" resultType="DataStatisticsModel">
+        select COUNT(*) as count, login_time as timestamp
+        from user_login_record 
+        where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * ${offsetTime}) 
+        group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
+        order by login_time limit ${offsetTime};
+    </select>
+</mapper>
