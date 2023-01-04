@@ -1,0 +1,12 @@
+{
+	"folders" : ["/SDK/ShareSDK/Support/PlatformSDK/LineSDK"],
+    "framework" : ["/SDK/ShareSDK/Support/PlatformConnector/LineConnector.framework"],
+    "LSApplicationQueriesSchemes":["lineauth","lineauth2","line","line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)"],
+    "URLSchemes" : {
+    				"CFBundleURLSchemes" :["line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)"],
+    				"CFBundleURLName" : "line"
+    				},
+    "infoPlistSet":{
+		"LineSDKConfig":{"ChannelID":"{appkey}","UniversalLink":"{universalLink}"}
+	}
+}

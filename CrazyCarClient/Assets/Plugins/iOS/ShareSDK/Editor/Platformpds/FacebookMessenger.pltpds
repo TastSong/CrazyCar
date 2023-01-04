@@ -1,0 +1,11 @@
+{
+    "framework" : ["/SDK/ShareSDK/Support/PlatformConnector/FacebookMessengerConnector.framework"],
+    "LSApplicationQueriesSchemes":["fb-messenger-platform-20150714","fb-messenger"],
+    "URLSchemes" : {
+    				"CFBundleURLSchemes" :["fb{appkey}"],
+    				"CFBundleURLName" : "facebookmessage"
+    				},
+	"infoPlistSet":{
+		"FacebookAppID":"{appkey}"
+	}
+}

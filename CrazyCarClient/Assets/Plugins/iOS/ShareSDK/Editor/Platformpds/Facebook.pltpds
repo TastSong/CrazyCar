@@ -1,0 +1,11 @@
+{
+        "folders" : ["/SDK/ShareSDK/Support/PlatformSDK/FacebookSDK"],
+	"framework" : ["/SDK/ShareSDK/Support/PlatformConnector/FacebookConnector.framework"],
+    "sysFramework":["Accelerate.framework","WebKit.framework"],
+    "LSApplicationQueriesSchemes":["fbauth","fbauth2","fbapi20130214","fbapi","fbapi20160328","fbshareextension","fbapi20150629"],
+    "URLSchemes" : {
+    				"CFBundleURLSchemes" :["fb{appkey}"],
+    				"CFBundleURLName" : "facebook"
+    				},
+"infoPlistSet" :{"FacebookAppID": "{appkey}"}
+}
