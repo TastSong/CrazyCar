@@ -388,16 +388,16 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("Android", "8.6.0", 10000, 1633519472000, "https://www.pgyer.com/xlbk");
+				   ("Android", "9.0.0", 10000, 1633519472000, "https://www.pgyer.com/xlbk");
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("ios", "8.6.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+				   ("ios", "9.0.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("WebGL", "8.6.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+				   ("WebGL", "9.0.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("PC", "8.6.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");    
+				   ("PC", "9.0.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");    
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
 				   ("Defeat", "0.0.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");                                         
