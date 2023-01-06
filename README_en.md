@@ -144,6 +144,10 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 22. [element: A Vue.js 2.0 UI Toolkit for Web](https://github.com/ElemeFE/element)
 23. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
 
+## Star History
+
+![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar&type=Date)
+
 
 ## License
 [MIT](https://github.com/TastSong/CrazyCar/blob/master/LICENSE)

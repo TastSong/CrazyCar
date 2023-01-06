@@ -161,6 +161,12 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 ------
 
 
+## Star History
+
+![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar&type=Date)
+
+
 ## 证书
+
 [MIT](https://github.com/TastSong/CrazyCar/blob/master/LICENSE)
 
