@@ -8,11 +8,11 @@ using LitJson;
 using Utils;
 
 public interface IKCPSystem : ISystem {
-    void Connect(string url, int port);
-    void SendMsgToServer(string msg);
-    void CloseConnect();
+    public void Connect(string url, int port);
+    public void SendMsgToServer(string msg);
+    public void CloseConnect();
 
-    bool IsConnected { get; }
+    public bool IsConnected { get; }
 }
 
 public class KCPSystem : AbstractSystem, IKCPSystem {

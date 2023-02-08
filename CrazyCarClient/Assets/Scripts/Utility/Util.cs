@@ -46,15 +46,17 @@ namespace Utils {
         {
             switch (serverType) {
                 case ServerType.Local:
-                    return 8081;
+                    return DefaultPort;
                 case ServerType.Remote:
                     return 80;
                 case ServerType.TestServer:
                     return 80;
                 default:
-                    return 8081;
+                    return DefaultPort;
             }
         }
+
+        public static int DefaultPort = 8081;
 
         public static string GetServerBaseUrl(ServerType serverType) {
             string host = GetServerHost(serverType);
@@ -66,8 +68,10 @@ namespace Utils {
                 case ServerType.Local:
                     return "127.0.0.1";
                 case ServerType.Remote:
+                    //return "139.9.103.145";
                     return "tastsong.xyz";
                 case ServerType.TestServer:
+                    //return "101.34.205.139";
                     return "tastsong.top";
                 default:
                     return "127.0.0.1";
