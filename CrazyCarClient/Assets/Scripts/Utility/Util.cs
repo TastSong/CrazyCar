@@ -56,7 +56,7 @@ namespace Utils {
             }
         }
 
-        public static int DefaultPort = 8081;
+        private static int DefaultPort = 8081;
 
         public static string GetServerBaseUrl(ServerType serverType) {
             string host = GetServerHost(serverType);

@@ -106,7 +106,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void Connect(string wsURL = "", string kcpURL = "", int port = 0) {
         if (netType == NetType.WebSocket) {
-            wsURL = "ws://" + Util.GetServerHost(ServerType) + ":" + Util.DefaultPort + wsURL;
+            wsURL = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + wsURL;
             this.GetSystem<IWebSocketSystem>().Connect(wsURL);
         } else if (netType == NetType.KCP) {
             this.GetSystem<IKCPSystem>().Connect(kcpURL, port);

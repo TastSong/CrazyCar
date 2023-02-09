@@ -66,7 +66,7 @@ public class KCPManager : KcpClient, IController {
     }
 
     protected override void HandleException(Exception ex) {
-        Debug.Log("+++++ Exception");
+        Debug.Log("+++++ Exception " + ex.ToString());
         base.HandleException(ex);
     }
 
@@ -79,6 +79,7 @@ public class KCPManager : KcpClient, IController {
         if (client != null && client.IsRunning()) {
             return;
         }
+        Debug.LogError("host " + host + " port " + port + " url " + url);
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
             token: this.GetModel<IGameModel>().Token.Value,
