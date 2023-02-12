@@ -34,7 +34,7 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     }
 
     public void Connect(string url, int port) {
-        host = Util.GetServerHost(this.GetSystem<INetworkSystem>().ServerType);
+        host = Util.GetServerHostIP(this.GetSystem<INetworkSystem>().ServerType);
         this.port = port;
         this.url = url;
         kcpManager.ConnectKCP(host, port, url);
@@ -79,7 +79,7 @@ public class KCPManager : KcpClient, IController {
         if (client != null && client.IsRunning()) {
             return;
         }
-        Debug.LogError("host " + host + " port " + port + " url " + url);
+        Debug.Log("host " + host + " port " + port + " url " + url);
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
             token: this.GetModel<IGameModel>().Token.Value,

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using UnityEngine;
+using Object = System.Object;
 
 namespace KcpCSharp {
     public abstract class KcpOnUdp : Output {
