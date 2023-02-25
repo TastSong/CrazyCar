@@ -10,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @MapperScan("com.tastsong.crazycar")
 @EnableScheduling
-public class CrazycarApplication {
+public class CrazyCarApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrazycarApplication.class, args);
+		SpringApplication.run(CrazyCarApplication.class, args);
 
 		System.out.println("     _____                        _____                                            ");
 		System.out.println("    / ____|                      / ____|                                           ");
