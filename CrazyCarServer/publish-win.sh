@@ -3,21 +3,21 @@
 mvn clean
 mvn package
 
-rm -rf crazycar.zip
+rm -rf crazy_car.zip
 
-mv ./target/crazycar.jar crazycar.jar
+mv ./target/crazy_car.jar crazy_car.jar
 
-zip crazycar.zip crazycar.jar
+zip crazy_car.zip crazy_car.jar
 
-scp crazycar.zip huawei:/root/crazy_car_game/
+scp crazy_car.zip huawei:/root/crazy_car_game/
 
-mv crazycar.jar ./target/crazycar.jar
-rm -rf crazycar.zip
+mv crazy_car.jar ./target/crazy_car.jar
+rm -rf crazy_car.zip
 
-ssh -t huawei "ps -ax | grep crazycar | cut -c 1-5  | xargs kill -9"
-ssh -t huawei "rm -rf /root/crazy_car_game/crazycar.jar"
-ssh -t huawei "unzip /root/crazy_car_game/crazycar.zip -d /root/crazy_car_game/"
-ssh -t huawei "nohup java -jar /root/crazy_car_game/crazycar.jar >/root/crazy_car_game/crazycar.txt &"
+ssh -t huawei "ps -ax | grep crazy_car | cut -c 1-5  | xargs kill -9"
+ssh -t huawei "rm -rf /root/crazy_car_game/crazy_car.jar"
+ssh -t huawei "unzip /root/crazy_car_game/crazy_car.zip -d /root/crazy_car_game/"
+ssh -t huawei "nohup java -jar /root/crazy_car_game/crazy_car.jar >/root/crazy_car_game/crazy_car.txt &"
 
 echo "Finish!!!"
 
