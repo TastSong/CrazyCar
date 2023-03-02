@@ -1,11 +1,9 @@
 # CrazyCar
-unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
-
 ## 框架结构
 
 ### 层级
 
-* 表现层：ViewController 层2021.3.12
+* 表现层：ViewController 层
 
 * 系统层：System 层
 
@@ -67,50 +65,6 @@ unity 制作前端游戏；Java+MySQL+Tomcat+Nginx部署服务器
 5. 注册的时候利用接口初始化对象；(原型模式)
 
 > 在[QFramework](https://github.com/liangxiegame/QFramework)上进行微改
-
-## 数据传输格式制定
-
-1. HTTP 数据传输格式指定为JSON
-
-2. 选定JAR包为FastJson，[使用及下载地址](https://www.runoob.com/w3cnote/fastjson-intro.html)
-
-3. 要注意JavaWeb项目的三方JAR，要在WebContent下的WEB-INF新建lib文件夹并放入，才能正常调用
-
-4. 由于Unity系统内置的UnityWebRequest发送的数据为byte数组，所以在服务器端需要额外处理才能使用
-
-   ```java
-   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-   		// TODO Auto-generated method stub
-   		response.setContentType("text/html");
-   
-   		System.out.println("读取请求内容.");
-   		BufferedReader br = new BufferedReader(new 		InputStreamReader(request.getInputStream(),"utf-8"));
-   		String line = null;
-   		StringBuilder sb = new StringBuilder();
-   		while ((line = br.readLine()) != null) {
-   			sb.append(line);
-   		}
-   		System.out.println(sb.toString());
-   		JSONObject json = JSONObject.parseObject(sb.toString());
-   		if(!sb.toString().isEmpty() && json.containsKey("key")){
-   			System.out.println(json.getString("key"));
-   		}
-   
-   
-   		System.out.println("开始回复消息.");
-   		PrintWriter out = response.getWriter();		
-   		JSONArray jsonArray = new JSONArray();
-           JSONObject jsonObject = new JSONObject();
-           jsonObject.put("key", "value");
-           jsonArray.add(jsonObject);
-           // 此处为数组
-   	    String jsonOutput = jsonArray.toJSONString();
-   		//out.println(jsonObject.toString());
-           out.println(jsonOutput);
-   		out.flush();
-   		out.close();
-   	}
-   ```
 
 
 ## 工具
