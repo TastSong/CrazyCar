@@ -21,11 +21,11 @@
 
 ## 运行
 
-1. 用**Unity**(2021.3.12及以上)打开**CrazyCar -> CrazyCar**项目；
+1. 用**Unity**(2021.3.9及以上)打开**CrazyCar -> CrazyCarClient**项目；
 
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 
-3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意账号和密码需要和[配置文件](./CarzyCarSpringBootServer/src/main/resources/application.properties)保持一致
+3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
 
 4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg**不要**下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
@@ -39,7 +39,7 @@
 
    ![](./SamplePictures/VSCODE2.png)
 
-8. 使用VScode打开文件夹：CarzyCarSpringBootServer，F5启动项目
+8. 使用VScode打开文件夹：CrazyCarServer，F5启动项目
 
 9. 服务端运行成功后，即可运行**Unity**客户端；
 
