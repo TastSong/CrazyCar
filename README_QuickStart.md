@@ -2,21 +2,21 @@
 
 ## 视频教程
 
-### [一、前端环境](https://www.bilibili.com/video/BV1se4y1f7fZ?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
+### [一、前端环境 视频](https://www.bilibili.com/video/BV1se4y1f7fZ?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
 
 
 ### 二、服务端环境
 
-#### 2.1 [数据库](https://www.bilibili.com/video/BV1Ua411V7zV)
+#### 2.1 [数据库 视频](https://www.bilibili.com/video/BV1Ua411V7zV)
 
 
-#### 2.2  [Java环境](https://www.bilibili.com/video/BV1pB4y1V7CL)
+#### 2.2  [Java环境 视频](https://www.bilibili.com/video/BV1pB4y1V7CL)
 
 
-#### 2.3  [VSCode](https://www.bilibili.com/video/BV17g411r7dk?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
+#### 2.3  [VSCode 视频](https://www.bilibili.com/video/BV17g411r7dk?share_source=copy_web&vd_source=f8cee64c485579bb7cc03c9b2d573b0a)
 
 
-### 三、[后台环境](https://www.bilibili.com/video/BV1s14y1t7xS)
+### 三、[后台环境 视频](https://www.bilibili.com/video/BV1s14y1t7xS)
 
 
 ## 运行
