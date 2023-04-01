@@ -157,6 +157,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 10. [Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.](https://github.com/vuejs/vue)
 10. [element: A Vue.js 2.0 UI Toolkit for Web](https://github.com/ElemeFE/element)
 10. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
+10. [Midjourney](https://www.midjourney.com/app/)
 
 ------
 
