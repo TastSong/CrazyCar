@@ -118,8 +118,8 @@ public class MPlayer : MonoBehaviour, IController {
         if (isLockSpeed) {
             return;
         }
-        transform.position = pos;
-        rig.velocity = speed;
+        transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * 1);
+        rig.velocity = Vector3.Lerp(rig.velocity, speed, Time.deltaTime * 1);
         lastRecvStatusStamp = Util.GetTime();
     }
 
