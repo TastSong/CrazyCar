@@ -148,28 +148,39 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public void RespondAction(JsonData recJD){
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
         lock (MsgLock) {
-            if (msgType == MsgType.CreatePlayer) {
-                playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
-                PlayerCreateMsgs.Enqueue(playerCreateMsg);
-            } else if (msgType == MsgType.PlayerState) {
-                playerStateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerStateMsg(recJD);
-                PlayerStateMsgs.Enqueue(playerStateMsg);
-            } else if (msgType == MsgType.PlayerOperat) {
-                playerOperatMsg = this.GetSystem<IDataParseSystem>().ParsePlayerOperatMsg(recJD);
-                PlayerOperatMsgs.Enqueue(playerOperatMsg);
-            } else if (msgType == MsgType.PlayerCompleteGame) {
-                playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
-                PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
-            } else if (msgType == MsgType.MatchRoomCreate) {
-                OnMatchRoomCreateMsg = recJD;
-            } else if (msgType == MsgType.MatchRoomJoin) {
-                OnMatchRoomJoinMsg = recJD;
-            } else if (msgType == MsgType.MatchRoomStart) {
-                OnMatchRoomStartMsg = recJD;
-            } else if (msgType == MsgType.MatchRoomStatus) {
-                OnMatchRoomStatusMsg = recJD;
-            } else if (msgType == MsgType.MatchRoomExit) {
-                OnMatchRoomExitMsg = recJD;
+            switch (msgType)
+            {
+                case MsgType.CreatePlayer:
+                    playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
+                    PlayerCreateMsgs.Enqueue(playerCreateMsg);
+                    break;
+                case MsgType.PlayerState:
+                    playerStateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerStateMsg(recJD);
+                    PlayerStateMsgs.Enqueue(playerStateMsg);
+                    break;
+                case MsgType.PlayerOperat:
+                    playerOperatMsg = this.GetSystem<IDataParseSystem>().ParsePlayerOperatMsg(recJD);
+                    PlayerOperatMsgs.Enqueue(playerOperatMsg);
+                    break;
+                case MsgType.PlayerCompleteGame:
+                    playerCompleteMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCompleteMsg(recJD);
+                    PlayerCompleteMsgs.Enqueue(playerCompleteMsg);
+                    break;
+                case MsgType.MatchRoomCreate:
+                    OnMatchRoomCreateMsg = recJD;
+                    break;
+                case MsgType.MatchRoomJoin:
+                    OnMatchRoomJoinMsg = recJD;
+                    break;
+                case MsgType.MatchRoomStart:
+                    OnMatchRoomStartMsg = recJD;
+                    break;
+                case MsgType.MatchRoomStatus:
+                    OnMatchRoomStatusMsg = recJD;
+                    break;
+                case MsgType.MatchRoomExit:
+                    OnMatchRoomExitMsg = recJD;
+                    break;
             }
         }
     }

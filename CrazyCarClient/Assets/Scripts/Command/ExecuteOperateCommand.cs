@@ -10,6 +10,10 @@ public enum ControllerType {
     Speed
 }
 
+
+/// <summary>
+/// 此处用于执行操作的命令，不仅处理直接来自用户操作的命令，还处理来自服务器的命令。
+/// </summary>
 public class ExecuteOperateCommand : AbstractCommand {
     private int uid;
     private ControllerType controllerType;
