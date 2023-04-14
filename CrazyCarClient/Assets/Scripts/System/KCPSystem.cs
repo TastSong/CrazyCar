@@ -34,15 +34,6 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
-    public Action BreakLineAction {
-        get {
-            return kcpManager.BreakLineAction;
-        }
-        set {
-            kcpManager.BreakLineAction = value;
-        }
-    }
-
     public Action ConnectSuccAction {
         get {
             return kcpManager.ConnectSuccAction;
@@ -88,7 +79,6 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
 
 public class KCPManager : KcpClient, IController {
     public Action CloseSuccAction { get; set; }
-    public Action BreakLineAction { get; set; }
     public Action ConnectSuccAction { get; set; }
     
     private new KcpClient client;
@@ -116,14 +106,14 @@ public class KCPManager : KcpClient, IController {
     protected override void HandleException(Exception ex) {
         Debug.Log("+++++ Exception " + ex.ToString());
         base.HandleException(ex);
-        BreakLineAction?.Invoke();
+        //BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
     protected override void HandleTimeout() {
         Debug.Log("+++++ Timeout");
         base.HandleTimeout();
-        BreakLineAction?.Invoke();
+        //BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
