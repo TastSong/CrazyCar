@@ -10,19 +10,17 @@ public class TimeTrialNet : MonoBehaviour, IController {
     private Coroutine timeTrialNetCor;
 
     private void Start() {
-        //if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
-        //    this.GetSystem<INetworkSystem>().Connect(RequestUrl.timeTrialWSUrl);
-
-        //    StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ: () => {
-        //        Debug.Log("Connect succ");
-        //        this.SendCommand<PostCreatePlayerMsgCommand>();
-        //        timeTrialNetCor = CoroutineController.manager.StartCoroutine(SendMsg());
-        //    }, fail: () => {
-        //        Debug.Log("Connect Fail");
-        //    }));
-        //}
-
-        //this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
+        // if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
+        //     this.GetSystem<INetworkSystem>().Connect(RequestUrl.timeTrialWSUrl);
+        //     
+        //     this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
+        //         Debug.Log("Connect succ");
+        //         this.SendCommand<PostCreatePlayerMsgCommand>();
+        //         timeTrialNetCor = CoroutineController.manager.StartCoroutine(SendMsg());
+        //     };
+        // }
+        //
+        // this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnExitGameScene(ExitGameSceneEvent e)
