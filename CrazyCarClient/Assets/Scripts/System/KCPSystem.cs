@@ -7,6 +7,13 @@ using System;
 using LitJson;
 using Utils;
 
+public enum KCPState : ushort {
+    Connecting = 0,
+    Open = 1,
+    Closing = 2,
+    Closed = 3
+}
+
 public interface IKCPSystem : ISystem, ISocketSystem {
 }
 
@@ -58,10 +65,22 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
 }
 
 public class KCPManager : KcpClient, IController {
-
     private new KcpClient client;
     private string recStr;
     private JsonData recJD = new JsonData();
+    private KCPState mKCPState = KCPState.Closed;
+    
+    
+    public KCPState KCPState{
+        get {
+            return mKCPState;
+        }
+        
+        set {
+            Debug.Log("change KCPState to " + value);
+            mKCPState = value;
+        }
+    }
 
     protected override void HandleReceive(ByteBuf bb) {
         recStr = System.Text.Encoding.UTF8.GetString(bb.GetRaw());
@@ -72,17 +91,20 @@ public class KCPManager : KcpClient, IController {
     protected override void HandleException(Exception ex) {
         Debug.Log("+++++ Exception " + ex.ToString());
         base.HandleException(ex);
+        KCPState = KCPState.Closed;
     }
 
     protected override void HandleTimeout() {
         Debug.Log("+++++ Timeout");
         base.HandleTimeout();
+        KCPState = KCPState.Closed;
     }
 
     public void ConnectKCP(string host, int port, string url) {
         if (client != null && client.IsRunning()) {
             return;
         }
+        KCPState = KCPState.Connecting;
         Debug.Log("host " + host + " port " + port + " url " + url);
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
@@ -96,6 +118,7 @@ public class KCPManager : KcpClient, IController {
                 client.SetMinRto(10);
                 client.Connect(host, port);
                 client.Start();
+                KCPState = KCPState.Open;
             }));     
     }
 
@@ -109,6 +132,7 @@ public class KCPManager : KcpClient, IController {
     public void Close() {
         if (client != null) {
             client.Stop();
+            KCPState = KCPState.Closed;
             Debug.Log("++++++ client.IsRunning() = " + client.IsRunning());
         }
     }
