@@ -33,7 +33,7 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
-    public Action BreakLine { get; set; }
+    public Action BreakLineAction { get; set; }
     public void Reconnect() {
         
     }

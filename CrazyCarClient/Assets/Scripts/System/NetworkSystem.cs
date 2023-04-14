@@ -15,19 +15,17 @@ public interface ISocketSystem {
     public void Reconnect();
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
-    public Action BreakLine { get; set; }
+    public Action BreakLineAction { get; set; }
     public bool IsConnected { get; }
 }
 
-public interface INetworkSystem : ISystem {
+public interface INetworkSystem : ISystem, ISocketSystem {
     public ServerType ServerType { get; set; }
     public NetType NetType { get; set; }
     public string HttpBaseUrl { get; set; }
     public void Connect(string wsURL, string kcpURL, int port);
     public IEnumerator OnConnect(Action succ, Action fail);
-    public void SendMsgToServer(string msg);
     public void RespondAction(JsonData recJD);
-    public void CloseConnect();
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
@@ -46,6 +44,7 @@ public interface INetworkSystem : ISystem {
 public class NetworkSystem : AbstractSystem, INetworkSystem {
     private ServerType serverType;
     private NetType netType;
+    private ISocketSystem curSocketSystem;
 
     public ServerType ServerType {
         get {
@@ -62,6 +61,13 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
         set {
             netType = value;
+            if (value == NetType.WebSocket) {
+                curSocketSystem = this.GetSystem<IWebSocketSystem>();
+            } else if (value == NetType.KCP) {
+                curSocketSystem = this.GetSystem<IKCPSystem>();
+            } else {
+                curSocketSystem = this.GetSystem<IWebSocketSystem>();
+            }
         }
     }
     public string HttpBaseUrl { get; set; }
@@ -116,12 +122,14 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void Connect(string wsURL = "", string kcpURL = "", int port = 0) {
+        string url = "";
         if (netType == NetType.WebSocket) {
-            wsURL = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + wsURL;
-            this.GetSystem<IWebSocketSystem>().Connect(wsURL);
+            url = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + wsURL;
         } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().Connect(kcpURL, port);
+            url = kcpURL;
         }
+        
+        this.Connect(url, port);
     }
 
     public IEnumerator OnConnect(Action succ, Action fail) {
@@ -129,16 +137,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         float gap = 0.04f;
         float timer = 0;
         WaitForSeconds wait = new WaitForSeconds(gap);
-        if (netType == NetType.WebSocket) {
-            while (!this.GetSystem<IWebSocketSystem>().IsConnected && timer < maxTime) {
-                yield return wait;
-                timer += gap;
-            }
-        } else if (netType == NetType.KCP) {
-            while (!this.GetSystem<IKCPSystem>().IsConnected && timer < maxTime) {
-                yield return wait;
-                timer += gap;
-            }
+        while (!IsConnected && timer < maxTime) {
+            yield return wait;
+            timer += gap;
         }
 
         if (timer < maxTime) {
@@ -148,12 +149,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
+    public void Connect(string url, int port = 0) {
+        curSocketSystem.Connect(url, port);
+    }
+
     public void SendMsgToServer(string msg) {
-        if (netType == NetType.WebSocket) {
-            this.GetSystem<IWebSocketSystem>().SendMsgToServer(msg);
-        } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().SendMsgToServer(msg);
-        }
+        curSocketSystem.SendMsgToServer(msg);
     }
 
     public void RespondAction(JsonData recJD){
@@ -197,10 +198,42 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void CloseConnect() {
-        if (netType == NetType.WebSocket) {
-            this.GetSystem<IWebSocketSystem>().CloseConnect();
-        } else if (netType == NetType.KCP) {
-            this.GetSystem<IKCPSystem>().CloseConnect();
+        curSocketSystem.CloseConnect();
+    }
+
+    public void Reconnect() {
+        curSocketSystem.Reconnect();
+    }
+
+    public Action ConnectSuccAction {
+        get {
+            return curSocketSystem.ConnectSuccAction;
+        }
+        set {
+            curSocketSystem.ConnectSuccAction = value;
+        }
+    }
+
+    public Action CloseSuccAction { 
+        get {
+            return curSocketSystem.CloseSuccAction;
+        }
+        set {
+            curSocketSystem.CloseSuccAction = value;
+        } 
+    }
+    public Action BreakLineAction {  
+        get {
+            return curSocketSystem.BreakLineAction;
+        }
+        set {
+            curSocketSystem.BreakLineAction = value;
+        } 
+    }
+
+    public bool IsConnected {
+        get {
+            return curSocketSystem.IsConnected;
         }
     }
 

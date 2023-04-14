@@ -18,19 +18,22 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
+    public Action BreakLineAction { get; set; }
 
     public bool IsConnected {
         get {
-            return socket.ReadyState == WebSocketState.Open;
+            return socket != null && socket.ReadyState == WebSocketState.Open;
         }
     }
 
-    public Action BreakLine { get; set; }
     public void Reconnect() {
-        
+        socket.ConnectAsync();
     }
 
     public void Connect(string url, int port = 0) {
+        if (IsConnected) {
+            return;
+        }
         address = url;
         socket = new WebSocket(address);
         socket.OnOpen += Socket_OnOpen;
@@ -69,11 +72,15 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     private void Socket_OnClose(object sender, CloseEventArgs e) {
         Debug.Log(string.Format("Closed: StatusCode: {0}, Reason: {1}\n", e.StatusCode, e.Reason));
+        if (e.StatusCode != CloseStatusCode.Normal) {
+            BreakLineAction?.Invoke();
+        }
         CloseSuccAction?.Invoke();
     }
 
     private void Socket_OnError(object sender, ErrorEventArgs e) {
         Debug.Log(string.Format("Error: {0}\n", e.Message));
+        BreakLineAction?.Invoke();
     }
 
     protected override void OnInit() {
