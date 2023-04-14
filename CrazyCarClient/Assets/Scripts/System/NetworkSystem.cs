@@ -8,6 +8,17 @@ using System;
 using LitJson;
 using System.Text;
 
+public interface ISocketSystem {
+    public void Connect(string url, int port = 0);
+    public void SendMsgToServer(string msg);
+    public void CloseConnect();
+    public Action ConnectSuccAction { get; set; }
+    public Action CloseSuccAction { get; set; }
+    public bool IsConnected { get; }
+    public Action BreakLine { get; set; }
+    public void Reconnect();
+}
+
 public interface INetworkSystem : ISystem {
     public ServerType ServerType { get; set; }
     public NetType NetType { get; set; }

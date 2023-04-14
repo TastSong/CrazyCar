@@ -6,13 +6,7 @@ using UnityEngine;
 using UnityWebSocket;
 using QFramework;
 
-public interface IWebSocketSystem : ISystem {
-    void Connect(string url);
-    void SendMsgToServer(string msg);
-    void CloseConnect();
-    Action ConnectSuccAction { get; set; }
-    Action CloseSuccAction { get; set; }
-    bool IsConnected { get; }
+public interface IWebSocketSystem : ISystem, ISocketSystem {
 }
 
 public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
@@ -31,7 +25,12 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         }
     }
 
-    public void Connect(string url) {
+    public Action BreakLine { get; set; }
+    public void Reconnect() {
+        
+    }
+
+    public void Connect(string url, int port = 0) {
         address = url;
         socket = new WebSocket(address);
         socket.OnOpen += Socket_OnOpen;

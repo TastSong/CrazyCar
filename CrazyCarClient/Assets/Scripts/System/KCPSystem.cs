@@ -7,12 +7,7 @@ using System;
 using LitJson;
 using Utils;
 
-public interface IKCPSystem : ISystem {
-    public void Connect(string url, int port);
-    public void SendMsgToServer(string msg);
-    public void CloseConnect();
-
-    public bool IsConnected { get; }
+public interface IKCPSystem : ISystem, ISocketSystem {
 }
 
 public class KCPSystem : AbstractSystem, IKCPSystem {
@@ -23,15 +18,24 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     public static bool isRec = false;
     private string url;
 
+    public Action CloseSuccAction { get; set; }
+
     public bool IsConnected {
         get {
             return kcpManager.IsRunning;
         }
     }
 
+    public Action BreakLine { get; set; }
+    public void Reconnect() {
+        
+    }
+
     public void CloseConnect() {
         kcpManager.Close();
     }
+
+    public Action ConnectSuccAction { get; set; }
 
     public void Connect(string url, int port) {
         host = Util.GetServerHostIP(this.GetSystem<INetworkSystem>().ServerType);
