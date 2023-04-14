@@ -21,11 +21,11 @@ public interface ISocketSystem {
 
 public interface INetworkSystem : ISystem, ISocketSystem {
     public ServerType ServerType { get; set; }
-    public NetType NetType { get; set; }
     public string HttpBaseUrl { get; set; }
+    // socket
+    public NetType NetType { get; set; }
     public void Connect(string wsURL, string kcpURL, int port);
     public void RespondAction(JsonData recJD);
-    public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; }
@@ -36,6 +36,8 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomStatusMsg { get; set; }
     public JsonData OnMatchRoomStartMsg { get; set; }
     public System.Object MsgLock { get; set; }
+    // http
+    public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public void EnterRoom(GameType gameType, int cid, Action succ = null);
     public void GetUserInfo(int uid, Action<UserInfo> succ);
 }
