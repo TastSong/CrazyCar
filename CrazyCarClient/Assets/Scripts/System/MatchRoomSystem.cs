@@ -23,12 +23,10 @@ public interface IMatchRoomSystem : ISystem {
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     private void MatchRoomConnect(Action succ) {
         this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchRoomWSUrl, RequestUrl.kcpMatchRoomUrl, RequestUrl.matchRoomKCPPort);
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ: () => {
-            Debug.Log("Connect Room succ");
-            succ.Invoke();
-        }, fail: () => {
-            Debug.Log("Connect Room Fail");
-        }));
+        this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
+            Debug.Log("MatchRoom Connect Succ");
+            succ?.Invoke();
+        };
     }
 
     public void MatchRoomCreate() {

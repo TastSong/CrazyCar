@@ -12,14 +12,12 @@ public class MatchNet : MonoBehaviour, IController {
     private void Start() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchWSUrl,RequestUrl.kcpServerUrl, RequestUrl.matchKCPPort);
-
-            StartCoroutine(this.GetSystem<INetworkSystem>().OnConnect(succ : () => {
-                Debug.Log("Connect succ");
+            
+            this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
+                Debug.Log("MatchNet Connect Succ");
                 this.SendCommand<PostCreatePlayerMsgCommand>();
                 matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg());
-            },  fail : () => {
-                Debug.Log("Connect Fail");
-            }));
+            };
         }
 
         this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);

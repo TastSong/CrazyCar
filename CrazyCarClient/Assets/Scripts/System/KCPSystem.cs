@@ -25,7 +25,32 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     public static bool isRec = false;
     private string url;
 
-    public Action CloseSuccAction { get; set; }
+    public Action CloseSuccAction {
+        get {
+            return kcpManager.CloseSuccAction;
+        }
+        set {
+            kcpManager.CloseSuccAction = value;
+        }
+    }
+
+    public Action BreakLineAction {
+        get {
+            return kcpManager.BreakLineAction;
+        }
+        set {
+            kcpManager.BreakLineAction = value;
+        }
+    }
+
+    public Action ConnectSuccAction {
+        get {
+            return kcpManager.ConnectSuccAction;
+        }
+        set {
+            kcpManager.ConnectSuccAction = value;
+        }
+    }
 
     public bool IsConnected {
         get {
@@ -33,16 +58,13 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
-    public Action BreakLineAction { get; set; }
     public void Reconnect() {
-        
+        kcpManager.ConnectKCP(host, port, url);
     }
 
     public void CloseConnect() {
         kcpManager.Close();
     }
-
-    public Action ConnectSuccAction { get; set; }
 
     public void Connect(string url, int port) {
         host = Util.GetServerHostIP(this.GetSystem<INetworkSystem>().ServerType);
@@ -65,12 +87,15 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
 }
 
 public class KCPManager : KcpClient, IController {
+    public Action CloseSuccAction { get; set; }
+    public Action BreakLineAction { get; set; }
+    public Action ConnectSuccAction { get; set; }
+    
     private new KcpClient client;
     private string recStr;
     private JsonData recJD = new JsonData();
     private KCPState mKCPState = KCPState.Closed;
-    
-    
+
     public KCPState KCPState{
         get {
             return mKCPState;
@@ -91,12 +116,14 @@ public class KCPManager : KcpClient, IController {
     protected override void HandleException(Exception ex) {
         Debug.Log("+++++ Exception " + ex.ToString());
         base.HandleException(ex);
+        BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
     protected override void HandleTimeout() {
         Debug.Log("+++++ Timeout");
         base.HandleTimeout();
+        BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
@@ -119,6 +146,7 @@ public class KCPManager : KcpClient, IController {
                 client.Connect(host, port);
                 client.Start();
                 KCPState = KCPState.Open;
+                ConnectSuccAction?.Invoke();
             }));     
     }
 
@@ -133,6 +161,7 @@ public class KCPManager : KcpClient, IController {
         if (client != null) {
             client.Stop();
             KCPState = KCPState.Closed;
+            CloseSuccAction?.Invoke();
             Debug.Log("++++++ client.IsRunning() = " + client.IsRunning());
         }
     }

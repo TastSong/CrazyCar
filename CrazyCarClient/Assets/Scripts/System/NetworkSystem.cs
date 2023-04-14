@@ -24,7 +24,6 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public NetType NetType { get; set; }
     public string HttpBaseUrl { get; set; }
     public void Connect(string wsURL, string kcpURL, int port);
-    public IEnumerator OnConnect(Action succ, Action fail);
     public void RespondAction(JsonData recJD);
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; }
@@ -130,23 +129,6 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
         
         this.Connect(url, port);
-    }
-
-    public IEnumerator OnConnect(Action succ, Action fail) {
-        int maxTime = 3;
-        float gap = 0.04f;
-        float timer = 0;
-        WaitForSeconds wait = new WaitForSeconds(gap);
-        while (!IsConnected && timer < maxTime) {
-            yield return wait;
-            timer += gap;
-        }
-
-        if (timer < maxTime) {
-            succ.Invoke();
-        } else {
-            fail.Invoke();
-        }
     }
 
     public void Connect(string url, int port = 0) {
