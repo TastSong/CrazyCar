@@ -6,20 +6,20 @@ using LitJson;
 using System;
 
 public interface IDataParseSystem : ISystem {
-    void ParseAvatarRes(JsonData jsonData, Action success = null);
-    void ParseSelfUserInfo(JsonData jsonData);
-    UserInfo ParseUserInfo(JsonData jsonData);
-    void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
-    void ParseTimeTrialRank(JsonData jsonData, Action success = null);
-    void ParseTimeTrialResult(JsonData jsonData, Action success = null);
-    void ParseMatchMapData(JsonData jsonData, Action success = null);
-    void ParseSelectMatch(JsonData jsonData, Action success = null);
-    void ParseMatchRank(JsonData data, Action success = null);
-    void ParseEquipRes(JsonData jsonData, Action success = null);
-    PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
-    PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
-    PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
-    PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
+    public void ParseAvatarRes(JsonData jsonData, Action success = null);
+    public void ParseSelfUserInfo(JsonData jsonData);
+    public UserInfo ParseUserInfo(JsonData jsonData);
+    public void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
+    public void ParseTimeTrialRank(JsonData jsonData, Action success = null);
+    public void ParseTimeTrialResult(JsonData jsonData, Action success = null);
+    public void ParseMatchMapData(JsonData jsonData, Action success = null);
+    public void ParseSelectMatch(JsonData jsonData, Action success = null);
+    public void ParseMatchRank(JsonData data, Action success = null);
+    public void ParseEquipRes(JsonData jsonData, Action success = null);
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {

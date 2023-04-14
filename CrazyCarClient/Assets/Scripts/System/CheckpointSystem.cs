@@ -5,12 +5,12 @@ using QFramework;
 using Utils;
 
 public interface ICheckpointSystem : ISystem {
-    BindableProperty<int> CheckpointCount { get; }   
-    BindableProperty<int> CheckedCount { get; }
-    BindableProperty<int> PassTimes { get; }
-    List<Vector3> CheckpointPos { get; set; }
-    List<GameObject> CheckpointsList { get; }
-    void ClearData();
+    public BindableProperty<int> CheckpointCount { get; }   
+    public BindableProperty<int> CheckedCount { get; }
+    public BindableProperty<int> PassTimes { get; }
+    public List<Vector3> CheckpointPos { get; set; }
+    public List<GameObject> CheckpointsList { get; }
+    public void ClearData();
 }
 
 public class CheckpointSystem : AbstractSystem, ICheckpointSystem {

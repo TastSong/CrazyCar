@@ -2,7 +2,7 @@
 using QFramework;
 
 public interface IInputModel : IModel {
-    BindableProperty<int> IsUseKeyboard { get; }
+    public BindableProperty<int> IsUseKeyboard { get; }
 }
 
 public class InputModel : AbstractModel, IInputModel 

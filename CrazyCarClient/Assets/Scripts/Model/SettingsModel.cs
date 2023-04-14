@@ -75,13 +75,13 @@ public class SystemSettingsInfo : ISerializable {
 }
 
 public interface ISettingsModel : IModel {
-    BindableProperty <string> Language { get; }
-    BindableProperty<bool> IsOnMusic { get; }
-    BindableProperty<bool> IsOnSound { get; }
-    BindableProperty<bool> IsOnVibration { get; }
+    public BindableProperty <string> Language { get; }
+    public BindableProperty<bool> IsOnMusic { get; }
+    public BindableProperty<bool> IsOnSound { get; }
+    public BindableProperty<bool> IsOnVibration { get; }
 
-    void SaveSystemInfo(SystemSettingsInfo ss);
-    void DelFile();
+    public void SaveSystemInfo(SystemSettingsInfo ss);
+    public void DelFile();
 }
 
 public class SettingsModel : AbstractModel, ISettingsModel {

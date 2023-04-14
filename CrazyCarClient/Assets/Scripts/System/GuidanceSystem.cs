@@ -9,11 +9,11 @@ public enum GuidanceCanvasType {
 }
 
 public interface IGuidanceSystem : ISystem {
-    Canvas UIControllerCanvas { get; set; }
+    public Canvas UIControllerCanvas { get; set; }
 
-    Canvas TestCanvas { get; set; }
+    public Canvas TestCanvas { get; set; }
 
-    Canvas GetTargetCanvas(GuidanceCanvasType canvasType);
+    public Canvas GetTargetCanvas(GuidanceCanvasType canvasType);
 }
 
 public class GuidanceSystem : AbstractSystem, IGuidanceSystem {

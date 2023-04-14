@@ -20,9 +20,9 @@ public class EquipInfo {
 }
 
 public interface IEquipModel : IModel {
-    Dictionary<int, EquipInfo> EquipDic { get; set; }
+    public Dictionary<int, EquipInfo> EquipDic { get; set; }
 
-    Dictionary<string, EquipResource> EquipResource { get; set; }
+    public Dictionary<string, EquipResource> EquipResource { get; set; }
 }
 
 public class EquipModel : AbstractModel, IEquipModel {

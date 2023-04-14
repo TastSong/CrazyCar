@@ -5,10 +5,10 @@ using QFramework;
 using Cinemachine;
 
 public interface IScreenEffectsSystem : ISystem {
-    CinemachineImpulseSource CinemachineImpulseSource { get; set; }
-    MotionBlurEffects MotionBlurEffects { get; set; }
-    void ShakeCamera(); 
-    void SetMotionBlur(float intensity);
+    public CinemachineImpulseSource CinemachineImpulseSource { get; set; }
+    public MotionBlurEffects MotionBlurEffects { get; set; }
+    public void ShakeCamera(); 
+    public void SetMotionBlur(float intensity);
 }
 
 public class ScreenEffectsSystem : AbstractSystem, IScreenEffectsSystem {

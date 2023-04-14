@@ -10,15 +10,16 @@ public enum GameType {
 }
 
 public interface IGameModel : IModel {
-    BindableProperty<bool> SceneLoaded { get; }
-    BindableProperty<bool> SceneLoading { get; }
-    BindableProperty<SceneID> LoadingTargetSceneID { get; }
-    BindableProperty<string> Token { get; }
-    GameType CurGameType { get; set; }
-    BindableProperty<float> SendMsgOffTime { get; }
-    BindableProperty<bool> StandAlone { get; }
-    BindableProperty<int> MaxSyncDelay { get; }
-    BindableProperty<int> MatchStartGameTime { get; }
+    public BindableProperty<bool> SceneLoaded { get; }
+    public BindableProperty<bool> SceneLoading { get; }
+    public BindableProperty<SceneID> LoadingTargetSceneID { get; }
+    public BindableProperty<string> Token { get; }
+    public GameType CurGameType { get; set; }
+    public BindableProperty<float> SendMsgOffTime { get; }
+    public BindableProperty<float> ReconnectionTimeout { get; }  // 重连超时
+    public BindableProperty<bool> StandAlone { get; }
+    public BindableProperty<int> MaxSyncDelay { get; }
+    public BindableProperty<int> MatchStartGameTime { get; }
 }
 
 public class GameModel : AbstractModel, IGameModel {
@@ -30,6 +31,7 @@ public class GameModel : AbstractModel, IGameModel {
     public GameType CurGameType { get; set; }
 
     public BindableProperty<float> SendMsgOffTime { get; } = new BindableProperty<float>();
+    public BindableProperty<float> ReconnectionTimeout { get; } = new BindableProperty<float>();
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
 
@@ -41,6 +43,7 @@ public class GameModel : AbstractModel, IGameModel {
         SceneLoaded.Value = false;
         CurGameType = GameType.TimeTrial;
         SendMsgOffTime.Value = 0.4f;
+        ReconnectionTimeout.Value = 144f;
         StandAlone.Value = false;
         MaxSyncDelay.Value = 4000;
         MatchStartGameTime.Value = 16;

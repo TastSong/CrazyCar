@@ -14,7 +14,7 @@ public class AvatarInfo {
 }
 
 public interface IAvatarModel : IModel {
-    Dictionary<int, AvatarInfo> AvatarDic { get; set; }
+    public Dictionary<int, AvatarInfo> AvatarDic { get; set; }
 }
 
 public class AvatarModel : AbstractModel, IAvatarModel {

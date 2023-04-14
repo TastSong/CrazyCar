@@ -8,16 +8,16 @@ using Utils;
 using System;
 
 public interface IMatchRoomSystem : ISystem {
-    void MatchRoomCreate();
-    void MatchRoomJoin();
-    void MatchRoomStatus();
-    void MatchRoomEixt();
-    void MatchRoomStart();
-    void OnCreateMsg(JsonData recJD);
-    void OnJoinMsg(JsonData recJD);
-    void OnStatusMsg(JsonData recJD);
-    void OnExitMsg(JsonData recJD);
-    void OnStartMsg(JsonData recJD);
+    public void MatchRoomCreate();
+    public void MatchRoomJoin();
+    public void MatchRoomStatus();
+    public void MatchRoomEixt();
+    public void MatchRoomStart();
+    public void OnCreateMsg(JsonData recJD);
+    public void OnJoinMsg(JsonData recJD);
+    public void OnStatusMsg(JsonData recJD);
+    public void OnExitMsg(JsonData recJD);
+    public void OnStartMsg(JsonData recJD);
 }
 
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {

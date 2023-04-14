@@ -4,10 +4,10 @@ using UnityEngine;
 using QFramework;
 
 public interface IPlayerPrefsStorage : IUtility {
-    void SaveInt(string key, int value);
-    int LoadInt(string key);
-    void SaveString(string key, string value);
-    string LoadString(string key);
+    public void SaveInt(string key, int value);
+    public int LoadInt(string key);
+    public void SaveString(string key, string value);
+    public string LoadString(string key);
 }
 
 public class PlayerPrefsStorage : IPlayerPrefsStorage {

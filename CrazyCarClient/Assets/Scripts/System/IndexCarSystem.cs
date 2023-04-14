@@ -4,8 +4,8 @@ using UnityEngine;
 using QFramework;
 
 public interface IIndexCarSystem : ISystem {
-    GameObject CarGO { get; set; }
-    MPlayerStyle MPlayerStyle { get; set; }
+    public GameObject CarGO { get; set; }
+    public MPlayerStyle MPlayerStyle { get; set; }
 }
 
 public class IndexCarSystem : AbstractSystem, IIndexCarSystem {

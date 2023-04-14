@@ -28,28 +28,28 @@ namespace QFramework {
     #region Architecture
 
     public interface IArchitecture {
-        void RegisterSystem<T>(T system) where T : ISystem;
+        public void RegisterSystem<T>(T system) where T : ISystem;
 
-        void RegisterModel<T>(T model) where T : IModel;
+        public void RegisterModel<T>(T model) where T : IModel;
 
-        void RegisterUtility<T>(T utility) where T : IUtility;
+        public void RegisterUtility<T>(T utility) where T : IUtility;
 
-        T GetSystem<T>() where T : class, ISystem;
+        public T GetSystem<T>() where T : class, ISystem;
 
-        T GetModel<T>() where T : class, IModel;
+        public T GetModel<T>() where T : class, IModel;
 
-        T GetUtility<T>() where T : class, IUtility;
+        public T GetUtility<T>() where T : class, IUtility;
 
-        void SendCommand<T>() where T : ICommand, new();
-        void SendCommand<T>(T command) where T : ICommand;
+        public void SendCommand<T>() where T : ICommand, new();
+        public void SendCommand<T>(T command) where T : ICommand;
 
-        TResult SendQuery<TResult>(IQuery<TResult> query);
+        public TResult SendQuery<TResult>(IQuery<TResult> query);
 
-        void SendEvent<T>() where T : new();
-        void SendEvent<T>(T e);
+        public void SendEvent<T>() where T : new();
+        public void SendEvent<T>(T e);
 
-        IUnRegister RegisterEvent<T>(Action<T> onEvent);
-        void UnRegisterEvent<T>(Action<T> onEvent);
+        public IUnRegister RegisterEvent<T>(Action<T> onEvent);
+        public void UnRegisterEvent<T>(Action<T> onEvent);
     }
 
     public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new() {
@@ -178,7 +178,7 @@ namespace QFramework {
     }
 
     public interface IOnEvent<T> {
-        void OnEvent(T e);
+        public void OnEvent(T e);
     }
 
     public static class OnGlobalEventExtension {
@@ -205,7 +205,7 @@ namespace QFramework {
 
     public interface ISystem : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel, ICanGetUtility,
         ICanRegisterEvent, ICanSendEvent, ICanGetSystem {
-        void Init();
+        public void Init();
     }
 
     public abstract class AbstractSystem : ISystem {
@@ -231,7 +231,7 @@ namespace QFramework {
     #region Model
 
     public interface IModel : IBelongToArchitecture, ICanSetArchitecture, ICanGetUtility, ICanSendEvent {
-        void Init();
+        public void Init();
     }
 
     public abstract class AbstractModel : IModel {
@@ -265,7 +265,7 @@ namespace QFramework {
 
     public interface ICommand : IBelongToArchitecture, ICanSetArchitecture, ICanGetSystem, ICanGetModel, ICanGetUtility,
         ICanSendEvent, ICanSendCommand, ICanSendQuery {
-        void Execute();
+        public void Execute();
     }
 
     public abstract class AbstractCommand : ICommand {
@@ -292,7 +292,7 @@ namespace QFramework {
 
     public interface IQuery<TResult> : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel, ICanGetSystem,
         ICanSendQuery {
-        TResult Do();
+        public TResult Do();
     }
 
     public abstract class AbstractQuery<T> : IQuery<T> {
@@ -319,11 +319,11 @@ namespace QFramework {
     #region Rule
 
     public interface IBelongToArchitecture {
-        IArchitecture GetArchitecture();
+        public IArchitecture GetArchitecture();
     }
 
     public interface ICanSetArchitecture {
-        void SetArchitecture(IArchitecture architecture);
+        public void SetArchitecture(IArchitecture architecture);
     }
 
     public interface ICanGetModel : IBelongToArchitecture {
@@ -406,11 +406,11 @@ namespace QFramework {
     #region TypeEventSystem
 
     public interface IUnRegister {
-        void UnRegister();
+        public void UnRegister();
     }
 
     public interface IUnRegisterList {
-        List<IUnRegister> UnregisterList { get; }
+        public List<IUnRegister> UnregisterList { get; }
     }
 
     public static class IUnRegisterListExtension {
@@ -545,16 +545,16 @@ namespace QFramework {
     #region BindableProperty
 
     public interface IBindableProperty<T> : IReadonlyBindableProperty<T> {
-        new T Value { get; set; }
-        void SetValueWithoutEvent(T newValue);
+        public new T Value { get; set; }
+        public void SetValueWithoutEvent(T newValue);
     }
 
     public interface IReadonlyBindableProperty<T> {
-        T Value { get; }
+        public T Value { get; }
 
-        IUnRegister RegisterWithInitValue(Action<T> action);
-        void UnRegister(Action<T> onValueChanged);
-        IUnRegister Register(Action<T> onValueChanged);
+        public IUnRegister RegisterWithInitValue(Action<T> action);
+        public void UnRegister(Action<T> onValueChanged);
+        public IUnRegister Register(Action<T> onValueChanged);
     }
 
     public class BindableProperty<T> : IBindableProperty<T> {

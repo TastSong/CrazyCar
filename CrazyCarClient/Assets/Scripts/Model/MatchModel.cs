@@ -35,25 +35,25 @@ public class MatchRoomMemberInfo {
 }
 
 public interface IMatchModel : IModel {
-    BindableProperty<int> RewardStar { get; }
-    Dictionary<int, MatchInfo> MatchDic { get; set; }
-    BindableProperty<MatchInfo> SelectInfo { get; set; }
-    List<MatchRankInfo> MatchRankList { get; set; }
-    BindableProperty<bool> IsComplete { get; }
-    BindableProperty<int> CompleteTime { get; }
-    BindableProperty<long> StartTime { get; }
-    BindableProperty<long> EndTime { get; }
-    BindableProperty<bool> IsArriveLimitTime { get; }
-    bool IsStartGame { get; }
-    bool IsEndGame { get; }
-    bool InGame { get; }
-    BindableProperty<string> RoomId { get; }
-    Dictionary<int, MatchRoomMemberInfo> MemberInfoDic { get; set; }
+    public BindableProperty<int> RewardStar { get; }
+    public Dictionary<int, MatchInfo> MatchDic { get; set; }
+    public BindableProperty<MatchInfo> SelectInfo { get; set; }
+    public List<MatchRankInfo> MatchRankList { get; set; }
+    public BindableProperty<bool> IsComplete { get; }
+    public BindableProperty<int> CompleteTime { get; }
+    public BindableProperty<long> StartTime { get; }
+    public BindableProperty<long> EndTime { get; }
+    public BindableProperty<bool> IsArriveLimitTime { get; }
+    public bool IsStartGame { get; }
+    public bool IsEndGame { get; }
+    public bool InGame { get; }
+    public BindableProperty<string> RoomId { get; }
+    public Dictionary<int, MatchRoomMemberInfo> MemberInfoDic { get; set; }
 
-    bool IsHouseOwner { get; set; }
+    public bool IsHouseOwner { get; set; }
 
-    int GetCompleteTime();
-    void CleanData();
+    public int GetCompleteTime();
+    public void CleanData();
 }
 
 public class MatchModel : AbstractModel, IMatchModel {

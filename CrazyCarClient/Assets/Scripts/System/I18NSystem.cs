@@ -7,13 +7,13 @@ using Utils;
 using System;
 
 public interface II18NSystem : ISystem {
-    string CurrentLang { get; set; }
-    bool InitFinish { get; set; }
+    public string CurrentLang { get; set; }
+    public bool InitFinish { get; set; }
 
-    void InitTranslation();
-    string GetText(string key);
-    void RegisterText(I18NText t);
-    void UnregisterText(I18NText t);
+    public void InitTranslation();
+    public string GetText(string key);
+    public void RegisterText(I18NText t);
+    public void UnregisterText(I18NText t);
 }
 
 public class I18NSystem : AbstractSystem, II18NSystem {

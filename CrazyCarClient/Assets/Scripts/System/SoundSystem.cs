@@ -4,16 +4,16 @@ using UnityEngine;
 using QFramework;
 
 public interface ISoundSystem : ISystem {
-    void PlayClickSound();
-    void PlayCloseSound();
-    void PlayLoseSound();
-    void PlayWinSound();
-    void PlayBackgroundMusic();
-    void PlaySpinWheekSound();
-    void PlayWheelEngineSound();
-    void StopAllSound();
-    void SetSound(bool isOn);
-    void SetBackgroundMusic(bool isOn);
+    public void PlayClickSound();
+    public void PlayCloseSound();
+    public void PlayLoseSound();
+    public void PlayWinSound();
+    public void PlayBackgroundMusic();
+    public void PlaySpinWheekSound();
+    public void PlayWheelEngineSound();
+    public void StopAllSound();
+    public void SetSound(bool isOn);
+    public void SetBackgroundMusic(bool isOn);
 }
 
 public class SoundSystem : AbstractSystem, ISoundSystem {

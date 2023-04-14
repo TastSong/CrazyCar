@@ -19,21 +19,21 @@ public class UserInfo {
 }
 
 public interface IUserModel : IModel {
-    BindableProperty<string> Name { get; }
-    BindableProperty<string> Password { get; }
-    BindableProperty<int> Aid { get; }
-    BindableProperty<int> Uid { get; }
-    BindableProperty<int> Star { get; }
-    BindableProperty<bool> IsVIP { get; }
-    BindableProperty<bool> IsSuperuser { get; }
-    BindableProperty<int> TravelTimes { get; }
-    BindableProperty<int> AvatarNum { get; }
-    BindableProperty<int> MapNum { get; }
-    BindableProperty<EquipInfo> EquipInfo { get; }
-    BindableProperty<int> RememberPassword { get; }
-    BindableProperty<bool> IsCompleteGuidance { get; }
-    void SetUserInfoPart(UserInfo userInfo);
-    UserInfo GetUserInfo();
+    public BindableProperty<string> Name { get; }
+    public BindableProperty<string> Password { get; }
+    public BindableProperty<int> Aid { get; }
+    public BindableProperty<int> Uid { get; }
+    public BindableProperty<int> Star { get; }
+    public BindableProperty<bool> IsVIP { get; }
+    public BindableProperty<bool> IsSuperuser { get; }
+    public BindableProperty<int> TravelTimes { get; }
+    public BindableProperty<int> AvatarNum { get; }
+    public BindableProperty<int> MapNum { get; }
+    public BindableProperty<EquipInfo> EquipInfo { get; }
+    public BindableProperty<int> RememberPassword { get; }
+    public BindableProperty<bool> IsCompleteGuidance { get; }
+    public void SetUserInfoPart(UserInfo userInfo);
+    public UserInfo GetUserInfo();
 }
 
 public class UserModel : AbstractModel, IUserModel {

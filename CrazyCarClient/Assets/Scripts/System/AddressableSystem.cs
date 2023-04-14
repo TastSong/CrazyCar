@@ -13,12 +13,12 @@ public class AddressableInfo {
 }
 
 public interface IAddressableSystem : ISystem {
-    void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
-    void GetDownloadAssets();
-    void DownloadAsset();
-    void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoad);
-    void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded);
-    void SetUpdateInfo(Action finish);
+    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
+    public void GetDownloadAssets();
+    public void DownloadAsset();
+    public void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoad);
+    public void GetEquipResource(string rid, Action<AsyncOperationHandle<GameObject>> OnLoaded);
+    public void SetUpdateInfo(Action finish);
 }
 
 public class AddressableSystem : AbstractSystem, IAddressableSystem {

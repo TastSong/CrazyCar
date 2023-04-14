@@ -4,7 +4,7 @@ using UnityEngine;
 using QFramework;
 
 public interface IVibrationSystem : ISystem {
-    void Haptic();
+    public void Haptic();
 }
 
 public class VibrationSystem : AbstractSystem, IVibrationSystem {

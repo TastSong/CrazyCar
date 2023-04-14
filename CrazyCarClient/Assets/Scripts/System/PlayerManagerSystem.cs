@@ -57,12 +57,12 @@ public class PlayerCompleteMsg {
 }
 
 public interface IPlayerManagerSystem : ISystem {
-    MPlayer SelfPlayer { get; set; }
-    MPlayer GetPlayerByUid(int uid);
-    Dictionary<int, MPlayer> peers { get; set; }
-    void RespondStateAction(PlayerStateMsg playerStateMsg);
-    void RespondOperatAction(PlayerOperatMsg playerOperatMsg);
-    void RemovePlayer(int uid);
+    public MPlayer SelfPlayer { get; set; }
+    public MPlayer GetPlayerByUid(int uid);
+    public Dictionary<int, MPlayer> peers { get; set; }
+    public void RespondStateAction(PlayerStateMsg playerStateMsg);
+    public void RespondOperatAction(PlayerOperatMsg playerOperatMsg);
+    public void RemovePlayer(int uid);
 }
 
 public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {

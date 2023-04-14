@@ -25,25 +25,25 @@ public class TimeTrialRankInfo {
 }
 
 public interface ITimeTrialModel : IModel {
-    BindableProperty<bool> IsWin { get; }
-    BindableProperty<bool> IsBreakRecord { get; }
-    BindableProperty<int> Rank { get; }
-    BindableProperty<int> RewardStar { get; }
-    Dictionary<int, TimeTrialInfo> TimeTrialDic { get; set; }
-    BindableProperty<TimeTrialInfo> SelectInfo { get; }
-    List<TimeTrialRankInfo> TimeTrialRankList { get; set; }
-    BindableProperty<bool> IsComplete { get; }
-    BindableProperty<int> CompleteTime { get; }
-    BindableProperty<long> StartTime { get; }
-    BindableProperty<long> EndTime { get; }
-    BindableProperty<bool> IsArriveLimitTime { get; }
-    bool IsStartGame { get; }
-    bool IsEndGame { get; }
-    bool InGame { get; }
+    public BindableProperty<bool> IsWin { get; }
+    public BindableProperty<bool> IsBreakRecord { get; }
+    public BindableProperty<int> Rank { get; }
+    public BindableProperty<int> RewardStar { get; }
+    public Dictionary<int, TimeTrialInfo> TimeTrialDic { get; set; }
+    public BindableProperty<TimeTrialInfo> SelectInfo { get; }
+    public List<TimeTrialRankInfo> TimeTrialRankList { get; set; }
+    public BindableProperty<bool> IsComplete { get; }
+    public BindableProperty<int> CompleteTime { get; }
+    public BindableProperty<long> StartTime { get; }
+    public BindableProperty<long> EndTime { get; }
+    public BindableProperty<bool> IsArriveLimitTime { get; }
+    public bool IsStartGame { get; }
+    public bool IsEndGame { get; }
+    public bool InGame { get; }
 
 
-    int GetCompleteTime();
-    void CleanData();
+    public int GetCompleteTime();
+    public void CleanData();
 }
 
 public class TimeTrialModel : AbstractModel, ITimeTrialModel {
