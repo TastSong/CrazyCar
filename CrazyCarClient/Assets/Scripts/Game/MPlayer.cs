@@ -52,8 +52,12 @@ public class MPlayer : MonoBehaviour, IController {
     // 记录通过拱门的次数
     public int passEndSignTimes = 0;
     private bool isCanCalculatePassEndSignTimes = true;
+    
+    // 消除移动时的顿挫感
+    private Coroutine moveNetCarCor = null;
+    private float smoothSpeed = 1;
 
-    void Start() {
+    private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
         forceDir_Horizontal = transform.forward;
         rotationStream = rig.rotation;
@@ -115,12 +119,27 @@ public class MPlayer : MonoBehaviour, IController {
     }
 
     public void AdjustPosition(Vector3 pos, Vector3 speed) {
+        if (this == null) {
+            return;
+        }
         if (isLockSpeed) {
             return;
         }
-        transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * 1);
-        rig.velocity = Vector3.Lerp(rig.velocity, speed, Time.deltaTime * 1);
+        if (moveNetCarCor != null) {
+            StopCoroutine(moveNetCarCor);
+        }
+        moveNetCarCor = StartCoroutine(MoveNetCar(pos, speed));
         lastRecvStatusStamp = Util.GetTime();
+    }
+
+    private IEnumerator MoveNetCar(Vector3 pos, Vector3 speed) {
+        float time = this.GetModel<IGameModel>().SendMsgOffTime / 2;
+        while (time > 0) {
+            yield return new WaitForSecondsRealtime(Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * smoothSpeed);
+            rig.velocity = Vector3.Lerp(rig.velocity, speed, Time.deltaTime * smoothSpeed);
+            time -= Time.deltaTime;
+        }
     }
 
     //计算加力方向
