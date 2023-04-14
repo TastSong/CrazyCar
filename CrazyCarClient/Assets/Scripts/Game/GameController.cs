@@ -41,6 +41,7 @@ public class GameController : MonoBehaviour, IController {
     }
 
     private void Start() {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         gameHelper.gameObject.SetActiveFast(false);
         warningAlert.gameObject.SetActiveFast(false);
         infoConfirmAlert.gameObject.SetActiveFast(false);
