@@ -34,7 +34,14 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
-    public Action BreakLineAction { get; set; }
+    public Action BreakLineAction {
+        get {
+            return kcpManager.BreakLineAction;
+        }
+        set {
+            kcpManager.BreakLineAction = value;
+        }
+    }
 
     public Action ConnectSuccAction {
         get {
@@ -51,7 +58,15 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
-    public bool NeedReconnect { get; set; }
+    public bool NeedReconnect {
+        get {
+            return kcpManager.NeedReconnect;
+        }
+
+        set {
+            kcpManager.NeedReconnect = value;
+        }
+    }
 
     public void Reconnect() {
         kcpManager.ConnectKCP(host, port, url);
@@ -77,13 +92,15 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     }
 
     protected override void OnInit() {
-        
+        NeedReconnect = false;
     }
 }
 
 public class KCPManager : KcpClient, IController {
     public Action CloseSuccAction { get; set; }
     public Action ConnectSuccAction { get; set; }
+    public Action BreakLineAction { get; set; }
+    public bool NeedReconnect { get; set; }
     
     private new KcpClient client;
     private string recStr;
@@ -110,14 +127,14 @@ public class KCPManager : KcpClient, IController {
     protected override void HandleException(Exception ex) {
         Debug.Log("+++++ Exception " + ex.ToString());
         base.HandleException(ex);
-        //BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
     protected override void HandleTimeout() {
         Debug.Log("+++++ Timeout");
         base.HandleTimeout();
-        //BreakLineAction?.Invoke();
+        NeedReconnect = true;
+        BreakLineAction?.Invoke();
         KCPState = KCPState.Closed;
     }
 
@@ -140,6 +157,7 @@ public class KCPManager : KcpClient, IController {
                 client.Connect(host, port);
                 client.Start();
                 KCPState = KCPState.Open;
+                NeedReconnect = false;
                 ConnectSuccAction?.Invoke();
             }));     
     }
@@ -152,6 +170,7 @@ public class KCPManager : KcpClient, IController {
     }
 
     public void Close() {
+        NeedReconnect = false;
         if (client != null) {
             client.Stop();
             KCPState = KCPState.Closed;
