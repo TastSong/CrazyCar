@@ -12,9 +12,12 @@ public interface ISocketSystem {
     public void Connect(string url, int port = 0);
     public void SendMsgToServer(string msg);
     public void CloseConnect();
+    public void Reconnect();
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
+    public Action BreakLineAction { get; set; }
     public bool IsConnected { get; }
+    public bool NeedReconnect { get; set; }
 }
 
 public interface INetworkSystem : ISystem, ISocketSystem {
@@ -182,7 +185,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public void CloseConnect() {
         curSocketSystem.CloseConnect();
     }
-    
+
+    public void Reconnect() {
+        
+    }
+
     public Action ConnectSuccAction {
         get {
             return curSocketSystem.ConnectSuccAction;
@@ -201,11 +208,15 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         } 
     }
 
+    public Action BreakLineAction { get; set; }
+
     public bool IsConnected {
         get {
             return curSocketSystem.IsConnected;
         }
     }
+
+    public bool NeedReconnect { get; set; }
 
     public void EnterRoom(GameType gameType, int cid, Action succ = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {

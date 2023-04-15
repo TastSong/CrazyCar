@@ -34,6 +34,8 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
         }
     }
 
+    public Action BreakLineAction { get; set; }
+
     public Action ConnectSuccAction {
         get {
             return kcpManager.ConnectSuccAction;
@@ -48,6 +50,8 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
             return kcpManager.IsRunning;
         }
     }
+
+    public bool NeedReconnect { get; set; }
 
     public void Reconnect() {
         kcpManager.ConnectKCP(host, port, url);

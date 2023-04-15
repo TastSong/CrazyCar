@@ -19,6 +19,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
+    public Action BreakLineAction { get; set; }
 
     public bool IsConnected {
         get {
@@ -26,7 +27,9 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         }
     }
 
-    private void Reconnect() {
+    public bool NeedReconnect { get; set; }
+
+    public void Reconnect() {
         socket.ConnectAsync();
     }
 
