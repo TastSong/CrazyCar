@@ -27,6 +27,7 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public NetType NetType { get; set; }
     public void Connect(string wsURL, string kcpURL, int port);
     public void RespondAction(JsonData recJD);
+    public System.Object MsgLock { get; set; }
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; }
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; }
     public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; }
@@ -36,7 +37,6 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomExitMsg { get; set; }
     public JsonData OnMatchRoomStatusMsg { get; set; }
     public JsonData OnMatchRoomStartMsg { get; set; }
-    public System.Object MsgLock { get; set; }
     // http
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public void EnterRoom(GameType gameType, int cid, Action succ = null);
@@ -46,7 +46,6 @@ public interface INetworkSystem : ISystem, ISocketSystem {
 public class NetworkSystem : AbstractSystem, INetworkSystem {
     private ServerType serverType;
     private NetType netType;
-    private ISocketSystem curSocketSystem;
 
     public ServerType ServerType {
         get {
@@ -72,7 +71,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
         }
     }
+    
     public string HttpBaseUrl { get; set; }
+    
+    private ISocketSystem curSocketSystem;
+    public object MsgLock { get; set; } = new object();
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; } = new Queue<PlayerCreateMsg>();
     public Queue<PlayerStateMsg> PlayerStateMsgs { get; set; } = new Queue<PlayerStateMsg>();
     public Queue<PlayerOperatMsg> PlayerOperatMsgs { get; set; } = new Queue<PlayerOperatMsg>();
@@ -82,8 +85,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public JsonData OnMatchRoomExitMsg { get; set; }
     public JsonData OnMatchRoomStatusMsg { get; set; }
     public JsonData OnMatchRoomStartMsg { get; set; }
-    public object MsgLock { get; set; } = new object();
-    private  PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
+    private PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
     private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
     private PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
@@ -187,7 +189,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void Reconnect() {
-        
+        curSocketSystem.Reconnect();
     }
 
     public Action ConnectSuccAction {
@@ -208,7 +210,14 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         } 
     }
 
-    public Action BreakLineAction { get; set; }
+    public Action BreakLineAction {
+        get {
+            return curSocketSystem.BreakLineAction;
+        }
+        set {
+            curSocketSystem.BreakLineAction = value;
+        }
+    }
 
     public bool IsConnected {
         get {
@@ -216,7 +225,14 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public bool NeedReconnect { get; set; }
+    public bool NeedReconnect {
+        get {
+            return curSocketSystem.NeedReconnect;
+        }
+        set {
+            curSocketSystem.NeedReconnect = value;
+        }
+    }
 
     public void EnterRoom(GameType gameType, int cid, Action succ = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {

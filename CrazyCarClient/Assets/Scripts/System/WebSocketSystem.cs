@@ -20,6 +20,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     public Action ConnectSuccAction { get; set; }
     public Action CloseSuccAction { get; set; }
     public Action BreakLineAction { get; set; }
+    public bool NeedReconnect { get; set; }
 
     public bool IsConnected {
         get {
@@ -27,7 +28,6 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         }
     }
 
-    public bool NeedReconnect { get; set; }
 
     public void Reconnect() {
         socket.ConnectAsync();
@@ -53,6 +53,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     }
 
     public void CloseConnect() {
+        NeedReconnect = false;
         if (socket != null && socket.ReadyState != WebSocketState.Closed) {
             socket.CloseAsync();
         }
@@ -61,6 +62,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     private void Socket_OnOpen(object sender, OpenEventArgs e) {
         Debug.Log(string.Format("Connected: {0}\n", address));
         ConnectSuccAction?.Invoke();
+        NeedReconnect = false;
     }
 
     private void Socket_OnMessage(object sender, MessageEventArgs e) {
@@ -76,17 +78,19 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     private void Socket_OnClose(object sender, CloseEventArgs e) {
         Debug.Log(string.Format("Closed: StatusCode: {0}, Reason: {1}\n", e.StatusCode, e.Reason));
         if (e.StatusCode != CloseStatusCode.Normal) {
-            //BreakLineAction?.Invoke();
+            NeedReconnect = true;
+            BreakLineAction?.Invoke();
+        } else {
+            NeedReconnect = false;
         }
         CloseSuccAction?.Invoke();
     }
 
     private void Socket_OnError(object sender, ErrorEventArgs e) {
         Debug.Log(string.Format("Error: {0}\n", e.Message));
-        //BreakLineAction?.Invoke();
     }
 
     protected override void OnInit() {
-        
+        NeedReconnect = false;
     }   
 }

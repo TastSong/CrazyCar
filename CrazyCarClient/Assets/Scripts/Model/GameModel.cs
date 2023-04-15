@@ -16,7 +16,7 @@ public interface IGameModel : IModel {
     public BindableProperty<string> Token { get; }
     public GameType CurGameType { get; set; }
     public BindableProperty<float> SendMsgOffTime { get; }
-    public BindableProperty<float> ReconnectionTimeout { get; }  // 重连超时
+    public BindableProperty<int> ReconnectionTimeout { get; }  // 重连超时
     public BindableProperty<bool> StandAlone { get; }
     public BindableProperty<int> MaxSyncDelay { get; }
     public BindableProperty<int> MatchStartGameTime { get; }
@@ -31,7 +31,7 @@ public class GameModel : AbstractModel, IGameModel {
     public GameType CurGameType { get; set; }
 
     public BindableProperty<float> SendMsgOffTime { get; } = new BindableProperty<float>();
-    public BindableProperty<float> ReconnectionTimeout { get; } = new BindableProperty<float>();
+    public BindableProperty<int> ReconnectionTimeout { get; } = new BindableProperty<int>();
 
     public BindableProperty<bool> StandAlone { get; } = new BindableProperty<bool>();
 
@@ -43,7 +43,7 @@ public class GameModel : AbstractModel, IGameModel {
         SceneLoaded.Value = false;
         CurGameType = GameType.TimeTrial;
         SendMsgOffTime.Value = 0.4f;
-        ReconnectionTimeout.Value = 144f;
+        ReconnectionTimeout.Value = 144;
         StandAlone.Value = false;
         MaxSyncDelay.Value = 4000;
         MatchStartGameTime.Value = 16;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
@@ -38,6 +39,25 @@ public class NetworkController : MonoBehaviour, IController {
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start() {
+        this.GetSystem<INetworkSystem>().BreakLineAction = () => {
+            StopCoroutine(Reconnect());
+            StartCoroutine(Reconnect());
+        };
+    }
+    
+    private IEnumerator Reconnect() {
+        int times = this.GetModel<IGameModel>().ReconnectionTimeout;
+        var net = this.GetSystem<INetworkSystem>();
+        while (times > 0 && net.NeedReconnect && !net.IsConnected) {
+            net.Reconnect();
+            times--;
+            yield return new WaitForSeconds(1f);
+        }
+
+        net.NeedReconnect = false;
     }
 
     private void FixedUpdate() {
