@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
+using UnityEngine.UI;
 
 public class TestFSM : MonoBehaviour {
     public enum States {
@@ -11,6 +12,8 @@ public class TestFSM : MonoBehaviour {
     }
 
     public FSM<States> FSM = new FSM<States>();
+
+    public Image LoadingImage;
 
     public class StateA : AbstractState<States, TestFSM> {
         public StateA(FSM<States> fsm, TestFSM target) : base(fsm, target) {
@@ -39,6 +42,7 @@ public class TestFSM : MonoBehaviour {
 
         public override void OnEnter() {
             Debug.Log("++++333 " +  mFSM.CurrentState);
+            mTarget.LoadingImage.color = Color.green;
         }
     }
 
