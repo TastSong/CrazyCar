@@ -8,7 +8,7 @@ public class AssetsUpdateState : AbstractState<LaunchStates, LaunchFSM>, IContro
     }
 
     public override void OnEnter() {
-        this.SendCommand(new OpenDownloadResCommand());
+        this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
     }
 
     public IArchitecture GetArchitecture() {

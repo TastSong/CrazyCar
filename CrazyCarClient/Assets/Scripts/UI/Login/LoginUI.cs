@@ -36,7 +36,7 @@ public class LoginUI : MonoBehaviour, IController {
 
         registerBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.SendCommand(new OpenRegisterCommand());
+            this.SendCommand(new ShowPageCommand(UIPageType.RegisterUI));
             gameObject.SetActiveFast(false);
         });
     }

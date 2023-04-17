@@ -16,7 +16,10 @@ public enum UIPageType {
     RankUI,
     TimeTrialRankUI,
     ChangeCarUI,
-    MatchRoomUI
+    MatchRoomUI,
+    DownloadResUI,
+    LoginUI,
+    RegisterUI
 }
 
 public enum UILevelType {
@@ -29,11 +32,15 @@ public enum UILevelType {
 public class UIController : MonoBehaviour, IController {
     public Transform[] levles;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
+    private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
     private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
+        foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
+            pagesGroup.Add(value, new LinkedList<UIPageType>());
+        }
         
         string urlStr = Resources.Load<TextAsset>(basePageUrl + "url").text;
         JsonData data = JsonMapper.ToObject(urlStr);
@@ -47,6 +54,9 @@ public class UIController : MonoBehaviour, IController {
 
         this.RegisterEvent<HidePageEvent>(HidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ShowPageEvent>(ShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<HidePageByLevelEvent>(HidePageByLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     public void HidePage(HidePageEvent e) {
@@ -66,17 +76,48 @@ public class UIController : MonoBehaviour, IController {
             }
         }
 
-        if (pagesDict.ContainsKey(e.pageType)) {
+        if (pagesDict.ContainsKey(e.pageType) && pagesGroup[e.levelType].Contains(e.pageType)) {
             pagesDict[e.pageType].SetActiveFast(true);
+        } else if (pagesDict.ContainsKey(e.pageType) && !pagesGroup[e.levelType].Contains(e.pageType)) {
+            pagesDict[e.pageType].transform.SetParent(levles[(int)e.levelType], false);
+            pagesGroup[GetGroupByPageType(e.pageType)].Remove(e.pageType);
+            pagesGroup[e.levelType].AddLast(e.pageType);
         } else {
-            // FindPage]
+            // FindPage
             string pageUrl = GetPageUrlByType(e.pageType);
             GameObject page = Instantiate(Resources.Load<GameObject>(pageUrl));
             page.transform.SetParent(levles[(int)e.levelType], false);
             pagesDict[e.pageType] = page;
+            pagesGroup[e.levelType].AddLast(e.pageType);
         }
 
         pagesDict[e.pageType].transform.SetAsLastSibling();
+    }
+    
+    private UILevelType GetGroupByPageType(UIPageType type) {
+        foreach (var kv in pagesGroup) {
+            if (kv.Value.Contains(type)) {
+                return kv.Key;
+            }
+        }
+        return UILevelType.Main;
+    }
+    
+    public void HidePageByLevel(HidePageByLevelEvent e) {
+        foreach (var kv in pagesGroup[e.mLevelType]) {
+            if (pagesDict.ContainsKey(kv)) {
+                pagesDict[kv].SetActiveFast(false);
+            }
+        }
+    }
+
+    public void DestoryPageByLevel(UILevelType levelType) {
+        foreach (var kv in pagesDict) {
+            if (kv.Value.GetComponentInParent<Transform>() == levles[(int)levelType]) {
+                Destroy(pagesDict[kv.Key]);
+                pagesDict.Remove(kv.Key);
+            }
+        }
     }
 
     // 获取对应页面

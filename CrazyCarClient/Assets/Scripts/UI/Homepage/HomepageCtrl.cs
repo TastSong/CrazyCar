@@ -10,6 +10,7 @@ public class HomepageCtrl : MonoBehaviour, IController{
     }
 
     private void Start() {
+        this.SendCommand(new HidePageByLevelCommand(UILevelType.UIPage));
         this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
     }
 }

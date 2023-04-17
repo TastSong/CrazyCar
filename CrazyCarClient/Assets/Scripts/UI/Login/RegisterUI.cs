@@ -20,7 +20,7 @@ public class RegisterUI : MonoBehaviour, IController {
     private void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayCloseSound();
-            this.SendCommand(new OpenLoginCommand());
+            this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
             gameObject.SetActiveFast(false);
         });
 

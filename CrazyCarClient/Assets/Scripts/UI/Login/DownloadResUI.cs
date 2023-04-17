@@ -56,17 +56,22 @@ public class DownloadResUI : MonoBehaviour, IController {
             },
             OnCompleteDownload: () => {
                 Debug.Log("下载完成");
-                this.SendCommand(new DownloadResFinishCommand());
+                FinishDownloadRes();
             },
             OnCheckCompleteNoUpdate: () => {
                 Debug.Log("不需要更新");
-                this.SendCommand(new DownloadResFinishCommand());
+                FinishDownloadRes();
             },
             OnUpdate: (percent, tatalSize) => {
                 try {
                     UpdateProgress(percent, tatalSize);
                 } catch { }
             });
+    }
+
+    private void FinishDownloadRes() {
+        this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
+        this.SendCommand(new HidePageCommand(UIPageType.DownloadResUI));
     }
 
     private float lastProgress = 0;
