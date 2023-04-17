@@ -7,6 +7,15 @@ public class AssetsUpdateState : AbstractState<LaunchStates, LaunchFSM>, IContro
     public AssetsUpdateState(FSM<LaunchStates> fsm, LaunchFSM target) : base(fsm, target) {
     }
 
+    public override void OnEnter() {
+        this.SendCommand(new OpenDownloadResCommand());
+        ChangeState();
+    }
+    
+    private void ChangeState() {
+        mFSM.ChangeState(LaunchStates.InitGameConfig);
+    }
+
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
     }

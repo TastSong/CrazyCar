@@ -9,14 +9,19 @@ public class LoginCtr : MonoBehaviour, IController {
     public RegisterUI registerUI;
     public DownloadResUI downloadResUI;
 
-    private void Start() {
-        downloadResUI.gameObject.SetActiveFast(true);
+    private void Awake() {
+        downloadResUI.gameObject.SetActiveFast(false);
         loginUI.gameObject.SetActiveFast(false);
         registerUI.gameObject.SetActiveFast(false);
 
         this.RegisterEvent<OpenLoginEvent>(OnOpenLogin).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<OpenDownloadResEvent>(ODownloadRes).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<DownloadResFinishEvent>(OnDownloadResFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
+
+    private void ODownloadRes(OpenDownloadResEvent obj) {
+        downloadResUI.gameObject.SetActiveFast(true);
     }
 
     private void OnOpenLogin(OpenLoginEvent e) {

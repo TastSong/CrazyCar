@@ -13,7 +13,7 @@ public class InitNetworkState : AbstractState<LaunchStates, LaunchFSM>, IControl
     }
 
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.SplashScreen);
+        mFSM.ChangeState(LaunchStates.AssetsUpdate);
     }
 
     public override void OnExit() {
