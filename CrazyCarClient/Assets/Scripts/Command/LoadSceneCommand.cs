@@ -15,8 +15,8 @@ public class LoadSceneCommand : AbstractCommand {
         if (this.GetModel<IGameModel>().SceneLoading) {
             return;
         }
-        this.SendCommand(new HidePageByLevelCommand(UILevelType.UIPage));
         this.GetModel<IGameModel>().LoadingTargetSceneID.Value = mSceneID;
         SceneManager.LoadScene((int)SceneID.Loading);
+        this.SendCommand(new HidePageByLevelCommand(UILevelType.UIPage));
     }
 }
