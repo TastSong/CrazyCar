@@ -19,13 +19,22 @@ public enum UIPageType {
     MatchRoomUI
 }
 
+public enum UILevelType {
+    Main = 0,
+    UIPage,
+    Popup,
+    Alart
+}
+
 public class UIController : MonoBehaviour, IController {
+    public Transform[] levles;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
+        
         string urlStr = Resources.Load<TextAsset>(basePageUrl + "url").text;
         JsonData data = JsonMapper.ToObject(urlStr);
         IDictionary dict = data;
@@ -63,7 +72,7 @@ public class UIController : MonoBehaviour, IController {
             // FindPage]
             string pageUrl = GetPageUrlByType(e.pageType);
             GameObject page = Instantiate(Resources.Load<GameObject>(pageUrl));
-            page.transform.SetParent(transform, false);
+            page.transform.SetParent(levles[(int)e.levelType], false);
             pagesDict[e.pageType] = page;
         }
 
