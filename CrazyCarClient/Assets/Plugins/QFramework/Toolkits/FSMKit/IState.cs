@@ -233,7 +233,7 @@ namespace QFramework
 
         protected virtual bool OnCondition() => true;
 
-        protected virtual void OnEnter()
+        public virtual void OnEnter()
         {
         }
 
@@ -247,7 +247,7 @@ namespace QFramework
             
         }
 
-        protected virtual void OnExit()
+        public virtual void OnExit()
         {
             
         }
