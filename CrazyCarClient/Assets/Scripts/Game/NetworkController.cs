@@ -35,10 +35,14 @@ public class NetworkController : MonoBehaviour, IController {
     public NetType netType;
 
     private void Awake() {
+        this.RegisterEvent<InitNetworkEvent>(OnInitNetwork).UnRegisterWhenGameObjectDestroyed(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnInitNetwork(InitNetworkEvent obj) {
         this.GetSystem<INetworkSystem>().ServerType = serverType;
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start() {

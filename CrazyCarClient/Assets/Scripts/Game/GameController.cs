@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour, IController {
     public InfoConfirmAlert infoConfirmAlert;
     public LoadingUI loadingUI;
 
+    private LaunchFSM launchFSM = new LaunchFSM();
+
     private void Awake() {
         DontDestroyOnLoad(gameObject);
 
@@ -28,6 +30,8 @@ public class GameController : MonoBehaviour, IController {
         loadingUI.HideLoading();
         this.GetSystem<II18NSystem>().InitTranslation();
         InitSettingsInfo();
+        
+        launchFSM.StartState();
     }
 
     private void OnWarningAlert(ShowWarningAlertEvent e) {
