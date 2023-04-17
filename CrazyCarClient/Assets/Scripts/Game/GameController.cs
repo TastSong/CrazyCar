@@ -14,23 +14,20 @@ public class GameController : MonoBehaviour, IController {
     private LaunchFSM launchFSM = new LaunchFSM();
 
     private void Awake() {
-        DontDestroyOnLoad(gameObject);
+        gameHelper.gameObject.SetActiveFast(false);
+        warningAlert.gameObject.SetActiveFast(false);
+        infoConfirmAlert.gameObject.SetActiveFast(false);
+        loadingUI.HideLoading();
 
         this.RegisterEvent<ShowWarningAlertEvent>(OnWarningAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ShowInfoConfirmAlertEvent>(OnInfoConfirmAlert).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<SetLoadingUIEvent>(OnSetLoadingUI).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<SetGameHelperEvent>(OnSetGameHelper).UnRegisterWhenGameObjectDestroyed(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
     }
     
     private void Start() {
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        gameHelper.gameObject.SetActiveFast(false);
-        warningAlert.gameObject.SetActiveFast(false);
-        infoConfirmAlert.gameObject.SetActiveFast(false);
-        loadingUI.HideLoading();
-        this.GetSystem<II18NSystem>().InitTranslation();
-        InitSettingsInfo();
-        
         launchFSM.StartState();
     }
 
@@ -52,10 +49,6 @@ public class GameController : MonoBehaviour, IController {
 
     private void OnSetGameHelper(SetGameHelperEvent e) {
         gameHelper.gameObject.SetActiveFast(e.isShow);
-    }
-
-    private void InitSettingsInfo() {
-        this.SendCommand<SavaSettingsCommand>();
     }
 
     public IArchitecture GetArchitecture() {

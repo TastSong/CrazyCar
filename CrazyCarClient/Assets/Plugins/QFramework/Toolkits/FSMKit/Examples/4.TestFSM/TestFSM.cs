@@ -4,68 +4,70 @@ using UnityEngine;
 using QFramework;
 using UnityEngine.UI;
 
-public class TestFSM : MonoBehaviour {
-    public enum States {
-        A,
-        B,
-        C
-    }
-
-    public FSM<States> FSM = new FSM<States>();
-
-    public Image LoadingImage;
-
-    public class StateA : AbstractState<States, TestFSM> {
-        public StateA(FSM<States> fsm, TestFSM target) : base(fsm, target) {
+namespace QFramework.Example {
+    public class TestFSM : MonoBehaviour {
+        public enum States {
+            A,
+            B,
+            C
         }
 
-        public override void OnEnter() {
-            Debug.Log("++++111 " +  mFSM.CurrentState);
-            mFSM.ChangeState(States.B);
-        }
-    }
+        public FSM<States> FSM = new FSM<States>();
 
+        public Image LoadingImage;
 
-    public class StateB : AbstractState<States, TestFSM> {
-        public StateB(FSM<States> fsm, TestFSM target) : base(fsm, target) {
-        }
+        public class StateA : AbstractState<States, TestFSM> {
+            public StateA(FSM<States> fsm, TestFSM target) : base(fsm, target) {
+            }
 
-        public override void OnEnter() {
-            Debug.Log("++++222 " +  mFSM.CurrentState);
-            mFSM.ChangeState(States.C);
-        }
-    }
-    
-    public class StateC : AbstractState<States, TestFSM> {
-        public StateC(FSM<States> fsm, TestFSM target) : base(fsm, target) {
+            public override void OnEnter() {
+                Debug.Log("++++111 " + mFSM.CurrentState);
+                mFSM.ChangeState(States.B);
+            }
         }
 
-        public override void OnEnter() {
-            Debug.Log("++++333 " +  mFSM.CurrentState);
-            mTarget.LoadingImage.color = Color.green;
+
+        public class StateB : AbstractState<States, TestFSM> {
+            public StateB(FSM<States> fsm, TestFSM target) : base(fsm, target) {
+            }
+
+            public override void OnEnter() {
+                Debug.Log("++++222 " + mFSM.CurrentState);
+                mFSM.ChangeState(States.C);
+            }
         }
-    }
 
-    private void Start() {
-        FSM.AddState(States.A, new StateA(FSM, this));
-        FSM.AddState(States.B, new StateB(FSM, this));
-        FSM.AddState(States.C, new StateC(FSM, this));
+        public class StateC : AbstractState<States, TestFSM> {
+            public StateC(FSM<States> fsm, TestFSM target) : base(fsm, target) {
+            }
 
-        // 支持和链式模式混用
-        // FSM.State(States.C)
-        //     .OnEnter(() =>
-        //     {
-        //
-        //     });
+            public override void OnEnter() {
+                Debug.Log("++++333 " + mFSM.CurrentState);
+                mTarget.LoadingImage.color = Color.green;
+            }
+        }
 
-        FSM.StartState(States.A);
-    }
+        private void Start() {
+            FSM.AddState(States.A, new StateA(FSM, this));
+            FSM.AddState(States.B, new StateB(FSM, this));
+            FSM.AddState(States.C, new StateC(FSM, this));
 
-    private void OnGUI() {
-        FSM.OnGUI();
-    }
+            // 支持和链式模式混用
+            // FSM.State(States.C)
+            //     .OnEnter(() =>
+            //     {
+            //
+            //     });
 
-    private void OnDestroy() {
-        FSM.Clear();
+            FSM.StartState(States.A);
+        }
+
+        private void OnGUI() {
+            FSM.OnGUI();
+        }
+
+        private void OnDestroy() {
+            FSM.Clear();
+        }
     }
 }

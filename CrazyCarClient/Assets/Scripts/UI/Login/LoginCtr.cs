@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using QFramework;
+using UnityEngine.UI;
 
 public class LoginCtr : MonoBehaviour, IController {
+    public Image bg;
     public LoginUI loginUI;
     public RegisterUI registerUI;
     public DownloadResUI downloadResUI;
@@ -13,6 +15,7 @@ public class LoginCtr : MonoBehaviour, IController {
         downloadResUI.gameObject.SetActiveFast(false);
         loginUI.gameObject.SetActiveFast(false);
         registerUI.gameObject.SetActiveFast(false);
+        bg.gameObject.SetActiveFast(true);
 
         this.RegisterEvent<OpenLoginEvent>(OnOpenLogin).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<OpenRegisterEvent>(OnOpenRegister).UnRegisterWhenGameObjectDestroyed(gameObject);

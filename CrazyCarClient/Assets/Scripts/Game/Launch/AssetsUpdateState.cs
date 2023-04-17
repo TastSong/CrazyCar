@@ -9,11 +9,6 @@ public class AssetsUpdateState : AbstractState<LaunchStates, LaunchFSM>, IContro
 
     public override void OnEnter() {
         this.SendCommand(new OpenDownloadResCommand());
-        ChangeState();
-    }
-    
-    private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.InitGameConfig);
     }
 
     public IArchitecture GetArchitecture() {
