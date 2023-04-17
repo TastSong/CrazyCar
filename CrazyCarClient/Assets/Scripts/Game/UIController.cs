@@ -112,10 +112,11 @@ public class UIController : MonoBehaviour, IController {
     }
 
     public void DestoryPageByLevel(UILevelType levelType) {
-        foreach (var kv in pagesDict) {
-            if (kv.Value.GetComponentInParent<Transform>() == levles[(int)levelType]) {
-                Destroy(pagesDict[kv.Key]);
-                pagesDict.Remove(kv.Key);
+        foreach (var kv in pagesGroup[levelType]) {
+            if (pagesDict.ContainsKey(kv)) {
+                Destroy(pagesDict[kv]);
+                pagesDict.Remove(kv);
+                pagesGroup[levelType].Remove(kv);
             }
         }
     }
