@@ -19,6 +19,16 @@ public class GameController : MonoBehaviour, IController {
         this.RegisterEvent<SetLoadingUIEvent>(OnSetLoadingUI).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<SetGameHelperEvent>(OnSetGameHelper).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
+    
+    private void Start() {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        gameHelper.gameObject.SetActiveFast(false);
+        warningAlert.gameObject.SetActiveFast(false);
+        infoConfirmAlert.gameObject.SetActiveFast(false);
+        loadingUI.HideLoading();
+        this.GetSystem<II18NSystem>().InitTranslation();
+        InitSettingsInfo();
+    }
 
     private void OnWarningAlert(ShowWarningAlertEvent e) {
         warningAlert.ShowWithText(e.text, e.time, e.callback);
@@ -38,16 +48,6 @@ public class GameController : MonoBehaviour, IController {
 
     private void OnSetGameHelper(SetGameHelperEvent e) {
         gameHelper.gameObject.SetActiveFast(e.isShow);
-    }
-
-    private void Start() {
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        gameHelper.gameObject.SetActiveFast(false);
-        warningAlert.gameObject.SetActiveFast(false);
-        infoConfirmAlert.gameObject.SetActiveFast(false);
-        loadingUI.HideLoading();
-        this.GetSystem<II18NSystem>().InitTranslation();
-        InitSettingsInfo();
     }
 
     private void InitSettingsInfo() {
