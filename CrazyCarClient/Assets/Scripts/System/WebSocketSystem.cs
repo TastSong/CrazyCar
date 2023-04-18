@@ -11,7 +11,7 @@ public interface IWebSocketSystem : ISystem, ISocketSystem {
 }
 
 public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
-    private string address;
+    private string address = "";
     private int receiveCount;
     private IWebSocket socket;
     private JsonData recJD = new JsonData();
@@ -34,7 +34,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     }
 
     public void Connect(string url, int port = 0) {
-        if (IsConnected) {
+        if (IsConnected && address == url) {
             return;
         }
         address = url;
