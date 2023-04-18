@@ -26,6 +26,8 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     }
 
     private IEnumerator LoadScene() {
+        this.SendCommand(new HidePageByLevelCommand(UILevelType.Main));
+        this.SendCommand(new HidePageByLevelCommand(UILevelType.UIPage));
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = (int)(progressSlider.value * 100) + "%";
