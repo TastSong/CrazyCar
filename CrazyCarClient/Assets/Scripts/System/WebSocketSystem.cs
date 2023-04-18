@@ -34,9 +34,6 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     }
 
     public void Connect(string url, int port = 0) {
-        if (IsConnected && address == url) {
-            return;
-        }
         address = url;
         socket = new WebSocket(address);
         socket.OnOpen += Socket_OnOpen;
