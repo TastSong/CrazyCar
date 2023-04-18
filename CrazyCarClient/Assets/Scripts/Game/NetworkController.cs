@@ -43,15 +43,13 @@ public class NetworkController : MonoBehaviour, IController {
         this.GetSystem<INetworkSystem>().ServerType = serverType;
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
-    }
-
-    private void Start() {
+        
         this.GetSystem<INetworkSystem>().BreakLineAction = () => {
             StopCoroutine(Reconnect());
             StartCoroutine(Reconnect());
         };
     }
-    
+
     private IEnumerator Reconnect() {
         int times = this.GetModel<IGameModel>().ReconnectionTimeout;
         var net = this.GetSystem<INetworkSystem>();
