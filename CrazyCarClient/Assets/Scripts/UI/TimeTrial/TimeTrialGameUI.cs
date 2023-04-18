@@ -46,7 +46,15 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
 
     private void OnEndTimeTrial(EndTimeTrialEvent e) {
         StopCoroutine(limitTimeCor);
-        this.SendCommand(new ShowResultUICommand());
+        this.GetSystem<IPlayerManagerSystem>().SelfPlayer.isLockSpeed = true;
+        if (this.GetModel<IGameModel>().StandAlone) {
+            this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Game Over"), 2.0f));
+            Util.DelayExecuteWithSecond(2.0f, () => {
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
+            });           
+        } else {
+            this.SendCommand(new ShowPageCommand(UIPageType.GameResultUI, UILevelType.UIPage));
+        }
     }
 
     public IArchitecture GetArchitecture() {

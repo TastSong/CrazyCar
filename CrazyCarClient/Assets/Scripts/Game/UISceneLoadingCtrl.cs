@@ -50,7 +50,20 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         yield return new WaitForSeconds(0.1f);
         this.GetModel<IGameModel>().SceneLoaded.Value = true;
         this.GetModel<IGameModel>().SceneLoading.Value = false;
-        this.SendCommand(new SelectGameUICommand());
+        
+        if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Game) {
+            SelectGameUI();
+        }
+    }
+    
+    private void SelectGameUI() {
+        this.SendCommand(new ShowPageCommand(UIPageType.CommonGameUI, UILevelType.Main));
+        this.SendCommand(new ShowPageCommand(UIPageType.InputSystemPanel, UILevelType.Main));
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
+            this.SendCommand(new ShowPageCommand(UIPageType.MatchGameUI, UILevelType.UIPage));
+        } else if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial) {
+            this.SendCommand(new ShowPageCommand(UIPageType.TimeTrailGameUI, UILevelType.UIPage));
+        }
     }
 
     public IArchitecture GetArchitecture() {

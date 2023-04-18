@@ -132,7 +132,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         } else if (netType == NetType.KCP) {
             url = kcpURL;
         }
-        
+        Debug.Log("url = " + url);
         this.Connect(url, port);
     }
 

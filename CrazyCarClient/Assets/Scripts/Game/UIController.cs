@@ -19,7 +19,12 @@ public enum UIPageType {
     MatchRoomUI,
     DownloadResUI,
     LoginUI,
-    RegisterUI
+    RegisterUI,
+    InputSystemPanel,
+    TimeTrailGameUI,
+    MatchGameUI,
+    CommonGameUI,
+    GameResultUI
 }
 
 public enum UILevelType {
