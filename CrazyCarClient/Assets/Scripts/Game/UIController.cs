@@ -24,7 +24,8 @@ public enum UIPageType {
     TimeTrailGameUI,
     MatchGameUI,
     CommonGameUI,
-    GameResultUI
+    GameResultUI,
+    WarningAlert
 }
 
 public enum UILevelType {
@@ -94,6 +95,11 @@ public class UIController : MonoBehaviour, IController {
             page.transform.SetParent(levles[(int)e.levelType], false);
             pagesDict[e.pageType] = page;
             pagesGroup[e.levelType].AddLast(e.pageType);
+        }
+        
+        UIPenal penal = pagesDict[e.pageType].GetComponent<UIPenal>();
+        if (e.data != null && penal != null) {
+            penal.InitData(e.data);
         }
 
         pagesDict[e.pageType].transform.SetAsLastSibling();

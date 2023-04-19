@@ -41,7 +41,8 @@ public class LoginCommand : AbstractCommand {
                         }));
 
                 } else if (code == 423) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Password Error")));
+                    WarningAlertInfo info = new WarningAlertInfo(this.GetSystem<II18NSystem>().GetText("Password Error"));
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
                 } else if (code == 404) {
                     this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User not registered")));
                 } else {
