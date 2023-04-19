@@ -33,6 +33,8 @@ public enum MsgType{
 public class NetworkController : MonoBehaviour, IController {
     public ServerType serverType;
     public NetType netType;
+    [SerializeField] 
+    public string host;
 
     private void Awake() {
         this.RegisterEvent<InitNetworkEvent>(OnInitNetwork).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -43,6 +45,7 @@ public class NetworkController : MonoBehaviour, IController {
         this.GetSystem<INetworkSystem>().ServerType = serverType;
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
+        host = this.GetSystem<INetworkSystem>().HttpBaseUrl;
         
         this.GetSystem<INetworkSystem>().BreakLineAction = () => {
             StopCoroutine(Reconnect());
