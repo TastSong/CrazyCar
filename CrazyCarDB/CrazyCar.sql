@@ -1,5 +1,13 @@
 create database crazy_car;
 use crazy_car;
+/*
+centos 如果没生效
+1. sudo find / -name "my.cnf"
+2. 添加
+sql_mode =STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+3. sudo systemctl stop mysqld
+4. 重启crazy_car.jar
+*/
 SET sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 SET SQL_SAFE_UPDATES = false;
 
