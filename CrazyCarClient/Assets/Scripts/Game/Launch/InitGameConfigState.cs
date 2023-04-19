@@ -11,6 +11,10 @@ public class InitGameConfigState : AbstractState<LaunchStates, LaunchFSM>, ICont
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         this.GetSystem<II18NSystem>().InitTranslation();
         InitSettingsInfo();
+        
+        if (this.GetUtility<IPlayerPrefsStorage>().LoadInt(PrefKeys.isSuperuser) == 1) {
+            this.SendCommand(new ShowPageCommand(UIPageType.GameHelper, UILevelType.Debug));
+        }
         ChangeState();
     }
     

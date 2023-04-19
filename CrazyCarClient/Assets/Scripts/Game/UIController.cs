@@ -27,14 +27,16 @@ public enum UIPageType {
     GameResultUI,
     WarningAlert,
     InfoConfirmAlert,
-    LoadingUI
+    LoadingUI,
+    GameHelper
 }
 
 public enum UILevelType {
     Main = 0,
     UIPage,
     Popup,
-    Alart
+    Alart,
+    Debug
 }
 
 public class UIController : MonoBehaviour, IController {

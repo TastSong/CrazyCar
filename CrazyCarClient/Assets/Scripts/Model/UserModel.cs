@@ -84,14 +84,14 @@ public class UserModel : AbstractModel, IUserModel {
         var storage = this.GetUtility <IPlayerPrefsStorage>();
         Name.Value = storage.LoadString(PrefKeys.userName);
         Name.Register((v) => { 
-            if(PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
+            if(storage.LoadInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.userName, v);
             }
         });
 
         Password.Value = storage.LoadString(PrefKeys.password);
         Password.Register((v) => {
-            if (PlayerPrefs.GetInt(PrefKeys.rememberPassword) == 1) {
+            if (storage.LoadInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.password, v);
             }           
         });
@@ -105,5 +105,15 @@ public class UserModel : AbstractModel, IUserModel {
         IsCompleteGuidance.Register(v =>
             storage.SaveInt(PrefKeys.isCompleteGuidance, v ? 1 : 0)
         );
+
+        IsSuperuser.Value = storage.LoadInt(PrefKeys.isSuperuser) == 1;
+        IsSuperuser.Register(v => {
+            storage.SaveInt(PrefKeys.isSuperuser, v ? 1 : 0);
+            if (IsSuperuser) {
+                this.SendEvent(new ShowPageEvent(UIPageType.GameHelper, UILevelType.Debug));
+            } else {
+                this.SendEvent(new HidePageEvent(UIPageType.GameHelper));
+            }
+        });
     }
 }

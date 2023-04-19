@@ -26,8 +26,6 @@ public class HomepageUI : MonoBehaviour, IController {
     public Button matchBtn;
 
     private void Start() {
-        this.SendCommand(new SetGameHelperCommand(this.GetModel<IUserModel>().IsSuperuser));
-
         nickNameText.text = this.GetModel<IUserModel>().Name.Value;
 
         avatarBtn.onClick.AddListener(() => {

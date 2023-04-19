@@ -20,6 +20,13 @@ public class ShowPageEvent {
         this.data = data;
     }
     
+    public ShowPageEvent(UIPageType pageType, UILevelType levelType) {
+        this.pageType = pageType;
+        this.closeOther = false;
+        this.levelType = levelType;
+        this.data = null;
+    }
+
     public ShowPageEvent(UIPageType pageType, bool closeOther, UILevelType levelType, object data) {
         this.pageType = pageType;
         this.closeOther = false;
