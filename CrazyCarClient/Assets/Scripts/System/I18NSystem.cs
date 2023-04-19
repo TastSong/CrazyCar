@@ -49,7 +49,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
             var s = (string)current_dict[key];
             return s;
         } catch {
-            Debug.LogError("没有key是 [ " + key + "]   |的翻译");
+            Debug.Log("没有key是 [ " + key + "]   |的翻译");
             return "";
         }
     }

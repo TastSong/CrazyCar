@@ -21,7 +21,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         avatarModel = this.GetModel<IAvatarModel>();
-        this.SendCommand(new SetLoadingUICommand(true));
+        this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Alart));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
         token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {

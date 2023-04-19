@@ -26,7 +26,8 @@ public enum UIPageType {
     CommonGameUI,
     GameResultUI,
     WarningAlert,
-    InfoConfirmAlert
+    InfoConfirmAlert,
+    LoadingUI
 }
 
 public enum UILevelType {
@@ -68,7 +69,7 @@ public class UIController : MonoBehaviour, IController {
 
     public void HidePage(HidePageEvent e) {
         if (!pagesDict.ContainsKey(e.pageType)) {
-            Debug.LogError("Not Exist Page");
+            Debug.Log("Not Exist Page");
             return;
         }
 
