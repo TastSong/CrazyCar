@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
 
-public class InitGameConfigState : AbstractState<LaunchStates, LaunchFSM>, IController {
-    public InitGameConfigState(FSM<LaunchStates> fsm, LaunchFSM target) : base(fsm, target) {
+public class InitGameConfigState : AbstractState<LaunchStates, Launch>, IController {
+    public InitGameConfigState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
 
     public override void OnEnter() {

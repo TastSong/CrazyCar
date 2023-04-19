@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
 
-public class AssetsUpdateState : AbstractState<LaunchStates, LaunchFSM>, IController {
-    public AssetsUpdateState(FSM<LaunchStates> fsm, LaunchFSM target) : base(fsm, target) {
+public class AssetsUpdateState : AbstractState<LaunchStates, Launch>, IController {
+    public AssetsUpdateState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
 
     public override void OnEnter() {

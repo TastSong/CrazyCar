@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
 
-public class InitNetworkState : AbstractState<LaunchStates, LaunchFSM>, IController {
-    public InitNetworkState(FSM<LaunchStates> fsm, LaunchFSM target) : base(fsm, target) {
+public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController {
+    public InitNetworkState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
     
     public override void OnEnter() {
