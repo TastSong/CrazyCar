@@ -32,16 +32,20 @@ public class RegisterCommand : AbstractCommand {
             }, code: (code) => {
                 if (code == 200) {
                     this.GetSystem<IVibrationSystem>().Haptic();
-                    this.SendEvent(new ShowWarningAlertEvent(text: this.GetSystem<II18NSystem>().GetText("Registration Successful"), callback: () => {
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Registration Successful", () => {
                         this.SendCommand<RecodeLoginCommand>();
                         this.SendCommand(new LoadSceneCommand(SceneID.Index));
-                    }));
+                    });
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else if (code == 423) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("User registered")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("User registered");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else if (code == 425) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Incorrect information format")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Incorrect information format");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Unknown Error")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Unknown Error");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }));
     }

@@ -54,7 +54,8 @@ public class ProfileUI : MonoBehaviour, IController {
         });
         userNameBtn.onClick.AddListener(() => {
             if (userNameInput.text == this.GetModel<IUserModel>().Name.Value) {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original nickname")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Consistent with the original nickname");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             } else {
 
             }
@@ -62,9 +63,11 @@ public class ProfileUI : MonoBehaviour, IController {
         passwordBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
             if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Consistent with the original password")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Consistent with the original password");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             } else if (passwordInput.text.Length < 6) {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("The password must contain more than six characters")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("The password must contain more than six characters");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             } else {
                 this.SendCommand(new ChangePasswordCommand(passwordInput.text));
             }
@@ -72,7 +75,8 @@ public class ProfileUI : MonoBehaviour, IController {
 
         guidanceBtn.onClick.AddListener(() => {
             this.GetModel<IUserModel>().IsCompleteGuidance.Value = false;
-            this.SendCommand(new ShowWarningAlertCommand("重新进入，即可重启新手教程"));
+            WarningAlertInfo alertInfo = new WarningAlertInfo("重新进入，即可重启新手教程");
+            this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
         });
     }
 }

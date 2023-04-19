@@ -34,7 +34,8 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetModel<IMatchModel>().RoomId.Value = inputField.text;
                 this.GetSystem<IMatchRoomSystem>().MatchRoomCreate();
             } else {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Please enter a 4-digit room number")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter a 4-digit room number");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 ResetUI();
             }
         });
@@ -45,7 +46,8 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetModel<IMatchModel>().RoomId.Value = inputField.text;
                 this.GetSystem<IMatchRoomSystem>().MatchRoomJoin();
             } else {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Please enter a 4-digit room number")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter a 4-digit room number");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 ResetUI();
             }
         });

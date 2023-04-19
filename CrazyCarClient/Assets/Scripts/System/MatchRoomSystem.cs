@@ -146,13 +146,16 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 421) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Room already exists")));
+            WarningAlertInfo info = new WarningAlertInfo("Room already exists");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The number of rooms has reached the upper limit")));
+            WarningAlertInfo info = new WarningAlertInfo("The number of rooms has reached the upper limit");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 423) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Token Past Due")));
+            WarningAlertInfo info = new WarningAlertInfo("Token Past Due");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
@@ -175,7 +178,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                         this.SendEvent<MatchRoomExitEvent>();
                     }, type: ConfirmAlertType.Single));
             } else {
-                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Members of the exit")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Members of the exit");
+                this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 JsonData players = recJD["players"];
                 var infos = this.GetModel<IMatchModel>().MemberInfoDic;
                 infos.Clear();
@@ -200,13 +204,16 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
         } else if (code == 404) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Without this room")));
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Without this room");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 422) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The room is full")));
+            WarningAlertInfo alertInfo = new WarningAlertInfo("The room is full");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         } else if (code == 423) {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Token Past Due")));
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Token Past Due");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             this.SendEvent<MatchRoomCreateOrJoinFailEvent>();
         }
     }
@@ -255,7 +262,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
             this.SendEvent<MatchRoomStartEvent>();
         } else {
-            this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("This map requires all player vehicles to be able to wade")));
+            WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");
+            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
         }
     }
 

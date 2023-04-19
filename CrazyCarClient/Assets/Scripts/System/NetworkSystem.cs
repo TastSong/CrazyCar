@@ -268,9 +268,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         code: (code) => {
             if (code == 423) {
                 if (gameType == GameType.Match) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("The match is currently open only to VIP users")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Do not own this course")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Do not own this course");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }
         }));

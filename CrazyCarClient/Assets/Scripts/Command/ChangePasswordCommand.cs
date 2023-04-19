@@ -23,14 +23,17 @@ public class ChangePasswordCommand : AbstractCommand {
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             data: bytes, token: this.GetModel<IGameModel>().Token.Value,
             succData: (data) => {
-                this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Modify Successfully")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Modify Successfully");
+                this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 this.GetModel<IUserModel>().Password.Value = mPassword;
             },
             code: (code) => {
                 if (code == 423) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Fail To Modify")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Fail To Modify");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else if (code == 404) {
-                    this.SendEvent(new ShowWarningAlertEvent(this.GetSystem<II18NSystem>().GetText("Information Error")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("Information Error");
+                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }));
     }

@@ -45,10 +45,12 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
                 if (IsLegalMap()) {
                     this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
                 } else {
-                    this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This map requires all player vehicles to be able to wade")));
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");
+                    this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             } else {
-                this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("Other players are not in position")));
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Other players are not in position");
+                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }  
         });
 

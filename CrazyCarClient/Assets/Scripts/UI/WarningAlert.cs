@@ -4,8 +4,9 @@ using UnityEngine.UI;
 using Utils;
 using System;
 using System.Collections.Generic;
+using QFramework;
 
-public class WarningAlertInfo{
+public class WarningAlertInfo {
     public string text;
     public float time;
     public Action callback;
@@ -20,6 +21,12 @@ public class WarningAlertInfo{
         text = content;
         time = 1;
         callback = null;
+    }
+    
+    public WarningAlertInfo(string content, Action action) {
+        text = content;
+        time = 1;
+        callback = action;
     }
 }
 
@@ -48,7 +55,11 @@ public class WarningAlert : UIPenal {
     private IEnumerator HideWarningAlert() {
         while (queue.Count != 0) {
             WarningAlertInfo info = queue.Dequeue();
-            warningText.text = info.text;
+            string content = this.GetSystem<II18NSystem>().GetText(info.text);
+            if (content == "") {
+                content = info.text;
+            }
+            warningText.text = content;
             yield return new WaitForSeconds(info.time);           
             info.callback?.Invoke();
         }

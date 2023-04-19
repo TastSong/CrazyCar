@@ -95,7 +95,8 @@ public class AIController : MonoBehaviour, IController {
                     break;
                 }           
                 if (item.Value.needPassTimes == item.Value.mPlayer.passEndSignTimes){
-                    this.SendCommand(new ShowWarningAlertCommand("AI玩家" + item.Value.userInfo.name + "获胜")); 
+                    WarningAlertInfo alertInfo = new WarningAlertInfo("AI玩家" + item.Value.userInfo.name + "获胜");
+                    this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                     item.Value.isFinishGame = true;
                     this.SendCommand<EndTimeTrialCommand>();
                 } else{

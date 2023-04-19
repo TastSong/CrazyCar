@@ -62,7 +62,8 @@ public class HomepageUI : MonoBehaviour, IController {
                         if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
                             this.SendCommand(new ShowPageCommand(UIPageType.MatchRoomUI));
                         } else {
-                            this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("No game")));
+                            WarningAlertInfo alertInfo = new WarningAlertInfo("No game");
+                            this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                         }
                     });
                 }));
@@ -138,7 +139,8 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void ShowStandAlone() {
-        this.SendCommand(new ShowWarningAlertCommand(this.GetSystem<II18NSystem>().GetText("This function is unavailable in single-machine mode")));
+        WarningAlertInfo alertInfo = new WarningAlertInfo("This function is unavailable in single-machine mode");
+        this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {
