@@ -25,7 +25,8 @@ public enum UIPageType {
     MatchGameUI,
     CommonGameUI,
     GameResultUI,
-    WarningAlert
+    WarningAlert,
+    InfoConfirmAlert
 }
 
 public enum UILevelType {

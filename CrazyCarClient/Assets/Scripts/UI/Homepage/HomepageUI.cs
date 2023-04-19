@@ -89,11 +89,13 @@ public class HomepageUI : MonoBehaviour, IController {
         });
         infoBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.SendCommand(new ShowInfoConfirmAlertCommand(title: "Version", content: "当前版本为：" + Application.version));
+            InfoConfirmInfo info = new InfoConfirmInfo(title: "Version", content: "当前版本为：" + Application.version);
+            this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         });
         questionBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();
-            this.SendCommand(new ShowInfoConfirmAlertCommand(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com"));
+            InfoConfirmInfo info = new InfoConfirmInfo(title: "Content", content: "作者：TastSong 邮箱地址：TastSong@163.com");
+            this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         });
         exitBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlayClickSound();

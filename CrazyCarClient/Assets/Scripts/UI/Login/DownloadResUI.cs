@@ -34,12 +34,13 @@ public class DownloadResUI : MonoBehaviour, IController {
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
                 data: bytes, succData: (data) => {
                     if ((bool)data["is_forced_updating"]) {
-                        this.SendCommand(new ShowInfoConfirmAlertCommand(content: this.GetSystem<II18NSystem>().GetText("Version is too low"),
+                        InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
                             success: () => {
                                 Application.OpenURL((string)data["url"]);
                                 Application.Quit();
                             },
-                            confirmText: this.GetSystem<II18NSystem>().GetText("Download")));
+                            confirmText: "Download");
+                        this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
                     } else {
                         this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => { DownloadRes(); });
                     }

@@ -9,8 +9,7 @@ public class ExitGameSceneCommand : AbstractCommand
     protected override void OnExecute()
     {
         Time.timeScale = 0;
-        this.SendCommand(new ShowInfoConfirmAlertCommand(
-            content: this.GetSystem<II18NSystem>().GetText("Quit the game?"),
+        InfoConfirmInfo info = new InfoConfirmInfo(content: "Quit the game?",
             success: () => {
                 this.SendEvent<ExitGameSceneEvent>();
                 this.GetSystem<IPlayerManagerSystem>().peers.Clear();
@@ -19,6 +18,7 @@ public class ExitGameSceneCommand : AbstractCommand
             },
             fail: () => {
                 Time.timeScale = 1;
-            }));
+            });
+        this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
     }
 }

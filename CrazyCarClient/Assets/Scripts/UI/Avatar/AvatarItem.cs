@@ -21,14 +21,15 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
             this.SendCommand(new UpdataAvatarUICommand(avatarInfo.aid));
         } else {
             if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
-                this.SendCommand(new ShowInfoConfirmAlertCommand(content:
+                InfoConfirmInfo info = new InfoConfirmInfo(content:
                     string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
-                success: () => {
-                    this.SendCommand(new BuyAvatarCommand(avatarInfo));
-                },
-                fail: () => {
-                    Debug.Log("放弃购买");
-                }));
+                    success: () => {
+                        this.SendCommand(new BuyAvatarCommand(avatarInfo));
+                    },
+                    fail: () => {
+                        Debug.Log("放弃购买");
+                    });
+                this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo(string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star));
                 this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));

@@ -12,7 +12,28 @@ public enum ConfirmAlertType {
     Single
 }
 
-public class InfoConfirmAlert : MonoBehaviour, IController {
+public class InfoConfirmInfo {
+    public string title;
+    public string content;
+    public Action succ;
+    public Action fail;
+    public string confirmText;
+    public string cancelText;
+    public ConfirmAlertType type;
+
+    public InfoConfirmInfo(string title = "Tips", string content = "", Action success = null, Action fail = null,
+        string confirmText = "Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
+        this.title = title;
+        this.content = content;
+        this.succ = success;
+        this.fail = fail;
+        this.confirmText = confirmText;
+        this.cancelText = cancelText;
+        this.type = type;
+    }
+}
+
+public class InfoConfirmAlert : UIPenal {
     public Text titleText;
     public Text contentText;
     public Button cancelBtn;
@@ -22,28 +43,16 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
 
     private Action success;
     private Action fail;
-
-    private class InfoConfirmInfo {
-        public string title;
-        public string content;
-        public Action succ;
-        public Action fail;
-        public string confirmText;
-        public string cancelText;
-        public ConfirmAlertType type;
-
-        public InfoConfirmInfo(string title = "Tips", string content = "", Action success = null, Action fail = null,
-        string confirmText = "Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
-            this.title = title;
-            this.content = content;
-            this.succ = success;
-            this.fail = fail;
-            this.confirmText = confirmText;
-            this.cancelText = cancelText;
-            this.type = type;
-        }
-    }
+    
     private Queue<InfoConfirmInfo> queue = new Queue<InfoConfirmInfo>();
+
+    public override void InitData(object data) {
+        InfoConfirmInfo info = data as InfoConfirmInfo;
+        if (info == null) {
+            return;
+        }
+        ShowWithText(info.title, info.content, info.succ, info.fail, info.confirmText, info.cancelText, info.type);
+    }
 
     private void Start() {
         cancelBtn.onClick.AddListener(() => {
@@ -67,13 +76,11 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
         });
     }
 
-    public void ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
+    private void ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
         string confirmText ="Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
         InfoConfirmInfo info = new InfoConfirmInfo(title: title, content: content, success: success, fail: fail, confirmText: confirmText, cancelText: cancelText, type: type);
         queue.Enqueue(info);
-        if (!gameObject.activeInHierarchy) {
-            UpdateUI(queue.Dequeue());
-        }       
+        UpdateUI(queue.Dequeue());
         return;
     }
 
@@ -84,25 +91,16 @@ public class InfoConfirmAlert : MonoBehaviour, IController {
         this.success = info.succ;
         this.fail = info.fail;
         cancelBtn.gameObject.SetActive(info.type == ConfirmAlertType.Double && fail != null);
-        this.confirmText.text = GetI18NText("Confirm", info.confirmText);
-        this.cancelText.text = GetI18NText("Cancel", info.cancelText);
-        titleText.text = GetI18NText("Tips", info.title);
+        this.confirmText.text = GetI18NText(info.confirmText);
+        this.cancelText.text = GetI18NText(info.cancelText);
+        titleText.text = GetI18NText(info.title);
     }
 
-    public string GetI18NText(string normalText, string showText) {
+    public string GetI18NText(string showText) {
         if (this.GetSystem<II18NSystem>().InitFinish) {
-            if (normalText == showText) {
-                return this.GetSystem<II18NSystem>().GetText(showText);
-            } else {
-                return showText;
-            }
+            return this.GetSystem<II18NSystem>().GetText(showText);
         } else {
-            return normalText;
+            return showText;
         }
-    }
-
-
-    public IArchitecture GetArchitecture() {
-        return CrazyCar.Interface;
     }
 }

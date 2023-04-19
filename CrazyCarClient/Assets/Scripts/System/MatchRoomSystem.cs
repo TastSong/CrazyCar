@@ -164,19 +164,20 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnExitMsg = " + recJD.ToJson());
         if (code == 404) {
-            this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("Without this room"),
-                    success: () => {
-                        this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single));
+            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room", success: () => {
+                this.SendEvent<MatchRoomExitEvent>();
+            }, type: ConfirmAlertType.Single);
+            this.SendEvent(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         } else if (code == 200) {
             int exitUid = (int)recJD["exit_uid"];
             if (exitUid == this.GetModel<IUserModel>().Uid) {
                 this.SendEvent<MatchRoomExitEvent>();
             } else if (this.GetModel<IMatchModel>().MemberInfoDic[exitUid].isHouseOwner) {
-                this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("The owner quits and the room dissolves"),
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves", 
                     success: () => {
                         this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single));
+                    }, type: ConfirmAlertType.Single);
+                this.SendEvent(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Members of the exit");
                 this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
@@ -242,16 +243,18 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             if (hasHouseOwner) {
                 this.SendEvent<MatchRoomUpdateStatusEvent>();
             } else {
-                this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("The owner quits and the room dissolves"),
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves", 
                     success: () => {
                         this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single));
+                    }, type: ConfirmAlertType.Single);
+                this.SendEvent(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             }  
         } else if (code == 404) {
-            this.SendEvent(new ShowInfoConfirmAlertEvent(content: this.GetSystem<II18NSystem>().GetText("Without this room"),
-                    success: () => {
-                        this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single));
+            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room", 
+                success: () => {
+                    this.SendEvent<MatchRoomExitEvent>();
+                }, type: ConfirmAlertType.Single);
+            this.SendEvent(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         }
     }
 
