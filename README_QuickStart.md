@@ -113,7 +113,7 @@
 
 ## 自动化打版
 
-1. Android、PC和IOS都是直接点击**Window--> Build -->Local**(过程中会让你选择目标文件夹)，进行打版，**Remote**为使用线上服务器。
+1. Android、PC和IOS都是直接点击**Build -->Local**(过程中会让你选择目标文件夹)，进行打版，**Remote**为使用线上服务器。
 2. 如果没有服务器，游戏支持单机模式，但是只能使用主功能，直接使用**File --> BuildSettings --> Build**即可。
 
 ## 添加装备

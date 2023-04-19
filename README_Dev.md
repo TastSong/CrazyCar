@@ -244,7 +244,7 @@ IsFinish--Yes-->Login-->End
 > 例如头像需要给线上版本添加新的资源
 
 1. 将新头像放入`Assets\AB\Avatar`文件夹
-2. 点击`Window/Build/AB/Remote`编辑资源包
+2. 点击`Build/AB/Remote`编辑资源包
 3. 完成后在`Console`上会显示资源的`CRC`和`Hash`,文件大小需要到文件管理器查看
 4. 将数据更新到数据库ab_resource表中
 
