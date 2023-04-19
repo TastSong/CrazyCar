@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
 
-public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController {
-    public InitNetworkState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
+public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
+    public PrepareUIState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
     
     public override void OnEnter() {
-       this.SendCommand(new InitNetworkCommand());
+       this.SendCommand(new PrepareUICommand());
        ChangeState();
     }
 
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.PrepareUI);
+        mFSM.ChangeState(LaunchStates.InitGameConfig);
     }
 
     public override void OnExit() {

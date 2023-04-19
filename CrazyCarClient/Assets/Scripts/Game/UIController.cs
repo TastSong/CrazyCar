@@ -47,6 +47,15 @@ public class UIController : MonoBehaviour, IController {
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
+        this.RegisterEvent<HidePageEvent>(HidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<ShowPageEvent>(ShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<HidePageByLevelEvent>(HidePageByLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<PrepareUIEvent>(OnPrepareUI).UnRegisterWhenGameObjectDestroyed(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnPrepareUI(PrepareUIEvent obj) {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
             pagesGroup.Add(value, new LinkedList<UIPageType>());
@@ -61,12 +70,6 @@ public class UIController : MonoBehaviour, IController {
             string value = (string)data[key];
             urlDict[key] = value;
         }
-
-        this.RegisterEvent<HidePageEvent>(HidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<ShowPageEvent>(ShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<HidePageByLevelEvent>(HidePageByLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
-        
-        DontDestroyOnLoad(gameObject);
     }
 
     public void HidePage(HidePageEvent e) {

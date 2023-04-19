@@ -7,8 +7,9 @@ using QFramework;
 
 public enum LaunchStates {
     InitNetwork,
-    AssetsUpdate,
-    InitGameConfig
+    PrepareUI,
+    InitGameConfig,
+    AssetsUpdate
 }
 
 public class Launch : MonoBehaviour, IController {
@@ -21,8 +22,10 @@ public class Launch : MonoBehaviour, IController {
     private void Start() {
         // 其他模块需要在Awake中注册事件
         FSM.AddState(LaunchStates.InitNetwork, new InitNetworkState(FSM, this));
-        FSM.AddState(LaunchStates.AssetsUpdate, new AssetsUpdateState(FSM, this));
+        FSM.AddState(LaunchStates.PrepareUI, new PrepareUIState(FSM, this));
         FSM.AddState(LaunchStates.InitGameConfig, new InitGameConfigState(FSM, this));
+        FSM.AddState(LaunchStates.AssetsUpdate, new AssetsUpdateState(FSM, this));
+        
         FSM.StartState(LaunchStates.InitNetwork);
     }
 
