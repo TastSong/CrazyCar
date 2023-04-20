@@ -30,6 +30,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     private Action OnCheckCompleteNoUpdate;
     private Action OnCompleteDownload;
     private AsyncOperationHandle downloadHandle;
+    private AsyncOperationHandle<IResourceLocator> initHandle;
 
     public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null) {
         this.OnCheckCompleteUpdate = OnCheckCompleteNeedUpdate ?? OnCheckCompleteUpdate;
@@ -42,13 +43,13 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         CoroutineController.manager.StartCoroutine(GetTotalDonwloadKeys());
     }
 
-    IEnumerator GetTotalDonwloadKeys() {
-        var initHandle = Addressables.InitializeAsync();
+    private IEnumerator GetTotalDonwloadKeys() { 
+        initHandle = Addressables.InitializeAsync();
         initHandle.Completed += OnInitAA;
         yield return initHandle;
     }
 
-    void OnInitAA(AsyncOperationHandle<IResourceLocator> handle) {
+    private void OnInitAA(AsyncOperationHandle<IResourceLocator> handle) {
         downloadKeys = handle.Result.Keys;
 
         var checkHandle = Addressables.CheckForCatalogUpdates(false);
@@ -56,7 +57,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         Addressables.Release(handle);
     }
 
-    void OnCheckCatalogUpdate(AsyncOperationHandle<List<string>> handle) {
+    private void OnCheckCatalogUpdate(AsyncOperationHandle<List<string>> handle) {
         // 耗性能
         // string str = "";
         // for (int i = 0; i < handle.Result.ToList().Count; i++) {
@@ -74,13 +75,13 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         Addressables.Release(handle);
     }
 
-    void OnUpdateCatalogs(AsyncOperationHandle<List<IResourceLocator>> handle) {
+    private void OnUpdateCatalogs(AsyncOperationHandle<List<IResourceLocator>> handle) {
         Debug.Log("OnUpdateFinish");
         Addressables.GetDownloadSizeAsync(downloadKeys).Completed += OnCheckDownload;
         Addressables.Release(handle);
     }
 
-    void OnCheckDownload(AsyncOperationHandle<long> checkHandle) {
+    private void OnCheckDownload(AsyncOperationHandle<long> checkHandle) {
         Debug.Log("GetDownloadSizeAsync " + checkHandle.Result.ToString());
         if (checkHandle.Result > 0) {
             Debug.Log("有需要更新的Handle");
@@ -96,7 +97,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         CoroutineController.manager.StartCoroutine(DownloadAssets());
     }
 
-    IEnumerator DownloadAssets() {
+    private IEnumerator DownloadAssets() {
         string str = "";
         foreach (var item in downloadKeys) {
             str += "    ";
