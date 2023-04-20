@@ -43,7 +43,7 @@ public class UIController : MonoBehaviour, IController {
     public Transform[] levles;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
-    private Dictionary<string, string> urlDict = new Dictionary<string, string>();
+    //private Dictionary<string, string> urlDict = new Dictionary<string, string>();
     private readonly string basePageUrl = "Pages/";
 
     private void Awake() {
@@ -59,16 +59,6 @@ public class UIController : MonoBehaviour, IController {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
             pagesGroup.Add(value, new LinkedList<UIPageType>());
-        }
-        
-        string urlStr = Resources.Load<TextAsset>(basePageUrl + "url").text;
-        JsonData data = JsonMapper.ToObject(urlStr);
-        IDictionary dict = data;
-        foreach (DictionaryEntry entry in dict) {
-            string key = (string)entry.Key;
-            // 要先转为jsonData 再强转成string
-            string value = (string)data[key];
-            urlDict[key] = value;
         }
     }
 
@@ -99,6 +89,10 @@ public class UIController : MonoBehaviour, IController {
             // FindPage
             string pageUrl = GetPageUrlByType(e.pageType);
             GameObject page = Instantiate(Resources.Load<GameObject>(pageUrl));
+            if (page == null) {
+                Debug.LogError("Not Exist Page " + pageUrl);
+                return;
+            }
             page.transform.SetParent(levles[(int)e.levelType], false);
             pagesDict[e.pageType] = page;
             pagesGroup[e.levelType].AddLast(e.pageType);
@@ -172,12 +166,7 @@ public class UIController : MonoBehaviour, IController {
 
     // 查找Resources中的路径
     private string GetPageUrlByType(UIPageType type) {
-        if (!urlDict.ContainsKey(type.ToString())) {
-            Debug.LogError("Error type = " + type.ToString());
-            return "";
-        }
-
-        return basePageUrl + urlDict[type.ToString()];
+        return basePageUrl + type.ToString();
     }
 
     private void OnDestroy() {
@@ -187,7 +176,6 @@ public class UIController : MonoBehaviour, IController {
             }
         }
         pagesDict.Clear();
-        urlDict.Clear();
     }
 
     public IArchitecture GetArchitecture() {
