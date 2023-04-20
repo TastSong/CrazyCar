@@ -57,7 +57,7 @@ public class InfoConfirmAlert : UIPenal {
     private void Start() {
         cancelBtn.onClick.AddListener(() => {
             fail?.Invoke();
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (queue.Count == 0) {
                 gameObject.SetActive(false);
             } else {
@@ -67,7 +67,7 @@ public class InfoConfirmAlert : UIPenal {
 
         confirmBtn.onClick.AddListener(() => {
             success?.Invoke();
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (queue.Count == 0) {
                 gameObject.SetActive(false);
             } else {

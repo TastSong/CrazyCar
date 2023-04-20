@@ -48,12 +48,12 @@ public class AvatarUI : MonoBehaviour, IController {
     private void Start() {
         applyBtn.interactable = false;
         applyBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand(new ApplyAvatarCommand(curAid));
         });
 
         closeBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand(new HidePageCommand(UIPageType.AvatarUI));
             this.SendCommand<UpdateHomepageUICommand>();
         });

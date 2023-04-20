@@ -28,13 +28,13 @@ public class SettingsUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayCloseSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
             SaveSettings();
             gameObject.SetActiveFast(false);
         });
 
         exitBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand(new LoadSceneCommand(SceneID.Login));
         });
 

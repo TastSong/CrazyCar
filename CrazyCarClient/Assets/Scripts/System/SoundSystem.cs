@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
 
+public enum SoundType {
+    Button_Low,
+    Close,
+    Lose,
+    SpinWheel,
+    WheelEngine,
+    Win
+}
+
 public interface ISoundSystem : ISystem {
-    public void PlayClickSound();
-    public void PlayCloseSound();
-    public void PlayLoseSound();
-    public void PlayWinSound();
     public void PlayBackgroundMusic();
-    public void PlaySpinWheekSound();
-    public void PlayWheelEngineSound();
+    public void PlaySound(SoundType type);
     public void StopAllSound();
     public void SetSound(bool isOn);
     public void SetBackgroundMusic(bool isOn);
@@ -18,33 +22,13 @@ public interface ISoundSystem : ISystem {
 
 public class SoundSystem : AbstractSystem, ISoundSystem {
     private string path = "Sounds/";
+    
+    public void PlaySound(SoundType soundType) {
+        AudioKit.PlaySound(path + soundType.ToString());
+    }
 
     public void PlayBackgroundMusic() {
         AudioKit.PlayMusic(path + "BackgroundMusic");
-    }
-
-    public void PlayClickSound() {
-        AudioKit.PlaySound(path + "Button_Low");
-    }
-
-    public void PlayCloseSound() {
-        AudioKit.PlaySound(path + "Close");
-    }
-
-    public void PlayLoseSound() {
-        AudioKit.PlaySound(path + "Lose");
-    }
-
-    public void PlaySpinWheekSound() {
-        AudioKit.PlaySound(path + "SpinWheel");
-    }
-
-    public void PlayWheelEngineSound() {
-        AudioKit.PlaySound(path + "WheelEngine");
-    }
-
-    public void PlayWinSound() {
-        AudioKit.PlaySound(path + "Win");
     }
 
     public void StopAllSound() {

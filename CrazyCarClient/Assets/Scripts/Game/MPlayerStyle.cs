@@ -40,7 +40,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
             EnableScreenEffect();
             PlayDriftParticle();
             ChangeDriftColor();
-            this.GetSystem<ISoundSystem>().PlayWheelEngineSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.WheelEngine);
             isStartDrift = true;
         }
     }

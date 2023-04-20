@@ -49,7 +49,7 @@ public class ProfileUI : MonoBehaviour, IController {
 
     private void Start() {
         closeBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayCloseSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
             this.SendCommand(new HidePageCommand(UIPageType.ProfileUI));
         });
         userNameBtn.onClick.AddListener(() => {
@@ -61,7 +61,7 @@ public class ProfileUI : MonoBehaviour, IController {
             }
         });
         passwordBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (passwordInput.text == this.GetModel<IUserModel>().Password.Value) {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Consistent with the original password");
                 this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));

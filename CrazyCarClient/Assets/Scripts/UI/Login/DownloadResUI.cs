@@ -14,7 +14,7 @@ public class DownloadResUI : MonoBehaviour, IController {
 
     private void Start() {
         standAloneBtn.onClick.AddListener(() => {
-            this.GetSystem<ISoundSystem>().PlayClickSound();
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand<EnableStandAloneCommand>();
         });
         //this.SendCommand<EnableStandAloneCommand>();
