@@ -111,11 +111,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
                 Debug.LogError("Is Network Error url = " + url);
             } else {
-                this.SendEvent(new HidePageEvent(UIPageType.LoadingUI));
                 byte[] results = request.downloadHandler.data;
                 string s = Encoding.UTF8.GetString(results);
                 Debug.Log(url + " : " + s);
                 JsonData d = JsonMapper.ToObject(s);
+                this.SendEvent(new HidePageEvent(UIPageType.LoadingUI));
 
                 code?.Invoke((int)d["code"]);
                 if ((int)d["code"] == 200) {
