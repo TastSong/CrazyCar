@@ -64,7 +64,7 @@ public class UIController : MonoBehaviour, IController {
 
     public void HidePage(HidePageEvent e) {
         if (!pagesDict.ContainsKey(e.pageType)) {
-            Debug.Log("Not Exist Page");
+            Debug.Log("Not Exist Page " + e.pageType);
             return;
         }
 
