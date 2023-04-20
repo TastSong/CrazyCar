@@ -47,7 +47,6 @@ public class UIController : MonoBehaviour, IController {
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
     private readonly string basePageUrl = "Assets/Prefabs/UIPage/";
-    private Dictionary<UIPageType, ShowPageEvent> waitShowDic = new Dictionary<UIPageType, ShowPageEvent>();
 
     private void Awake() {
         this.RegisterEvent<HidePageEvent>(OnHidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -96,10 +95,22 @@ public class UIController : MonoBehaviour, IController {
             pagesGroup[e.levelType].AddLast(e.pageType);
             SetPageInfo(e);
         } else {
-            // FindPage
-            string pageUrl = GetPageUrlByType(e.pageType);
-            waitShowDic.Add(e.pageType, e);
-            Addressables.LoadAssetAsync<GameObject>(pageUrl).Completed += OnLoaded;
+            LoadPage(e).Forget();
+        }
+    }
+    
+    private async UniTaskVoid LoadPage(ShowPageEvent e) {
+        string pageUrl = GetPageUrlByType(e.pageType);
+        var obj = Addressables.LoadAssetAsync<GameObject>(pageUrl);
+        await obj;
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            GameObject page = Instantiate(obj.Result);
+            page.transform.SetParent(levles[(int)e.levelType], false);
+            pagesDict[e.pageType] = page;
+            pagesGroup[e.levelType].AddLast(e.pageType);
+            SetPageInfo(e);
+        } else {
+            Debug.LogError($"Load {e.pageType} Page Failed");
         }
     }
 
@@ -110,22 +121,6 @@ public class UIController : MonoBehaviour, IController {
         }
 
         pagesDict[e.pageType].transform.SetAsLastSibling();
-    }
-
-    private void OnLoaded(AsyncOperationHandle<GameObject> obj) {
-        UIPageType curPage = (UIPageType)Enum.Parse(typeof(UIPageType), obj.Result.name);
-        ShowPageEvent e = waitShowDic[curPage];
-        if (obj.Status == AsyncOperationStatus.Succeeded) {
-            GameObject page = Instantiate(obj.Result);
-            page.transform.SetParent(levles[(int)e.levelType], false);
-            pagesDict[e.pageType] = page;
-            pagesGroup[e.levelType].AddLast(e.pageType);
-            SetPageInfo(e);
-        } else {
-            Debug.LogError($"Load {e.pageType} Page Failed");
-        }
-
-        waitShowDic.Remove(curPage);
     }
 
     private UILevelType GetGroupByPageType(UIPageType type) {
