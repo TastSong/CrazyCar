@@ -43,7 +43,7 @@ public class WarningAlert : UIPenal {
         ShowWithText(info.text, info.time, info.callback);
     }
 
-    public void ShowWithText(string text, float time = 1.0f, Action callback = null) {
+    private void ShowWithText(string text, float time = 1.0f, Action callback = null) {
         WarningAlertInfo info = new WarningAlertInfo(text, time, callback);
         queue.Enqueue(info);
         gameObject.SetActiveFast(true);
