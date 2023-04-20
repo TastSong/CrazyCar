@@ -21,14 +21,14 @@ public interface ISoundSystem : ISystem {
 }
 
 public class SoundSystem : AbstractSystem, ISoundSystem {
-    private string path = "Sounds/";
+    private string path = "Assets/Sounds/";
     
     public void PlaySound(SoundType soundType) {
-        AudioKit.PlaySound(path + soundType.ToString());
+        AudioKit.PlaySound(path + soundType.ToString()+ ".wav");
     }
 
     public void PlayBackgroundMusic() {
-        AudioKit.PlayMusic(path + "BackgroundMusic");
+        AudioKit.PlayMusic(path + "BackgroundMusic" + ".wav");
     }
 
     public void StopAllSound() {

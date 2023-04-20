@@ -26,6 +26,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace QFramework
 {
@@ -313,13 +315,12 @@ namespace QFramework
 
     public class AudioKitConfig
     {
-        public IAudioLoaderPool AudioLoaderPool = new DefaultAudioLoaderPool();
+        public IAudioLoaderPool AudioLoaderPool = new AddressableAudioLoaderPool();
     }
 
     public interface IAudioLoader
     { 
         AudioClip Clip { get; }
-        AudioClip LoadClip(AudioSearchKeys audioSearchKeys);
 
         void LoadClipAsync(AudioSearchKeys audioSearchKeys, Action<bool,AudioClip> onLoad);
         void Unload();
@@ -396,12 +397,6 @@ namespace QFramework
         
         public AudioClip Clip => mClip;
 
-        public AudioClip LoadClip(AudioSearchKeys panelSearchKeys)
-        {
-            mClip = Resources.Load<AudioClip>(panelSearchKeys.AssetName);
-            return mClip;
-        }
-
         public void LoadClipAsync(AudioSearchKeys audioSearchKeys, Action<bool,AudioClip> onLoad)
         {
             var resourceRequest = Resources.LoadAsync<AudioClip>(audioSearchKeys.AssetName);
@@ -414,6 +409,31 @@ namespace QFramework
 
         public void Unload()
         {
+            Resources.UnloadAsset(mClip);
+        }
+    }
+
+    public class AddressableAudioLoaderPool : AbstractAudioLoaderPool {
+        protected override IAudioLoader CreateLoader() {
+            return new AddressableAudioLoader();
+        }
+    }
+
+    public class AddressableAudioLoader : IAudioLoader {
+        private AudioClip mClip;
+
+        public AudioClip Clip => mClip;
+
+        public void LoadClipAsync(AudioSearchKeys audioSearchKeys, Action<bool, AudioClip> onLoad) {
+            Addressables.LoadAssetAsync<AudioClip>(audioSearchKeys.AssetName).Completed += operation => {
+                if (operation.Status == AsyncOperationStatus.Succeeded) {
+                    var clip = operation.Result;
+                    onLoad(clip, clip);
+                }
+            };
+        }
+
+        public void Unload() {
             Resources.UnloadAsset(mClip);
         }
     }
