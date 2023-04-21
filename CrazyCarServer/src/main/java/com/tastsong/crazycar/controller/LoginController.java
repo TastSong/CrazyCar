@@ -75,4 +75,11 @@ public class LoginController {
 			}
 		}
 	}
+
+	@PostMapping(value = "/Config")
+	public Object config(@RequestBody JSONObject body) throws Exception{
+		JSONObject data = new JSONObject();
+		data.putOpt("avatars", loginService.getAvatarList());
+		return Result.success(data);
+	}
 }

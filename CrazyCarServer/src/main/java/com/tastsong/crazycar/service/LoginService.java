@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.mapper.UserMapper;
+import com.tastsong.crazycar.model.AvatarModel;
 import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
@@ -125,5 +128,13 @@ public class LoginService {
     public void updateUser(UserModel userModel){
         userMapper.updateUserStar(userModel.uid, userModel.star);
         userMapper.updateUserVip(userModel.uid, userModel.is_vip);
+    }
+
+    public List<AvatarModel> getAvatarList(){
+        List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
+        for (Integer i = 0; i < avatarModels.size(); i++){
+            avatarModels.get(i).is_has = false;
+        }
+        return avatarModels;
     }
 }

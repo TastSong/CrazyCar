@@ -17,6 +17,6 @@ public class AssetsUpdatingController {
 
     @PostMapping(value = "/AssetsUpdating")
     public Object assetsUpdating() throws Exception {
-		return assetsUpdatingService.getInfo();		
+		  return assetsUpdatingService.getInfo();		
     }
 }
