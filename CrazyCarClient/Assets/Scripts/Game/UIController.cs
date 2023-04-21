@@ -95,22 +95,18 @@ public class UIController : MonoBehaviour, IController {
             pagesGroup[e.levelType].AddLast(e.pageType);
             SetPageInfo(e);
         } else {
-            LoadPage(e).Forget();
-        }
-    }
-    
-    private async UniTaskVoid LoadPage(ShowPageEvent e) {
-        string pageUrl = GetPageUrlByType(e.pageType);
-        var obj = Addressables.LoadAssetAsync<GameObject>(pageUrl);
-        await obj;
-        if (obj.Status == AsyncOperationStatus.Succeeded) {
-            GameObject page = Instantiate(obj.Result);
-            page.transform.SetParent(levles[(int)e.levelType], false);
-            pagesDict[e.pageType] = page;
-            pagesGroup[e.levelType].AddLast(e.pageType);
-            SetPageInfo(e);
-        } else {
-            Debug.LogError($"Load {e.pageType} Page Failed");
+            string pageUrl = GetPageUrlByType(e.pageType);
+            this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl, (obj) => {
+                if (obj.Status == AsyncOperationStatus.Succeeded) {
+                    GameObject page = Instantiate(obj.Result);
+                    page.transform.SetParent(levles[(int)e.levelType], false);
+                    pagesDict[e.pageType] = page;
+                    pagesGroup[e.levelType].AddLast(e.pageType);
+                    SetPageInfo(e);
+                } else {
+                    Debug.LogError($"Load {e.pageType} Page Failed");
+                }
+            }).Forget();
         }
     }
 
