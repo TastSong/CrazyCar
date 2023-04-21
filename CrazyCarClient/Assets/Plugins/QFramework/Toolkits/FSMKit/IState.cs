@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace QFramework
 {
@@ -209,6 +210,7 @@ namespace QFramework
 
         void IState.Enter()
         {
+            Debug.Log("# Enter " + GetType().Name);
             OnEnter();
         }
 

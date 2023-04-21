@@ -7,6 +7,7 @@ public static class RequestUrl {
     public static string forcedUpdatingUrl = "v1/ForcedUpdating";
     public static string addressableUrl = "v1/AssetsUpdating";
     public static string loginUrl = "v1/Login";
+    public static string configUrl = "v1/Config";
     public static string registerUrl = "v1/Register";
     public static string recodeLogin = "v1/recodeLogin";
     public static string avatarUrl = "v2/Avatar/Detail";
