@@ -18,7 +18,7 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Color normalColor;
     public void SetContent(EquipInfo info) {
         equipInfo = info;
-        this.GetSystem<IAddressableSystem>().GetEquipResource(equipInfo.rid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<GameObject>(Util.GetEquipUrl(equipInfo.rid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 showImage.sprite = obj.Result.GetComponent<EquipResource>().theIcon;
                 lockGO.SetActiveFast(!equipInfo.isHas);

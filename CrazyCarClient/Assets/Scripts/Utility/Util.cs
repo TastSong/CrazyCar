@@ -533,5 +533,14 @@ namespace Utils {
 
             return hashString.PadLeft(32, '0');
         }
+        
+        
+        public static string GetAvatarUrl(int avatarId) {
+            return "Assets/AB/Avatar/" + avatarId + ".png";
+        }
+    
+        public static string GetEquipUrl(string equipRid) {
+            return "Assets/AB/Equip/Items/" + equipRid + ".prefab";
+        }
     }
 }

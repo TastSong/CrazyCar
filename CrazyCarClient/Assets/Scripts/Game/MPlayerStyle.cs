@@ -61,7 +61,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
     }
 
     public void ChangeEquip(int eid, string rid) {
-        this.GetSystem<IAddressableSystem>().GetEquipResource(rid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<GameObject>(Util.GetEquipUrl(rid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 if (car != null) {
                     car.transform.SetParent(null);
