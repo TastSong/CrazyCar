@@ -43,7 +43,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
 
     public void SetContent(AvatarInfo info) {
         avatarInfo = info;
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(avatarInfo.aid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(avatarInfo.aid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 avatarImage.sprite = Instantiate(obj.Result, transform, false);
             }

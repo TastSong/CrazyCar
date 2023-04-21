@@ -38,7 +38,7 @@ public class ProfileUI : MonoBehaviour, IController {
             avatarText.text = userModel.AvatarNum.ToString();
             mapsText.text = userModel.MapNum.ToString();
 
-            this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+            this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
                 if (obj.Status == AsyncOperationStatus.Succeeded) {
                     avatarImage.sprite = Instantiate(obj.Result, transform, false);
                 }

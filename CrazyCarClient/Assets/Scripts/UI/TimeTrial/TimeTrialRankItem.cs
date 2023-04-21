@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Utils;
 
 public class TimeTrialRankItem : MonoBehaviour, IController {
     public Text nameText;
@@ -17,7 +18,7 @@ public class TimeTrialRankItem : MonoBehaviour, IController {
 
     public void SetContent(TimeTrialRankInfo info) {
         nameText.text = info.name;
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(info.aid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(info.aid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 avatarImage.sprite = Instantiate(obj.Result, transform, false);
             }

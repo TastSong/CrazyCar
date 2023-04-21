@@ -17,7 +17,6 @@ public interface IAddressableSystem : ISystem {
     public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
     public void GetDownloadAssets();
     public void DownloadAsset();
-    public void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoad);
     public void LoadAsset<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded);
     public UniTaskVoid LoadAssetAsync<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded); 
     public void SetUpdateInfo(Action finish);
@@ -127,10 +126,6 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
                 //ChangeDownloadUrl(AddressableInfo.cdn_1);
             }
         }
-    }
-
-    public void GetAvatarResource(int aid, Action<AsyncOperationHandle<Sprite>> OnLoaded) {
-        Addressables.LoadAssetAsync<Sprite>("Assets/AB/Avatar/" + this.GetModel<IAvatarModel>().AvatarDic[aid].rid + ".png").Completed += OnLoaded;
     }
 
     public void SetUpdateInfo(Action finish) {

@@ -144,7 +144,7 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private void OnUpdataUI(UpdateHomepageUIEvent e) {
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 avatarImage.sprite = Instantiate(obj.Result, transform, false);
             }

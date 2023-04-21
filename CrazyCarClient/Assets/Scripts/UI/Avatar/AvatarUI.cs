@@ -31,7 +31,7 @@ public class AvatarUI : MonoBehaviour, IController {
     }
 
     private void UpdataUI() {
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(curAid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(curAid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 curAvatar.sprite = Instantiate(obj.Result, transform, false);
             }
@@ -67,7 +67,7 @@ public class AvatarUI : MonoBehaviour, IController {
         } else {
             applyBtn.interactable = true;
         }
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(e.aid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(e.aid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 curAvatar.sprite = Instantiate(obj.Result, transform, false);
             }

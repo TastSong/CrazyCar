@@ -46,7 +46,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
     }
 
     private void UpdateUI() {
-        this.GetSystem<IAddressableSystem>().GetAvatarResource(this.GetModel<IUserModel>().Aid, (obj) => {
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 avatarImage.sprite = Instantiate(obj.Result, transform, false);
             }
