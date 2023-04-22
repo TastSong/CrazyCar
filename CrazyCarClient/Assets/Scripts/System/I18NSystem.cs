@@ -5,12 +5,16 @@ using QFramework;
 using LitJson;
 using Utils;
 using System;
+using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets.ResourceLocators;
 
 public interface II18NSystem : ISystem {
     public string CurrentLang { get; set; }
     public bool InitFinish { get; set; }
 
-    public void InitTranslation();
+    public UniTaskVoid InitTranslation();
     public string GetText(string key);
     public void RegisterText(I18NText t);
     public void UnregisterText(I18NText t);
@@ -26,9 +30,13 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     private JsonData current_dict;
     private string defaultLang = "zh-cn";
 
-    public void InitTranslation() {
-        TextAsset[] tas = Resources.LoadAll<TextAsset>(Util.baseLanguagePath);
-        foreach (var t in tas) {
+    public async UniTaskVoid InitTranslation() {
+        var result = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
+        JsonData fileNames = JsonMapper.ToObject(result.text);
+        string[] names = ((string)fileNames["FileName"]).Split(',');
+        
+        for (int i = 0; i < names.Length; i++) {
+            var t = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             JsonData d = JsonMapper.ToObject(t.text);
             langMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;
@@ -65,6 +73,9 @@ public class I18NSystem : AbstractSystem, II18NSystem {
 
     private void ChangeLang(string id) {
         Debug.Log("ChangeLang = " + id);
+        if (!InitFinish) {
+            return;
+        }
         current_dict = trans[id];
         CurrentLang = id;
         RefreshAllText();

@@ -34,8 +34,8 @@ namespace Utils {
     }
 
     public static class Util {
-        public static string baseLanguagePath = "Language/Locales/";
-        public static string baseFlagPath = "Language/Flag/";
+        public static string baseLanguagePath = "Assets/AB/Language/Locales/";
+        public static string baseFlagPath = "Assets/AB/Language/Flag/";
 
         public static string baseStandAlone = "StandAlone/";
         public static string standAloneLogin = "Login";

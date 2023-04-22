@@ -7,6 +7,10 @@ using LitJson;
 using System;
 using static UnityEngine.UI.Dropdown;
 using QFramework;
+using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets.ResourceLocators;
 
 public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;
@@ -26,7 +30,7 @@ public class SettingsUI : MonoBehaviour, IController {
         UpdateUI();
     }
 
-    private void Start() {
+    private async void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
             SaveSettings();
@@ -40,13 +44,16 @@ public class SettingsUI : MonoBehaviour, IController {
 
         languageOptionsList.Clear();
         flagsUrlList.Clear();
-        TextAsset[] tas = Resources.LoadAll<TextAsset>(Util.baseLanguagePath);
+        var result = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
+        JsonData fileNames = JsonMapper.ToObject(result.text);
+        string[] names = ((string)fileNames["FileName"]).Split(',');
         string flagIconUrl;
-        foreach (var t in tas) {
+        for (int i = 0; i < names.Length; i++) {
+            var t = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             JsonData d = JsonMapper.ToObject(t.text);
             languageOptionsList.Add((string)d["languageName"]);
             lanMap[(string)d["languageName"]] = (string)d["id"];
-            flagIconUrl = Util.baseFlagPath + (string)d["flagName"];
+            flagIconUrl = Util.baseFlagPath + (string)d["flagName"] + ".png";
             flagsUrlList.Add(flagIconUrl);
         }
         languageDropdown.ClearOptions();
@@ -54,7 +61,7 @@ public class SettingsUI : MonoBehaviour, IController {
         for (int i = 0; i < languageOptionsList.Count; i++) {
             OptionData optionData = new OptionData();
             optionData.text = languageOptionsList[i];
-            optionData.image = Resources.Load(flagsUrlList[i], typeof(Sprite)) as Sprite;
+            optionData.image = await Addressables.LoadAssetAsync<Sprite>(flagsUrlList[i]);
 
             languageOptions.Add(optionData);
         }
