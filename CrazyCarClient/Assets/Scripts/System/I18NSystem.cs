@@ -36,7 +36,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
         string[] names = ((string)fileNames["FileName"]).Split(',');
         
         for (int i = 0; i < names.Length; i++) {
-            var t = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
+            var t = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             JsonData d = JsonMapper.ToObject(t.text);
             langMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;

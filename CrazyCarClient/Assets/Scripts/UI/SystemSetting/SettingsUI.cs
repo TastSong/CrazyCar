@@ -44,7 +44,7 @@ public class SettingsUI : MonoBehaviour, IController {
 
         languageOptionsList.Clear();
         flagsUrlList.Clear();
-        var result = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
+        var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
         JsonData fileNames = JsonMapper.ToObject(result.text);
         string[] names = ((string)fileNames["FileName"]).Split(',');
         string flagIconUrl;
@@ -61,7 +61,7 @@ public class SettingsUI : MonoBehaviour, IController {
         for (int i = 0; i < languageOptionsList.Count; i++) {
             OptionData optionData = new OptionData();
             optionData.text = languageOptionsList[i];
-            optionData.image = await Addressables.LoadAssetAsync<Sprite>(flagsUrlList[i]);
+            optionData.image = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(flagsUrlList[i]);
 
             languageOptions.Add(optionData);
         }
