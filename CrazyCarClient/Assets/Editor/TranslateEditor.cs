@@ -18,7 +18,7 @@ public class TranslateEditor : EditorWindow {
     // [MenuItem("Translate/Test")]
     static void test() {
         //路径  
-        string fullPath = Application.dataPath + "/Resources/Language/Locales";
+        string fullPath = Application.dataPath + "/AB/Language/Locales";
         //  fullPath = EditorUtility.OpenFolderPanel("", "", "");
         //获取指定路径下面的所有资源文件  
         if (Directory.Exists(fullPath)) {
@@ -119,7 +119,7 @@ public class TranslateEditor : EditorWindow {
     }
     static void AddTranslate(string val, int index) {
         //路径  
-        string fullPath = Application.dataPath + "/Resources/Language/Locales";
+        string fullPath = Application.dataPath + "/AB/Language/Locales";
         //  fullPath = EditorUtility.OpenFolderPanel("", "", "");
         //获取指定路径下面的所有资源文件  
         if (Directory.Exists(fullPath)) {
@@ -129,9 +129,9 @@ public class TranslateEditor : EditorWindow {
             //Debug.Log(files.Length);
             for (int i = 0; i < files.Length; i++) {
                 Debug.Log(files[i].FullName);
-                if (!files[i].Name.EndsWith(".json"))
+                if (!files[i].Name.EndsWith(".json") || files[i].Name.Contains("url"))
                     continue;
-
+                
                 string jsonTest = File.ReadAllText(files[i].FullName);
                 JsonData jsonData = JsonMapper.ToObject(jsonTest);
                 string languageId = (string)jsonData["id"];
