@@ -13,6 +13,8 @@ using UnityEngine.AddressableAssets.ResourceLocators;
 public interface II18NSystem : ISystem {
     public string CurrentLang { get; set; }
     public bool InitFinish { get; set; }
+    public Dictionary<string, string> LangMap { get; set; }
+    public Dictionary<string, Sprite> FlagsDic { get; set; }
 
     public UniTaskVoid InitTranslation();
     public string GetText(string key);
@@ -23,9 +25,10 @@ public interface II18NSystem : ISystem {
 public class I18NSystem : AbstractSystem, II18NSystem {
     public string CurrentLang { get; set; }
     public bool InitFinish { get; set; }
+    public Dictionary<string, string> LangMap { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, Sprite> FlagsDic { get; set; } = new Dictionary<string, Sprite>();
 
     private Dictionary<string, JsonData> trans = new Dictionary<string, JsonData>();
-    private Dictionary<string, string> langMap = new Dictionary<string, string>();
     private List<I18NText> allTexts = new List<I18NText>();
     private JsonData current_dict;
     private string defaultLang = "zh-cn";
@@ -38,8 +41,11 @@ public class I18NSystem : AbstractSystem, II18NSystem {
         for (int i = 0; i < names.Length; i++) {
             var t = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             JsonData d = JsonMapper.ToObject(t.text);
-            langMap[(string)d["languageName"]] = (string)d["id"];
+            LangMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;
+            string flagIconUrl = Util.baseFlagPath + (string)d["flagName"] + ".png";
+            var flag = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(flagIconUrl);
+            FlagsDic[(string)d["languageName"]] = flag;
         }
         InitFinish = true;
 

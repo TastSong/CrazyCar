@@ -7,10 +7,6 @@ using LitJson;
 using System;
 using static UnityEngine.UI.Dropdown;
 using QFramework;
-using Cysharp.Threading.Tasks;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.AddressableAssets.ResourceLocators;
 
 public class SettingsUI : MonoBehaviour, IController {
     public Button closeBtn;
@@ -22,15 +18,13 @@ public class SettingsUI : MonoBehaviour, IController {
 
     private bool isInit = false;
     private List<string> languageOptionsList = new List<string>();
-    private List<string> flagsUrlList = new List<string>();
     private List<OptionData> languageOptions = new List<OptionData>();
-    private Dictionary<string, string> lanMap = new Dictionary<string, string>();
 
     private void OnEnable() {
         UpdateUI();
     }
 
-    private async void Start() {
+    private void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
             SaveSettings();
@@ -43,25 +37,16 @@ public class SettingsUI : MonoBehaviour, IController {
         });
 
         languageOptionsList.Clear();
-        flagsUrlList.Clear();
-        var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
-        JsonData fileNames = JsonMapper.ToObject(result.text);
-        string[] names = ((string)fileNames["FileName"]).Split(',');
-        string flagIconUrl;
-        for (int i = 0; i < names.Length; i++) {
-            var t = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
-            JsonData d = JsonMapper.ToObject(t.text);
-            languageOptionsList.Add((string)d["languageName"]);
-            lanMap[(string)d["languageName"]] = (string)d["id"];
-            flagIconUrl = Util.baseFlagPath + (string)d["flagName"] + ".png";
-            flagsUrlList.Add(flagIconUrl);
+        var lanMap = this.GetSystem<II18NSystem>().LangMap;
+        foreach (var kv in lanMap) {
+            languageOptionsList.Add(kv.Key);
         }
         languageDropdown.ClearOptions();
         languageOptions.Clear();
         for (int i = 0; i < languageOptionsList.Count; i++) {
             OptionData optionData = new OptionData();
             optionData.text = languageOptionsList[i];
-            optionData.image = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(flagsUrlList[i]);
+            optionData.image = this.GetSystem<II18NSystem>().FlagsDic[languageOptionsList[i]];
 
             languageOptions.Add(optionData);
         }
@@ -77,7 +62,7 @@ public class SettingsUI : MonoBehaviour, IController {
 
         var info = this.GetModel<ISettingsModel>();
         for (int i = 0; i < languageOptionsList.Count; i++) {
-            if (info.Language.Value.Equals(lanMap[languageOptionsList[i]])) {
+            if (info.Language.Value.Equals(this.GetSystem<II18NSystem>().LangMap[languageOptionsList[i]])) {
                 languageDropdown.value = i;
                 break;
             }
@@ -89,7 +74,7 @@ public class SettingsUI : MonoBehaviour, IController {
 
     private SystemSettingsInfo GetCurrentInfo() {
         SystemSettingsInfo info = new SystemSettingsInfo();
-        info.language = lanMap[languageDropdown.captionText.text];
+        info.language = this.GetSystem<II18NSystem>().LangMap[languageDropdown.captionText.text];
         info.isOnMusic = Convert.ToBoolean(musicSlider.value);
         info.isOnSound = Convert.ToBoolean(soundSlider.value);
         info.isOnVibration = Convert.ToBoolean(vibrationSlider.value);
