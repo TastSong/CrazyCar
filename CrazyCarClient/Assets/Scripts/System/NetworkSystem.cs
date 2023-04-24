@@ -280,9 +280,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public void GetUserInfo(int uid, Action<UserInfo> succ) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
-            JsonData data = JsonMapper.ToObject(ta.text);
-            succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
+            this.GetSystem<IAddressableSystem>().LoadAsset<TextAsset>(Util.baseStandAlone + Util.standAloneAI, (asset) => {
+                JsonData data = JsonMapper.ToObject(asset.Result.text);
+                succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
+            });
             return;
         }
         StringBuilder sb = new StringBuilder();

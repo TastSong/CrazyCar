@@ -47,14 +47,6 @@ public class AIController : MonoBehaviour, IController {
         playerFinishTimeTrial = true;
     }
 
-    private UserInfo GetUserInfo()
-    {
-        UserInfo userInfo = new UserInfo();
-        TextAsset ta = Resources.Load<TextAsset>(Util.baseStandAlone + RequestUrl.aiUrl);
-        userInfo = JsonMapper.ToObject<UserInfo>(ta.text);
-        return userInfo;
-    }
-
     private void OnMakeAIPlayer(MakeAIPlayerEvent e)
     {
         AIInfo aiInfo = new AIInfo();

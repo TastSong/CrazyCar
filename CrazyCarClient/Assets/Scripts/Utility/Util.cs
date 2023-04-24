@@ -37,10 +37,10 @@ namespace Utils {
         public static string baseLanguagePath = "Assets/AB/Language/Locales/";
         public static string baseFlagPath = "Assets/AB/Language/Flag/";
 
-        public static string baseStandAlone = "StandAlone/";
-        public static string standAloneLogin = "Login";
-        public static string standAloneTimeTrialDetail = "TimeTrialDetail";
-        public static string standAloneAI = "AI";
+        public static string baseStandAlone = "Assets/AB/StandAlone/";
+        public static string standAloneLogin = "Login.json";
+        public static string standAloneTimeTrialDetail = "TimeTrialDetail.json";
+        public static string standAloneAI = "AI.json";
 
         private static int Port (ServerType serverType)
         {
