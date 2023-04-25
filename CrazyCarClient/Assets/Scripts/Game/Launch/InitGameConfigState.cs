@@ -19,7 +19,7 @@ public class InitGameConfigState : AbstractState<LaunchStates, Launch>, IControl
     }
     
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.AssetsUpdate);
+        
     }
 
     private void InitSettingsInfo() {
