@@ -230,6 +230,7 @@ namespace QFramework
 
         void IState.Exit()
         {
+            Debug.Log("# Exit " + GetType().Name);
             OnExit();
         }
 

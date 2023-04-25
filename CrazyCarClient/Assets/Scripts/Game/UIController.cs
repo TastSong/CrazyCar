@@ -62,9 +62,6 @@ public class UIController : MonoBehaviour, IController {
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
             pagesGroup.Add(value, new LinkedList<UIPageType>());
         }
-        // loading 的特殊性，可能还未准备好，就会被关闭，所以提前准备
-        ShowPageEvent e = new ShowPageEvent(UIPageType.LoadingUI, UILevelType.Main);
-        OnShowPage(e);
     }
 
     private void OnHidePage(HidePageEvent e) {
