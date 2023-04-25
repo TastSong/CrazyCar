@@ -632,7 +632,7 @@ create table if not exists `assets_updating`(
    )engine = innodb default charset = utf8;
 insert into assets_updating (id, is_on, updata_time, url)
 				   values
-				   (0, 1, 1633519472000, "http://tastsong.top/CrazyCarSpringBootServer/Addressable");                                     
+				   (0, 1, 1633519472000, "http://tastsong.top/crazy_car_addressable");
 update assets_updating
 set is_on = 0
 where id = 0;
