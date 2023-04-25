@@ -9,7 +9,7 @@ public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController
     
     public override void OnEnter() {
        this.SendCommand(new InitNetworkCommand());
-       this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => { ChangeState(); });
+       ChangeState();
     }
 
     private void ChangeState() {

@@ -8,8 +8,10 @@ public class AssetsUpdateState : AbstractState<LaunchStates, Launch>, IControlle
     }
 
     public override void OnEnter() {
-        this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
-        ChangeState();
+        this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => {
+            this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
+            ChangeState();
+        });
     }
     
     private void ChangeState() {
