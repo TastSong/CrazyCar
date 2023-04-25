@@ -35,7 +35,8 @@ public enum UIPageType {
 }
 
 public enum UILevelType {
-    Main = 0,
+    Prepare = 0,
+    Main ,
     UIPage,
     Popup,
     Alart,
