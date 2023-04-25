@@ -9,11 +9,13 @@ public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController
     
     public override void OnEnter() {
        this.SendCommand(new InitNetworkCommand());
-       ChangeState();
+       this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => {
+           ChangeState();
+       });
     }
 
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.AssetsUpdate);
+        mFSM.ChangeState(LaunchStates.PrepareUI);
     }
 
     public override void OnExit() {

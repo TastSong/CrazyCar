@@ -8,14 +8,12 @@ public class AssetsUpdateState : AbstractState<LaunchStates, Launch>, IControlle
     }
 
     public override void OnEnter() {
-        this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => {
-            this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
-            ChangeState();
-        });
+        this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
+        ChangeState();
     }
     
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.PrepareUI);
+        mFSM.ChangeState(LaunchStates.InitConfig);
     }
 
     public IArchitecture GetArchitecture() {

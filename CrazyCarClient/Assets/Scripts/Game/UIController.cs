@@ -49,10 +49,6 @@ public class UIController : MonoBehaviour, IController {
     private readonly string basePageUrl = "Assets/Prefabs/UIPage/";
 
     private void Awake() {
-        this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
-        foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
-            pagesGroup.Add(value, new LinkedList<UIPageType>());
-        }
         this.RegisterEvent<HidePageEvent>(OnHidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ShowPageEvent>(OnShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<HidePageByLevelEvent>(OnHidePageByLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -62,6 +58,10 @@ public class UIController : MonoBehaviour, IController {
     }
 
     private void OnPrepareUI(PrepareUIEvent obj) {
+        this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
+        foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
+            pagesGroup.Add(value, new LinkedList<UIPageType>());
+        }
         // loading 的特殊性，可能还未准备好，就会被关闭，所以提前准备
         ShowPageEvent e = new ShowPageEvent(UIPageType.LoadingUI, UILevelType.Main);
         OnShowPage(e);

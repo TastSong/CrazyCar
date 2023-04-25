@@ -13,7 +13,7 @@ public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
     }
 
     private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.InitConfig);
+        mFSM.ChangeState(LaunchStates.AssetsUpdate);
     }
 
     public override void OnExit() {
