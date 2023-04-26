@@ -35,17 +35,21 @@ public class DownloadResUI : MonoBehaviour, IController {
         // Unity 2021 不能开启游戏就发送HTTP会有报错
         var result =
             await TaskableHTTP.Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
-        standAloneBtn.gameObject.SetActiveFast(result.serverCode != 200);
-        if ((bool)result.serverData["is_forced_updating"]) {
-            InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
-                success: () => {
-                    Application.OpenURL((string)result.serverData["url"]);
-                    Application.Quit();
-                },
-                confirmText: "Download");
-            this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+        if (result.serverCode == 200) {
+            if ((bool)result.serverData["is_forced_updating"]) {
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
+                    success: () => {
+                        Application.OpenURL((string)result.serverData["url"]);
+                        Application.Quit();
+                    },
+                    confirmText: "Download");
+                this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+            } else {
+                DownloadRes();
+            }
         } else {
-            DownloadRes();
+            standAloneBtn.gameObject.SetActiveFast(true);
+            FinishDownloadRes(false);
         }
     }
 
@@ -59,11 +63,11 @@ public class DownloadResUI : MonoBehaviour, IController {
             },
             OnCompleteDownload: () => {
                 Debug.Log("下载完成");
-                FinishDownloadRes().Forget();
+                FinishDownloadRes(true);
             },
             OnCheckCompleteNoUpdate: () => {
                 Debug.Log("不需要更新");
-                FinishDownloadRes().Forget();
+                FinishDownloadRes(true);
             },
             OnUpdate: (percent, tatalSize) => {
                 try {
@@ -72,10 +76,8 @@ public class DownloadResUI : MonoBehaviour, IController {
             });
     }
 
-    private async UniTaskVoid FinishDownloadRes() {
-        await this.GetSystem<II18NSystem>().InitTranslation();
-        this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
-        this.SendCommand(new HidePageCommand(UIPageType.DownloadResUI));
+    private void FinishDownloadRes(bool isFinish) {
+        this.SendCommand(new FinishDownloadResCommand(isFinish));
     }
 
     private float lastProgress = 0;

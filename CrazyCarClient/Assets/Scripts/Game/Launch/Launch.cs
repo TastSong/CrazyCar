@@ -11,6 +11,7 @@ public enum LaunchStates {
     PrepareUI,
     InitGameConfig,
     AssetsUpdate,
+    EnterGame,
     ExitGameState
 }
 
@@ -28,6 +29,7 @@ public class Launch : MonoBehaviour, IController {
         FSM.AddState(LaunchStates.AssetsUpdate, new AssetsUpdateState(FSM, this));
         FSM.AddState(LaunchStates.InitConfig, new InitConfigState(FSM, this));
         FSM.AddState(LaunchStates.InitGameConfig, new InitGameConfigState(FSM, this));
+        FSM.AddState(LaunchStates.EnterGame, new EnterGameState(FSM, this));
         FSM.AddState(LaunchStates.ExitGameState, new ExitGameState(FSM, this));
         
         FSM.StartState(LaunchStates.InitNetwork);

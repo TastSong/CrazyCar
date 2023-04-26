@@ -8,12 +8,20 @@ public class AssetsUpdateState : AbstractState<LaunchStates, Launch>, IControlle
     }
 
     public override void OnEnter() {
+        this.RegisterEvent<FinishDownloadResEvent>(OnFinishDownloadRes);
         this.SendCommand(new ShowPageCommand(UIPageType.DownloadResUI, UILevelType.UIPage));
-        ChangeState();
     }
     
-    private void ChangeState() {
-        mFSM.ChangeState(LaunchStates.InitConfig);
+    private void OnFinishDownloadRes(FinishDownloadResEvent e) {
+        if (e.isFinish) {
+            mFSM.ChangeState(LaunchStates.InitConfig);
+        } else {
+            mFSM.ChangeState(LaunchStates.ExitGameState);
+        }
+    }
+
+    public override void OnExit() {
+        this.UnRegisterEvent<FinishDownloadResEvent>(OnFinishDownloadRes);
     }
 
     public IArchitecture GetArchitecture() {
