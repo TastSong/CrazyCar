@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
+using Cysharp.Threading.Tasks;
 using QFramework;
 
 public class DownloadResUI : MonoBehaviour, IController {
@@ -13,6 +14,7 @@ public class DownloadResUI : MonoBehaviour, IController {
     public Button standAloneBtn;
 
     private async void Start() {
+        standAloneBtn.gameObject.SetActiveFast(false);
         standAloneBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand<EnableStandAloneCommand>();
@@ -33,6 +35,7 @@ public class DownloadResUI : MonoBehaviour, IController {
         // Unity 2021 不能开启游戏就发送HTTP会有报错
         var result =
             await TaskableHTTP.Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
+        standAloneBtn.gameObject.SetActiveFast(result.serverCode != 200);
         if ((bool)result.serverData["is_forced_updating"]) {
             InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
                 success: () => {
@@ -56,11 +59,11 @@ public class DownloadResUI : MonoBehaviour, IController {
             },
             OnCompleteDownload: () => {
                 Debug.Log("下载完成");
-                FinishDownloadRes();
+                FinishDownloadRes().Forget();
             },
             OnCheckCompleteNoUpdate: () => {
                 Debug.Log("不需要更新");
-                FinishDownloadRes();
+                FinishDownloadRes().Forget();
             },
             OnUpdate: (percent, tatalSize) => {
                 try {
@@ -69,7 +72,8 @@ public class DownloadResUI : MonoBehaviour, IController {
             });
     }
 
-    private void FinishDownloadRes() {
+    private async UniTaskVoid FinishDownloadRes() {
+        await this.GetSystem<II18NSystem>().InitTranslation();
         this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
         this.SendCommand(new HidePageCommand(UIPageType.DownloadResUI));
     }
