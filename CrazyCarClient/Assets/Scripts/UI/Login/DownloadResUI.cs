@@ -12,7 +12,7 @@ public class DownloadResUI : MonoBehaviour, IController {
     public Slider progressSlider;
     public Button standAloneBtn;
 
-    private void Start() {
+    private async void Start() {
         standAloneBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand<EnableStandAloneCommand>();
@@ -31,20 +31,19 @@ public class DownloadResUI : MonoBehaviour, IController {
         Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         // Unity 2021 不能开启游戏就发送HTTP会有报错
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-                data: bytes, succData: (data) => {
-                    if ((bool)data["is_forced_updating"]) {
-                        InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
-                            success: () => {
-                                Application.OpenURL((string)data["url"]);
-                                Application.Quit();
-                            },
-                            confirmText: "Download");
-                        this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
-                    } else {
-                        DownloadRes();
-                    }
-                }));
+        var result =
+            await TaskableHTTP.Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
+        if ((bool)result.serverData["is_forced_updating"]) {
+            InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
+                success: () => {
+                    Application.OpenURL((string)result.serverData["url"]);
+                    Application.Quit();
+                },
+                confirmText: "Download");
+            this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+        } else {
+            DownloadRes();
+        }
     }
 
     private void DownloadRes() {
