@@ -137,6 +137,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
                     } else {
                         AddressableInfo.BaseUrl = Application.streamingAssetsPath;
                     }
+                }, code: (code) => {
                     finish.Invoke();
                 }));
     }
