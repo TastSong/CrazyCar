@@ -145,6 +145,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 23. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
 23. [Midjourney](https://www.midjourney.com/app/)
 23. [Customizable skybox | 2D 天空 | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
+23. [Plugins for mobile platforms to enable file downloads in background (github.com)](https://github.com/Unity-Technologies/BackgroundDownload/tree/master)
 
 ## Star History
 
