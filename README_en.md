@@ -149,7 +149,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar)
 
 
 ## License
