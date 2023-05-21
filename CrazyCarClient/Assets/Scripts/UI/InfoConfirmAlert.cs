@@ -90,7 +90,7 @@ public class InfoConfirmAlert : UIPenal {
         contentText.text = info.content;
         this.success = info.succ;
         this.fail = info.fail;
-        cancelBtn.gameObject.SetActive(info.type == ConfirmAlertType.Double && fail != null);
+        cancelBtn.gameObject.SetActive(info.type == ConfirmAlertType.Double);
         this.confirmText.text = GetI18NText(info.confirmText);
         this.cancelText.text = GetI18NText(info.cancelText);
         titleText.text = GetI18NText(info.title);

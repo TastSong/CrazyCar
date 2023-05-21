@@ -16,7 +16,7 @@ public interface II18NSystem : ISystem {
     public Dictionary<string, string> LangMap { get; set; }
     public Dictionary<string, Sprite> FlagsDic { get; set; }
 
-    public UniTaskVoid InitTranslation();
+    public UniTask InitTranslation();
     public string GetText(string key);
     public void RegisterText(I18NText t);
     public void UnregisterText(I18NText t);
@@ -33,7 +33,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     private JsonData current_dict;
     private string defaultLang = "zh-cn";
 
-    public async UniTaskVoid InitTranslation() {
+    public async UniTask InitTranslation() {
         var result = await Addressables.LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
         JsonData fileNames = JsonMapper.ToObject(result.text);
         string[] names = ((string)fileNames["FileName"]).Split(',');

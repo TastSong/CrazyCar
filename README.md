@@ -159,13 +159,14 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 10. [vue-element-admin: A magical vue admin](https://github.com/PanJiaChen/vue-element-admin)
 10. [Midjourney](https://www.midjourney.com/app/)
 10. [Customizable skybox | 2D 天空 | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
+10. [Plugins for mobile platforms to enable file downloads in background (github.com)](https://github.com/Unity-Technologies/BackgroundDownload/tree/master)
 
 ------
 
 
 ## Star History
 
-![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=TastSong/CrazyCar)
 
 
 ## 证书

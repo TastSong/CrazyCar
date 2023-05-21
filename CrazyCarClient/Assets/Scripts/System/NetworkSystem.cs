@@ -110,6 +110,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
                 Debug.LogError("Is Network Error url = " + url);
+                code?.Invoke(500);
             } else {
                 byte[] results = request.downloadHandler.data;
                 string s = Encoding.UTF8.GetString(results);

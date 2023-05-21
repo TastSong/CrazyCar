@@ -7,6 +7,7 @@ using Utils;
 using QFramework;
 
 public class LoginUI : MonoBehaviour, IController {
+    public Button standAloneBtn;
     public InputField userNameInput;
     public InputField passwordInput;
     public Toggle rememberToggle; 
@@ -18,6 +19,10 @@ public class LoginUI : MonoBehaviour, IController {
     }
 
     private void Start() {
+        standAloneBtn.onClick.AddListener(() => {
+            this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
+            this.SendCommand<EnableStandAloneCommand>();
+        });
         rememberToggle.isOn = this.GetModel<IUserModel>().RememberPassword == 1;
         if (rememberToggle.isOn) {
             userNameInput.text = this.GetModel<IUserModel>().Name.Value;

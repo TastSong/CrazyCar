@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
+using Cysharp.Threading.Tasks;
 using QFramework;
 
 public class DownloadResUI : MonoBehaviour, IController {
@@ -12,7 +13,8 @@ public class DownloadResUI : MonoBehaviour, IController {
     public Slider progressSlider;
     public Button standAloneBtn;
 
-    private void Start() {
+    private async void Start() {
+        standAloneBtn.gameObject.SetActiveFast(false);
         standAloneBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand<EnableStandAloneCommand>();
@@ -31,20 +33,24 @@ public class DownloadResUI : MonoBehaviour, IController {
         Debug.Log("++++++ " + this.GetSystem<INetworkSystem>().HttpBaseUrl);
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         // Unity 2021 不能开启游戏就发送HTTP会有报错
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl,
-                data: bytes, succData: (data) => {
-                    if ((bool)data["is_forced_updating"]) {
-                        InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
-                            success: () => {
-                                Application.OpenURL((string)data["url"]);
-                                Application.Quit();
-                            },
-                            confirmText: "Download");
-                        this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
-                    } else {
-                        this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => { DownloadRes(); });
-                    }
-                }));
+        var result =
+            await TaskableHTTP.Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
+        if (result.serverCode == 200) {
+            if ((bool)result.serverData["is_forced_updating"]) {
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
+                    success: () => {
+                        Application.OpenURL((string)result.serverData["url"]);
+                        Application.Quit();
+                    },
+                    confirmText: "Download");
+                this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+            } else {
+                DownloadRes();
+            }
+        } else {
+            standAloneBtn.gameObject.SetActiveFast(true);
+            FinishDownloadRes(false);
+        }
     }
 
     private void DownloadRes() {
@@ -57,11 +63,11 @@ public class DownloadResUI : MonoBehaviour, IController {
             },
             OnCompleteDownload: () => {
                 Debug.Log("下载完成");
-                FinishDownloadRes();
+                FinishDownloadRes(true);
             },
             OnCheckCompleteNoUpdate: () => {
                 Debug.Log("不需要更新");
-                FinishDownloadRes();
+                FinishDownloadRes(true);
             },
             OnUpdate: (percent, tatalSize) => {
                 try {
@@ -70,9 +76,8 @@ public class DownloadResUI : MonoBehaviour, IController {
             });
     }
 
-    private void FinishDownloadRes() {
-        this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
-        this.SendCommand(new HidePageCommand(UIPageType.DownloadResUI));
+    private void FinishDownloadRes(bool isFinish) {
+        this.SendCommand(new FinishDownloadResCommand(isFinish));
     }
 
     private float lastProgress = 0;

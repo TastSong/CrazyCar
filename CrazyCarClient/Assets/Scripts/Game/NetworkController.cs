@@ -42,7 +42,6 @@ public class NetworkController : MonoBehaviour, IController {
     }
 
     private void OnInitNetwork(InitNetworkEvent obj) {
-        AddressableInfo.BaseUrl = Application.streamingAssetsPath;
         this.GetSystem<INetworkSystem>().ServerType = serverType;
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
