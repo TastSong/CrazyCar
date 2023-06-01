@@ -15,9 +15,11 @@ import com.tastsong.crazycar.service.LoginService;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Scope("prototype")
+@Slf4j
 @RequestMapping(value = "/v2/Background")
 public class BackgroundUser {
     @Autowired
@@ -30,7 +32,7 @@ public class BackgroundUser {
         data.putOpt("introduction", "I am a super administrator");
         data.putOpt("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         data.putOpt("name", "Super Admin");
-        System.out.println("+++++ info " + data.toString());
+        log.info(data.toString());
         return data;
     }
 

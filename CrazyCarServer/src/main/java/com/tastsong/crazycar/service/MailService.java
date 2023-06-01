@@ -8,6 +8,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class MailService {
  
@@ -27,9 +30,9 @@ public class MailService {
             helper.setSubject(subject);
             helper.setText(content,true);
             mailSender.send(message);
-            System.out.println("邮件发送成功");
+            log.info("邮件发送成功");
         }catch (Exception e){
-            System.out.println("邮件发送失败");
+            log.info("邮件发送失败");
         }
     }
 }
