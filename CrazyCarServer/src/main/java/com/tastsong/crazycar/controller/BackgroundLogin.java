@@ -33,10 +33,7 @@ public class BackgroundLogin {
         
     }
 
-
-    @GetMapping(value = "getNav")
-    public Object getNav() throws Exception {
-        String asyncRouters = "[\r\n" + //
+    String asyncRouters = "[\r\n" + //
                 "  {\r\n" + //
                 "    id: 21,\r\n" + //
                 "    parentId: 0,\r\n" + //
@@ -57,9 +54,98 @@ public class BackgroundLogin {
                 "    ]\r\n" + //
                 "  }\r\n" + //
                 "]";
+
+    @GetMapping(value = "getNav")
+    public Object getNav() throws Exception {
         JSONArray items = new JSONArray();
         items = JSONUtil.parseArray(asyncRouters);
        
         return items;
+    }
+
+
+    @GetMapping(value = "getRoutes")
+    public Object getRoutes() throws Exception {
+        
+        JSONArray items = new JSONArray();
+        items = JSONUtil.parseArray(asyncRouters);
+       
+        return items;
+    }
+
+    @GetMapping(value = "getRoles")
+    public Object getRoles() throws Exception {
+            String roles = "[\n" + //
+                    "  {\n" + //
+                    "    key: 'admin',\n" + //
+                    "    name: 'admin',\n" + //
+                    "    description: 'Super Administrator. Have access to view all pages.',\n" + //
+                    "    routes: [{\n" + //
+                    "      path: '',\n" + //
+                    "      redirect: 'dashboard',\n" + //
+                    "      children: [\n" + //
+                    "        {\n" + //
+                    "          path: 'dashboard',\n" + //
+                    "          name: 'Dashboard',\n" + //
+                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
+                    "        }\n" + //
+                    "      ]\n" + //
+                    "    }]\n" + //
+                    "  },\n" + //
+                    "  {\n" + //
+                    "    key: 'editor',\n" + //
+                    "    name: 'editor',\n" + //
+                    "    description: 'Normal Editor. Can see all pages except permission page',\n" + //
+                    "    routes: [{\n" + //
+                    "      path: '',\n" + //
+                    "      redirect: 'dashboard',\n" + //
+                    "      children: [\n" + //
+                    "        {\n" + //
+                    "          path: 'dashboard',\n" + //
+                    "          name: 'Dashboard',\n" + //
+                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
+                    "        }\n" + //
+                    "      ]\n" + //
+                    "    }]\n" + //
+                    "  },\n" + //
+                    "  {\n" + //
+                    "    key: 'visitor',\n" + //
+                    "    name: 'visitor',\n" + //
+                    "    description: 'Just a visitor. Can only see the home page and the document page',\n" + //
+                    "    routes: [{\n" + //
+                    "      path: '',\n" + //
+                    "      redirect: 'dashboard',\n" + //
+                    "      children: [\n" + //
+                    "        {\n" + //
+                    "          path: 'dashboard',\n" + //
+                    "          name: 'Dashboard',\n" + //
+                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
+                    "        }\n" + //
+                    "      ]\n" + //
+                    "    }]\n" + //
+                    "  }\n" + //
+                    "]";
+        JSONArray items = new JSONArray();
+        items = JSONUtil.parseArray(roles);
+       
+        return items;
+    }
+
+    @PostMapping(value = "addRole")
+    public Object addRole(@RequestBody JSONObject body) throws Exception {
+        Integer[] id = {500, 666};
+        return id;
+    }
+
+    @PostMapping(value = "updateRole")
+    public Object updateRole(@RequestBody JSONObject body) throws Exception {
+        Integer[] id = {500, 666};
+        return id;
+    }
+
+    @PostMapping(value = "deleteRole")
+    public Object deleteRole(@RequestBody JSONObject body) throws Exception {
+        Integer[] id = {500, 666};
+        return id;
     }
 }
