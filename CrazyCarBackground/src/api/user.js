@@ -39,13 +39,6 @@ export function updateUser(data) {
   })
 }
 
-export function getNav() {
-  return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/getNav',
-    method: 'get'
-  })
-}
-
 export function getAllRoutes() {
   return request({
     url: '/CrazyCarSpringBootServer/v2/Background/getAllRoutes',
