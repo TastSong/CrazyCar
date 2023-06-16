@@ -5,12 +5,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.service.LoginService;
 
 import cn.hutool.json.JSONArray;
@@ -25,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BackgroundUser {
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private BackgroundUserService backgroundUserService;
 
     @GetMapping(value = "/userInfo")
     public JSONObject userInfo() throws Exception {
@@ -61,72 +67,19 @@ public class BackgroundUser {
         userModel.is_vip = body.getBool("is_vip");
         loginService.updateUser(userModel);
         return loginService.getUserByName(userModel.user_name);
-    }
+    }        
 
-    String allRouters = "[\r\n" + //
-            "    {\r\n" + //
-            "        \"redirect\":\"/form/index\",\r\n" + //
-            "        \"level\":0,\r\n" + //
-            "        \"parentId\":0,\r\n" + //
-            "        \"path\":\"/form\",\r\n" + //
-            "        \"component\":\"Layout\",\r\n" + //
-            "        \"createTime\":\"2020-02-07T08:29:13.000+00:00\",\r\n" + //
-            "        \"children\":[\r\n" + //
-            "            {\r\n" + //
-            "                \"path\":\"form\",\r\n" + //
-            "                \"component\":\"form/index\",\r\n" + //
-            "                \"meta\":{\r\n" + //
-            "                    \"icon\":\"form\",\r\n" + //
-            "                    \"title\":\"form\"\r\n" + //
-            "                },\r\n" + //
-            "                \"name\":\"form\"\r\n" + //
-            "            }\r\n" + //
-            "        ],\r\n" + //
-            "        \"meta\":{\r\n" + //
-            "            \"icon\":\"form\",\r\n" + //
-            "            \"title\":\"form\"\r\n" + //
-            "        },\r\n" + //
-            "        \"name\":\"form\",\r\n" + //
-            "        \"id\":21\r\n" + //
-            "    },\r\n" + //
-            "    {\r\n" + //
-            "        \"redirect\":\"/permission/role\",\r\n" + //
-            "        \"path\":\"/permission\",\r\n" + //
-            "        \"component\":\"Layout\",\r\n" + //
-            "        \"children\":[\r\n" + //
-            "            {\r\n" + //
-            "                \"path\":\"role\",\r\n" + //
-            "                \"component\":\"permission/role\",\r\n" + //
-            "                \"meta\":{\r\n" + //
-            "                    \"title\":\"Role Permission\"\r\n" + //
-            "                },\r\n" + //
-            "                \"name\":\"RolePermission\"\r\n" + //
-            "            }\r\n" + //
-            "        ],\r\n" + //
-            "        \"meta\":{\r\n" + //
-            "            \"icon\":\"lock\",\r\n" + //
-            "            \"title\":\"Permission\"\r\n" + //
-            "        },\r\n" + //
-            "        \"alwaysShow\":true\r\n" + //
-            "    }\r\n" + //
-            "]";            
-
-    @GetMapping(value = "getAllRoutes")
-    public Object getAllRoutes() throws Exception {
-        
-        JSONArray items = new JSONArray();
-        items = JSONUtil.parseArray(allRouters);
-       
-        return items;
+    @GetMapping(value = "getAllRouters")
+    public Object getAllRouters(@RequestHeader(Util.TOKEN) String token) throws Exception {
+        return backgroundUserService.getAllRouters();
     }
 
 
-    @GetMapping(value = "getRoutes")
-    public Object getRoutes() throws Exception {
-        JSONArray items = new JSONArray();
-        items = JSONUtil.parseArray(allRouters);
+    @GetMapping(value = "getRouters")
+    public Object getRouters(@RequestHeader(Util.TOKEN) String token) throws Exception {
+        Integer uid = Util.getUidByToken(token);
        
-        return items;
+        return backgroundUserService.getRouters(uid);
     }
 
     @GetMapping(value = "getRoles")

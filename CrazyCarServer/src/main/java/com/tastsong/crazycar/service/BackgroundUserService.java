@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.tastsong.crazycar.mapper.AdminUserMapper;
 import com.tastsong.crazycar.model.AdminUserModel;
 
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONUtil;
+
 @Service
 public class BackgroundUserService {
     @Autowired
@@ -13,6 +16,16 @@ public class BackgroundUserService {
 
     public Integer getUserNum(){
         return adminUserMapper.getAllUserNum();
+    }
+
+    public JSONArray getAllRouters(){
+        String router = adminUserMapper.getUserByUid(1).router;
+        return JSONUtil.parseArray(router);
+    }
+
+    public JSONArray getRouters(Integer uid){
+        String router = adminUserMapper.getUserByUid(uid).router;
+        return JSONUtil.parseArray(router);
     }
 
     public AdminUserModel getUserByUid(Integer uid){
