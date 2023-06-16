@@ -5,5 +5,5 @@ public class AdminUserModel {
     public String user_password;
     public Integer uid;
     public String des;
-    public String router;
+    public String route;
 }

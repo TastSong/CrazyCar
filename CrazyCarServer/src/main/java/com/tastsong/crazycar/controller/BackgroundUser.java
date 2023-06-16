@@ -69,17 +69,17 @@ public class BackgroundUser {
         return loginService.getUserByName(userModel.user_name);
     }        
 
-    @GetMapping(value = "getAllRouters")
-    public Object getAllRouters(@RequestHeader(Util.TOKEN) String token) throws Exception {
-        return backgroundUserService.getAllRouters();
+    @GetMapping(value = "getAllRoutes")
+    public Object getAllRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
+        return backgroundUserService.getAllRoute();
     }
 
 
-    @GetMapping(value = "getRouters")
-    public Object getRouters(@RequestHeader(Util.TOKEN) String token) throws Exception {
+    @GetMapping(value = "getRoutes")
+    public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
         Integer uid = Util.getUidByToken(token);
        
-        return backgroundUserService.getRouters(uid);
+        return backgroundUserService.getRoute(uid);
     }
 
     @GetMapping(value = "getRoles")

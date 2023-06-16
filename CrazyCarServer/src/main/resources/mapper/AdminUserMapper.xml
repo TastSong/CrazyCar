@@ -39,9 +39,9 @@
 
     <insert id="insertUser" parameterType="AdminUserModel">
         insert into admin_user (
-          user_name, user_password, des, router
+          user_name, user_password, des, route
         ) VALUES (
-         #{user_name}, #{user_password}, #{des}, #{router}
+         #{user_name}, #{user_password}, #{des}, #{route}
         )
     </insert>
 
@@ -51,9 +51,9 @@
         where uid = #{uid}
     </update>
 
-    <update id="updateUserRouter">
+    <update id="updateUserRoute">
         update admin_user
-        set user_password = #{router}
+        set user_password = #{route}
         where uid = #{uid}
     </update>
 </mapper>

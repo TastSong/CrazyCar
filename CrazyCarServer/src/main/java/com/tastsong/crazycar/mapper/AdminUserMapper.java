@@ -10,5 +10,5 @@ public interface AdminUserMapper {
     public boolean isExistsUserByUid(Integer uid);
     public Integer insertUser(AdminUserModel userModel);
     public Integer updateUserPassword(Integer uid, String password);
-    public Integer updateUserRouter(Integer uid, String router);
+    public Integer updateUserRoute(Integer uid, String route);
 }

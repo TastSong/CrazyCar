@@ -77,7 +77,7 @@ export const loadView = (view) => {
   return (resolve) => require([`@/views/${view}.vue`], resolve)
 }
 function filterAsyncRouter(asyncRouterMap) {
-  const accessedRouters = asyncRouterMap.filter(router => {
+  const accessedRoutes = asyncRouterMap.filter(router => {
     if (router.component === 'Layout') {
       router.component = Layout
     } else {
@@ -94,5 +94,5 @@ function filterAsyncRouter(asyncRouterMap) {
     }
     return true
   })
-  return accessedRouters
+  return accessedRoutes
 }
