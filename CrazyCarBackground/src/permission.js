@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import Layout from '@/layout'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -34,7 +35,15 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           await store.dispatch('user/getInfo')
 
-          next()
+          await store.dispatch('user/getRoutes')
+          if (store.getters.menus.length < 1) {
+            global.antRouter = []
+            next()
+          }
+          const menus = filterAsyncRouter(store.getters.menus)
+          router.addRoutes(menus)
+          global.antRouter = menus
+          next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
@@ -62,3 +71,27 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done()
 })
+
+export const loadView = (view) => {
+  return (resolve) => require([`@/views/${view}.vue`], resolve)
+}
+function filterAsyncRouter(asyncRouterMap) {
+  const accessedRouters = asyncRouterMap.filter(router => {
+    if (router.component === 'Layout') {
+      router.component = Layout
+    } else {
+      try {
+        router.component = loadView(router.component)
+      } catch (error) {
+        router.component = loadView('system/menu/index')
+        Message.error('请查看控制台修改或者删除不存在的组件路径')
+      }
+    }
+
+    if (router.children && router.children.length) {
+      router.children = filterAsyncRouter(router.children)
+    }
+    return true
+  })
+  return accessedRouters
+}

@@ -1,13 +1,13 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getRoutes } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import router, { resetRouter } from '@/router'
+import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    menus: ''
   }
 }
 
@@ -26,8 +26,8 @@ const mutations = {
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
   }
 }
 
@@ -92,25 +92,17 @@ const actions = {
     })
   },
 
-  // dynamically modify permissions
-  async changeRoles({ commit, dispatch }, role) {
-    console.log('+++++++change roles ')
-    const token = role + '-token'
-
-    commit('SET_TOKEN', token)
-    setToken(token)
-
-    const { roles } = await dispatch('getInfo')
-
-    resetRouter()
-
-    // generate accessible routes map based on roles
-    const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-    // dynamically add accessible routes
-    router.addRoutes(accessRoutes)
-
-    // reset visited views and cached views
-    dispatch('tagsView/delAllViews', null, { root: true })
+  getRoutes({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getRoutes().then(response => {
+        const menus = response
+        console.log('++++++++ ' + JSON.stringify(menus))
+        commit('SET_MENUS', menus)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 
