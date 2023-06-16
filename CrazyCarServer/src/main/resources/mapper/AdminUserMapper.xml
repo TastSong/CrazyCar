@@ -7,6 +7,12 @@
         from admin_user;
     </select>
 
+    <select id="getAllUser" resultType="AdminUserModel">
+        select
+        *
+        from admin_user;
+    </select>
+
     <select id="getUserByUid" resultType="AdminUserModel">
         select
         *

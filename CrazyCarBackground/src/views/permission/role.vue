@@ -5,17 +5,17 @@
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="Role Key" width="220">
         <template slot-scope="scope">
-          {{ scope.row.key }}
+          {{ scope.row.uid }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="Role Name" width="220">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.user_name }}
         </template>
       </el-table-column>
       <el-table-column align="header-center" label="Description">
         <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.des }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="Operations">
@@ -29,11 +29,11 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
       <el-form :model="role" label-width="80px" label-position="left">
         <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
+          <el-input v-model="role.user_name" placeholder="Role Name" />
         </el-form-item>
         <el-form-item label="Desc">
           <el-input
-            v-model="role.description"
+            v-model="role.des"
             :autosize="{ minRows: 2, maxRows: 4}"
             type="textarea"
             placeholder="Role Description"
@@ -65,9 +65,9 @@ import { deepClone } from '@/utils'
 import { getAllRoutes, getRoutes, getRoles, createRole, updateRole } from '@/api/user'
 
 const defaultRole = {
-  key: '',
-  name: '',
-  description: '',
+  uid: '',
+  user_name: '',
+  des: '',
   routes: []
 }
 
@@ -183,7 +183,7 @@ export default {
     //     type: 'warning'
     //   })
     //     .then(async() => {
-    //       await deleteRole(row.key)
+    //       await deleteRole(row.uid)
     //       this.rolesList.splice($index, 1)
     //       this.$message({
     //         type: 'success',
@@ -217,26 +217,26 @@ export default {
       if (isEdit) {
         await updateRole(this.role)
         for (let index = 0; index < this.rolesList.length; index++) {
-          if (this.rolesList[index].key === this.role.key) {
+          if (this.rolesList[index].uid === this.role.uid) {
             this.rolesList.splice(index, 1, Object.assign({}, this.role))
             break
           }
         }
       } else {
         const { data } = await createRole(this.role)
-        this.role.key = data.key
+        this.role.uid = data.uid
         this.rolesList.push(this.role)
       }
 
-      const { description, key, name } = this.role
+      const { des, uid, user_name } = this.role
       this.dialogVisible = false
       this.$notify({
         title: 'Success',
         dangerouslyUseHTMLString: true,
         message: `
-            <div>Role Key: ${key}</div>
-            <div>Role Name: ${name}</div>
-            <div>Description: ${description}</div>
+            <div>Role Key: ${uid}</div>
+            <div>Role Name: ${user_name}</div>
+            <div>Description: ${des}</div>
           `,
         type: 'success'
       })

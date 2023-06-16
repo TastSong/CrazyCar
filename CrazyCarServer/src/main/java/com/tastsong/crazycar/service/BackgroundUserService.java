@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class BackgroundUserService {
 
     public Integer getUserNum(){
         return adminUserMapper.getAllUserNum();
+    }
+
+    public List<AdminUserModel> getAllUser(){
+        return adminUserMapper.getAllUser();
     }
 
     public JSONArray getAllRoute(){

@@ -18,7 +18,6 @@ import com.tastsong.crazycar.service.LoginService;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -84,60 +83,7 @@ public class BackgroundUser {
 
     @GetMapping(value = "getRoles")
     public Object getRoles() throws Exception {
-            String roles = "[\n" + //
-                    "  {\n" + //
-                    "    key: 'admin',\n" + //
-                    "    name: 'admin',\n" + //
-                    "    description: 'Super Administrator. Have access to view all pages.',\n" + //
-                    "    routes: [{\n" + //
-                    "      path: '',\n" + //
-                    "      redirect: 'dashboard',\n" + //
-                    "      children: [\n" + //
-                    "        {\n" + //
-                    "          path: 'dashboard',\n" + //
-                    "          name: 'Dashboard',\n" + //
-                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
-                    "        }\n" + //
-                    "      ]\n" + //
-                    "    }]\n" + //
-                    "  },\n" + //
-                    "  {\n" + //
-                    "    key: 'editor',\n" + //
-                    "    name: 'editor',\n" + //
-                    "    description: 'Normal Editor. Can see all pages except permission page',\n" + //
-                    "    routes: [{\n" + //
-                    "      path: '',\n" + //
-                    "      redirect: 'dashboard',\n" + //
-                    "      children: [\n" + //
-                    "        {\n" + //
-                    "          path: 'dashboard',\n" + //
-                    "          name: 'Dashboard',\n" + //
-                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
-                    "        }\n" + //
-                    "      ]\n" + //
-                    "    }]\n" + //
-                    "  },\n" + //
-                    "  {\n" + //
-                    "    key: 'visitor',\n" + //
-                    "    name: 'visitor',\n" + //
-                    "    description: 'Just a visitor. Can only see the home page and the document page',\n" + //
-                    "    routes: [{\n" + //
-                    "      path: '',\n" + //
-                    "      redirect: 'dashboard',\n" + //
-                    "      children: [\n" + //
-                    "        {\n" + //
-                    "          path: 'dashboard',\n" + //
-                    "          name: 'Dashboard',\n" + //
-                    "          meta: { title: 'dashboard', icon: 'dashboard' }\n" + //
-                    "        }\n" + //
-                    "      ]\n" + //
-                    "    }]\n" + //
-                    "  }\n" + //
-                    "]";
-        JSONArray items = new JSONArray();
-        items = JSONUtil.parseArray(roles);
-       
-        return items;
+        return backgroundUserService.getAllUser();
     }
 
     @GetMapping(value = "addRole")
