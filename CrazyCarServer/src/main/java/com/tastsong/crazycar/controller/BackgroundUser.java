@@ -62,138 +62,54 @@ public class BackgroundUser {
         loginService.updateUser(userModel);
         return loginService.getUserByName(userModel.user_name);
     }
-    
-    String asyncRouters = "[\n" + //
-            "    {\n" + //
-            "        \"redirect\":\"/form/index\",\n" + //
-            "        \"level\":0,\n" + //
-            "        \"parentId\":0,\n" + //
-            "        \"path\":\"/form\",\n" + //
-            "        \"component\":\"Layout\",\n" + //
-            "        \"createTime\":\"2020-02-07T08:29:13.000+00:00\",\n" + //
-            "        \"children\":[\n" + //
-            "            {\n" + //
-            "                \"path\":\"form\",\n" + //
-            "                \"component\":\"form/index\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"roles\":[\n" + //
-            "                        \"admin\"\n" + //
-            "                    ],\n" + //
-            "                    \"icon\":\"form\",\n" + //
-            "                    \"title\":\"form\"\n" + //
-            "                },\n" + //
-            "                \"name\":\"form\"\n" + //
-            "            }\n" + //
-            "        ],\n" + //
-            "        \"meta\":{\n" + //
-            "            \"icon\":\"form\",\n" + //
-            "            \"title\":\"form\"\n" + //
-            "        },\n" + //
-            "        \"name\":\"form\",\n" + //
-            "        \"id\":21\n" + //
-            "    }\n" + //
-            "]";
 
-    String allRouters = "[\n" + //
-            "    {\n" + //
-            "        \"redirect\":\"/form/index\",\n" + //
-            "        \"level\":0,\n" + //
-            "        \"parentId\":0,\n" + //
-            "        \"path\":\"/form\",\n" + //
-            "        \"component\":\"Layout\",\n" + //
-            "        \"createTime\":\"2020-02-07T08:29:13.000+00:00\",\n" + //
-            "        \"children\":[\n" + //
-            "            {\n" + //
-            "                \"path\":\"form\",\n" + //
-            "                \"component\":\"form/index\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"roles\":[\n" + //
-            "                        \"admin\"\n" + //
-            "                    ],\n" + //
-            "                    \"icon\":\"form\",\n" + //
-            "                    \"title\":\"form\"\n" + //
-            "                },\n" + //
-            "                \"name\":\"form\"\n" + //
-            "            }\n" + //
-            "        ],\n" + //
-            "        \"meta\":{\n" + //
-            "            \"icon\":\"form\",\n" + //
-            "            \"title\":\"form\"\n" + //
-            "        },\n" + //
-            "        \"name\":\"form\",\n" + //
-            "        \"id\":21\n" + //
-            "    },\n" + //
-            "    {\n" + //
-            "        \"path\":\"/permission\",\n" + //
-            "        \"component\":\"layout/Layout\",\n" + //
-            "        \"redirect\":\"/permission/index\",\n" + //
-            "        \"alwaysShow\":true,\n" + //
-            "        \"meta\":{\n" + //
-            "            \"title\":\"Permission\",\n" + //
-            "            \"icon\":\"lock\",\n" + //
-            "            \"roles\":[\n" + //
-            "                \"admin\",\n" + //
-            "                \"editor\"\n" + //
-            "            ]\n" + //
-            "        },\n" + //
-            "        \"children\":[\n" + //
-            "            {\n" + //
-            "                \"path\":\"page\",\n" + //
-            "                \"component\":\"views/permission/page\",\n" + //
-            "                \"name\":\"PagePermission\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"title\":\"Page Permission\",\n" + //
-            "                    \"roles\":[\n" + //
-            "                        \"admin\"\n" + //
-            "                    ]\n" + //
-            "                }\n" + //
-            "            },\n" + //
-            "            {\n" + //
-            "                \"path\":\"directive\",\n" + //
-            "                \"component\":\"views/permission/directive\",\n" + //
-            "                \"name\":\"DirectivePermission\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"title\":\"Directive Permission\"\n" + //
-            "                }\n" + //
-            "            },\n" + //
-            "            {\n" + //
-            "                \"path\":\"role\",\n" + //
-            "                \"component\":\"views/permission/role\",\n" + //
-            "                \"name\":\"RolePermission\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"title\":\"Role Permission\",\n" + //
-            "                    \"roles\":[\n" + //
-            "                        \"admin\"\n" + //
-            "                    ]\n" + //
-            "                }\n" + //
-            "            }\n" + //
-            "        ]\n" + //
-            "    },\n" + //
-            "    {\n" + //
-            "        \"path\":\"/icon\",\n" + //
-            "        \"component\":\"layout/Layout\",\n" + //
-            "        \"children\":[\n" + //
-            "            {\n" + //
-            "                \"path\":\"index\",\n" + //
-            "                \"component\":\"views/icons/index\",\n" + //
-            "                \"name\":\"Icons\",\n" + //
-            "                \"meta\":{\n" + //
-            "                    \"title\":\"Icons\",\n" + //
-            "                    \"icon\":\"icon\",\n" + //
-            "                    \"noCache\":true\n" + //
-            "                }\n" + //
-            "            }\n" + //
-            "        ]\n" + //
-            "    }\n" + //
+    String allRouters = "[\r\n" + //
+            "    {\r\n" + //
+            "        \"redirect\":\"/form/index\",\r\n" + //
+            "        \"level\":0,\r\n" + //
+            "        \"parentId\":0,\r\n" + //
+            "        \"path\":\"/form\",\r\n" + //
+            "        \"component\":\"Layout\",\r\n" + //
+            "        \"createTime\":\"2020-02-07T08:29:13.000+00:00\",\r\n" + //
+            "        \"children\":[\r\n" + //
+            "            {\r\n" + //
+            "                \"path\":\"form\",\r\n" + //
+            "                \"component\":\"form/index\",\r\n" + //
+            "                \"meta\":{\r\n" + //
+            "                    \"icon\":\"form\",\r\n" + //
+            "                    \"title\":\"form\"\r\n" + //
+            "                },\r\n" + //
+            "                \"name\":\"form\"\r\n" + //
+            "            }\r\n" + //
+            "        ],\r\n" + //
+            "        \"meta\":{\r\n" + //
+            "            \"icon\":\"form\",\r\n" + //
+            "            \"title\":\"form\"\r\n" + //
+            "        },\r\n" + //
+            "        \"name\":\"form\",\r\n" + //
+            "        \"id\":21\r\n" + //
+            "    },\r\n" + //
+            "    {\r\n" + //
+            "        \"redirect\":\"/permission/role\",\r\n" + //
+            "        \"path\":\"/permission\",\r\n" + //
+            "        \"component\":\"Layout\",\r\n" + //
+            "        \"children\":[\r\n" + //
+            "            {\r\n" + //
+            "                \"path\":\"role\",\r\n" + //
+            "                \"component\":\"permission/role\",\r\n" + //
+            "                \"meta\":{\r\n" + //
+            "                    \"title\":\"Role Permission\"\r\n" + //
+            "                },\r\n" + //
+            "                \"name\":\"RolePermission\"\r\n" + //
+            "            }\r\n" + //
+            "        ],\r\n" + //
+            "        \"meta\":{\r\n" + //
+            "            \"icon\":\"lock\",\r\n" + //
+            "            \"title\":\"Permission\"\r\n" + //
+            "        },\r\n" + //
+            "        \"alwaysShow\":true\r\n" + //
+            "    }\r\n" + //
             "]";            
-
-    @GetMapping(value = "getNav")
-    public Object getNav() throws Exception {
-        JSONArray items = new JSONArray();
-        items = JSONUtil.parseArray(asyncRouters);
-       
-        return items;
-    }
 
     @GetMapping(value = "getAllRoutes")
     public Object getAllRoutes() throws Exception {
@@ -207,9 +123,8 @@ public class BackgroundUser {
 
     @GetMapping(value = "getRoutes")
     public Object getRoutes() throws Exception {
-        log.info(allRouters);
         JSONArray items = new JSONArray();
-        items = JSONUtil.parseArray(asyncRouters);
+        items = JSONUtil.parseArray(allRouters);
        
         return items;
     }

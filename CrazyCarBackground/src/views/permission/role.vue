@@ -21,7 +21,7 @@
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+          <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -62,7 +62,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import { getAllRoutes, getRoutes, getRoles, createRole, updateRole } from '@/api/user'
 
 const defaultRole = {
   key: '',
@@ -93,19 +93,21 @@ export default {
   },
   created() {
     // Mock: get all routes and roles list from server
-    this.getRoutes()
+    this.getAllRoutes()
     this.getRoles()
   },
   methods: {
+    async getAllRoutes() {
+      this.serviceRoutes = await getAllRoutes()
+      console.log('+++++ getAllRoutes' + JSON.stringify(this.serviceRoutes))
+      this.routes = this.generateRoutes(this.serviceRoutes)
+    },
     async getRoutes() {
-      const res = await getRoutes()
-      this.serviceRoutes = res.data
-      this.routes = this.generateRoutes(res.data)
+      this.serviceRoutes = await getRoutes()
+      this.routes = this.generateRoutes(this.serviceRoutes)
     },
     async getRoles() {
-      const res = await getRoles()
-      this.rolesList = res.data
-      console.log('getRoles this.rolesList : ' + JSON.stringify(this.rolesList))
+      this.rolesList = await getRoles()
     },
 
     // Reshape the routes structure so that it looks the same as the sidebar
@@ -134,8 +136,6 @@ export default {
         }
         res.push(data)
       }
-      console.log('generateRoutes res : ' + JSON.stringify(res))
-      console.log('generateRoutes routes : ' + JSON.stringify(routes))
       return res
     },
     generateArr(routes) {
@@ -149,8 +149,6 @@ export default {
           }
         }
       })
-      console.log('generateArr data : ' + JSON.stringify(data))
-      console.log('generateArr routes : ' + JSON.stringify(routes))
       return data
     },
     handleAddRole() {
@@ -167,28 +165,33 @@ export default {
       this.checkStrictly = true
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
-        const routes = this.generateRoutes(this.role.routes)
-        this.$refs.tree.setCheckedNodes(this.generateArr(routes))
-        // set checked state of a node not affects its father and child nodes
-        this.checkStrictly = false
-      })
-    },
-    handleDelete({ $index, row }) {
-      this.$confirm('Confirm to remove the role?', 'Warning', {
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      })
-        .then(async() => {
-          await deleteRole(row.key)
-          this.rolesList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: 'Delete succed!'
-          })
+        getRoutes().then(res => {
+          const roleRoutes = res
+          console.log('+++++ getRoutes' + JSON.stringify(roleRoutes))
+          const routes = this.generateRoutes(roleRoutes)
+          this.$refs.tree.setCheckedNodes(this.generateArr(routes))
+          // this.$refs.tree.setChecked('/icon/index', false)
+          // set checked state of a node not affects its father and child nodes
+          this.checkStrictly = false
         })
-        .catch(err => { console.error(err) })
+      })
     },
+    // handleDelete({ $index, row }) {
+    //   this.$confirm('Confirm to remove the role?', 'Warning', {
+    //     confirmButtonText: 'Confirm',
+    //     cancelButtonText: 'Cancel',
+    //     type: 'warning'
+    //   })
+    //     .then(async() => {
+    //       await deleteRole(row.key)
+    //       this.rolesList.splice($index, 1)
+    //       this.$message({
+    //         type: 'success',
+    //         message: 'Delete succed!'
+    //       })
+    //     })
+    //     .catch(err => { console.error(err) })
+    // },
     generateTree(routes, basePath = '/', checkedKeys) {
       const res = []
 
@@ -211,9 +214,8 @@ export default {
 
       const checkedKeys = this.$refs.tree.getCheckedKeys()
       this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
-
       if (isEdit) {
-        await updateRole(this.role.key, this.role)
+        await updateRole(this.role)
         for (let index = 0; index < this.rolesList.length; index++) {
           if (this.rolesList[index].key === this.role.key) {
             this.rolesList.splice(index, 1, Object.assign({}, this.role))
@@ -221,7 +223,7 @@ export default {
           }
         }
       } else {
-        const { data } = await addRole(this.role)
+        const { data } = await createRole(this.role)
         this.role.key = data.key
         this.rolesList.push(this.role)
       }
