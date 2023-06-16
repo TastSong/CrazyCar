@@ -62,7 +62,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getAllRoutes, getRoutes, getRoles, createRole, updateRole } from '@/api/user'
+import { getAllRoutes, getRoutes, getRoles, createRole, updateRole, getRoutesByUid } from '@/api/user'
 
 const defaultRole = {
   uid: '',
@@ -164,8 +164,9 @@ export default {
       this.dialogVisible = true
       this.checkStrictly = true
       this.role = deepClone(scope.row)
+      console.log('+++++ handleEdit' + JSON.stringify(this.role))
       this.$nextTick(() => {
-        getRoutes().then(res => {
+        getRoutesByUid(this.role.uid).then(res => {
           const roleRoutes = res
           console.log('+++++ getRoutes' + JSON.stringify(roleRoutes))
           const routes = this.generateRoutes(roleRoutes)
@@ -215,7 +216,8 @@ export default {
       const checkedKeys = this.$refs.tree.getCheckedKeys()
       this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
       if (isEdit) {
-        await updateRole(this.role)
+        const { data } = await updateRole(this.role)
+        console.log('+++++ updateRole' + JSON.stringify(data))
         for (let index = 0; index < this.rolesList.length; index++) {
           if (this.rolesList[index].uid === this.role.uid) {
             this.rolesList.splice(index, 1, Object.assign({}, this.role))

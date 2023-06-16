@@ -53,6 +53,14 @@ export function getRoutes() {
   })
 }
 
+export function getRoutesByUid(uid) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getRoutesByUid',
+    method: 'get',
+    params: { uid }
+  })
+}
+
 export function getRoles() {
   return request({
     url: '/CrazyCarSpringBootServer/v2/Background/getRoles',

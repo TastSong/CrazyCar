@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.service.LoginService;
@@ -81,6 +82,11 @@ public class BackgroundUser {
         return backgroundUserService.getRoute(uid);
     }
 
+    @GetMapping(value = "getRoutesByUid")
+    public Object getRoutesByUid(@RequestParam("uid") Integer uid) throws Exception {
+        return backgroundUserService.getRoute(uid);
+    }
+
     @GetMapping(value = "getRoles")
     public Object getRoles() throws Exception {
         return backgroundUserService.getAllUser();
@@ -93,9 +99,17 @@ public class BackgroundUser {
     }
 
     @PostMapping(value = "updateRole")
-    public Object updateRole(@RequestBody JSONObject body) throws Exception {
-        Integer[] id = {500, 666};
-        return id;
+    public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+        Integer uid = Util.getUidByToken(token);
+        log.info("uid " + uid);
+        if(uid == 1){
+            return Result.failure(ResultCode.RC423);
+        } else{
+            String route = body.getStr("route");
+            backgroundUserService.updateUserRoute(uid, route);
+            return backgroundUserService.getUserByUid(uid);
+        }
+        
     }
 
     @PostMapping(value = "deleteRole")
