@@ -225,8 +225,7 @@ export default {
           }
         }
       } else {
-        const { data } = await createRole(this.role)
-        this.role.uid = data.uid
+        this.role = await createRole(this.role)
         this.rolesList.push(this.role)
       }
 

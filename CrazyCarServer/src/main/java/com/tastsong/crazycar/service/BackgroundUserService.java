@@ -25,13 +25,13 @@ public class BackgroundUserService {
     }
 
     public JSONArray getAllRoute(){
-        String route = adminUserMapper.getUserByUid(1).route;
-        return JSONUtil.parseArray(route);
+        String routes = adminUserMapper.getUserByUid(1).routes;
+        return JSONUtil.parseArray(routes);
     }
 
     public JSONArray getRoute(Integer uid){
-        String route = adminUserMapper.getUserByUid(uid).route;
-        return JSONUtil.parseArray(route);
+        String routes = adminUserMapper.getUserByUid(uid).routes;
+        return JSONUtil.parseArray(routes);
     }
 
     public AdminUserModel getUserByUid(Integer uid){
@@ -58,7 +58,7 @@ public class BackgroundUserService {
         return adminUserMapper.updateUserPassword(uid, password) == 1;
     }
 
-    public boolean updateUserRoute(Integer uid, String route){
-        return adminUserMapper.updateUserRoute(uid, route) == 1;
+    public boolean updateUserRoute(Integer uid, String routes){
+        return adminUserMapper.updateUserRoute(uid, routes) == 1;
     }
 }

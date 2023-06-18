@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.service.LoginService;
@@ -92,24 +93,33 @@ public class BackgroundUser {
         return backgroundUserService.getAllUser();
     }
 
-    @GetMapping(value = "addRole")
-    public Object addRole(@RequestBody JSONObject body) throws Exception {
-        Integer[] id = {500, 666};
-        return id;
+    @PostMapping(value = "createRole")
+    public Object createRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+        AdminUserModel adminUserModel = new AdminUserModel();
+        adminUserModel.user_name = body.getStr("user_name");
+        adminUserModel.user_password = "123456";
+        adminUserModel.des = body.getStr("des");
+        adminUserModel.routes = body.getObj("routes").toString();
+        if(backgroundUserService.isExistsUser(adminUserModel.user_name )){
+            return Result.failure(ResultCode.RC423);
+        } else{ 
+            backgroundUserService.insertUser(adminUserModel);
+            adminUserModel.uid = backgroundUserService.getUserByName(adminUserModel.user_name).uid;
+            return adminUserModel;
+        }
+
     }
 
     @PostMapping(value = "updateRole")
     public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
         Integer uid = Util.getUidByToken(token);
-        log.info("uid " + uid);
         if(uid == 1){
             return Result.failure(ResultCode.RC423);
         } else{
-            String route = body.getStr("route");
-            backgroundUserService.updateUserRoute(uid, route);
+            String routes = body.getStr("routes");
+            backgroundUserService.updateUserRoute(uid, routes);
             return backgroundUserService.getUserByUid(uid);
         }
-        
     }
 
     @PostMapping(value = "deleteRole")
