@@ -639,18 +639,18 @@ where id = 0;
 select * from assets_updating;
 
 /*admin_user*/
-create table if not exists `admin_user`(
+create table if not exists `admin_users`(
     `uid` int unsigned auto_increment,
     `user_password` VARCHAR(100) not null,
     `user_name` VARCHAR(100) not null,
     `des` VARCHAR(1000) not null,
-    `route` TEXT,
+    `routes` TEXT,
    primary key ( `uid` )
    )engine = innodb default charset = utf8;
-insert into `admin_user` (`user_password`, `user_name`, `des`, `route`) VALUES
+insert into `admin_users` (`user_password`, `user_name`, `des`, `routes`) VALUES
     ('123456', 'admin', 'Super Administrator. Have access to view all pages.', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21},{"redirect":"/permission/role","path":"/permission","component":"Layout","children":[{"path":"role","component":"permission/role","meta":{"title":"Role Permission"},"name":"RolePermission"}],"meta":{"icon":"lock","title":"Permission"},"alwaysShow":true}]'),
     ('123456', 'editor', 'Normal Editor. Can see all pages except permission page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]'),
     ('123456', 'visitor', 'Just a visitor. Can only see the home page and the document page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]');
-select * from admin_user;
+select * from admin_users;
 
 
