@@ -61,7 +61,7 @@ public class UIController : MonoBehaviour, IController {
     private void OnPrepareUI(PrepareUIEvent obj) {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
-            pagesGroup.Add(value, new LinkedList<UIPageType>());
+            pagesGroup[value] = new LinkedList<UIPageType>();
         }
     }
 
