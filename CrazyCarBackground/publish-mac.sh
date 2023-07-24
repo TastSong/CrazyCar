@@ -1,21 +1,16 @@
 #!/bin/bash
 npm run build:prod
 
-rm -rf ROOT.zip
+rm -rf crazy_car_background.zip
 
-mv dist ROOT
+zip crazy_car_background.zip crazy_car_background/* crazy_car_background/static/* crazy_car_background/static/css/* crazy_car_background/static/fonts/* crazy_car_background/static/img/* crazy_car_background/static/js/*
 
-zip ROOT.zip ROOT/* ROOT/static/* ROOT/static/css/* ROOT/static/fonts/* ROOT/static/img/* ROOT/static/js/*
+scp crazy_car_background.zip 118.195.254.13:/root/nginx/
 
-scp ROOT.zip huawei:/root/tomcat-10.0.27/webapps/
+rm -rf crazy_car_background.zip
 
-mv ROOT dist
-rm -rf ROOT.zip
-
-ssh -t huawei "sh /root/tomcat-10.0.27/bin/shutdown.sh"
-ssh -t huawei "rm -rf /root/tomcat-10.0.27/webapps/ROOT"
-ssh -t huawei "unzip /root/tomcat-10.0.27/webapps/ROOT.zip -d /root/tomcat-10.0.27/webapps/"
-ssh -t huawei "nohup sh /root/tomcat-10.0.27/bin/startup.sh"
+ssh -t 118.195.254.13 "rm -rf /root/nginx/"
+ssh -t 118.195.254.13 "unzip /root/nginx/crazy_car_background.zip -d /root/nginx/"
 
 echo "Finish!!!"
 
