@@ -79,6 +79,7 @@ public class MatchRoomWebSocket {
         }
     }
  
+    // todo: 加入一个Dispatcher，使用Dispatcher进行消息分发，与token验证
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("Match Room onMessage : " + message);
