@@ -1,4 +1,4 @@
-create database crazy_car;
+create database crazy_car charset=utf8mb4 collate=utf8mb4_general_ci;
 use crazy_car;
 /*
 centos 如果没生效
