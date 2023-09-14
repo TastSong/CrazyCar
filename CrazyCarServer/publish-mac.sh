@@ -1,6 +1,6 @@
 #!/bin/bash
-mvn clean
-mvn package
+mvn install
+mvn clean package
 
 rm -rf crazy_car.zip
 

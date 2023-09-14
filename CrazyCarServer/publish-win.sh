@@ -1,7 +1,7 @@
 #!/bin/bash
 # 在windows下使用git bash运行 首先cd 到此脚本所在文件夹即：*/crazy_car/CrazyCarServer
-mvn clean
-mvn package
+mvn install
+mvn clean package
 
 rm -rf crazy_car.zip
 
