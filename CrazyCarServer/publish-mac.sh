@@ -1,6 +1,6 @@
 #!/bin/bash
-mvn clean
-mvn package
+mvn install
+mvn clean package
 
 rm -rf crazy_car.zip
 
@@ -13,6 +13,7 @@ scp crazy_car.zip tencent:/root/crazy_car_game/
 mv crazy_car.jar ./target/crazy_car.jar
 rm -rf crazy_car.zip
 
+# supervisor conf
 # crazy_car.ini内容如下
 # [program:crazy_car]
 # command=/usr/lib/jvm/jdk-17.0.5/bin/java -jar /root/crazy_car_game/crazy_car.jar > >/root/crazy_car_game/crazy_car.txt &
