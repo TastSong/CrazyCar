@@ -1,4 +1,4 @@
-package com.tastsong.crazycar.Util;
+package com.tastsong.crazycar.utils;
 
 import java.util.HashMap;
 import java.util.Map;

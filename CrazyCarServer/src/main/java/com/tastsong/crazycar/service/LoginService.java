@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
@@ -15,6 +14,7 @@ import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.model.UserInfoModel;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.utils.Util;
 
 @Service
 public class LoginService {

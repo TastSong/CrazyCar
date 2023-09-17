@@ -5,7 +5,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Component;
 
-import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;

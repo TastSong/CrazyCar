@@ -12,7 +12,7 @@ import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 import com.tastsong.crazycar.service.TimeTrialService;
-import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
