@@ -79,7 +79,7 @@ public class BackgroundUser {
     @GetMapping(value = "getRoutes")
     public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
         Integer uid = Util.getUidByToken(token);
-       
+        System.out.println(uid);
         return backgroundUserService.getRoute(uid);
     }
 
