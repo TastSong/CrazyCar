@@ -181,7 +181,7 @@ export const constantRoutes = [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  },
+  }
   /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
@@ -228,8 +228,9 @@ export const constantRoutes = [
   //   ]
   // },
 
+  // ********* 放在最后 *********
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
