@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 

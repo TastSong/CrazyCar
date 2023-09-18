@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.service.LoginService;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -79,7 +79,7 @@ public class BackgroundUser {
     @GetMapping(value = "getRoutes")
     public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
         Integer uid = Util.getUidByToken(token);
-       
+        System.out.println(uid);
         return backgroundUserService.getRoute(uid);
     }
 

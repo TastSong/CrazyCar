@@ -42,6 +42,7 @@ router.beforeEach(async(to, from, next) => {
           }
           const menus = filterAsyncRouter(store.getters.menus)
           console.log('   ===' + JSON.stringify(menus))
+          router.push({ path: '*', redirect: '/404', hidden: true })
           router.addRoutes(menus)
           global.antRouter = menus
           next({ ...to, replace: true })
