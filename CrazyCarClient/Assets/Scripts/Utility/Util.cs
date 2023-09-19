@@ -81,9 +81,9 @@ namespace Utils {
                 case ServerType.Local:
                     return "127.0.0.1";
                 case ServerType.Remote:
-                    return "101.34.205.139";
-                case ServerType.TestServer:
                     return "139.9.103.145";
+                case ServerType.TestServer:
+                    return "101.34.205.139";
                 default:
                     return "127.0.0.1";
             }
