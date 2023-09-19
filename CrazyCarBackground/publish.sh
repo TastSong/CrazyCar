@@ -5,12 +5,12 @@ rm -rf crazy_car_background.zip
 
 zip crazy_car_background.zip crazy_car_background/* crazy_car_background/static/* crazy_car_background/static/css/* crazy_car_background/static/fonts/* crazy_car_background/static/img/* crazy_car_background/static/js/*
 
-scp crazy_car_background.zip 118.195.254.13:/root/nginx/
+scp crazy_car_background.zip huawei:/data/wwwroot/default/
 
 rm -rf crazy_car_background.zip
 
-ssh -t 118.195.254.13 "rm -rf /root/nginx/"
-ssh -t 118.195.254.13 "unzip /root/nginx/crazy_car_background.zip -d /root/nginx/"
+ssh -t huawei "rm -rf /data/wwwroot/default/crazy_car_background"
+ssh -t huawei "unzip /data/wwwroot/default/crazy_car_background.zip -d /data/wwwroot/default/"
 
 echo "Finish!!!"
 
