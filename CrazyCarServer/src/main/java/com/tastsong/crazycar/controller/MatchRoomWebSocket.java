@@ -6,11 +6,11 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
 import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -79,6 +79,7 @@ public class MatchRoomWebSocket {
         }
     }
  
+    // todo: 加入一个Dispatcher，使用Dispatcher进行消息分发，与token验证
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("Match Room onMessage : " + message);

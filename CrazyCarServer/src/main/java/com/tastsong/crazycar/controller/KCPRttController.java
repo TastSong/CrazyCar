@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backblaze.erasure.fec.Snmp;
-import com.tastsong.crazycar.Util.Util;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 import io.netty.buffer.ByteBuf;

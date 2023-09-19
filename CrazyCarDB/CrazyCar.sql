@@ -1,8 +1,8 @@
-create database crazy_car;
+create database crazy_car charset=utf8mb4 collate=utf8mb4_general_ci;
 use crazy_car;
 /*
 centos 如果没生效
-1. sudo find / -name "my.cnf"
+1. sudo find / -name 'my.cnf'
 2. 添加
 sql_mode =STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 3. sudo systemctl stop mysqld
@@ -24,21 +24,21 @@ create table if not exists `all_user`(
    )engine = innodb default charset = utf8;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
-					   (1, "Tast", "96e79218965eb72c92a549dd5a330112", 1629544628, 1, 99, 1, 1);
+					   (1, 'Tast', '96e79218965eb72c92a549dd5a330112', 1629544628, 1, 99, 1, 1);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (2, "song", "96e79218965eb72c92a549dd5a330112", 1629544634, 2, 88, 1, 2);
+					   (2, 'song', '96e79218965eb72c92a549dd5a330112', 1629544634, 2, 88, 1, 2);
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (3, "阿宋小娇妻", "96e79218965eb72c92a549dd5a330112", 1629544655, 3, 66, 1, 3);        
+					   (3, '阿宋小娇妻', '96e79218965eb72c92a549dd5a330112', 1629544655, 3, 66, 1, 3);        
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
                        values
-					   (4, "Lory", "96e79218965eb72c92a549dd5a330112", 1629544666, 4, 12, 0, 1);                       
+					   (4, 'Lory', '96e79218965eb72c92a549dd5a330112', 1629544666, 4, 12, 0, 1);                       
 select* from all_user;
 
 select user_password 
 from all_user 
-where user_name = "Tast";
+where user_name = 'Tast';
 /*修改原有表all_user*/
 /*
 ALTER TABLE all_user ADD aid INT(4)  not null;
@@ -55,61 +55,61 @@ create table if not exists `avatar_name`(
    )engine = innodb default charset = utf8;
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("0", "Tast 0", 3);
+				   ('0', 'Tast 0', 3);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("1", "Black 1", 2);
+				   ('1', 'Black 1', 2);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("2", "Write 2", 4);
+				   ('2', 'Write 2', 4);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("3", "Write 3", 5);
+				   ('3', 'Write 3', 5);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("4", "Write 4", 6);
+				   ('4', 'Write 4', 6);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("5", "Write 5", 4);
+				   ('5', 'Write 5', 4);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("6", "Avatar6", 2);
+				   ('6', 'Avatar6', 2);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("7", "Avatar7", 100);
+				   ('7', 'Avatar7', 100);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("8", "Avatar8", 1);
+				   ('8', 'Avatar8', 1);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("9", "Avatar9", 3);
+				   ('9', 'Avatar9', 3);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("11", "Avatar11", 3);
+				   ('11', 'Avatar11', 3);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("12", "Avatar12", 5);
+				   ('12', 'Avatar12', 5);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("13", "Avatar13", 6);
+				   ('13', 'Avatar13', 6);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("14", "Avatar14", 5);
+				   ('14', 'Avatar14', 5);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("15", "Avatar15", 2);
+				   ('15', 'Avatar15', 2);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("16", "Avatar160", 3);
+				   ('16', 'Avatar160', 3);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("17", "Avatar17", 5);
+				   ('17', 'Avatar17', 5);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("18", "Avatar18", 2);
+				   ('18', 'Avatar18', 2);
 insert into avatar_name ( rid, avatar_name, star )
 				   values
-				   ("19", "Avatar19", 4);
+				   ('19', 'Avatar19', 4);
 select* from avatar_name;
 
 select* from all_user;
@@ -175,22 +175,22 @@ create table if not exists `time_trial_class`(
    )engine = innodb default charset = utf8;
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (2, 0, 0, 88, "基地卡通", 2);
+				   (2, 0, 0, 88, '基地卡通', 2);
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (14, 1, 1, 96, "水上乐园", 2);
+				   (14, 1, 1, 96, '水上乐园', 2);
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (3, 2, 0, 80, "曲折前行", 2);
+				   (3, 2, 0, 80, '曲折前行', 2);
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (22, 3, 0, 100, "蜿蜒驰骋", 2);
+				   (22, 3, 0, 100, '蜿蜒驰骋', 2);
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (4, 4, 0, 90, "砥砺前行", 2);        
+				   (4, 4, 0, 90, '砥砺前行', 2);        
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 5, 0, 90, "几何风光", 2);                     
+				   (1, 5, 0, 90, '几何风光', 2);                     
 select* from time_trial_class;
 select cid from time_trial_class;
 
@@ -207,22 +207,22 @@ create table if not exists `match_map`(
    )engine = innodb default charset = utf8;
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (2, 0, 0, 88, "基地卡通", 1);
+				   (2, 0, 0, 88, '基地卡通', 1);
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (14, 1, 1, 96, "水上乐园", 1);
+				   (14, 1, 1, 96, '水上乐园', 1);
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (3, 2, 0, 80, "曲折前行", 2);
+				   (3, 2, 0, 80, '曲折前行', 2);
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (22, 3, 0, 100, "蜿蜒驰骋", 2);
+				   (22, 3, 0, 100, '蜿蜒驰骋', 2);
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (4, 4, 0, 90, "砥砺前行", 2);        
+				   (4, 4, 0, 90, '砥砺前行', 2);        
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
-				   (1, 5, 0, 90, "几何风光", 2);                     
+				   (1, 5, 0, 90, '几何风光', 2);                     
 select* from match_map;
 select cid from match_map;
 
@@ -396,23 +396,23 @@ create table if not exists `forced_updating`(
    )engine = innodb default charset = utf8;
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("Android", "9.2.0", 10000, 1633519472000, "https://www.pgyer.com/xlbk");
+				   ('Android', '9.2.0', 10000, 1633519472000, 'https://www.pgyer.com/xlbk');
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("ios", "9.2.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+				   ('ios', '9.2.0', 10000, 1633519472123, 'https://www.pgyer.com/rRut');
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("WebGL", "9.2.0", 10000, 1633519472123, "https://www.pgyer.com/rRut");
+				   ('WebGL', '9.2.0', 10000, 1633519472123, 'https://www.pgyer.com/rRut');
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("PC", "9.2.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");
+				   ('PC', '9.2.0', 10000, 1633519472121, 'https://github.com/TastSong/CrazyCar/releases/latest');
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
-				   ("Defeat", "0.0.0", 10000, 1633519472121, "https://github.com/TastSong/CrazyCar/releases/latest");                                         
+				   ('Defeat', '0.0.0', 10000, 1633519472121, 'https://github.com/TastSong/CrazyCar/releases/latest');                                         
 select * from forced_updating;
 update forced_updating
-set version = "8.5.0", rule = 9999, url = "https://github.com/TastSong/CrazyCar/releases/latest"
-where platform = "PC";
+set version = '8.5.0', rule = 9999, url = 'https://github.com/TastSong/CrazyCar/releases/latest'
+where platform = 'PC';
 
 /*all_equip*/
 create table if not exists `all_equip`(
@@ -429,28 +429,28 @@ create table if not exists `all_equip`(
    )engine = innodb default charset = utf8;
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_F1_Blue", "F1 Blue", 3, 20, 70, 96, 0, 1);
+				   ('R_Car_F1_Blue', 'F1 Blue', 3, 20, 70, 96, 0, 1);
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_MonsterTruck_Red", "Monster Red", 2, 20, 78, 86, 0, 1);
+				   ('R_Car_MonsterTruck_Red', 'Monster Red', 2, 20, 78, 86, 0, 1);
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_OffRoadTruck_Orange", "RoadTruck Orange", 12, 21, 98, 93, 1, 1);                
+				   ('R_Car_OffRoadTruck_Orange', 'RoadTruck Orange', 12, 21, 98, 93, 1, 1);                
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_SprintCar_White", "SprintCar White", 10, 20, 96, 92, 1, 1);                 
+				   ('R_Car_SprintCar_White', 'SprintCar White', 10, 20, 96, 92, 1, 1);                 
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_StockCar_Red", "StockCar Red", 4, 18, 78, 88, 0, 0);
+				   ('R_Car_StockCar_Red', 'StockCar Red', 4, 18, 78, 88, 0, 0);
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_StockCar_White", "StockCar White", 48, 15, 100, 120, 1, 1);   
+				   ('R_Car_StockCar_White', 'StockCar White', 48, 15, 100, 120, 1, 1);   
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_OffRoadTruck_Orange_2", "RoadTruck Orange2", 4, 21, 80, 93, 0, 1);   
+				   ('R_Car_OffRoadTruck_Orange_2', 'RoadTruck Orange2', 4, 21, 80, 93, 0, 1);   
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
-				   ("R_Car_SprintCar_White_2", "SprintCar White2", 5, 20, 82, 92, 0, 1);                     
+				   ('R_Car_SprintCar_White_2', 'SprintCar White2', 5, 20, 82, 92, 0, 1);                     
 select* from all_equip;
 
 /*equip_uid*/
@@ -507,12 +507,12 @@ create table if not exists `match_class`(
    )engine = innodb default charset = utf8;
 insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time)
 				   values
-				   (2, 0, '1111', 60, "基地卡通", 1, 1633519470, 1633519470);
+				   (2, 0, '1111', 60, '基地卡通', 1, 1633519470, 1633519470);
 insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time )
 				   values
-				   (1, 1, '0011', 70, "几何风光", 3, 1633519472, 1633519472);
+				   (1, 1, '0011', 70, '几何风光', 3, 1633519472, 1633519472);
 select cid from match_class where room_id = '0011' and start_time = 1633519472;
-insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time) values (2, 0, "1121",120, "TastSong", 1, 1652146822, 1652146792);
+insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time) values (2, 0, '1121',120, 'TastSong', 1, 1652146822, 1652146792);
 select* from match_class;
 
 /*match_record*/
@@ -593,25 +593,25 @@ create table if not exists `user_login_record`(
    )engine = innodb default charset = utf8;
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Lrrrr", 1658471682, "山东，青岛", "ios");  
+					   ('Lrrrr', 1658471682, '山东，青岛', 'ios');  
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Tast", 1658385282, "山东，青岛", "ios");                
+					   ('Tast', 1658385282, '山东，青岛', 'ios');                
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Song", 1658288609, "山东，青岛", "ios"); 
+					   ('Song', 1658288609, '山东，青岛', 'ios'); 
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Tast", 1658202210, "山东，青岛", "ios"); 
+					   ('Tast', 1658202210, '山东，青岛', 'ios'); 
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Fete", 1658202210, "山东，青岛", "ios");                          
+					   ('Fete', 1658202210, '山东，青岛', 'ios');                          
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Song", 1658202210, "山东，青岛", "ios");      
+					   ('Song', 1658202210, '山东，青岛', 'ios');      
 insert into user_login_record (user_name, login_time, place, device)
                        values
-					   ("Fete", 1658332801, "山东，青岛", "ios");                           
+					   ('Fete', 1658332801, '山东，青岛', 'ios');                           
 select* from user_login_record;
 select* from user_login_record
 where login_time > 1629544627;
@@ -632,12 +632,25 @@ create table if not exists `assets_updating`(
    )engine = innodb default charset = utf8;
 insert into assets_updating (id, is_on, updata_time, url)
 				   values
-				   (0, 1, 1633519472000, "http://tastsong.top/crazy_car_addressable");
+				   (0, 1, 1633519472000, 'http://tastsong.top/crazy_car_addressable');
 update assets_updating
 set is_on = 0
 where id = 0;
 select * from assets_updating;
 
-
+/*admin_user*/
+create table if not exists `admin_users`(
+    `uid` int unsigned auto_increment,
+    `user_password` VARCHAR(100) not null,
+    `user_name` VARCHAR(100) not null,
+    `des` VARCHAR(1000) not null,
+    `routes` TEXT,
+   primary key ( `uid` )
+   )engine = innodb default charset = utf8;
+insert into `admin_users` (`user_password`, `user_name`, `des`, `routes`) VALUES
+    ('123456', 'admin', 'Super Administrator. Have access to view all pages.', '[ { "redirect":"/form/index", "level":0, "parentId":0, "path":"/form", "component":"Layout", "createTime":"2020-02-07T08:29:13.000+00:00", "children":[ { "path":"form", "component":"form/index", "meta":{ "icon":"form", "title":"Form" }, "name":"Form" } ], "meta":{ "icon":"form", "title":"Form" }, "id":68 }, { "redirect":"/permission/role", "path":"/permission", "component":"Layout", "children":[ { "path":"role", "component":"permission/role", "meta":{ "title":"Role Permission" }, "name":"RolePermission" } ], "meta":{ "icon":"lock", "title":"Permission" }, "alwaysShow":true } ]'),
+    ('123456', 'editor', 'Normal Editor. Can see all pages except permission page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]'),
+    ('123456', 'visitor', 'Just a visitor. Can only see the home page and the document page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]');
+select * from admin_users;
 
 

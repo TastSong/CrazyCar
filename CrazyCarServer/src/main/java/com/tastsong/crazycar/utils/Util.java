@@ -1,4 +1,4 @@
-package com.tastsong.crazycar.Util;
+package com.tastsong.crazycar.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,8 @@ public class Util {
 
 	public static Integer getUidByToken(String token){
 		cn.hutool.jwt.JWT jwt = JWTUtil.parseToken(token);
-		return (Integer) jwt.getPayload("uid");
+		Integer uid = Integer.valueOf(jwt.getPayload("uid").toString());
+		return uid;
 	}
 	
 	public static class MsgType {

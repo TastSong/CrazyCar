@@ -18,6 +18,7 @@ public interface MatchMapper {
     public Integer insertRecord(MatchRecordModel recordModel);
     public Integer delMatchRank(Integer uid, Integer cid);
     public List<MatchRankModel> getMatchRankList(Integer uid, Integer cid);
+    public List<MatchRankModel> getMatchRankListByCid(Integer cid);
     public Integer initMatchRank(Integer uid, Integer cid);
     public List<DataStatisticsModel> getMatchData(Integer offsetTime); 
     public Integer updateMatchMapInfo(MatchMapInfoModel mapInfoModel);

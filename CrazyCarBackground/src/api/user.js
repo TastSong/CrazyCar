@@ -38,3 +38,56 @@ export function updateUser(data) {
     data
   })
 }
+
+export function getAllRoutes() {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getAllRoutes',
+    method: 'get'
+  })
+}
+
+export function getRoutes() {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getRoutes',
+    method: 'get'
+  })
+}
+
+export function getRoutesByUid(uid) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getRoutesByUid',
+    method: 'get',
+    params: { uid }
+  })
+}
+
+export function getRoles() {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/getRoles',
+    method: 'get'
+  })
+}
+
+export function createRole(data) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/createRole',
+    method: 'post',
+    data
+  })
+}
+
+export function updateRole(data) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/updateRole',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteRole(data) {
+  return request({
+    url: '/CrazyCarSpringBootServer/v2/Background/deleteRole',
+    method: 'post',
+    data: data
+  })
+}

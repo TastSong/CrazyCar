@@ -105,7 +105,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            // this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/welcome' })
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -144,7 +145,6 @@ $cursor: #fff;
     input {
       background: transparent;
       border: 0px;
-      -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;

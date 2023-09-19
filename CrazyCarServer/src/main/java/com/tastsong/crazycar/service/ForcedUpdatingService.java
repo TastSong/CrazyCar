@@ -3,8 +3,8 @@ package com.tastsong.crazycar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.mapper.ForcedUpdatingMapper;
+import com.tastsong.crazycar.utils.Util;
 
 @Service
 public class ForcedUpdatingService {

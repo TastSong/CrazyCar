@@ -5,13 +5,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.service.LoginService;
+import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -24,6 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BackgroundUser {
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private BackgroundUserService backgroundUserService;
 
     @GetMapping(value = "/userInfo")
     public JSONObject userInfo() throws Exception {
@@ -60,5 +68,63 @@ public class BackgroundUser {
         userModel.is_vip = body.getBool("is_vip");
         loginService.updateUser(userModel);
         return loginService.getUserByName(userModel.user_name);
+    }        
+
+    @GetMapping(value = "getAllRoutes")
+    public Object getAllRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
+        return backgroundUserService.getAllRoute();
+    }
+
+
+    @GetMapping(value = "getRoutes")
+    public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
+        Integer uid = Util.getUidByToken(token);
+        System.out.println(uid);
+        return backgroundUserService.getRoute(uid);
+    }
+
+    @GetMapping(value = "getRoutesByUid")
+    public Object getRoutesByUid(@RequestParam("uid") Integer uid) throws Exception {
+        return backgroundUserService.getRoute(uid);
+    }
+
+    @GetMapping(value = "getRoles")
+    public Object getRoles() throws Exception {
+        return backgroundUserService.getAllUser();
+    }
+
+    @PostMapping(value = "createRole")
+    public Object createRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+        AdminUserModel adminUserModel = new AdminUserModel();
+        adminUserModel.user_name = body.getStr("user_name");
+        adminUserModel.user_password = "123456";
+        adminUserModel.des = body.getStr("des");
+        adminUserModel.routes = body.getObj("routes").toString();
+        if(backgroundUserService.isExistsUser(adminUserModel.user_name )){
+            return Result.failure(ResultCode.RC423);
+        } else{ 
+            backgroundUserService.insertUser(adminUserModel);
+            adminUserModel.uid = backgroundUserService.getUserByName(adminUserModel.user_name).uid;
+            return adminUserModel;
+        }
+
+    }
+
+    @PostMapping(value = "updateRole")
+    public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+        Integer uid = Util.getUidByToken(token);
+        if(uid == 1){
+            return Result.failure(ResultCode.RC423);
+        } else{
+            String routes = body.getStr("routes");
+            backgroundUserService.updateUserRoute(uid, routes);
+            return backgroundUserService.getUserByUid(uid);
+        }
+    }
+
+    @PostMapping(value = "deleteRole")
+    public Object deleteRole(@RequestBody JSONObject body) throws Exception {
+        Integer[] id = {500, 666};
+        return id;
     }
 }

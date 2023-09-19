@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastsong.crazycar.mapper.AdminUserMapper">
+    <select id="getAllUserNum" resultType="Integer">
+        select
+        Count(*)
+        from admin_users;
+    </select>
+
+    <select id="getAllUser" resultType="AdminUserModel">
+        select
+        *
+        from admin_users;
+    </select>
+
+    <select id="getUserByUid" resultType="AdminUserModel">
+        select
+        *
+        from admin_users 
+        where uid = #{uid};
+    </select>
+
+    <select id="getUserByName" resultType="AdminUserModel">
+        select
+        *
+        from admin_users 
+        where user_name = #{userName};
+    </select>
+
+    <select id="isExistsUser" resultType="boolean">
+        select exists(
+        select
+        *
+        from admin_users 
+        where user_name = #{userName});
+    </select>
+
+    <select id="isExistsUserByUid" resultType="boolean">
+        select exists(
+        select
+        *
+        from admin_users 
+        where uid = #{uid});
+    </select>
+
+    <insert id="insertUser" parameterType="AdminUserModel">
+        insert into admin_users (
+          user_name, user_password, des, routes
+        ) VALUES (
+         #{user_name}, #{user_password}, #{des}, #{routes}
+        )
+    </insert>
+
+    <update id="updateUserPassword">
+        update admin_users
+        set user_password = #{password}
+        where uid = #{uid}
+    </update>
+
+    <update id="updateUserRoute">
+        update admin_users
+        set routes = #{routes}
+        where uid = #{uid}
+    </update>
+</mapper>

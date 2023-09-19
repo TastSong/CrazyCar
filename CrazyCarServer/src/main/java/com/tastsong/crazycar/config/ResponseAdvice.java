@@ -14,6 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
@@ -27,6 +30,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
             return body;
         } else if (body instanceof LinkedHashMap) {
             // Spring boot 捕获异常
+            log.info("beforeBodyWrite ResponseAdvice Type : " + body.getClass() + "; data : " + body.toString());
             return Result.failure(ResultCode.RC500);
         } else {
             //log.info("ResponseAdvice Type : " + body.getClass() + "; data : " + JSONUtil.toJsonStr(body));

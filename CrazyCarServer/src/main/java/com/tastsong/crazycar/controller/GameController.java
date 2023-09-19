@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
-import com.tastsong.crazycar.Util.Util;
 import com.tastsong.crazycar.common.GameType;
 import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.utils.Util;
 
 @RestController
 @Scope("prototype")

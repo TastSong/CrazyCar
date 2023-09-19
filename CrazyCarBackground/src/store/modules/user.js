@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getRoutes } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    menus: ''
   }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
   }
 }
 
@@ -50,7 +54,11 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
         console.log('++++++++ ' + response)
-        const { name, avatar } = response
+        const { roles, name, avatar } = response
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -81,6 +89,19 @@ const actions = {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
+    })
+  },
+
+  getRoutes({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getRoutes().then(response => {
+        const menus = response
+        console.log('++++++++ ' + JSON.stringify(menus))
+        commit('SET_MENUS', menus)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

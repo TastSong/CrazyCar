@@ -20,14 +20,15 @@ public class TimeTrialService {
     @Autowired
     private UserMapper userMapper;
 
-    private void initRank(Integer uid, Integer cid){
-        timeTrialMapper.delTimeTrialRank(uid, cid);
-        timeTrialMapper.initTimeTrialRank(uid, cid);
-    }
+    // private void initRank(Integer uid, Integer cid){
+    //     timeTrialMapper.delTimeTrialRank(uid, cid);
+    //     timeTrialMapper.initTimeTrialRank(uid, cid);
+    // }
 
     public List<TimeTrialRankModel> getRankList(Integer uid, Integer cid){
-        initRank(uid, cid);
-        List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankList(uid, cid);
+        // initRank(uid, cid);
+        // List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankList(uid, cid);
+        List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankListByCid(cid);
         for (Integer i = 0; i< timeTrialRankModels.size(); i++){
             Integer userId = timeTrialRankModels.get(i).uid;
             timeTrialRankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
@@ -99,8 +100,9 @@ public class TimeTrialService {
     }
 
     public Integer getRank(Integer uid, Integer cid){
-        initRank(uid, cid);
-        return timeTrialMapper.getRank(uid, cid);
+        // initRank(uid, cid);
+        // return timeTrialMapper.getRank(uid, cid);
+        return timeTrialMapper.getRankByUid(uid, cid);
     }
 
     public Integer getMapStar(Integer cid){
