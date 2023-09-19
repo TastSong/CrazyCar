@@ -61,6 +61,22 @@
         from time_trial_rank_${uid}_${cid};
     </select>
 
+    <select id="getTimeTrialRankListByCid" resultType="TimeTrialRankModel">
+        select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
+                        from
+                            (
+                                select *
+                                from
+                                (select uid, min(complete_time) as complete_time
+                                from
+                                    time_trial_record
+                                    where cid = ${cid} and complete_time != -1 
+                                    group by uid) as min_time
+                                order by complete_time asc
+                            ) as user_rank,
+                            (select @rank_num:= 0) r)  as all_user_rank;
+    </select>
+
     <select id="getTimeTrialInfos" resultType="TimeTrialInfoModel">
         select
         *
