@@ -22,6 +22,7 @@ public interface TimeTrialMapper {
     public Integer getMiniCompleteTime(Integer uid, Integer cid);
     public Integer insertRecord(TimeTrialRecordModel recordModel);
     public Integer getRank(Integer uid, Integer cid);
+    public Integer getRankByUid(Integer uid, Integer cid);
     public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime); 
     public Integer updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel);
 }

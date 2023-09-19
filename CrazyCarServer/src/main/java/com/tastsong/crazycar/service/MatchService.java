@@ -99,14 +99,15 @@ public class MatchService {
         matchMapper.insertRecord(recordModel);
     }
 
-    private void initRank(Integer uid, Integer cid){
-        matchMapper.delMatchRank(uid, cid);
-        matchMapper.initMatchRank(uid, cid);
-    }
+    // private void initRank(Integer uid, Integer cid){
+    //     matchMapper.delMatchRank(uid, cid);
+    //     matchMapper.initMatchRank(uid, cid);
+    // }
 
     public List<MatchRankModel> getRankList(Integer uid, Integer cid){
-        initRank(uid, cid);
-        List<MatchRankModel> rankModels =  matchMapper.getMatchRankList(uid, cid);
+        // initRank(uid, cid);
+        // List<MatchRankModel> rankModels =  matchMapper.getMatchRankList(uid, cid);
+        List<MatchRankModel> rankModels =  matchMapper.getMatchRankListByCid(cid);
         for (Integer i = 0; i< rankModels.size(); i++){
             Integer userId = rankModels.get(i).uid;
             rankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
