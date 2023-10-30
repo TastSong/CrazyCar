@@ -36,8 +36,8 @@ public class MatchService {
         return equipMapper.getEquipByEid(eid).can_wade;
     }
 
-    public void insertMatchClass(MatchRoomInfoModel infoModel){
-        matchMapper.insertMatchClass(infoModel);
+    public Boolean insertMatchClass(MatchRoomInfoModel infoModel){
+        return matchMapper.insertMatchClass(infoModel) > 0;
     }
 
     public Integer getMatchRoomCid(String roomId, long startTime){
