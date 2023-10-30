@@ -204,7 +204,7 @@ export default {
       const isEdit = this.dialogType === 'edit'
 
       const checkedKeys = this.$refs.tree.getCheckedKeys()
-      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
+      this.role.routes = this.generateTree(asyncRoutes, '/', checkedKeys)
       if (isEdit) {
         const { data } = await updateRole(this.role)
         console.log('+++++ updateRole' + JSON.stringify(data))

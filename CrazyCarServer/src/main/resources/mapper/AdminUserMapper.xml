@@ -43,7 +43,7 @@
         where uid = #{uid});
     </select>
 
-    <insert id="insertUser" parameterType="AdminUserModel">
+    <insert id="insertUser" parameterType="AdminUserModel" useGeneratedKeys="true" keyProperty="uid">
         insert into admin_users (
           user_name, user_password, des, routes
         ) VALUES (
