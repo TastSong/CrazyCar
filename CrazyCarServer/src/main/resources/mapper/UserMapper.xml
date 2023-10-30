@@ -45,7 +45,7 @@
         where uid = #{uid});
     </select>
 
-    <insert id="insertUser" parameterType="UserModel">
+    <insert id="insertUser" parameterType="UserModel" useGeneratedKeys="true" keyProperty="uid">
         insert into all_user (
           user_name, user_password, login_time, aid, star, is_vip, eid
         ) VALUES (
