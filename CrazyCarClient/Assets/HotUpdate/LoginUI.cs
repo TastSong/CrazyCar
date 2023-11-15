@@ -20,8 +20,6 @@ public class LoginUI : MonoBehaviour, IController {
 
     private void Start() {
         standAloneBtn.onClick.AddListener(() => {
-            WarningAlertInfo alertInfo = new WarningAlertInfo("Stand Alone");
-            this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.SendCommand<EnableStandAloneCommand>();
         });

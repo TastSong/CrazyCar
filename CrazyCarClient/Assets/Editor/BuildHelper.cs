@@ -11,6 +11,7 @@ using Utils;
 using UnityEditor.AddressableAssets.Settings;
 using System.Collections.Generic;
 using System;
+using HybridCLR.Editor.Commands;
 
 public static class BuildHelper {
     public static void BuildGame(string type, string path = null) {
@@ -27,8 +28,42 @@ public static class BuildHelper {
     }
 
     public static void BuildBundleToAsset() {
+        Debug.Log("Build HotUpdate DLL......");
+        PrebuildCommand.GenerateAll();
+        CopyFilesToAssets();
         Debug.Log("BuildBundleToAsset......");
         AddressableAssetSettings.BuildPlayerContent();
+    }
+    
+    private static void CopyFilesToAssets() {
+        // 根据当前平台构建源文件路径
+        string platformFolder = GetPlatformFolder();
+        string sourceFilePath = Path.Combine(Application.dataPath, $"../HybridCLRData/HotUpdateDlls/{platformFolder}/HotUpdate.dll");
+
+        string destinationFolderPath = Path.Combine(Application.dataPath, "HotUpdateDll");
+        string destinationFilePath = Path.Combine(destinationFolderPath, "HotUpdate.dll.bytes");
+
+        // 删除目标文件夹中的HotUpdate.dll.bytes
+        if (File.Exists(destinationFilePath)) {
+            File.Delete(destinationFilePath);
+        }
+
+        // 复制文件
+        File.Copy(sourceFilePath, destinationFilePath);
+        // 刷新Unity编辑器
+        AssetDatabase.Refresh();
+    }
+    
+    private static string GetPlatformFolder()
+    {
+#if UNITY_ANDROID
+        return "Android";
+#elif UNITY_IOS
+        return "iOS";
+#elif UNITY_STANDALONE
+        return "StandaloneWindows";
+#endif
+        return "Android";
     }
 
     public static void BuildConfig(string type, Action successCallback = null) {
