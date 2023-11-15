@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /Users/bokken/build/output/Unity-Technologies/mono/tmp/bin/mono --gc-params=nursery-size=64m $MONO_OPTIONS /Users/bokken/build/output/Unity-Technologies/mono/tmp/lib/mono/4.5/vbc.exe "$@"
