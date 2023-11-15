@@ -104,8 +104,7 @@ public class BackgroundUser {
             return Result.failure(ResultCode.RC423);
         } else{ 
             backgroundUserService.insertUser(adminUserModel);
-            adminUserModel.uid = backgroundUserService.getUserByName(adminUserModel.user_name).uid;
-            return adminUserModel;
+            return backgroundUserService.getUserByUid(adminUserModel.uid);
         }
 
     }

@@ -95,7 +95,7 @@ public class LoginService {
         userModel.login_time = System.currentTimeMillis()/1000;
         userMapper.insertUser(userModel);
 
-		int uid = userMapper.getUserByName(userName).uid;
+		int uid = userModel.uid;
         if(avatarMapper.isHasAvatar(uid, defaultAid)){
             avatarMapper.addAvatarForUser(uid, defaultAid);
         }

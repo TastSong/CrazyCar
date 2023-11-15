@@ -229,7 +229,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
         matchService.insertMatchClass(infoModel);
-        Integer cid = matchService.getMatchRoomCid(infoModel.room_id, infoModel.start_time);
+        Integer cid = infoModel.cid;
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
