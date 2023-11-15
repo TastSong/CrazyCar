@@ -51,6 +51,8 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :blue_book:The resource hot update method is Addressable
 
+:hotsprings:Hot repairs:**HybridCLR**
+
 :video_game:Adopt Unity's new version of Input System, support a variety of controllers
 
 :alien:Robot,Robots can compete with players in Time trial
