@@ -23,6 +23,8 @@
 
 1. 用**Unity**(2021.3.9及以上)打开**CrazyCar -> CrazyCarClient**项目；
 
+1. 由于项目使用了**HybridCLR**，所以先配置项目的**IL2CPP**：打开菜单`HybridCLR/Installer`， 点击`安装`按钮进行安装，具体操作可以查看[HybridCLR (code-philosophy.com)](https://hybridclr.doc.code-philosophy.com/docs/intro)；**Assets->HotUpdate**文件夹为热更文件夹，热更的DLL打包好会放入**Assets->HotUpdateDll**，这些打包的时候都已经封装好了，直接执行菜单`Build/Remote`
+
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 
 3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
@@ -51,7 +53,7 @@
 
 ## 环境版本
 
-1. Unity 2021.3.12
+1. Unity 2021.3.9 f1c1
 2. VS 2019
 4. JDK 17
 5. MySQL 8.0.26

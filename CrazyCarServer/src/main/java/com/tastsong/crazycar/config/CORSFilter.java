@@ -24,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Order(1)
-@WebFilter(filterName = "CORSFilter", urlPatterns = {"/v2/*"})
+// @CrossOrigin 与 Filter 二选一，不要同时对一个接口使用
+@WebFilter(filterName = "CORSFilter")
 public class CORSFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,19 +38,12 @@ public class CORSFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         log.info("CORSFilter, URL：{}", request.getRequestURI());      
         try {
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-            httpResponse.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE");
-            httpResponse.setHeader("Access-Control-Allow-Headers", "content-type, authorization");
-            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpResponse.setHeader("Access-Control-Max-Age", "3600");
-            String token = request.getHeader(Util.TOKEN);
-            if(token != null){
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else{
-                log.info("missing Token ：{}", request.getRequestURI());
-                return;
-            }
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Allow-Headers", "content-type, authorization");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception e) {
             log.info("missing Token，or interface error：{}", request.getRequestURI());
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);

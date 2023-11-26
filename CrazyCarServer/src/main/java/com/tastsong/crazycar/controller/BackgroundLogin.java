@@ -16,7 +16,7 @@ import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
-@CrossOrigin
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1/Background")

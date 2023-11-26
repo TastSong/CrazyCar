@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="Main">
+    <type fullname="CrazyCar" preserve="all" />
+    <type fullname="EnableStandAloneCommand" preserve="all" />
+    <type fullname="ISoundSystem" preserve="all" />
+    <type fullname="IUserModel" preserve="all" />
+    <type fullname="LoginCommand" preserve="all" />
+    <type fullname="QFramework.Architecture`1" preserve="all" />
+    <type fullname="QFramework.BindableProperty`1" preserve="all" />
+    <type fullname="QFramework.CanGetModelExtension" preserve="all" />
+    <type fullname="QFramework.CanGetSystemExtension" preserve="all" />
+    <type fullname="QFramework.CanSendCommandExtension" preserve="all" />
+    <type fullname="QFramework.IArchitecture" preserve="all" />
+    <type fullname="QFramework.IBelongToArchitecture" preserve="all" />
+    <type fullname="QFramework.ICanGetModel" preserve="all" />
+    <type fullname="QFramework.ICanGetSystem" preserve="all" />
+    <type fullname="QFramework.ICanGetUtility" preserve="all" />
+    <type fullname="QFramework.ICanRegisterEvent" preserve="all" />
+    <type fullname="QFramework.ICanSendCommand" preserve="all" />
+    <type fullname="QFramework.ICanSendQuery" preserve="all" />
+    <type fullname="QFramework.IController" preserve="all" />
+    <type fullname="ShowPageCommand" preserve="all" />
+    <type fullname="SoundType" preserve="all" />
+    <type fullname="UILevelType" preserve="all" />
+    <type fullname="UIPageType" preserve="all" />
+    <type fullname="Utils.GameObjectExtension" preserve="all" />
+    <type fullname="WarningAlertInfo" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule">
+    <type fullname="UnityEngine.Component" preserve="all" />
+    <type fullname="UnityEngine.Debug" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.InputField" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle" preserve="all" />
+  </assembly>
+  <assembly fullname="netstandard">
+    <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
+    <type fullname="System.Object" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.CompilationRelaxationsAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.CompilerGeneratedAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.RuntimeCompatibilityAttribute" preserve="all" />
+    <type fullname="System.String" preserve="all" />
+  </assembly>
+</linker>

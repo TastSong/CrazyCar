@@ -55,6 +55,8 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 :blue_book:资源热更新方式为Addressable
 
+:hotsprings:热修复使用:**HybridCLR**
+
 :video_game:采用Unity新版本Input System，支持多款手柄
 
 :alien:机器人，计时赛中机器人可与玩家共同竞技
@@ -160,6 +162,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 10. [Midjourney](https://www.midjourney.com/app/)
 10. [Customizable skybox | 2D 天空 | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
 10. [Plugins for mobile platforms to enable file downloads in background (github.com)](https://github.com/Unity-Technologies/BackgroundDownload/tree/master)
+10. [focus-creative-games/hybridclr: HybridCLR是一个特性完整、零成本、高性能、低内存的Unity全平台原生c#热更方案](https://github.com/focus-creative-games/hybridclr)
 
 ------
 

@@ -51,6 +51,8 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :blue_book:The resource hot update method is Addressable
 
+:hotsprings:Hot repairs:**HybridCLR**
+
 :video_game:Adopt Unity's new version of Input System, support a variety of controllers
 
 :alien:Robot,Robots can compete with players in Time trial
@@ -146,6 +148,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 23. [Midjourney](https://www.midjourney.com/app/)
 23. [Customizable skybox | 2D 天空 | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
 23. [Plugins for mobile platforms to enable file downloads in background (github.com)](https://github.com/Unity-Technologies/BackgroundDownload/tree/master)
+23. [HybridCLR is a fully featured, zero-cost, high-performance, low-memory solution for Unity's all-platform native c# hotupdate](https://github.com/focus-creative-games/hybridclr)
 
 ## Star History
 
