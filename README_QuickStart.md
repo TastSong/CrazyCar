@@ -103,6 +103,17 @@
 7. 将**CrazyCar\CrazyCar\Assets\StreamingAssets**下生成的包放入**CrazyCar\CrazyCarServer\src\main\webapp**重新生成**War/Jar**包发布到服务端即可
 7. 具体分组的参数设置可以查看[此文章](./ProjectOptimization/Addressable.md)
 
+## 热修复
+
+![image-20231127091759199](./SamplePictures/hot_fix.png)
+
+1. 所有的热更脚本需要放入，**Project->HotUpdate**文件夹中
+2. 需要热更的UI，需要拖入**Addressable**的**WaitingHot**分组中，如**LoginU**
+3. 然后点击**Windows->Build->HotFix**
+4. 将**Project->StreamingAssets**中的对应的资源放入**CDN**或者**热更服务器**中即可
+
+*点击**HotFix**，首先会自动的执行**HybridCLR**资源整理，然后替换**Project-->HotUpdateDll**下的**HotUpdate.dll.bytes**，然后再进行**Addressable**资源打包，这一切都是自动化的，无需手动修改，至于为什么要替换**HotUpdate.dll.bytes**，需要自己去看一下**HybridCLR**的文档。*
+
 ## 添加头像
 
 1. 将头像放入**Assets -> AB -> Avatar** 文件夹
