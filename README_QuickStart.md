@@ -49,17 +49,16 @@
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
 > 2. [Apifox](https://www.apifox.cn/apidoc/shared-f1aa2fc5-8e30-46a8-9218-6c1cb96da3b7)接口测试分享
 
-10. 安装[nodejs](https://nodejs.org/en/) 16 ，使用VScode打开文件夹：CrazyCarBackground，然后在终端运行npm install安装依赖，最后使用npm run dev运行即可 (此模块按需求部署即可，[详细操作文档](https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/) ,**不要使用**nodejs18及其以上版本，使用16)
+10. 安装[nodejs](https://nodejs.org/en/) 16 ，使用VScode打开文件夹：CrazyCarBackground，然后在终端运行**npm install**安装依赖，最后使用**npm run dev**运行即可 (此模块按需求部署即可，[详细操作文档](https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/) ,**不要使用nodejs18及其以上版本，使用16**)
 
 ## 环境版本
 
 1. Unity 2021.3.9 f1c1
 2. VS 2019
-4. JDK 17
+4. JDK 17  *可高不可低*
 5. MySQL 8.0.26
-6. Tomcat 8.0.52
 8. Nginx  1.20.1
-8. Nodejs 16.16.0
+8. Nodejs 16.16.0  *不要使用18以上版本*
 
 ## 环境配置
 
@@ -76,12 +75,12 @@
 
   ```mermaid
   graph LR
-  start-->配置Java环境-->配置Maven环境-->配置Web服务器(Tomcat)-->配置Mysql-->配置VScode开发环境-->安装Unity
+  start-->配置Java环境-->配置Maven环境-->配置Mysql-->配置VScode开发环境-->安装Unity
   ```
 
   
 
-* 配置服务器基本属性a
+* 配置服务器基本属性
 
   1. 购买云服务器 [华为云](https://www.huaweicloud.com/?locale=zh-cn)
 
@@ -89,7 +88,7 @@
 
 ## 游戏引擎
 
-**Unity 2021.3.12 及以上**
+**Unity 2021.3.9 及以上**
 
 ## 添加新的热更类型
 
