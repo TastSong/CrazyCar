@@ -19,4 +19,9 @@ public class ApplicationBuilder : Editor {
     private static void BuildTestServer() {
         BuildHelper.BuildGame("TestServer");
     }
+    
+    [MenuItem("Build/HotFix")]
+    private static void BuildHotFix() {
+        BuildHelper.BuildBundleToAsset();
+    }
 }
