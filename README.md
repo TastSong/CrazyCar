@@ -55,7 +55,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 :blue_book:资源热更新方式为Addressable
 
-♨️:热修复使用:**HybridCLR**
+♨️热修复使用:**HybridCLR**
 
 :video_game:采用Unity新版本Input System，支持多款手柄
 

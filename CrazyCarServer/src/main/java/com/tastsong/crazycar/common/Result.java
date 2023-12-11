@@ -98,6 +98,10 @@ public class Result<T> implements Serializable {
         return failure(rc.getCode(), rc.getMessage(), null);
     }
 
+    public static <T> Result<T> failure(ResultCode rc, String msg) {
+        return failure(rc.getCode(), msg, null);
+    }
+
     /**
      * 失 败 操 作, 携 带 自 定 义 消 息 和 数 据
      */
