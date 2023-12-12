@@ -96,15 +96,15 @@ public class BackgroundUser {
     @PostMapping(value = "createRole")
     public Object createRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
         AdminUserModel adminUserModel = new AdminUserModel();
-        adminUserModel.user_name = body.getStr("user_name");
-        adminUserModel.user_password = "123456";
-        adminUserModel.des = body.getStr("des");
-        adminUserModel.routes = body.getObj("routes").toString();
-        if(backgroundUserService.isExistsUser(adminUserModel.user_name )){
+        adminUserModel.setUser_name(body.getStr("user_name"));
+        adminUserModel.setUser_password("123456");
+        adminUserModel.setDes(body.getStr("des"));
+        adminUserModel.setRoutes(body.getObj("routes").toString());
+        if(backgroundUserService.isExistsUser(adminUserModel.getUser_name() )){
             return Result.failure(ResultCode.RC423);
         } else{ 
             backgroundUserService.insertUser(adminUserModel);
-            return backgroundUserService.getUserByUid(adminUserModel.uid);
+            return backgroundUserService.getUserByUid(adminUserModel.getUid());
         }
 
     }

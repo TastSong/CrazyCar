@@ -1,10 +1,30 @@
 package com.tastsong.crazycar.model;
 
-public class AdminUserModel {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-    public int uid;
-    public String user_name;
-    public String user_password;
-    public String des;
-    public String routes;
+import javax.persistence.*;
+
+@Entity
+@Table(name = ConstModelNameAttribute.ASSETS_UPDATING)
+@TableName(ConstModelNameAttribute.ASSETS_UPDATING)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Data
+public class AdminUserModel {
+    @Id  //标注主键
+    @TableId(type = IdType.AUTO) //mybatis-plus注解
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
+    private int uid;
+    private String user_name;
+    private String user_password;
+    private String des;
+    private String routes;
 }

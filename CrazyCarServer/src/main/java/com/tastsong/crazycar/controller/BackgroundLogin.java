@@ -1,5 +1,8 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.dto.req.ReqLogin;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +19,9 @@ import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1/Background")
@@ -26,21 +31,22 @@ public class BackgroundLogin {
     private BackgroundUserService backgroundUserService;
 
     @PostMapping(value = "/login")
-    public Object login(@RequestBody JSONObject body) throws Exception {
-        String userName = body.getStr("username");
-        String password = body.getStr("password");
+    public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
+        String userName = req.getUsername();
+        String password = req.getPassword();
 
         if (backgroundUserService.isExistsUser(userName)){
             AdminUserModel userModel = backgroundUserService.getUserByName(userName);
-            if (password.equals(userModel.user_password)){
+            log.info("userModel:" + JSONUtil.toJsonStr(userModel));
+            if (password.equals(userModel.getUser_password())){
                 JSONObject data = new JSONObject();
-                data.putOpt("token", Util.createToken(userModel.uid));
+                data.putOpt("token", Util.createToken(userModel.getUid()));
                 return data;
             } else {
-                return Result.failure(ResultCode.RC423);
+                return Result.failure(ResultCode.RC423, "密码错误");
             }
         } else{
-            return Result.failure(ResultCode.RC404);
+            return Result.failure(ResultCode.RC404, "用户不存在");
         }
     }
 }

@@ -25,12 +25,12 @@ public class BackgroundUserService {
     }
 
     public JSONArray getAllRoute(){
-        String routes = adminUserMapper.getUserByUid(1).routes;
+        String routes = adminUserMapper.getUserByUid(1).getRoutes();
         return JSONUtil.parseArray(routes);
     }
 
     public JSONArray getRoute(int uid){
-        String routes = adminUserMapper.getUserByUid(uid).routes;
+        String routes = adminUserMapper.getUserByUid(uid).getRoutes();
         return JSONUtil.parseArray(routes);
     }
 
