@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @ServletComponentScan
 @SpringBootApplication
-@MapperScan("com.tastsong.crazycar")
+@MapperScan("com.tastsong.crazycar.mapper")
 @EnableScheduling
 public class CrazyCarApplication {
 
