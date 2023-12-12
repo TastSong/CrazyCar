@@ -1,11 +1,9 @@
 package com.tastsong.crazycar.controller;
 
-import cn.hutool.json.JSONUtil;
-import com.tastsong.crazycar.dto.req.ReqLogin;
+import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +29,7 @@ public class BackgroundLogin {
     private BackgroundUserService backgroundUserService;
 
     @PostMapping(value = "/login")
-    public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
+    public Object login(@Valid @RequestBody ReqBackgroundLogin req) throws Exception {
         String userName = req.getUsername();
         String password = req.getPassword();
 

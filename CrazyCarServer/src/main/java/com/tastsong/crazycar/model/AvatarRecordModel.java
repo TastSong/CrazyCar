@@ -24,5 +24,5 @@ public class AvatarRecordModel {
     private int id;
     private int aid;
     private int uid;
-    private long updateTime;
+    private long update_time;
 }

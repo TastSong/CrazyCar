@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import com.tastsong.crazycar.dto.req.ReqLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -32,8 +33,8 @@ public class LoginController {
 
 	@PostMapping(value = "/Login")
 	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
-		String userName = req.getUsername();
-		String password = req.getPassword();
+		String userName = req.UserName;
+		String password = req.Password;
 		log.info("login : userName = " + userName + "; password  = " + password);
 		UserModel userModel = loginService.getUserByName(userName);
 		if(userModel == null){

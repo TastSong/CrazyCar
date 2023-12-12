@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
-import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
+import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.utils.Util;
 
@@ -29,12 +29,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 @Component
 public class MatchRoomWebSocket {
-    private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
+    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>>();
     private static int onlineCount = 0;
     private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchRoomWebSocket>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private JSONObject sendMsg = new JSONObject(); 
-    private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
+    private ArrayList<RespMatchRoomPlayerInfo> playerLists = new ArrayList<RespMatchRoomPlayerInfo>();
     private int maxNum = 2;
     private int startOffsetTime = 16;
     private MatchService matchService;
@@ -112,13 +112,13 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 421);
         } else{
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
+            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = curUid;
             info.memberName = matchService.getUserName(curUid);
             info.aid = matchService.getAid(curUid);
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
-            ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
+            ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
             list.add(info);
             MatchRoomWebSocket.roomMap.put(roomId, list);
             data.putOpt("code", 200);
@@ -142,7 +142,7 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
             data.putOpt("code", 423);
         } else{
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
+            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = curUid;
             info.memberName = matchService.getUserName(curUid);
             info.aid = matchService.getAid(curUid);

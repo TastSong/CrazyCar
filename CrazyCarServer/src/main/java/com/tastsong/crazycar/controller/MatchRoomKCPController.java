@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backblaze.erasure.fec.Snmp;
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
-import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
+import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.utils.Util;
 
@@ -37,13 +37,13 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private static final long serialVersionUID = 1L;
     private boolean isInit = false;
     private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
-    private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
+    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>>();
     private static int onlineCount = 0;
     private int maxNum = 2;
     private int startOffsetTime = 16;
     private MatchService matchService;
     
-    private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
+    private ArrayList<RespMatchRoomPlayerInfo> playerLists = new ArrayList<RespMatchRoomPlayerInfo>();
 
     public MatchRoomKCPController() {
         super();
@@ -116,13 +116,13 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 421);
         } else {
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
+            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = uid;
             info.memberName = matchService.getUserName(uid);
             info.aid = matchService.getAid(uid);
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
-            ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
+            ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
             list.add(info);
             MatchRoomKCPController.roomMap.put(roomId, list);
             data.putOpt("code", 200);
@@ -146,7 +146,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.get(roomId).size() >= maxNum) {
             data.putOpt("code", 423);
         } else {
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
+            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = uid;
             info.memberName = matchService.getUserName(uid);
             info.aid = matchService.getAid(uid);

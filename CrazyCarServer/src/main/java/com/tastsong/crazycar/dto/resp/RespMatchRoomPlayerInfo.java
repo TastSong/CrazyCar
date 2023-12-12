@@ -1,6 +1,6 @@
-package com.tastsong.crazycar.model;
+package com.tastsong.crazycar.dto.resp;
 
-public class MatchRoomPlayerInfo {
+public class RespMatchRoomPlayerInfo {
     public int uid;
     public String memberName;
     public int aid;

@@ -22,9 +22,8 @@ public class AvatarModel {
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
     private int aid;
+
     private String rid;
     private String avatar_name;
     private int star;
-    @Transient
-    private boolean is_has;
 }

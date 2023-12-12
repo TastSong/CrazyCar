@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
-
+@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Avatar")
@@ -37,6 +38,7 @@ public class AvatarController {
         int uid = Util.getUidByToken(token);
         int aid = body.getInt("aid");
         JSONObject data = new JSONObject();
+        log.info("buyAvatar : uid = " + uid + "; aid  = " + aid);
         if (avatarService.hasAvatar(uid, aid)) {
             return data.putOpt("star", avatarService.getUserStar(uid));
         } else if (avatarService.canBuyAvatar(uid, aid)) {
