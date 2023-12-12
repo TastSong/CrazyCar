@@ -40,12 +40,10 @@ public class BackgroundAssetsController {
     public Object updateAssetsInfo(@RequestBody ReqUpdateAssets body) throws Exception {
         AssetsUpdatingModel assetsUpdatingModel = new AssetsUpdatingModel();
         log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(body));
-        assetsUpdatingModel.id = body.getId();
-        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(assetsUpdatingModel));
-        assetsUpdatingModel.is_on = body.is_on();
-        assetsUpdatingModel.url = body.getUrl();
-        assetsUpdatingModel.update_time = System.currentTimeMillis();
-        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(assetsUpdatingModel));
+        assetsUpdatingModel.setId(body.getId());
+        assetsUpdatingModel.set_on(body.is_on());
+        assetsUpdatingModel.setUrl(body.getUrl());
+        assetsUpdatingModel.setUpdate_time(System.currentTimeMillis());
         return assetsUpdatingService.updateInfo(assetsUpdatingModel) ? assetsUpdatingModel : false;
     }
 }
