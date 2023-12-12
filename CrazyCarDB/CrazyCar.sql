@@ -117,50 +117,51 @@ update all_user
 set aid = 2 
 where uid = 1;
 
-/*avatar_uid*/
-create table if not exists `avatar_uid`(
+/*avatar_record*/
+create table if not exists `avatar_record`(
    `id` int unsigned auto_increment,
    `aid` int not null,
    `uid` int not null,
+   `update_time` long,
    primary key ( `id` )
    )engine = innodb default charset = utf8;
-insert into avatar_uid ( aid, uid )
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (1, 1);
-insert into avatar_uid ( aid, uid )
+				   (1, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (2, 1);
-insert into avatar_uid ( aid, uid )
+				   (2, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (5, 1);
-insert into avatar_uid ( aid, uid )
+				   (5, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (9, 1);
-insert into avatar_uid ( aid, uid )
+				   (9, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (17, 1);
-insert into avatar_uid ( aid, uid )
+				   (17, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (18, 1);
-insert into avatar_uid ( aid, uid )
+				   (18, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (15, 1);
-insert into avatar_uid ( aid, uid )
+				   (15, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (16, 1);
-insert into avatar_uid ( aid, uid )
+				   (16, 1, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (2, 2);
-insert into avatar_uid ( aid, uid )
+				   (2, 2, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (3, 3);
-insert into avatar_uid ( aid, uid )
+				   (3, 3, 1702374103865);
+insert into avatar_record ( aid, uid, update_time )
 				   values
-				   (4, 4);                   
+				   (4, 4, 1702374103865);                   
 select aid from
- avatar_uid 
+ avatar_record 
  where aid = 1 and uid = 1;
-select aid from avatar_uid where uid = 1;
+select aid from avatar_record where uid = 1;
 
 /*time trail class*/
 create table if not exists `time_trial_class`(
