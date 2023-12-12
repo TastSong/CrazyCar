@@ -12,8 +12,8 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = ConstModelNameAttribute.ASSETS_UPDATING)
-@TableName(ConstModelNameAttribute.ASSETS_UPDATING)
+@Table(name = ConstModelNameAttribute.ADMIN_USERS)
+@TableName(ConstModelNameAttribute.ADMIN_USERS)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

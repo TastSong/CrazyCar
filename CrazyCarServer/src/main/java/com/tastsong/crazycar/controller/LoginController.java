@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ import com.tastsong.crazycar.utils.Util;
 import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1")
@@ -28,9 +31,9 @@ public class LoginController {
 	private LoginService loginService;
 
 	@PostMapping(value = "/Login")
-	public Object login(@RequestBody JSONObject body) throws Exception {
-		String userName = body.getStr("UserName");
-		String password = body.getStr("Password");
+	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
+		String userName = req.getUsername();
+		String password = req.getPassword();
 		log.info("login : userName = " + userName + "; password  = " + password);
 		UserModel userModel = loginService.getUserByName(userName);
 		if(userModel == null){
