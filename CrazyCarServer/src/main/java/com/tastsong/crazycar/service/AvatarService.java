@@ -20,7 +20,7 @@ public class AvatarService {
     public List<AvatarModel> getAvatarList(int uid){
         List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
         for (int i = 0; i < avatarModels.size(); i++){
-            avatarModels.get(i).is_has = isHasAvatar(uid, avatarModels.get(i).aid);
+            avatarModels.get(i).set_has(isHasAvatar(uid, avatarModels.get(i).getAid()));
         }
         return avatarModels;
     }
@@ -47,7 +47,7 @@ public class AvatarService {
     }
 
     private int getNeedStar(int aid){
-        return avatarMapper.getAvatarByAid(aid).star;
+        return avatarMapper.getAvatarByAid(aid).getStar();
     }
 
     public boolean canBuyAvatar(int uid, int aid) {

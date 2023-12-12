@@ -133,7 +133,7 @@ public class LoginService {
     public List<AvatarModel> getAvatarList(){
         List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
         for (int i = 0; i < avatarModels.size(); i++){
-            avatarModels.get(i).is_has = false;
+            avatarModels.get(i).set_has(false);
         }
         return avatarModels;
     }

@@ -32,10 +32,10 @@ public class BackgroundAvatarController {
     @PostMapping(value = "updateAvatarInfo")
     public Object updateAvatarInfo(@RequestBody JSONObject body) throws Exception {
         AvatarModel avatarModel = new AvatarModel();
-        avatarModel.aid = body.getInt("aid");
-        avatarModel.rid = body.getStr("rid");
-        avatarModel.avatar_name = body.getStr("avatar_name");
-        avatarModel.star = body.getInt("star");
+        avatarModel.setAid(body.getInt("aid"));
+        avatarModel.setRid(body.getStr("rid"));
+        avatarModel.setAvatar_name(body.getStr("avatar_name"));
+        avatarModel.setStar(body.getInt("star"));
         return avatarService.updateAvatarInfo(avatarModel) ? avatarModel : false;
     }
 }
