@@ -55,7 +55,6 @@ public class LoginController {
 
 	@GetMapping (value = "/TestJWT")
 	public Object testJWT(@RequestHeader(Util.TOKEN) String token) throws Exception{
-		log.info(Util.getUidByToken(token).toString());
 		return Util.isLegalToken(token);
 	}
 

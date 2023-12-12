@@ -7,19 +7,19 @@ import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 
 public interface UserMapper {
-    public Integer getAllUserNum();
-    public UserModel getUserByUid(Integer uid);
+    public int getAllUserNum();
+    public UserModel getUserByUid(int uid);
     public UserModel getUserByName(String userName);
-    public boolean isSuperuser(Integer uid);
+    public boolean isSuperuser(int uid);
     public boolean isExistsUser(String userName);
-    public boolean isExistsUserByUid(Integer uid);
-    public Integer insertUser(UserModel userModel);
-    public Integer updateUserStar(Integer uid, Integer star);
-    public Integer updateUserVip(Integer uid, Boolean is_vip);
-    public Integer updateUserAid(Integer uid, Integer aid);
-    public Integer updateUserPassword(Integer uid, String password);
-    public Integer updateUserEid(Integer uid, Integer eid);
-    public Integer insertUserLoginRecord(UserLoginRecordModel userLoginRecordModel);
+    public boolean isExistsUserByUid(int uid);
+    public int insertUser(UserModel userModel);
+    public int updateUserStar(int uid, int star);
+    public int updateUserVip(int uid, Boolean is_vip);
+    public int updateUserAid(int uid, int aid);
+    public int updateUserPassword(int uid, String password);
+    public int updateUserEid(int uid, int eid);
+    public int insertUserLoginRecord(UserLoginRecordModel userLoginRecordModel);
     public List<UserLoginRecordModel> getLoginRecordAfterTime(Long time);
-    public List<DataStatisticsModel> getUserLoginData(Integer offsetTime);
+    public List<DataStatisticsModel> getUserLoginData(int offsetTime);
 }

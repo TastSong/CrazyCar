@@ -25,7 +25,7 @@ public class UserInfoController {
 
     @PostMapping(value = "/GetUser")
     public Object getUserInfo(@RequestBody JSONObject body) throws Exception {
-        Integer uid = body.getInt("uid");
+        int uid = body.getInt("uid");
         if(loginService.isExistsUserByUid(uid)){
             String userName = loginService.getUserByUid(uid).user_name;
             return loginService.getUserInfo(userName);
@@ -36,7 +36,7 @@ public class UserInfoController {
 
     @PostMapping(value = "/ModifyPassword")
     public Object ModifyPassword(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token) throws Exception{
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         String password = body.getStr("password");
         if(password.length() >= 6){
             loginService.changePassword(uid, password);

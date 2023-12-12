@@ -16,7 +16,7 @@ public class BackgroundUserService {
     @Autowired
     private AdminUserMapper adminUserMapper;
 
-    public Integer getUserNum(){
+    public int getUserNum(){
         return adminUserMapper.getAllUserNum();
     }
 
@@ -29,12 +29,12 @@ public class BackgroundUserService {
         return JSONUtil.parseArray(routes);
     }
 
-    public JSONArray getRoute(Integer uid){
+    public JSONArray getRoute(int uid){
         String routes = adminUserMapper.getUserByUid(uid).routes;
         return JSONUtil.parseArray(routes);
     }
 
-    public AdminUserModel getUserByUid(Integer uid){
+    public AdminUserModel getUserByUid(int uid){
         return adminUserMapper.getUserByUid(uid);
     }
 
@@ -46,7 +46,7 @@ public class BackgroundUserService {
         return adminUserMapper.isExistsUser(userName);
     }
 
-    public boolean isExistsUserByUid(Integer uid){
+    public boolean isExistsUserByUid(int uid){
         return adminUserMapper.isExistsUserByUid(uid);
     }
 
@@ -54,11 +54,11 @@ public class BackgroundUserService {
         return adminUserMapper.insertUser(adminUserModel) == 1;
     }
 
-    public boolean updateUserPassword(Integer uid, String password){
+    public boolean updateUserPassword(int uid, String password){
         return adminUserMapper.updateUserPassword(uid, password) == 1;
     }
 
-    public boolean updateUserRoute(Integer uid, String routes){
+    public boolean updateUserRoute(int uid, String routes){
         return adminUserMapper.updateUserRoute(uid, routes) == 1;
     }
 }

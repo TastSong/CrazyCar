@@ -1,9 +1,9 @@
 package com.tastsong.crazycar.model;
 
 public class MatchRankModel {
-    public Integer uid;
-    public Integer aid;
-    public Integer rank_num;
-    public Integer complete_time;
+    public int uid;
+    public int aid;
+    public int rank_num;
+    public int complete_time;
     public String user_name;
 }

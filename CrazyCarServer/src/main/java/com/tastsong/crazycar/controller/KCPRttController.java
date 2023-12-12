@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
+import cn.hutool.core.convert.Convert;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,7 +83,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.getBytes(buf.readerIndex(), bytes);
         JSONObject sendMsg = new JSONObject(buf.toString(CharsetUtil.UTF_8));
-        Integer msgType = sendMsg.getInt("msg_type");
+        int msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.CreatePlayer) {
             onCreatePlayer(sendMsg);
         } else {
@@ -91,14 +92,14 @@ public class KCPRttController extends HttpServlet implements KcpListener {
     }
 
     private void onCreatePlayer(JSONObject data) {
-        Integer uid = data.getInt("uid");
-        Integer cid = data.getInt("cid");
+        int uid = data.getInt("uid");
+        int cid = data.getInt("cid");
         id = uid + "," + cid;
         log.info("Match onOpen id = " + id);
         kcpSet.put(id, this.uKcp);
         createPlayerMsgMap.put(id, data);
         for (String key : createPlayerMsgMap.keySet()) {
-            if (key.split(",")[1].equals(cid.toString())) {
+            if (key.split(",")[1].equals(Convert.toStr(cid))) {
                 sendToUser(createPlayerMsgMap.get(key));
             }
         }
@@ -106,10 +107,10 @@ public class KCPRttController extends HttpServlet implements KcpListener {
 
     private void sendToUser(JSONObject message) {
         String cid = message.getStr("cid");
-        Integer uid = message.getInt("uid");
+        int uid = message.getInt("uid");
 
         for (String key : kcpSet.keySet()) {
-            if (!key.split(",")[0].equals(uid.toString()) && key.split(",")[1].equals(cid)) {
+            if (!key.split(",")[0].equals(Convert.toStr(uid)) && key.split(",")[1].equals(cid)) {
                 byte[] bytes = message.toString().getBytes(CharsetUtil.UTF_8);
                 ByteBuf buf = Unpooled.wrappedBuffer(bytes);
                 kcpSet.get(key).write(buf);

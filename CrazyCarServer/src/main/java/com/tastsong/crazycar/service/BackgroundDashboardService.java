@@ -31,41 +31,41 @@ public class BackgroundDashboardService {
     @Autowired
     private MatchMapper matchMapper;
 
-    public Integer getUserNum(){
+    public int getUserNum(){
         return userMapper.getAllUserNum();
     }
 
-    public Integer getEquipNum(){
+    public int getEquipNum(){
         return equipMapper.getEquipList().size();
     }
 
-    public Integer getAvatarNum(){
+    public int getAvatarNum(){
         return avatarMapper.getAvatarList().size();
     }
 
-    public Integer getMapNum(){
+    public int getMapNum(){
         return timeTrialMapper.getTimeTrialInfos().size();
     }
 
-    public List<DataStatisticsModel> getUserLoginData(Integer offsetTime){
+    public List<DataStatisticsModel> getUserLoginData(int offsetTime){
         List<DataStatisticsModel> data = userMapper.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime){
+    public List<DataStatisticsModel> getTimeTrialData(int offsetTime){
         List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getMatchData(Integer offsetTime){
+    public List<DataStatisticsModel> getMatchData(int offsetTime){
         List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    private List<DataStatisticsModel> formatData(List<DataStatisticsModel> data, Integer offsetTime){
+    private List<DataStatisticsModel> formatData(List<DataStatisticsModel> data, int offsetTime){
         ArrayList<DataStatisticsModel> result = new ArrayList<>();
         long current = System.currentTimeMillis() / 1000;
-        Integer oneDay = 60 * 60 * 24;
+        int oneDay = 60 * 60 * 24;
         long curWeeHours = current-(current+ TimeZone.getDefault().getRawOffset()) % oneDay;
         for(int i = 0; i < offsetTime; i++){
             DataStatisticsModel temp = new DataStatisticsModel();
@@ -83,9 +83,9 @@ public class BackgroundDashboardService {
         return result;
     }
 
-    public Integer getTimeTrialTimes(Integer offsetTime){
+    public int getTimeTrialTimes(int offsetTime){
         List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
-        Integer tatal = 0;
+        int tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;
         }
@@ -97,9 +97,9 @@ public class BackgroundDashboardService {
         return tatal;
     }
 
-    public Integer getMatchTimes(Integer offsetTime){
+    public int getMatchTimes(int offsetTime){
         List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
-        Integer tatal = 0;
+        int tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;
         }

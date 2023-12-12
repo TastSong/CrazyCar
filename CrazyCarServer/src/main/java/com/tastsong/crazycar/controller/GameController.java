@@ -32,8 +32,8 @@ public class GameController {
 
     @PostMapping(value = "/EnterGame")
     public Object enterGame(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body)  throws Exception{
-        Integer uid = Util.getUidByToken(token);
-        Integer cid = body.getInt("cid");
+        int uid = Util.getUidByToken(token);
+        int cid = body.getInt("cid");
 		GameType gameType = GameType.values()[body.getInt("GameType")];
 		NetType netType = NetType.values()[body.getInt("NetType")];
 

@@ -24,15 +24,15 @@ public class MatchService {
     @Autowired
     private MatchMapper matchMapper;
 
-    public String getUserName(Integer uid){
+    public String getUserName(int uid){
         return userMapper.getUserByUid(uid).user_name;
     }
 
-    public Integer getAid(Integer uid){
+    public int getAid(int uid){
         return userMapper.getUserByUid(uid).aid;
     }
 
-    public boolean canWade(Integer eid){
+    public boolean canWade(int eid){
         return equipMapper.getEquipByEid(eid).can_wade;
     }
 
@@ -40,23 +40,23 @@ public class MatchService {
         return matchMapper.insertMatchClass(infoModel) > 0;
     }
 
-    public Integer getMatchRoomCid(String roomId, long startTime){
+    public int getMatchRoomCid(String roomId, long startTime){
         return matchMapper.getMatchRoomInfo(roomId, startTime).cid;
     }
 
-    public Integer getMatchMapMapId(Integer cid){
+    public int getMatchMapMapId(int cid){
         return matchMapper.getMatchMapInfo(cid).map_id;
     }
 
-    public Integer getMatchRoomLimitTime(Integer cid){
+    public int getMatchRoomLimitTime(int cid){
         return matchMapper.getMatchRoomInfoByCid(cid).limit_time;
     }
 
-    public Integer getMatchMapLimitTime(Integer cid){
+    public int getMatchMapLimitTime(int cid){
         return matchMapper.getMatchMapInfo(cid).limit_time;
     }
 
-    public Integer getMatchMapTimes(Integer cid){
+    public int getMatchMapTimes(int cid){
         return matchMapper.getMatchMapInfo(cid).times;
     }
 
@@ -68,7 +68,7 @@ public class MatchService {
         return matchMapper.updateMatchMapInfo(mapInfoModel) == 1;
     }
 
-    public boolean isVIP(Integer uid){
+    public boolean isVIP(int uid){
         return userMapper.getUserByUid(uid).is_vip;
     }
 
@@ -76,8 +76,8 @@ public class MatchService {
         if (recordModel.complete_time == -1) {
 			return false;
 		} 
-        Integer minTime = matchMapper.getMiniCompleteTime(recordModel.uid, recordModel.cid);
-        if(minTime == null){
+        int minTime = matchMapper.getMiniCompleteTime(recordModel.uid, recordModel.cid);
+        if(minTime == 0){
             minTime = -1;
         }
 		if (minTime == -1 && recordModel.complete_time != -1){
@@ -87,11 +87,11 @@ public class MatchService {
 		return recordModel.complete_time < minTime;
     }
 
-    public Integer getMatchStar(Integer cid) {
+    public int getMatchStar(int cid) {
         return matchMapper.getMatchRoomInfoByCid(cid).star;
     }
 
-    public void giveReward(Integer uid, Integer cid) {
+    public void giveReward(int uid, int cid) {
         userMapper.updateUserStar(uid, getMatchStar(cid) + userMapper.getUserByUid(uid).star);
     }
 
@@ -99,17 +99,17 @@ public class MatchService {
         matchMapper.insertRecord(recordModel);
     }
 
-    // private void initRank(Integer uid, Integer cid){
+    // private void initRank(int uid, int cid){
     //     matchMapper.delMatchRank(uid, cid);
     //     matchMapper.initMatchRank(uid, cid);
     // }
 
-    public List<MatchRankModel> getRankList(Integer uid, Integer cid){
+    public List<MatchRankModel> getRankList(int uid, int cid){
         // initRank(uid, cid);
         // List<MatchRankModel> rankModels =  matchMapper.getMatchRankList(uid, cid);
         List<MatchRankModel> rankModels =  matchMapper.getMatchRankListByCid(cid);
-        for (Integer i = 0; i< rankModels.size(); i++){
-            Integer userId = rankModels.get(i).uid;
+        for (int i = 0; i< rankModels.size(); i++){
+            int userId = rankModels.get(i).uid;
             rankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
             rankModels.get(i).user_name = userMapper.getUserByUid(userId).user_name;
         }

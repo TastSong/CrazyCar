@@ -37,11 +37,11 @@ public class MatchController {
         recordModel.cid = body.getInt("cid");
         recordModel.complete_time = body.getInt("complete_time");
         recordModel.record_time = (int) (System.currentTimeMillis()/1000);
-        if(recordModel.cid == null || recordModel.complete_time == null){
+        if(recordModel.cid == 0 || recordModel.complete_time == 0){
             return Result.failure(ResultCode.RC404);
         }
 
-        Integer limitTime = matchService.getMatchRoomLimitTime(recordModel.cid);
+        int limitTime = matchService.getMatchRoomLimitTime(recordModel.cid);
         JSONObject data = new JSONObject();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
             data.putOpt("is_win", true);

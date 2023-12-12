@@ -17,9 +17,9 @@ public class AvatarService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<AvatarModel> getAvatarList(Integer uid){
+    public List<AvatarModel> getAvatarList(int uid){
         List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
-        for (Integer i = 0; i < avatarModels.size(); i++){
+        for (int i = 0; i < avatarModels.size(); i++){
             avatarModels.get(i).is_has = isHasAvatar(uid, avatarModels.get(i).aid);
         }
         return avatarModels;
@@ -34,19 +34,19 @@ public class AvatarService {
         return avatarMapper.updateAvatarInfo(avatarModel) == 1;
     }
 
-    public boolean isHasAvatar(Integer uid, Integer aid){
+    public boolean isHasAvatar(int uid, int aid){
         return avatarMapper.isHasAvatar(uid, aid);
     }
 
-    public Integer getCurAidByUid(Integer uid){
+    public int getCurAidByUid(int uid){
         return userMapper.getUserByUid(uid).aid;
     }
 
-    public Integer getUserStar(Integer uid){
+    public int getUserStar(int uid){
         return userMapper.getUserByUid(uid).star;
     }
 
-    private Integer getNeedStar(Integer aid){
+    private int getNeedStar(int aid){
         return avatarMapper.getAvatarByAid(aid).star;
     }
 
@@ -54,13 +54,13 @@ public class AvatarService {
 		return getUserStar(uid) >= getNeedStar(aid);		
 	}
 
-    public void buyAvatar(Integer uid, Integer aid){
-        Integer curStar = getUserStar(uid) - getNeedStar(aid);
+    public void buyAvatar(int uid, int aid){
+        int curStar = getUserStar(uid) - getNeedStar(aid);
         userMapper.updateUserStar(uid, curStar);
         avatarMapper.addAvatarForUser(uid, aid);
     }
 
-    public void changeAvatar(Integer uid, Integer aid){
+    public void changeAvatar(int uid, int aid){
         userMapper.updateUserAid(uid, aid);
     }
 }

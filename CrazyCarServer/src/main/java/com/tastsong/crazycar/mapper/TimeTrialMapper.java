@@ -8,21 +8,21 @@ import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 
 public interface TimeTrialMapper {
-    public List<TimeTrialRecordModel> getTimeTrialRecordByUid(Integer uid);
-    public Integer getTimeTrialTimesByUid(Integer uid);
-    public Integer getTimeTrialMapNumByUid(Integer uid);
-    public Integer addTimeTrialMapForUser(Integer uid, Integer cid);
-    public Integer initTimeTrialRank(Integer uid, Integer cid);
-    public Integer delTimeTrialRank(Integer uid, Integer cid);
-    public List<TimeTrialRankModel> getTimeTrialRankList(Integer uid, Integer cid);
-    public List<TimeTrialRankModel> getTimeTrialRankListByCid(Integer cid);
+    public List<TimeTrialRecordModel> getTimeTrialRecordByUid(int uid);
+    public int getTimeTrialTimesByUid(int uid);
+    public int getTimeTrialMapNumByUid(int uid);
+    public int addTimeTrialMapForUser(int uid, int cid);
+    public int initTimeTrialRank(int uid, int cid);
+    public int delTimeTrialRank(int uid, int cid);
+    public List<TimeTrialRankModel> getTimeTrialRankList(int uid, int cid);
+    public List<TimeTrialRankModel> getTimeTrialRankListByCid(int cid);
     public List<TimeTrialInfoModel> getTimeTrialInfos();
-    public boolean isHasTimeTrialClass(Integer uid, Integer cid);
-    public TimeTrialInfoModel getTimeTrialInfo(Integer cid);
-    public Integer getMiniCompleteTime(Integer uid, Integer cid);
-    public Integer insertRecord(TimeTrialRecordModel recordModel);
-    public Integer getRank(Integer uid, Integer cid);
-    public Integer getRankByUid(Integer uid, Integer cid);
-    public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime); 
-    public Integer updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel);
+    public boolean isHasTimeTrialClass(int uid, int cid);
+    public TimeTrialInfoModel getTimeTrialInfo(int cid);
+    public int getMiniCompleteTime(int uid, int cid);
+    public int insertRecord(TimeTrialRecordModel recordModel);
+    public int getRank(int uid, int cid);
+    public int getRankByUid(int uid, int cid);
+    public List<DataStatisticsModel> getTimeTrialData(int offsetTime); 
+    public int updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel);
 }

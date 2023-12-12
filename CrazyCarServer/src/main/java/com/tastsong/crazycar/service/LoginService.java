@@ -40,7 +40,7 @@ public class LoginService {
         userInfoModel.star = userModel.star;
         userInfoModel.is_vip = userModel.is_vip;
         userInfoModel.token = Util.createToken(userModel.uid);
-        Integer uid = userModel.uid;
+        int uid = userModel.uid;
         userInfoModel.is_superuser = isSuperuser(uid);
         userInfoModel.travel_times = getTimeTrialTimes(uid);
         userInfoModel.avatar_num = getAvatarNumByUid(uid);
@@ -50,27 +50,27 @@ public class LoginService {
         return userInfoModel;
     }
 
-    public Integer getTimeTrialTimes(Integer uid){
+    public int getTimeTrialTimes(int uid){
         return timeTrialMapper.getTimeTrialTimesByUid(uid);
     }
 
-    public Integer getTimeTrialMapNum(Integer uid){
+    public int getTimeTrialMapNum(int uid){
         return timeTrialMapper.getTimeTrialMapNumByUid(uid);
     }
 
-    private Integer getAvatarNumByUid(Integer uid){
+    private int getAvatarNumByUid(int uid){
         return avatarMapper.getAvatarNumByUid(uid);
     }
 
-    private EquipModel getEquipByEid(Integer eid){
+    private EquipModel getEquipByEid(int eid){
         return equipMapper.getEquipByEid(eid);
     }
 
-    private boolean isHasEquip (Integer eid, Integer uid){
+    private boolean isHasEquip (int eid, int uid){
         return equipMapper.isHasEquip(uid, eid);
     }
 
-    private boolean isSuperuser(Integer uid){
+    private boolean isSuperuser(int uid){
         return userMapper.isSuperuser(uid);
     }
 
@@ -109,15 +109,15 @@ public class LoginService {
         }
     }
 
-    public void changePassword(Integer uid, String password){
+    public void changePassword(int uid, String password){
         userMapper.updateUserPassword(uid, password);
     }
 
-    public UserModel getUserByUid(Integer uid){
+    public UserModel getUserByUid(int uid){
         return userMapper.getUserByUid(uid);
     }
 
-    public boolean isExistsUserByUid(Integer uid){
+    public boolean isExistsUserByUid(int uid){
         return userMapper.isExistsUserByUid(uid);
     }
 
@@ -132,7 +132,7 @@ public class LoginService {
 
     public List<AvatarModel> getAvatarList(){
         List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
-        for (Integer i = 0; i < avatarModels.size(); i++){
+        for (int i = 0; i < avatarModels.size(); i++){
             avatarModels.get(i).is_has = false;
         }
         return avatarModels;

@@ -25,20 +25,20 @@ public class TimeTrialController {
 
     @PostMapping(value = "/Rank")
     public Object getRank(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        Integer uid = Util.getUidByToken(token);
-        Integer cid = body.getInt("cid");
+        int uid = Util.getUidByToken(token);
+        int cid = body.getInt("cid");
         return timeTrialService.getRankList(uid, cid);
     }
 
     @PostMapping(value = "/Detail")
     public Object getDetail(@RequestHeader(Util.TOKEN) String token) throws Exception {
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         return timeTrialService.getTimeTrialDetail(uid);
     }
 
     @PostMapping(value = "/BuyClass")
     public Object budClass(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         if (body != null && body.containsKey("cid")) {
             int cid = body.getInt("cid");
             JSONObject data = new JSONObject();
@@ -66,11 +66,11 @@ public class TimeTrialController {
         recordModel.cid = body.getInt("cid");
         recordModel.complete_time = body.getInt("complete_time");
         recordModel.record_time = (int) (System.currentTimeMillis()/1000);
-        if(recordModel.cid == null || recordModel.complete_time == null){
+        if(recordModel.cid == 0 || recordModel.complete_time == 0){
             return Result.failure(ResultCode.RC404);
         }
 
-        Integer limitTime = timeTrialService.getLimitTime(recordModel.cid);
+        int limitTime = timeTrialService.getLimitTime(recordModel.cid);
         JSONObject data = new JSONObject();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
             data.putOpt("is_win", true);

@@ -6,9 +6,9 @@ import com.tastsong.crazycar.model.AvatarModel;
 
 public interface AvatarMapper {
     public List<AvatarModel> getAvatarList();
-    public Integer getAvatarNumByUid(Integer uid);
-    public Integer addAvatarForUser(Integer uid, Integer aid);
-    public boolean isHasAvatar(Integer uid, Integer aid);
-    public AvatarModel getAvatarByAid(Integer aid);
-    public Integer updateAvatarInfo(AvatarModel avatarModel);
+    public int getAvatarNumByUid(int uid);
+    public int addAvatarForUser(int uid, int aid);
+    public boolean isHasAvatar(int uid, int aid);
+    public AvatarModel getAvatarByAid(int aid);
+    public int updateAvatarInfo(AvatarModel avatarModel);
 }

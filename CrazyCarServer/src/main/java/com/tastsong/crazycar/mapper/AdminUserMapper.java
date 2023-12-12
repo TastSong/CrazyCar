@@ -5,13 +5,13 @@ import java.util.List;
 import com.tastsong.crazycar.model.AdminUserModel;
 
 public interface AdminUserMapper {
-    public Integer getAllUserNum();
+    public int getAllUserNum();
     public List<AdminUserModel> getAllUser();
-    public AdminUserModel getUserByUid(Integer uid);
+    public AdminUserModel getUserByUid(int uid);
     public AdminUserModel getUserByName(String userName);
     public boolean isExistsUser(String userName);
-    public boolean isExistsUserByUid(Integer uid);
-    public Integer insertUser(AdminUserModel userModel);
-    public Integer updateUserPassword(Integer uid, String password);
-    public Integer updateUserRoute(Integer uid, String routes);
+    public boolean isExistsUserByUid(int uid);
+    public int insertUser(AdminUserModel userModel);
+    public int updateUserPassword(int uid, String password);
+    public int updateUserRoute(int uid, String routes);
 }

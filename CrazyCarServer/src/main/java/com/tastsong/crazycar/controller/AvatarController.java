@@ -25,7 +25,7 @@ public class AvatarController {
 
     @PostMapping(value = "/Detail")
     public Object getAvatarDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         JSONObject data = new JSONObject();
         data.putOpt("avatars", avatarService.getAvatarList(uid));
         data.putOpt("cur_aid", avatarService.getCurAidByUid(uid));
@@ -34,8 +34,8 @@ public class AvatarController {
 
     @PostMapping(value = "/Buy")
     public Object buyAvatar(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token)  throws Exception{
-        Integer uid = Util.getUidByToken(token);
-        Integer aid = body.getInt("aid");
+        int uid = Util.getUidByToken(token);
+        int aid = body.getInt("aid");
         JSONObject data = new JSONObject();
         if (avatarService.isHasAvatar(uid, aid)) {
             return data.putOpt("star", avatarService.getUserStar(uid));
@@ -49,7 +49,7 @@ public class AvatarController {
 
     @PostMapping(value = "/Change")
     public Object changeAvatar(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token) throws Exception{
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         if (body != null && body.containsKey("aid")) {
 			int aid = body.getInt("aid");
 			if (avatarService.isHasAvatar(uid, aid)) {

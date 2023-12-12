@@ -40,7 +40,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
     private static int onlineCount = 0;
     private int maxNum = 2;
-    private Integer startOffsetTime = 16;
+    private int startOffsetTime = 16;
     private MatchService matchService;
     
     private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
@@ -88,7 +88,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.getBytes(buf.readerIndex(), bytes);
         JSONObject sendMsg = new JSONObject(buf.toString(CharsetUtil.UTF_8));
-        Integer msgType = sendMsg.getInt("msg_type");
+        int msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.MatchRoomCreate) {
             onCreateRoom(sendMsg, kcp);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
@@ -220,7 +220,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String roomId = message.getStr("room_id");
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
-        Integer mapCid = message.getInt("cid");
+        int mapCid = message.getInt("cid");
         infoModel.map_id = matchService.getMatchMapMapId(mapCid);
         infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
         infoModel.times = matchService.getMatchMapTimes(mapCid);
@@ -229,7 +229,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
         matchService.insertMatchClass(infoModel);
-        Integer cid = infoModel.cid;
+        int cid = infoModel.cid;
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {

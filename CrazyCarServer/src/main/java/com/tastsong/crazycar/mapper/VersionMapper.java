@@ -6,5 +6,5 @@ import com.tastsong.crazycar.model.VersionModel;
 
 public interface VersionMapper {
     public List<VersionModel> getVersionList();
-    public Integer updateVersion(VersionModel versionModel); 
+    public int updateVersion(VersionModel versionModel); 
 }

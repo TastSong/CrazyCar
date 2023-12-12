@@ -5,10 +5,10 @@ import java.util.List;
 import com.tastsong.crazycar.model.EquipModel;
 
 public interface EquipMapper {
-    public EquipModel getEquipByEid(Integer eid);
+    public EquipModel getEquipByEid(int eid);
     public List<EquipModel> getEquipList();
-    public List<Integer> getEidsByUid(Integer uid);
-    public boolean isHasEquip(Integer uid, Integer eid);
-    public Integer addEquipForUser(Integer uid, Integer eid);
-    public Integer updateEquipInfo(EquipModel equipModel);
+    public List<Integer> getEidsByUid(int uid);
+    public boolean isHasEquip(int uid, int eid);
+    public int addEquipForUser(int uid, int eid);
+    public int updateEquipInfo(EquipModel equipModel);
 }

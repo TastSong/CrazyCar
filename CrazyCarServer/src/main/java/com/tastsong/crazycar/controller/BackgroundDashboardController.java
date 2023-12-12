@@ -24,7 +24,7 @@ public class BackgroundDashboardController {
         data.putOpt("equip_num", dashboardService.getEquipNum());
         data.putOpt("avatar_num", dashboardService.getAvatarNum());
         data.putOpt("map_num", dashboardService.getMapNum());
-        Integer offsetTime = 7;
+        int offsetTime = 7;
         data.putOpt("time_trial_times", dashboardService.getTimeTrialTimes(offsetTime));
         data.putOpt("match_times", dashboardService.getMatchTimes(offsetTime));
         data.putOpt("login_user_num", dashboardService.getUserLoginData(offsetTime));

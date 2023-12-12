@@ -3,6 +3,7 @@ package com.tastsong.crazycar.controller;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
+import cn.hutool.core.convert.Convert;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.utils.Util;
@@ -53,7 +54,7 @@ public class MatchWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         JSONObject sendMsg = JSONUtil.parseObj(message);
-        Integer msgType = sendMsg.getInt("msg_type");
+        int msgType = sendMsg.getInt("msg_type");
         if(msgType == Util.msgType.CreatePlayer){
             onCreatePlayer(sendMsg);
         } else{
@@ -63,12 +64,12 @@ public class MatchWebSocket {
 
     private void sendToUser(JSONObject message) {
     	String cid = message.getStr("cid");
-        Integer uid = message.getInt("uid");
+        int uid = message.getInt("uid");
     	
         //String now = getNowTime();
     	for (String key : webSocketSet.keySet()) {
           try {
-        	  if (!key.split(",")[0].equals(uid.toString()) && key.split(",")[1].equals(cid)){
+        	  if (!key.split(",")[0].equals(Convert.toStr(uid)) && key.split(",")[1].equals(cid)){
         		  webSocketSet.get(key).sendMessage(message);
         	  }              
           } catch (IOException e) {
@@ -78,14 +79,14 @@ public class MatchWebSocket {
     }
 
     private void onCreatePlayer(JSONObject data){
-        Integer uid = data.getInt("uid");
-        Integer cid = data.getInt("cid");
+        int uid = data.getInt("uid");
+        int cid = data.getInt("cid");
         id = uid+ "," + cid;
         log.info("Match onOpen id = " + id);
         webSocketSet.put(id, this);
         createPlayerMsgMap.put(id, data);
         for (String key : createPlayerMsgMap.keySet()) {
-            if (key.split(",")[1].equals(cid.toString())){
+            if (key.split(",")[1].equals(Convert.toStr(cid))){
                 sendToUser(createPlayerMsgMap.get(key));
             }              
          }   

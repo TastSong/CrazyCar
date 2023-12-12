@@ -1,9 +1,9 @@
 package com.tastsong.crazycar.model;
 
 public class AvatarModel {
-    public Integer aid;
+    public int aid;
     public String rid;
     public String avatar_name;
-    public Integer star;
+    public int star;
     public boolean is_has;
 }

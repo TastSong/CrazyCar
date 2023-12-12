@@ -1,8 +1,8 @@
 package com.tastsong.crazycar.model;
 
 public class MatchRecordModel {
-    public Integer uid;
-    public Integer cid;
-    public Integer complete_time;
-    public Integer record_time;
+    public int uid;
+    public int cid;
+    public int complete_time;
+    public int record_time;
 }

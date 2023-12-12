@@ -36,7 +36,7 @@ public class MatchRoomWebSocket {
     private JSONObject sendMsg = new JSONObject(); 
     private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
     private int maxNum = 2;
-    private Integer startOffsetTime = 16;
+    private int startOffsetTime = 16;
     private MatchService matchService;
 
     // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
@@ -84,7 +84,7 @@ public class MatchRoomWebSocket {
     public void onMessage(String message, Session session) {
         log.info("Match Room onMessage : " + message);
         sendMsg = JSONUtil.parseObj(message);
-    	Integer msgType = sendMsg.getInt("msg_type");
+    	int msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.MatchRoomCreate) {
             onCreateRoom(sendMsg);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
@@ -211,7 +211,7 @@ public class MatchRoomWebSocket {
     private void onStartRoom(JSONObject message) {
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
-        Integer mapCid = message.getInt("cid");
+        int mapCid = message.getInt("cid");
         infoModel.map_id = matchService.getMatchMapMapId(mapCid);
         infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
         infoModel.times = matchService.getMatchMapTimes(mapCid);
@@ -220,7 +220,7 @@ public class MatchRoomWebSocket {
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
         matchService.insertMatchClass(infoModel);
-        Integer cid = infoModel.cid;
+        int cid = infoModel.cid;
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){

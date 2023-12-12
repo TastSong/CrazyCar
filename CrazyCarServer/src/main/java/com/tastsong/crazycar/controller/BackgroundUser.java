@@ -78,13 +78,13 @@ public class BackgroundUser {
 
     @GetMapping(value = "getRoutes")
     public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         System.out.println(uid);
         return backgroundUserService.getRoute(uid);
     }
 
     @GetMapping(value = "getRoutesByUid")
-    public Object getRoutesByUid(@RequestParam("uid") Integer uid) throws Exception {
+    public Object getRoutesByUid(@RequestParam("uid") int uid) throws Exception {
         return backgroundUserService.getRoute(uid);
     }
 
@@ -111,7 +111,7 @@ public class BackgroundUser {
 
     @PostMapping(value = "updateRole")
     public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         if(uid == 1){
             return Result.failure(ResultCode.RC423);
         } else{
@@ -123,7 +123,7 @@ public class BackgroundUser {
 
     @PostMapping(value = "deleteRole")
     public Object deleteRole(@RequestBody JSONObject body) throws Exception {
-        Integer[] id = {500, 666};
+        int[] id = {500, 666};
         return id;
     }
 }

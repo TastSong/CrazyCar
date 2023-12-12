@@ -17,41 +17,41 @@ public class EquipService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<EquipModel> getEquipDetail(Integer uid){
+    public List<EquipModel> getEquipDetail(int uid){
         List<EquipModel> equipModels = equipMapper.getEquipList();
-        for(Integer i = 0; i < equipModels.size(); i++){
+        for(int i = 0; i < equipModels.size(); i++){
             equipModels.get(i).is_has = equipMapper.isHasEquip(uid, equipModels.get(i).eid);
         }
         return equipModels;
     }
 
-    public Integer getCurEid(Integer uid){
+    public int getCurEid(int uid){
         return userMapper.getUserByUid(uid).eid;
     }
 
-    public boolean isHasEquip(Integer uid, Integer eid){
+    public boolean isHasEquip(int uid, int eid){
         return equipMapper.isHasEquip(uid, eid);
     }
 
-    public boolean canBuyEquip(Integer uid, Integer eid){
+    public boolean canBuyEquip(int uid, int eid){
         return getUserCurStar(uid) >= getEquipNeedStar(eid);
     }
 
-    public void bugEquip(Integer uid, Integer eid){
-        Integer curStar = getUserCurStar(uid) - getEquipNeedStar(eid);
+    public void bugEquip(int uid, int eid){
+        int curStar = getUserCurStar(uid) - getEquipNeedStar(eid);
         userMapper.updateUserStar(uid, curStar);
         equipMapper.addEquipForUser(uid, eid);
     }
 
-    public Integer getUserCurStar(Integer uid){
+    public int getUserCurStar(int uid){
         return userMapper.getUserByUid(uid).star;
     }
 
-    private Integer getEquipNeedStar(Integer eid){
+    private int getEquipNeedStar(int eid){
         return equipMapper.getEquipByEid(eid).star;
     }
 
-    public void changeEquip(Integer uid, Integer eid){
+    public void changeEquip(int uid, int eid){
         userMapper.updateUserEid(uid, eid);
     }
 

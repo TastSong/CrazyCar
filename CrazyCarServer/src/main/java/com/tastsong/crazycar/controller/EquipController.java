@@ -24,7 +24,7 @@ public class EquipController {
 
     @PostMapping(value = "/Detail")
     public Object getEquipDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         JSONObject data = new JSONObject();
         data.putOpt("equips", equipService.getEquipDetail(uid));
         data.putOpt("curEid", equipService.getCurEid(uid));
@@ -35,8 +35,8 @@ public class EquipController {
     public Object buyEquip(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception{
 		JSONObject data = new JSONObject();
 		if (body != null && body.containsKey("eid")) {
-            Integer uid = Util.getUidByToken(token);
-			Integer eid = body.getInt("eid");
+            int uid = Util.getUidByToken(token);
+			int eid = body.getInt("eid");
 			if (equipService.isHasEquip(uid, eid)) {
 				data.putOpt("star", equipService.getUserCurStar(uid));
                 return data;
@@ -54,9 +54,9 @@ public class EquipController {
 
     @PostMapping(value = "/Change")
     public Object changeEquip(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception{
-        Integer uid = Util.getUidByToken(token);
+        int uid = Util.getUidByToken(token);
         if (body != null && body.containsKey("eid")) {
-			Integer eid = body.getInt("eid");
+			int eid = body.getInt("eid");
 			if (equipService.isHasEquip(uid, eid)) {
 				equipService.changeEquip(uid, eid);
                 JSONObject data = new JSONObject();
