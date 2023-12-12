@@ -2,18 +2,12 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
+import com.tastsong.crazycar.mapper.*;
+import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.mapper.AvatarMapper;
-import com.tastsong.crazycar.mapper.EquipMapper;
-import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
-import com.tastsong.crazycar.model.AvatarModel;
-import com.tastsong.crazycar.model.EquipModel;
-import com.tastsong.crazycar.model.UserInfoModel;
-import com.tastsong.crazycar.model.UserLoginRecordModel;
-import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.dto.resp.RespUserInfo;
 import com.tastsong.crazycar.utils.Util;
 
 @Service
@@ -23,7 +17,7 @@ public class LoginService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
-    private AvatarMapper avatarMapper;
+    private AvatarService avatarService;
     @Autowired
     private EquipMapper equipMapper;
 
@@ -31,23 +25,23 @@ public class LoginService {
         return userMapper.getUserByName(userName);
     }
 
-    public UserInfoModel getUserInfo(String userName){
-        UserInfoModel userInfoModel = new UserInfoModel();
+    public RespUserInfo getUserInfo(String userName){
+        RespUserInfo respUserInfo = new RespUserInfo();
         UserModel userModel = getUserByName(userName);
-        userInfoModel.user_name = userModel.user_name;
-        userInfoModel.uid = userModel.uid;
-        userInfoModel.aid = userModel.aid;
-        userInfoModel.star = userModel.star;
-        userInfoModel.is_vip = userModel.is_vip;
-        userInfoModel.token = Util.createToken(userModel.uid);
+        respUserInfo.user_name = userModel.user_name;
+        respUserInfo.uid = userModel.uid;
+        respUserInfo.aid = userModel.aid;
+        respUserInfo.star = userModel.star;
+        respUserInfo.is_vip = userModel.is_vip;
+        respUserInfo.token = Util.createToken(userModel.uid);
         int uid = userModel.uid;
-        userInfoModel.is_superuser = isSuperuser(uid);
-        userInfoModel.travel_times = getTimeTrialTimes(uid);
-        userInfoModel.avatar_num = getAvatarNumByUid(uid);
-        userInfoModel.map_num = getTimeTrialMapNum(uid);
-        userInfoModel.equip_info = getEquipByEid(userModel.eid);
-        userInfoModel.equip_info.is_has = isHasEquip(userModel.eid, uid);
-        return userInfoModel;
+        respUserInfo.is_superuser = isSuperuser(uid);
+        respUserInfo.travel_times = getTimeTrialTimes(uid);
+        respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
+        respUserInfo.map_num = getTimeTrialMapNum(uid);
+        respUserInfo.equip_info = getEquipByEid(userModel.eid);
+        respUserInfo.equip_info.is_has = isHasEquip(userModel.eid, uid);
+        return respUserInfo;
     }
 
     public int getTimeTrialTimes(int uid){
@@ -56,10 +50,6 @@ public class LoginService {
 
     public int getTimeTrialMapNum(int uid){
         return timeTrialMapper.getTimeTrialMapNumByUid(uid);
-    }
-
-    private int getAvatarNumByUid(int uid){
-        return avatarMapper.getAvatarNumByUid(uid);
     }
 
     private EquipModel getEquipByEid(int eid){
@@ -96,8 +86,8 @@ public class LoginService {
         userMapper.insertUser(userModel);
 
 		int uid = userModel.uid;
-        if(avatarMapper.isHasAvatar(uid, defaultAid)){
-            avatarMapper.addAvatarForUser(uid, defaultAid);
+        if(avatarService.hasAvatar(uid, defaultAid)){
+            avatarService.addAvatarForUser(uid, defaultAid);
         }
 
         if(!timeTrialMapper.isHasTimeTrialClass(uid, defaultCid)){
@@ -131,10 +121,6 @@ public class LoginService {
     }
 
     public List<AvatarModel> getAvatarList(){
-        List<AvatarModel> avatarModels = avatarMapper.getAvatarList();
-        for (int i = 0; i < avatarModels.size(); i++){
-            avatarModels.get(i).set_has(false);
-        }
-        return avatarModels;
+        return avatarService.getAllAvatar();
     }
 }

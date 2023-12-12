@@ -11,20 +11,18 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = ConstModelNameAttribute.AVATAR)
-@TableName(ConstModelNameAttribute.AVATAR)
+@Table(name = ConstModelNameAttribute.AVATAR_RECORD)
+@TableName(ConstModelNameAttribute.AVATAR_RECORD)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Data
-public class AvatarModel {
+public class AvatarRecordModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
+    private int id;
     private int aid;
-    private String rid;
-    private String avatar_name;
-    private int star;
-    @Transient
-    private boolean is_has;
+    private int uid;
+    private long updateTime;
 }

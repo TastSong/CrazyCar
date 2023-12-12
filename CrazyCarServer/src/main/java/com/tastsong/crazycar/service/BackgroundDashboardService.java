@@ -7,7 +7,6 @@ import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.MatchMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
@@ -18,16 +17,10 @@ import com.tastsong.crazycar.model.DataStatisticsModel;
 public class BackgroundDashboardService {
     @Autowired
     private UserMapper userMapper;
-
     @Autowired 
     private EquipMapper equipMapper;
-
-    @Autowired 
-    private AvatarMapper avatarMapper;
-
     @Autowired
     private TimeTrialMapper timeTrialMapper;
-
     @Autowired
     private MatchMapper matchMapper;
 
@@ -37,10 +30,6 @@ public class BackgroundDashboardService {
 
     public int getEquipNum(){
         return equipMapper.getEquipList().size();
-    }
-
-    public int getAvatarNum(){
-        return avatarMapper.getAvatarList().size();
     }
 
     public int getMapNum(){

@@ -1,6 +1,8 @@
-package com.tastsong.crazycar.model;
+package com.tastsong.crazycar.dto.resp;
 
-public class UserInfoModel {
+import com.tastsong.crazycar.model.EquipModel;
+
+public class RespUserInfo {
     public String user_name;
     public int uid;
     public int aid;

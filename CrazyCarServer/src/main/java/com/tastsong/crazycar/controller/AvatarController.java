@@ -37,7 +37,7 @@ public class AvatarController {
         int uid = Util.getUidByToken(token);
         int aid = body.getInt("aid");
         JSONObject data = new JSONObject();
-        if (avatarService.isHasAvatar(uid, aid)) {
+        if (avatarService.hasAvatar(uid, aid)) {
             return data.putOpt("star", avatarService.getUserStar(uid));
         } else if (avatarService.canBuyAvatar(uid, aid)) {
             avatarService.buyAvatar(uid, aid);
@@ -52,7 +52,7 @@ public class AvatarController {
         int uid = Util.getUidByToken(token);
         if (body != null && body.containsKey("aid")) {
 			int aid = body.getInt("aid");
-			if (avatarService.isHasAvatar(uid, aid)) {
+			if (avatarService.hasAvatar(uid, aid)) {
 				avatarService.changeAvatar(uid, aid);
                 JSONObject data = new JSONObject();
                 data.putOpt("aid", aid);
