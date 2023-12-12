@@ -1,5 +1,8 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.dto.req.ReqUpdateAssets;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,7 @@ import com.tastsong.crazycar.service.AssetsUpdatingService;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
+@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
@@ -33,12 +37,15 @@ public class BackgroundAssetsController {
     }
 
     @PostMapping(value = "/updateAssetsInfo")
-    public Object updateAssetsInfo(@RequestBody JSONObject body) throws Exception {
+    public Object updateAssetsInfo(@RequestBody ReqUpdateAssets body) throws Exception {
         AssetsUpdatingModel assetsUpdatingModel = new AssetsUpdatingModel();
-        assetsUpdatingModel.id = body.getInt("id");
-        assetsUpdatingModel.is_on = body.getBool("is_on");
-        assetsUpdatingModel.url = body.getStr("url");
-        assetsUpdatingModel.updata_time = System.currentTimeMillis();
+        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(body));
+        assetsUpdatingModel.id = body.getId();
+        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(assetsUpdatingModel));
+        assetsUpdatingModel.is_on = body.is_on();
+        assetsUpdatingModel.url = body.getUrl();
+        assetsUpdatingModel.update_time = System.currentTimeMillis();
+        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(assetsUpdatingModel));
         return assetsUpdatingService.updateInfo(assetsUpdatingModel) ? assetsUpdatingModel : false;
     }
 }

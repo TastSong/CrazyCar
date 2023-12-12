@@ -9,7 +9,7 @@
 
     <update id="updateVersion" parameterType="VersionModel">
         update forced_updating
-        set version = #{version}, rule = #{rule}, url = #{url}, updata_time = #{updata_time}
+        set version = #{version}, rule = #{rule}, url = #{url}, update_time = #{update_time}
         where platform = #{platform};
     </update>
 </mapper>

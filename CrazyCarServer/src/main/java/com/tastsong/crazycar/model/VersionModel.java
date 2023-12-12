@@ -5,6 +5,6 @@ public class VersionModel {
     public String platform;
     public String version;
     public Integer rule;
-    public long updata_time;
+    public long update_time;
     public String url;
 }

@@ -10,7 +10,7 @@
 
     <update id="updateInfo" parameterType="AssetsUpdatingModel">
         update assets_updating
-        set updata_time = #{updata_time}, is_on= #{is_on}, url = #{url}
+        set update_time = #{update_time}, is_on= #{is_on}, url = #{url}
         where id = #{id}
     </update>
 </mapper>

@@ -36,7 +36,7 @@ public class BackgroundVersionController {
         versionModel.platform = body.getStr("platform");
         versionModel.url = body.getStr("url");
         versionModel.rule = body.getInt("rule");
-        versionModel.updata_time = System.currentTimeMillis();
+        versionModel.update_time = System.currentTimeMillis();
         return versionService.updateVersion(versionModel) ? versionModel : false;
     }
 }
