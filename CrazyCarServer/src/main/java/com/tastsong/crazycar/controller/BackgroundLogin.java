@@ -37,7 +37,6 @@ public class BackgroundLogin {
 
         if (backgroundUserService.isExistsUser(userName)){
             AdminUserModel userModel = backgroundUserService.getUserByName(userName);
-            log.info("userModel:" + JSONUtil.toJsonStr(userModel));
             if (password.equals(userModel.getUser_password())){
                 JSONObject data = new JSONObject();
                 data.putOpt("token", Util.createToken(userModel.getUid()));

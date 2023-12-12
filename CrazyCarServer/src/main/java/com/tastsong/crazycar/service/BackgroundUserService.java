@@ -2,6 +2,10 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,54 +15,66 @@ import com.tastsong.crazycar.model.AdminUserModel;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 
+@Slf4j
 @Service
 public class BackgroundUserService {
     @Autowired
     private AdminUserMapper adminUserMapper;
 
     public int getUserNum(){
-        return adminUserMapper.getAllUserNum();
+        return adminUserMapper.selectList(null).size();
     }
 
     public List<AdminUserModel> getAllUser(){
-        return adminUserMapper.getAllUser();
+        return adminUserMapper.selectList(null);
     }
 
     public JSONArray getAllRoute(){
-        String routes = adminUserMapper.getUserByUid(1).getRoutes();
+        log.info(JSONUtil.toJsonStr(adminUserMapper.selectById(1)));
+        String routes = adminUserMapper.selectById(1).getRoutes();
         return JSONUtil.parseArray(routes);
     }
 
     public JSONArray getRoute(int uid){
-        String routes = adminUserMapper.getUserByUid(uid).getRoutes();
+        String routes = adminUserMapper.selectById(uid).getRoutes();
         return JSONUtil.parseArray(routes);
     }
 
     public AdminUserModel getUserByUid(int uid){
-        return adminUserMapper.getUserByUid(uid);
+        return adminUserMapper.selectById(uid);
     }
 
     public AdminUserModel getUserByName(String userName){
-        return adminUserMapper.getUserByName(userName);
+        QueryWrapper<AdminUserModel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(AdminUserModel::getUser_name, userName);
+        return adminUserMapper.selectOne(queryWrapper, false);
     }
 
     public boolean isExistsUser(String userName){
-        return adminUserMapper.isExistsUser(userName);
-    }
-
-    public boolean isExistsUserByUid(int uid){
-        return adminUserMapper.isExistsUserByUid(uid);
+        QueryWrapper<AdminUserModel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(AdminUserModel::getUser_name, userName);
+        return adminUserMapper.exists(queryWrapper);
     }
 
     public boolean insertUser(AdminUserModel adminUserModel){
-        return adminUserMapper.insertUser(adminUserModel) == 1;
+        return adminUserMapper.insert(adminUserModel) == 1;
     }
 
     public boolean updateUserPassword(int uid, String password){
-        return adminUserMapper.updateUserPassword(uid, password) == 1;
+        AdminUserModel adminUserModel = adminUserMapper.selectById(uid);
+        if (ObjUtil.isEmpty(adminUserModel)) {
+            return false;
+        }
+        adminUserModel.setUser_password(password);
+        return adminUserMapper.updateById(adminUserModel) > 0;
     }
 
     public boolean updateUserRoute(int uid, String routes){
-        return adminUserMapper.updateUserRoute(uid, routes) == 1;
+        AdminUserModel adminUserModel = adminUserMapper.selectById(uid);
+        if (ObjUtil.isEmpty(adminUserModel)) {
+            return false;
+        }
+        adminUserModel.setRoutes(routes);
+        return adminUserMapper.updateById(adminUserModel) > 0;
     }
 }
