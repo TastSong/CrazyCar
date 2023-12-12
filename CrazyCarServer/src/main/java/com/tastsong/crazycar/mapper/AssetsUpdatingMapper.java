@@ -1,8 +1,7 @@
 package com.tastsong.crazycar.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tastsong.crazycar.model.AssetsUpdatingModel;
 
-public interface AssetsUpdatingMapper {
-    public AssetsUpdatingModel getInfo(Integer id);
-    public Integer updateInfo(AssetsUpdatingModel assetsUpdatingModel);
+public interface AssetsUpdatingMapper extends BaseMapper<AssetsUpdatingModel> {
 }

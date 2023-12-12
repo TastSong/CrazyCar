@@ -12,10 +12,10 @@ public class AssetsUpdatingService {
 	private AssetsUpdatingMapper assetsUpdatingMapper;
 
 	public AssetsUpdatingModel getInfo(){
-		return assetsUpdatingMapper.getInfo(0);
+		return assetsUpdatingMapper.selectById(0);
 	}
 
 	public boolean updateInfo(AssetsUpdatingModel assetsUpdatingModel){
-		return assetsUpdatingMapper.updateInfo(assetsUpdatingModel) == 1;
+		return assetsUpdatingMapper.updateById(assetsUpdatingModel) > 0;
 	}
 }

@@ -17,5 +17,4 @@ public class AssetsUpdatingModel {
     public long update_time;
     public boolean is_on;
     public String url;
-    public int version;
 }
