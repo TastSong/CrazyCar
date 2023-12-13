@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqUpdateVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +30,8 @@ public class BackgroundVersionController {
     }
 
     @PostMapping(value = "/updateVersion")
-    public Object updateVersion(@RequestBody JSONObject body) throws Exception {
-        VersionModel versionModel = new VersionModel();
-        versionModel.id = body.getInt("id");
-        versionModel.version = body.getStr("version");
-        versionModel.platform = body.getStr("platform");
-        versionModel.url = body.getStr("url");
-        versionModel.rule = body.getInt("rule");
-        versionModel.update_time = System.currentTimeMillis();
+    public Object updateVersion(@RequestBody ReqUpdateVersion req) throws Exception {
+        VersionModel versionModel = versionService.toVersionModelByReq(req);
         return versionService.updateVersion(versionModel) ? versionModel : false;
     }
 }

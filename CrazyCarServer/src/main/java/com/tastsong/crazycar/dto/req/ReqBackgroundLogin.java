@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @ToString
 @Data
-
 public class ReqBackgroundLogin {
     @NotNull
     private String username;
