@@ -2,7 +2,7 @@ package com.tastsong.crazycar.mapper;
 
 import java.util.List;
 
-import com.tastsong.crazycar.model.DataStatisticsModel;
+import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 import com.tastsong.crazycar.model.MatchMapInfoModel;
 import com.tastsong.crazycar.model.MatchRankModel;
 import com.tastsong.crazycar.model.MatchRecordModel;
@@ -20,6 +20,6 @@ public interface MatchMapper {
     public List<MatchRankModel> getMatchRankList(int uid, int cid);
     public List<MatchRankModel> getMatchRankListByCid(int cid);
     public int initMatchRank(int uid, int cid);
-    public List<DataStatisticsModel> getMatchData(int offsetTime); 
+    public List<RespDataStatistics> getMatchData(int offsetTime);
     public int updateMatchMapInfo(MatchMapInfoModel mapInfoModel);
 }

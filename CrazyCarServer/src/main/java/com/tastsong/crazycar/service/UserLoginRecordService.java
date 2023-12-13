@@ -3,7 +3,7 @@ package com.tastsong.crazycar.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tastsong.crazycar.dto.resp.RespLoginRecord;
 import com.tastsong.crazycar.mapper.UserLoginRecordMapper;
-import com.tastsong.crazycar.model.DataStatisticsModel;
+import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class UserLoginRecordService {
         return respLoginRecord;
     }
 
-    public List<DataStatisticsModel> getUserLoginData(int offsetTime){
+    public List<RespDataStatistics> getUserLoginData(int offsetTime){
         return userLoginRecordMapper.getUserLoginData(offsetTime);
     }
 }

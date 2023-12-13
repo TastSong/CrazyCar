@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.MatchMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.model.DataStatisticsModel;
+import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 
 @Service
 public class BackgroundDashboardService {
@@ -31,28 +31,28 @@ public class BackgroundDashboardService {
         return timeTrialMapper.getTimeTrialInfos().size();
     }
 
-    public List<DataStatisticsModel> getUserLoginData(int offsetTime){
-        List<DataStatisticsModel> data = userLoginRecordService.getUserLoginData(offsetTime);
+    public List<RespDataStatistics> getUserLoginData(int offsetTime){
+        List<RespDataStatistics> data = userLoginRecordService.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getTimeTrialData(int offsetTime){
-        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
+    public List<RespDataStatistics> getTimeTrialData(int offsetTime){
+        List<RespDataStatistics> data = timeTrialMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getMatchData(int offsetTime){
-        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
+    public List<RespDataStatistics> getMatchData(int offsetTime){
+        List<RespDataStatistics> data = matchMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    private List<DataStatisticsModel> formatData(List<DataStatisticsModel> data, int offsetTime){
-        ArrayList<DataStatisticsModel> result = new ArrayList<>();
+    private List<RespDataStatistics> formatData(List<RespDataStatistics> data, int offsetTime){
+        ArrayList<RespDataStatistics> result = new ArrayList<>();
         long current = System.currentTimeMillis() / 1000;
         int oneDay = 60 * 60 * 24;
         long curWeeHours = current-(current+ TimeZone.getDefault().getRawOffset()) % oneDay;
         for(int i = 0; i < offsetTime; i++){
-            DataStatisticsModel temp = new DataStatisticsModel();
+            RespDataStatistics temp = new RespDataStatistics();
             temp.count = 0;
             temp.timestamp = curWeeHours - oneDay * (offsetTime - i - 1);
             long nextTimestaml = curWeeHours - oneDay * (offsetTime - i - 2);
@@ -68,7 +68,7 @@ public class BackgroundDashboardService {
     }
 
     public int getTimeTrialTimes(int offsetTime){
-        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
+        List<RespDataStatistics> data = timeTrialMapper.getTimeTrialData(offsetTime);
         int tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;
@@ -82,7 +82,7 @@ public class BackgroundDashboardService {
     }
 
     public int getMatchTimes(int offsetTime){
-        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
+        List<RespDataStatistics> data = matchMapper.getMatchData(offsetTime);
         int tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;

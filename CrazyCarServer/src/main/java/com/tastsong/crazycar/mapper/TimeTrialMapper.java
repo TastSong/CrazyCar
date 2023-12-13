@@ -2,7 +2,7 @@ package com.tastsong.crazycar.mapper;
 
 import java.util.List;
 
-import com.tastsong.crazycar.model.DataStatisticsModel;
+import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
@@ -23,6 +23,6 @@ public interface TimeTrialMapper {
     public int insertRecord(TimeTrialRecordModel recordModel);
     public int getRank(int uid, int cid);
     public int getRankByUid(int uid, int cid);
-    public List<DataStatisticsModel> getTimeTrialData(int offsetTime); 
+    public List<RespDataStatistics> getTimeTrialData(int offsetTime);
     public int updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel);
 }
