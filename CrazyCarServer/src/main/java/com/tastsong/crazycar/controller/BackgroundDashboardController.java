@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.service.AvatarService;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,13 @@ public class BackgroundDashboardController {
     private BackgroundDashboardService dashboardService;
     @Autowired
     private AvatarService avatarService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "getDashboardData")
     public Object getDashboardData() throws Exception {
         JSONObject data = new JSONObject();
-        data.putOpt("user_num", dashboardService.getUserNum());
+        data.putOpt("user_num", userService.getUserList().size());
         data.putOpt("equip_num", dashboardService.getEquipNum());
         data.putOpt("avatar_num", avatarService.getAllAvatar().size());
         data.putOpt("map_num", dashboardService.getMapNum());

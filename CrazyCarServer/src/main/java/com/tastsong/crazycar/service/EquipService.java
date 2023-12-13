@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.EquipMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.EquipModel;
 
 @Service
@@ -15,18 +14,14 @@ public class EquipService {
     private EquipMapper equipMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     public List<EquipModel> getEquipDetail(int uid){
         List<EquipModel> equipModels = equipMapper.getEquipList();
-        for(int i = 0; i < equipModels.size(); i++){
-            equipModels.get(i).is_has = equipMapper.isHasEquip(uid, equipModels.get(i).eid);
+        for (EquipModel equipModel : equipModels) {
+            equipModel.is_has = equipMapper.isHasEquip(uid, equipModel.eid);
         }
         return equipModels;
-    }
-
-    public int getCurEid(int uid){
-        return userMapper.getUserByUid(uid).getEid();
     }
 
     public boolean isHasEquip(int uid, int eid){
@@ -34,17 +29,13 @@ public class EquipService {
     }
 
     public boolean canBuyEquip(int uid, int eid){
-        return getUserCurStar(uid) >= getEquipNeedStar(eid);
+        return userService.getUserStar(uid) >= getEquipNeedStar(eid);
     }
 
     public void bugEquip(int uid, int eid){
-        int curStar = getUserCurStar(uid) - getEquipNeedStar(eid);
-        userMapper.updateUserStar(uid, curStar);
+        int curStar = userService.getUserStar(uid) - getEquipNeedStar(eid);
+        userService.updateUserStar(uid, curStar);
         equipMapper.addEquipForUser(uid, eid);
-    }
-
-    public int getUserCurStar(int uid){
-        return userMapper.getUserByUid(uid).getStar();
     }
 
     private int getEquipNeedStar(int eid){
@@ -52,7 +43,7 @@ public class EquipService {
     }
 
     public void changeEquip(int uid, int eid){
-        userMapper.updateUserEid(uid, eid);
+        userService.updateUserEid(uid, eid);
     }
 
     public List<EquipModel> getEqiupInfos(){

@@ -3,11 +3,11 @@ package com.tastsong.crazycar.service;
 import java.util.List;
 
 
+import com.tastsong.crazycar.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.TimeTrialInfoModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
@@ -18,7 +18,7 @@ public class TimeTrialService {
     private TimeTrialMapper timeTrialMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     // private void initRank(int uid, int cid){
     //     timeTrialMapper.delTimeTrialRank(uid, cid);
@@ -31,8 +31,9 @@ public class TimeTrialService {
         List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankListByCid(cid);
         for (int i = 0; i< timeTrialRankModels.size(); i++){
             int userId = timeTrialRankModels.get(i).uid;
-            timeTrialRankModels.get(i).aid = userMapper.getUserByUid(userId).getAid();
-            timeTrialRankModels.get(i).user_name = userMapper.getUserByUid(userId).getUser_name();
+            UserModel userModel = userService.getUserByUid(userId);
+            timeTrialRankModels.get(i).aid = userModel.getAid();
+            timeTrialRankModels.get(i).user_name = userModel.getUser_name();
         }
         return timeTrialRankModels;
     }
@@ -58,21 +59,17 @@ public class TimeTrialService {
         return timeTrialMapper.isHasTimeTrialClass(uid, cid);
     }
 
-    public int getUserStar(int uid){
-        return userMapper.getUserByUid(uid).getStar();
-    }
-
     private int getNeedStar(int cid){
         return timeTrialMapper.getTimeTrialInfo(cid).star;
     }
 
     public boolean canBuyClass(int uid, int cid) {
-		return getUserStar(uid) >= getNeedStar(cid);
+		return userService.getUserStar(uid) >= getNeedStar(cid);
 	}
 
     public void buyClass(int uid, int cid){
-        int curStar = getUserStar(uid) - getNeedStar(cid);
-        userMapper.updateUserStar(uid, curStar);
+        int curStar = userService.getUserStar(uid) - getNeedStar(cid);
+        userService.updateUserStar(uid, curStar);
         timeTrialMapper.addTimeTrialMapForUser(uid, cid);
     }
 
@@ -110,6 +107,6 @@ public class TimeTrialService {
     }
 
     public void giveReward(int uid, int cid){
-        userMapper.updateUserStar(uid, getMapStar(cid) + userMapper.getUserByUid(uid).getStar());
+        userService.updateUserStar(uid, getMapStar(cid) + userService.getUserStar(uid));
     }
 }

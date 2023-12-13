@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BackgroundUser {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private BackgroundUserService backgroundUserService;
@@ -53,7 +56,7 @@ public class BackgroundUser {
     public Object getUserByUserName(@RequestParam("user_name") String user_name) throws Exception {
         JSONObject data = new JSONObject();
         JSONArray items = new JSONArray();
-        items.add(loginService.getUserByName(user_name));
+        items.add(userService.getUserByName(user_name));
         data.putOpt("items", items);
         data.putOpt("total", 1);
         return data;
@@ -66,8 +69,8 @@ public class BackgroundUser {
         userModel.setUser_name(body.getStr("user_name"));
         userModel.setStar(body.getInt("star"));
         userModel.set_vip(body.getBool("is_vip"));
-        loginService.updateUser(userModel);
-        return loginService.getUserByName(userModel.getUser_name());
+        userService.updateUser(userModel);
+        return userService.getUserByName(userModel.getUser_name());
     }        
 
     @GetMapping(value = "getAllRoutes")

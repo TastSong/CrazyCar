@@ -87,13 +87,13 @@ INSERT INTO `all_equip` VALUES (1,'R_Car_F1_Blue','F1 Blue',3,20,70,96,0,1),
 UNLOCK TABLES;
 
 --
--- Table structure for table `all_user`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `all_user`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `all_user` (
+CREATE TABLE `user` (
                             `uid` int unsigned NOT NULL AUTO_INCREMENT,
                             `user_name` varchar(100) NOT NULL,
                             `user_password` varchar(40) NOT NULL,
@@ -107,16 +107,16 @@ CREATE TABLE `all_user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `all_user`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `all_user` WRITE;
-/*!40000 ALTER TABLE `all_user` DISABLE KEYS */;
-INSERT INTO `all_user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112','1629544628',2,99,1,1),
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112','1629544628',2,99,1,1),
                               (2,'song','96e79218965eb72c92a549dd5a330112','1629544634',2,88,1,2),
                               (3,'°¢ËÎÐ¡½¿ÆÞ','96e79218965eb72c92a549dd5a330112','1629544655',3,66,1,3),
                               (4,'Lory','96e79218965eb72c92a549dd5a330112','1629544666',4,12,0,1);
-/*!40000 ALTER TABLE `all_user` ENABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

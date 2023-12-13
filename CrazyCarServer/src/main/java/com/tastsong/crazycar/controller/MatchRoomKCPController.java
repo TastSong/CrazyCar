@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
+
+import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.context.ApplicationContext;
 
 import org.springframework.context.annotation.Scope;
@@ -42,6 +45,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private int maxNum = 2;
     private int startOffsetTime = 16;
     private MatchService matchService;
+    private UserService userService;
     
     private ArrayList<RespMatchRoomPlayerInfo> playerLists = new ArrayList<RespMatchRoomPlayerInfo>();
 
@@ -80,6 +84,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         onlineCount++;
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
+        userService = act.getBean(UserService.class);
         log.info("Connected onlineCount = " + onlineCount);
     }
 
@@ -118,8 +123,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else {
             RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = uid;
-            info.memberName = matchService.getUserName(uid);
-            info.aid = matchService.getAid(uid);
+            UserModel userModel = userService.getUserByUid(uid);
+            info.memberName = userModel.getUser_name();
+            info.aid = userModel.getAid();
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
             ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
@@ -148,8 +154,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else {
             RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = uid;
-            info.memberName = matchService.getUserName(uid);
-            info.aid = matchService.getAid(uid);
+            UserModel userModel = userService.getUserByUid(uid);
+            info.memberName = userModel.getUser_name();
+            info.aid = userModel.getAid();
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = false;
             MatchRoomKCPController.roomMap.get(roomId).add(info);

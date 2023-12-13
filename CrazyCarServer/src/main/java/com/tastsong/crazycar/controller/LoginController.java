@@ -2,6 +2,7 @@ package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import com.tastsong.crazycar.dto.req.ReqLogin;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +31,15 @@ import javax.validation.Valid;
 public class LoginController {
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private UserService userService;
 
 	@PostMapping(value = "/Login")
 	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
 		String userName = req.UserName;
 		String password = req.Password;
 		log.info("login : userName = " + userName + "; password  = " + password);
-		UserModel userModel = loginService.getUserByName(userName);
+		UserModel userModel = userService.getUserByName(userName);
 		if(userModel == null){
 			return Result.failure(ResultCode.RC404);
 		} else if (password.equals(userModel.getUser_password())){
@@ -53,7 +56,7 @@ public class LoginController {
 		userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
 		userLoginRecordModel.device = body.getStr("device");
 		userLoginRecordModel.place = body.getStr("place");
-		loginService.recordLoginInfo(userLoginRecordModel);
+		userService.recordLoginInfo(userLoginRecordModel);
 		return Result.success();
 	}
 
@@ -67,11 +70,11 @@ public class LoginController {
 		String userName = body.getStr("UserName");
 		String password = body.getStr("Password");
 		log.info("Register : UserName = " + userName + "; password  = " + password);
-		if (loginService.isExistsUser(userName)){		
+		if (userService.isExistsUser(userName)){
 			return Result.failure(ResultCode.RC423);
 		} else{
 			loginService.registerUser(userName, password);
-			if (loginService.isExistsUser(userName)){	
+			if (userService.isExistsUser(userName)){
 				return loginService.getUserInfo(userName);
 			} else{
 				return Result.failure(ResultCode.RC425);

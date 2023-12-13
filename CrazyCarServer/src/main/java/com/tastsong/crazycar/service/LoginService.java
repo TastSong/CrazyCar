@@ -3,6 +3,8 @@ package com.tastsong.crazycar.service;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tastsong.crazycar.mapper.*;
 import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import com.tastsong.crazycar.utils.Util;
 @Service
 public class LoginService {
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
     @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
@@ -22,13 +24,9 @@ public class LoginService {
     @Autowired
     private EquipMapper equipMapper;
 
-    public UserModel getUserByName(String userName){
-        return userMapper.getUserByName(userName);
-    }
-
     public RespUserInfo getUserInfo(String userName){
         RespUserInfo respUserInfo = new RespUserInfo();
-        UserModel userModel = getUserByName(userName);
+        UserModel userModel = userService.getUserByName(userName);
         respUserInfo.user_name = userModel.getUser_name();
         respUserInfo.uid = userModel.getUid();
         respUserInfo.aid = userModel.getAid();
@@ -36,7 +34,7 @@ public class LoginService {
         respUserInfo.is_vip = userModel.is_vip();
         respUserInfo.token = Util.createToken(userModel.getUid());
         int uid = userModel.getUid();
-        respUserInfo.is_superuser = isSuperuser(uid);
+        respUserInfo.is_superuser = userService.isSuperuser(uid);
         respUserInfo.travel_times = getTimeTrialTimes(uid);
         respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
         respUserInfo.map_num = getTimeTrialMapNum(uid);
@@ -61,13 +59,6 @@ public class LoginService {
         return equipMapper.isHasEquip(uid, eid);
     }
 
-    private boolean isSuperuser(int uid){
-        return userMapper.isSuperuser(uid);
-    }
-
-    public boolean isExistsUser(String userName){
-        return userMapper.isExistsUser(userName);
-    }
 
     public void registerUser (String userName, String password){
         int defaultAid = 1;
@@ -84,7 +75,7 @@ public class LoginService {
         userModel.setEid(defaultEid);
         userModel.set_vip(defaultVIP);
         userModel.setLogin_time(DateUtil.currentSeconds());
-        userMapper.insertUser(userModel);
+        userService.insert(userModel);
 
 		int uid = userModel.getUid();
         if(avatarService.hasAvatar(uid, defaultAid)){
@@ -98,27 +89,6 @@ public class LoginService {
         if(!equipMapper.isHasEquip(uid, defaultEid)){
             equipMapper.addEquipForUser(uid, defaultEid);
         }
-    }
-
-    public void changePassword(int uid, String password){
-        userMapper.updateUserPassword(uid, password);
-    }
-
-    public UserModel getUserByUid(int uid){
-        return userMapper.getUserByUid(uid);
-    }
-
-    public boolean isExistsUserByUid(int uid){
-        return userMapper.isExistsUserByUid(uid);
-    }
-
-    public void recordLoginInfo(UserLoginRecordModel userLoginRecordModel){
-        userMapper.insertUserLoginRecord(userLoginRecordModel);
-    }
-
-    public void updateUser(UserModel userModel){
-        userMapper.updateUserStar(userModel.getUid(), userModel.getStar());
-        userMapper.updateUserVip(userModel.getUid(), userModel.is_vip());
     }
 
     public List<AvatarModel> getAvatarList(){

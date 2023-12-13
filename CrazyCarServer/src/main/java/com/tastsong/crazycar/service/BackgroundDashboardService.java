@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,6 @@ public class BackgroundDashboardService {
     private TimeTrialMapper timeTrialMapper;
     @Autowired
     private MatchMapper matchMapper;
-
-    public int getUserNum(){
-        return userMapper.getAllUserNum();
-    }
 
     public int getEquipNum(){
         return equipMapper.getEquipList().size();

@@ -2,21 +2,17 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
+import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.MatchMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
-import com.tastsong.crazycar.model.MatchMapInfoModel;
-import com.tastsong.crazycar.model.MatchRankModel;
-import com.tastsong.crazycar.model.MatchRecordModel;
-import com.tastsong.crazycar.model.MatchRoomInfoModel;
 
 @Service
 public class MatchService {
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
     private EquipMapper equipMapper;
@@ -24,13 +20,6 @@ public class MatchService {
     @Autowired
     private MatchMapper matchMapper;
 
-    public String getUserName(int uid){
-        return userMapper.getUserByUid(uid).getUser_name();
-    }
-
-    public int getAid(int uid){
-        return userMapper.getUserByUid(uid).getAid();
-    }
 
     public boolean canWade(int eid){
         return equipMapper.getEquipByEid(eid).can_wade;
@@ -68,10 +57,6 @@ public class MatchService {
         return matchMapper.updateMatchMapInfo(mapInfoModel) == 1;
     }
 
-    public boolean isVIP(int uid){
-        return userMapper.getUserByUid(uid).is_vip();
-    }
-
     public boolean isBreakRecord(MatchRecordModel recordModel) {
         if (recordModel.complete_time == -1) {
 			return false;
@@ -92,7 +77,7 @@ public class MatchService {
     }
 
     public void giveReward(int uid, int cid) {
-        userMapper.updateUserStar(uid, getMatchStar(cid) + userMapper.getUserByUid(uid).getStar());
+        userService.updateUserStar(uid, getMatchStar(cid) + userService.getUserStar(uid));
     }
 
     public void insertRecord(MatchRecordModel recordModel) {
@@ -108,10 +93,11 @@ public class MatchService {
         // initRank(uid, cid);
         // List<MatchRankModel> rankModels =  matchMapper.getMatchRankList(uid, cid);
         List<MatchRankModel> rankModels =  matchMapper.getMatchRankListByCid(cid);
-        for (int i = 0; i< rankModels.size(); i++){
-            int userId = rankModels.get(i).uid;
-            rankModels.get(i).aid = userMapper.getUserByUid(userId).getAid();
-            rankModels.get(i).user_name = userMapper.getUserByUid(userId).getUser_name();
+        for (MatchRankModel rankModel : rankModels) {
+            int userId = rankModel.uid;
+            UserModel userModel = userService.getUserByUid(userId);
+            rankModel.aid = userModel.getAid();
+            rankModel.user_name = userModel.getUser_name();
         }
         return rankModels;
     }

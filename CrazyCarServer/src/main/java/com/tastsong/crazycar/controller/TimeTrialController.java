@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,8 @@ import cn.hutool.json.JSONObject;
 public class TimeTrialController {
     @Autowired
     private TimeTrialService timeTrialService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/Rank")
     public Object getRank(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
@@ -44,12 +47,12 @@ public class TimeTrialController {
             JSONObject data = new JSONObject();
             if (timeTrialService.isHasClass(uid, cid)) {
                 System.out.print("++++++++ isHasClass ");
-                data.putOpt("star", timeTrialService.getUserStar(uid));
+                data.putOpt("star", userService.getUserStar(uid));
                 return data;
             } else if (timeTrialService.canBuyClass(uid, cid)) {
                 timeTrialService.buyClass(uid, cid);
                 System.out.print("++++++++ buyClass ");
-                data.putOpt("star", timeTrialService.getUserStar(uid));
+                data.putOpt("star", userService.getUserStar(uid));
                 return data;
             } else {
                 return Result.failure(ResultCode.RC423);

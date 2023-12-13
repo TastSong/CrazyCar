@@ -18,9 +18,9 @@ import javax.persistence.*;
 @ToString
 @Data
 public class UserModel {
-    @Id  //标注主键
-    @TableId(type = IdType.AUTO) //mybatis-plus注解
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
+    @Id
+    @TableId(type = IdType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
     private String user_name;
     private String user_password;

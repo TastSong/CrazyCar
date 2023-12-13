@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,8 @@ public class GameController {
 
     @Autowired
     private MatchService matchService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/EnterGame")
     public Object enterGame(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body)  throws Exception{
@@ -39,7 +42,7 @@ public class GameController {
 
         JSONObject data = new JSONObject();
 		if (gameType == GameType.Match){
-            if(!matchService.isVIP(uid)) {
+            if(!userService.getUserByUid(uid).is_vip()) {
                 return Result.failure(ResultCode.RC423);
 			} 
 

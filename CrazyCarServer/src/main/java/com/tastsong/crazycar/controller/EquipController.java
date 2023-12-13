@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,13 +22,15 @@ import cn.hutool.json.JSONObject;
 public class EquipController {
     @Autowired
     private EquipService equipService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/Detail")
     public Object getEquipDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
         int uid = Util.getUidByToken(token);
         JSONObject data = new JSONObject();
         data.putOpt("equips", equipService.getEquipDetail(uid));
-        data.putOpt("curEid", equipService.getCurEid(uid));
+        data.putOpt("curEid", userService.getUserByUid(uid).getEid());
         return data;
     }
 
@@ -38,11 +41,11 @@ public class EquipController {
             int uid = Util.getUidByToken(token);
 			int eid = body.getInt("eid");
 			if (equipService.isHasEquip(uid, eid)) {
-				data.putOpt("star", equipService.getUserCurStar(uid));
+				data.putOpt("star", userService.getUserStar(uid));
                 return data;
 			} else if (equipService.canBuyEquip(uid, eid)) {
 				equipService.bugEquip(uid, eid);
-				data.putOpt("star", equipService.getUserCurStar(uid));
+				data.putOpt("star", userService.getUserStar(uid));
                 return data;
 			} else {
                 return Result.failure(ResultCode.RC423);

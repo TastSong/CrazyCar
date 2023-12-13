@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,13 +24,15 @@ import cn.hutool.json.JSONObject;
 public class AvatarController {
     @Autowired
     private AvatarService avatarService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/Detail")
     public Object getAvatarDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
         int uid = Util.getUidByToken(token);
         JSONObject data = new JSONObject();
         data.putOpt("avatars", avatarService.getAvatarList(uid));
-        data.putOpt("cur_aid", avatarService.getCurAidByUid(uid));
+        data.putOpt("cur_aid", userService.getUserStar(uid));
         return data;
     }
 
@@ -40,10 +43,10 @@ public class AvatarController {
         JSONObject data = new JSONObject();
         log.info("buyAvatar : uid = " + uid + "; aid  = " + aid);
         if (avatarService.hasAvatar(uid, aid)) {
-            return data.putOpt("star", avatarService.getUserStar(uid));
+            return data.putOpt("star", userService.getUserStar(uid));
         } else if (avatarService.canBuyAvatar(uid, aid)) {
             avatarService.buyAvatar(uid, aid);
-            return data.putOpt("star", avatarService.getUserStar(uid));
+            return data.putOpt("star", userService.getUserStar(uid));
         } else {
             return Result.failure(ResultCode.RC423);
         }		

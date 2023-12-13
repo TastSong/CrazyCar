@@ -3,6 +3,8 @@ package com.tastsong.crazycar.controller;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
+import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,7 @@ public class MatchRoomWebSocket {
     private int maxNum = 2;
     private int startOffsetTime = 16;
     private MatchService matchService;
+    private UserService userService;
 
     // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
     private Session WebSocketsession;
@@ -53,6 +56,7 @@ public class MatchRoomWebSocket {
         
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
+        userService = act.getBean(UserService.class);
         log.info("Match Room onOpen, num = " + getOnlineCount());
     }
  
@@ -114,8 +118,9 @@ public class MatchRoomWebSocket {
         } else{
             RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = curUid;
-            info.memberName = matchService.getUserName(curUid);
-            info.aid = matchService.getAid(curUid);
+            UserModel userModel = userService.getUserByUid(curUid);
+            info.memberName = userModel.getUser_name();
+            info.aid = userModel.getAid();
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = true;
             ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
@@ -144,14 +149,15 @@ public class MatchRoomWebSocket {
         } else{
             RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
             info.uid = curUid;
-            info.memberName = matchService.getUserName(curUid);
-            info.aid = matchService.getAid(curUid);
+            UserModel userModel = userService.getUserByUid(curUid);
+            info.memberName = userModel.getUser_name();
+            info.aid = userModel.getAid();
             info.canWade = matchService.canWade(message.getInt("eid"));
             info.isHouseOwner = false;
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);    
         }
-        log.info("OnCreateRoom : " + data.toString());  
+        log.info("OnCreateRoom : " + data);
         sendToUser(data.toString(), roomId);
     }
 

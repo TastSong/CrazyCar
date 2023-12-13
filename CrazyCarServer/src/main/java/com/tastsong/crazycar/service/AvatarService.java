@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.AvatarMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.AvatarModel;
 
 @Slf4j
@@ -26,7 +25,7 @@ public class AvatarService {
     private AvatarRecordMapper avatarRecordMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     public RespAvatar toRespAvatar(AvatarModel avatarModel, int uid){
         RespAvatar resp = new RespAvatar();
@@ -59,20 +58,13 @@ public class AvatarService {
         return avatarMapper.updateById(avatarModel) == 1;
     }
 
-    public int getCurAidByUid(int uid){
-        return userMapper.getUserByUid(uid).getAid();
-    }
-
-    public int getUserStar(int uid){
-        return userMapper.getUserByUid(uid).getStar();
-    }
 
     private int getNeedStar(int aid){
         return avatarMapper.selectById(aid).getStar();
     }
 
     public boolean canBuyAvatar(int uid, int aid) {
-        int hasStar = getUserStar(uid);
+        int hasStar = userService.getUserStar(uid);
         log.info("canBuyAvatar hasStar : " + hasStar);
         int needStar = getNeedStar(aid);
         log.info("canBuyAvatar needStar : " + needStar);
@@ -80,8 +72,8 @@ public class AvatarService {
 	}
 
     public boolean buyAvatar(int uid, int aid){
-        int curStar = getUserStar(uid) - getNeedStar(aid);
-        userMapper.updateUserStar(uid, curStar);
+        int curStar = userService.getUserStar(uid) - getNeedStar(aid);
+        userService.updateUserStar(uid, curStar);
         try {
             addAvatarForUser(uid, aid);
         } catch (Exception e) {
@@ -113,6 +105,6 @@ public class AvatarService {
     }
 
     public void changeAvatar(int uid, int aid){
-        userMapper.updateUserAid(uid, aid);
+        userService.updateUserAid(uid, aid);
     }
 }

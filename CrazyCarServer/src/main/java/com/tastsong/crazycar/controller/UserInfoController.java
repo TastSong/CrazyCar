@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class UserInfoController {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/GetUser")
     public Object getUserInfo(@RequestBody JSONObject body) throws Exception {
         int uid = body.getInt("uid");
-        if(loginService.isExistsUserByUid(uid)){
-            String userName = loginService.getUserByUid(uid).getUser_name();
+        if(userService.isExistsUserByUid(uid)){
+            String userName = userService.getUserByUid(uid).getUser_name();
             return loginService.getUserInfo(userName);
         } else{
             return Result.failure(ResultCode.RC404);
@@ -39,7 +42,7 @@ public class UserInfoController {
         int uid = Util.getUidByToken(token);
         String password = body.getStr("password");
         if(password.length() >= 6){
-            loginService.changePassword(uid, password);
+            userService.changePassword(uid, password);
             return Result.success();
         } else {
             return Result.failure(ResultCode.RC423);
