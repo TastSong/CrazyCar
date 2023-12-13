@@ -25,7 +25,7 @@ public class BackgroundEquipController {
     @GetMapping(value = "getEqiupInfos")
     public Object getEqiupInfos() throws Exception {
         JSONObject result = new JSONObject();
-        List<EquipModel> items = equipService.getEqiupInfos();
+        List<EquipModel> items = equipService.getEquipInfos();
         result.putOpt("items", items);
         result.putOpt("total", items.size());
         return result;
@@ -43,6 +43,6 @@ public class BackgroundEquipController {
         equipModel.mass = body.getInt("mass");
         equipModel.power = body.getInt("power");
         equipModel.max_power = body.getInt("max_power");
-        return equipService.updtaeEquipInfo(equipModel) ? equipModel : false;
+        return equipService.updateEquipInfoByModel(equipModel) ? equipModel : false;
     }
 }

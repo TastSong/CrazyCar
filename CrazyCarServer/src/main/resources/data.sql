@@ -226,13 +226,13 @@ INSERT INTO `avatar_record` VALUES (1,1,1,1702374103),
 UNLOCK TABLES;
 
 --
--- Table structure for table `equip_uid`
+-- Table structure for table `equip_record`
 --
 
-DROP TABLE IF EXISTS `equip_uid`;
+DROP TABLE IF EXISTS `equip_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `equip_uid` (
+CREATE TABLE `equip_record` (
                              `id` int unsigned NOT NULL AUTO_INCREMENT,
                              `eid` int NOT NULL,
                              `uid` int NOT NULL,
@@ -241,12 +241,12 @@ CREATE TABLE `equip_uid` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `equip_uid`
+-- Dumping data for table `equip_record`
 --
 
-LOCK TABLES `equip_uid` WRITE;
-/*!40000 ALTER TABLE `equip_uid` DISABLE KEYS */;
-INSERT INTO `equip_uid` VALUES (1,1,1),
+LOCK TABLES `equip_record` WRITE;
+/*!40000 ALTER TABLE `equip_record` DISABLE KEYS */;
+INSERT INTO `equip_record` VALUES (1,1,1),
                                (2,2,1),
                                (3,3,1),
                                (4,1,2),
@@ -256,7 +256,7 @@ INSERT INTO `equip_uid` VALUES (1,1,1),
                                (8,5,3),
                                (9,1,4),
                                (10,2,4);
-/*!40000 ALTER TABLE `equip_uid` ENABLE KEYS */;
+/*!40000 ALTER TABLE `equip_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

@@ -11,24 +11,18 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = ConstModelNameAttribute.EQUIP)
-@TableName(ConstModelNameAttribute.EQUIP)
+@Table(name = ConstModelNameAttribute.EQUIP_RECORD)
+@TableName(ConstModelNameAttribute.EQUIP_RECORD)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Data
-public class EquipModel {
+public class EquipRecordModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    public int eid;
-
-    public String rid;
-    public String equip_name;
-    public int star;
-    public int mass;
-    public int power;
-    public int max_power;
-    public boolean can_wade;
-    public boolean is_show;
+    private int id;
+    private int eid;
+    private int uid;
+    private long update_time;
 }

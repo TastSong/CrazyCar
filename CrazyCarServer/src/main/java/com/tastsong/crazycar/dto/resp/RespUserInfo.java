@@ -13,7 +13,7 @@ public class RespUserInfo {
     public int travel_times;
     public int map_num;
 
-    public EquipModel equip_info;
+    public RespEquip equip_info;
 
     public String token;
 }

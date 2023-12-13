@@ -3,8 +3,6 @@ package com.tastsong.crazycar.service;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tastsong.crazycar.mapper.*;
 import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class LoginService {
     @Autowired
     private AvatarService avatarService;
     @Autowired
-    private EquipMapper equipMapper;
+    private EquipService equipService;
 
     public RespUserInfo getUserInfo(String userName){
         RespUserInfo respUserInfo = new RespUserInfo();
@@ -38,8 +36,7 @@ public class LoginService {
         respUserInfo.travel_times = getTimeTrialTimes(uid);
         respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
         respUserInfo.map_num = getTimeTrialMapNum(uid);
-        respUserInfo.equip_info = getEquipByEid(userModel.getEid());
-        respUserInfo.equip_info.is_has = isHasEquip(userModel.getEid(), uid);
+        respUserInfo.equip_info = equipService.getRespEquip(uid, userModel.getEid());
         return respUserInfo;
     }
 
@@ -49,14 +46,6 @@ public class LoginService {
 
     public int getTimeTrialMapNum(int uid){
         return timeTrialMapper.getTimeTrialMapNumByUid(uid);
-    }
-
-    private EquipModel getEquipByEid(int eid){
-        return equipMapper.getEquipByEid(eid);
-    }
-
-    private boolean isHasEquip (int eid, int uid){
-        return equipMapper.isHasEquip(uid, eid);
     }
 
 
@@ -86,8 +75,8 @@ public class LoginService {
             timeTrialMapper.addTimeTrialMapForUser(uid, defaultCid);
         }
 
-        if(!equipMapper.isHasEquip(uid, defaultEid)){
-            equipMapper.addEquipForUser(uid, defaultEid);
+        if(!equipService.hasEquip(uid, defaultEid)){
+            equipService.addEquipForUser(uid, defaultEid);
         }
     }
 

@@ -40,7 +40,7 @@ public class EquipController {
 		if (body != null && body.containsKey("eid")) {
             int uid = Util.getUidByToken(token);
 			int eid = body.getInt("eid");
-			if (equipService.isHasEquip(uid, eid)) {
+			if (equipService.hasEquip(uid, eid)) {
 				data.putOpt("star", userService.getUserStar(uid));
                 return data;
 			} else if (equipService.canBuyEquip(uid, eid)) {
@@ -60,7 +60,7 @@ public class EquipController {
         int uid = Util.getUidByToken(token);
         if (body != null && body.containsKey("eid")) {
 			int eid = body.getInt("eid");
-			if (equipService.isHasEquip(uid, eid)) {
+			if (equipService.hasEquip(uid, eid)) {
 				equipService.changeEquip(uid, eid);
                 JSONObject data = new JSONObject();
                 data.putOpt("eid", eid);
