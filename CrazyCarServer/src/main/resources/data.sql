@@ -1,658 +1,607 @@
 DROP DATABASE IF EXISTS crazy_car;
 create database crazy_car charset=utf8mb4 collate=utf8mb4_general_ci;
 use crazy_car;
-/*
-centos å¦‚æžœæ²¡ç”Ÿæ•ˆ
-1. sudo find / -name 'my.cnf'
-2. æ·»åŠ 
-sql_mode =STRICT_TRANS_TABLES,NO_ZERO_IN_all_userDATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-3. sudo systemctl stop mysqld
-4. é‡å¯crazy_car.jar
-*/
-SET sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SET SQL_SAFE_UPDATES = false;
 
-create table if not exists `all_user`(
-   `uid` int unsigned auto_increment,
-   `user_name` varchar(100) not null,
-   `user_password` VARCHAR(40) not null,
-   `login_time` long not null,
-    `aid` INT(4)  not null,
-    `star` int not null,
-    `is_vip` int not null,
-    `eid` int not null,
-   primary key ( `uid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
-                       values
-					   (1, 'Tast', '96e79218965eb72c92a549dd5a330112', 1629544628, 1, 99, 1, 1);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
-                       values
-					   (2, 'song', '96e79218965eb72c92a549dd5a330112', 1629544634, 2, 88, 1, 2);
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
-                       values
-					   (3, 'é˜¿å®‹å°å¨‡å¦»', '96e79218965eb72c92a549dd5a330112', 1629544655, 3, 66, 1, 3);        
-insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid )
-                       values
-					   (4, 'Lory', '96e79218965eb72c92a549dd5a330112', 1629544666, 4, 12, 0, 1);                       
-select* from all_user;
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
+--
+-- Host: localhost    Database: crazy_car
+-- ------------------------------------------------------
+-- Server version	8.0.32
 
-select user_password 
-from all_user 
-where user_name = 'Tast';
-/*ä¿®æ”¹åŽŸæœ‰è¡¨all_user*/
-/*
-ALTER TABLE all_user ADD aid INT(4)  not null;
-alter table all_user drop column aid;
-*/
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-/*avatar*/
-create table if not exists `avatar`(
-   `aid` int unsigned auto_increment,
-   `rid` VARCHAR(100) not null,
-   `avatar_name` VARCHAR(40) not null,
-   `star` int not null,
-   primary key ( `aid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('0', 'Tast 0', 3);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('1', 'Black 1', 2);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('2', 'Write 2', 4);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('3', 'Write 3', 5);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('4', 'Write 4', 6);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('5', 'Write 5', 4);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('6', 'Avatar6', 2);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('7', 'Avatar7', 100);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('8', 'Avatar8', 1);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('9', 'Avatar9', 3);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('11', 'Avatar11', 3);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('12', 'Avatar12', 5);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('13', 'Avatar13', 6);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('14', 'Avatar14', 5);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('15', 'Avatar15', 2);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('16', 'Avatar160', 3);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('17', 'Avatar17', 5);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('18', 'Avatar18', 2);
-insert into avatar ( rid, avatar_name, star )
-				   values
-				   ('19', 'Avatar19', 4);
-select* from avatar;
+--
+-- Table structure for table `admin_users`
+--
 
-select* from all_user;
-update all_user 
-set aid = 2 
-where uid = 1;
+DROP TABLE IF EXISTS `admin_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admin_users` (
+                               `uid` int unsigned NOT NULL AUTO_INCREMENT,
+                               `user_password` varchar(100) NOT NULL,
+                               `user_name` varchar(100) NOT NULL,
+                               `des` varchar(1000) NOT NULL,
+                               `routes` text,
+                               PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*avatar_record*/
-create table if not exists `avatar_record`(
-   `id` int unsigned auto_increment,
-   `aid` int not null,
-   `uid` int not null,
-   `update_time` long,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (1, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (2, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (5, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (9, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (17, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (18, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (15, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (16, 1, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (2, 2, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (3, 3, 1702374103865);
-insert into avatar_record ( aid, uid, update_time )
-				   values
-				   (4, 4, 1702374103865);                   
-select aid from
- avatar_record 
- where aid = 1 and uid = 1;
-select aid from avatar_record where uid = 1;
+--
+-- Dumping data for table `admin_users`
+--
 
-/*time trail class*/
-create table if not exists `time_trial_class`(
-   `cid` int unsigned auto_increment,
-   `star` int not null,  /*åŒStar*/
-   `map_id` int not null,
-   `has_water` int not null,
-   `limit_time` int not null,
-   `class_name` VARCHAR(40) not null,
-   `times` int not null,
-   primary key ( `cid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (2, 0, 0, 88, 'åŸºåœ°å¡é€š', 2);
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (14, 1, 1, 96, 'æ°´ä¸Šä¹å›­', 2);
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (3, 2, 0, 80, 'æ›²æŠ˜å‰è¡Œ', 2);
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (22, 3, 0, 100, 'èœ¿èœ’é©°éª‹', 2);
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (4, 4, 0, 90, 'ç ¥ç ºå‰è¡Œ', 2);        
-insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (1, 5, 0, 90, 'å‡ ä½•é£Žå…‰', 2);                     
-select* from time_trial_class;
-select cid from time_trial_class;
+LOCK TABLES `admin_users` WRITE;
+/*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
+INSERT INTO `admin_users` VALUES (1,'123456','admin','Super Administrator. Have access to view all pages.','[ { \"redirect\":\"/form/index\", \"level\":0, \"parentId\":0, \"path\":\"/form\", \"component\":\"Layout\", \"createTime\":\"2020-02-07T08:29:13.000+00:00\", \"children\":[ { \"path\":\"form\", \"component\":\"form/index\", \"meta\":{ \"icon\":\"form\", \"title\":\"Form\" }, \"name\":\"Form\" } ], \"meta\":{ \"icon\":\"form\", \"title\":\"Form\" }, \"id\":68 }, { \"redirect\":\"/permission/role\", \"path\":\"/permission\", \"component\":\"Layout\", \"children\":[ { \"path\":\"role\", \"component\":\"permission/role\", \"meta\":{ \"title\":\"Role Permission\" }, \"name\":\"RolePermission\" } ], \"meta\":{ \"icon\":\"lock\", \"title\":\"Permission\" }, \"alwaysShow\":true } ]'),
+                                 (2,'123456','editor','Normal Editor. Can see all pages except permission page','[{\"redirect\":\"/form/index\",\"level\":0,\"parentId\":0,\"path\":\"/form\",\"component\":\"Layout\",\"createTime\":\"2020-02-07T08:29:13.000+00:00\",\"children\":[{\"path\":\"form\",\"component\":\"form/index\",\"meta\":{\"icon\":\"form\",\"title\":\"form\"},\"name\":\"form\"}],\"meta\":{\"icon\":\"form\",\"title\":\"form\"},\"name\":\"form\",\"id\":21}]'),
+                                 (3,'123456','visitor','Just a visitor. Can only see the home page and the document page','[{\"redirect\":\"/form/index\",\"level\":0,\"parentId\":0,\"path\":\"/form\",\"component\":\"Layout\",\"createTime\":\"2020-02-07T08:29:13.000+00:00\",\"children\":[{\"path\":\"form\",\"component\":\"form/index\",\"meta\":{\"icon\":\"form\",\"title\":\"form\"},\"name\":\"form\"}],\"meta\":{\"icon\":\"form\",\"title\":\"form\"},\"name\":\"form\",\"id\":21}]');
+/*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*match map*/
-create table if not exists `match_map`(
-   `cid` int unsigned auto_increment,
-   `star` int not null,  /*åŒStar*/
-   `map_id` int not null,
-   `has_water` int not null,
-   `limit_time` int not null,
-   `class_name` VARCHAR(40) not null,
-   `times` int not null,
-   primary key ( `cid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (2, 0, 0, 88, 'åŸºåœ°å¡é€š', 1);
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (14, 1, 1, 96, 'æ°´ä¸Šä¹å›­', 1);
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (3, 2, 0, 80, 'æ›²æŠ˜å‰è¡Œ', 2);
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (22, 3, 0, 100, 'èœ¿èœ’é©°éª‹', 2);
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (4, 4, 0, 90, 'ç ¥ç ºå‰è¡Œ', 2);        
-insert into match_map (star, map_id, has_water, limit_time, class_name, times )
-				   values
-				   (1, 5, 0, 90, 'å‡ ä½•é£Žå…‰', 2);                     
-select* from match_map;
-select cid from match_map;
+--
+-- Table structure for table `all_equip`
+--
 
-/*time_trial_user_map*/
-create table if not exists `time_trial_user_map`(
-   `id` int unsigned auto_increment,
-   `cid` int not null,
-   `uid` int not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (1, 1);
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (2, 1);
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (3, 1);
- insert into time_trial_user_map ( cid, uid )
-				   values
-				   (1, 2);
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (1, 3);
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (1, 5);                   
-insert into time_trial_user_map ( cid, uid )
-				   values
-				   (1, 4);
-                   
-select cid from
-	time_trial_user_map 
-	where cid = 1 and uid = 1;
-select cid from time_trial_user_map 
-	where uid = 1;
-select * from time_trial_user_map;
+DROP TABLE IF EXISTS `all_equip`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `all_equip` (
+                             `eid` int unsigned NOT NULL AUTO_INCREMENT,
+                             `rid` varchar(100) NOT NULL,
+                             `equip_name` varchar(100) NOT NULL,
+                             `star` int NOT NULL,
+                             `mass` int NOT NULL,
+                             `power` int NOT NULL,
+                             `max_power` int NOT NULL,
+                             `can_wade` int NOT NULL,
+                             `is_show` int NOT NULL,
+                             PRIMARY KEY (`eid`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `all_equip`
+--
 
-/*time_trial_record*/
-create table if not exists `time_trial_record`(
-    `id` int unsigned auto_increment,
-	`uid` int not null,
-    `cid` int not null,
-    `complete_time` int not null,
-    `record_time` long not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, 22, 1629544628);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, 14, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, -1, 1629544628);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 0, 14, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (2, 1, 15, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (2, 1, 14, 1629544644);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (3, 1, 10, 1658332800);
-insert into time_trial_record ( uid, cid, complete_time, record_time)
-				   values
-				   (4, 1, 16, 1658474034);
-select * from time_trial_record where uid = 1 ;
+LOCK TABLES `all_equip` WRITE;
+/*!40000 ALTER TABLE `all_equip` DISABLE KEYS */;
+INSERT INTO `all_equip` VALUES (1,'R_Car_F1_Blue','F1 Blue',3,20,70,96,0,1),
+                               (2,'R_Car_MonsterTruck_Red','Monster Red',2,20,78,86,0,1),
+                               (3,'R_Car_OffRoadTruck_Orange','RoadTruck Orange',12,21,98,93,1,1),
+                               (4,'R_Car_SprintCar_White','SprintCar White',10,20,96,92,1,1),
+                               (5,'R_Car_StockCar_Red','StockCar Red',4,18,78,88,0,0),
+                               (6,'R_Car_StockCar_White','StockCar White',48,15,100,120,1,1),
+                               (7,'R_Car_OffRoadTruck_Orange_2','RoadTruck Orange2',4,21,80,93,0,1),
+                               (8,'R_Car_SprintCar_White_2','SprintCar White2',5,20,82,92,0,1);
+/*!40000 ALTER TABLE `all_equip` ENABLE KEYS */;
+UNLOCK TABLES;
 
-select COUNT(*) as count, record_time as timestamp
-from time_trial_record 
-where record_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
-group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
-order by record_time limit 2;			
+--
+-- Table structure for table `all_user`
+--
 
-/*æŸ¥è¯¢è‡ªå·±çš„æˆç»©æŽ’å*/
-select
-	ta.*, @rownum  := @rownum  + 1 AS rownum
-from
-	(
-		select uid, complete_time
-		from time_trial_record
+DROP TABLE IF EXISTS `all_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `all_user` (
+                            `uid` int unsigned NOT NULL AUTO_INCREMENT,
+                            `user_name` varchar(100) NOT NULL,
+                            `user_password` varchar(40) NOT NULL,
+                            `login_time` mediumtext NOT NULL,
+                            `aid` int NOT NULL,
+                            `star` int NOT NULL,
+                            `is_vip` int NOT NULL,
+                            `eid` int NOT NULL,
+                            PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5000001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-		where uid = 1 and cid = 1
-		order by complete_time asc
-	) AS ta,
-	(select @rownum:= 0) r;
+--
+-- Dumping data for table `all_user`
+--
 
-/*æŸ¥è¯¢è‡ªå·±çš„æœ€å¥½æˆç»©*/
-select complete_time 
-from
- (
-	select
-		record.*, @rownum  := @rownum + 1 as rownum
-	from
-		(
-			select uid, complete_time
-			from time_trial_record
-				where uid = 1 and cid = 1
-				order by complete_time asc
-		) as record,
-		(select @rownum:= 0) r
-) as history_rank where rownum = 1 and complete_time != -1;
+LOCK TABLES `all_user` WRITE;
+/*!40000 ALTER TABLE `all_user` DISABLE KEYS */;
+INSERT INTO `all_user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112','1629544628',2,99,1,1),
+                              (2,'song','96e79218965eb72c92a549dd5a330112','1629544634',2,88,1,2),
+                              (3,'°¢ËÎÐ¡½¿ÆÞ','96e79218965eb72c92a549dd5a330112','1629544655',3,66,1,3),
+                              (4,'Lory','96e79218965eb72c92a549dd5a330112','1629544666',4,12,0,1);
+/*!40000 ALTER TABLE `all_user` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*èŽ·å–è®°å½•ä¸­çš„æ‰€æœ‰äººçš„æŽ’å*/
-select
-	user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
-from
-	(
-		select *
-		from
-		(select uid, min(complete_time) as complete_time
-		from
-			 time_trial_record
-			 where cid = 1 and complete_time != -1 
-			 group by uid) as min_time
-		order by complete_time asc
-	) as user_rank,
-	(select @rank_num:= 0) r;
+--
+-- Table structure for table `assets_updating`
+--
 
-select complete_time 
-        from
-        (
-            select
-                record.*, @rownum  := @rownum + 1 as rownum
-            from
-                (
-                    select uid, complete_time
-                    from time_trial_record
-                        where uid = 1 and cid = 2
-                        order by complete_time asc
-                ) as record,
-                (select @rownum:= 0) r
-        ) as history_rank where rownum = 1 and complete_time != -1;
+DROP TABLE IF EXISTS `assets_updating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assets_updating` (
+                                   `id` int NOT NULL,
+                                   `updata_time` mediumtext NOT NULL,
+                                   `is_on` int NOT NULL,
+                                   `url` varchar(1000) NOT NULL,
+                                   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-drop table if exists time_trial_rank_0;
-create table  time_trial_rank_0 as
-select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
-				from
-					(
-						select *
-						from
-						(select uid, min(complete_time) as complete_time
-						from
-							 time_trial_record
-							 where cid = 1 and complete_time != -1 
-							 group by uid) as min_time
-						order by complete_time asc
-					) as user_rank,
-					(select @rank_num:= 0) r)  as all_user_rank;
-select rank_num from time_trial_rank_0 where uid = 1;      
-select count(rank_num) as rank_count from  time_trial_rank_0;
-select * from time_trial_rank_0;			
-select uid from time_trial_rank_0 where rank_num = 4;
+--
+-- Dumping data for table `assets_updating`
+--
 
-/*forced_updating*/
-create table if not exists `forced_updating`(
-    `id` int unsigned auto_increment,
-	`platform` VARCHAR(100) not null,
-    `version` VARCHAR(100) not null,
-    `rule` int not null,
-	`updata_time` long not null,
-    `url` VARCHAR(1000) not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into forced_updating ( platform, version, rule, updata_time, url)
-				   values
-				   ('Android', '9.2.0', 10000, 1633519472000, 'https://www.pgyer.com/xlbk');
-insert into forced_updating ( platform, version, rule, updata_time, url)
-				   values
-				   ('ios', '9.2.0', 10000, 1633519472123, 'https://www.pgyer.com/rRut');
-insert into forced_updating ( platform, version, rule, updata_time, url)
-				   values
-				   ('WebGL', '9.2.0', 10000, 1633519472123, 'https://www.pgyer.com/rRut');
-insert into forced_updating ( platform, version, rule, updata_time, url)
-				   values
-				   ('PC', '9.2.0', 10000, 1633519472121, 'https://github.com/TastSong/CrazyCar/releases/latest');
-insert into forced_updating ( platform, version, rule, updata_time, url)
-				   values
-				   ('Defeat', '0.0.0', 10000, 1633519472121, 'https://github.com/TastSong/CrazyCar/releases/latest');                                         
-select * from forced_updating;
-update forced_updating
-set version = '8.5.0', rule = 9999, url = 'https://github.com/TastSong/CrazyCar/releases/latest'
-where platform = 'PC';
+LOCK TABLES `assets_updating` WRITE;
+/*!40000 ALTER TABLE `assets_updating` DISABLE KEYS */;
+INSERT INTO `assets_updating` VALUES (0,'1633519472000',0,'http://tastsong.top/crazy_car_addressable');
+/*!40000 ALTER TABLE `assets_updating` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*all_equip*/
-create table if not exists `all_equip`(
-   `eid` int unsigned auto_increment,
-   `rid` VARCHAR(100) not null,
-   `equip_name` VARCHAR(100) not null,
-   `star` int not null,
-   `mass` int not null,
-   `power` int not null,
-   `max_power` int not null,
-   `can_wade` int not null,
-   `is_show` int not null,
-   primary key ( `eid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_F1_Blue', 'F1 Blue', 3, 20, 70, 96, 0, 1);
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_MonsterTruck_Red', 'Monster Red', 2, 20, 78, 86, 0, 1);
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_OffRoadTruck_Orange', 'RoadTruck Orange', 12, 21, 98, 93, 1, 1);                
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_SprintCar_White', 'SprintCar White', 10, 20, 96, 92, 1, 1);                 
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_StockCar_Red', 'StockCar Red', 4, 18, 78, 88, 0, 0);
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_StockCar_White', 'StockCar White', 48, 15, 100, 120, 1, 1);   
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_OffRoadTruck_Orange_2', 'RoadTruck Orange2', 4, 21, 80, 93, 0, 1);   
-insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
-				   values
-				   ('R_Car_SprintCar_White_2', 'SprintCar White2', 5, 20, 82, 92, 0, 1);                     
-select* from all_equip;
+--
+-- Table structure for table `avatar`
+--
 
-/*equip_uid*/
-create table if not exists `equip_uid`(
-   `id` int unsigned auto_increment,
-   `eid` int not null,
-   `uid` int not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into equip_uid ( eid, uid )
-				   values
-				   (1, 1);
-insert into equip_uid ( eid, uid )
-				   values
-				   (2, 1);                   
-insert into equip_uid ( eid, uid )
-				   values
-				   (3, 1);
-insert into equip_uid ( eid, uid )
-				   values
-				   (1, 2);                   
-insert into equip_uid ( eid, uid )
-				   values
-				   (2, 2);
-insert into equip_uid ( eid, uid )
-				   values
-				   (1, 3);   
-insert into equip_uid ( eid, uid )
-				   values
-				   (3, 3);    
-insert into equip_uid ( eid, uid )
-				   values
-				   (5, 3);                    
-insert into equip_uid ( eid, uid )
-				   values
-				   (1, 4);   
-insert into equip_uid ( eid, uid )
-				   values
-				   (2, 4);                      
-select eid from equip_uid where uid = 1;
+DROP TABLE IF EXISTS `avatar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `avatar` (
+                          `aid` int unsigned NOT NULL AUTO_INCREMENT,
+                          `rid` varchar(100) NOT NULL,
+                          `avatar_name` varchar(40) NOT NULL,
+                          `star` int NOT NULL,
+                          PRIMARY KEY (`aid`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*match class*/
-create table if not exists `match_class`(
-   `cid` int unsigned auto_increment,
-   `star` int not null,  /*åŒStar*/
-   `map_id` int not null,
-   `room_id` VARCHAR(40),
-   `limit_time` int not null,
-   `class_name` VARCHAR(40) not null,
-   `times` int not null,
-   `start_time` long not null,
-   `enroll_time` long not null,
-   primary key ( `cid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time)
-				   values
-				   (2, 0, '1111', 60, 'åŸºåœ°å¡é€š', 1, 1633519470, 1633519470);
-insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time )
-				   values
-				   (1, 1, '0011', 70, 'å‡ ä½•é£Žå…‰', 3, 1633519472, 1633519472);
-select cid from match_class where room_id = '0011' and start_time = 1633519472;
-insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time) values (2, 0, '1121',120, 'TastSong', 1, 1652146822, 1652146792);
-select* from match_class;
+--
+-- Dumping data for table `avatar`
+--
 
-/*match_record*/
-create table if not exists `match_record`(
-    `id` int unsigned auto_increment,
-	`uid` int not null,
-    `cid` int not null,
-    `complete_time` int not null,
-    `record_time` long not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, 22, 1629544628);
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, -1, 1629544628);
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (1, 1, 14, 1629544644);
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (2, 1, 14, 1629544644);
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (3, 1, 10, 1629544644);
-insert into match_record ( uid, cid, complete_time, record_time)
-				   values
-				   (4, 1, 16, 1658476385);
-select record_time from match_record where uid = 1 ;	
+LOCK TABLES `avatar` WRITE;
+/*!40000 ALTER TABLE `avatar` DISABLE KEYS */;
+INSERT INTO `avatar` VALUES (1,'0','Tast 0',3),
+                            (2,'1','Black 1',2),
+                            (3,'2','Write 2',4),
+                            (4,'3','Write 3',5),
+                            (5,'4','Write 4',6),
+                            (6,'5','Write 5',4),
+                            (7,'6','Avatar6',2),
+                            (8,'7','Avatar7',100),
+                            (9,'8','Avatar8',1),
+                            (10,'9','Avatar9',3),
+                            (11,'11','Avatar11',3),
+                            (12,'12','Avatar12',5),
+                            (13,'13','Avatar13',6),
+                            (14,'14','Avatar14',5),
+                            (15,'15','Avatar15',2),
+                            (16,'16','Avatar160',3),
+                            (17,'17','Avatar17',5),
+                            (18,'18','Avatar18',2),
+                            (19,'19','Avatar19',4);
+/*!40000 ALTER TABLE `avatar` ENABLE KEYS */;
+UNLOCK TABLES;
 
-select COUNT(*) as count, record_time as timestamp
-from match_record 
-where record_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
-group by FROM_UNIXTIME(record_time, '%y-%m-%d') 
-order by record_time limit 2;
+--
+-- Table structure for table `avatar_record`
+--
 
-drop table if exists match_rank_0;
-create table  match_rank_0 as
-select * from  (select user_rank.*, @rank_num  := @rank_num  + 1 as rank_num
-				from
-					(
-						select *
-						from
-						(select uid, min(complete_time) as complete_time
-						from
-							 match_record
-							 where cid = 1 and complete_time != -1 
-							 group by uid) as min_time
-						order by complete_time asc
-					) as user_rank,
-					(select @rank_num:= 0) r)  as all_user_rank;
-select rank_num from match_rank_0 where uid = 1;      
-select count(rank_num) as rank_count from  match_rank_0;
-select * from match_rank_0;			
-select uid from match_rank_0 where rank_num = 4;
+DROP TABLE IF EXISTS `avatar_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `avatar_record` (
+                                 `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                 `aid` int NOT NULL,
+                                 `uid` int NOT NULL,
+                                 `update_time` mediumtext,
+                                 PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-create table if not exists `superuser`(
-   `uid` int unsigned auto_increment,
-   primary key ( `uid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into superuser ( uid)
-                       values
-					   (1);
-                
-select* from superuser;
+--
+-- Dumping data for table `avatar_record`
+--
 
-select exists (select uid from superuser where uid = 2);
+LOCK TABLES `avatar_record` WRITE;
+/*!40000 ALTER TABLE `avatar_record` DISABLE KEYS */;
+INSERT INTO `avatar_record` VALUES (1,1,1,'1702374103865'),
+                                   (2,2,1,'1702374103865'),
+                                   (3,5,1,'1702374103865'),
+                                   (4,9,1,'1702374103865'),
+                                   (5,17,1,'1702374103865'),
+                                   (6,18,1,'1702374103865'),
+                                   (7,15,1,'1702374103865'),
+                                   (8,16,1,'1702374103865'),
+                                   (9,2,2,'1702374103865'),
+                                   (10,3,3,'1702374103865'),
+                                   (11,4,4,'1702374103865');
+/*!40000 ALTER TABLE `avatar_record` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `equip_uid`
+--
 
-create table if not exists `user_login_record`(
-   `id` int unsigned auto_increment,
-   `user_name` varchar(100) not null,
-   `login_time` long not null,
-    `place` varchar(100),
-    `device` varchar(100),
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Lrrrr', 1658471682, 'å±±ä¸œï¼Œé’å²›', 'ios');  
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Tast', 1658385282, 'å±±ä¸œï¼Œé’å²›', 'ios');                
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Song', 1658288609, 'å±±ä¸œï¼Œé’å²›', 'ios'); 
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Tast', 1658202210, 'å±±ä¸œï¼Œé’å²›', 'ios'); 
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Fete', 1658202210, 'å±±ä¸œï¼Œé’å²›', 'ios');                          
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Song', 1658202210, 'å±±ä¸œï¼Œé’å²›', 'ios');      
-insert into user_login_record (user_name, login_time, place, device)
-                       values
-					   ('Fete', 1658332801, 'å±±ä¸œï¼Œé’å²›', 'ios');                           
-select* from user_login_record;
-select* from user_login_record
-where login_time > 1629544627;
+DROP TABLE IF EXISTS `equip_uid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `equip_uid` (
+                             `id` int unsigned NOT NULL AUTO_INCREMENT,
+                             `eid` int NOT NULL,
+                             `uid` int NOT NULL,
+                             PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-select COUNT(*) as count, login_time as timestamp
-from user_login_record 
-where login_time > (unix_timestamp(CAST(SYSDATE()AS DATE)) - 60 * 60 * 24 * 2) 
-group by FROM_UNIXTIME(login_time, '%y-%m-%d') 
-order by login_time limit 2;
+--
+-- Dumping data for table `equip_uid`
+--
 
-/*addressable*/
-create table if not exists `assets_updating`(
-    `id` int not null,
-	`updata_time` long not null,
-    `is_on` int not null,
-    `url` VARCHAR(1000) not null,
-   primary key ( `id` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into assets_updating (id, is_on, updata_time, url)
-				   values
-				   (0, 1, 1633519472000, 'http://tastsong.top/crazy_car_addressable');
-update assets_updating
-set is_on = 0
-where id = 0;
-select * from assets_updating;
+LOCK TABLES `equip_uid` WRITE;
+/*!40000 ALTER TABLE `equip_uid` DISABLE KEYS */;
+INSERT INTO `equip_uid` VALUES (1,1,1),
+                               (2,2,1),
+                               (3,3,1),
+                               (4,1,2),
+                               (5,2,2),
+                               (6,1,3),
+                               (7,3,3),
+                               (8,5,3),
+                               (9,1,4),
+                               (10,2,4);
+/*!40000 ALTER TABLE `equip_uid` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*admin_user*/
-create table if not exists `admin_users`(
-    `uid` int unsigned auto_increment,
-    `user_password` VARCHAR(100) not null,
-    `user_name` VARCHAR(100) not null,
-    `des` VARCHAR(1000) not null,
-    `routes` TEXT,
-   primary key ( `uid` )
-   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
-insert into `admin_users` (`user_password`, `user_name`, `des`, `routes`) VALUES
-    ('123456', 'admin', 'Super Administrator. Have access to view all pages.', '[ { "redirect":"/form/index", "level":0, "parentId":0, "path":"/form", "component":"Layout", "createTime":"2020-02-07T08:29:13.000+00:00", "children":[ { "path":"form", "component":"form/index", "meta":{ "icon":"form", "title":"Form" }, "name":"Form" } ], "meta":{ "icon":"form", "title":"Form" }, "id":68 }, { "redirect":"/permission/role", "path":"/permission", "component":"Layout", "children":[ { "path":"role", "component":"permission/role", "meta":{ "title":"Role Permission" }, "name":"RolePermission" } ], "meta":{ "icon":"lock", "title":"Permission" }, "alwaysShow":true } ]'),
-    ('123456', 'editor', 'Normal Editor. Can see all pages except permission page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]'),
-    ('123456', 'visitor', 'Just a visitor. Can only see the home page and the document page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]');
-select * from admin_users;
+--
+-- Table structure for table `forced_updating`
+--
+
+DROP TABLE IF EXISTS `forced_updating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `forced_updating` (
+                                   `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                   `platform` varchar(100) NOT NULL,
+                                   `version` varchar(100) NOT NULL,
+                                   `rule` int NOT NULL,
+                                   `updata_time` mediumtext NOT NULL,
+                                   `url` varchar(1000) NOT NULL,
+                                   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `forced_updating`
+--
+
+LOCK TABLES `forced_updating` WRITE;
+/*!40000 ALTER TABLE `forced_updating` DISABLE KEYS */;
+INSERT INTO `forced_updating` VALUES (1,'Android','9.2.0',10000,'1633519472000','https://www.pgyer.com/xlbk'),
+                                     (2,'ios','9.2.0',10000,'1633519472123','https://www.pgyer.com/rRut'),
+                                     (3,'WebGL','9.2.0',10000,'1633519472123','https://www.pgyer.com/rRut'),
+                                     (4,'PC','8.5.0',9999,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
+/*!40000 ALTER TABLE `forced_updating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `match_class`
+--
+
+DROP TABLE IF EXISTS `match_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `match_class` (
+                               `cid` int unsigned NOT NULL AUTO_INCREMENT,
+                               `star` int NOT NULL,
+                               `map_id` int NOT NULL,
+                               `room_id` varchar(40) DEFAULT NULL,
+                               `limit_time` int NOT NULL,
+                               `class_name` varchar(40) NOT NULL,
+                               `times` int NOT NULL,
+                               `start_time` mediumtext NOT NULL,
+                               `enroll_time` mediumtext NOT NULL,
+                               PRIMARY KEY (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `match_class`
+--
+
+LOCK TABLES `match_class` WRITE;
+/*!40000 ALTER TABLE `match_class` DISABLE KEYS */;
+INSERT INTO `match_class` VALUES (1,2,0,'1111',60,'»ùµØ¿¨Í¨',1,'1633519470','1633519470'),
+                                 (2,1,1,'0011',70,'¼¸ºÎ·ç¹â',3,'1633519472','1633519472'),
+                                 (3,2,0,'1121',120,'TastSong',1,'1652146822','1652146792');
+/*!40000 ALTER TABLE `match_class` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `match_map`
+--
+
+DROP TABLE IF EXISTS `match_map`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `match_map` (
+                             `cid` int unsigned NOT NULL AUTO_INCREMENT,
+                             `star` int NOT NULL,
+                             `map_id` int NOT NULL,
+                             `has_water` int NOT NULL,
+                             `limit_time` int NOT NULL,
+                             `class_name` varchar(40) NOT NULL,
+                             `times` int NOT NULL,
+                             PRIMARY KEY (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `match_map`
+--
+
+LOCK TABLES `match_map` WRITE;
+/*!40000 ALTER TABLE `match_map` DISABLE KEYS */;
+INSERT INTO `match_map` VALUES (1,2,0,0,88,'»ùµØ¿¨Í¨',1),
+                               (2,14,1,1,96,'Ë®ÉÏÀÖÔ°',1),
+                               (3,3,2,0,80,'ÇúÕÛÇ°ÐÐ',2),
+                               (4,22,3,0,100,'òêÑÑ³Û³Ò',2),
+                               (5,4,4,0,90,'íÆíÂÇ°ÐÐ',2),
+                               (6,1,5,0,90,'¼¸ºÎ·ç¹â',2);
+/*!40000 ALTER TABLE `match_map` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `match_rank_0`
+--
+
+DROP TABLE IF EXISTS `match_rank_0`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `match_rank_0` (
+                                `uid` int NOT NULL,
+                                `complete_time` int,
+                                `rank_num` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `match_rank_0`
+--
+
+LOCK TABLES `match_rank_0` WRITE;
+/*!40000 ALTER TABLE `match_rank_0` DISABLE KEYS */;
+INSERT INTO `match_rank_0` VALUES (3,10,1),(1,14,2),(2,14,3),(4,16,4);
+/*!40000 ALTER TABLE `match_rank_0` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `match_record`
+--
+
+DROP TABLE IF EXISTS `match_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `match_record` (
+                                `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                `uid` int NOT NULL,
+                                `cid` int NOT NULL,
+                                `complete_time` int NOT NULL,
+                                `record_time` mediumtext NOT NULL,
+                                PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `match_record`
+--
+
+LOCK TABLES `match_record` WRITE;
+/*!40000 ALTER TABLE `match_record` DISABLE KEYS */;
+INSERT INTO `match_record` VALUES (1,1,1,22,'1629544628'),
+                                  (2,1,1,-1,'1629544628'),
+                                  (3,1,1,14,'1629544644'),
+                                  (4,2,1,14,'1629544644'),
+                                  (5,3,1,10,'1629544644'),
+                                  (6,4,1,16,'1658476385');
+/*!40000 ALTER TABLE `match_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `superuser`
+--
+
+DROP TABLE IF EXISTS `superuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `superuser` (
+                             `uid` int unsigned NOT NULL AUTO_INCREMENT,
+                             PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `superuser`
+--
+
+LOCK TABLES `superuser` WRITE;
+/*!40000 ALTER TABLE `superuser` DISABLE KEYS */;
+INSERT INTO `superuser` VALUES (1);
+/*!40000 ALTER TABLE `superuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time_trial_class`
+--
+
+DROP TABLE IF EXISTS `time_trial_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `time_trial_class` (
+                                    `cid` int unsigned NOT NULL AUTO_INCREMENT,
+                                    `star` int NOT NULL,
+                                    `map_id` int NOT NULL,
+                                    `has_water` int NOT NULL,
+                                    `limit_time` int NOT NULL,
+                                    `class_name` varchar(40) NOT NULL,
+                                    `times` int NOT NULL,
+                                    PRIMARY KEY (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time_trial_class`
+--
+
+LOCK TABLES `time_trial_class` WRITE;
+/*!40000 ALTER TABLE `time_trial_class` DISABLE KEYS */;
+INSERT INTO `time_trial_class` VALUES (1,2,0,0,88,'»ùµØ¿¨Í¨',2),
+                                      (2,14,1,1,96,'Ë®ÉÏÀÖÔ°',2),
+                                      (3,3,2,0,80,'ÇúÕÛÇ°ÐÐ',2),
+                                      (4,22,3,0,100,'òêÑÑ³Û³Ò',2),
+                                      (5,4,4,0,90,'íÆíÂÇ°ÐÐ',2),
+                                      (6,1,5,0,90,'¼¸ºÎ·ç¹â',2);
+/*!40000 ALTER TABLE `time_trial_class` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time_trial_rank_0`
+--
+
+DROP TABLE IF EXISTS `time_trial_rank_0`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `time_trial_rank_0` (
+                                     `uid` int NOT NULL,
+                                     `complete_time` int,
+                                     `rank_num` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time_trial_rank_0`
+--
+
+LOCK TABLES `time_trial_rank_0` WRITE;
+/*!40000 ALTER TABLE `time_trial_rank_0` DISABLE KEYS */;
+INSERT INTO `time_trial_rank_0` VALUES (3,10,1),(1,14,2),(2,14,3),(4,16,4);
+/*!40000 ALTER TABLE `time_trial_rank_0` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time_trial_record`
+--
+
+DROP TABLE IF EXISTS `time_trial_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `time_trial_record` (
+                                     `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                     `uid` int NOT NULL,
+                                     `cid` int NOT NULL,
+                                     `complete_time` int NOT NULL,
+                                     `record_time` mediumtext NOT NULL,
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time_trial_record`
+--
+
+LOCK TABLES `time_trial_record` WRITE;
+/*!40000 ALTER TABLE `time_trial_record` DISABLE KEYS */;
+INSERT INTO `time_trial_record` VALUES (1,1,1,22,'1629544628'),
+                                       (2,1,1,14,'1629544644'),
+                                       (3,1,1,-1,'1629544628'),
+                                       (4,1,0,14,'1629544644'),
+                                       (5,2,1,15,'1629544644'),
+                                       (6,2,1,14,'1629544644'),
+                                       (7,3,1,10,'1658332800'),
+                                       (8,4,1,16,'1658474034');
+/*!40000 ALTER TABLE `time_trial_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time_trial_user_map`
+--
+
+DROP TABLE IF EXISTS `time_trial_user_map`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `time_trial_user_map` (
+                                       `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                       `cid` int NOT NULL,
+                                       `uid` int NOT NULL,
+                                       PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time_trial_user_map`
+--
+
+LOCK TABLES `time_trial_user_map` WRITE;
+/*!40000 ALTER TABLE `time_trial_user_map` DISABLE KEYS */;
+INSERT INTO `time_trial_user_map` VALUES (1,1,1),
+                                         (2,2,1),
+                                         (3,3,1),
+                                         (4,1,2),
+                                         (5,1,3),
+                                         (6,1,5),
+                                         (7,1,4);
+/*!40000 ALTER TABLE `time_trial_user_map` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_login_record`
+--
+
+DROP TABLE IF EXISTS `user_login_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_login_record` (
+                                     `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                     `user_name` varchar(100) NOT NULL,
+                                     `login_time` mediumtext NOT NULL,
+                                     `place` varchar(100) DEFAULT NULL,
+                                     `device` varchar(100) DEFAULT NULL,
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_login_record`
+--
+
+LOCK TABLES `user_login_record` WRITE;
+/*!40000 ALTER TABLE `user_login_record` DISABLE KEYS */;
+INSERT INTO `user_login_record` VALUES (1,'Lrrrr','1658471682','É½¶«£¬Çàµº','ios'),
+                                       (2,'Tast','1658385282','É½¶«£¬Çàµº','ios'),
+                                       (3,'Song','1658288609','É½¶«£¬Çàµº','ios'),
+                                       (4,'Tast','1658202210','É½¶«£¬Çàµº','ios'),
+                                       (5,'Fete','1658202210','É½¶«£¬Çàµº','ios'),
+                                       (6,'Song','1658202210','É½¶«£¬Çàµº','ios'),
+                                       (7,'Fete','1658332801','É½¶«£¬Çàµº','ios');
+/*!40000 ALTER TABLE `user_login_record` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-12-13  9:31:31
+
 
 
