@@ -4,14 +4,14 @@
     <select id="getEquipByEid" resultType="EquipModel">
         select
         *
-        from all_equip 
+        from equip
         where eid = #{eid};
     </select>
 
     <select id="getEquipList" resultType="EquipModel">
         select
         *
-        from all_equip;
+        from equip;
     </select>
 
     <select id="getEidsByUid" resultType="Integer">
@@ -38,7 +38,7 @@
     </insert>
 
     <update id="updateEquipInfo" parameterType="EquipModel">
-        update all_equip
+        update equip
         set rid = #{rid}, equip_name = #{equip_name}, star = #{star},
          mass = #{mass}, power = #{power}, max_power = #{max_power}, 
          can_wade = #{can_wade}, is_show = #{is_show}

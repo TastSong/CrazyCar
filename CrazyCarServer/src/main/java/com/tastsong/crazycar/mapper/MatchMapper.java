@@ -7,6 +7,8 @@ import com.tastsong.crazycar.model.MatchMapInfoModel;
 import com.tastsong.crazycar.model.MatchRankModel;
 import com.tastsong.crazycar.model.MatchRecordModel;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface MatchMapper {
     public int insertMatchClass(MatchRoomInfoModel infoModel);
@@ -20,6 +22,11 @@ public interface MatchMapper {
     public List<MatchRankModel> getMatchRankList(int uid, int cid);
     public List<MatchRankModel> getMatchRankListByCid(int cid);
     public int initMatchRank(int uid, int cid);
-    public List<RespDataStatistics> getMatchData(int offsetTime);
+    @Select("SELECT COUNT(*) as count, record_time as timestamp " +
+            "FROM match_record " +
+            "WHERE record_time > (UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE)) - 60 * 60 * 24 * #{offsetTime}) " +
+            "GROUP BY FROM_UNIXTIME(record_time, '%y-%m-%d'), record_time " +
+            "ORDER BY record_time LIMIT #{offsetTime}")
+    List<RespDataStatistics> getMatchData(@Param("offsetTime") Integer offsetTime);
     public int updateMatchMapInfo(MatchMapInfoModel mapInfoModel);
 }

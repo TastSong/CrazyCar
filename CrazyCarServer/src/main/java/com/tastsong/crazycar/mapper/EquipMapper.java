@@ -2,9 +2,10 @@ package com.tastsong.crazycar.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tastsong.crazycar.model.EquipModel;
 
-public interface EquipMapper {
+public interface EquipMapper extends BaseMapper<EquipModel> {
     public EquipModel getEquipByEid(int eid);
     public List<EquipModel> getEquipList();
     public List<Integer> getEidsByUid(int uid);

@@ -7,4 +7,5 @@ public class ConstModelNameAttribute {
     public static final String AVATAR_RECORD = "avatar_record";
     public static final String USER = "user";
     public static final String USER_LOGIN_RECORD = "user_login_record";
+    public static final String EQUIP = "equip";
 }

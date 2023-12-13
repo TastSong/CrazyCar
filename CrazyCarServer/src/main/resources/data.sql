@@ -49,13 +49,13 @@ INSERT INTO `admin_users` VALUES (1,'123456','admin','Super Administrator. Have 
 UNLOCK TABLES;
 
 --
--- Table structure for table `all_equip`
+-- Table structure for table `equip`
 --
 
-DROP TABLE IF EXISTS `all_equip`;
+DROP TABLE IF EXISTS `equip`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `all_equip` (
+CREATE TABLE `equip` (
                              `eid` int unsigned NOT NULL AUTO_INCREMENT,
                              `rid` varchar(100) NOT NULL,
                              `equip_name` varchar(100) NOT NULL,
@@ -70,12 +70,12 @@ CREATE TABLE `all_equip` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `all_equip`
+-- Dumping data for table `equip`
 --
 
-LOCK TABLES `all_equip` WRITE;
-/*!40000 ALTER TABLE `all_equip` DISABLE KEYS */;
-INSERT INTO `all_equip` VALUES (1,'R_Car_F1_Blue','F1 Blue',3,20,70,96,0,1),
+LOCK TABLES `equip` WRITE;
+/*!40000 ALTER TABLE `equip` DISABLE KEYS */;
+INSERT INTO `equip` VALUES (1,'R_Car_F1_Blue','F1 Blue',3,20,70,96,0,1),
                                (2,'R_Car_MonsterTruck_Red','Monster Red',2,20,78,86,0,1),
                                (3,'R_Car_OffRoadTruck_Orange','RoadTruck Orange',12,21,98,93,1,1),
                                (4,'R_Car_SprintCar_White','SprintCar White',10,20,96,92,1,1),
@@ -83,7 +83,7 @@ INSERT INTO `all_equip` VALUES (1,'R_Car_F1_Blue','F1 Blue',3,20,70,96,0,1),
                                (6,'R_Car_StockCar_White','StockCar White',48,15,100,120,1,1),
                                (7,'R_Car_OffRoadTruck_Orange_2','RoadTruck Orange2',4,21,80,93,0,1),
                                (8,'R_Car_SprintCar_White_2','SprintCar White2',5,20,82,92,0,1);
-/*!40000 ALTER TABLE `all_equip` ENABLE KEYS */;
+/*!40000 ALTER TABLE `equip` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -128,7 +128,7 @@ DROP TABLE IF EXISTS `assets_updating`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assets_updating` (
                                    `id` int NOT NULL,
-                                   `updata_time` mediumtext NOT NULL,
+                                   `update_time` long NOT NULL,
                                    `is_on` int NOT NULL,
                                    `url` varchar(1000) NOT NULL,
                                    PRIMARY KEY (`id`)
@@ -141,7 +141,7 @@ CREATE TABLE `assets_updating` (
 
 LOCK TABLES `assets_updating` WRITE;
 /*!40000 ALTER TABLE `assets_updating` DISABLE KEYS */;
-INSERT INTO `assets_updating` VALUES (0,'1633519472000',0,'http://tastsong.top/crazy_car_addressable');
+INSERT INTO `assets_updating` VALUES (0,1633519472,0,'http://tastsong.top/crazy_car_addressable');
 /*!40000 ALTER TABLE `assets_updating` ENABLE KEYS */;
 UNLOCK TABLES;
 
