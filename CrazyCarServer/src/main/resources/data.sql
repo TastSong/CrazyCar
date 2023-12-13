@@ -1,10 +1,11 @@
+DROP DATABASE IF EXISTS crazy_car;
 create database crazy_car charset=utf8mb4 collate=utf8mb4_general_ci;
 use crazy_car;
 /*
 centos 如果没生效
 1. sudo find / -name 'my.cnf'
 2. 添加
-sql_mode =STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+sql_mode =STRICT_TRANS_TABLES,NO_ZERO_IN_all_userDATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 3. sudo systemctl stop mysqld
 4. 重启crazy_car.jar
 */
@@ -21,7 +22,7 @@ create table if not exists `all_user`(
     `is_vip` int not null,
     `eid` int not null,
    primary key ( `uid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into all_user ( uid, user_name, user_password, login_time, aid, star, is_vip, eid)
                        values
 					   (1, 'Tast', '96e79218965eb72c92a549dd5a330112', 1629544628, 1, 99, 1, 1);
@@ -45,72 +46,72 @@ ALTER TABLE all_user ADD aid INT(4)  not null;
 alter table all_user drop column aid;
 */
 
-/*avatar_name*/
-create table if not exists `avatar_name`(
+/*avatar*/
+create table if not exists `avatar`(
    `aid` int unsigned auto_increment,
    `rid` VARCHAR(100) not null,
    `avatar_name` VARCHAR(40) not null,
    `star` int not null,
    primary key ( `aid` )
-   )engine = innodb default charset = utf8;
-insert into avatar_name ( rid, avatar_name, star )
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('0', 'Tast 0', 3);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('1', 'Black 1', 2);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('2', 'Write 2', 4);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('3', 'Write 3', 5);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('4', 'Write 4', 6);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('5', 'Write 5', 4);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('6', 'Avatar6', 2);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('7', 'Avatar7', 100);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('8', 'Avatar8', 1);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('9', 'Avatar9', 3);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('11', 'Avatar11', 3);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('12', 'Avatar12', 5);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('13', 'Avatar13', 6);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('14', 'Avatar14', 5);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('15', 'Avatar15', 2);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('16', 'Avatar160', 3);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('17', 'Avatar17', 5);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('18', 'Avatar18', 2);
-insert into avatar_name ( rid, avatar_name, star )
+insert into avatar ( rid, avatar_name, star )
 				   values
 				   ('19', 'Avatar19', 4);
-select* from avatar_name;
+select* from avatar;
 
 select* from all_user;
 update all_user 
@@ -124,7 +125,7 @@ create table if not exists `avatar_record`(
    `uid` int not null,
    `update_time` long,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into avatar_record ( aid, uid, update_time )
 				   values
 				   (1, 1, 1702374103865);
@@ -173,7 +174,7 @@ create table if not exists `time_trial_class`(
    `class_name` VARCHAR(40) not null,
    `times` int not null,
    primary key ( `cid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into time_trial_class (star, map_id, has_water, limit_time, class_name, times )
 				   values
 				   (2, 0, 0, 88, '基地卡通', 2);
@@ -205,7 +206,7 @@ create table if not exists `match_map`(
    `class_name` VARCHAR(40) not null,
    `times` int not null,
    primary key ( `cid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into match_map (star, map_id, has_water, limit_time, class_name, times )
 				   values
 				   (2, 0, 0, 88, '基地卡通', 1);
@@ -233,7 +234,7 @@ create table if not exists `time_trial_user_map`(
    `cid` int not null,
    `uid` int not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into time_trial_user_map ( cid, uid )
 				   values
 				   (1, 1);
@@ -272,7 +273,7 @@ create table if not exists `time_trial_record`(
     `complete_time` int not null,
     `record_time` long not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
 				   (1, 1, 22, 1629544628);
@@ -394,7 +395,7 @@ create table if not exists `forced_updating`(
 	`updata_time` long not null,
     `url` VARCHAR(1000) not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into forced_updating ( platform, version, rule, updata_time, url)
 				   values
 				   ('Android', '9.2.0', 10000, 1633519472000, 'https://www.pgyer.com/xlbk');
@@ -427,7 +428,7 @@ create table if not exists `all_equip`(
    `can_wade` int not null,
    `is_show` int not null,
    primary key ( `eid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into all_equip (rid, equip_name, star, mass, power, max_power, can_wade, is_show )
 				   values
 				   ('R_Car_F1_Blue', 'F1 Blue', 3, 20, 70, 96, 0, 1);
@@ -460,7 +461,7 @@ create table if not exists `equip_uid`(
    `eid` int not null,
    `uid` int not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into equip_uid ( eid, uid )
 				   values
 				   (1, 1);
@@ -505,7 +506,7 @@ create table if not exists `match_class`(
    `start_time` long not null,
    `enroll_time` long not null,
    primary key ( `cid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into match_class (star, map_id, room_id, limit_time, class_name, times, start_time, enroll_time)
 				   values
 				   (2, 0, '1111', 60, '基地卡通', 1, 1633519470, 1633519470);
@@ -524,7 +525,7 @@ create table if not exists `match_record`(
     `complete_time` int not null,
     `record_time` long not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into match_record ( uid, cid, complete_time, record_time)
 				   values
 				   (1, 1, 22, 1629544628);
@@ -574,7 +575,7 @@ select uid from match_rank_0 where rank_num = 4;
 create table if not exists `superuser`(
    `uid` int unsigned auto_increment,
    primary key ( `uid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into superuser ( uid)
                        values
 					   (1);
@@ -591,7 +592,7 @@ create table if not exists `user_login_record`(
     `place` varchar(100),
     `device` varchar(100),
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into user_login_record (user_name, login_time, place, device)
                        values
 					   ('Lrrrr', 1658471682, '山东，青岛', 'ios');  
@@ -630,7 +631,7 @@ create table if not exists `assets_updating`(
     `is_on` int not null,
     `url` VARCHAR(1000) not null,
    primary key ( `id` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into assets_updating (id, is_on, updata_time, url)
 				   values
 				   (0, 1, 1633519472000, 'http://tastsong.top/crazy_car_addressable');
@@ -647,7 +648,7 @@ create table if not exists `admin_users`(
     `des` VARCHAR(1000) not null,
     `routes` TEXT,
    primary key ( `uid` )
-   )engine = innodb default charset = utf8;
+   )ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 insert into `admin_users` (`user_password`, `user_name`, `des`, `routes`) VALUES
     ('123456', 'admin', 'Super Administrator. Have access to view all pages.', '[ { "redirect":"/form/index", "level":0, "parentId":0, "path":"/form", "component":"Layout", "createTime":"2020-02-07T08:29:13.000+00:00", "children":[ { "path":"form", "component":"form/index", "meta":{ "icon":"form", "title":"Form" }, "name":"Form" } ], "meta":{ "icon":"form", "title":"Form" }, "id":68 }, { "redirect":"/permission/role", "path":"/permission", "component":"Layout", "children":[ { "path":"role", "component":"permission/role", "meta":{ "title":"Role Permission" }, "name":"RolePermission" } ], "meta":{ "icon":"lock", "title":"Permission" }, "alwaysShow":true } ]'),
     ('123456', 'editor', 'Normal Editor. Can see all pages except permission page', '[{"redirect":"/form/index","level":0,"parentId":0,"path":"/form","component":"Layout","createTime":"2020-02-07T08:29:13.000+00:00","children":[{"path":"form","component":"form/index","meta":{"icon":"form","title":"form"},"name":"form"}],"meta":{"icon":"form","title":"form"},"name":"form","id":21}]'),
