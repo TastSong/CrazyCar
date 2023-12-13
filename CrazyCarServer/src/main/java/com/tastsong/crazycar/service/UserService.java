@@ -61,10 +61,6 @@ public class UserService {
         return !ObjUtil.isEmpty(userMapper.selectById(uid));
     }
 
-    public void recordLoginInfo(UserLoginRecordModel userLoginRecordModel){
-        userMapper.insertUserLoginRecord(userLoginRecordModel);
-    }
-
     public void updateUser(UserModel userModel){
         updateUserStar(userModel.getUid(), userModel.getStar());
         updateUserVip(userModel.getUid(), userModel.is_vip());

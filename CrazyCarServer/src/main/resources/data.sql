@@ -568,7 +568,7 @@ DROP TABLE IF EXISTS `user_login_record`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_login_record` (
                                      `id` int unsigned NOT NULL AUTO_INCREMENT,
-                                     `user_name` varchar(100) NOT NULL,
+                                     `uid` int NOT NULL,
                                      `login_time` mediumtext NOT NULL,
                                      `place` varchar(100) DEFAULT NULL,
                                      `device` varchar(100) DEFAULT NULL,
@@ -582,13 +582,13 @@ CREATE TABLE `user_login_record` (
 
 LOCK TABLES `user_login_record` WRITE;
 /*!40000 ALTER TABLE `user_login_record` DISABLE KEYS */;
-INSERT INTO `user_login_record` VALUES (1,'Lrrrr','1658471682','山东，青岛','ios'),
-                                       (2,'Tast','1658385282','山东，青岛','ios'),
-                                       (3,'Song','1658288609','山东，青岛','ios'),
-                                       (4,'Tast','1658202210','山东，青岛','ios'),
-                                       (5,'Fete','1658202210','山东，青岛','ios'),
-                                       (6,'Song','1658202210','山东，青岛','ios'),
-                                       (7,'Fete','1658332801','山东，青岛','ios');
+INSERT INTO `user_login_record` VALUES (1,1,'1658471682','山东，青岛','ios'),
+                                       (2,1,'1658385282','山东，青岛','ios'),
+                                       (3,2,'1658288609','山东，青岛','ios'),
+                                       (4,1,'1658202210','山东，青岛','ios'),
+                                       (5,3,'1658202210','山东，青岛','ios'),
+                                       (6,1,'1658202210','山东，青岛','ios'),
+                                       (7,1,'1658332801','山东，青岛','ios');
 /*!40000 ALTER TABLE `user_login_record` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

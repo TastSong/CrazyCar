@@ -1,7 +1,9 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import com.tastsong.crazycar.dto.req.ReqLogin;
+import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -33,6 +35,8 @@ public class LoginController {
 	private LoginService loginService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserLoginRecordService userLoginRecordService;
 
 	@PostMapping(value = "/Login")
 	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
@@ -50,13 +54,11 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/recodeLogin")
-	public Object recodeLogin(@RequestBody JSONObject body) throws Exception {
-		UserLoginRecordModel userLoginRecordModel = new UserLoginRecordModel();
-		userLoginRecordModel.user_name = body.getStr("UserName");
-		userLoginRecordModel.login_time = System.currentTimeMillis()/1000;
-		userLoginRecordModel.device = body.getStr("device");
-		userLoginRecordModel.place = body.getStr("place");
-		userService.recordLoginInfo(userLoginRecordModel);
+	public Object recodeLogin(@RequestBody UserLoginRecordModel req, @RequestHeader(Util.TOKEN) String token) throws Exception {
+		int uid = Util.getUidByToken(token);
+		req.setUid(uid);
+		req.setLogin_time(DateUtil.currentSeconds());
+		userLoginRecordService.insert(req);
 		return Result.success();
 	}
 

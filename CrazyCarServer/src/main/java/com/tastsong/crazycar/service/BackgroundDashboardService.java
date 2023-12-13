@@ -4,20 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.MatchMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.DataStatisticsModel;
 
 @Service
 public class BackgroundDashboardService {
     @Autowired
-    private UserMapper userMapper;
+    private UserLoginRecordService userLoginRecordService;
     @Autowired 
     private EquipMapper equipMapper;
     @Autowired
@@ -34,7 +32,7 @@ public class BackgroundDashboardService {
     }
 
     public List<DataStatisticsModel> getUserLoginData(int offsetTime){
-        List<DataStatisticsModel> data = userMapper.getUserLoginData(offsetTime);
+        List<DataStatisticsModel> data = userLoginRecordService.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
