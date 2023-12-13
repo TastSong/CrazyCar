@@ -15,14 +15,14 @@ public class MatchService {
     private UserService userService;
 
     @Autowired
-    private EquipMapper equipMapper;
+    private EquipService equipService;
 
     @Autowired
     private MatchMapper matchMapper;
 
 
     public boolean canWade(int eid){
-        return equipMapper.getEquipByEid(eid).isCan_wade();
+        return equipService.getEquipByEid(eid).isCan_wade();
     }
 
     public Boolean insertMatchClass(MatchRoomInfoModel infoModel){

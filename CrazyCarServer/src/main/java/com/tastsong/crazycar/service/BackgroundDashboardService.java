@@ -17,14 +17,14 @@ public class BackgroundDashboardService {
     @Autowired
     private UserLoginRecordService userLoginRecordService;
     @Autowired 
-    private EquipMapper equipMapper;
+    private EquipService equipService;
     @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
     private MatchMapper matchMapper;
 
     public int getEquipNum(){
-        return equipMapper.getEquipList().size();
+        return equipService.getEquipInfos().size();
     }
 
     public int getMapNum(){

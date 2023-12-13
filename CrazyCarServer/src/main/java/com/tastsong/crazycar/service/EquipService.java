@@ -3,9 +3,13 @@ package com.tastsong.crazycar.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tastsong.crazycar.dto.req.ReqUpdateEquip;
 import com.tastsong.crazycar.dto.resp.RespEquip;
 import com.tastsong.crazycar.mapper.EquipRecordMapper;
+import com.tastsong.crazycar.model.EquipRecordModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +36,12 @@ public class EquipService {
     }
 
     public RespEquip getRespEquip(int uid, int eid){
-        EquipModel equipModel = equipMapper.getEquipByEid(eid);
+        EquipModel equipModel = getEquipByEid(eid);
         return toResp(equipModel, uid);
+    }
+
+    public EquipModel getEquipByEid(int eid){
+        return equipMapper.selectById(eid);
     }
 
     private RespEquip toResp(EquipModel model, int uid) {
@@ -47,12 +55,8 @@ public class EquipService {
         resp.setMax_power(model.getMax_power());
         resp.setCan_wade(model.isCan_wade());
         resp.set_show(model.is_show());
-        resp.set_has(equipMapper.isHasEquip(uid, model.getEid()));
+        resp.set_has(hasEquip(uid, model.getEid()));
         return resp;
-    }
-
-    public boolean updateEquipInfo(int uid, int eid){
-        return equipMapper.isHasEquip(uid, eid);
     }
 
     public boolean canBuyEquip(int uid, int eid){
@@ -62,11 +66,11 @@ public class EquipService {
     public void bugEquip(int uid, int eid){
         int curStar = userService.getUserStar(uid) - getEquipNeedStar(eid);
         userService.updateUserStar(uid, curStar);
-        equipMapper.addEquipForUser(uid, eid);
+        addEquipForUser(uid, eid);
     }
 
     private int getEquipNeedStar(int eid){
-        return equipMapper.getEquipByEid(eid).getStar();
+        return getEquipByEid(eid).getStar();
     }
 
     public void changeEquip(int uid, int eid){
@@ -74,11 +78,11 @@ public class EquipService {
     }
 
     public List<EquipModel> getEquipInfos(){
-        return equipMapper.getEquipList();
+        return equipMapper.selectList(null);
     }
     
     public boolean updateEquipInfoByModel(EquipModel equipModel){
-        return equipMapper.updateEquipInfo(equipModel) == 1;
+        return equipMapper.updateById(equipModel) == 1;
     }
 
     public EquipModel getEquipByReq(ReqUpdateEquip req) {
@@ -96,10 +100,20 @@ public class EquipService {
     }
 
     public boolean hasEquip(int uid, int eid){
-        return equipMapper.isHasEquip(uid, eid);
+        QueryWrapper<EquipRecordModel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(EquipRecordModel::getUid, uid);
+        queryWrapper.lambda().eq(EquipRecordModel::getEid, eid);
+        return equipRecordMapper.exists(queryWrapper);
     }
 
     public boolean addEquipForUser(int uid, int eid){
-        return equipMapper.addEquipForUser(uid, eid) == 1;
+        if (hasEquip(uid, eid)) {
+            return true;
+        }
+        EquipRecordModel equipRecordModel = new EquipRecordModel();
+        equipRecordModel.setUid(uid);
+        equipRecordModel.setEid(eid);
+        equipRecordModel.setUpdate_time(DateUtil.currentSeconds());
+        return equipRecordMapper.insert(equipRecordModel) > 0;
     }
 }

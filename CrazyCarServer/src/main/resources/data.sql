@@ -236,6 +236,7 @@ CREATE TABLE `equip_record` (
                              `id` int unsigned NOT NULL AUTO_INCREMENT,
                              `eid` int NOT NULL,
                              `uid` int NOT NULL,
+                             `update_time` bigint NOT NULL,
                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -246,16 +247,16 @@ CREATE TABLE `equip_record` (
 
 LOCK TABLES `equip_record` WRITE;
 /*!40000 ALTER TABLE `equip_record` DISABLE KEYS */;
-INSERT INTO `equip_record` VALUES (1,1,1),
-                               (2,2,1),
-                               (3,3,1),
-                               (4,1,2),
-                               (5,2,2),
-                               (6,1,3),
-                               (7,3,3),
-                               (8,5,3),
-                               (9,1,4),
-                               (10,2,4);
+INSERT INTO `equip_record` VALUES (1,1,1,1702459368),
+                               (2,2,1,1702459368),
+                               (3,3,1,1702459368),
+                               (4,1,2,1702459368),
+                               (5,2,2,1702459368),
+                               (6,1,3,1702459368),
+                               (7,3,3,1702459368),
+                               (8,5,3,1702459368),
+                               (9,1,4,1702459368),
+                               (10,2,4,1702459368);
 /*!40000 ALTER TABLE `equip_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
