@@ -2,6 +2,7 @@ package com.tastsong.crazycar.controller;
 
 import java.util.List;
 
+import com.tastsong.crazycar.dto.req.ReqUpdateEquip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,18 +32,9 @@ public class BackgroundEquipController {
         return result;
     }
 
-    @PostMapping(value = "updtaeEquipInfo")
-    public Object updtaeEquipInfo(@RequestBody JSONObject body) throws Exception {
-        EquipModel equipModel = new EquipModel();
-        equipModel.eid = body.getInt("eid");
-        equipModel.rid = body.getStr("rid");
-        equipModel.equip_name = body.getStr("equip_name");
-        equipModel.star = body.getInt("star");
-        equipModel.can_wade = body.getBool("can_wade");
-        equipModel.is_show = body.getBool("is_show");
-        equipModel.mass = body.getInt("mass");
-        equipModel.power = body.getInt("power");
-        equipModel.max_power = body.getInt("max_power");
+    @PostMapping(value = "updateEquipInfo")
+    public Object updateEquipInfo(@RequestBody ReqUpdateEquip req) throws Exception {
+        EquipModel equipModel = equipService.getEquipByReq(req);
         return equipService.updateEquipInfoByModel(equipModel) ? equipModel : false;
     }
 }

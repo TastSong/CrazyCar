@@ -3,6 +3,7 @@ package com.tastsong.crazycar.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tastsong.crazycar.dto.req.ReqUpdateEquip;
 import com.tastsong.crazycar.dto.resp.RespEquip;
 import com.tastsong.crazycar.mapper.EquipRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class EquipService {
         resp.setMax_power(model.getMax_power());
         resp.setCan_wade(model.isCan_wade());
         resp.set_show(model.is_show());
-        resp.set_has(equipMapper.isHasEquip(uid, model.eid));
+        resp.set_has(equipMapper.isHasEquip(uid, model.getEid()));
         return resp;
     }
 
@@ -65,7 +66,7 @@ public class EquipService {
     }
 
     private int getEquipNeedStar(int eid){
-        return equipMapper.getEquipByEid(eid).star;
+        return equipMapper.getEquipByEid(eid).getStar();
     }
 
     public void changeEquip(int uid, int eid){
@@ -78,6 +79,20 @@ public class EquipService {
     
     public boolean updateEquipInfoByModel(EquipModel equipModel){
         return equipMapper.updateEquipInfo(equipModel) == 1;
+    }
+
+    public EquipModel getEquipByReq(ReqUpdateEquip req) {
+        EquipModel equipModel = new EquipModel();
+        equipModel.setEquip_name(req.getEquip_name());
+        equipModel.setEid(req.getEid());
+        equipModel.setRid(req.getRid());
+        equipModel.setStar(req.getStar());
+        equipModel.setMass(req.getMass());
+        equipModel.setPower(req.getPower());
+        equipModel.setMax_power(req.getMax_power());
+        equipModel.setCan_wade(req.isCan_wade());
+        equipModel.set_show(req.is_show());
+        return equipModel;
     }
 
     public boolean hasEquip(int uid, int eid){

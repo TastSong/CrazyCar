@@ -22,7 +22,7 @@ public class MatchService {
 
 
     public boolean canWade(int eid){
-        return equipMapper.getEquipByEid(eid).can_wade;
+        return equipMapper.getEquipByEid(eid).isCan_wade();
     }
 
     public Boolean insertMatchClass(MatchRoomInfoModel infoModel){

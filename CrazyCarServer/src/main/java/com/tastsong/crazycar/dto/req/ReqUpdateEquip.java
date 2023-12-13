@@ -1,34 +1,37 @@
-package com.tastsong.crazycar.model;
+package com.tastsong.crazycar.dto.req;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = ConstModelNameAttribute.EQUIP)
-@TableName(ConstModelNameAttribute.EQUIP)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Data
-public class EquipModel {
-    @Id  //标注主键
-    @TableId(type = IdType.AUTO) //mybatis-plus注解
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    private int eid;
 
+public class ReqUpdateEquip {
+    @NotNull
+    private int eid;
+    @NotNull
     private String rid;
+    @NotNull
     private String equip_name;
+    @NotNull
     private int star;
+    @NotNull
     private int mass;
+    @NotNull
     private int power;
+    @NotNull
     private int max_power;
+    @NotNull
     private boolean can_wade;
+    @NotNull
     private boolean is_show;
 }

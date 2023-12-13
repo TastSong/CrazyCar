@@ -8,9 +8,9 @@ export function getEqiupInfos(query) {
   })
 }
 
-export function updtaeEquipInfo(data) {
+export function updateEquipInfo(data) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/updtaeEquipInfo',
+    url: '/CrazyCarSpringBootServer/v2/Background/updateEquipInfo',
     method: 'post',
     data
   })
