@@ -97,7 +97,7 @@ CREATE TABLE `user` (
                             `uid` int unsigned NOT NULL AUTO_INCREMENT,
                             `user_name` varchar(100) NOT NULL,
                             `user_password` varchar(40) NOT NULL,
-                            `login_time` mediumtext NOT NULL,
+                            `login_time` bigint NOT NULL,
                             `aid` int NOT NULL,
                             `star` int NOT NULL,
                             `is_vip` int NOT NULL,
@@ -112,10 +112,10 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112','1629544628',2,99,1,1),
-                              (2,'song','96e79218965eb72c92a549dd5a330112','1629544634',2,88,1,2),
-                              (3,'阿宋小娇妻','96e79218965eb72c92a549dd5a330112','1629544655',3,66,1,3),
-                              (4,'Lory','96e79218965eb72c92a549dd5a330112','1629544666',4,12,0,1);
+INSERT INTO `user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112',1629544628,2,99,1,1),
+                              (2,'song','96e79218965eb72c92a549dd5a330112',1629544634,2,88,1,2),
+                              (3,'阿宋小娇妻','96e79218965eb72c92a549dd5a330112',1629544655,3,66,1,3),
+                              (4,'Lory','96e79218965eb72c92a549dd5a330112',1629544666,4,12,0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ DROP TABLE IF EXISTS `assets_updating`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assets_updating` (
                                    `id` int NOT NULL,
-                                   `update_time` long NOT NULL,
+                                   `update_time` bigint NOT NULL,
                                    `is_on` int NOT NULL,
                                    `url` varchar(1000) NOT NULL,
                                    PRIMARY KEY (`id`)
@@ -200,7 +200,7 @@ CREATE TABLE `avatar_record` (
                                  `id` int unsigned NOT NULL AUTO_INCREMENT,
                                  `aid` int NOT NULL,
                                  `uid` int NOT NULL,
-                                 `update_time` mediumtext,
+                                 `update_time` bigint,
                                  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -211,17 +211,17 @@ CREATE TABLE `avatar_record` (
 
 LOCK TABLES `avatar_record` WRITE;
 /*!40000 ALTER TABLE `avatar_record` DISABLE KEYS */;
-INSERT INTO `avatar_record` VALUES (1,1,1,'1702374103865'),
-                                   (2,2,1,'1702374103865'),
-                                   (3,5,1,'1702374103865'),
-                                   (4,9,1,'1702374103865'),
-                                   (5,17,1,'1702374103865'),
-                                   (6,18,1,'1702374103865'),
-                                   (7,15,1,'1702374103865'),
-                                   (8,16,1,'1702374103865'),
-                                   (9,2,2,'1702374103865'),
-                                   (10,3,3,'1702374103865'),
-                                   (11,4,4,'1702374103865');
+INSERT INTO `avatar_record` VALUES (1,1,1,1702374103),
+                                   (2,2,1,1702374103),
+                                   (3,5,1,1702374103),
+                                   (4,9,1,1702374103),
+                                   (5,17,1,1702374103),
+                                   (6,18,1,1702374103),
+                                   (7,15,1,1702374103),
+                                   (8,16,1,1702374103),
+                                   (9,2,2,1702374103),
+                                   (10,3,3,1702374103),
+                                   (11,4,4,1702374103);
 /*!40000 ALTER TABLE `avatar_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,7 +271,7 @@ CREATE TABLE `forced_updating` (
                                    `platform` varchar(100) NOT NULL,
                                    `version` varchar(100) NOT NULL,
                                    `rule` int NOT NULL,
-                                   `updata_time` mediumtext NOT NULL,
+                                   `updata_time` bigint NOT NULL,
                                    `url` varchar(1000) NOT NULL,
                                    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -283,10 +283,10 @@ CREATE TABLE `forced_updating` (
 
 LOCK TABLES `forced_updating` WRITE;
 /*!40000 ALTER TABLE `forced_updating` DISABLE KEYS */;
-INSERT INTO `forced_updating` VALUES (1,'Android','9.2.0',10000,'1633519472000','https://www.pgyer.com/xlbk'),
-                                     (2,'ios','9.2.0',10000,'1633519472123','https://www.pgyer.com/rRut'),
-                                     (3,'WebGL','9.2.0',10000,'1633519472123','https://www.pgyer.com/rRut'),
-                                     (4,'PC','8.5.0',9999,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
+INSERT INTO `forced_updating` VALUES (1,'Android','9.2.0',10000,1633519472,'https://www.pgyer.com/xlbk'),
+                                     (2,'ios','9.2.0',10000,1633519472,'https://www.pgyer.com/rRut'),
+                                     (3,'WebGL','9.2.0',10000,1633519472,'https://www.pgyer.com/rRut'),
+                                     (4,'PC','8.5.0',9999,1633519472,'https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
 /*!40000 ALTER TABLE `forced_updating` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,8 +305,8 @@ CREATE TABLE `match_class` (
                                `limit_time` int NOT NULL,
                                `class_name` varchar(40) NOT NULL,
                                `times` int NOT NULL,
-                               `start_time` mediumtext NOT NULL,
-                               `enroll_time` mediumtext NOT NULL,
+                               `start_time` bigint NOT NULL,
+                               `enroll_time` bigint NOT NULL,
                                PRIMARY KEY (`cid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -317,9 +317,9 @@ CREATE TABLE `match_class` (
 
 LOCK TABLES `match_class` WRITE;
 /*!40000 ALTER TABLE `match_class` DISABLE KEYS */;
-INSERT INTO `match_class` VALUES (1,2,0,'1111',60,'基地卡通',1,'1633519470','1633519470'),
-                                 (2,1,1,'0011',70,'几何风光',3,'1633519472','1633519472'),
-                                 (3,2,0,'1121',120,'TastSong',1,'1652146822','1652146792');
+INSERT INTO `match_class` VALUES (1,2,0,'1111',60,'基地卡通',1,1633519470,1633519470),
+                                 (2,1,1,'0011',70,'几何风光',3,1633519472,1633519472),
+                                 (3,2,0,'1121',120,'TastSong',1,1652146822,1652146792);
 /*!40000 ALTER TABLE `match_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +393,7 @@ CREATE TABLE `match_record` (
                                 `uid` int NOT NULL,
                                 `cid` int NOT NULL,
                                 `complete_time` int NOT NULL,
-                                `record_time` mediumtext NOT NULL,
+                                `record_time` bigint NOT NULL,
                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -404,12 +404,12 @@ CREATE TABLE `match_record` (
 
 LOCK TABLES `match_record` WRITE;
 /*!40000 ALTER TABLE `match_record` DISABLE KEYS */;
-INSERT INTO `match_record` VALUES (1,1,1,22,'1629544628'),
-                                  (2,1,1,-1,'1629544628'),
-                                  (3,1,1,14,'1629544644'),
-                                  (4,2,1,14,'1629544644'),
-                                  (5,3,1,10,'1629544644'),
-                                  (6,4,1,16,'1658476385');
+INSERT INTO `match_record` VALUES (1,1,1,22,1629544628),
+                                  (2,1,1,-1,1629544628),
+                                  (3,1,1,14,1629544644),
+                                  (4,2,1,14,1629544644),
+                                  (5,3,1,10,1629544644),
+                                  (6,4,1,16,1658476385);
 /*!40000 ALTER TABLE `match_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +506,7 @@ CREATE TABLE `time_trial_record` (
                                      `uid` int NOT NULL,
                                      `cid` int NOT NULL,
                                      `complete_time` int NOT NULL,
-                                     `record_time` mediumtext NOT NULL,
+                                     `record_time` bigint NOT NULL,
                                      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -517,14 +517,14 @@ CREATE TABLE `time_trial_record` (
 
 LOCK TABLES `time_trial_record` WRITE;
 /*!40000 ALTER TABLE `time_trial_record` DISABLE KEYS */;
-INSERT INTO `time_trial_record` VALUES (1,1,1,22,'1629544628'),
-                                       (2,1,1,14,'1629544644'),
-                                       (3,1,1,-1,'1629544628'),
-                                       (4,1,0,14,'1629544644'),
-                                       (5,2,1,15,'1629544644'),
-                                       (6,2,1,14,'1629544644'),
-                                       (7,3,1,10,'1658332800'),
-                                       (8,4,1,16,'1658474034');
+INSERT INTO `time_trial_record` VALUES (1,1,1,22,1629544628),
+                                       (2,1,1,14,1629544644),
+                                       (3,1,1,-1,1629544628),
+                                       (4,1,0,14,1629544644),
+                                       (5,2,1,15,1629544644),
+                                       (6,2,1,14,1629544644),
+                                       (7,3,1,10,1658332800),
+                                       (8,4,1,16,1658474034);
 /*!40000 ALTER TABLE `time_trial_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +569,7 @@ DROP TABLE IF EXISTS `user_login_record`;
 CREATE TABLE `user_login_record` (
                                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                                      `uid` int NOT NULL,
-                                     `login_time` mediumtext NOT NULL,
+                                     `login_time` bigint NOT NULL,
                                      `place` varchar(100) DEFAULT NULL,
                                      `device` varchar(100) DEFAULT NULL,
                                      PRIMARY KEY (`id`)
@@ -582,13 +582,13 @@ CREATE TABLE `user_login_record` (
 
 LOCK TABLES `user_login_record` WRITE;
 /*!40000 ALTER TABLE `user_login_record` DISABLE KEYS */;
-INSERT INTO `user_login_record` VALUES (1,1,'1658471682','山东，青岛','ios'),
-                                       (2,1,'1658385282','山东，青岛','ios'),
-                                       (3,2,'1658288609','山东，青岛','ios'),
-                                       (4,1,'1658202210','山东，青岛','ios'),
-                                       (5,3,'1658202210','山东，青岛','ios'),
-                                       (6,1,'1658202210','山东，青岛','ios'),
-                                       (7,1,'1658332801','山东，青岛','ios');
+INSERT INTO `user_login_record` VALUES (1,1,1658471682,'山东，青岛','ios'),
+                                       (2,1,1658385282,'山东，青岛','ios'),
+                                       (3,2,1658288609,'山东，青岛','ios'),
+                                       (4,1,1658202210,'山东，青岛','ios'),
+                                       (5,3,1658202210,'山东，青岛','ios'),
+                                       (6,1,1658202210,'山东，青岛','ios'),
+                                       (7,1,1658332801,'山东，青岛','ios');
 /*!40000 ALTER TABLE `user_login_record` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
