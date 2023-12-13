@@ -27,7 +27,7 @@
 
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 
-3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarDB**中的**CrazyCar.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
+3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarServer -> src -> main -> resources**中的**data.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
 
 4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg**不要**下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
