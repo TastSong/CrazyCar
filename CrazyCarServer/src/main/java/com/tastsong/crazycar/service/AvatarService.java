@@ -60,11 +60,11 @@ public class AvatarService {
     }
 
     public int getCurAidByUid(int uid){
-        return userMapper.getUserByUid(uid).aid;
+        return userMapper.getUserByUid(uid).getAid();
     }
 
     public int getUserStar(int uid){
-        return userMapper.getUserByUid(uid).star;
+        return userMapper.getUserByUid(uid).getStar();
     }
 
     private int getNeedStar(int aid){

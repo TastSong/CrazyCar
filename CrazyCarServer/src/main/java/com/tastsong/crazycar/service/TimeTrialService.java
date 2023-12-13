@@ -31,8 +31,8 @@ public class TimeTrialService {
         List<TimeTrialRankModel> timeTrialRankModels =  timeTrialMapper.getTimeTrialRankListByCid(cid);
         for (int i = 0; i< timeTrialRankModels.size(); i++){
             int userId = timeTrialRankModels.get(i).uid;
-            timeTrialRankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
-            timeTrialRankModels.get(i).user_name = userMapper.getUserByUid(userId).user_name;
+            timeTrialRankModels.get(i).aid = userMapper.getUserByUid(userId).getAid();
+            timeTrialRankModels.get(i).user_name = userMapper.getUserByUid(userId).getUser_name();
         }
         return timeTrialRankModels;
     }
@@ -59,7 +59,7 @@ public class TimeTrialService {
     }
 
     public int getUserStar(int uid){
-        return userMapper.getUserByUid(uid).star;
+        return userMapper.getUserByUid(uid).getStar();
     }
 
     private int getNeedStar(int cid){
@@ -110,6 +110,6 @@ public class TimeTrialService {
     }
 
     public void giveReward(int uid, int cid){
-        userMapper.updateUserStar(uid, getMapStar(cid) + userMapper.getUserByUid(uid).star);
+        userMapper.updateUserStar(uid, getMapStar(cid) + userMapper.getUserByUid(uid).getStar());
     }
 }

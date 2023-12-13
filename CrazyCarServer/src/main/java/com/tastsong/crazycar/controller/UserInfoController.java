@@ -27,7 +27,7 @@ public class UserInfoController {
     public Object getUserInfo(@RequestBody JSONObject body) throws Exception {
         int uid = body.getInt("uid");
         if(loginService.isExistsUserByUid(uid)){
-            String userName = loginService.getUserByUid(uid).user_name;
+            String userName = loginService.getUserByUid(uid).getUser_name();
             return loginService.getUserInfo(userName);
         } else{
             return Result.failure(ResultCode.RC404);

@@ -25,11 +25,11 @@ public class MatchService {
     private MatchMapper matchMapper;
 
     public String getUserName(int uid){
-        return userMapper.getUserByUid(uid).user_name;
+        return userMapper.getUserByUid(uid).getUser_name();
     }
 
     public int getAid(int uid){
-        return userMapper.getUserByUid(uid).aid;
+        return userMapper.getUserByUid(uid).getAid();
     }
 
     public boolean canWade(int eid){
@@ -69,7 +69,7 @@ public class MatchService {
     }
 
     public boolean isVIP(int uid){
-        return userMapper.getUserByUid(uid).is_vip;
+        return userMapper.getUserByUid(uid).is_vip();
     }
 
     public boolean isBreakRecord(MatchRecordModel recordModel) {
@@ -92,7 +92,7 @@ public class MatchService {
     }
 
     public void giveReward(int uid, int cid) {
-        userMapper.updateUserStar(uid, getMatchStar(cid) + userMapper.getUserByUid(uid).star);
+        userMapper.updateUserStar(uid, getMatchStar(cid) + userMapper.getUserByUid(uid).getStar());
     }
 
     public void insertRecord(MatchRecordModel recordModel) {
@@ -110,8 +110,8 @@ public class MatchService {
         List<MatchRankModel> rankModels =  matchMapper.getMatchRankListByCid(cid);
         for (int i = 0; i< rankModels.size(); i++){
             int userId = rankModels.get(i).uid;
-            rankModels.get(i).aid = userMapper.getUserByUid(userId).aid;
-            rankModels.get(i).user_name = userMapper.getUserByUid(userId).user_name;
+            rankModels.get(i).aid = userMapper.getUserByUid(userId).getAid();
+            rankModels.get(i).user_name = userMapper.getUserByUid(userId).getUser_name();
         }
         return rankModels;
     }

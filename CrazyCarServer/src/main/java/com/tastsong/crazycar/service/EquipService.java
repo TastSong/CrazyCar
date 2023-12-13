@@ -26,7 +26,7 @@ public class EquipService {
     }
 
     public int getCurEid(int uid){
-        return userMapper.getUserByUid(uid).eid;
+        return userMapper.getUserByUid(uid).getEid();
     }
 
     public boolean isHasEquip(int uid, int eid){
@@ -44,7 +44,7 @@ public class EquipService {
     }
 
     public int getUserCurStar(int uid){
-        return userMapper.getUserByUid(uid).star;
+        return userMapper.getUserByUid(uid).getStar();
     }
 
     private int getEquipNeedStar(int eid){

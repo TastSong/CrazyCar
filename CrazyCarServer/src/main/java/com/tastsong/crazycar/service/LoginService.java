@@ -2,6 +2,7 @@ package com.tastsong.crazycar.service;
 
 import java.util.List;
 
+import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.mapper.*;
 import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +29,19 @@ public class LoginService {
     public RespUserInfo getUserInfo(String userName){
         RespUserInfo respUserInfo = new RespUserInfo();
         UserModel userModel = getUserByName(userName);
-        respUserInfo.user_name = userModel.user_name;
-        respUserInfo.uid = userModel.uid;
-        respUserInfo.aid = userModel.aid;
-        respUserInfo.star = userModel.star;
-        respUserInfo.is_vip = userModel.is_vip;
-        respUserInfo.token = Util.createToken(userModel.uid);
-        int uid = userModel.uid;
+        respUserInfo.user_name = userModel.getUser_name();
+        respUserInfo.uid = userModel.getUid();
+        respUserInfo.aid = userModel.getAid();
+        respUserInfo.star = userModel.getStar();
+        respUserInfo.is_vip = userModel.is_vip();
+        respUserInfo.token = Util.createToken(userModel.getUid());
+        int uid = userModel.getUid();
         respUserInfo.is_superuser = isSuperuser(uid);
         respUserInfo.travel_times = getTimeTrialTimes(uid);
         respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
         respUserInfo.map_num = getTimeTrialMapNum(uid);
-        respUserInfo.equip_info = getEquipByEid(userModel.eid);
-        respUserInfo.equip_info.is_has = isHasEquip(userModel.eid, uid);
+        respUserInfo.equip_info = getEquipByEid(userModel.getEid());
+        respUserInfo.equip_info.is_has = isHasEquip(userModel.getEid(), uid);
         return respUserInfo;
     }
 
@@ -76,16 +77,16 @@ public class LoginService {
 		int defaultEid = 1;
 
         UserModel userModel = new UserModel();
-        userModel.user_name = userName;
-        userModel.user_password = password;
-        userModel.aid = defaultAid;
-        userModel.star = defaultStar;
-        userModel.eid = defaultEid;
-        userModel.is_vip = defaultVIP;
-        userModel.login_time = System.currentTimeMillis()/1000;
+        userModel.setUser_name(userName);
+        userModel.setUser_password(password);
+        userModel.setAid(defaultAid);
+        userModel.setStar(defaultStar);
+        userModel.setEid(defaultEid);
+        userModel.set_vip(defaultVIP);
+        userModel.setLogin_time(DateUtil.currentSeconds());
         userMapper.insertUser(userModel);
 
-		int uid = userModel.uid;
+		int uid = userModel.getUid();
         if(avatarService.hasAvatar(uid, defaultAid)){
             avatarService.addAvatarForUser(uid, defaultAid);
         }
@@ -116,8 +117,8 @@ public class LoginService {
     }
 
     public void updateUser(UserModel userModel){
-        userMapper.updateUserStar(userModel.uid, userModel.star);
-        userMapper.updateUserVip(userModel.uid, userModel.is_vip);
+        userMapper.updateUserStar(userModel.getUid(), userModel.getStar());
+        userMapper.updateUserVip(userModel.getUid(), userModel.is_vip());
     }
 
     public List<AvatarModel> getAvatarList(){

@@ -62,12 +62,12 @@ public class BackgroundUser {
     @PostMapping(value = "updateUser")
     public Object updateUser(@RequestBody JSONObject body) throws Exception{
         UserModel userModel = new UserModel();
-        userModel.uid = body.getInt("uid");
-        userModel.user_name = body.getStr("user_name");
-        userModel.star = body.getInt("star");
-        userModel.is_vip = body.getBool("is_vip");
+        userModel.setUid( body.getInt("uid"));
+        userModel.setUser_name(body.getStr("user_name"));
+        userModel.setStar(body.getInt("star"));
+        userModel.set_vip(body.getBool("is_vip"));
         loginService.updateUser(userModel);
-        return loginService.getUserByName(userModel.user_name);
+        return loginService.getUserByName(userModel.getUser_name());
     }        
 
     @GetMapping(value = "getAllRoutes")
