@@ -16,11 +16,11 @@ public class VersionService {
     private VersionMapper versionMapper;
 
     public List<VersionModel> getVersionList(){
-        return versionMapper.getVersionList();
+        return versionMapper.selectList(null);
     }
 
     public boolean updateVersion(VersionModel versionModel){
-        return versionMapper.updateVersion(versionModel) == 1;
+        return versionMapper.updateById(versionModel) > 0;
     }
 
     public boolean isForcedUpdating(String version, String platform) {

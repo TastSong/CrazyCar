@@ -6,6 +6,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tastsong.crazycar.model.VersionModel;
 
 public interface VersionMapper extends BaseMapper<VersionModel> {
-    public List<VersionModel> getVersionList();
-    public int updateVersion(VersionModel versionModel);
 }
