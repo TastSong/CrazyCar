@@ -261,34 +261,34 @@ INSERT INTO `equip_record` VALUES (1,1,1,1702459368),
 UNLOCK TABLES;
 
 --
--- Table structure for table `forced_updating`
+-- Table structure for table `version`
 --
 
-DROP TABLE IF EXISTS `forced_updating`;
+DROP TABLE IF EXISTS `version`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `forced_updating` (
+CREATE TABLE `version` (
                                    `id` int unsigned NOT NULL AUTO_INCREMENT,
                                    `platform` varchar(100) NOT NULL,
                                    `version` varchar(100) NOT NULL,
                                    `rule` int NOT NULL,
-                                   `updata_time` bigint NOT NULL,
+                                   `update_time` bigint NOT NULL,
                                    `url` varchar(1000) NOT NULL,
                                    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `forced_updating`
+-- Dumping data for table `version`
 --
 
-LOCK TABLES `forced_updating` WRITE;
-/*!40000 ALTER TABLE `forced_updating` DISABLE KEYS */;
-INSERT INTO `forced_updating` VALUES (1,'Android','9.2.0',10000,1633519472,'https://www.pgyer.com/xlbk'),
+LOCK TABLES `version` WRITE;
+/*!40000 ALTER TABLE `version` DISABLE KEYS */;
+INSERT INTO `version` VALUES (1,'Android','9.2.0',10000,1633519472,'https://www.pgyer.com/xlbk'),
                                      (2,'ios','9.2.0',10000,1633519472,'https://www.pgyer.com/rRut'),
                                      (3,'WebGL','9.2.0',10000,1633519472,'https://www.pgyer.com/rRut'),
                                      (4,'PC','8.5.0',9999,1633519472,'https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
-/*!40000 ALTER TABLE `forced_updating` ENABLE KEYS */;
+/*!40000 ALTER TABLE `version` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
