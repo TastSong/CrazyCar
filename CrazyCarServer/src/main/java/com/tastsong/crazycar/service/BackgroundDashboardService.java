@@ -20,6 +20,8 @@ public class BackgroundDashboardService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
+    private TimeTrialClassService timeTrialClassService;
+    @Autowired
     private MatchRecordMapper matchRecordMapper;
 
     public int getEquipNum(){
@@ -27,7 +29,7 @@ public class BackgroundDashboardService {
     }
 
     public int getMapNum(){
-        return timeTrialMapper.getTimeTrialInfos().size();
+        return timeTrialClassService.getAllTimeTrialClass().size();
     }
 
     public List<RespDataStatistics> getUserLoginData(int offsetTime){

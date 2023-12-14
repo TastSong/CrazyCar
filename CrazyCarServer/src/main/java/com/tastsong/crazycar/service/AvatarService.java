@@ -50,10 +50,6 @@ public class AvatarService {
         return avatarMapper.selectList(null);
     }
 
-    public List<AvatarModel> getAvatarInfos(){
-        return avatarMapper.selectList(null);
-    }
-
     public boolean updateAvatarInfo(AvatarModel avatarModel){
         return avatarMapper.updateById(avatarModel) == 1;
     }

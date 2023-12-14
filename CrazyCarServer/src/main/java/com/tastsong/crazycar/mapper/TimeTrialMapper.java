@@ -14,9 +14,7 @@ public interface TimeTrialMapper {
     public int getTimeTrialMapNumByUid(int uid);
     public int addTimeTrialMapForUser(int uid, int cid);
     public List<TimeTrialRankModel> getTimeTrialRankListByCid(int cid);
-    public List<TimeTrialClassModel> getTimeTrialInfos();
     public boolean isHasTimeTrialClass(int uid, int cid);
-    public TimeTrialClassModel getTimeTrialInfo(int cid);
     public int getMiniCompleteTime(int uid, int cid);
     public int insertRecord(TimeTrialRecordModel recordModel);
     public int getRankByUid(int uid, int cid);
@@ -26,5 +24,4 @@ public interface TimeTrialMapper {
             "GROUP BY FROM_UNIXTIME(record_time, '%y-%m-%d'), record_time " +
             "ORDER BY record_time LIMIT #{offsetTime}")
     List<RespDataStatistics> getTimeTrialData(@Param("offsetTime") Integer offsetTime);
-    public int updateTimeTrialInfo(TimeTrialClassModel timeTrialClassModel);
 }

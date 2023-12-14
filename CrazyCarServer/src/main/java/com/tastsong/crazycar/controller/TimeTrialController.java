@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +25,8 @@ public class TimeTrialController {
     @Autowired
     private TimeTrialService timeTrialService;
     @Autowired
+    private TimeTrialClassService timeTrialClassService;
+    @Autowired
     private UserService userService;
 
     @PostMapping(value = "/Rank")
@@ -36,7 +39,7 @@ public class TimeTrialController {
     @PostMapping(value = "/Detail")
     public Object getDetail(@RequestHeader(Util.TOKEN) String token) throws Exception {
         int uid = Util.getUidByToken(token);
-        return timeTrialService.getTimeTrialDetail(uid);
+        return timeTrialClassService.getTimeTrialClassList(uid);
     }
 
     @PostMapping(value = "/BuyClass")
@@ -45,12 +48,12 @@ public class TimeTrialController {
         if (body != null && body.containsKey("cid")) {
             int cid = body.getInt("cid");
             JSONObject data = new JSONObject();
-            if (timeTrialService.isHasClass(uid, cid)) {
+            if (timeTrialClassService.hasClass(uid, cid)) {
                 System.out.print("++++++++ isHasClass ");
                 data.putOpt("star", userService.getUserStar(uid));
                 return data;
-            } else if (timeTrialService.canBuyClass(uid, cid)) {
-                timeTrialService.buyClass(uid, cid);
+            } else if (timeTrialClassService.canBuyClass(uid, cid)) {
+                timeTrialClassService.buyClass(uid, cid);
                 System.out.print("++++++++ buyClass ");
                 data.putOpt("star", userService.getUserStar(uid));
                 return data;
@@ -73,7 +76,7 @@ public class TimeTrialController {
             return Result.failure(ResultCode.RC404);
         }
 
-        int limitTime = timeTrialService.getLimitTime(recordModel.cid);
+        int limitTime = timeTrialClassService.getTimeTrialClass(recordModel.cid).getLimit_time();
         JSONObject data = new JSONObject();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
             data.putOpt("is_win", true);
@@ -84,9 +87,9 @@ public class TimeTrialController {
         }
         boolean isBreakRecord = timeTrialService.isBreakRecord(recordModel);
         data.putOpt("is_break_record", isBreakRecord);
-        data.putOpt("reward", isBreakRecord ? timeTrialService.getMapStar(recordModel.cid) : 0);
+        data.putOpt("reward", isBreakRecord ? timeTrialClassService.getTimeTrialClass(recordModel.cid).getStar() : 0);
         if (isBreakRecord) {
-            timeTrialService.giveReward(recordModel.uid, recordModel.cid);
+            timeTrialClassService.giveReward(recordModel.uid, recordModel.cid);
         }
         timeTrialService.insertRecord(recordModel);
         

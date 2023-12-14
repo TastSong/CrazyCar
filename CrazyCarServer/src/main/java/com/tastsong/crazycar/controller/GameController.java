@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +28,8 @@ import com.tastsong.crazycar.utils.Util;
 public class GameController {
     @Autowired
     private TimeTrialService timeTrialService;
+    @Autowired
+    private TimeTrialClassService timeTrialClassService;
 
     @Autowired
     private MatchRecordService matchRecordService;
@@ -55,7 +58,7 @@ public class GameController {
                 return data;
 			}	
 		} else{
-			if(timeTrialService.isHasClass(uid, cid)) {
+			if(timeTrialClassService.hasClass(uid, cid)) {
                 data.putOpt("num", 0);
                 return data;
 			} else{

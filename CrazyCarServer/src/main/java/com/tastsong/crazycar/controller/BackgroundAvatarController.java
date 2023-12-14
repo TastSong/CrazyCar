@@ -24,8 +24,8 @@ public class BackgroundAvatarController {
     public Object getAvatarInfos() throws Exception {
         JSONObject result = new JSONObject();
         // 以后资源更新可能会分版本、平台等，所以做成数组
-        result.putOpt("items", avatarService.getAvatarInfos());
-        result.putOpt("total", avatarService.getAvatarInfos().size());
+        result.putOpt("items", avatarService.getAllAvatar());
+        result.putOpt("total", avatarService.getAllAvatar().size());
         return result;
     }
 

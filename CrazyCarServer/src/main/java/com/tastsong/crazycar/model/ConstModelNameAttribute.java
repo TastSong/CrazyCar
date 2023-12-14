@@ -14,4 +14,6 @@ public class ConstModelNameAttribute {
     public static final String MATCH_CLASS = "match_class";
     public static final String MATCH_RECORD = "match_record";
     public static final String TIME_TRIAL_CLASS = "time_trial_class";
+    public static final String TIME_TRIAL_CLASS_RECORD = "time_trial_class_record";
+    public static final String TIME_TRIAL_RECORD = "time_trial_record";;
 }

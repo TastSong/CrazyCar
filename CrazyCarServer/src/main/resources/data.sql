@@ -483,13 +483,13 @@ INSERT INTO `time_trial_record` VALUES (1,1,1,22,1629544628),
 UNLOCK TABLES;
 
 --
--- Table structure for table `time_trial_user_map`
+-- Table structure for table `time_trial_class_record`
 --
 
-DROP TABLE IF EXISTS `time_trial_user_map`;
+DROP TABLE IF EXISTS `time_trial_class_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `time_trial_user_map` (
+CREATE TABLE `time_trial_class_record` (
                                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                                        `cid` int NOT NULL,
                                        `uid` int NOT NULL,
@@ -498,19 +498,19 @@ CREATE TABLE `time_trial_user_map` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `time_trial_user_map`
+-- Dumping data for table `time_trial_class_record`
 --
 
-LOCK TABLES `time_trial_user_map` WRITE;
-/*!40000 ALTER TABLE `time_trial_user_map` DISABLE KEYS */;
-INSERT INTO `time_trial_user_map` VALUES (1,1,1),
+LOCK TABLES `time_trial_class_record` WRITE;
+/*!40000 ALTER TABLE `time_trial_class_record` DISABLE KEYS */;
+INSERT INTO `time_trial_class_record` VALUES (1,1,1),
                                          (2,2,1),
                                          (3,3,1),
                                          (4,1,2),
                                          (5,1,3),
                                          (6,1,5),
                                          (7,1,4);
-/*!40000 ALTER TABLE `time_trial_user_map` ENABLE KEYS */;
+/*!40000 ALTER TABLE `time_trial_class_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

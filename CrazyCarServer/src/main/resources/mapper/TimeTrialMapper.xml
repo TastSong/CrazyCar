@@ -45,18 +45,6 @@
                             (select @rank_num:= 0) r)  as all_user_rank;
     </select>
 
-    <select id="getTimeTrialInfos" resultType="TimeTrialClassModel">
-        select
-        *
-        from time_trial_class;
-    </select>
-
-    <select id="getTimeTrialInfo" resultType="TimeTrialClassModel">
-        select
-        *
-        from time_trial_class
-        where cid = #{cid};
-    </select>
 
     <select id="isHasTimeTrialClass" resultType="boolean">
         select exists(
@@ -98,11 +86,4 @@
                             ) as user_rank,
                             (select @rank_num:= 0) r)  as all_user_rank  where uid = #{uid};
     </select>
-
-    <update id="updateTimeTrialInfo" parameterType="TimeTrialClassModel">
-        update time_trial_class
-        set map_id = #{map_id}, has_water = #{has_water}, star = #{star}, 
-         limit_time = #{limit_time}, class_name = #{class_name}, times = #{times}
-        where cid = #{cid}
-    </update>
 </mapper>
