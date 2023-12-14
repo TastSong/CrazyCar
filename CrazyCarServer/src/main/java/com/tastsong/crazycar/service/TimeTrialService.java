@@ -1,14 +1,17 @@
 package com.tastsong.crazycar.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
+import com.tastsong.crazycar.dto.resp.RespTimeTrialClass;
+import com.tastsong.crazycar.mapper.TimeTrialClassMapper;
 import com.tastsong.crazycar.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.model.TimeTrialInfoModel;
+import com.tastsong.crazycar.model.TimeTrialClassModel;
 import com.tastsong.crazycar.model.TimeTrialRankModel;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 
@@ -16,6 +19,8 @@ import com.tastsong.crazycar.model.TimeTrialRecordModel;
 public class TimeTrialService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;
+    @Autowired
+    private TimeTrialClassMapper timeTrialClassMapper;
 
     @Autowired
     private UserService userService;
@@ -38,21 +43,35 @@ public class TimeTrialService {
         return timeTrialRankModels;
     }
 
-    public List<TimeTrialInfoModel> getTimeTrialDetail(int uid){
-        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfos();
-        for(int i = 0; i < timeTrialInfoModels.size(); i++){
-            timeTrialInfoModels.get(i).is_has = timeTrialMapper.isHasTimeTrialClass(uid, timeTrialInfoModels.get(i).cid);
+    public List<RespTimeTrialClass> getTimeTrialDetail(int uid){
+        List<TimeTrialClassModel> timeTrialClassModels = timeTrialMapper.getTimeTrialInfos();
+        List<RespTimeTrialClass> resp = new ArrayList<>();
+        for (TimeTrialClassModel timeTrialClassModel : timeTrialClassModels) {
+            resp.add(toRespTimeTrialClass(timeTrialClassModel, uid));
         }
-        return timeTrialInfoModels;
+        return resp;
     }
 
-    public List<TimeTrialInfoModel> getTimeTrialInfos(){
-        List<TimeTrialInfoModel> timeTrialInfoModels = timeTrialMapper.getTimeTrialInfos();
-        return timeTrialInfoModels;
+    public RespTimeTrialClass toRespTimeTrialClass(TimeTrialClassModel model, int uid) {
+        RespTimeTrialClass resp = new RespTimeTrialClass();
+        resp.setTimes(model.getTimes());
+        resp.setCid(model.getCid());
+        resp.setStar(model.getStar());
+        resp.setHas_water(model.isHas_water());
+        resp.setLimit_time(model.getLimit_time());
+        resp.setClass_name(model.getClass_name());
+        resp.setMap_id(model.getMap_id());
+        resp.set_has(timeTrialMapper.isHasTimeTrialClass(uid, model.getCid()));
+        return resp;
     }
 
-    public boolean updateTimeTrialInfo(TimeTrialInfoModel timeTrialInfoModel){
-        return timeTrialMapper.updateTimeTrialInfo(timeTrialInfoModel) == 1;
+    public List<TimeTrialClassModel> getTimeTrialInfos(){
+        List<TimeTrialClassModel> timeTrialClassModels = timeTrialMapper.getTimeTrialInfos();
+        return timeTrialClassModels;
+    }
+
+    public boolean updateTimeTrialInfo(TimeTrialClassModel timeTrialClassModel){
+        return timeTrialMapper.updateTimeTrialInfo(timeTrialClassModel) == 1;
     }
 
     public boolean isHasClass(int uid, int cid){
