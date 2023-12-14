@@ -22,7 +22,7 @@ public class EquipRecordModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    private int id;
+    private long id;
     private int eid;
     private int uid;
     private long update_time;

@@ -490,7 +490,7 @@ DROP TABLE IF EXISTS `time_trial_class_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `time_trial_class_record` (
-                                       `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                       `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                        `cid` int NOT NULL,
                                        `uid` int NOT NULL,
                                         `update_time` bigint NOT NULL,

@@ -22,7 +22,7 @@ public class UserLoginRecordModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    private int id;
+    private long id;
     private int uid;
     private long login_time;
     private String place;
