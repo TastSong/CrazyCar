@@ -493,6 +493,7 @@ CREATE TABLE `time_trial_class_record` (
                                        `id` int unsigned NOT NULL AUTO_INCREMENT,
                                        `cid` int NOT NULL,
                                        `uid` int NOT NULL,
+                                        `update_time` bigint NOT NULL,
                                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -503,13 +504,13 @@ CREATE TABLE `time_trial_class_record` (
 
 LOCK TABLES `time_trial_class_record` WRITE;
 /*!40000 ALTER TABLE `time_trial_class_record` DISABLE KEYS */;
-INSERT INTO `time_trial_class_record` VALUES (1,1,1),
-                                         (2,2,1),
-                                         (3,3,1),
-                                         (4,1,2),
-                                         (5,1,3),
-                                         (6,1,5),
-                                         (7,1,4);
+INSERT INTO `time_trial_class_record` VALUES (1,1,1, 1702543584),
+                                         (2,2,1, 1702543584),
+                                         (3,3,1, 1702543584),
+                                         (4,1,2, 1702543584),
+                                         (5,1,3, 1702543584),
+                                         (6,1,5, 1702543584),
+                                         (7,1,4, 1702543584);
 /*!40000 ALTER TABLE `time_trial_class_record` ENABLE KEYS */;
 UNLOCK TABLES;
 

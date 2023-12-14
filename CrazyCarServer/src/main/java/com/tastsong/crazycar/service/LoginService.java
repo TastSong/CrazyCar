@@ -21,6 +21,8 @@ public class LoginService {
     private AvatarService avatarService;
     @Autowired
     private EquipService equipService;
+    @Autowired
+    private TimeTrialClassService timeTrialClassService;
 
     public RespUserInfo getUserInfo(String userName){
         RespUserInfo respUserInfo = new RespUserInfo();
@@ -45,7 +47,7 @@ public class LoginService {
     }
 
     public int getTimeTrialMapNum(int uid){
-        return timeTrialMapper.getTimeTrialMapNumByUid(uid);
+        return timeTrialClassService.getTimeTrialClassNumByUid(uid);
     }
 
 
@@ -71,8 +73,8 @@ public class LoginService {
             avatarService.addAvatarForUser(uid, defaultAid);
         }
 
-        if(!timeTrialMapper.isHasTimeTrialClass(uid, defaultCid)){
-            timeTrialMapper.addTimeTrialMapForUser(uid, defaultCid);
+        if(!timeTrialClassService.hasClass(uid, defaultCid)){
+            timeTrialClassService.addTimeTrialClassForUser(uid, defaultCid);
         }
 
         if(!equipService.hasEquip(uid, defaultEid)){

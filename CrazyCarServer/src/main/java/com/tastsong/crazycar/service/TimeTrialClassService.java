@@ -8,6 +8,7 @@ import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
 import com.tastsong.crazycar.dto.resp.RespTimeTrialClass;
 import com.tastsong.crazycar.mapper.TimeTrialClassMapper;
 import com.tastsong.crazycar.mapper.TimeTrialClassRecordMapper;
+import com.tastsong.crazycar.model.AvatarRecordModel;
 import com.tastsong.crazycar.model.TimeTrialClassModel;
 import com.tastsong.crazycar.model.TimeTrialClassRecordModel;
 import lombok.extern.slf4j.Slf4j;
@@ -102,6 +103,12 @@ public class TimeTrialClassService {
         timeTrialClassRecordModel.setUid(uid);
         timeTrialClassRecordModel.setUpdate_time(DateUtil.currentSeconds());
         return timeTrialClassRecordMapper.insert(timeTrialClassRecordModel) > 0;
+    }
+
+    public int getTimeTrialClassNumByUid(int uid){
+        QueryWrapper<TimeTrialClassRecordModel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(TimeTrialClassRecordModel::getUid, uid);
+        return Convert.toInt(timeTrialClassRecordMapper.selectCount(queryWrapper));
     }
 
     public TimeTrialClassModel getTimeTrialClass(int cid){

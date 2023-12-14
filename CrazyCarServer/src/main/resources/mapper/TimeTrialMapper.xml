@@ -10,19 +10,6 @@
         where uid = #{uid};
     </select>
 
-    <select id="getTimeTrialMapNumByUid" resultType="Integer">
-        select
-        Count(*)
-        from time_trial_user_map 
-        where uid = #{uid};
-    </select>
-
-    <insert id="addTimeTrialMapForUser">
-        insert into time_trial_user_map ( cid, uid )
-				   values
-				   (#{cid}, #{uid});
-    </insert>
-
     <insert id="insertRecord" parameterType="TimeTrialRecordModel">
         insert into time_trial_record ( uid, cid, complete_time, record_time)
 				   values
@@ -43,15 +30,6 @@
                                 order by complete_time asc
                             ) as user_rank,
                             (select @rank_num:= 0) r)  as all_user_rank;
-    </select>
-
-
-    <select id="isHasTimeTrialClass" resultType="boolean">
-        select exists(
-        select
-        id
-        from time_trial_user_map 
-        where uid = #{uid} and cid = #{cid});
     </select>
 
     <select id="getMiniCompleteTime" resultType="Integer">
