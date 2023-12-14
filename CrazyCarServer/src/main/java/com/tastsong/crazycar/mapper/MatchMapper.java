@@ -3,7 +3,6 @@ package com.tastsong.crazycar.mapper;
 import java.util.List;
 
 import com.tastsong.crazycar.dto.resp.RespDataStatistics;
-import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.model.MatchRankModel;
 import com.tastsong.crazycar.model.MatchRecordModel;
 import com.tastsong.crazycar.model.MatchRoomInfoModel;
@@ -12,9 +11,6 @@ import org.apache.ibatis.annotations.Select;
 
 public interface MatchMapper {
     public int insertMatchClass(MatchRoomInfoModel infoModel);
-    public MatchRoomInfoModel getMatchRoomInfo(String roomId, long startTime);
-    public List<MatchMapModel> getMatchMapDetail();
-    public MatchMapModel getMatchMapInfo(int cid);
     public MatchRoomInfoModel getMatchRoomInfoByCid(int cid);
     public int getMiniCompleteTime(int uid, int cid);
     public int insertRecord(MatchRecordModel recordModel);
@@ -28,5 +24,4 @@ public interface MatchMapper {
             "GROUP BY FROM_UNIXTIME(record_time, '%y-%m-%d'), record_time " +
             "ORDER BY record_time LIMIT #{offsetTime}")
     List<RespDataStatistics> getMatchData(@Param("offsetTime") Integer offsetTime);
-    public int updateMatchMapInfo(MatchMapModel mapInfoModel);
 }

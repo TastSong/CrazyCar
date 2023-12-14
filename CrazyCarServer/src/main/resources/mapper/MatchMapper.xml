@@ -7,26 +7,9 @@
 				   (#{star}, #{map_id}, #{room_id}, #{limit_time}, #{class_name}, #{times}, #{start_time}, #{enroll_time});
     </insert>
 
-    <select id="getMatchRoomInfo" resultType="MatchRoomInfoModel">
-        select * 
-        from match_class 
-        where room_id = #{roomId} and start_time = #{startTime};
-    </select>
-
     <select id="getMatchRoomInfoByCid" resultType="MatchRoomInfoModel">
         select * 
         from match_class 
-        where cid = #{cid};
-    </select>
-
-    <select id="getMatchMapDetail" resultType="MatchMapModel">
-        select * 
-        from match_map;
-    </select>
-
-    <select id="getMatchMapInfo" resultType="MatchMapModel">
-        select * 
-        from match_map
         where cid = #{cid};
     </select>
 
@@ -95,11 +78,4 @@
                 (select @rownum:= 0) r
         ) as history_rank where rownum = 1 and complete_time != -1;
     </select>
-
-    <update id="updateMatchMapInfo" parameterType="MatchMapModel">
-        update match_map
-        set map_id = #{map_id}, has_water = #{has_water}, star = #{star}, 
-         limit_time = #{limit_time}, class_name = #{class_name}, times = #{times}
-        where cid = #{cid}
-    </update>
 </mapper>

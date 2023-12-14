@@ -8,9 +8,9 @@ export function getMatchInfos(query) {
   })
 }
 
-export function updtaeMatchInfo(data) {
+export function updateMatchInfo(data) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/updtaeMatchInfo',
+    url: '/CrazyCarSpringBootServer/v2/Background/updateMatchInfo',
     method: 'post',
     data
   })

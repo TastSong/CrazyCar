@@ -3,7 +3,9 @@ package com.tastsong.crazycar.controller;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
+import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.MatchMapService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -40,6 +42,7 @@ public class MatchRoomWebSocket {
     private int maxNum = 2;
     private int startOffsetTime = 16;
     private MatchService matchService;
+    private MatchMapService matchMapService;
     private UserService userService;
 
     // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
@@ -56,6 +59,7 @@ public class MatchRoomWebSocket {
         
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
+        matchMapService = act.getBean(MatchMapService.class);
         userService = act.getBean(UserService.class);
         log.info("Match Room onOpen, num = " + getOnlineCount());
     }
@@ -218,9 +222,10 @@ public class MatchRoomWebSocket {
         MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
         infoModel.room_id = message.getStr("room_id");
         int mapCid = message.getInt("cid");
-        infoModel.map_id = matchService.getMatchMapMapId(mapCid);
-        infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
-        infoModel.times = matchService.getMatchMapTimes(mapCid);
+        MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
+        infoModel.map_id = matchMapModel.map_id;
+        infoModel.limit_time = matchMapModel.limit_time;
+        infoModel.times = matchMapModel.times;
         infoModel.start_time = System.currentTimeMillis()/1000 + startOffsetTime;
         infoModel.enroll_time =  System.currentTimeMillis()/1000;
         infoModel.class_name = "TastSong";

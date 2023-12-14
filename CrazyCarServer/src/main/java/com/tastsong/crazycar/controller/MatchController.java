@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.service.MatchMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class MatchController {
     @Autowired
     private MatchService matchService;
+    @Autowired
+    private MatchMapService matchMapService;
 
     @PostMapping(value="/Map")
     public Object getMapDetail() throws Exception {
-        return matchService.getMatchMapDetail();
+        return matchMapService.getMatchMapDetail();
     }
     
     @PostMapping(value = "/Result")

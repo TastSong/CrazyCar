@@ -28,33 +28,10 @@ public class MatchService {
         return matchMapper.insertMatchClass(infoModel) > 0;
     }
 
-    public int getMatchRoomCid(String roomId, long startTime){
-        return matchMapper.getMatchRoomInfo(roomId, startTime).cid;
-    }
-
-    public int getMatchMapMapId(int cid){
-        return matchMapper.getMatchMapInfo(cid).map_id;
-    }
-
     public int getMatchRoomLimitTime(int cid){
         return matchMapper.getMatchRoomInfoByCid(cid).limit_time;
     }
 
-    public int getMatchMapLimitTime(int cid){
-        return matchMapper.getMatchMapInfo(cid).limit_time;
-    }
-
-    public int getMatchMapTimes(int cid){
-        return matchMapper.getMatchMapInfo(cid).times;
-    }
-
-    public List<MatchMapModel> getMatchMapDetail(){
-        return matchMapper.getMatchMapDetail();
-    }
-
-    public boolean updateMatchMapInfo(MatchMapModel mapInfoModel){
-        return matchMapper.updateMatchMapInfo(mapInfoModel) == 1;
-    }
 
     public boolean isBreakRecord(MatchRecordModel recordModel) {
         if (recordModel.complete_time == -1) {
