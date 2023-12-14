@@ -5,13 +5,14 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.MatchClassService;
 import com.tastsong.crazycar.service.MatchMapService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.config.ApplicationContextRegister;
-import com.tastsong.crazycar.model.MatchRoomInfoModel;
+import com.tastsong.crazycar.model.MatchClassModel;
 import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
 import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.utils.Util;
@@ -43,6 +44,7 @@ public class MatchRoomWebSocket {
     private int startOffsetTime = 16;
     private MatchService matchService;
     private MatchMapService matchMapService;
+    private MatchClassService matchClassService;
     private UserService userService;
 
     // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
@@ -60,6 +62,7 @@ public class MatchRoomWebSocket {
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchService = act.getBean(MatchService.class);
         matchMapService = act.getBean(MatchMapService.class);
+        matchClassService = act.getBean(MatchClassService.class);
         userService = act.getBean(UserService.class);
         log.info("Match Room onOpen, num = " + getOnlineCount());
     }
@@ -219,7 +222,7 @@ public class MatchRoomWebSocket {
     }
 
     private void onStartRoom(JSONObject message) {
-        MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
+        MatchClassModel infoModel = new MatchClassModel();
         infoModel.room_id = message.getStr("room_id");
         int mapCid = message.getInt("cid");
         MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
@@ -230,7 +233,7 @@ public class MatchRoomWebSocket {
         infoModel.enroll_time =  System.currentTimeMillis()/1000;
         infoModel.class_name = "TastSong";
         infoModel.star = 2;
-        matchService.insertMatchClass(infoModel);
+        matchClassService.insertMatchClass(infoModel);
         int cid = infoModel.cid;
         JSONObject data = new JSONObject();			
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);

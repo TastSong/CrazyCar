@@ -24,14 +24,6 @@ public class MatchService {
         return equipService.getEquipByEid(eid).isCan_wade();
     }
 
-    public Boolean insertMatchClass(MatchRoomInfoModel infoModel){
-        return matchMapper.insertMatchClass(infoModel) > 0;
-    }
-
-    public int getMatchRoomLimitTime(int cid){
-        return matchMapper.getMatchRoomInfoByCid(cid).limit_time;
-    }
-
 
     public boolean isBreakRecord(MatchRecordModel recordModel) {
         if (recordModel.complete_time == -1) {
@@ -46,14 +38,6 @@ public class MatchService {
 		}		
 		
 		return recordModel.complete_time < minTime;
-    }
-
-    public int getMatchStar(int cid) {
-        return matchMapper.getMatchRoomInfoByCid(cid).star;
-    }
-
-    public void giveReward(int uid, int cid) {
-        userService.updateUserStar(uid, getMatchStar(cid) + userService.getUserStar(uid));
     }
 
     public void insertRecord(MatchRecordModel recordModel) {

@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.model.MatchClassModel;
+import com.tastsong.crazycar.service.MatchClassService;
 import com.tastsong.crazycar.service.MatchMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +29,8 @@ public class MatchController {
     private MatchService matchService;
     @Autowired
     private MatchMapService matchMapService;
+    @Autowired
+    private MatchClassService matchClassService;
 
     @PostMapping(value="/Map")
     public Object getMapDetail() throws Exception {
@@ -43,8 +47,8 @@ public class MatchController {
         if(recordModel.cid == 0 || recordModel.complete_time == 0){
             return Result.failure(ResultCode.RC404);
         }
-
-        int limitTime = matchService.getMatchRoomLimitTime(recordModel.cid);
+        MatchClassModel matchClassModel = matchClassService.getMatchClassByCid(recordModel.cid);
+        int limitTime = matchClassModel.getLimit_time();
         JSONObject data = new JSONObject();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
             data.putOpt("is_win", true);
@@ -55,9 +59,9 @@ public class MatchController {
         }
         boolean isBreakRecord = matchService.isBreakRecord(recordModel);
         data.putOpt("is_break_record", isBreakRecord);
-        data.putOpt("reward", isBreakRecord ? matchService.getMatchStar(recordModel.cid) : 0);
+        data.putOpt("reward", isBreakRecord ? matchClassModel.getStar() : 0);
         if (isBreakRecord) {
-            matchService.giveReward(recordModel.uid, recordModel.cid);
+            matchClassService.giveReward(recordModel.uid, recordModel.cid);
         }
         matchService.insertRecord(recordModel);
         
