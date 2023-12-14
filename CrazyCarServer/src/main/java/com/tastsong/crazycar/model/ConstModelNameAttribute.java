@@ -12,4 +12,5 @@ public class ConstModelNameAttribute {
     public static final String VERSION = "version";
     public static final String MATCH_MAP = "match_map";
     public static final String MATCH_CLASS = "match_class";
+    public static final String MATCH_RECORD = "match_record";
 }

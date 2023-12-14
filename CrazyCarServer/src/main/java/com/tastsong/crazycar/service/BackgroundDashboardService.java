@@ -7,8 +7,7 @@ import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.mapper.EquipMapper;
-import com.tastsong.crazycar.mapper.MatchMapper;
+import com.tastsong.crazycar.mapper.MatchRecordMapper;
 import com.tastsong.crazycar.mapper.TimeTrialMapper;
 import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 
@@ -21,7 +20,7 @@ public class BackgroundDashboardService {
     @Autowired
     private TimeTrialMapper timeTrialMapper;
     @Autowired
-    private MatchMapper matchMapper;
+    private MatchRecordMapper matchRecordMapper;
 
     public int getEquipNum(){
         return equipService.getEquipInfos().size();
@@ -42,7 +41,7 @@ public class BackgroundDashboardService {
     }
 
     public List<RespDataStatistics> getMatchData(int offsetTime){
-        List<RespDataStatistics> data = matchMapper.getMatchData(offsetTime);
+        List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
 
@@ -54,11 +53,11 @@ public class BackgroundDashboardService {
         for(int i = 0; i < offsetTime; i++){
             RespDataStatistics temp = new RespDataStatistics();
             temp.count = 0;
-            temp.timestamp = curWeeHours - oneDay * (offsetTime - i - 1);
-            long nextTimestaml = curWeeHours - oneDay * (offsetTime - i - 2);
-            for(int k = 0; k < data.size(); k++){
-                if(data.get(k).timestamp >= temp.timestamp && data.get(k).timestamp <= nextTimestaml){
-                    temp.count = data.get(k).count;
+            temp.timestamp = curWeeHours - (long) oneDay * (offsetTime - i - 1);
+            long nextTimestamp = curWeeHours - (long) oneDay * (offsetTime - i - 2);
+            for (RespDataStatistics datum : data) {
+                if (datum.timestamp >= temp.timestamp && datum.timestamp <= nextTimestamp) {
+                    temp.count = datum.count;
                     break;
                 }
             }
@@ -82,10 +81,10 @@ public class BackgroundDashboardService {
     }
 
     public int getMatchTimes(int offsetTime){
-        List<RespDataStatistics> data = matchMapper.getMatchData(offsetTime);
+        List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         int tatal = 0;
-        for(int i = 0; i < data.size(); i++){
-            tatal += data.get(i).count;
+        for (RespDataStatistics datum : data) {
+            tatal += datum.count;
         }
         // ------假数据------
         if(tatal == 0){

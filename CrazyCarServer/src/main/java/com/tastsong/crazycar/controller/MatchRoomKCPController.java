@@ -5,12 +5,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
-import cn.hutool.core.date.DateUtil;
-import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.model.UserModel;
-import com.tastsong.crazycar.service.MatchClassService;
-import com.tastsong.crazycar.service.MatchMapService;
-import com.tastsong.crazycar.service.UserService;
+import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
 
 import org.springframework.context.annotation.Scope;
@@ -22,7 +18,6 @@ import com.backblaze.erasure.fec.Snmp;
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchClassModel;
 import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
-import com.tastsong.crazycar.service.MatchService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
@@ -47,9 +42,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>>();
     private static int onlineCount = 0;
     private int maxNum = 2;
-    private int startOffsetTime = 16;
-    private MatchService matchService;
-    private MatchMapService matchMapService;
+    private EquipService equipService;
+    private MatchRecordService matchRecordService;
     private MatchClassService matchClassService;
     private UserService userService;
     
@@ -89,8 +83,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     public void onConnected(Ukcp uKcp) {
         onlineCount++;
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
-        matchService = act.getBean(MatchService.class);
-        matchMapService = act.getBean(MatchMapService.class);
+        matchRecordService = act.getBean(MatchRecordService.class);
+        equipService = act.getBean(EquipService.class);
         matchClassService = act.getBean(MatchClassService.class);
         userService = act.getBean(UserService.class);
         log.info("Connected onlineCount = " + onlineCount);
@@ -134,7 +128,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             UserModel userModel = userService.getUserByUid(uid);
             info.memberName = userModel.getUser_name();
             info.aid = userModel.getAid();
-            info.canWade = matchService.canWade(message.getInt("eid"));
+            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
             info.isHouseOwner = true;
             ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
             list.add(info);
@@ -165,7 +159,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             UserModel userModel = userService.getUserByUid(uid);
             info.memberName = userModel.getUser_name();
             info.aid = userModel.getAid();
-            info.canWade = matchService.canWade(message.getInt("eid"));
+            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
             info.isHouseOwner = false;
             MatchRoomKCPController.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);

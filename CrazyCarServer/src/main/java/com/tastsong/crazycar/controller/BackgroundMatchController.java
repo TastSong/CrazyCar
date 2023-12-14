@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.model.MatchMapModel;
-import com.tastsong.crazycar.service.MatchService;
+import com.tastsong.crazycar.service.MatchRecordService;
 
 import cn.hutool.json.JSONObject;
 
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v2/Background")
 public class BackgroundMatchController {
     @Autowired
-    private MatchService matchService;
+    private MatchRecordService matchRecordService;
     @Autowired
     private MatchMapService matchMapService;
 

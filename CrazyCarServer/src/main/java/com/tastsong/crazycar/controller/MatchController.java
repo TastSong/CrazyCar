@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastsong.crazycar.service.MatchService;
+import com.tastsong.crazycar.service.MatchRecordService;
 import com.tastsong.crazycar.utils.Util;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @RequestMapping(value = "/v2/Match")
 public class MatchController {
     @Autowired
-    private MatchService matchService;
+    private MatchRecordService matchRecordService;
     @Autowired
     private MatchMapService matchMapService;
     @Autowired
@@ -57,15 +57,15 @@ public class MatchController {
             data.putOpt("is_win", false);
             data.putOpt("complete_time", -1);
         }
-        boolean isBreakRecord = matchService.isBreakRecord(recordModel);
+        boolean isBreakRecord = matchRecordService.isBreakRecord(recordModel);
         data.putOpt("is_break_record", isBreakRecord);
         data.putOpt("reward", isBreakRecord ? matchClassModel.getStar() : 0);
         if (isBreakRecord) {
             matchClassService.giveReward(recordModel.uid, recordModel.cid);
         }
-        matchService.insertRecord(recordModel);
+        matchRecordService.insertRecord(recordModel);
         
-        data.putOpt("rank", matchService.getRankList(recordModel.uid, recordModel.cid));
+        data.putOpt("rank", matchRecordService.getMatchRankListByCid(recordModel.cid));
         return data;
     }
 }

@@ -16,7 +16,7 @@ import com.tastsong.crazycar.common.GameType;
 import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import com.tastsong.crazycar.service.MatchService;
+import com.tastsong.crazycar.service.MatchRecordService;
 import com.tastsong.crazycar.service.TimeTrialService;
 import com.tastsong.crazycar.utils.Util;
 
@@ -29,7 +29,7 @@ public class GameController {
     private TimeTrialService timeTrialService;
 
     @Autowired
-    private MatchService matchService;
+    private MatchRecordService matchRecordService;
     @Autowired
     private UserService userService;
 

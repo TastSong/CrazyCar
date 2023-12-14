@@ -9,7 +9,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Data
-public class RespDataStatistics {
-    public int count;
-    public long timestamp;
+public class RespMatchRank {
+    private int uid;
+    private int aid;
+    private int rank_num;
+    private int complete_time;
+    private String user_name;
 }
