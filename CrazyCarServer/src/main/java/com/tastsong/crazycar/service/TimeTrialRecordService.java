@@ -6,13 +6,12 @@ import java.util.List;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tastsong.crazycar.model.MatchRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.TimeTrialRecordMapper;
-import com.tastsong.crazycar.model.TimeTrialRankModel;
+import com.tastsong.crazycar.dto.resp.RespTimeTrialRank;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
 
 @Service
@@ -29,22 +28,22 @@ public class TimeTrialRecordService {
     }
 
     // ªÒ»°≈≈––∞Ò
-    public List<TimeTrialRankModel> getTimeTrialRankListByCid(int cid){
+    public List<RespTimeTrialRank> getTimeTrialRankListByCid(int cid){
         QueryWrapper<TimeTrialRecordModel> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(TimeTrialRecordModel::getCid, cid);
         queryWrapper.lambda().ne(TimeTrialRecordModel::getComplete_time, -1);
         queryWrapper.lambda().groupBy(TimeTrialRecordModel::getUid);
         queryWrapper.lambda().orderByAsc(TimeTrialRecordModel::getComplete_time);
         List<TimeTrialRecordModel> timeTrialRecordModels = timeTrialRecordMapper.selectList(queryWrapper);
-        List<TimeTrialRankModel> timeTrialRankModels = new ArrayList<>();
+        List<RespTimeTrialRank> respTimeTrialRanks = new ArrayList<>();
         for (int i = 0; i< timeTrialRecordModels.size(); i++){
-            timeTrialRankModels.add(toRespTimeTrialRank(timeTrialRecordModels.get(i), i+1));
+            respTimeTrialRanks.add(toRespTimeTrialRank(timeTrialRecordModels.get(i), i+1));
         }
-        return timeTrialRankModels;
+        return respTimeTrialRanks;
     }
 
-    public TimeTrialRankModel toRespTimeTrialRank(TimeTrialRecordModel mode, int rank) {
-        	TimeTrialRankModel resp = new TimeTrialRankModel();
+    public RespTimeTrialRank toRespTimeTrialRank(TimeTrialRecordModel mode, int rank) {
+        	RespTimeTrialRank resp = new RespTimeTrialRank();
             resp.setComplete_time(mode.getComplete_time());
             resp.setRank_num(rank);
             resp.setUid(mode.getUid());
@@ -57,26 +56,26 @@ public class TimeTrialRecordService {
     }
 
     public int getRankByUid(int uid, int cid){
-        List<TimeTrialRankModel> rankList = getTimeTrialRankListByCid(cid);
-        for (TimeTrialRankModel timeTrialRankModel : rankList) {
-            if (timeTrialRankModel.uid == uid) {
-                return timeTrialRankModel.getRank_num();
+        List<RespTimeTrialRank> rankList = getTimeTrialRankListByCid(cid);
+        for (RespTimeTrialRank respTimeTrialRank : rankList) {
+            if (respTimeTrialRank.getUid() == uid) {
+                return respTimeTrialRank.getRank_num();
             }
         }
         return -1;
     }
 
     public boolean isBreakRecord(TimeTrialRecordModel recordModel){
-        if (recordModel.complete_time == -1) {
+        if (recordModel.getComplete_time() == -1) {
 			return false;
 		}
-        int minTime = getMiniCompleteTime(recordModel.uid, recordModel.cid);
+        int minTime = getMiniCompleteTime(recordModel.getUid(), recordModel.getCid());
 
-		if (minTime == -1 && recordModel.complete_time != -1){
+		if (minTime == -1 && recordModel.getComplete_time() != -1){
 			return true;
 		}
 
-		return recordModel.complete_time < minTime;
+		return recordModel.getComplete_time() < minTime;
     }
 
     private int getMiniCompleteTime(int uid, int cid){
@@ -89,7 +88,7 @@ public class TimeTrialRecordService {
         if(ObjUtil.isEmpty(recordModel)){
             return -1;
         } else {
-            return recordModel.complete_time;
+            return recordModel.getComplete_time();
         }
     }
 
