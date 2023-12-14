@@ -8,9 +8,9 @@ export function getTimeTrialInfos(query) {
   })
 }
 
-export function updtaeTimeTrialInfo(data) {
+export function updateTimeTrialInfo(data) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/updtaeTimeTrialInfo',
+    url: '/CrazyCarSpringBootServer/v2/Background/updateTimeTrialInfo',
     method: 'post',
     data
   })

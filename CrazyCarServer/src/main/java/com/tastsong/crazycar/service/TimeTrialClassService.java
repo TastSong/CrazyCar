@@ -4,6 +4,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
 import com.tastsong.crazycar.dto.resp.RespTimeTrialClass;
 import com.tastsong.crazycar.mapper.TimeTrialClassMapper;
 import com.tastsong.crazycar.mapper.TimeTrialClassRecordMapper;
@@ -57,6 +58,20 @@ public class TimeTrialClassService {
         return timeTrialClassMapper.updateById(timeTrialClassModel) == 1;
     }
 
+    public TimeTrialClassModel toTimeTrialClassModel(ReqUpdateTimeTrialClass resp){
+        TimeTrialClassModel timeTrialClassModel = getTimeTrialClass(resp.getCid());
+        if (ObjUtil.isEmpty(timeTrialClassModel)) {
+            return null;
+        }
+        timeTrialClassModel.setCid(resp.getCid());
+        timeTrialClassModel.setMap_id(resp.getMap_id());
+        timeTrialClassModel.setClass_name(resp.getClass_name());
+        timeTrialClassModel.setStar(resp.getStar());
+        timeTrialClassModel.setHas_water(resp.isHas_water());
+        timeTrialClassModel.setLimit_time(resp.getLimit_time());
+        timeTrialClassModel.setTimes(resp.getTimes());
+        return timeTrialClassModel;
+    }
 
     private int getNeedStar(int aid){
         return timeTrialClassMapper.selectById(aid).getStar();

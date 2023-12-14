@@ -2,6 +2,10 @@ package com.tastsong.crazycar.controller;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +19,8 @@ import com.tastsong.crazycar.model.TimeTrialClassModel;
 import com.tastsong.crazycar.service.TimeTrialService;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
@@ -34,16 +40,12 @@ public class BackgroundTimeTrialController {
         return result;
     }
 
-    @PostMapping(value = "updtaeTimeTrialInfo")
-    public Object updtaeTimeTrialInfo(@RequestBody JSONObject body) throws Exception {
-        TimeTrialClassModel timeTrialClassModel = new TimeTrialClassModel();
-        timeTrialClassModel.cid= body.getInt("cid");
-        timeTrialClassModel.map_id = body.getInt("map_id");
-        timeTrialClassModel.class_name = body.getStr("class_name");
-        timeTrialClassModel.star = body.getInt("star");
-        timeTrialClassModel.has_water = body.getBool("has_water");
-        timeTrialClassModel.limit_time = body.getInt("limit_time");
-        timeTrialClassModel.times = body.getInt("times");
+    @PostMapping(value = "updateTimeTrialInfo")
+    public Object updateTimeTrialInfo(@Valid @RequestBody ReqUpdateTimeTrialClass req) throws Exception {
+        TimeTrialClassModel timeTrialClassModel = timeTrialClassService.toTimeTrialClassModel(req);
+        if (ObjUtil.isEmpty(timeTrialClassModel)) {
+            return Result.failure(ResultCode.RC404, "找不到该课程");
+        }
         return timeTrialClassService.updateTimeTrialClassInfo(timeTrialClassModel) ? timeTrialClassModel : false;
     }
 }
