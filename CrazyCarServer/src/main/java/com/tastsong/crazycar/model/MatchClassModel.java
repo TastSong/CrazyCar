@@ -21,13 +21,13 @@ public class MatchClassModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    public int cid;
-    public int map_id;
-    public int star;
-    public String room_id;
-    public int limit_time;
-    public String class_name;
-    public int times;
-    public long start_time;
-    public long enroll_time;
+    private int cid;
+    private int map_id;
+    private int star;
+    private String room_id;
+    private int limit_time;
+    private String class_name;
+    private int times;
+    private long start_time;
+    private long enroll_time;
 }

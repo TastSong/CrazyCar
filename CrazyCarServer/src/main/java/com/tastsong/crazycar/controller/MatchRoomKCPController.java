@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
+import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.MatchClassService;
@@ -233,31 +234,31 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private void onStartRoom(JSONObject message) {
         String roomId = message.getStr("room_id");
         MatchClassModel infoModel = new MatchClassModel();
-        infoModel.room_id = message.getStr("room_id");
+        infoModel.setRoom_id(message.getStr("room_id"));
         int mapCid = message.getInt("cid");
         MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
-        infoModel.map_id = matchMapModel.getMap_id();
-        infoModel.limit_time = matchMapModel.getLimit_time();
-        infoModel.times = matchMapModel.getTimes();
-        infoModel.start_time = System.currentTimeMillis() / 1000 + startOffsetTime;
-        infoModel.enroll_time = System.currentTimeMillis() / 1000;
-        infoModel.class_name = "TastSong";
-        infoModel.star = 2;
+        infoModel.setMap_id(matchMapModel.getMap_id());
+        infoModel.setLimit_time(matchMapModel.getLimit_time());
+        infoModel.setTimes(matchMapModel.getTimes());
+        infoModel.setStart_time(DateUtil.currentSeconds() + startOffsetTime );
+        infoModel.setEnroll_time(DateUtil.currentSeconds());
+        infoModel.setClass_name("TastSong");
+        infoModel.setStar(2);
         matchClassService.insertMatchClass(infoModel);
-        int cid = infoModel.cid;
+        int cid = infoModel.getCid();
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 404);
         } else {
             data.putOpt("cid", cid);
-            data.putOpt("name", infoModel.class_name);
-            data.putOpt("star", infoModel.star);
-            data.putOpt("map_id", infoModel.map_id);
-            data.putOpt("limit_time", infoModel.limit_time);
-            data.putOpt("times", infoModel.times);
-            data.putOpt("start_time", infoModel.start_time);
-            data.putOpt("enroll_time", infoModel.enroll_time);
+            data.putOpt("name", infoModel.getClass_name());
+            data.putOpt("star", infoModel.getStar());
+            data.putOpt("map_id", infoModel.getMap_id());
+            data.putOpt("limit_time", infoModel.getLimit_time());
+            data.putOpt("times", infoModel.getTimes());
+            data.putOpt("start_time", infoModel.getStart_time());
+            data.putOpt("enroll_time", infoModel.getEnroll_time());
             data.putOpt("code", 200);
         }
         log.info("onStartRoom : " + data.toString());
