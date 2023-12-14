@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class AssetsUpdatingModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
     private int id;
     private long update_time;
+    @JsonProperty("is_on")
     private boolean is_on;
     private String url;
 }

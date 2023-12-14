@@ -120,6 +120,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
                 code?.Invoke((int)d["code"]);
                 if ((int)d["code"] == 200) {
+                    Debug.Log("url： " + url + "---succData = " + d["data"].ToJson());
                     succData?.Invoke(d["data"]);
                 }
             }

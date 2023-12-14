@@ -223,25 +223,15 @@ public class MatchRoomWebSocket {
     }
 
     private void onStartRoom(JSONObject message) {
-        MatchClassModel infoModel = new MatchClassModel();
-        infoModel.setRoom_id(message.getStr("room_id"));
+        String roomId = message.getStr("room_id");
         int mapCid = message.getInt("cid");
-        MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
-        infoModel.setMap_id(matchMapModel.getMap_id());
-        infoModel.setLimit_time(matchMapModel.getLimit_time());
-        infoModel.setTimes(matchMapModel.getTimes());
-        infoModel.setStart_time(DateUtil.currentSeconds() + startOffsetTime );
-        infoModel.setEnroll_time(DateUtil.currentSeconds());
-        infoModel.setClass_name("TastSong");
-        infoModel.setStar(2);
-        matchClassService.insertMatchClass(infoModel);
-        int cid = infoModel.getCid();
-        JSONObject data = new JSONObject();			
+        MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
+        JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);   
-        } else{              	
-            data.putOpt("cid", cid);
+			data.putOpt("code", 404);
+        } else{
+            data.putOpt("cid", infoModel.getCid());
             data.putOpt("name", infoModel.getClass_name());
             data.putOpt("star", infoModel.getStar());
             data.putOpt("map_id", infoModel.getMap_id());
@@ -249,7 +239,7 @@ public class MatchRoomWebSocket {
             data.putOpt("times", infoModel.getTimes());
             data.putOpt("start_time", infoModel.getStart_time());
             data.putOpt("enroll_time", infoModel.getEnroll_time());
-            data.putOpt("code", 200); 
+            data.putOpt("code", 200);
         }
         log.info("onStartRoom : " + data.toString());
         sendToUser(data.toString(), roomId);

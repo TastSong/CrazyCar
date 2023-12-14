@@ -3,6 +3,7 @@ package com.tastsong.crazycar.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class UserModel {
     private Long login_time;
     private int aid;
     private int star;
+    @JsonProperty("is_vip")
     private boolean is_vip;
     private int eid;
 }

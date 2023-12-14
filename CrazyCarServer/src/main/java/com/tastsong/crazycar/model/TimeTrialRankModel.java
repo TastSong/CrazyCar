@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TimeTrialRankModel {
     public int uid;
     public int aid;

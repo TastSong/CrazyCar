@@ -233,25 +233,14 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
 
     private void onStartRoom(JSONObject message) {
         String roomId = message.getStr("room_id");
-        MatchClassModel infoModel = new MatchClassModel();
-        infoModel.setRoom_id(message.getStr("room_id"));
         int mapCid = message.getInt("cid");
-        MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
-        infoModel.setMap_id(matchMapModel.getMap_id());
-        infoModel.setLimit_time(matchMapModel.getLimit_time());
-        infoModel.setTimes(matchMapModel.getTimes());
-        infoModel.setStart_time(DateUtil.currentSeconds() + startOffsetTime );
-        infoModel.setEnroll_time(DateUtil.currentSeconds());
-        infoModel.setClass_name("TastSong");
-        infoModel.setStar(2);
-        matchClassService.insertMatchClass(infoModel);
-        int cid = infoModel.getCid();
+        MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 404);
         } else {
-            data.putOpt("cid", cid);
+            data.putOpt("cid", infoModel.getCid());
             data.putOpt("name", infoModel.getClass_name());
             data.putOpt("star", infoModel.getStar());
             data.putOpt("map_id", infoModel.getMap_id());
