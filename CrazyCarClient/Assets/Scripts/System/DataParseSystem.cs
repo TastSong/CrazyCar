@@ -32,7 +32,11 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.aid = (int)data[i]["aid"];
             info.rid = (string)data[i]["rid"];
             info.name = (string)data[i]["avatar_name"];
-            info.isHas = (bool)data[i]["is_has"];
+            try {
+                info.isHas = (bool)data[i]["is_has"];
+            } catch {
+                info.isHas = false;
+            }
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
         }

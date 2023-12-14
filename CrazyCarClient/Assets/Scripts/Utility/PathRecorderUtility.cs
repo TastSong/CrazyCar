@@ -9,7 +9,7 @@ public static class RequestUrl {
     public static string loginUrl = "v1/Login";
     public static string configUrl = "v1/Config";
     public static string registerUrl = "v1/Register";
-    public static string recodeLogin = "v1/recodeLogin";
+    public static string recodeLogin = "v2/UserInfo/recodeLogin";
     public static string avatarUrl = "v2/Avatar/Detail";
     public static string changeAvatarUrl = "v2/Avatar/Change";
     public static string buyAvatarUrl = "v2/Avatar/Buy";

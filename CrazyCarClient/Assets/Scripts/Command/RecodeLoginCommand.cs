@@ -25,7 +25,7 @@ public class RecodeLoginCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.recodeLogin,
-            data: bytes, succData: (data) => {
+            data: bytes, token: this.GetModel<IGameModel>().Token.Value, succData: (data) => {
             }, code: (code) => {
        
             }));

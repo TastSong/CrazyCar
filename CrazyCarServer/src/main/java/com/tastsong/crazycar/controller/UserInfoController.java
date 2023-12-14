@@ -1,5 +1,8 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.date.DateUtil;
+import com.tastsong.crazycar.model.UserLoginRecordModel;
+import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +28,8 @@ public class UserInfoController {
     private LoginService loginService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserLoginRecordService userLoginRecordService;
 
     @PostMapping(value = "/GetUser")
     public Object getUserInfo(@RequestBody JSONObject body) throws Exception {
@@ -47,5 +52,16 @@ public class UserInfoController {
         } else {
             return Result.failure(ResultCode.RC423);
         }
+    }
+
+
+
+    @PostMapping(value = "/recodeLogin")
+    public Object recodeLogin(@RequestBody UserLoginRecordModel req, @RequestHeader(Util.TOKEN) String token) throws Exception {
+        int uid = Util.getUidByToken(token);
+        req.setUid(uid);
+        req.setLogin_time(DateUtil.currentSeconds());
+        userLoginRecordService.insert(req);
+        return Result.success();
     }
 }

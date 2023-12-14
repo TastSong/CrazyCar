@@ -53,15 +53,6 @@ public class LoginController {
 		}
 	}
 
-	@PostMapping(value = "/recodeLogin")
-	public Object recodeLogin(@RequestBody UserLoginRecordModel req, @RequestHeader(Util.TOKEN) String token) throws Exception {
-		int uid = Util.getUidByToken(token);
-		req.setUid(uid);
-		req.setLogin_time(DateUtil.currentSeconds());
-		userLoginRecordService.insert(req);
-		return Result.success();
-	}
-
 	@GetMapping (value = "/TestJWT")
 	public Object testJWT(@RequestHeader(Util.TOKEN) String token) throws Exception{
 		return Util.isLegalToken(token);
