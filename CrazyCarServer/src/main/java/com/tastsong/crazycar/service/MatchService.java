@@ -6,7 +6,6 @@ import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.mapper.MatchMapper;
 
 @Service
@@ -49,11 +48,11 @@ public class MatchService {
         return matchMapper.getMatchMapInfo(cid).times;
     }
 
-    public List<MatchMapInfoModel> getMatchMapDetail(){
+    public List<MatchMapModel> getMatchMapDetail(){
         return matchMapper.getMatchMapDetail();
     }
 
-    public boolean updateMatchMapInfo(MatchMapInfoModel mapInfoModel){
+    public boolean updateMatchMapInfo(MatchMapModel mapInfoModel){
         return matchMapper.updateMatchMapInfo(mapInfoModel) == 1;
     }
 

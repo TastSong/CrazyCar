@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastsong.crazycar.model.MatchMapInfoModel;
+import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.service.MatchService;
 
 import cn.hutool.json.JSONObject;
@@ -25,7 +25,7 @@ public class BackgroundMatchController {
     @GetMapping(value = "getMatchInfos")
     public Object getMatchInfos() throws Exception {
         JSONObject result = new JSONObject();
-        List<MatchMapInfoModel> items = matchService.getMatchMapDetail();
+        List<MatchMapModel> items = matchService.getMatchMapDetail();
         result.putOpt("items", items);
         result.putOpt("total", items.size());
         return result;
@@ -33,7 +33,7 @@ public class BackgroundMatchController {
 
     @PostMapping(value = "updtaeMatchInfo")
     public Object updtaeMatchInfo(@RequestBody JSONObject body) throws Exception {
-        MatchMapInfoModel mapInfoModel = new MatchMapInfoModel();
+        MatchMapModel mapInfoModel = new MatchMapModel();
         mapInfoModel.cid= body.getInt("cid");
         mapInfoModel.map_id = body.getInt("map_id");
         mapInfoModel.class_name = body.getStr("class_name");
