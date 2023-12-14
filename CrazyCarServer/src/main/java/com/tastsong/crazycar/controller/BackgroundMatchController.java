@@ -2,6 +2,10 @@ package com.tastsong.crazycar.controller;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqUpdateMatchMap;
 import com.tastsong.crazycar.service.MatchMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +19,8 @@ import com.tastsong.crazycar.model.MatchMapModel;
 import com.tastsong.crazycar.service.MatchService;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
@@ -35,15 +41,11 @@ public class BackgroundMatchController {
     }
 
     @PostMapping(value = "updateMatchInfo")
-    public Object updateMatchInfo(@RequestBody JSONObject body) throws Exception {
-        MatchMapModel mapInfoModel = new MatchMapModel();
-        mapInfoModel.cid= body.getInt("cid");
-        mapInfoModel.map_id = body.getInt("map_id");
-        mapInfoModel.class_name = body.getStr("class_name");
-        mapInfoModel.star = body.getInt("star");
-        mapInfoModel.has_water = body.getBool("has_water");
-        mapInfoModel.limit_time = body.getInt("limit_time");
-        mapInfoModel.times = body.getInt("times");
+    public Object updateMatchInfo(@Valid @RequestBody ReqUpdateMatchMap req) throws Exception {
+        MatchMapModel mapInfoModel = matchMapService.toMatchMapModel(req);
+        if (ObjUtil.isEmpty(mapInfoModel)) {
+            return Result.failure(ResultCode.RC404, "无此地图");
+        }
         return matchMapService.updateMatchMapInfo(mapInfoModel) ? mapInfoModel : false;
     }
 }

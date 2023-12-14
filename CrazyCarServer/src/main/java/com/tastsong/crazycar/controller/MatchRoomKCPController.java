@@ -233,9 +233,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         infoModel.room_id = message.getStr("room_id");
         int mapCid = message.getInt("cid");
         MatchMapModel matchMapModel = matchMapService.getMatchMapByCid(mapCid);
-        infoModel.map_id = matchMapModel.map_id;
-        infoModel.limit_time = matchMapModel.limit_time;
-        infoModel.times = matchMapModel.times;
+        infoModel.map_id = matchMapModel.getMap_id();
+        infoModel.limit_time = matchMapModel.getLimit_time();
+        infoModel.times = matchMapModel.getTimes();
         infoModel.start_time = System.currentTimeMillis() / 1000 + startOffsetTime;
         infoModel.enroll_time = System.currentTimeMillis() / 1000;
         infoModel.class_name = "TastSong";
