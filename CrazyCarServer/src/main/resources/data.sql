@@ -358,29 +358,6 @@ INSERT INTO `match_map` VALUES (1,2,0,0,88,'»ùµØ¿¨Í¨',1),
 /*!40000 ALTER TABLE `match_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `match_rank_0`
---
-
-DROP TABLE IF EXISTS `match_rank_0`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `match_rank_0` (
-                                `uid` int NOT NULL,
-                                `complete_time` int,
-                                `rank_num` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `match_rank_0`
---
-
-LOCK TABLES `match_rank_0` WRITE;
-/*!40000 ALTER TABLE `match_rank_0` DISABLE KEYS */;
-INSERT INTO `match_rank_0` VALUES (3,10,1),(1,14,2),(2,14,3),(4,16,4);
-/*!40000 ALTER TABLE `match_rank_0` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `match_record`

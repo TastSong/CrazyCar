@@ -14,10 +14,7 @@ public interface MatchMapper {
     public MatchRoomInfoModel getMatchRoomInfoByCid(int cid);
     public int getMiniCompleteTime(int uid, int cid);
     public int insertRecord(MatchRecordModel recordModel);
-    public int delMatchRank(int uid, int cid);
-    public List<MatchRankModel> getMatchRankList(int uid, int cid);
     public List<MatchRankModel> getMatchRankListByCid(int cid);
-    public int initMatchRank(int uid, int cid);
     @Select("SELECT COUNT(*) as count, record_time as timestamp " +
             "FROM match_record " +
             "WHERE record_time > (UNIX_TIMESTAMP(CAST(SYSDATE() AS DATE)) - 60 * 60 * 24 * #{offsetTime}) " +
