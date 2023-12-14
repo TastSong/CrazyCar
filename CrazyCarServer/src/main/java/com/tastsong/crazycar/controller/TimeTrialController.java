@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
@@ -23,17 +23,16 @@ import cn.hutool.json.JSONObject;
 @RequestMapping(value = "/v2/TimeTrial")
 public class TimeTrialController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialRecordService timeTrialRecordService;
     @Autowired
     private TimeTrialClassService timeTrialClassService;
     @Autowired
     private UserService userService;
 
     @PostMapping(value = "/Rank")
-    public Object getRank(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        int uid = Util.getUidByToken(token);
+    public Object getRank(@RequestBody JSONObject body) throws Exception {
         int cid = body.getInt("cid");
-        return timeTrialService.getRankList(uid, cid);
+        return timeTrialRecordService.getTimeTrialRankListByCid(cid);
     }
 
     @PostMapping(value = "/Detail")
@@ -85,16 +84,16 @@ public class TimeTrialController {
             data.putOpt("is_win", false);
             data.putOpt("complete_time", -1);
         }
-        boolean isBreakRecord = timeTrialService.isBreakRecord(recordModel);
+        boolean isBreakRecord = timeTrialRecordService.isBreakRecord(recordModel);
         data.putOpt("is_break_record", isBreakRecord);
         data.putOpt("reward", isBreakRecord ? timeTrialClassService.getTimeTrialClass(recordModel.cid).getStar() : 0);
         if (isBreakRecord) {
             timeTrialClassService.giveReward(recordModel.uid, recordModel.cid);
         }
-        timeTrialService.insertRecord(recordModel);
+        timeTrialRecordService.insertRecord(recordModel);
         
         if (isBreakRecord) {
-            data.putOpt("rank", timeTrialService.getRank(recordModel.uid, recordModel.cid));
+            data.putOpt("rank", timeTrialRecordService.getRankByUid(recordModel.uid, recordModel.cid));
         } else {
             data.putOpt("rank", -1);
         }

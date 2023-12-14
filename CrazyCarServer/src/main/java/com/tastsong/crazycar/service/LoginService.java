@@ -3,7 +3,6 @@ package com.tastsong.crazycar.service;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
-import com.tastsong.crazycar.mapper.*;
 import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,11 @@ public class LoginService {
     @Autowired
     private UserService userService;
     @Autowired
-    private TimeTrialMapper timeTrialMapper;
-    @Autowired
     private AvatarService avatarService;
     @Autowired
     private EquipService equipService;
+    @Autowired
+    private TimeTrialRecordService timeTrialRecordService;
     @Autowired
     private TimeTrialClassService timeTrialClassService;
 
@@ -35,15 +34,11 @@ public class LoginService {
         respUserInfo.token = Util.createToken(userModel.getUid());
         int uid = userModel.getUid();
         respUserInfo.is_superuser = userService.isSuperuser(uid);
-        respUserInfo.travel_times = getTimeTrialTimes(uid);
+        respUserInfo.travel_times = timeTrialRecordService.getTimeTrialTimes(uid);
         respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
         respUserInfo.map_num = getTimeTrialMapNum(uid);
         respUserInfo.equip_info = equipService.getRespEquip(uid, userModel.getEid());
         return respUserInfo;
-    }
-
-    public int getTimeTrialTimes(int uid){
-        return timeTrialMapper.getTimeTrialTimesByUid(uid);
     }
 
     public int getTimeTrialMapNum(int uid){

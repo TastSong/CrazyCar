@@ -18,7 +18,7 @@ import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.service.MatchRecordService;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
 @RestController
@@ -27,7 +27,7 @@ import com.tastsong.crazycar.utils.Util;
 @RequestMapping(value = "/v2/Game")
 public class GameController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialRecordService timeTrialRecordService;
     @Autowired
     private TimeTrialClassService timeTrialClassService;
 

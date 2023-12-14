@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.MatchRecordMapper;
-import com.tastsong.crazycar.mapper.TimeTrialMapper;
+import com.tastsong.crazycar.mapper.TimeTrialRecordMapper;
 import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 
 @Service
@@ -18,7 +18,7 @@ public class BackgroundDashboardService {
     @Autowired 
     private EquipService equipService;
     @Autowired
-    private TimeTrialMapper timeTrialMapper;
+    private TimeTrialRecordMapper timeTrialRecordMapper;
     @Autowired
     private TimeTrialClassService timeTrialClassService;
     @Autowired
@@ -38,7 +38,7 @@ public class BackgroundDashboardService {
     }
 
     public List<RespDataStatistics> getTimeTrialData(int offsetTime){
-        List<RespDataStatistics> data = timeTrialMapper.getTimeTrialData(offsetTime);
+        List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
@@ -69,7 +69,7 @@ public class BackgroundDashboardService {
     }
 
     public int getTimeTrialTimes(int offsetTime){
-        List<RespDataStatistics> data = timeTrialMapper.getTimeTrialData(offsetTime);
+        List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         int tatal = 0;
         for(int i = 0; i < data.size(); i++){
             tatal += data.get(i).count;

@@ -197,7 +197,7 @@ DROP TABLE IF EXISTS `avatar_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `avatar_record` (
-                                 `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                 `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                  `aid` int NOT NULL,
                                  `uid` int NOT NULL,
                                  `update_time` bigint,
@@ -233,7 +233,7 @@ DROP TABLE IF EXISTS `equip_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `equip_record` (
-                             `id` int unsigned NOT NULL AUTO_INCREMENT,
+                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                              `eid` int NOT NULL,
                              `uid` int NOT NULL,
                              `update_time` bigint NOT NULL,
@@ -367,7 +367,7 @@ DROP TABLE IF EXISTS `match_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `match_record` (
-                                `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                 `uid` int NOT NULL,
                                 `cid` int NOT NULL,
                                 `complete_time` int NOT NULL,
@@ -456,7 +456,7 @@ DROP TABLE IF EXISTS `time_trial_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `time_trial_record` (
-                                     `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                     `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                      `uid` int NOT NULL,
                                      `cid` int NOT NULL,
                                      `complete_time` int NOT NULL,
@@ -522,7 +522,7 @@ DROP TABLE IF EXISTS `user_login_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_login_record` (
-                                     `id` int unsigned NOT NULL AUTO_INCREMENT,
+                                     `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                      `uid` int NOT NULL,
                                      `login_time` bigint NOT NULL,
                                      `place` varchar(100) DEFAULT NULL,

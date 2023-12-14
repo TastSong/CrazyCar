@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.model.TimeTrialClassModel;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 
 import cn.hutool.json.JSONObject;
 
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v2/Background")
 public class BackgroundTimeTrialController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialRecordService timeTrialRecordService;
     @Autowired
     private TimeTrialClassService timeTrialClassService;
 
