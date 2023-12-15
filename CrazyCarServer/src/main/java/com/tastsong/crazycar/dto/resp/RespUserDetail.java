@@ -10,7 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Data
-public class RespUserInfo {
+public class RespUserDetail {
     private String user_name;
     private int uid;
     private int aid;

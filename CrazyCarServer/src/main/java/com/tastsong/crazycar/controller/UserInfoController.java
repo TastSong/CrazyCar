@@ -36,7 +36,7 @@ public class UserInfoController {
         int uid = body.getInt("uid");
         if(userService.isExistsUserByUid(uid)){
             String userName = userService.getUserByUid(uid).getUser_name();
-            return loginService.getUserInfo(userName);
+            return loginService.getUserDetail(userName);
         } else{
             return Result.failure(ResultCode.RC404);
         }

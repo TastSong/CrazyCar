@@ -1,7 +1,5 @@
 package com.tastsong.crazycar.controller;
 
-import cn.hutool.core.date.DateUtil;
-import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import com.tastsong.crazycar.dto.req.ReqLogin;
 import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
 import com.tastsong.crazycar.utils.Util;
@@ -47,7 +44,7 @@ public class LoginController {
 		if(userModel == null){
 			return Result.failure(ResultCode.RC404);
 		} else if (password.equals(userModel.getUser_password())){
-			return loginService.getUserInfo(userName);
+			return loginService.getUserDetail(userName);
 		} else{
 			return Result.failure(ResultCode.RC423);
 		}
@@ -68,7 +65,7 @@ public class LoginController {
 		} else{
 			loginService.registerUser(userName, password);
 			if (userService.isExistsUser(userName)){
-				return loginService.getUserInfo(userName);
+				return loginService.getUserDetail(userName);
 			} else{
 				return Result.failure(ResultCode.RC425);
 			}

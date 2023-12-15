@@ -37,7 +37,7 @@ public class BackgroundLogin {
             AdminUserModel userModel = backgroundUserService.getUserByName(userName);
             if (password.equals(userModel.getUser_password())){
                 JSONObject data = new JSONObject();
-                data.putOpt("token", Util.createToken(userModel.getUid()));
+                data.putOpt(Util.TOKEN, Util.createToken(userModel.getUid()));
                 return data;
             } else {
                 return Result.failure(ResultCode.RC423, "密码错误");

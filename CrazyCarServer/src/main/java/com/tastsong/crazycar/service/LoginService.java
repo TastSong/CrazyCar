@@ -7,7 +7,7 @@ import com.tastsong.crazycar.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.dto.resp.RespUserInfo;
+import com.tastsong.crazycar.dto.resp.RespUserDetail;
 import com.tastsong.crazycar.utils.Util;
 
 @Service
@@ -23,22 +23,22 @@ public class LoginService {
     @Autowired
     private TimeTrialClassService timeTrialClassService;
 
-    public RespUserInfo getUserInfo(String userName){
-        RespUserInfo respUserInfo = new RespUserInfo();
+    public RespUserDetail getUserDetail(String userName){
+        RespUserDetail resp = new RespUserDetail();
         UserModel userModel = userService.getUserByName(userName);
-        respUserInfo.setUser_name(userModel.getUser_name());
-        respUserInfo.setUid(userModel.getUid());
-        respUserInfo.setAid(userModel.getAid());
-        respUserInfo.setStar(userModel.getStar());
-        respUserInfo.set_vip(userModel.is_vip());
-        respUserInfo.setToken(Util.createToken(userModel.getUid()));
+        resp.setUser_name(userModel.getUser_name());
+        resp.setUid(userModel.getUid());
+        resp.setAid(userModel.getAid());
+        resp.setStar(userModel.getStar());
+        resp.set_vip(userModel.is_vip());
+        resp.setToken(Util.createToken(userModel.getUid()));
         int uid = userModel.getUid();
-        respUserInfo.set_superuser(userService.isSuperuser(uid));
-        respUserInfo.setTravel_times(timeTrialRecordService.getTimeTrialTimes(uid));
-        respUserInfo.setAvatar_num(avatarService.getAvatarNumByUid(uid));
-        respUserInfo.setMap_num(getTimeTrialMapNum(uid));
-        respUserInfo.setEquip_info(equipService.getRespEquip(uid, userModel.getEid()));
-        return respUserInfo;
+        resp.set_superuser(userService.isSuperuser(uid));
+        resp.setTravel_times(timeTrialRecordService.getTimeTrialTimes(uid));
+        resp.setAvatar_num(avatarService.getAvatarNumByUid(uid));
+        resp.setMap_num(getTimeTrialMapNum(uid));
+        resp.setEquip_info(equipService.getRespEquip(uid, userModel.getEid()));
+        return resp;
     }
     public int getTimeTrialMapNum(int uid){
         return timeTrialClassService.getTimeTrialClassNumByUid(uid);
