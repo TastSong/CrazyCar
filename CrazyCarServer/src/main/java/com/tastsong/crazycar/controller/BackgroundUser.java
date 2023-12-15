@@ -29,23 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value = "/v2/Background")
 public class BackgroundUser {
     @Autowired
-    private LoginService loginService;
-    @Autowired
     private UserService userService;
-
     @Autowired
     private BackgroundUserService backgroundUserService;
-
-    @GetMapping(value = "/userInfo")
-    public JSONObject userInfo() throws Exception {
-        JSONObject data = new JSONObject();
-        data.putOpt("roles", "admin");
-        data.putOpt("introduction", "I am a super administrator");
-        data.putOpt("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        data.putOpt("name", "Super Admin");
-        log.info(data.toString());
-        return data;
-    }
 
     @PostMapping(value = "/logout")
     public Object logout() throws Exception {
@@ -122,11 +108,5 @@ public class BackgroundUser {
             backgroundUserService.updateUserRoute(uid, routes);
             return backgroundUserService.getUserByUid(uid);
         }
-    }
-
-    @PostMapping(value = "deleteRole")
-    public Object deleteRole(@RequestBody JSONObject body) throws Exception {
-        int[] id = {500, 666};
-        return id;
     }
 }
