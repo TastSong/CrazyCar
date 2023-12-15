@@ -29,12 +29,6 @@ public class BackgroundUserService {
         return adminUserMapper.selectList(null);
     }
 
-    public JSONArray getAllRoute(){
-        log.info(JSONUtil.toJsonStr(adminUserMapper.selectById(1)));
-        String routes = adminUserMapper.selectById(1).getRoutes();
-        return JSONUtil.parseArray(routes);
-    }
-
     public JSONArray getRoute(int uid){
         String routes = adminUserMapper.selectById(uid).getRoutes();
         return JSONUtil.parseArray(routes);

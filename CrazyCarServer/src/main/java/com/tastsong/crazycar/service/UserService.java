@@ -2,6 +2,7 @@ package com.tastsong.crazycar.service;
 
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.mapper.UserMapper;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
@@ -23,6 +24,18 @@ public class UserService {
         QueryWrapper<UserModel> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(UserModel::getUser_name, userName);
         return userMapper.selectOne(queryWrapper, false);
+    }
+
+    public UserModel toUserModel(ReqUpdateUser req){
+        UserModel userModel = getUserByUid(req.getUid());
+        if (ObjUtil.isEmpty(userModel)) {
+            return null;
+        }
+        userModel.setStar(req.getStar());
+        userModel.set_vip(req.is_vip());
+        userModel.setUser_name(req.getUser_name());
+        userModel.setUser_password(req.getUser_password());
+        return userModel;
     }
 
     public boolean insert(UserModel userModel) {
