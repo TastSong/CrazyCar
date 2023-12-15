@@ -2,6 +2,7 @@ package com.tastsong.crazycar.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.tastsong.crazycar.dto.req.ReqUpdateAssets;
+import com.tastsong.crazycar.dto.resp.RespCommonList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,11 +29,12 @@ public class BackgroundAssetsController {
     @GetMapping(value = "/getAssetsInfo")
     public Object getAssetsInfo() throws Exception {
         JSONObject result = new JSONObject();
+        RespCommonList resp = new RespCommonList();
         JSONArray itemArray = new JSONArray();
         itemArray.add(assetsUpdatingService.getInfo());
         // 以后资源更新可能会分版本、平台等，所以做成数组
-        result.putOpt("items", itemArray);
-        result.putOpt("total", 1);
+        resp.setItems(itemArray);
+        resp.setTotal(1);
         return result;
     }
 
