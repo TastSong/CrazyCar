@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.resp.RespCommonList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,8 @@ import com.tastsong.crazycar.service.AvatarService;
 
 import cn.hutool.json.JSONObject;
 
+import java.util.List;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
@@ -22,11 +25,12 @@ public class BackgroundAvatarController {
 
     @GetMapping(value = "getAvatarInfos")
     public Object getAvatarInfos() throws Exception {
-        JSONObject result = new JSONObject();
+        RespCommonList resp = new RespCommonList();
+        List<AvatarModel> data = avatarService.getAllAvatar();
+        resp.setItems(data);
+        resp.setTotal(data.size());
         // 以后资源更新可能会分版本、平台等，所以做成数组
-        result.putOpt("items", avatarService.getAllAvatar());
-        result.putOpt("total", avatarService.getAllAvatar().size());
-        return result;
+        return resp;
     }
 
     @PostMapping(value = "updateAvatarInfo")

@@ -1,6 +1,5 @@
 package com.tastsong.crazycar.dto.resp;
 
-import cn.hutool.json.JSONArray;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,6 @@ import lombok.ToString;
 @ToString
 @Data
 public class RespCommonList {
-    private JSONArray items;
+    private Object items;
     private int total;
 }

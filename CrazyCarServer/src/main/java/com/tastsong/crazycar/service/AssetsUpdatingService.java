@@ -15,7 +15,7 @@ public class AssetsUpdatingService {
 	private AssetsUpdatingMapper assetsUpdatingMapper;
 
 	public AssetsUpdatingModel getInfo(){
-		return assetsUpdatingMapper.selectById(0);
+		return assetsUpdatingMapper.selectList(null).get(0);
 	}
 
 	public boolean updateInfo(AssetsUpdatingModel assetsUpdatingModel){

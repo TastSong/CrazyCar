@@ -33,14 +33,10 @@ public class BackgroundAssetsController {
 
     @GetMapping(value = "/getAssetsInfo")
     public Object getAssetsInfo() throws Exception {
-        JSONObject result = new JSONObject();
         RespCommonList resp = new RespCommonList();
-        JSONArray itemArray = new JSONArray();
-        itemArray.add(assetsUpdatingService.getInfo());
-        // 以后资源更新可能会分版本、平台等，所以做成数组
-        resp.setItems(itemArray);
+        resp.setItems(assetsUpdatingService.getInfo());
         resp.setTotal(1);
-        return result;
+        return resp;
     }
 
     @PostMapping(value = "/updateAssetsInfo")
