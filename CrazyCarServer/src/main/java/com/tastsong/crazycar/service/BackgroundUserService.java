@@ -5,6 +5,7 @@ import java.util.List;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.tastsong.crazycar.dto.req.ReqCreateAdminUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,6 @@ import cn.hutool.json.JSONUtil;
 public class BackgroundUserService {
     @Autowired
     private AdminUserMapper adminUserMapper;
-
-    public int getUserNum(){
-        return adminUserMapper.selectList(null).size();
-    }
 
     public List<AdminUserModel> getAllUser(){
         return adminUserMapper.selectList(null);
@@ -54,14 +51,6 @@ public class BackgroundUserService {
         return adminUserMapper.insert(adminUserModel) == 1;
     }
 
-    public boolean updateUserPassword(int uid, String password){
-        AdminUserModel adminUserModel = adminUserMapper.selectById(uid);
-        if (ObjUtil.isEmpty(adminUserModel)) {
-            return false;
-        }
-        adminUserModel.setUser_password(password);
-        return adminUserMapper.updateById(adminUserModel) > 0;
-    }
 
     public boolean updateUserRoute(int uid, String routes){
         AdminUserModel adminUserModel = adminUserMapper.selectById(uid);
@@ -70,5 +59,14 @@ public class BackgroundUserService {
         }
         adminUserModel.setRoutes(routes);
         return adminUserMapper.updateById(adminUserModel) > 0;
+    }
+
+    public AdminUserModel toCreateAdminUser(ReqCreateAdminUser req){
+        AdminUserModel adminUserModel = new AdminUserModel();
+        adminUserModel.setUser_name(req.getUser_name());
+        adminUserModel.setUser_password(req.getUser_password());
+        adminUserModel.setDes(req.getDes());
+        adminUserModel.setRoutes(req.getRoutes());
+        return adminUserModel;
     }
 }
