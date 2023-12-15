@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.dto.req.ReqCreateAdminUser;
 import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.UserService;
@@ -66,7 +67,6 @@ public class BackgroundUser {
     @GetMapping(value = "getRoutes")
     public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
         int uid = Util.getUidByToken(token);
-        System.out.println(uid);
         return backgroundUserService.getRoute(uid);
     }
 
@@ -81,19 +81,14 @@ public class BackgroundUser {
     }
 
     @PostMapping(value = "createRole")
-    public Object createRole(@RequestBody JSONObject body) throws Exception {
-        AdminUserModel adminUserModel = new AdminUserModel();
-        adminUserModel.setUser_name(body.getStr("user_name"));
-        adminUserModel.setUser_password("123456");
-        adminUserModel.setDes(body.getStr("des"));
-        adminUserModel.setRoutes(body.getObj("routes").toString());
-        if(backgroundUserService.isExistsUser(adminUserModel.getUser_name() )){
+    public Object createRole(@Valid @RequestBody ReqCreateAdminUser req) throws Exception {
+        AdminUserModel adminUserModel = backgroundUserService.toCreateAdminUser(req);
+        if(backgroundUserService.isExistsUser(adminUserModel.getUser_name())){
             return Result.failure(ResultCode.RC423);
         } else{ 
             backgroundUserService.insertUser(adminUserModel);
             return backgroundUserService.getUserByUid(adminUserModel.getUid());
         }
-
     }
 
     @PostMapping(value = "updateRole")
