@@ -32,7 +32,7 @@ public class VersionController {
 			String platform = req.getPlatform();
 			log.info("ForcedUpdating version = " + version + "; platform = " + platform);
 			RespUpdatingInfo resp = new RespUpdatingInfo();
-			resp.is_forced_updating = versionService.isForcedUpdating(version, platform);
+			resp.set_forced_updating(versionService.isForcedUpdating(version, platform));
 			resp.setUrl(versionService.getURL(platform));
 			return resp;
 		} else {

@@ -3,14 +3,13 @@ package com.tastsong.crazycar.controller;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
-import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchClassModel;
-import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
+import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayer;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
@@ -30,12 +29,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 @Component
 public class MatchRoomWebSocket {
-    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>>();
+    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
     private static int onlineCount = 0;
     private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchRoomWebSocket>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private JSONObject sendMsg = new JSONObject(); 
-    private ArrayList<RespMatchRoomPlayerInfo> playerLists = new ArrayList<RespMatchRoomPlayerInfo>();
+    private ArrayList<RespMatchRoomPlayer> playerLists = new ArrayList<RespMatchRoomPlayer>();
     private int maxNum = 2;
     private EquipService equipService;
     private MatchRecordService matchRecordService;
@@ -65,12 +64,12 @@ public class MatchRoomWebSocket {
 
     @OnClose
     public void onClose() {
-        if (!id.equals("")) {
+        if (!id.isEmpty()) {
             if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
                 for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
-                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
+                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).getUid() == curUid){
                         MatchRoomWebSocket.roomMap.get(roomId).remove(i);
-                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
+                        if(MatchRoomWebSocket.roomMap.get(roomId).isEmpty()){
                             MatchRoomWebSocket.roomMap.remove(roomId);
                         }
                         break;
@@ -118,14 +117,9 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
 			data.putOpt("code", 421);
         } else{
-            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
-            info.uid = curUid;
-            UserModel userModel = userService.getUserByUid(curUid);
-            info.memberName = userModel.getUser_name();
-            info.aid = userModel.getAid();
-            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
-            info.isHouseOwner = true;
-            ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
+            int eid = message.getInt("eid");
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(curUid, eid, true);
+            ArrayList<RespMatchRoomPlayer> list = new ArrayList<>();
             list.add(info);
             MatchRoomWebSocket.roomMap.put(roomId, list);
             data.putOpt("code", 200);
@@ -149,13 +143,8 @@ public class MatchRoomWebSocket {
         } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
             data.putOpt("code", 423);
         } else{
-            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
-            info.uid = curUid;
-            UserModel userModel = userService.getUserByUid(curUid);
-            info.memberName = userModel.getUser_name();
-            info.aid = userModel.getAid();
-            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
-            info.isHouseOwner = false;
+            int eid = message.getInt("eid");
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(curUid, eid, false);
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);    
         }
@@ -172,15 +161,7 @@ public class MatchRoomWebSocket {
         } else{              
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
-            for (int i = 0; i < playerLists.size(); i++){
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                jsonArray.add(jbItem);
-            }		
+            jsonArray.addAll(playerLists);
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
@@ -198,15 +179,9 @@ public class MatchRoomWebSocket {
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
-            for (int i = 0; i < playerLists.size(); i++){
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                if (curUid != playerLists.get(i).uid){
-                    jsonArray.add(jbItem);
+            for (RespMatchRoomPlayer playerList : playerLists) {
+                if (curUid != playerList.getUid()) {
+                    jsonArray.add(playerList);
                 }
             }		
             data.putOpt("players", jsonArray);

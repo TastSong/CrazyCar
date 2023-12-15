@@ -54,12 +54,12 @@ public class BackgroundDashboardService {
         long curWeeHours = current-(current+ TimeZone.getDefault().getRawOffset()) % oneDay;
         for(int i = 0; i < offsetTime; i++){
             RespDataStatistics temp = new RespDataStatistics();
-            temp.count = 0;
-            temp.timestamp = curWeeHours - (long) oneDay * (offsetTime - i - 1);
+            temp.setCount(0);
+            temp.setTimestamp( curWeeHours - (long) oneDay * (offsetTime - i - 1));
             long nextTimestamp = curWeeHours - (long) oneDay * (offsetTime - i - 2);
             for (RespDataStatistics datum : data) {
-                if (datum.timestamp >= temp.timestamp && datum.timestamp <= nextTimestamp) {
-                    temp.count = datum.count;
+                if (datum.getTimestamp() >= temp.getTimestamp() && datum.getTimestamp() <= nextTimestamp) {
+                    temp.setCount(datum.getCount());
                     break;
                 }
             }
@@ -71,8 +71,8 @@ public class BackgroundDashboardService {
     public int getTimeTrialTimes(int offsetTime){
         List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         int tatal = 0;
-        for(int i = 0; i < data.size(); i++){
-            tatal += data.get(i).count;
+        for (RespDataStatistics datum : data) {
+            tatal += datum.getCount();
         }
         // ------假数据------
         if(tatal == 0){
@@ -86,7 +86,7 @@ public class BackgroundDashboardService {
         List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         int tatal = 0;
         for (RespDataStatistics datum : data) {
-            tatal += datum.count;
+            tatal += datum.getCount();
         }
         // ------假数据------
         if(tatal == 0){

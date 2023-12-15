@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
-import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
 
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backblaze.erasure.fec.Snmp;
 import com.tastsong.crazycar.config.ApplicationContextRegister;
 import com.tastsong.crazycar.model.MatchClassModel;
-import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayerInfo;
+import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayer;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
@@ -39,7 +38,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private static final long serialVersionUID = 1L;
     private boolean isInit = false;
     private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
-    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayerInfo>>();
+    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
     private static int onlineCount = 0;
     private int maxNum = 2;
     private EquipService equipService;
@@ -47,7 +46,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private MatchClassService matchClassService;
     private UserService userService;
     
-    private ArrayList<RespMatchRoomPlayerInfo> playerLists = new ArrayList<RespMatchRoomPlayerInfo>();
+    private ArrayList<RespMatchRoomPlayer> playerLists = new ArrayList<RespMatchRoomPlayer>();
 
     public MatchRoomKCPController() {
         super();
@@ -123,14 +122,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 421);
         } else {
-            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
-            info.uid = uid;
-            UserModel userModel = userService.getUserByUid(uid);
-            info.memberName = userModel.getUser_name();
-            info.aid = userModel.getAid();
-            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
-            info.isHouseOwner = true;
-            ArrayList<RespMatchRoomPlayerInfo> list = new ArrayList<RespMatchRoomPlayerInfo>();
+            int eid = message.getInt("eid");
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, eid, true);
+            ArrayList<RespMatchRoomPlayer> list = new ArrayList<>();
             list.add(info);
             MatchRoomKCPController.roomMap.put(roomId, list);
             data.putOpt("code", 200);
@@ -154,13 +148,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.get(roomId).size() >= maxNum) {
             data.putOpt("code", 423);
         } else {
-            RespMatchRoomPlayerInfo info = new RespMatchRoomPlayerInfo();
-            info.uid = uid;
-            UserModel userModel = userService.getUserByUid(uid);
-            info.memberName = userModel.getUser_name();
-            info.aid = userModel.getAid();
-            info.canWade = equipService.getEquipByEid(message.getInt("eid")).isCan_wade();
-            info.isHouseOwner = false;
+            int eid = message.getInt("eid");
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, eid, false);
             MatchRoomKCPController.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);
         }
@@ -177,15 +166,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else {
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
-            for (int i = 0; i < playerLists.size(); i++) {
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                jsonArray.add(jbItem);
-            }
+            jsonArray.addAll(playerLists);
             data.putOpt("players", jsonArray);
             data.putOpt("code", 200);
         }
@@ -206,15 +187,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
-            for (int i = 0; i < playerLists.size(); i++) {
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                if (uid != playerLists.get(i).uid) {
-                    jsonArray.add(jbItem);
+            for (RespMatchRoomPlayer playerList : playerLists) {
+                if (uid != playerList.getUid()) {
+                    jsonArray.add(playerList);
                 }
             }
             data.putOpt("players", jsonArray);
@@ -280,9 +255,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String roomId = id.split(",")[1];
         if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
             for (int i = 0; i < MatchRoomKCPController.roomMap.get(roomId).size(); i++) {
-                if (MatchRoomKCPController.roomMap.get(roomId).get(i).uid == curUid) {
+                if (MatchRoomKCPController.roomMap.get(roomId).get(i).getUid() == curUid) {
                     MatchRoomKCPController.roomMap.get(roomId).remove(i);
-                    if (MatchRoomKCPController.roomMap.get(roomId).size() == 0) {
+                    if (MatchRoomKCPController.roomMap.get(roomId).isEmpty()) {
                         MatchRoomKCPController.roomMap.remove(roomId);
                     }
                     break;

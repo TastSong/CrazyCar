@@ -10,6 +10,6 @@ import lombok.ToString;
 @ToString
 @Data
 public class RespDataStatistics {
-    public int count;
-    public long timestamp;
+    private int count;
+    private long timestamp;
 }
