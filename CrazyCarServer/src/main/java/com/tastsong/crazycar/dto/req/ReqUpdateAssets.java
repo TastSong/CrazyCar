@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.dto.req;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,8 +11,7 @@ import lombok.*;
 
 public class ReqUpdateAssets {
     private int id;
-    @Getter
-    @Setter
-    public boolean is_on;
-    public String url;
+    @JsonProperty("is_on")
+    private boolean is_on;
+    private String url;
 }

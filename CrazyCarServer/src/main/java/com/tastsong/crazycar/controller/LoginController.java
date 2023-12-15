@@ -40,8 +40,8 @@ public class LoginController {
 
 	@PostMapping(value = "/Login")
 	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {
-		String userName = req.UserName;
-		String password = req.Password;
+		String userName = req.getUserName();
+		String password = req.getPassword();
 		log.info("login : userName = " + userName + "; password  = " + password);
 		UserModel userModel = userService.getUserByName(userName);
 		if(userModel == null){

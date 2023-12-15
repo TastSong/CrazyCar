@@ -13,17 +13,17 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ReqUpdateTimeTrialClass {
     @NotNull
-    public int cid;
+    private int cid;
     @NotNull
-    public int star;
+    private int star;
     @NotNull
-    public int map_id;
+    private int map_id;
     @NotNull
-    public boolean has_water;
+    private boolean has_water;
     @NotNull
-    public int limit_time;
+    private int limit_time;
     @NotNull
-    public String class_name;
+    private String class_name;
     @NotNull
-    public int times;
+    private int times;
 }
