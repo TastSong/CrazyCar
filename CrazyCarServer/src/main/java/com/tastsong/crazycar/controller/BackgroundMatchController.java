@@ -27,8 +27,6 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v2/Background")
 public class BackgroundMatchController {
     @Autowired
-    private MatchRecordService matchRecordService;
-    @Autowired
     private MatchMapService matchMapService;
 
     @GetMapping(value = "getMatchInfos")
