@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import com.tastsong.crazycar.dto.resp.RespDashboardData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,26 +24,30 @@ public class BackgroundDashboardService {
     private TimeTrialClassService timeTrialClassService;
     @Autowired
     private MatchRecordMapper matchRecordMapper;
+    @Autowired
+    private AvatarService avatarService;
+    @Autowired
+    private UserService userService;
 
-    public int getEquipNum(){
+    private int getEquipNum(){
         return equipService.getEquipInfos().size();
     }
 
-    public int getMapNum(){
+    private int getMapNum(){
         return timeTrialClassService.getAllTimeTrialClass().size();
     }
 
-    public List<RespDataStatistics> getUserLoginData(int offsetTime){
+    private List<RespDataStatistics> getUserLoginData(int offsetTime){
         List<RespDataStatistics> data = userLoginRecordService.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<RespDataStatistics> getTimeTrialData(int offsetTime){
+    private List<RespDataStatistics> getTimeTrialData(int offsetTime){
         List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<RespDataStatistics> getMatchData(int offsetTime){
+    private List<RespDataStatistics> getMatchData(int offsetTime){
         List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
@@ -68,7 +73,7 @@ public class BackgroundDashboardService {
         return result;
     }
 
-    public int getTimeTrialTimes(int offsetTime){
+    private int getTimeTrialTimes(int offsetTime){
         List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         int tatal = 0;
         for (RespDataStatistics datum : data) {
@@ -82,7 +87,7 @@ public class BackgroundDashboardService {
         return tatal;
     }
 
-    public int getMatchTimes(int offsetTime){
+    private int getMatchTimes(int offsetTime){
         List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         int tatal = 0;
         for (RespDataStatistics datum : data) {
@@ -94,5 +99,21 @@ public class BackgroundDashboardService {
         }
         // ------------------
         return tatal;
+    }
+
+    public RespDashboardData getDashboardData(){
+        RespDashboardData dashboardData = new RespDashboardData();
+        dashboardData.setUser_num(userService.getUserList().size());
+        dashboardData.setEquip_num(getEquipNum());
+        dashboardData.setAvatar_num(avatarService.getAllAvatar().size());
+        dashboardData.setMap_num(getMapNum());
+
+        int offsetTime = 7;
+        dashboardData.setTime_trial_times(getTimeTrialTimes(offsetTime));
+        dashboardData.setMatch_times(getMatchTimes(offsetTime));
+        dashboardData.setLogin_user_num(getUserLoginData(offsetTime));
+        dashboardData.setTime_trial_num(getTimeTrialData(offsetTime));
+        dashboardData.setMatch_num(getMatchData(offsetTime));
+        return dashboardData;
     }
 }
