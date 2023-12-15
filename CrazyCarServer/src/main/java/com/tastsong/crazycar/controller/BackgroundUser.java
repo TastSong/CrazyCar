@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import com.tastsong.crazycar.utils.Util;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
@@ -50,21 +54,14 @@ public class BackgroundUser {
     }
 
     @PostMapping(value = "updateUser")
-    public Object updateUser(@RequestBody JSONObject body) throws Exception{
-        UserModel userModel = new UserModel();
-        userModel.setUid( body.getInt("uid"));
-        userModel.setUser_name(body.getStr("user_name"));
-        userModel.setStar(body.getInt("star"));
-        userModel.set_vip(body.getBool("is_vip"));
+    public Object updateUser(@Valid @RequestBody ReqUpdateUser req) throws Exception{
+        UserModel userModel = userService.toUserModel(req);
+        if (ObjUtil.isEmpty(userModel)) {
+            return Result.failure(ResultCode.RC404, "无此用户");
+        }
         userService.updateUser(userModel);
-        return userService.getUserByName(userModel.getUser_name());
-    }        
-
-    @GetMapping(value = "getAllRoutes")
-    public Object getAllRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
-        return backgroundUserService.getAllRoute();
+        return userService.getUserByUid(userModel.getUid());
     }
-
 
     @GetMapping(value = "getRoutes")
     public Object getRoutes(@RequestHeader(Util.TOKEN) String token) throws Exception {
@@ -74,7 +71,7 @@ public class BackgroundUser {
     }
 
     @GetMapping(value = "getRoutesByUid")
-    public Object getRoutesByUid(@RequestParam("uid") int uid) throws Exception {
+    public Object getRoutesByUid(int uid) throws Exception {
         return backgroundUserService.getRoute(uid);
     }
 
@@ -84,7 +81,7 @@ public class BackgroundUser {
     }
 
     @PostMapping(value = "createRole")
-    public Object createRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object createRole(@RequestBody JSONObject body) throws Exception {
         AdminUserModel adminUserModel = new AdminUserModel();
         adminUserModel.setUser_name(body.getStr("user_name"));
         adminUserModel.setUser_password("123456");
