@@ -26,21 +26,20 @@ public class LoginService {
     public RespUserInfo getUserInfo(String userName){
         RespUserInfo respUserInfo = new RespUserInfo();
         UserModel userModel = userService.getUserByName(userName);
-        respUserInfo.user_name = userModel.getUser_name();
-        respUserInfo.uid = userModel.getUid();
-        respUserInfo.aid = userModel.getAid();
-        respUserInfo.star = userModel.getStar();
-        respUserInfo.is_vip = userModel.is_vip();
-        respUserInfo.token = Util.createToken(userModel.getUid());
+        respUserInfo.setUser_name(userModel.getUser_name());
+        respUserInfo.setUid(userModel.getUid());
+        respUserInfo.setAid(userModel.getAid());
+        respUserInfo.setStar(userModel.getStar());
+        respUserInfo.set_vip(userModel.is_vip());
+        respUserInfo.setToken(Util.createToken(userModel.getUid()));
         int uid = userModel.getUid();
-        respUserInfo.is_superuser = userService.isSuperuser(uid);
-        respUserInfo.travel_times = timeTrialRecordService.getTimeTrialTimes(uid);
-        respUserInfo.avatar_num = avatarService.getAvatarNumByUid(uid);
-        respUserInfo.map_num = getTimeTrialMapNum(uid);
-        respUserInfo.equip_info = equipService.getRespEquip(uid, userModel.getEid());
+        respUserInfo.set_superuser(userService.isSuperuser(uid));
+        respUserInfo.setTravel_times(timeTrialRecordService.getTimeTrialTimes(uid));
+        respUserInfo.setAvatar_num(avatarService.getAvatarNumByUid(uid));
+        respUserInfo.setMap_num(getTimeTrialMapNum(uid));
+        respUserInfo.setEquip_info(equipService.getRespEquip(uid, userModel.getEid()));
         return respUserInfo;
     }
-
     public int getTimeTrialMapNum(int uid){
         return timeTrialClassService.getTimeTrialClassNumByUid(uid);
     }

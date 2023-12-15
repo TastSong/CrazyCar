@@ -1,22 +1,29 @@
 package com.tastsong.crazycar.dto.resp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tastsong.crazycar.model.EquipModel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Data
 public class RespUserInfo {
-    public String user_name;
-    public int uid;
-    public int aid;
-    public int star;
+    private String user_name;
+    private int uid;
+    private int aid;
+    private int star;
     @JsonProperty("is_vip")
-    public boolean is_vip;
+    private boolean is_vip;
     @JsonProperty("is_superuser")
-    public boolean is_superuser;
-    public int avatar_num;
-    public int travel_times;
-    public int map_num;
+    private boolean is_superuser;
+    private int avatar_num;
+    private int travel_times;
+    private int map_num;
 
-    public RespEquip equip_info;
+    private RespEquip equip_info;
 
-    public String token;
+    private String token;
 }
