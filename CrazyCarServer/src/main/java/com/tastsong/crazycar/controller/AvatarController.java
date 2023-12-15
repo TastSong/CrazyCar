@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqAvatar;
 import com.tastsong.crazycar.dto.resp.RespAvatarList;
 import com.tastsong.crazycar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import com.tastsong.crazycar.service.AvatarService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -38,9 +41,9 @@ public class AvatarController {
     }
 
     @PostMapping(value = "/Buy")
-    public Object buyAvatar(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token)  throws Exception{
+    public Object buyAvatar(@Valid @RequestBody ReqAvatar req, @RequestHeader(Util.TOKEN) String token)  throws Exception{
         int uid = Util.getUidByToken(token);
-        int aid = body.getInt("aid");
+        int aid = req.getAid();
         log.info("buyAvatar : uid = " + uid + "; aid  = " + aid);
         if (avatarService.hasAvatar(uid, aid)) {
             return userService.getUserByUid(uid);
