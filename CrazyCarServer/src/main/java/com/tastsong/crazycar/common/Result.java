@@ -76,7 +76,7 @@ public class Result<T> implements Serializable {
         result.setCode(code);
         result.setMsg(message);
         result.setSuccess(true);
-        result.setData(data);
+        result.setData(data != null ? data : (T)"");
         return result;
     }
 
@@ -124,7 +124,7 @@ public class Result<T> implements Serializable {
         result.setCode(code);
         result.setMsg(message);
         result.setSuccess(false);
-        result.setData(data);
+        result.setData(data != null ? data : (T)"");
         return result;
     }
 
