@@ -44,10 +44,10 @@ public class AvatarController {
         JSONObject data = new JSONObject();
         log.info("buyAvatar : uid = " + uid + "; aid  = " + aid);
         if (avatarService.hasAvatar(uid, aid)) {
-            return data.putOpt("star", userService.getUserStar(uid));
+            return userService.getUserByUid(uid);
         } else if (avatarService.canBuyAvatar(uid, aid)) {
             avatarService.buyAvatar(uid, aid);
-            return data.putOpt("star", userService.getUserStar(uid));
+            return userService.getUserByUid(uid);
         } else {
             return Result.failure(ResultCode.RC423);
         }		
