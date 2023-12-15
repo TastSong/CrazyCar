@@ -5,7 +5,9 @@ import java.util.List;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.tastsong.crazycar.dto.req.ReqUpdateAvatar;
 import com.tastsong.crazycar.dto.resp.RespAvatar;
 import com.tastsong.crazycar.mapper.AvatarRecordMapper;
 import com.tastsong.crazycar.model.AvatarRecordModel;
@@ -52,6 +54,17 @@ public class AvatarService {
 
     public boolean updateAvatarInfo(AvatarModel avatarModel){
         return avatarMapper.updateById(avatarModel) == 1;
+    }
+
+    public AvatarModel toAvatarModel(ReqUpdateAvatar req) {
+        AvatarModel avatarModel = avatarMapper.selectById(req.getAid());
+        if (ObjUtil.isEmpty(avatarModel)) {
+            return null;
+        }
+        avatarModel.setAvatar_name(req.getAvatar_name());
+        avatarModel.setStar(req.getStar());
+        avatarModel.setRid(req.getRid());
+        return avatarModel;
     }
 
 

@@ -1,5 +1,9 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqUpdateAvatar;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,6 +18,7 @@ import com.tastsong.crazycar.service.AvatarService;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,12 +39,11 @@ public class BackgroundAvatarController {
     }
 
     @PostMapping(value = "updateAvatarInfo")
-    public Object updateAvatarInfo(@RequestBody JSONObject body) throws Exception {
-        AvatarModel avatarModel = new AvatarModel();
-        avatarModel.setAid(body.getInt("aid"));
-        avatarModel.setRid(body.getStr("rid"));
-        avatarModel.setAvatar_name(body.getStr("avatar_name"));
-        avatarModel.setStar(body.getInt("star"));
+    public Object updateAvatarInfo(@Valid @RequestBody ReqUpdateAvatar req) throws Exception {
+        AvatarModel avatarModel = avatarService.toAvatarModel(req);
+        if (ObjUtil.isEmpty(avatarModel)) {
+            return Result.failure(ResultCode.RC404, "无此资源");
+        }
         return avatarService.updateAvatarInfo(avatarModel) ? avatarModel : false;
     }
 }
