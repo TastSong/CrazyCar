@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.resp.RespAvatarList;
 import com.tastsong.crazycar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,10 @@ public class AvatarController {
     @PostMapping(value = "/Detail")
     public Object getAvatarDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
         int uid = Util.getUidByToken(token);
-        JSONObject data = new JSONObject();
-        data.putOpt("avatars", avatarService.getAvatarList(uid));
-        data.putOpt("cur_aid", userService.getUserStar(uid));
-        return data;
+        RespAvatarList resp = new RespAvatarList();
+        resp.setAvatars(avatarService.getAvatarList(uid));
+        resp.setCur_aid(userService.getUserStar(uid));
+        return resp;
     }
 
     @PostMapping(value = "/Buy")
