@@ -41,7 +41,6 @@ public class AvatarController {
     public Object buyAvatar(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token)  throws Exception{
         int uid = Util.getUidByToken(token);
         int aid = body.getInt("aid");
-        JSONObject data = new JSONObject();
         log.info("buyAvatar : uid = " + uid + "; aid  = " + aid);
         if (avatarService.hasAvatar(uid, aid)) {
             return userService.getUserByUid(uid);
