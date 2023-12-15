@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,13 +40,13 @@ public class BackgroundUser {
     }
 
     @GetMapping(value = "getUserByUserName")
-    public Object getUserByUserName(@RequestParam("user_name") String user_name) throws Exception {
-        JSONObject data = new JSONObject();
+    public Object getUserByUserName(String user_name) throws Exception {
+        RespCommonList resp = new RespCommonList();
         JSONArray items = new JSONArray();
         items.add(userService.getUserByName(user_name));
-        data.putOpt("items", items);
-        data.putOpt("total", 1);
-        return data;
+        resp.setItems(items);
+        resp.setTotal(items.size());
+        return resp;
     }
 
     @PostMapping(value = "updateUser")
