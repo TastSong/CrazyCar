@@ -94,12 +94,8 @@ public class BackgroundUser {
     @PostMapping(value = "updateRole")
     public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
         int uid = Util.getUidByToken(token);
-        if(uid == 1){
-            return Result.failure(ResultCode.RC423);
-        } else{
-            String routes = body.getStr("routes");
-            backgroundUserService.updateUserRoute(uid, routes);
-            return backgroundUserService.getUserByUid(uid);
-        }
+        String routes = body.getStr("routes");
+        backgroundUserService.updateUserRoute(uid, routes);
+        return backgroundUserService.getUserByUid(uid);
     }
 }
