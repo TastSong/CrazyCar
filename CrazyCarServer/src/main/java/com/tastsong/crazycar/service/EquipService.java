@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tastsong.crazycar.dto.req.ReqUpdateEquip;
@@ -86,7 +87,10 @@ public class EquipService {
     }
 
     public EquipModel getEquipByReq(ReqUpdateEquip req) {
-        EquipModel equipModel = new EquipModel();
+        EquipModel equipModel = getEquipByEid(req.getEid());
+        if (ObjUtil.isEmpty(equipModel)) {
+            return null;
+        }
         equipModel.setEquip_name(req.getEquip_name());
         equipModel.setEid(req.getEid());
         equipModel.setRid(req.getRid());

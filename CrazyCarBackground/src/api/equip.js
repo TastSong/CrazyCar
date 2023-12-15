@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getEqiupInfos(query) {
+export function getEquipInfos(query) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/getEqiupInfos',
+    url: '/CrazyCarSpringBootServer/v2/Background/getEquipInfos',
     method: 'get',
     params: query
   })

@@ -124,7 +124,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getEqiupInfos, updateEquipInfo } from '@/api/equip'
+import { getEquipInfos, updateEquipInfo } from '@/api/equip'
 
 export default {
   name: 'Equip',
@@ -179,7 +179,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getEqiupInfos(this.listQuery).then(response => {
+      getEquipInfos(this.listQuery).then(response => {
         this.list = response.items
         this.total = response.total
         this.listLoading = false
