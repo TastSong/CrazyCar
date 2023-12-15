@@ -6,6 +6,7 @@ import cn.hutool.core.util.ObjUtil;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
+import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -27,17 +28,15 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v2/Background")
 public class BackgroundTimeTrialController {
     @Autowired
-    private TimeTrialRecordService timeTrialRecordService;
-    @Autowired
     private TimeTrialClassService timeTrialClassService;
 
     @GetMapping(value = "getTimeTrialInfos")
     public Object getTimeTrialInfos() throws Exception {
-        JSONObject result = new JSONObject();
+        RespCommonList resp = new RespCommonList();
         List<TimeTrialClassModel> items = timeTrialClassService.getAllTimeTrialClass();
-        result.putOpt("items", items);
-        result.putOpt("total", items.size());
-        return result;
+        resp.setItems(items);
+        resp.setTotal(items.size());
+        return resp;
     }
 
     @PostMapping(value = "updateTimeTrialInfo")
