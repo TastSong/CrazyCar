@@ -23,16 +23,15 @@ public class LoginService {
     @Autowired
     private TimeTrialClassService timeTrialClassService;
 
-    public RespUserDetail getUserDetail(String userName){
+    public RespUserDetail getUserDetail(int uid){
         RespUserDetail resp = new RespUserDetail();
-        UserModel userModel = userService.getUserByName(userName);
+        UserModel userModel = userService.getUserByUid(uid);
         resp.setUser_name(userModel.getUser_name());
         resp.setUid(userModel.getUid());
         resp.setAid(userModel.getAid());
         resp.setStar(userModel.getStar());
         resp.set_vip(userModel.is_vip());
         resp.setToken(Util.createToken(userModel.getUid()));
-        int uid = userModel.getUid();
         resp.set_superuser(userService.isSuperuser(uid));
         resp.setTravel_times(timeTrialRecordService.getTimeTrialTimes(uid));
         resp.setAvatar_num(avatarService.getAvatarNumByUid(uid));
@@ -45,7 +44,7 @@ public class LoginService {
     }
 
 
-    public void registerUser (String userName, String password){
+    public int registerUser (String userName, String password){
         int defaultAid = 1;
 		int defaultCid = 1;
 		int defaultStar = 14;
@@ -74,6 +73,7 @@ public class LoginService {
         if(!equipService.hasEquip(uid, defaultEid)){
             equipService.addEquipForUser(uid, defaultEid);
         }
+        return uid;
     }
 
     public List<AvatarModel> getAvatarList(){

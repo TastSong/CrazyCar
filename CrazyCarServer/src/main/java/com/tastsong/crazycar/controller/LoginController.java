@@ -44,7 +44,7 @@ public class LoginController {
 		if(userModel == null){
 			return Result.failure(ResultCode.RC404);
 		} else if (password.equals(userModel.getUser_password())){
-			return loginService.getUserDetail(userName);
+			return loginService.getUserDetail(userModel.getUid());
 		} else{
 			return Result.failure(ResultCode.RC423);
 		}
@@ -63,9 +63,9 @@ public class LoginController {
 		if (userService.isExistsUser(userName)){
 			return Result.failure(ResultCode.RC423);
 		} else{
-			loginService.registerUser(userName, password);
+			int uid = loginService.registerUser(userName, password);
 			if (userService.isExistsUser(userName)){
-				return loginService.getUserDetail(userName);
+				return loginService.getUserDetail(uid);
 			} else{
 				return Result.failure(ResultCode.RC425);
 			}

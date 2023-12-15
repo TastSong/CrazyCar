@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
+import com.tastsong.crazycar.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +28,8 @@ public class BackgroundLogin {
 
     @Autowired
     private BackgroundUserService backgroundUserService;
+    @Autowired
+    private LoginService loginService;
 
     @PostMapping(value = "/login")
     public Object login(@Valid @RequestBody ReqBackgroundLogin req) throws Exception {
@@ -36,9 +39,7 @@ public class BackgroundLogin {
         if (backgroundUserService.isExistsUser(userName)){
             AdminUserModel userModel = backgroundUserService.getUserByName(userName);
             if (password.equals(userModel.getUser_password())){
-                JSONObject data = new JSONObject();
-                data.putOpt(Util.TOKEN, Util.createToken(userModel.getUid()));
-                return data;
+                return loginService.getUserDetail(userModel.getUid());
             } else {
                 return Result.failure(ResultCode.RC423, "密码错误");
             }
