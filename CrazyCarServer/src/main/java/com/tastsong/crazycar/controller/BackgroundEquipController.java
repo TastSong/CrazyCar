@@ -20,6 +20,8 @@ import com.tastsong.crazycar.service.EquipService;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
@@ -37,7 +39,7 @@ public class BackgroundEquipController {
     }
 
     @PostMapping(value = "updateEquipInfo")
-    public Object updateEquipInfo(@RequestBody ReqUpdateEquip req) throws Exception {
+    public Object updateEquipInfo(@Valid @RequestBody ReqUpdateEquip req) throws Exception {
         EquipModel equipModel = equipService.getEquipByReq(req);
         if (ObjUtil.isEmpty(equipModel)) {
             return Result.failure(ResultCode.RC404, "无此资源");
