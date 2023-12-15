@@ -1,6 +1,9 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.dto.req.ReqUpdateAssets;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,8 @@ import com.tastsong.crazycar.service.AssetsUpdatingService;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -39,13 +44,12 @@ public class BackgroundAssetsController {
     }
 
     @PostMapping(value = "/updateAssetsInfo")
-    public Object updateAssetsInfo(@RequestBody ReqUpdateAssets body) throws Exception {
-        AssetsUpdatingModel assetsUpdatingModel = new AssetsUpdatingModel();
-        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(body));
-        assetsUpdatingModel.setId(body.getId());
-        assetsUpdatingModel.set_on(body.is_on());
-        assetsUpdatingModel.setUrl(body.getUrl());
-        assetsUpdatingModel.setUpdate_time(System.currentTimeMillis());
+    public Object updateAssetsInfo(@Valid @RequestBody ReqUpdateAssets req) throws Exception {
+        AssetsUpdatingModel assetsUpdatingModel = assetsUpdatingService.toAssetsUpdatingModel(req);
+        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(req));
+        if (ObjUtil.isEmpty(assetsUpdatingModel)) {
+            return Result.failure(ResultCode.RC404, "资源不存在");
+        }
         return assetsUpdatingService.updateInfo(assetsUpdatingModel) ? assetsUpdatingModel : false;
     }
 }
