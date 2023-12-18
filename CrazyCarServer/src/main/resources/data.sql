@@ -517,11 +517,9 @@ UNLOCK TABLES;
 --
 -- Table structure for table `user_login_record`
 --
-
-DROP TABLE IF EXISTS `user_login_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_login_record` (
+CREATE TABLE IF NOT EXISTS  `user_login_record` (
                                      `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                                      `uid` int NOT NULL,
                                      `login_time` bigint NOT NULL,
