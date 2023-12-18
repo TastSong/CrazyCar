@@ -1,5 +1,9 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqEnterGame;
+import com.tastsong.crazycar.dto.resp.RespEnterGame;
+import com.tastsong.crazycar.service.TimeTrialClassService;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +19,11 @@ import com.tastsong.crazycar.common.GameType;
 import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import com.tastsong.crazycar.service.MatchService;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.service.MatchRecordService;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
@@ -25,36 +31,39 @@ import com.tastsong.crazycar.utils.Util;
 @RequestMapping(value = "/v2/Game")
 public class GameController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialRecordService timeTrialRecordService;
+    @Autowired
+    private TimeTrialClassService timeTrialClassService;
 
     @Autowired
-    private MatchService matchService;
+    private MatchRecordService matchRecordService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/EnterGame")
-    public Object enterGame(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body)  throws Exception{
-        Integer uid = Util.getUidByToken(token);
-        Integer cid = body.getInt("cid");
-		GameType gameType = GameType.values()[body.getInt("GameType")];
-		NetType netType = NetType.values()[body.getInt("NetType")];
+    public Object enterGame(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqEnterGame req)  throws Exception{
+        int uid = Util.getUidByToken(token);
+        int cid = req.getCid();
+		GameType gameType = GameType.values()[req.getGameType()];
+		NetType netType = NetType.values()[req.getNetType()];
 
-        JSONObject data = new JSONObject();
+        RespEnterGame resp = new RespEnterGame();
 		if (gameType == GameType.Match){
-            if(!matchService.isVIP(uid)) {
+            if(!userService.getUserByUid(uid).is_vip()) {
                 return Result.failure(ResultCode.RC423);
 			} 
 
 			if(netType == NetType.WebSocket){
 				log.info("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
-				data.putOpt("num", MatchWebSocket.getOnlineCount());
-                return data;
-			} else{
-				data.putOpt("num", 0);
-                return data;
-			}	
-		} else{
-			if(timeTrialService.isHasClass(uid, cid)) {
-                data.putOpt("num", 0);
-                return data;
+                resp.setNum(MatchWebSocket.getOnlineCount());
+            } else{
+                resp.setNum(0);
+            }
+            return resp;
+        } else{
+			if(timeTrialClassService.hasClass(uid, cid)) {
+                resp.setNum(0);
+                return resp;
 			} else{
                 return Result.failure(ResultCode.RC423);
 			}

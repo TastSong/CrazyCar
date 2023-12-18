@@ -3,17 +3,21 @@ package com.tastsong.crazycar.controller;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqRoomMsg;
+import com.tastsong.crazycar.dto.resp.RespRoomMsg;
+import com.tastsong.crazycar.dto.resp.RespExitRoom;
+import com.tastsong.crazycar.model.UserModel;
+import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.tastsong.crazycar.config.ApplicationContextRegister;
-import com.tastsong.crazycar.model.MatchRoomInfoModel;
-import com.tastsong.crazycar.model.MatchRoomPlayerInfo;
-import com.tastsong.crazycar.service.MatchService;
+import com.tastsong.crazycar.model.MatchClassModel;
+import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayer;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,20 +33,21 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 @Component
 public class MatchRoomWebSocket {
-    private static ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>> roomMap = new ConcurrentHashMap<String, ArrayList<MatchRoomPlayerInfo>>();
+    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<>();
     private static int onlineCount = 0;
-    private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchRoomWebSocket>();
-    //与某个客户端的连接会话，需要通过它来给客户端发送数据
-    private JSONObject sendMsg = new JSONObject(); 
-    private ArrayList<MatchRoomPlayerInfo> playerLists = new ArrayList<MatchRoomPlayerInfo>();
+    private static ConcurrentHashMap<String, MatchRoomWebSocket> webSocketSet = new ConcurrentHashMap<>();
+    private ArrayList<RespMatchRoomPlayer> playerLists = new ArrayList<>();
     private int maxNum = 2;
-    private Integer startOffsetTime = 16;
-    private MatchService matchService;
+    private EquipService equipService;
+    private MatchRecordService matchRecordService;
+    private MatchClassService matchClassService;
+    private UserService userService;
 
     // 由于ws每个连接一个对象，所以可以有内部变量区别于KCP
     private Session WebSocketsession;
     private String id = "";
     private int curUid;
+    private int curMap;
     private String roomId = "";
     
     // id = uid + "," + room_id
@@ -52,19 +57,22 @@ public class MatchRoomWebSocket {
         addOnlineCount();     
         
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
-        matchService = act.getBean(MatchService.class);
+        equipService = act.getBean(EquipService.class);
+        matchRecordService = act.getBean(MatchRecordService.class);
+        matchClassService = act.getBean(MatchClassService.class);
+        userService = act.getBean(UserService.class);
         log.info("Match Room onOpen, num = " + getOnlineCount());
     }
  
 
     @OnClose
     public void onClose() {
-        if (!id.equals("")) {
+        if (!id.isEmpty()) {
             if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
                 for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
-                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).uid == curUid){
+                    if(MatchRoomWebSocket.roomMap.get(roomId).get(i).getUid() == curUid){
                         MatchRoomWebSocket.roomMap.get(roomId).remove(i);
-                        if(MatchRoomWebSocket.roomMap.get(roomId).size() == 0){
+                        if(MatchRoomWebSocket.roomMap.get(roomId).isEmpty()){
                             MatchRoomWebSocket.roomMap.remove(roomId);
                         }
                         break;
@@ -83,161 +91,123 @@ public class MatchRoomWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("Match Room onMessage : " + message);
-        sendMsg = JSONUtil.parseObj(message);
-    	Integer msgType = sendMsg.getInt("msg_type");
+        ReqRoomMsg req = JSONUtil.toBean(message, ReqRoomMsg.class);
+        int msgType = req.getMsg_type();
         if (msgType == Util.msgType.MatchRoomCreate) {
-            onCreateRoom(sendMsg);
+            onCreateRoom(req);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
-            onJoinRoom(sendMsg);
+            onJoinRoom(req);
         } else if (msgType == Util.msgType.MatchRoomExit) {
             onExitRoom();
         } else if (msgType == Util.msgType.MatchRoomStart) {
-            onStartRoom(sendMsg);
-        } else if (msgType == Util.msgType.MatchRoomStatus) {
-            onStatusRoom(sendMsg);
+            onStartRoom(req);
+        } else if (req.getMsg_type()  == Util.msgType.MatchRoomStatus) {
+            onStatusRoom(req);
         }
     }
 
-    private void onCreateRoom(JSONObject message) {
-        curUid = message.getInt("uid");
-        roomId = message.getStr("room_id");
+    private void onCreateRoom(ReqRoomMsg req) {
+        curUid = req.getUid();
+        roomId = req.getRoom_id();
         id = curUid + "," + roomId;
         webSocketSet.put(id, this);
-        String token = message.getStr("token");
-        JSONObject data = new JSONObject();			
-        data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
-        data.putOpt("uid", curUid);
-        if(!Util.isLegalToken(token)){
-            data.putOpt("code", 423);
+        RespRoomMsg resp = getBasicRespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomCreate);
+        if(!Util.isLegalToken(req.getToken())){
+            resp.setCode(ResultCode.RC423.getCode());
         } else if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 421);
+            resp.setCode(ResultCode.RC421.getCode());
         } else{
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
-            info.uid = curUid;
-            info.memberName = matchService.getUserName(curUid);
-            info.aid = matchService.getAid(curUid);
-            info.canWade = matchService.canWade(message.getInt("eid"));
-            info.isHouseOwner = true;
-            ArrayList<MatchRoomPlayerInfo> list = new ArrayList<MatchRoomPlayerInfo>();
+            UserModel userModel = userService.getUserByUid(curUid);
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(curUid, userModel.getEid(), true);
+            ArrayList<RespMatchRoomPlayer> list = new ArrayList<>();
             list.add(info);
             MatchRoomWebSocket.roomMap.put(roomId, list);
-            data.putOpt("code", 200);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
-    private void onJoinRoom(JSONObject message) {
-        curUid = message.getInt("uid");
-        roomId = message.getStr("room_id");
+    private void onJoinRoom(ReqRoomMsg req) {
+        curUid = req.getUid();
+        roomId = req.getRoom_id();
         id = curUid + "," + roomId;
         webSocketSet.put(id, this);
-        String token = message.getStr("token");
-        JSONObject data = new JSONObject();			
-        data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
+        String token = req.getToken();
+        RespRoomMsg resp = getBasicRespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomJoin);
         if(!Util.isLegalToken(token)){
-            data.putOpt("code", 422);
+            resp.setCode(ResultCode.RC423.getCode());
         } else if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);
+            resp.setCode(ResultCode.RC404.getCode());
         } else if (MatchRoomWebSocket.roomMap.get(roomId).size() >= maxNum){
-            data.putOpt("code", 423);
+            resp.setCode(ResultCode.RC423.getCode());
         } else{
-            MatchRoomPlayerInfo info = new MatchRoomPlayerInfo();
-            info.uid = curUid;
-            info.memberName = matchService.getUserName(curUid);
-            info.aid = matchService.getAid(curUid);
-            info.canWade = matchService.canWade(message.getInt("eid"));
-            info.isHouseOwner = false;
+            UserModel userModel = userService.getUserByUid(curUid);
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(curUid, userModel.getEid(), false);
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
-            data.putOpt("code", 200);    
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + data.toString());  
-        sendToUser(data.toString(), roomId);
+        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
-    private void onStatusRoom(JSONObject message) {
-        String roomId = message.getStr("room_id");
-        JSONObject data = new JSONObject();			
-        data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
+    private void onStatusRoom(ReqRoomMsg req) {
+        String roomId = req.getRoom_id();
+        RespRoomMsg resp = getBasicRespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomStatus);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);     
+            resp.setCode(ResultCode.RC404.getCode());
         } else{              
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
-            for (int i = 0; i < playerLists.size(); i++){
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                jsonArray.add(jbItem);
-            }		
-            data.putOpt("players", jsonArray);
-            data.putOpt("code", 200);
+            jsonArray.addAll(playerLists);
+            resp.setData(jsonArray);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnStatusRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        log.info("OnStatusRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
     private void onExitRoom() {
-        JSONObject data = new JSONObject();			
-        data.putOpt("msg_type", Util.msgType.MatchRoomExit);
+        RespRoomMsg resp = getBasicRespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomExit);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);     
-        } else{    
-            data.putOpt("exit_uid", curUid);            
+            resp.setCode(ResultCode.RC404.getCode());
+        } else{
+            RespExitRoom data = new RespExitRoom();
+            data.setExit_uid(curUid);
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomWebSocket.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
-            for (int i = 0; i < playerLists.size(); i++){
-                JSONObject jbItem = new JSONObject();
-                jbItem.putOpt("member_name", playerLists.get(i).memberName);
-                jbItem.putOpt("is_house_owner", playerLists.get(i).isHouseOwner);
-                jbItem.putOpt("aid", playerLists.get(i).aid);
-                jbItem.putOpt("uid", playerLists.get(i).uid);
-                jbItem.putOpt("can_wade", playerLists.get(i).canWade);
-                if (curUid != playerLists.get(i).uid){
-                    jsonArray.add(jbItem);
+            for (RespMatchRoomPlayer playerList : playerLists) {
+                if (curUid != playerList.getUid()) {
+                    jsonArray.add(playerList);
                 }
             }		
-            data.putOpt("players", jsonArray);
-            data.putOpt("code", 200);
+            data.setPlayers(jsonArray);
+            resp.setData(data);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("onExitRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        log.info("onExitRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
-    private void onStartRoom(JSONObject message) {
-        MatchRoomInfoModel infoModel = new MatchRoomInfoModel();
-        infoModel.room_id = message.getStr("room_id");
-        Integer mapCid = message.getInt("cid");
-        infoModel.map_id = matchService.getMatchMapMapId(mapCid);
-        infoModel.limit_time = matchService.getMatchMapLimitTime(mapCid);
-        infoModel.times = matchService.getMatchMapTimes(mapCid);
-        infoModel.start_time = System.currentTimeMillis()/1000 + startOffsetTime;
-        infoModel.enroll_time =  System.currentTimeMillis()/1000;
-        infoModel.class_name = "TastSong";
-        infoModel.star = 2;
-        matchService.insertMatchClass(infoModel);
-        Integer cid = infoModel.cid;
-        JSONObject data = new JSONObject();			
-        data.putOpt("msg_type", Util.msgType.MatchRoomStart);
+    private void onStartRoom(ReqRoomMsg req) {
+        String roomId = req.getRoom_id();
+        int mapCid = req.getCid();
+        MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
+        RespRoomMsg resp = getBasicRespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
-			data.putOpt("code", 404);   
-        } else{              	
-            data.putOpt("cid", cid);
-            data.putOpt("name", infoModel.class_name);
-            data.putOpt("star", infoModel.star);
-            data.putOpt("map_id", infoModel.map_id);
-            data.putOpt("limit_time", infoModel.limit_time);
-            data.putOpt("times", infoModel.times);
-            data.putOpt("start_time", infoModel.start_time);
-            data.putOpt("enroll_time", infoModel.enroll_time);
-            data.putOpt("code", 200); 
+            resp.setCode(ResultCode.RC404.getCode());
+        } else{
+            resp.setData(infoModel);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("onStartRoom : " + data.toString());
-        sendToUser(data.toString(), roomId);
+        log.info("onStartRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
     public void sendToUser(String message, String roomId) {  	
@@ -248,7 +218,7 @@ public class MatchRoomWebSocket {
         		  webSocketSet.get(key).sendMessage(message);
         	  }              
           } catch (IOException e) {
-              e.printStackTrace();
+              log.info("Match Room sendToUser " + e.getMessage());
           }
        }     
     }
@@ -270,5 +240,12 @@ public class MatchRoomWebSocket {
     }
     public static synchronized void subOnlineCount() {
     	MatchRoomWebSocket.onlineCount--;
+    }
+
+    private RespRoomMsg getBasicRespRoomMsg() {
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setUid(curUid);
+        resp.setRoom_id(roomId);
+        return resp;
     }
 }

@@ -49,6 +49,7 @@ public class TokenFilter implements Filter{
             }
         } catch (Exception e) {
             log.info("missing Token,or interface error:{}", request.getRequestURI());
+            log.error(e.getMessage());
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
             PrintWriter writer = response.getWriter();
             writer.print(JSONUtil.toJsonStr(Result.failure(ResultCode.RC203)));

@@ -1,5 +1,11 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.date.DateUtil;
+import com.tastsong.crazycar.dto.req.ReqMatchInfo;
+import com.tastsong.crazycar.dto.req.ReqResult;
+import com.tastsong.crazycar.dto.resp.RespTimeTrailResult;
+import com.tastsong.crazycar.service.TimeTrialClassService;
+import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,87 +17,86 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.TimeTrialRecordModel;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/TimeTrial")
 public class TimeTrialController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialRecordService timeTrialRecordService;
+    @Autowired
+    private TimeTrialClassService timeTrialClassService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/Rank")
-    public Object getRank(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        Integer uid = Util.getUidByToken(token);
-        Integer cid = body.getInt("cid");
-        return timeTrialService.getRankList(uid, cid);
+    public Object getRank(@Valid @RequestBody ReqMatchInfo req) throws Exception {
+        int cid = req.getCid();
+        return timeTrialRecordService.getTimeTrialRankListByCid(cid);
     }
 
     @PostMapping(value = "/Detail")
     public Object getDetail(@RequestHeader(Util.TOKEN) String token) throws Exception {
-        Integer uid = Util.getUidByToken(token);
-        return timeTrialService.getTimeTrialDetail(uid);
+        int uid = Util.getUidByToken(token);
+        return timeTrialClassService.getTimeTrialClassList(uid);
     }
 
     @PostMapping(value = "/BuyClass")
-    public Object budClass(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
-        Integer uid = Util.getUidByToken(token);
-        if (body != null && body.containsKey("cid")) {
-            int cid = body.getInt("cid");
-            JSONObject data = new JSONObject();
-            if (timeTrialService.isHasClass(uid, cid)) {
-                System.out.print("++++++++ isHasClass ");
-                data.putOpt("star", timeTrialService.getUserStar(uid));
-                return data;
-            } else if (timeTrialService.canBuyClass(uid, cid)) {
-                timeTrialService.buyClass(uid, cid);
-                System.out.print("++++++++ buyClass ");
-                data.putOpt("star", timeTrialService.getUserStar(uid));
-                return data;
-            } else {
-                return Result.failure(ResultCode.RC423);
-            }
+    public Object budClass(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqMatchInfo req) throws Exception {
+        int uid = Util.getUidByToken(token);
+        int cid = req.getCid();
+        JSONObject data = new JSONObject();
+        if (timeTrialClassService.hasClass(uid, cid)) {
+            System.out.print("++++++++ isHasClass ");
+            return userService.getUserByUid(uid);
+        } else if (timeTrialClassService.canBuyClass(uid, cid)) {
+            timeTrialClassService.buyClass(uid, cid);
+            System.out.print("++++++++ buyClass ");
+            return userService.getUserByUid(uid);
         } else {
-            return Result.failure(ResultCode.RC404);
+            return Result.failure(ResultCode.RC423, "购买失败");
         }
     }
 
     @PostMapping(value = "/Result")
-    public Object getResult(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object getResult(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqResult req) throws Exception {
         TimeTrialRecordModel recordModel = new TimeTrialRecordModel();
-        recordModel.uid = Util.getUidByToken(token);
-        recordModel.cid = body.getInt("cid");
-        recordModel.complete_time = body.getInt("complete_time");
-        recordModel.record_time = (int) (System.currentTimeMillis()/1000);
-        if(recordModel.cid == null || recordModel.complete_time == null){
+        recordModel.setUid(Util.getUidByToken(token));
+        recordModel.setCid(req.getCid());
+        recordModel.setComplete_time(req.getComplete_time());
+        recordModel.setRecord_time(DateUtil.currentSeconds());
+        if(recordModel.getCid() == 0 || recordModel.getComplete_time() == 0){
             return Result.failure(ResultCode.RC404);
         }
 
-        Integer limitTime = timeTrialService.getLimitTime(recordModel.cid);
-        JSONObject data = new JSONObject();
-        if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
-            data.putOpt("is_win", true);
-            data.putOpt("complete_time", recordModel.complete_time);
+        int limitTime = timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getLimit_time();
+        RespTimeTrailResult resp = new RespTimeTrailResult();
+        if (recordModel.getComplete_time() > 0 && recordModel.getComplete_time() < limitTime) {
+            resp.set_win(true);
+            resp.setComplete_time(recordModel.getComplete_time());
         } else {
-            data.putOpt("is_win", false);
-            data.putOpt("complete_time", -1);
+            resp.set_win(false);
+            resp.setComplete_time(-1);
         }
-        boolean isBreakRecord = timeTrialService.isBreakRecord(recordModel);
-        data.putOpt("is_break_record", isBreakRecord);
-        data.putOpt("reward", isBreakRecord ? timeTrialService.getMapStar(recordModel.cid) : 0);
+        boolean isBreakRecord = timeTrialRecordService.isBreakRecord(recordModel);
+        resp.set_break_record(isBreakRecord);
+        resp.setReward(isBreakRecord ? timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getStar() : 0);
         if (isBreakRecord) {
-            timeTrialService.giveReward(recordModel.uid, recordModel.cid);
+            timeTrialClassService.giveReward(recordModel.getUid(), recordModel.getCid());
         }
-        timeTrialService.insertRecord(recordModel);
+        timeTrialRecordService.insertRecord(recordModel);
         
         if (isBreakRecord) {
-            data.putOpt("rank", timeTrialService.getRank(recordModel.uid, recordModel.cid));
+            resp.setRank(timeTrialRecordService.getRankByUid(recordModel.getUid(), recordModel.getCid()));
         } else {
-            data.putOpt("rank", -1);
+            resp.setRank(-1);
         }
-        return data;
+        return resp;
     }
 }

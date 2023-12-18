@@ -1,8 +1,10 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
+import com.tastsong.crazycar.service.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,9 @@ import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1/Background")
@@ -24,23 +28,23 @@ public class BackgroundLogin {
 
     @Autowired
     private BackgroundUserService backgroundUserService;
+    @Autowired
+    private LoginService loginService;
 
     @PostMapping(value = "/login")
-    public Object login(@RequestBody JSONObject body) throws Exception {
-        String userName = body.getStr("username");
-        String password = body.getStr("password");
+    public Object login(@Valid @RequestBody ReqBackgroundLogin req) throws Exception {
+        String userName = req.getUsername();
+        String password = req.getPassword();
 
         if (backgroundUserService.isExistsUser(userName)){
             AdminUserModel userModel = backgroundUserService.getUserByName(userName);
-            if (password.equals(userModel.user_password)){
-                JSONObject data = new JSONObject();
-                data.putOpt("token", Util.createToken(userModel.uid));
-                return data;
+            if (password.equals(userModel.getUser_password())){
+                return loginService.getUserDetail(userModel.getUid());
             } else {
-                return Result.failure(ResultCode.RC423);
+                return Result.failure(ResultCode.RC423, "密码错误");
             }
         } else{
-            return Result.failure(ResultCode.RC404);
+            return Result.failure(ResultCode.RC404, "用户不存在");
         }
     }
 }

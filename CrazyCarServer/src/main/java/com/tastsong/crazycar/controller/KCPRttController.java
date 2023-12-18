@@ -1,9 +1,11 @@
 package com.tastsong.crazycar.controller;
 
+import java.io.Serial;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
+import cn.hutool.core.convert.Convert;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping(value = "/v2/KCP")
 public class KCPRttController extends HttpServlet implements KcpListener {
-    private static final long serialVersionUID = 1L;
     private boolean isInit = false;
     private static int onlineCount = 0;
-    private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
-    private static ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<String, JSONObject>();
+    private static final ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<String, JSONObject>();
 
     private Ukcp uKcp;
     // 当前发消息的人员编号
@@ -82,7 +83,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.getBytes(buf.readerIndex(), bytes);
         JSONObject sendMsg = new JSONObject(buf.toString(CharsetUtil.UTF_8));
-        Integer msgType = sendMsg.getInt("msg_type");
+        int msgType = sendMsg.getInt("msg_type");
         if (msgType == Util.msgType.CreatePlayer) {
             onCreatePlayer(sendMsg);
         } else {
@@ -91,14 +92,14 @@ public class KCPRttController extends HttpServlet implements KcpListener {
     }
 
     private void onCreatePlayer(JSONObject data) {
-        Integer uid = data.getInt("uid");
-        Integer cid = data.getInt("cid");
+        int uid = data.getInt("uid");
+        int cid = data.getInt("cid");
         id = uid + "," + cid;
         log.info("Match onOpen id = " + id);
         kcpSet.put(id, this.uKcp);
         createPlayerMsgMap.put(id, data);
         for (String key : createPlayerMsgMap.keySet()) {
-            if (key.split(",")[1].equals(cid.toString())) {
+            if (key.split(",")[1].equals(Convert.toStr(cid))) {
                 sendToUser(createPlayerMsgMap.get(key));
             }
         }
@@ -106,10 +107,10 @@ public class KCPRttController extends HttpServlet implements KcpListener {
 
     private void sendToUser(JSONObject message) {
         String cid = message.getStr("cid");
-        Integer uid = message.getInt("uid");
+        int uid = message.getInt("uid");
 
         for (String key : kcpSet.keySet()) {
-            if (!key.split(",")[0].equals(uid.toString()) && key.split(",")[1].equals(cid)) {
+            if (!key.split(",")[0].equals(Convert.toStr(uid)) && key.split(",")[1].equals(cid)) {
                 byte[] bytes = message.toString().getBytes(CharsetUtil.UTF_8);
                 ByteBuf buf = Unpooled.wrappedBuffer(bytes);
                 kcpSet.get(key).write(buf);
@@ -126,7 +127,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
     public void handleClose(Ukcp uKcp) {
         log.info("handleClose " + Snmp.snmp.toString());
         Snmp.snmp = new Snmp();
-        if (!id.equals("")) {
+        if (!id.isEmpty()) {
             kcpSet.remove(id);  //从set中删除
             createPlayerMsgMap.remove(id);
             onlineCount--;           //在线数减1

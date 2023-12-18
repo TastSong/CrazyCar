@@ -4,12 +4,12 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.tastsong.crazycar.dto.resp.RespLoginRecord;
+import com.tastsong.crazycar.service.UserLoginRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.tastsong.crazycar.mapper.UserMapper;
-import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.service.MailService;
 
 @Component
@@ -18,7 +18,7 @@ public class MailScheduledTask {
     private MailService mailService;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserLoginRecordService userLoginRecordService;
 
     @Scheduled(cron = "0 0 10 * * 1")
     public void email() {
@@ -29,13 +29,13 @@ public class MailScheduledTask {
         String contentTableHead = "<html>\n<body>\n<table border=1>\n";
         String tableHead = "<tr>\n<td>Name</td>\n<td>Place</td>\n<td>Device</td>\n<td>Login Time</td>\n</tr>\n";
         String tableBody = "";
-        List<UserLoginRecordModel> userLoginRecordModels = userMapper.getLoginRecordAfterTime(afterTime);
+        List<RespLoginRecord> userLoginRecordModels = userLoginRecordService.getLoginRecordAfterTime(afterTime);
         for (int i = 0; i < userLoginRecordModels.size(); i++) {
             tableBody += "<tr>\n";
-            tableBody += "<td>" + userLoginRecordModels.get(i).user_name + "</td>\n";
-            tableBody += "<td>" + userLoginRecordModels.get(i).place + "</td>\n";
-            tableBody += "<td>" + userLoginRecordModels.get(i).device + "</td>\n";
-            String timeString = sdf.format(new Date(userLoginRecordModels.get(i).login_time * 1000));
+            tableBody += "<td>" + userLoginRecordModels.get(i).getUser_name() + "</td>\n";
+            tableBody += "<td>" + userLoginRecordModels.get(i).getPlace() + "</td>\n";
+            tableBody += "<td>" + userLoginRecordModels.get(i).getDevice() + "</td>\n";
+            String timeString = sdf.format(new Date(userLoginRecordModels.get(i).getLogin_time() * 1000));
             tableBody += "<td>" + timeString + "</td>\n";
             tableBody += "</tr>\n";
         }

@@ -2,6 +2,12 @@ package com.tastsong.crazycar.controller;
 
 import java.util.List;
 
+import cn.hutool.core.util.ObjUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
+import com.tastsong.crazycar.dto.resp.RespCommonList;
+import com.tastsong.crazycar.service.TimeTrialClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,37 +16,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tastsong.crazycar.model.TimeTrialInfoModel;
-import com.tastsong.crazycar.service.TimeTrialService;
+import com.tastsong.crazycar.model.TimeTrialClassModel;
+import com.tastsong.crazycar.service.TimeTrialRecordService;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
 public class BackgroundTimeTrialController {
     @Autowired
-    private TimeTrialService timeTrialService;
+    private TimeTrialClassService timeTrialClassService;
 
     @GetMapping(value = "getTimeTrialInfos")
     public Object getTimeTrialInfos() throws Exception {
-        JSONObject result = new JSONObject();
-        List<TimeTrialInfoModel> items = timeTrialService.getTimeTrialInfos();
-        result.putOpt("items", items);
-        result.putOpt("total", items.size());
-        return result;
+        RespCommonList resp = new RespCommonList();
+        List<TimeTrialClassModel> items = timeTrialClassService.getAllTimeTrialClass();
+        resp.setItems(items);
+        resp.setTotal(items.size());
+        return resp;
     }
 
-    @PostMapping(value = "updtaeTimeTrialInfo")
-    public Object updtaeTimeTrialInfo(@RequestBody JSONObject body) throws Exception {
-        TimeTrialInfoModel timeTrialInfoModel = new TimeTrialInfoModel();
-        timeTrialInfoModel.cid= body.getInt("cid");
-        timeTrialInfoModel.map_id = body.getInt("map_id");
-        timeTrialInfoModel.class_name = body.getStr("class_name");
-        timeTrialInfoModel.star = body.getInt("star");
-        timeTrialInfoModel.has_water = body.getBool("has_water");
-        timeTrialInfoModel.limit_time = body.getInt("limit_time");
-        timeTrialInfoModel.times = body.getInt("times");
-        return timeTrialService.updateTimeTrialInfo(timeTrialInfoModel) ? timeTrialInfoModel : false;
+    @PostMapping(value = "updateTimeTrialInfo")
+    public Object updateTimeTrialInfo(@Valid @RequestBody ReqUpdateTimeTrialClass req) throws Exception {
+        TimeTrialClassModel timeTrialClassModel = timeTrialClassService.toTimeTrialClassModel(req);
+        if (ObjUtil.isEmpty(timeTrialClassModel)) {
+            return Result.failure(ResultCode.RC404, "找不到该课程");
+        }
+        return timeTrialClassService.updateTimeTrialClassInfo(timeTrialClassModel) ? timeTrialClassModel : false;
     }
 }

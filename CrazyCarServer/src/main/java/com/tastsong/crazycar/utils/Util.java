@@ -22,7 +22,7 @@ public class Util {
 	public static final String  TOKEN  = "authorization";
 
 	private static final String jwtKey = "oeRaQQ7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5";
-	public static String createToken(Integer uid){
+	public static String createToken(int uid){
 		DateTime now = DateTime.now();
 		DateTime newTime = now.offsetNew(DateField.HOUR, 14);
 		
@@ -49,9 +49,9 @@ public class Util {
 		return verifyKey && verifyTime;
 	}
 
-	public static Integer getUidByToken(String token){
+	public static int getUidByToken(String token){
 		cn.hutool.jwt.JWT jwt = JWTUtil.parseToken(token);
-		Integer uid = Integer.valueOf(jwt.getPayload("uid").toString());
+		int uid = Integer.valueOf(jwt.getPayload("uid").toString());
 		return uid;
 	}
 	

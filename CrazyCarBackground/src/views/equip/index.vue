@@ -124,7 +124,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getEqiupInfos, updtaeEquipInfo } from '@/api/equip'
+import { getEquipInfos, updateEquipInfo } from '@/api/equip'
 
 export default {
   name: 'Equip',
@@ -179,7 +179,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getEqiupInfos(this.listQuery).then(response => {
+      getEquipInfos(this.listQuery).then(response => {
         this.list = response.items
         this.total = response.total
         this.listLoading = false
@@ -225,7 +225,7 @@ export default {
     },
     handleSwitchChange(row) {
       const tempData = Object.assign({}, row)
-      updtaeEquipInfo(tempData).then(response => {
+      updateEquipInfo(tempData).then(response => {
         const index = this.list.findIndex(v => v.eid === response.eid)
         this.list.splice(index, 1, response)
         this.$notify({
@@ -240,7 +240,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          updtaeEquipInfo(tempData).then(response => {
+          updateEquipInfo(tempData).then(response => {
             const index = this.list.findIndex(v => v.eid === response.eid)
             this.list.splice(index, 1, response)
             this.dialogFormVisible = false

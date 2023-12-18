@@ -105,7 +105,7 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getTimeTrialInfos, updtaeTimeTrialInfo } from '@/api/trial'
+import { getTimeTrialInfos, updateTimeTrialInfo } from '@/api/trial'
 
 export default {
   name: 'Trial',
@@ -201,7 +201,7 @@ export default {
     },
     handleHasWaterChange(row) {
       const tempData = Object.assign({}, row)
-      updtaeTimeTrialInfo(tempData).then(response => {
+      updateTimeTrialInfo(tempData).then(response => {
         const index = this.list.findIndex(v => v.cid === response.cid)
         this.list.splice(index, 1, response)
         this.$notify({
@@ -216,7 +216,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          updtaeTimeTrialInfo(tempData).then(response => {
+          updateTimeTrialInfo(tempData).then(response => {
             const index = this.list.findIndex(v => v.cid === response.cid)
             this.list.splice(index, 1, response)
             this.dialogFormVisible = false

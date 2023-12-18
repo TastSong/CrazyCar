@@ -32,7 +32,11 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.aid = (int)data[i]["aid"];
             info.rid = (string)data[i]["rid"];
             info.name = (string)data[i]["avatar_name"];
-            info.isHas = (bool)data[i]["is_has"];
+            try {
+                info.isHas = (bool)data[i]["is_has"];
+            } catch {
+                info.isHas = false;
+            }
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
         }
@@ -162,7 +166,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     public void ParseSelectMatch(JsonData jsonData, Action success = null) {
         MatchInfo info = new MatchInfo();
         info.cid = (int)jsonData["cid"];
-        info.name = (string)jsonData["name"];
+        info.name = (string)jsonData["class_name"];
         info.star = (int)jsonData["star"];
         info.mapId = (int)jsonData["map_id"];
         info.limitTime = (int)jsonData["limit_time"];

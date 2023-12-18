@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqUpdateVersion;
+import com.tastsong.crazycar.dto.resp.RespCommonList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,9 @@ import com.tastsong.crazycar.service.VersionService;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
@@ -22,21 +27,16 @@ public class BackgroundVersionController {
 
     @GetMapping(value = "/getVersionList")
     public Object getVersionList() throws Exception {
-        JSONObject result = new JSONObject();
-        result.putOpt("items", versionService.getVersionList());
-        result.putOpt("total", versionService.getVersionList().size());
-        return result;
+        RespCommonList resp = new RespCommonList();
+        List<VersionModel> versionList = versionService.getVersionList();
+        resp.setItems(versionList);
+        resp.setTotal(versionList.size());
+        return resp;
     }
 
     @PostMapping(value = "/updateVersion")
-    public Object updateVersion(@RequestBody JSONObject body) throws Exception {
-        VersionModel versionModel = new VersionModel();
-        versionModel.id = body.getInt("id");
-        versionModel.version = body.getStr("version");
-        versionModel.platform = body.getStr("platform");
-        versionModel.url = body.getStr("url");
-        versionModel.rule = body.getInt("rule");
-        versionModel.updata_time = System.currentTimeMillis();
+    public Object updateVersion(@Valid @RequestBody ReqUpdateVersion req) throws Exception {
+        VersionModel versionModel = versionService.toVersionModelByReq(req);
         return versionService.updateVersion(versionModel) ? versionModel : false;
     }
 }

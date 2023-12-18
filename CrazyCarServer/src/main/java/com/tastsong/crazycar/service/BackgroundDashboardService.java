@@ -4,77 +4,67 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import com.tastsong.crazycar.dto.resp.RespDashboardData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tastsong.crazycar.mapper.AvatarMapper;
-import com.tastsong.crazycar.mapper.EquipMapper;
-import com.tastsong.crazycar.mapper.MatchMapper;
-import com.tastsong.crazycar.mapper.TimeTrialMapper;
-import com.tastsong.crazycar.mapper.UserMapper;
-import com.tastsong.crazycar.model.DataStatisticsModel;
+import com.tastsong.crazycar.mapper.MatchRecordMapper;
+import com.tastsong.crazycar.mapper.TimeTrialRecordMapper;
+import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 
 @Service
 public class BackgroundDashboardService {
     @Autowired
-    private UserMapper userMapper;
-
+    private UserLoginRecordService userLoginRecordService;
     @Autowired 
-    private EquipMapper equipMapper;
-
-    @Autowired 
-    private AvatarMapper avatarMapper;
-
+    private EquipService equipService;
     @Autowired
-    private TimeTrialMapper timeTrialMapper;
-
+    private TimeTrialRecordMapper timeTrialRecordMapper;
     @Autowired
-    private MatchMapper matchMapper;
+    private TimeTrialClassService timeTrialClassService;
+    @Autowired
+    private MatchRecordMapper matchRecordMapper;
+    @Autowired
+    private AvatarService avatarService;
+    @Autowired
+    private UserService userService;
 
-    public Integer getUserNum(){
-        return userMapper.getAllUserNum();
+    private int getEquipNum(){
+        return equipService.getEquipInfos().size();
     }
 
-    public Integer getEquipNum(){
-        return equipMapper.getEquipList().size();
+    private int getMapNum(){
+        return timeTrialClassService.getAllTimeTrialClass().size();
     }
 
-    public Integer getAvatarNum(){
-        return avatarMapper.getAvatarList().size();
-    }
-
-    public Integer getMapNum(){
-        return timeTrialMapper.getTimeTrialInfos().size();
-    }
-
-    public List<DataStatisticsModel> getUserLoginData(Integer offsetTime){
-        List<DataStatisticsModel> data = userMapper.getUserLoginData(offsetTime);
+    private List<RespDataStatistics> getUserLoginData(int offsetTime){
+        List<RespDataStatistics> data = userLoginRecordService.getUserLoginData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getTimeTrialData(Integer offsetTime){
-        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
+    private List<RespDataStatistics> getTimeTrialData(int offsetTime){
+        List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    public List<DataStatisticsModel> getMatchData(Integer offsetTime){
-        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
+    private List<RespDataStatistics> getMatchData(int offsetTime){
+        List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
         return formatData(data, offsetTime);
     }
 
-    private List<DataStatisticsModel> formatData(List<DataStatisticsModel> data, Integer offsetTime){
-        ArrayList<DataStatisticsModel> result = new ArrayList<>();
+    private List<RespDataStatistics> formatData(List<RespDataStatistics> data, int offsetTime){
+        ArrayList<RespDataStatistics> result = new ArrayList<>();
         long current = System.currentTimeMillis() / 1000;
-        Integer oneDay = 60 * 60 * 24;
+        int oneDay = 60 * 60 * 24;
         long curWeeHours = current-(current+ TimeZone.getDefault().getRawOffset()) % oneDay;
         for(int i = 0; i < offsetTime; i++){
-            DataStatisticsModel temp = new DataStatisticsModel();
-            temp.count = 0;
-            temp.timestamp = curWeeHours - oneDay * (offsetTime - i - 1);
-            long nextTimestaml = curWeeHours - oneDay * (offsetTime - i - 2);
-            for(int k = 0; k < data.size(); k++){
-                if(data.get(k).timestamp >= temp.timestamp && data.get(k).timestamp <= nextTimestaml){
-                    temp.count = data.get(k).count;
+            RespDataStatistics temp = new RespDataStatistics();
+            temp.setCount(0);
+            temp.setTimestamp( curWeeHours - (long) oneDay * (offsetTime - i - 1));
+            long nextTimestamp = curWeeHours - (long) oneDay * (offsetTime - i - 2);
+            for (RespDataStatistics datum : data) {
+                if (datum.getTimestamp() >= temp.getTimestamp() && datum.getTimestamp() <= nextTimestamp) {
+                    temp.setCount(datum.getCount());
                     break;
                 }
             }
@@ -83,11 +73,11 @@ public class BackgroundDashboardService {
         return result;
     }
 
-    public Integer getTimeTrialTimes(Integer offsetTime){
-        List<DataStatisticsModel> data = timeTrialMapper.getTimeTrialData(offsetTime);
-        Integer tatal = 0;
-        for(int i = 0; i < data.size(); i++){
-            tatal += data.get(i).count;
+    private int getTimeTrialTimes(int offsetTime){
+        List<RespDataStatistics> data = timeTrialRecordMapper.getTimeTrialData(offsetTime);
+        int tatal = 0;
+        for (RespDataStatistics datum : data) {
+            tatal += datum.getCount();
         }
         // ------假数据------
         if(tatal == 0){
@@ -97,11 +87,11 @@ public class BackgroundDashboardService {
         return tatal;
     }
 
-    public Integer getMatchTimes(Integer offsetTime){
-        List<DataStatisticsModel> data = matchMapper.getMatchData(offsetTime);
-        Integer tatal = 0;
-        for(int i = 0; i < data.size(); i++){
-            tatal += data.get(i).count;
+    private int getMatchTimes(int offsetTime){
+        List<RespDataStatistics> data = matchRecordMapper.getMatchData(offsetTime);
+        int tatal = 0;
+        for (RespDataStatistics datum : data) {
+            tatal += datum.getCount();
         }
         // ------假数据------
         if(tatal == 0){
@@ -109,5 +99,21 @@ public class BackgroundDashboardService {
         }
         // ------------------
         return tatal;
+    }
+
+    public RespDashboardData getDashboardData(){
+        RespDashboardData dashboardData = new RespDashboardData();
+        dashboardData.setUser_num(userService.getUserList().size());
+        dashboardData.setEquip_num(getEquipNum());
+        dashboardData.setAvatar_num(avatarService.getAllAvatar().size());
+        dashboardData.setMap_num(getMapNum());
+
+        int offsetTime = 7;
+        dashboardData.setTime_trial_times(getTimeTrialTimes(offsetTime));
+        dashboardData.setMatch_times(getMatchTimes(offsetTime));
+        dashboardData.setLogin_user_num(getUserLoginData(offsetTime));
+        dashboardData.setTime_trial_num(getTimeTrialData(offsetTime));
+        dashboardData.setMatch_num(getMatchData(offsetTime));
+        return dashboardData;
     }
 }

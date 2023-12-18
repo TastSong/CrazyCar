@@ -1,16 +1,16 @@
 import request from '@/utils/request'
 
-export function getEqiupInfos(query) {
+export function getEquipInfos(query) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/getEqiupInfos',
+    url: '/CrazyCarSpringBootServer/v2/Background/getEquipInfos',
     method: 'get',
     params: query
   })
 }
 
-export function updtaeEquipInfo(data) {
+export function updateEquipInfo(data) {
   return request({
-    url: '/CrazyCarSpringBootServer/v2/Background/updtaeEquipInfo',
+    url: '/CrazyCarSpringBootServer/v2/Background/updateEquipInfo',
     method: 'post',
     data
   })

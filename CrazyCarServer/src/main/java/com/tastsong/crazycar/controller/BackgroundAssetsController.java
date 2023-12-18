@@ -1,5 +1,12 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.common.Result;
+import com.tastsong.crazycar.common.ResultCode;
+import com.tastsong.crazycar.dto.req.ReqUpdateAssets;
+import com.tastsong.crazycar.dto.resp.RespCommonList;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +21,9 @@ import com.tastsong.crazycar.service.AssetsUpdatingService;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
+
+@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/Background")
@@ -23,22 +33,19 @@ public class BackgroundAssetsController {
 
     @GetMapping(value = "/getAssetsInfo")
     public Object getAssetsInfo() throws Exception {
-        JSONObject result = new JSONObject();
-        JSONArray itemArray = new JSONArray();
-        itemArray.add(assetsUpdatingService.getInfo());
-        // 以后资源更新可能会分版本、平台等，所以做成数组
-        result.putOpt("items", itemArray);
-        result.putOpt("total", 1);
-        return result;
+        RespCommonList resp = new RespCommonList();
+        resp.setItems(assetsUpdatingService.getInfo());
+        resp.setTotal(1);
+        return resp;
     }
 
     @PostMapping(value = "/updateAssetsInfo")
-    public Object updateAssetsInfo(@RequestBody JSONObject body) throws Exception {
-        AssetsUpdatingModel assetsUpdatingModel = new AssetsUpdatingModel();
-        assetsUpdatingModel.id = body.getInt("id");
-        assetsUpdatingModel.is_on = body.getBool("is_on");
-        assetsUpdatingModel.url = body.getStr("url");
-        assetsUpdatingModel.updata_time = System.currentTimeMillis();
+    public Object updateAssetsInfo(@Valid @RequestBody ReqUpdateAssets req) throws Exception {
+        AssetsUpdatingModel assetsUpdatingModel = assetsUpdatingService.toAssetsUpdatingModel(req);
+        log.info("updateAssetsInfo:" + JSONUtil.toJsonStr(req));
+        if (ObjUtil.isEmpty(assetsUpdatingModel)) {
+            return Result.failure(ResultCode.RC404, "资源不存在");
+        }
         return assetsUpdatingService.updateInfo(assetsUpdatingModel) ? assetsUpdatingModel : false;
     }
 }
