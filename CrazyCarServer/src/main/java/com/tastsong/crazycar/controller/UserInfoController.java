@@ -57,8 +57,6 @@ public class UserInfoController {
         }
     }
 
-
-
     @PostMapping(value = "/recodeLogin")
     public Object recodeLogin(@RequestBody UserLoginRecordModel req, @RequestHeader(Util.TOKEN) String token) throws Exception {
         int uid = Util.getUidByToken(token);
