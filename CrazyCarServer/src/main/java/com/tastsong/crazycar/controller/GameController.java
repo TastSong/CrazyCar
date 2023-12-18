@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqEnterGame;
+import com.tastsong.crazycar.dto.resp.RespEnterGame;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class GameController {
 		GameType gameType = GameType.values()[req.getGameType()];
 		NetType netType = NetType.values()[req.getNetType()];
 
-        JSONObject data = new JSONObject();
+        RespEnterGame resp = new RespEnterGame();
 		if (gameType == GameType.Match){
             if(!userService.getUserByUid(uid).is_vip()) {
                 return Result.failure(ResultCode.RC423);
@@ -54,15 +55,15 @@ public class GameController {
 
 			if(netType == NetType.WebSocket){
 				log.info("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
-				data.putOpt("num", MatchWebSocket.getOnlineCount());
+                resp.setNum(MatchWebSocket.getOnlineCount());
             } else{
-				data.putOpt("num", 0);
+                resp.setNum(0);
             }
-            return data;
+            return resp;
         } else{
 			if(timeTrialClassService.hasClass(uid, cid)) {
-                data.putOpt("num", 0);
-                return data;
+                resp.setNum(0);
+                return resp;
 			} else{
                 return Result.failure(ResultCode.RC423);
 			}
