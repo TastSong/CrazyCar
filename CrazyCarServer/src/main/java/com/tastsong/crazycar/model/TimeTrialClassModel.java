@@ -22,12 +22,12 @@ public class TimeTrialClassModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    public int cid;
+    private int cid;
 
-    public int star;
-    public int map_id;
-    public boolean has_water;
-    public int limit_time;
-    public String class_name;
-    public int times;
+    private int star;
+    private int map_id;
+    private boolean has_water;
+    private int limit_time;
+    private String class_name;
+    private int times;
 }
