@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Data
 
-public class RespCommonRoomMsg {
+public class RespRoomMsg {
     private int msg_type;
     private int uid;
     private String room_id;

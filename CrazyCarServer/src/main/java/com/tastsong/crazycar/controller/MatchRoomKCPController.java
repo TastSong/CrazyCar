@@ -6,7 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServlet;
 
 import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.dto.req.ReqRoomMsg;
+import com.tastsong.crazycar.dto.resp.RespExitRoom;
+import com.tastsong.crazycar.dto.resp.RespRoomMsg;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
@@ -111,23 +114,23 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String id = uid + "," + roomId;
         kcpSet.put(id, kcp);
         String token = req.getToken();
-        JSONObject data = new JSONObject();
-        data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
-        data.putOpt("uid", uid);
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setMsg_type(Util.msgType.MatchRoomCreate);
+        resp.setUid(uid);
         if (!Util.isLegalToken(token)) {
-            data.putOpt("code", 423);
+            resp.setCode(ResultCode.RC423.getCode());
         } else if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
-            data.putOpt("code", 421);
+            resp.setCode(ResultCode.RC421.getCode());
         } else {
             UserModel userModel = userService.getUserByUid(uid);
             RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, userModel.getEid(), true);
             ArrayList<RespMatchRoomPlayer> list = new ArrayList<>();
             list.add(info);
             MatchRoomKCPController.roomMap.put(roomId, list);
-            data.putOpt("code", 200);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + data.toString());
-        sendToUser(data, roomId);
+        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
     private void onJoinRoom(ReqRoomMsg req, Ukcp kcp) {
@@ -136,52 +139,59 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String id = uid + "," + roomId;
         kcpSet.put(id, kcp);
         String token = req.getToken();
-        JSONObject data = new JSONObject();
-        data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setRoom_id(roomId);
+        resp.setUid(uid);
+        resp.setMsg_type(Util.msgType.MatchRoomJoin);
         int maxNum = 2;
         if (!Util.isLegalToken(token)) {
-            data.putOpt("code", 422);
+            resp.setCode(ResultCode.RC423.getCode());
         } else if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
-            data.putOpt("code", 404);
+            resp.setCode(ResultCode.RC404.getCode());
         } else if (MatchRoomKCPController.roomMap.get(roomId).size() >= maxNum) {
-            data.putOpt("code", 423);
+            resp.setCode(ResultCode.RC423.getCode());
         } else {
             UserModel userModel = userService.getUserByUid(uid);
             RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, userModel.getEid(), false);
             MatchRoomKCPController.roomMap.get(roomId).add(info);
-            data.putOpt("code", 200);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + data.toString());
-        sendToUser(data, roomId);
+        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
     private void onStatusRoom(ReqRoomMsg req) {
         String roomId = req.getRoom_id();
-        JSONObject data = new JSONObject();
-        data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setRoom_id(roomId);
+        resp.setUid(req.getUid());
+        resp.setMsg_type(Util.msgType.MatchRoomStatus);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
-            data.putOpt("code", 404);
+            resp.setCode(ResultCode.RC404.getCode());
         } else {
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
             jsonArray.addAll(playerLists);
-            data.putOpt("players", jsonArray);
-            data.putOpt("code", 200);
+            resp.setData(jsonArray);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnStatusRoom : " + data.toString());
-        sendToUser(data, roomId);
+        log.info("onStatusRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
     private void onExitRoom(ReqRoomMsg req) {
         int uid = req.getUid();
         String roomId = req.getRoom_id();
         String id = uid + "," + roomId;
-        JSONObject data = new JSONObject();
-        data.putOpt("msg_type", Util.msgType.MatchRoomExit);
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setRoom_id(roomId);
+        resp.setUid(req.getUid());
+        resp.setMsg_type(Util.msgType.MatchRoomExit);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
-            data.putOpt("code", 404);
+            resp.setCode(ResultCode.RC404.getCode());
         } else {
-            data.putOpt("exit_uid", uid);
+            RespExitRoom data = new RespExitRoom();
+            data.setExit_uid(uid);
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
@@ -190,11 +200,11 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
                     jsonArray.add(playerList);
                 }
             }
-            data.putOpt("players", jsonArray);
-            data.putOpt("code", 200);
+            data.setPlayers(jsonArray);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("onExitRoom : " + data.toString());
-        sendToUser(data, roomId);
+        log.info("onExitRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
         exitRoom(id);
     }
 
@@ -202,29 +212,24 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String roomId = req.getRoom_id();
         int mapCid = req.getCid();
         MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
-        JSONObject data = new JSONObject();
-        data.putOpt("msg_type", Util.msgType.MatchRoomStart);
+        RespRoomMsg resp = new RespRoomMsg();
+        resp.setRoom_id(roomId);
+        resp.setUid(req.getUid());
+        resp.setMsg_type(Util.msgType.MatchRoomStart);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
-            data.putOpt("code", 404);
+            resp.setCode(ResultCode.RC404.getCode());
         } else {
-            data.putOpt("cid", infoModel.getCid());
-            data.putOpt("name", infoModel.getClass_name());
-            data.putOpt("star", infoModel.getStar());
-            data.putOpt("map_id", infoModel.getMap_id());
-            data.putOpt("limit_time", infoModel.getLimit_time());
-            data.putOpt("times", infoModel.getTimes());
-            data.putOpt("start_time", infoModel.getStart_time());
-            data.putOpt("enroll_time", infoModel.getEnroll_time());
-            data.putOpt("code", 200);
+            resp.setData(infoModel);
+            resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("onStartRoom : " + data.toString());
-        sendToUser(data, roomId);
+        log.info("onStartRoom : " + JSONUtil.toJsonStr(resp));
+        sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
-    private void sendToUser(JSONObject message, String roomId) {
+    private void sendToUser(String message, String roomId) {
         for (String key : kcpSet.keySet()) {
             if (key.split(",")[1].equals(roomId)) {
-                byte[] bytes = message.toString().getBytes(CharsetUtil.UTF_8);
+                byte[] bytes = message.getBytes(CharsetUtil.UTF_8);
                 ByteBuf buf = Unpooled.wrappedBuffer(bytes);
                 kcpSet.get(key).write(buf);
             }

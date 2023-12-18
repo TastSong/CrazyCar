@@ -5,7 +5,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.dto.req.ReqRoomMsg;
-import com.tastsong.crazycar.dto.resp.RespCommonRoomMsg;
+import com.tastsong.crazycar.dto.resp.RespRoomMsg;
 import com.tastsong.crazycar.dto.resp.RespExitRoom;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.*;
@@ -18,7 +18,6 @@ import com.tastsong.crazycar.dto.resp.RespMatchRoomPlayer;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -102,7 +101,7 @@ public class MatchRoomWebSocket {
             onExitRoom();
         } else if (msgType == Util.msgType.MatchRoomStart) {
             onStartRoom(req);
-        } else if (msgType == Util.msgType.MatchRoomStatus) {
+        } else if (req.getMsg_type()  == Util.msgType.MatchRoomStatus) {
             onStatusRoom(req);
         }
     }
@@ -112,7 +111,7 @@ public class MatchRoomWebSocket {
         roomId = req.getRoom_id();
         id = curUid + "," + roomId;
         webSocketSet.put(id, this);
-        RespCommonRoomMsg resp = getBasicRespRoomMsg();
+        RespRoomMsg resp = getBasicRespRoomMsg();
         resp.setMsg_type(Util.msgType.MatchRoomCreate);
         if(!Util.isLegalToken(req.getToken())){
             resp.setCode(ResultCode.RC423.getCode());
@@ -136,7 +135,7 @@ public class MatchRoomWebSocket {
         id = curUid + "," + roomId;
         webSocketSet.put(id, this);
         String token = req.getToken();
-        RespCommonRoomMsg resp = getBasicRespRoomMsg();
+        RespRoomMsg resp = getBasicRespRoomMsg();
         resp.setMsg_type(Util.msgType.MatchRoomJoin);
         if(!Util.isLegalToken(token)){
             resp.setCode(ResultCode.RC423.getCode());
@@ -156,7 +155,7 @@ public class MatchRoomWebSocket {
 
     private void onStatusRoom(ReqRoomMsg req) {
         String roomId = req.getRoom_id();
-        RespCommonRoomMsg resp = getBasicRespRoomMsg();
+        RespRoomMsg resp = getBasicRespRoomMsg();
         resp.setMsg_type(Util.msgType.MatchRoomStatus);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
             resp.setCode(ResultCode.RC404.getCode());
@@ -172,7 +171,7 @@ public class MatchRoomWebSocket {
     }
 
     private void onExitRoom() {
-        RespCommonRoomMsg resp = getBasicRespRoomMsg();
+        RespRoomMsg resp = getBasicRespRoomMsg();
         resp.setMsg_type(Util.msgType.MatchRoomExit);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
             resp.setCode(ResultCode.RC404.getCode());
@@ -199,7 +198,7 @@ public class MatchRoomWebSocket {
         String roomId = req.getRoom_id();
         int mapCid = req.getCid();
         MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
-        RespCommonRoomMsg resp = getBasicRespRoomMsg();
+        RespRoomMsg resp = getBasicRespRoomMsg();
         resp.setMsg_type(Util.msgType.MatchRoomStart);
         if (!MatchRoomWebSocket.roomMap.containsKey(roomId)){
             resp.setCode(ResultCode.RC404.getCode());
@@ -243,8 +242,8 @@ public class MatchRoomWebSocket {
     	MatchRoomWebSocket.onlineCount--;
     }
 
-    private RespCommonRoomMsg getBasicRespRoomMsg() {
-        RespCommonRoomMsg resp = new RespCommonRoomMsg();
+    private RespRoomMsg getBasicRespRoomMsg() {
+        RespRoomMsg resp = new RespRoomMsg();
         resp.setUid(curUid);
         resp.setRoom_id(roomId);
         return resp;
