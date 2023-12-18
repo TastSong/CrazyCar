@@ -2,6 +2,7 @@ package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.util.ObjUtil;
 import com.tastsong.crazycar.dto.req.ReqCreateAdminUser;
+import com.tastsong.crazycar.dto.req.ReqUpdateRole;
 import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.UserService;
@@ -92,9 +93,9 @@ public class BackgroundUser {
     }
 
     @PostMapping(value = "updateRole")
-    public Object updateRole(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object updateRole(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqUpdateRole req) throws Exception {
         int uid = Util.getUidByToken(token);
-        String routes = body.getStr("routes");
+        String routes = req.getRoutes();
         backgroundUserService.updateUserRoute(uid, routes);
         return backgroundUserService.getUserByUid(uid);
     }
