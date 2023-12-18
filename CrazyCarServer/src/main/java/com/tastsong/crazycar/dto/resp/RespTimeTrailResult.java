@@ -20,5 +20,5 @@ public class RespTimeTrailResult {
     @JsonProperty("is_break_record")
     private boolean is_break_record;
     private int reward;
-    private List<RespMatchRank> rank = new ArrayList<>();
+    private int rank;
 }
