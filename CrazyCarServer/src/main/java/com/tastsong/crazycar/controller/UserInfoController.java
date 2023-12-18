@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.tastsong.crazycar.dto.req.ReqUserInfo;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/UserInfo")
@@ -32,8 +35,8 @@ public class UserInfoController {
     private UserLoginRecordService userLoginRecordService;
 
     @PostMapping(value = "/GetUser")
-    public Object getUserInfo(@RequestBody JSONObject body) throws Exception {
-        int uid = body.getInt("uid");
+    public Object getUserInfo(@Valid @RequestBody ReqUserInfo req) throws Exception {
+        int uid = req.getUid();
         if(userService.isExistsUserByUid(uid)){
             return loginService.getUserDetail(uid);
         } else{
