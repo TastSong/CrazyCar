@@ -5,6 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
 
+import cn.hutool.json.JSONUtil;
+import com.tastsong.crazycar.dto.req.ReqRoomMsg;
+import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.*;
 import org.springframework.context.ApplicationContext;
 
@@ -40,6 +43,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     private static final ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
     private static int onlineCount = 0;
     private MatchClassService matchClassService;
+    private UserService userService;
     
     private ArrayList<RespMatchRoomPlayer> playerLists = new ArrayList<RespMatchRoomPlayer>();
 
@@ -78,6 +82,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         onlineCount++;
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
         matchClassService = act.getBean(MatchClassService.class);
+        userService = act.getBean(UserService.class);
         log.info("Connected onlineCount = " + onlineCount);
     }
 
@@ -85,27 +90,27 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     public void handleReceive(ByteBuf buf, Ukcp kcp) {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.getBytes(buf.readerIndex(), bytes);
-        JSONObject sendMsg = new JSONObject(buf.toString(CharsetUtil.UTF_8));
-        int msgType = sendMsg.getInt("msg_type");
+        ReqRoomMsg req = JSONUtil.toBean(buf.toString(CharsetUtil.UTF_8), ReqRoomMsg.class);
+        int msgType = req.getMsg_type();
         if (msgType == Util.msgType.MatchRoomCreate) {
-            onCreateRoom(sendMsg, kcp);
+            onCreateRoom(req, kcp);
         } else if (msgType == Util.msgType.MatchRoomJoin) {
-            onJoinRoom(sendMsg, kcp);
+            onJoinRoom(req, kcp);
         } else if (msgType == Util.msgType.MatchRoomExit) {
-            onExitRoom(sendMsg);
+            onExitRoom(req);
         } else if (msgType == Util.msgType.MatchRoomStart) {
-            onStartRoom(sendMsg);
+            onStartRoom(req);
         } else if (msgType == Util.msgType.MatchRoomStatus) {
-            onStatusRoom(sendMsg);
+            onStatusRoom(req);
         }
     }
 
-    private void onCreateRoom(JSONObject message, Ukcp kcp) {
-        int uid = message.getInt("uid");
-        String roomId = message.getStr("room_id");
+    private void onCreateRoom(ReqRoomMsg req, Ukcp kcp) {
+        int uid = req.getUid();
+        String roomId = req.getRoom_id();
         String id = uid + "," + roomId;
         kcpSet.put(id, kcp);
-        String token = message.getStr("token");
+        String token = req.getToken();
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomCreate);
         data.putOpt("uid", uid);
@@ -114,8 +119,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 421);
         } else {
-            int eid = message.getInt("eid");
-            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, eid, true);
+            UserModel userModel = userService.getUserByUid(uid);
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, userModel.getEid(), true);
             ArrayList<RespMatchRoomPlayer> list = new ArrayList<>();
             list.add(info);
             MatchRoomKCPController.roomMap.put(roomId, list);
@@ -125,12 +130,12 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         sendToUser(data, roomId);
     }
 
-    private void onJoinRoom(JSONObject message, Ukcp kcp) {
-        int uid = message.getInt("uid");
-        String roomId = message.getStr("room_id");
+    private void onJoinRoom(ReqRoomMsg req, Ukcp kcp) {
+        int uid = req.getUid();
+        String roomId = req.getRoom_id();
         String id = uid + "," + roomId;
         kcpSet.put(id, kcp);
-        String token = message.getStr("token");
+        String token = req.getToken();
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
         int maxNum = 2;
@@ -141,8 +146,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         } else if (MatchRoomKCPController.roomMap.get(roomId).size() >= maxNum) {
             data.putOpt("code", 423);
         } else {
-            int eid = message.getInt("eid");
-            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, eid, false);
+            UserModel userModel = userService.getUserByUid(uid);
+            RespMatchRoomPlayer info = matchClassService.toRespMatchRoom(uid, userModel.getEid(), false);
             MatchRoomKCPController.roomMap.get(roomId).add(info);
             data.putOpt("code", 200);
         }
@@ -150,8 +155,8 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         sendToUser(data, roomId);
     }
 
-    private void onStatusRoom(JSONObject message) {
-        String roomId = message.getStr("room_id");
+    private void onStatusRoom(ReqRoomMsg req) {
+        String roomId = req.getRoom_id();
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStatus);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
@@ -167,16 +172,16 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         sendToUser(data, roomId);
     }
 
-    private void onExitRoom(JSONObject message) {
-        int uid = message.getInt("uid");
-        String roomId = message.getStr("room_id");
+    private void onExitRoom(ReqRoomMsg req) {
+        int uid = req.getUid();
+        String roomId = req.getRoom_id();
         String id = uid + "," + roomId;
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomExit);
         if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
             data.putOpt("code", 404);
         } else {
-            data.putOpt("exit_uid", message.getInt("uid"));
+            data.putOpt("exit_uid", uid);
             JSONArray jsonArray = new JSONArray();
             playerLists = MatchRoomKCPController.roomMap.get(roomId);
             // 不能在此处删除此Player在roomMap的数据，因为一会还需要发送给此玩家发消息
@@ -193,9 +198,9 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         exitRoom(id);
     }
 
-    private void onStartRoom(JSONObject message) {
-        String roomId = message.getStr("room_id");
-        int mapCid = message.getInt("cid");
+    private void onStartRoom(ReqRoomMsg req) {
+        String roomId = req.getRoom_id();
+        int mapCid = req.getCid();
         MatchClassModel infoModel = matchClassService.createOneMatch(mapCid, roomId);
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomStart);

@@ -93,15 +93,16 @@ public class MatchRoomWebSocket {
     public void onMessage(String message, Session session) {
         log.info("Match Room onMessage : " + message);
         ReqRoomMsg req = JSONUtil.toBean(message, ReqRoomMsg.class);
-        if (req.getMsg_type() == Util.msgType.MatchRoomCreate) {
+        int msgType = req.getMsg_type();
+        if (msgType == Util.msgType.MatchRoomCreate) {
             onCreateRoom(req);
-        } else if (req.getMsg_type()  == Util.msgType.MatchRoomJoin) {
+        } else if (msgType == Util.msgType.MatchRoomJoin) {
             onJoinRoom(req);
-        } else if (req.getMsg_type()  == Util.msgType.MatchRoomExit) {
+        } else if (msgType == Util.msgType.MatchRoomExit) {
             onExitRoom();
-        } else if (req.getMsg_type()  == Util.msgType.MatchRoomStart) {
+        } else if (msgType == Util.msgType.MatchRoomStart) {
             onStartRoom(req);
-        } else if (req.getMsg_type()  == Util.msgType.MatchRoomStatus) {
+        } else if (msgType == Util.msgType.MatchRoomStatus) {
             onStatusRoom(req);
         }
     }
