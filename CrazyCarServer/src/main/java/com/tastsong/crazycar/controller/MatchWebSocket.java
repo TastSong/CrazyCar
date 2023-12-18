@@ -27,8 +27,8 @@ public class MatchWebSocket {
 	//静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，可以使用Map来存放，其中Key可以为用户标识
-    private static ConcurrentHashMap<String, MatchWebSocket> webSocketSet = new ConcurrentHashMap<String, MatchWebSocket>();
-    private static ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<String, JSONObject>();
+    private static ConcurrentHashMap<String, MatchWebSocket> webSocketSet = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session WebSocketsession;
     //当前发消息的人员编号
@@ -43,7 +43,7 @@ public class MatchWebSocket {
  
     @OnClose
     public void onClose() {
-        if (!id.equals("")) {
+        if (!id.isEmpty()) {
             webSocketSet.remove(id);  //从set中删除
             createPlayerMsgMap.remove(id);
             subOnlineCount();           //在线数减1
@@ -73,7 +73,7 @@ public class MatchWebSocket {
         		  webSocketSet.get(key).sendMessage(message);
         	  }              
           } catch (IOException e) {
-              e.printStackTrace();
+              log.info("Match Websocket sendToUser " + e.getMessage());
           }
        }     
     }
@@ -94,8 +94,7 @@ public class MatchWebSocket {
 
     @OnError
     public void onError(Session session, Throwable error) {
-        log.info("Match Websocket onError");
-        error.printStackTrace();
+        log.info("Match Websocket onError " + error.getMessage());
     }
 
     private void sendMessage(JSONObject message) throws IOException {
