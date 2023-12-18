@@ -3,7 +3,7 @@ package com.tastsong.crazycar.controller;
 import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.dto.req.ReqMatchInfo;
 import com.tastsong.crazycar.dto.req.ReqResult;
-import com.tastsong.crazycar.dto.resp.RespResult;
+import com.tastsong.crazycar.dto.resp.RespTimeTrailResult;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class TimeTrialController {
         }
 
         int limitTime = timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getLimit_time();
-        RespResult resp = new RespResult();
+        RespTimeTrailResult resp = new RespTimeTrailResult();
         if (recordModel.getComplete_time() > 0 && recordModel.getComplete_time() < limitTime) {
             resp.set_win(true);
             resp.setComplete_time(recordModel.getComplete_time());

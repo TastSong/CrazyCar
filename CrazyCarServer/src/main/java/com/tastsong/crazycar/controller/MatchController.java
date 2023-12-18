@@ -1,5 +1,7 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqResult;
+import com.tastsong.crazycar.dto.resp.RespTimeTrailResult;
 import com.tastsong.crazycar.model.MatchClassModel;
 import com.tastsong.crazycar.service.MatchClassService;
 import com.tastsong.crazycar.service.MatchMapService;
@@ -14,11 +16,11 @@ import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.MatchRecordModel;
 
-import cn.hutool.json.JSONObject;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -38,34 +40,34 @@ public class MatchController {
     }
     
     @PostMapping(value = "/Result")
-    public Object getResult(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object getResult(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqResult req) throws Exception {
         MatchRecordModel recordModel = new MatchRecordModel();
         recordModel.uid = Util.getUidByToken(token);
-        recordModel.cid = body.getInt("cid");
-        recordModel.complete_time = body.getInt("complete_time");
+        recordModel.cid = req.getCid();
+        recordModel.complete_time = req.getComplete_time();
         recordModel.record_time = (int) (System.currentTimeMillis()/1000);
         if(recordModel.cid == 0 || recordModel.complete_time == 0){
             return Result.failure(ResultCode.RC404);
         }
         MatchClassModel matchClassModel = matchClassService.getMatchClassByCid(recordModel.cid);
         int limitTime = matchClassModel.getLimit_time();
-        JSONObject data = new JSONObject();
+        RespTimeTrailResult resp = new RespTimeTrailResult();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
-            data.putOpt("is_win", true);
-            data.putOpt("complete_time", recordModel.complete_time);
+            resp.set_win(true);
+            resp.setComplete_time(recordModel.getComplete_time());
         } else {
-            data.putOpt("is_win", false);
-            data.putOpt("complete_time", -1);
+            resp.set_win(false);
+            resp.setComplete_time(-1);
         }
         boolean isBreakRecord = matchRecordService.isBreakRecord(recordModel);
-        data.putOpt("is_break_record", isBreakRecord);
-        data.putOpt("reward", isBreakRecord ? matchClassModel.getStar() : 0);
+        resp.set_break_record(isBreakRecord);
+        resp.setReward(isBreakRecord ? matchClassModel.getStar() : 0);
         if (isBreakRecord) {
             matchClassService.giveReward(recordModel.uid, recordModel.cid);
         }
         matchRecordService.insertRecord(recordModel);
-        
-        data.putOpt("rank", matchRecordService.getMatchRankListByCid(recordModel.cid));
-        return data;
+
+        resp.setRank(matchRecordService.getMatchRankListByCid(recordModel.cid));
+        return resp;
     }
 }

@@ -6,14 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Data
-public class RespResult {
+public class RespMatchResult {
     private int complete_time;
     @JsonProperty("is_win")
     private boolean is_win;
