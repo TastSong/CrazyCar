@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqEnterGame;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import com.tastsong.crazycar.service.MatchRecordService;
 import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @Slf4j
@@ -37,11 +40,11 @@ public class GameController {
     private UserService userService;
 
     @PostMapping(value = "/EnterGame")
-    public Object enterGame(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body)  throws Exception{
+    public Object enterGame(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqEnterGame req)  throws Exception{
         int uid = Util.getUidByToken(token);
-        int cid = body.getInt("cid");
-		GameType gameType = GameType.values()[body.getInt("GameType")];
-		NetType netType = NetType.values()[body.getInt("NetType")];
+        int cid = req.getCid();
+		GameType gameType = GameType.values()[req.getGameType()];
+		NetType netType = NetType.values()[req.getNetType()];
 
         JSONObject data = new JSONObject();
 		if (gameType == GameType.Match){
@@ -52,12 +55,11 @@ public class GameController {
 			if(netType == NetType.WebSocket){
 				log.info("EnterRoom cid = " + cid + " GameType = " + gameType.name() + " NetType = " + netType.name());
 				data.putOpt("num", MatchWebSocket.getOnlineCount());
-                return data;
-			} else{
+            } else{
 				data.putOpt("num", 0);
-                return data;
-			}	
-		} else{
+            }
+            return data;
+        } else{
 			if(timeTrialClassService.hasClass(uid, cid)) {
                 data.putOpt("num", 0);
                 return data;
