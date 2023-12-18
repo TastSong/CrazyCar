@@ -35,16 +35,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping(value = "/v2/KCP")
 public class MatchRoomKCPController extends HttpServlet implements KcpListener {
-    private static final long serialVersionUID = 1L;
     private boolean isInit = false;
-    private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
-    private static ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
+    private static final ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
     private static int onlineCount = 0;
-    private int maxNum = 2;
-    private EquipService equipService;
-    private MatchRecordService matchRecordService;
     private MatchClassService matchClassService;
-    private UserService userService;
     
     private ArrayList<RespMatchRoomPlayer> playerLists = new ArrayList<RespMatchRoomPlayer>();
 
@@ -82,10 +77,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
     public void onConnected(Ukcp uKcp) {
         onlineCount++;
         ApplicationContext act = ApplicationContextRegister.getApplicationContext();
-        matchRecordService = act.getBean(MatchRecordService.class);
-        equipService = act.getBean(EquipService.class);
         matchClassService = act.getBean(MatchClassService.class);
-        userService = act.getBean(UserService.class);
         log.info("Connected onlineCount = " + onlineCount);
     }
 
@@ -141,6 +133,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         String token = message.getStr("token");
         JSONObject data = new JSONObject();
         data.putOpt("msg_type", Util.msgType.MatchRoomJoin);
+        int maxNum = 2;
         if (!Util.isLegalToken(token)) {
             data.putOpt("code", 422);
         } else if (!MatchRoomKCPController.roomMap.containsKey(roomId)) {
@@ -235,7 +228,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
 
     @Override
     public void handleException(Throwable ex, Ukcp kcp) {
-        ex.printStackTrace();
+        log.info(ex.getMessage());
     }
 
     @Override
