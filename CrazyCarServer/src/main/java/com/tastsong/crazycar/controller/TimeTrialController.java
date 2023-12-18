@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.tastsong.crazycar.dto.req.ReqMatchInfo;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONObject;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v2/TimeTrial")
@@ -31,8 +34,8 @@ public class TimeTrialController {
     private UserService userService;
 
     @PostMapping(value = "/Rank")
-    public Object getRank(@RequestBody JSONObject body) throws Exception {
-        int cid = body.getInt("cid");
+    public Object getRank(@Valid @RequestBody ReqMatchInfo req) throws Exception {
+        int cid = req.getCid();
         return timeTrialRecordService.getTimeTrialRankListByCid(cid);
     }
 
@@ -43,25 +46,19 @@ public class TimeTrialController {
     }
 
     @PostMapping(value = "/BuyClass")
-    public Object budClass(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object budClass(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqMatchInfo req) throws Exception {
         int uid = Util.getUidByToken(token);
-        if (body != null && body.containsKey("cid")) {
-            int cid = body.getInt("cid");
-            JSONObject data = new JSONObject();
-            if (timeTrialClassService.hasClass(uid, cid)) {
-                System.out.print("++++++++ isHasClass ");
-                data.putOpt("star", userService.getUserStar(uid));
-                return data;
-            } else if (timeTrialClassService.canBuyClass(uid, cid)) {
-                timeTrialClassService.buyClass(uid, cid);
-                System.out.print("++++++++ buyClass ");
-                data.putOpt("star", userService.getUserStar(uid));
-                return data;
-            } else {
-                return Result.failure(ResultCode.RC423);
-            }
+        int cid = req.getCid();
+        JSONObject data = new JSONObject();
+        if (timeTrialClassService.hasClass(uid, cid)) {
+            System.out.print("++++++++ isHasClass ");
+            return userService.getUserByUid(uid);
+        } else if (timeTrialClassService.canBuyClass(uid, cid)) {
+            timeTrialClassService.buyClass(uid, cid);
+            System.out.print("++++++++ buyClass ");
+            return userService.getUserByUid(uid);
         } else {
-            return Result.failure(ResultCode.RC404);
+            return Result.failure(ResultCode.RC423, "购买失败");
         }
     }
 
