@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.req.ReqEquip;
 import com.tastsong.crazycar.dto.resp.RespEquipList;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 
 import cn.hutool.json.JSONObject;
+
+import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
@@ -36,24 +39,17 @@ public class EquipController {
     }
 
     @PostMapping(value = "/Buy")
-    public Object buyEquip(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception{
-		JSONObject data = new JSONObject();
-		if (body != null && body.containsKey("eid")) {
-            int uid = Util.getUidByToken(token);
-			int eid = body.getInt("eid");
-			if (equipService.hasEquip(uid, eid)) {
-				data.putOpt("star", userService.getUserStar(uid));
-                return data;
-			} else if (equipService.canBuyEquip(uid, eid)) {
-				equipService.bugEquip(uid, eid);
-				data.putOpt("star", userService.getUserStar(uid));
-                return data;
-			} else {
-                return Result.failure(ResultCode.RC423);
-			}
-		} else {
-            return Result.failure(ResultCode.RC404);
-		}			
+    public Object buyEquip(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqEquip req) throws Exception{
+        int uid = Util.getUidByToken(token);
+        int eid = req.getEid();
+        if (equipService.hasEquip(uid, eid)) {
+            return userService.getUserByUid(uid);
+        } else if (equipService.canBuyEquip(uid, eid)) {
+            equipService.bugEquip(uid, eid);
+            return userService.getUserByUid(uid);
+        } else {
+            return Result.failure(ResultCode.RC423, "购买失败");
+        }
     }
 
     @PostMapping(value = "/Change")
