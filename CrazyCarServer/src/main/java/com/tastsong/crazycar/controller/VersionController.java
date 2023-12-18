@@ -17,6 +17,8 @@ import com.tastsong.crazycar.common.ResultCode;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
+
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1")
@@ -26,7 +28,7 @@ public class VersionController {
     private VersionService versionService;
 
     @PostMapping(value = "/ForcedUpdating")
-    public Object forcedUpdating(@RequestBody ReqUpdatingInfo req) throws Exception {
+    public Object forcedUpdating(@Valid @RequestBody ReqUpdatingInfo req) throws Exception {
 		if (!ObjUtil.isEmpty(req) && !StrUtil.isEmpty(req.getPlatform()) && !StrUtil.isEmpty(req.getVersion())) {
 			String version = req.getVersion();
 			String platform = req.getPlatform();
