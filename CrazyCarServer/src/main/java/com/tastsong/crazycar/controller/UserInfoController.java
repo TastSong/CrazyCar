@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.tastsong.crazycar.dto.req.ReqUpdateUserPassword;
 import com.tastsong.crazycar.dto.req.ReqUserInfo;
 import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.service.UserLoginRecordService;
@@ -45,9 +46,9 @@ public class UserInfoController {
     }
 
     @PostMapping(value = "/ModifyPassword")
-    public Object ModifyPassword(@RequestBody JSONObject body, @RequestHeader(Util.TOKEN) String token) throws Exception{
+    public Object ModifyPassword(@Valid @RequestBody ReqUpdateUserPassword req, @RequestHeader(Util.TOKEN) String token) throws Exception{
         int uid = Util.getUidByToken(token);
-        String password = body.getStr("password");
+        String password = req.getPassword();
         if(password.length() >= 6){
             userService.changePassword(uid, password);
             return Result.success();
