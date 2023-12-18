@@ -2,6 +2,8 @@ package com.tastsong.crazycar.controller;
 
 import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.dto.req.ReqMatchInfo;
+import com.tastsong.crazycar.dto.req.ReqResult;
+import com.tastsong.crazycar.dto.resp.RespResult;
 import com.tastsong.crazycar.service.TimeTrialClassService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,38 +65,38 @@ public class TimeTrialController {
     }
 
     @PostMapping(value = "/Result")
-    public Object getResult(@RequestHeader(Util.TOKEN) String token, @RequestBody JSONObject body) throws Exception {
+    public Object getResult(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqResult req) throws Exception {
         TimeTrialRecordModel recordModel = new TimeTrialRecordModel();
         recordModel.setUid(Util.getUidByToken(token));
-        recordModel.setCid(body.getInt("cid"));
-        recordModel.setComplete_time(body.getInt("complete_time"));
+        recordModel.setCid(req.getCid());
+        recordModel.setComplete_time(req.getComplete_time());
         recordModel.setRecord_time(DateUtil.currentSeconds());
         if(recordModel.getCid() == 0 || recordModel.getComplete_time() == 0){
             return Result.failure(ResultCode.RC404);
         }
 
         int limitTime = timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getLimit_time();
-        JSONObject data = new JSONObject();
+        RespResult resp = new RespResult();
         if (recordModel.getComplete_time() > 0 && recordModel.getComplete_time() < limitTime) {
-            data.putOpt("is_win", true);
-            data.putOpt("complete_time", recordModel.getComplete_time());
+            resp.set_win(true);
+            resp.setComplete_time(recordModel.getComplete_time());
         } else {
-            data.putOpt("is_win", false);
-            data.putOpt("complete_time", -1);
+            resp.set_win(false);
+            resp.setComplete_time(-1);
         }
         boolean isBreakRecord = timeTrialRecordService.isBreakRecord(recordModel);
-        data.putOpt("is_break_record", isBreakRecord);
-        data.putOpt("reward", isBreakRecord ? timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getStar() : 0);
+        resp.set_break_record(isBreakRecord);
+        resp.setReward(isBreakRecord ? timeTrialClassService.getTimeTrialClass(recordModel.getCid()).getStar() : 0);
         if (isBreakRecord) {
             timeTrialClassService.giveReward(recordModel.getUid(), recordModel.getCid());
         }
         timeTrialRecordService.insertRecord(recordModel);
         
         if (isBreakRecord) {
-            data.putOpt("rank", timeTrialRecordService.getRankByUid(recordModel.getUid(), recordModel.getCid()));
+            resp.setRank(timeTrialRecordService.getRankByUid(recordModel.getUid(), recordModel.getCid()));
         } else {
-            data.putOpt("rank", -1);
+            resp.setRank(-1);
         }
-        return data;
+        return resp;
     }
 }
