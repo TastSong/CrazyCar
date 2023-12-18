@@ -169,7 +169,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             }, type: ConfirmAlertType.Single);
             this.SendEvent(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         } else if (code == 200) {
-            int exitUid = (int)recJD["exit_uid"];
+            JsonData data = recJD["data"];
+            int exitUid = (int)data["exit_uid"];
             if (exitUid == this.GetModel<IUserModel>().Uid) {
                 this.SendEvent<MatchRoomExitEvent>();
             } else if (this.GetModel<IMatchModel>().MemberInfoDic[exitUid].isHouseOwner) {
@@ -181,7 +182,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Members of the exit");
                 this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                JsonData players = recJD["players"];
+                JsonData players = data["players"];
                 var infos = this.GetModel<IMatchModel>().MemberInfoDic;
                 infos.Clear();
                 for (int i = 0; i < players.Count; i++) {
@@ -223,7 +224,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnStatusMsg = " + recJD.ToJson());
         if (code == 200) {
-            JsonData players = recJD["players"];
+            JsonData players = recJD["data"];
             var infos = this.GetModel<IMatchModel>().MemberInfoDic;
             infos.Clear();
             bool hasHouseOwner = false;
@@ -262,7 +263,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         Debug.Log("OnStartMsg = " + recJD.ToJson());
         int code = (int)recJD["code"];
         if (code == 200) {
-            this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD);
+            this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD["data"]);
             this.SendEvent<MatchRoomStartEvent>();
         } else {
             WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");

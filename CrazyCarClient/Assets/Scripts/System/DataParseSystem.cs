@@ -166,7 +166,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     public void ParseSelectMatch(JsonData jsonData, Action success = null) {
         MatchInfo info = new MatchInfo();
         info.cid = (int)jsonData["cid"];
-        info.name = (string)jsonData["name"];
+        info.name = (string)jsonData["class_name"];
         info.star = (int)jsonData["star"];
         info.mapId = (int)jsonData["map_id"];
         info.limitTime = (int)jsonData["limit_time"];
