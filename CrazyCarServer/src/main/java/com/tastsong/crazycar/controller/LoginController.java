@@ -1,6 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqLogin;
+import com.tastsong.crazycar.dto.resp.RespConfig;
 import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +57,9 @@ public class LoginController {
 	}
 
 	@PostMapping (value = "/Register")
-	public Object register(@RequestBody JSONObject body) throws Exception{
-		String userName = body.getStr("UserName");
-		String password = body.getStr("Password");
+	public Object register(@Valid @RequestBody ReqLogin req) throws Exception{
+		String userName = req.getUserName();
+		String password = req.getPassword();
 		log.info("Register : UserName = " + userName + "; password  = " + password);
 		if (userService.isExistsUser(userName)){
 			return Result.failure(ResultCode.RC423);
@@ -74,8 +75,8 @@ public class LoginController {
 
 	@PostMapping(value = "/Config")
 	public Object config() throws Exception{
-		JSONObject data = new JSONObject();
-		data.putOpt("avatars", loginService.getAvatarList());
-		return data;
+		RespConfig resp = new RespConfig();
+		resp.setAvatars(loginService.getAvatarList());
+		return resp;
 	}
 }
