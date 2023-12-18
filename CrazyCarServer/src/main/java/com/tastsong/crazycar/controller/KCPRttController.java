@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import java.io.Serial;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServlet;
@@ -28,11 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping(value = "/v2/KCP")
 public class KCPRttController extends HttpServlet implements KcpListener {
-    private static final long serialVersionUID = 1L;
     private boolean isInit = false;
     private static int onlineCount = 0;
-    private static ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<String, Ukcp>();
-    private static ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<String, JSONObject>();
+    private static final ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, JSONObject> createPlayerMsgMap = new ConcurrentHashMap<String, JSONObject>();
 
     private Ukcp uKcp;
     // 当前发消息的人员编号
@@ -127,7 +127,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
     public void handleClose(Ukcp uKcp) {
         log.info("handleClose " + Snmp.snmp.toString());
         Snmp.snmp = new Snmp();
-        if (!id.equals("")) {
+        if (!id.isEmpty()) {
             kcpSet.remove(id);  //从set中删除
             createPlayerMsgMap.remove(id);
             onlineCount--;           //在线数减1
