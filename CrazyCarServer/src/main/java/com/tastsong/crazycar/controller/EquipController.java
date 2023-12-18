@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import com.tastsong.crazycar.dto.resp.RespEquipList;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,10 +29,10 @@ public class EquipController {
     @PostMapping(value = "/Detail")
     public Object getEquipDetail(@RequestHeader(Util.TOKEN) String token) throws Exception{
         int uid = Util.getUidByToken(token);
-        JSONObject data = new JSONObject();
-        data.putOpt("equips", equipService.getEquipDetail(uid));
-        data.putOpt("curEid", userService.getUserByUid(uid).getEid());
-        return data;
+        RespEquipList resp = new RespEquipList();
+        resp.setEquips(equipService.getEquipDetail(uid));
+        resp.setCurEid(userService.getUserByUid(uid).getEid());
+        return resp;
     }
 
     @PostMapping(value = "/Buy")
