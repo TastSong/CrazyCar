@@ -21,9 +21,9 @@ public class MatchRecordModel {
     @Id  //标注主键
     @TableId(type = IdType.AUTO) //mybatis-plus注解
     @GeneratedValue(strategy = GenerationType.IDENTITY) //id自增策略
-    public long id;
-    public int uid;
-    public int cid;
-    public int complete_time;
-    public int record_time;
+    private long id;
+    private int uid;
+    private int cid;
+    private int complete_time;
+    private long record_time;
 }

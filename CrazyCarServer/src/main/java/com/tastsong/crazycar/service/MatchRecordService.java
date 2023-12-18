@@ -23,15 +23,15 @@ public class MatchRecordService {
     private MatchRecordMapper matchRecordMapper;
 
     public boolean isBreakRecord(MatchRecordModel recordModel) {
-        if (recordModel.complete_time == -1) {
+        if (recordModel.getComplete_time() == -1) {
 			return false;
 		} 
-        int minTime = getMiniCompleteTime(recordModel.uid, recordModel.cid);
-		if (minTime == -1 && recordModel.complete_time != -1){
+        int minTime = getMiniCompleteTime(recordModel.getUid(), recordModel.getCid());
+		if (minTime == -1 && recordModel.getComplete_time() != -1){
 			return true;
 		}		
 		
-		return recordModel.complete_time < minTime;
+		return recordModel.getComplete_time() < minTime;
     }
 
     // 获取记录中自己最好的成绩

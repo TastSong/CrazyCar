@@ -1,5 +1,6 @@
 package com.tastsong.crazycar.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.tastsong.crazycar.dto.req.ReqResult;
 import com.tastsong.crazycar.dto.resp.RespMatchResult;
 import com.tastsong.crazycar.model.MatchClassModel;
@@ -42,17 +43,17 @@ public class MatchController {
     @PostMapping(value = "/Result")
     public Object getResult(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqResult req) throws Exception {
         MatchRecordModel recordModel = new MatchRecordModel();
-        recordModel.uid = Util.getUidByToken(token);
-        recordModel.cid = req.getCid();
-        recordModel.complete_time = req.getComplete_time();
-        recordModel.record_time = (int) (System.currentTimeMillis()/1000);
-        if(recordModel.cid == 0 || recordModel.complete_time == 0){
+        recordModel.setUid(Util.getUidByToken(token));
+        recordModel.setCid(req.getCid());
+        recordModel.setComplete_time(req.getComplete_time());
+        recordModel.setRecord_time(DateUtil.currentSeconds());
+        if(recordModel.getCid() == 0 || recordModel.getComplete_time() == 0){
             return Result.failure(ResultCode.RC404);
         }
-        MatchClassModel matchClassModel = matchClassService.getMatchClassByCid(recordModel.cid);
+        MatchClassModel matchClassModel = matchClassService.getMatchClassByCid(recordModel.getCid());
         int limitTime = matchClassModel.getLimit_time();
         RespMatchResult resp = new RespMatchResult();
-        if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
+        if (recordModel.getComplete_time() > 0 && recordModel.getComplete_time() < limitTime) {
             resp.set_win(true);
             resp.setComplete_time(recordModel.getComplete_time());
         } else {
@@ -63,11 +64,11 @@ public class MatchController {
         resp.set_break_record(isBreakRecord);
         resp.setReward(isBreakRecord ? matchClassModel.getStar() : 0);
         if (isBreakRecord) {
-            matchClassService.giveReward(recordModel.uid, recordModel.cid);
+            matchClassService.giveReward(recordModel.getUid(), recordModel.getCid());
         }
         matchRecordService.insertRecord(recordModel);
 
-        resp.setRank(matchRecordService.getMatchRankListByCid(recordModel.cid));
+        resp.setRank(matchRecordService.getMatchRankListByCid(recordModel.getCid()));
         return resp;
     }
 }
