@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -17,5 +20,5 @@ public class RespMatchResult {
     @JsonProperty("is_break_record")
     private boolean is_break_record;
     private int reward;
-    private int rank;
+    private List<RespMatchRank> rank = new ArrayList<>();
 }
