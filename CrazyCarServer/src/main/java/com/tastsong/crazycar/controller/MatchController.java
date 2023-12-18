@@ -1,7 +1,7 @@
 package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqResult;
-import com.tastsong.crazycar.dto.resp.RespTimeTrailResult;
+import com.tastsong.crazycar.dto.resp.RespMatchResult;
 import com.tastsong.crazycar.model.MatchClassModel;
 import com.tastsong.crazycar.service.MatchClassService;
 import com.tastsong.crazycar.service.MatchMapService;
@@ -51,7 +51,7 @@ public class MatchController {
         }
         MatchClassModel matchClassModel = matchClassService.getMatchClassByCid(recordModel.cid);
         int limitTime = matchClassModel.getLimit_time();
-        RespTimeTrailResult resp = new RespTimeTrailResult();
+        RespMatchResult resp = new RespMatchResult();
         if (recordModel.complete_time > 0 && recordModel.complete_time < limitTime) {
             resp.set_win(true);
             resp.setComplete_time(recordModel.getComplete_time());
