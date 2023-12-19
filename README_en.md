@@ -97,8 +97,6 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 ## Contributors
 
-[liangxie](https://github.com/liangxieq)
-
 [CherryWhite](https://github.com/cherry-white)
 
 You can submit questions in the  [pull requests](https://github.com/TastSong/CrazyCar/pulls) or [issues](https://github.com/TastSong/CrazyCar/issues) format.
