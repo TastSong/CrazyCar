@@ -107,8 +107,6 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 ## 贡献者
 
-[liangxie](https://github.com/liangxieq)
-
 [CherryWhite](https://github.com/cherry-white)
 
 欢迎任何形式的贡献，你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。
