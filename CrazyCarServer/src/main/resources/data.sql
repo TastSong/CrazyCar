@@ -114,7 +114,7 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES (1,'Tast','96e79218965eb72c92a549dd5a330112',1629544628,2,99,1,1),
                               (2,'song','96e79218965eb72c92a549dd5a330112',1629544634,2,88,1,2),
-                              (3,'∞¢ÀŒ–°Ωø∆ﬁ','96e79218965eb72c92a549dd5a330112',1629544655,3,66,1,3),
+                              (3,'ÈòøÂÆãÂ∞èÂ®áÂ¶ª','96e79218965eb72c92a549dd5a330112',1629544655,3,66,1,3),
                               (4,'Lory','96e79218965eb72c92a549dd5a330112',1629544666,4,12,0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -318,8 +318,8 @@ CREATE TABLE `match_class` (
 
 LOCK TABLES `match_class` WRITE;
 /*!40000 ALTER TABLE `match_class` DISABLE KEYS */;
-INSERT INTO `match_class` VALUES (1,2,0,'1111',60,'ª˘µÿø®Õ®',1,1633519470,1633519470),
-                                 (2,1,1,'0011',70,'º∏∫Œ∑Áπ‚',3,1633519472,1633519472),
+INSERT INTO `match_class` VALUES (1,2,0,'1111',60,'Âü∫Âú∞Âç°ÈÄö',1,1633519470,1633519470),
+                                 (2,1,1,'0011',70,'Âá†‰ΩïÈ£éÂÖâ',3,1633519472,1633519472),
                                  (3,2,0,'1121',120,'TastSong',1,1652146822,1652146792);
 /*!40000 ALTER TABLE `match_class` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -349,12 +349,12 @@ CREATE TABLE `match_map` (
 
 LOCK TABLES `match_map` WRITE;
 /*!40000 ALTER TABLE `match_map` DISABLE KEYS */;
-INSERT INTO `match_map` VALUES (1,2,0,0,88,'ª˘µÿø®Õ®',1),
-                               (2,14,1,1,96,'ÀÆ…œ¿÷‘∞',1),
-                               (3,3,2,0,80,'«˙’€«∞––',2),
-                               (4,22,3,0,100,'ÚÍ——≥€≥“',2),
-                               (5,4,4,0,90,'Ì∆Ì¬«∞––',2),
-                               (6,1,5,0,90,'º∏∫Œ∑Áπ‚',2);
+INSERT INTO `match_map` VALUES (1,2,0,0,88,'Âü∫Âú∞Âç°ÈÄö',1),
+                               (2,14,1,1,96,'Ê∞¥‰∏ä‰πêÂõ≠',1),
+                               (3,3,2,0,80,'Êõ≤ÊäòÂâçË°å',2),
+                               (4,22,3,0,100,'ËúøËúíÈ©∞È™ã',2),
+                               (5,4,4,0,90,'Á†•Á†∫ÂâçË°å',2),
+                               (6,1,5,0,90,'Âá†‰ΩïÈ£éÂÖâ',2);
 /*!40000 ALTER TABLE `match_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,12 +439,12 @@ CREATE TABLE `time_trial_class` (
 
 LOCK TABLES `time_trial_class` WRITE;
 /*!40000 ALTER TABLE `time_trial_class` DISABLE KEYS */;
-INSERT INTO `time_trial_class` VALUES (1,2,0,0,88,'ª˘µÿø®Õ®',2),
-                                      (2,14,1,1,96,'ÀÆ…œ¿÷‘∞',2),
-                                      (3,3,2,0,80,'«˙’€«∞––',2),
-                                      (4,22,3,0,100,'ÚÍ——≥€≥“',2),
-                                      (5,4,4,0,90,'Ì∆Ì¬«∞––',2),
-                                      (6,1,5,0,90,'º∏∫Œ∑Áπ‚',2);
+INSERT INTO `time_trial_class` VALUES (1,2,0,0,88,'Âü∫Âú∞Âç°ÈÄö',2),
+                                      (2,14,1,1,96,'Ê∞¥‰∏ä‰πêÂõ≠',2),
+                                      (3,3,2,0,80,'Êõ≤ÊäòÂâçË°å',2),
+                                      (4,22,3,0,100,'ËúøËúíÈ©∞È™ã',2),
+                                      (5,4,4,0,90,'Á†•Á†∫ÂâçË°å',2),
+                                      (6,1,5,0,90,'Âá†‰ΩïÈ£éÂÖâ',2);
 /*!40000 ALTER TABLE `time_trial_class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,13 +535,13 @@ CREATE TABLE IF NOT EXISTS  `user_login_record` (
 
 LOCK TABLES `user_login_record` WRITE;
 /*!40000 ALTER TABLE `user_login_record` DISABLE KEYS */;
-INSERT INTO `user_login_record` VALUES (1,1,1658471682,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (2,1,1658385282,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (3,2,1658288609,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (4,1,1658202210,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (5,3,1658202210,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (6,1,1658202210,'…Ω∂´£¨«‡µ∫','ios'),
-                                       (7,1,1658332801,'…Ω∂´£¨«‡µ∫','ios');
+INSERT INTO `user_login_record` VALUES (1,1,1658471682,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (2,1,1658385282,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (3,2,1658288609,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (4,1,1658202210,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (5,3,1658202210,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (6,1,1658202210,'Â±±‰∏úÔºåÈùíÂ≤õ','ios'),
+                                       (7,1,1658332801,'Â±±‰∏úÔºåÈùíÂ≤õ','ios');
 /*!40000 ALTER TABLE `user_login_record` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
