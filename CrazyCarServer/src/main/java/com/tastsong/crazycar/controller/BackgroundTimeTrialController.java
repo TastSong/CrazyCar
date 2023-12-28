@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.model.TimeTrialClassModel;
-import com.tastsong.crazycar.service.TimeTrialRecordService;
-
-import cn.hutool.json.JSONObject;
 
 import javax.validation.Valid;
 

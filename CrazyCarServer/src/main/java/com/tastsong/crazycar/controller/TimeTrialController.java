@@ -20,8 +20,6 @@ import com.tastsong.crazycar.model.TimeTrialRecordModel;
 import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
-import cn.hutool.json.JSONObject;
-
 import javax.validation.Valid;
 
 @RestController
@@ -51,7 +49,6 @@ public class TimeTrialController {
     public Object budClass(@RequestHeader(Util.TOKEN) String token, @Valid @RequestBody ReqMatchInfo req) throws Exception {
         int uid = Util.getUidByToken(token);
         int cid = req.getCid();
-        JSONObject data = new JSONObject();
         if (timeTrialClassService.hasClass(uid, cid)) {
             System.out.print("++++++++ isHasClass ");
             return userService.getUserByUid(uid);

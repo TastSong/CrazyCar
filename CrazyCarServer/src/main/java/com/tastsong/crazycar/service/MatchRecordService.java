@@ -3,13 +3,10 @@ package com.tastsong.crazycar.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tastsong.crazycar.dto.resp.RespDataStatistics;
 import com.tastsong.crazycar.dto.resp.RespMatchRank;
 import com.tastsong.crazycar.model.*;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

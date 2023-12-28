@@ -3,6 +3,7 @@ package com.tastsong.crazycar.common;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 public class Result<T> implements Serializable {
@@ -71,12 +72,12 @@ public class Result<T> implements Serializable {
         return success(code, message, null);
     }
 
-    public static <T> Result<T> success(int code,String message,T data) {
-        Result<T> result = new Result<T>();
+    public static <T> Result<T> success(int code, String message, T data) {
+        Result<T> result = new Result<>();
         result.setCode(code);
         result.setMsg(message);
         result.setSuccess(true);
-        result.setData(data != null ? data : (T)"");
+        result.setData(Optional.ofNullable(data).orElse(null));
         return result;
     }
 
@@ -124,7 +125,7 @@ public class Result<T> implements Serializable {
         result.setCode(code);
         result.setMsg(message);
         result.setSuccess(false);
-        result.setData(data != null ? data : (T)"");
+        result.setData(Optional.ofNullable(data).orElse(null));
         return result;
     }
 

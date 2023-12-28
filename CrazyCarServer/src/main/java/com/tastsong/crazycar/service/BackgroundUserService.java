@@ -4,9 +4,7 @@ import java.util.List;
 
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tastsong.crazycar.dto.req.ReqCreateAdminUser;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,6 @@ import com.tastsong.crazycar.model.AdminUserModel;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 
-@Slf4j
 @Service
 public class BackgroundUserService {
     @Autowired

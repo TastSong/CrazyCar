@@ -2,7 +2,6 @@ package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqBackgroundLogin;
 import com.tastsong.crazycar.service.LoginService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +13,9 @@ import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
-import com.tastsong.crazycar.utils.Util;
-
-import cn.hutool.json.JSONObject;
 
 import javax.validation.Valid;
 
-@Slf4j
 @RestController
 @Scope("prototype")
 @RequestMapping(value = "/v1/Background")

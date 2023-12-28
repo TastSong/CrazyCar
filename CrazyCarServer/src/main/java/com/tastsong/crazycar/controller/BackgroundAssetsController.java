@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.model.AssetsUpdatingModel;
 import com.tastsong.crazycar.service.AssetsUpdatingService;
 
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-
 import javax.validation.Valid;
 
 @Slf4j
