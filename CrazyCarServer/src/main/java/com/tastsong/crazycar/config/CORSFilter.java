@@ -42,7 +42,13 @@ public class CORSFilter implements Filter{
             response.setHeader("Access-Control-Allow-Headers", "content-type, authorization");
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Max-Age", "3600");
-            filterChain.doFilter(servletRequest, servletResponse);
+            if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                // 对于OPTIONS预检请求直接返回204状态码，无需继续向下执行
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                // 对于非OPTIONS请求，让请求继续通过filter链条向下执行
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
         } catch (Exception e) {
             log.info("missing Token，or interface error：{}", request.getRequestURI());
             response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
