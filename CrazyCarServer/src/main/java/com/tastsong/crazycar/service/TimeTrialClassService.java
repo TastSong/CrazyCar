@@ -8,7 +8,6 @@ import com.tastsong.crazycar.dto.req.ReqUpdateTimeTrialClass;
 import com.tastsong.crazycar.dto.resp.RespTimeTrialClass;
 import com.tastsong.crazycar.mapper.TimeTrialClassMapper;
 import com.tastsong.crazycar.mapper.TimeTrialClassRecordMapper;
-import com.tastsong.crazycar.model.AvatarRecordModel;
 import com.tastsong.crazycar.model.TimeTrialClassModel;
 import com.tastsong.crazycar.model.TimeTrialClassRecordModel;
 import lombok.extern.slf4j.Slf4j;

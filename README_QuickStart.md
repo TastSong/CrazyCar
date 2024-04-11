@@ -23,7 +23,7 @@
 
 1. 用**Unity**(2021.3.9及以上)打开**CrazyCar -> CrazyCarClient**项目；
 
-1. 由于项目使用了**HybridCLR**，所以先配置项目的**IL2CPP**：打开菜单`HybridCLR/Installer`， 点击`安装`按钮进行安装，具体操作可以查看[HybridCLR (code-philosophy.com)](https://hybridclr.doc.code-philosophy.com/docs/intro)；**Assets->HotUpdate**文件夹为热更文件夹，热更的DLL打包好会放入**Assets->HotUpdateDll**，这些打包的时候都已经封装好了，直接执行菜单`Build/Remote`
+1. 由于项目使用了**HybridCLR**，所以先配置项目的**IL2CPP**：打开菜单**HybridCLR/Installer**， 点击`安装`按钮进行安装，具体操作可以查看[HybridCLR (code-philosophy.com)](https://hybridclr.doc.code-philosophy.com/docs/intro)；**Assets->HotUpdate**文件夹为热更文件夹，热更的DLL打包好会放入**Assets->HotUpdateDll**，这些打包的时候都已经封装好了，直接执行菜单`Build/Remote`
 
 2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 
@@ -57,8 +57,8 @@
 2. VS 2019
 4. JDK 17  *可高不可低*
 5. MySQL 8.0.26
-8. Nginx  1.20.1
-8. Nodejs 16.16.0  *不要使用18以上版本*
+8. Nginx  1.20.1 *用户部署热更资源*
+8. Nodejs 16.16.0  **不要使用18以上版本**
 
 ## 环境配置
 
@@ -66,7 +66,7 @@
 
   ```mermaid
   graph LR
-  start-->购买服务器-->配置Java环境-->配置Web服务器(Tomcat)-->配置Mysql
+  start-->购买服务器-->配置Java环境-->配置Web服务器(Nginx)-->配置Mysql
   ```
 
   

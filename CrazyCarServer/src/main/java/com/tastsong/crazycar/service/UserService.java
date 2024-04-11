@@ -4,7 +4,6 @@ import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.mapper.UserMapper;
-import com.tastsong.crazycar.model.UserLoginRecordModel;
 import com.tastsong.crazycar.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

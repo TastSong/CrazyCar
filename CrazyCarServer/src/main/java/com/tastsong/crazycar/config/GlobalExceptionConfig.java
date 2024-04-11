@@ -3,7 +3,6 @@ package com.tastsong.crazycar.config;
 
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
-@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionConfig {
 

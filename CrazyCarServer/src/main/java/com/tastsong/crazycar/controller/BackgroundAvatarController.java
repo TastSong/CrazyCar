@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.model.AvatarModel;
 import com.tastsong.crazycar.service.AvatarService;
 
-import cn.hutool.json.JSONObject;
-
 import javax.validation.Valid;
 import java.util.List;
 

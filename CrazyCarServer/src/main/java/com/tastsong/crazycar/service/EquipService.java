@@ -6,7 +6,6 @@ import java.util.List;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.tastsong.crazycar.dto.req.ReqUpdateEquip;
 import com.tastsong.crazycar.dto.resp.RespEquip;
 import com.tastsong.crazycar.mapper.EquipRecordMapper;

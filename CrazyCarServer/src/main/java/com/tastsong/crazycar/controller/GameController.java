@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import com.tastsong.crazycar.common.GameType;
 import com.tastsong.crazycar.common.NetType;
 import com.tastsong.crazycar.common.Result;
 import com.tastsong.crazycar.common.ResultCode;
-import com.tastsong.crazycar.service.MatchRecordService;
-import com.tastsong.crazycar.service.TimeTrialRecordService;
 import com.tastsong.crazycar.utils.Util;
 
 import javax.validation.Valid;
@@ -31,12 +28,8 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v2/Game")
 public class GameController {
     @Autowired
-    private TimeTrialRecordService timeTrialRecordService;
-    @Autowired
     private TimeTrialClassService timeTrialClassService;
 
-    @Autowired
-    private MatchRecordService matchRecordService;
     @Autowired
     private UserService userService;
 

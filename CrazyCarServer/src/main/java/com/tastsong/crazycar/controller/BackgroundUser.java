@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tastsong.crazycar.common.Result;
@@ -21,18 +20,14 @@ import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.model.AdminUserModel;
 import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.BackgroundUserService;
-import com.tastsong.crazycar.service.LoginService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
-@Slf4j
 @RequestMapping(value = "/v2/Background")
 public class BackgroundUser {
     @Autowired

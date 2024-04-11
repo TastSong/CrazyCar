@@ -2,7 +2,6 @@ package com.tastsong.crazycar.controller;
 
 import com.tastsong.crazycar.dto.req.ReqLogin;
 import com.tastsong.crazycar.dto.resp.RespConfig;
-import com.tastsong.crazycar.service.UserLoginRecordService;
 import com.tastsong.crazycar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +18,6 @@ import com.tastsong.crazycar.model.UserModel;
 import com.tastsong.crazycar.service.LoginService;
 import com.tastsong.crazycar.utils.Util;
 
-import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
@@ -33,8 +31,6 @@ public class LoginController {
 	private LoginService loginService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserLoginRecordService userLoginRecordService;
 
 	@PostMapping(value = "/Login")
 	public Object login(@Valid @RequestBody ReqLogin req) throws Exception {

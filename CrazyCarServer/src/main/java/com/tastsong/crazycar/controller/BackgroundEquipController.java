@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tastsong.crazycar.model.EquipModel;
 import com.tastsong.crazycar.service.EquipService;
 
-import cn.hutool.json.JSONObject;
-
 import javax.validation.Valid;
 
 @RestController

@@ -17,8 +17,6 @@ import com.tastsong.crazycar.common.ResultCode;
 import com.tastsong.crazycar.service.AvatarService;
 import com.tastsong.crazycar.utils.Util;
 
-import cn.hutool.json.JSONObject;
-
 import javax.validation.Valid;
 
 @Slf4j
