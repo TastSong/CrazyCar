@@ -47,7 +47,7 @@ public class MatchWebSocket {
             webSocketSet.remove(id);  //从set中删除
             createPlayerMsgMap.remove(id);
             subOnlineCount();           //在线数减1
-            log.info("onclose sum = " + getOnlineCount());
+            log.info("onclose sum = {}", getOnlineCount());
         }
     }
  
