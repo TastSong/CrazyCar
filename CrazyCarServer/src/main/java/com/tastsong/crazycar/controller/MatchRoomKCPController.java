@@ -156,7 +156,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
             MatchRoomKCPController.roomMap.get(roomId).add(info);
             resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        log.info("onJoinRoom : " + JSONUtil.toJsonStr(resp));
         sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 
