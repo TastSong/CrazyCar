@@ -55,7 +55,8 @@ public class MPlayer : MonoBehaviour, IController {
     
     // 消除移动时的顿挫感
     private Coroutine moveNetCarCor = null;
-    private float smoothSpeed = 1;
+    private float smoothSpeed = 4f;
+    private Vector3 currentVelocity = Vector3.zero;
 
     private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
@@ -138,6 +139,7 @@ public class MPlayer : MonoBehaviour, IController {
             yield return new WaitForSecondsRealtime(Time.deltaTime);
             transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * smoothSpeed);
             rig.velocity = Vector3.Lerp(rig.velocity, speed, Time.deltaTime * smoothSpeed);
+            rig.velocity = Vector3.SmoothDamp(rig.velocity, speed, ref currentVelocity, Time.deltaTime * smoothSpeed);
             time -= Time.deltaTime;
         }
     }
