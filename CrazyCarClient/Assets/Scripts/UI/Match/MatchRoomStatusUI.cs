@@ -91,7 +91,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
-        this.GetSystem<INetworkSystem>().CloseConnect();
+        this.GetSystem<IMatchRoomSystem>().MatchRoomClose();
         gameObject.SetActiveFast(false);
     }
 
@@ -101,12 +101,9 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         }
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
         this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid, () => {
+            this.GetSystem<IMatchRoomSystem>().MatchRoomClose();
             this.SendCommand(new EnterMatchCommand(matchInfo));
         });
-    }
-
-    private void OnDestroy() {
-        this.GetSystem<INetworkSystem>().CloseConnect();
     }
 
     public IArchitecture GetArchitecture() {
