@@ -48,6 +48,7 @@ public class UIController : MonoBehaviour, IController {
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
     private readonly string basePageUrl = "Assets/Prefabs/UIPage/";
+    private readonly string suffix = ".prefab";
 
     private void Awake() {
         this.RegisterEvent<HidePageEvent>(OnHidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -177,7 +178,7 @@ public class UIController : MonoBehaviour, IController {
 
     // 查找Resources中的路径
     private string GetPageUrlByType(UIPageType type) {
-        return basePageUrl + type.ToString() + ".prefab";
+        return basePageUrl + type.ToString() + suffix;
     }
 
     private void OnDestroy() {
