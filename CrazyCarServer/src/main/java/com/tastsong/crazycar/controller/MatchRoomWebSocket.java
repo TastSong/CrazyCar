@@ -70,6 +70,7 @@ public class MatchRoomWebSocket {
         if (!id.isEmpty()) {
             if (MatchRoomWebSocket.roomMap.containsKey(roomId)){
                 for(int i = 0;i < MatchRoomWebSocket.roomMap.get(roomId).size(); i ++){
+                    // 退出房间
                     if(MatchRoomWebSocket.roomMap.get(roomId).get(i).getUid() == curUid){
                         MatchRoomWebSocket.roomMap.get(roomId).remove(i);
                         if(MatchRoomWebSocket.roomMap.get(roomId).isEmpty()){
@@ -83,7 +84,7 @@ public class MatchRoomWebSocket {
             webSocketSet.remove(id); 
             id = "";
             subOnlineCount();           
-            log.info("Match Room onClose, num = " + getOnlineCount());
+            log.info("Match Room onClose, roomId = " + roomId + " num"+ getOnlineCount());
         }
     }
  
@@ -149,7 +150,7 @@ public class MatchRoomWebSocket {
             MatchRoomWebSocket.roomMap.get(roomId).add(info);
             resp.setCode(ResultCode.RC200.getCode());
         }
-        log.info("OnCreateRoom : " + JSONUtil.toJsonStr(resp));
+        log.info("onJoinRoom : " + JSONUtil.toJsonStr(resp));
         sendToUser(JSONUtil.toJsonStr(resp), roomId);
     }
 

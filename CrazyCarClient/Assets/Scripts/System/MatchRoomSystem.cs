@@ -13,6 +13,7 @@ public interface IMatchRoomSystem : ISystem {
     public void MatchRoomStatus();
     public void MatchRoomEixt();
     public void MatchRoomStart();
+    public void MatchRoomClose();
     public void OnCreateMsg(JsonData recJD);
     public void OnJoinMsg(JsonData recJD);
     public void OnStatusMsg(JsonData recJD);
@@ -135,6 +136,10 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         w.WriteObjectEnd();
         Debug.Log("MatchRoomStart : " + sb.ToString());
         this.GetSystem<INetworkSystem>().SendMsgToServer(sb.ToString());
+    }
+
+    public void MatchRoomClose() {
+        this.GetSystem<INetworkSystem>().CloseConnect();
     }
 
     public void OnCreateMsg(JsonData recJD) {
