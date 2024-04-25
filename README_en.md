@@ -78,7 +78,7 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 ## Connection
 :email: ： TastSong@163.com
 
-🐧：577016553
+QQ Group ：577016553
 
 ## Sample screenshots
 <div  align="center">  
