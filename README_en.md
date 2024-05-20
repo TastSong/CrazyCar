@@ -75,6 +75,32 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :roller_coaster: Route planning function, custom route
 
+### Future Support
+
+:star2: **Skill System**
+
+- Introduce a skill system allowing players to learn and upgrade various skills, enhancing game depth and strategy.
+
+:hammer_and_wrench: **Creative Workshop**
+
+- Players can customize tracks and vehicles and share them with the community.
+
+:handshake: **Friends System**
+
+- Add friends, private chat, and team up features to enhance social interaction among players.
+
+:art: **UI/UX Optimization**
+
+- Continuously optimize the user interface and user experience to improve overall operational smoothness.
+
+:robot: **AI Optimization**
+
+- Continuously improve AI intelligence and behavior, making it more challenging and engaging.
+
+:lock: **Data Security**
+
+- Strengthen the protection of user data to prevent data breaches and cheating.
+
 ## Connection
 :email: ： TastSong@163.com
 
