@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace MOBASkill 
 {
@@ -22,8 +23,12 @@ namespace MOBASkill
         {
             if (data.prefabName != null)
             {
-                data.skillPrefab = Resources.Load<GameObject>("SkillPrefab/"+data.prefabName);
-                data.skillIcon = Resources.Load<Sprite>("SkillIcon/" + data.skillIconName);
+                Addressables.LoadAssetAsync<GameObject>("Assets/AB/SkillPrefab/" + data.prefabName + ".prefab").Completed += (go) => {
+                    data.skillPrefab = go.Result;
+                };
+                Addressables.LoadAssetAsync<Sprite>("Assets/AB/SkillIcon/" + data.skillIconName + ".png").Completed += (sprite) => {
+                    data.skillIcon = sprite.Result;
+                };
                 data.owner = this.gameObject;
             }
         }

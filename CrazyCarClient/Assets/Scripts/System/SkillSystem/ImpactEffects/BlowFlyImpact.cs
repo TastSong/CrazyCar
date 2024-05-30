@@ -14,10 +14,11 @@ namespace MOBASkill
         }
         public void BlowFly(Transform transform) 
         {
-            //CharacterData cd = transform.GetComponent<CharacterData>();
-            //BuffManager.instance.AllBuffs[0].currentTarget = cd;
-            //cd.AddBuff(BuffManager.instance.AllBuffs[0]);
-            //Debug.Log(cd.name);
+            // 此处处理击飞效果 禁用被击飞对象功能
+            // CharacterData cd = transform.GetComponent<CharacterData>();
+            // BuffManager.instance.AllBuffs[0].currentTarget = cd;
+            // cd.AddBuff(BuffManager.instance.AllBuffs[0]);
+            // Debug.Log(cd.name);
         }
         IEnumerator ContinuousBlowFly(SkillDeployer deployer) 
         {
