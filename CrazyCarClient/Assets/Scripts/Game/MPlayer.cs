@@ -70,6 +70,24 @@ public class MPlayer : MonoBehaviour, IController {
     private Coroutine moveNetCarCor = null;
     private float smoothSpeed = 4f;
     private Vector3 currentVelocity = Vector3.zero;
+    
+    // MP 玩家的蓝量
+    private float mp = 100;
+    private float maxMp = 100;
+
+    public float Mp {
+        get {
+            return mp;
+        }
+        set {
+            mp = value;
+            if (mp > maxMp) {
+                mp = maxMp;
+            } else if (mp < 0) {
+                mp = 0;
+            }
+        }
+    }
 
     private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;

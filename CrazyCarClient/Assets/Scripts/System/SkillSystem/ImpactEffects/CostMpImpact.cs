@@ -9,7 +9,7 @@ namespace MOBASkill
         public void Execute(SkillDeployer deployer)
         {
             data = deployer.SkillData;
-            //data.owner.GetComponent<PlayerCharacter>().Mp -= data.costMp;
+            data.owner.GetComponent<MPlayer>().Mp -= data.costMp;
         }
     }
 }
