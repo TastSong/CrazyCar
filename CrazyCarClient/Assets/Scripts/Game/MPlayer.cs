@@ -21,7 +21,7 @@ public class MPlayer : MonoBehaviour, IController {
     public float jumpForce = 10;
     public float gravity = 20;
     //力的方向
-    private Vector3 forceDir_Horizontal;
+    private Vector3 forceDirHorizontal;
     private float verticalModified;         //前后修正系数
     //转弯相关 
     public bool isDrifting;
@@ -60,7 +60,7 @@ public class MPlayer : MonoBehaviour, IController {
 
     private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
-        forceDir_Horizontal = transform.forward;
+        forceDirHorizontal = transform.forward;
         rotationStream = rig.rotation;
 
         StopDrift();
@@ -153,13 +153,13 @@ public class MPlayer : MonoBehaviour, IController {
             verticalModified = -1;
         }
 
-        forceDir_Horizontal = m_DriftOffset * transform.forward;
+        forceDirHorizontal = m_DriftOffset * transform.forward;
     }
 
     //加力移动
     private void AddForceToMove() {
         //计算合力
-        Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
+        Vector3 tempForce = verticalModified * currentForce * forceDirHorizontal;
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this && !isGround) {
             tempForce = tempForce + gravity * Vector3.down;
