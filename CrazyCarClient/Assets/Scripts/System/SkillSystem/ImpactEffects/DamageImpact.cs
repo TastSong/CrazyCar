@@ -18,7 +18,7 @@ namespace MOBASkill
             do
             {
                 yield return new WaitForSeconds(data.attackInterval);
-                //float realDamage = data.attackNum + data.owner.GetComponent<PlayerCharacter>().PhysicalDamge * 1.2f;
+                float realDamage = data.attackNum;
                 bool isCrit = false;
                 switch (data.disappearType)
                 {
@@ -28,7 +28,7 @@ namespace MOBASkill
                             Debug.Log("攻击成功，销毁技能");
                             foreach (var e in data.attackTargets)
                             {
-                                //e.GetComponent<EnemyCharacter>().BeHit(realDamage,false);
+                                e.GetComponent<MPlayer>().BeHit(realDamage,false);
                             }
                             deployer.Destroy();
 
@@ -40,12 +40,11 @@ namespace MOBASkill
                         {
                             if (data.skillId == 0)
                             {
-                                //isCrit = data.owner.GetComponent<PlayerCharacter>().CritController();
-                                //e.GetComponent<EnemyCharacter>().BeHit(realDamage, isCrit);
+                                e.GetComponent<MPlayer>().BeHit(realDamage, isCrit);
                             }
                             else 
                             {
-                               // e.GetComponent<EnemyCharacter>().BeHit(realDamage, false);
+                               e.GetComponent<MPlayer>().BeHit(realDamage, false);
                             }
                         }
                         break;
