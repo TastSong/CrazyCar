@@ -75,11 +75,9 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :roller_coaster: Route planning function, custom route
 
+:star2:Introducing the **Skill System**, allowing players to learn and upgrade various skills, enhancing the depth and strategy of the game. 
+
 ### Future Support
-
-:star2: **Skill System**
-
-- Introduce a skill system allowing players to learn and upgrade various skills, enhancing game depth and strategy.
 
 :hammer_and_wrench: **Creative Workshop**
 
