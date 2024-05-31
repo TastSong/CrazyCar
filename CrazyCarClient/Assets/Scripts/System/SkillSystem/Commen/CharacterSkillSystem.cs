@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,17 @@ namespace MOBASkill
         public SplatManager sm;
 
         public SkillData skill;
+        
+        public bool isSkillChooseTime;
+        private int currentSkillnum;
 
-        int count;
+        private int count;
+
+        private void Awake() {
+            isSkillChooseTime = false;
+            currentSkillnum = -1;
+        }
+
         private void Start()
         {
             skillManager = GetComponent<CharacterSkillManager>();
@@ -63,6 +73,37 @@ namespace MOBASkill
                 animator.Play(skill.animationName[0]);
             }
             DeploySkill();
+        }
+
+        private void Update() {
+            if (!isSkillChooseTime) {
+                if (Input.GetKeyDown(KeyCode.Q)) {
+                    OnSkillChoose(0);
+                }
+            }
+            
+            if (isSkillChooseTime && Input.GetMouseButtonDown(0)) {
+                ReleaseSkill(currentSkillnum);
+            }
+        }
+
+        public void ReleaseSkill(int id) 
+        {
+            AttackUseSkill(id);
+            CloseSkillIndicator();
+            isSkillChooseTime = false;
+        }
+    
+        public void OnSkillChoose(int id) {
+            currentSkillnum = skillManager.Skills[id].skillId;
+            if (!OpenSkillIndicator(currentSkillnum))
+            {
+                ReleaseSkill(currentSkillnum);
+            }
+            else
+            {
+                isSkillChooseTime = true;
+            }
         }
     }
 }

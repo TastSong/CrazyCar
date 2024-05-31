@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace MOBASkill
 {
@@ -34,7 +35,7 @@ namespace MOBASkill
         public int costMp;//消耗量
         public float attackDistance;//技能距离
         public float attackAngle;//技能攻击角度
-        public string[] attackTargetTags = { "Enemy" };//可攻击的目标Tag
+        public string[] attackTargetTags = { TagName.player };//可攻击的目标Tag
         [HideInInspector]
         public Transform[] attackTargets;//攻击目标对象数组
         public string[] impactType = { "CostMP", "Damage" };//技能影响类型
