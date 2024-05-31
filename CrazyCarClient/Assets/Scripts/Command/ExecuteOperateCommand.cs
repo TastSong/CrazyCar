@@ -57,7 +57,7 @@ public class ExecuteOperateCommand : AbstractCommand {
                 }
             }
         } else if (controllerType == ControllerType.Attack) {
-            mPlayer.Attack();
+            mPlayer.Attack(value);
         }
     }
 }

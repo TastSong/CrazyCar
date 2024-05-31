@@ -60,7 +60,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
             this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
         });
         attackBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Attack, 1));
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Attack, 0));
         });
     }
 

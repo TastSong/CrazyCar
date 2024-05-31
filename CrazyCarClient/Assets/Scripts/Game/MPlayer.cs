@@ -416,8 +416,8 @@ public class MPlayer : MonoBehaviour, IController {
         }
     }
 
-    public void Attack() {
-        skillSystem.OnSkillChoose(0);
+    public void Attack(int id) {
+        skillSystem.OnSkillChoose(id);
     }
 
     public IArchitecture GetArchitecture() {
