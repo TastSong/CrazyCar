@@ -6,17 +6,25 @@ using UnityEngine.AddressableAssets;
 
 namespace MOBASkill 
 {
+    public class SkillDataArray
+    {
+        public SkillData[] skillArray;
+    }
     public class CharacterSkillManager : MonoBehaviour
     {
         public SkillData[] Skills;//技能列表
 
         private void Awake()
         {
-            foreach (var s in Skills)
-            {
-                InitSkill(s);
-                Debug.Log(s.skillIndicator);
-            }
+            Addressables.LoadAssetAsync<TextAsset>("Assets/AB/Skill/SkillData.json").Completed += (text) => {
+                SkillDataArray dataArray  = JsonUtility.FromJson<SkillDataArray>(text.Result.text);
+                Skills = dataArray.skillArray;
+                foreach (var s in dataArray.skillArray)
+                {
+                    InitSkill(s);
+                    Debug.Log(JsonUtility.ToJson(s));
+                }
+            };
         }
         //初始化技能
         private void InitSkill(SkillData data)

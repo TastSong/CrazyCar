@@ -1,0 +1,321 @@
+{
+  "skillArray": [
+    {
+      "skillId": 0,
+      "name": "NormalAttack",
+      "description": "普通攻击",
+      "skillCd": 0.5,
+      "cdRemain": 0.0,
+      "costMp": 0,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 0.0,
+      "durationTime": 0.5,
+      "attackInterval": 0.4000000059604645,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "Attack",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Attack1",
+        "Attack2",
+        "Attack3"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 0,
+      "selectorType": 1,
+      "skillIndicator": "",
+      "skillIconName": "Attack",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 0
+    },
+    {
+      "skillId": 1,
+      "name": "Dash",
+      "description": "向前冲刺击飞敌人",
+      "skillCd": 5.0,
+      "cdRemain": 0.0,
+      "costMp": 20,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Move",
+        "BlowFly"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 30.0,
+      "durationTime": 0.4000000059604645,
+      "attackInterval": 0.0,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "Dash",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill1"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 0,
+      "selectorType": 1,
+      "skillIndicator": "Direction",
+      "skillIconName": "Dash",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 0
+    },
+    {
+      "skillId": 2,
+      "name": "FireBall",
+      "description": "向前方发射一发火球",
+      "skillCd": 1.0,
+      "cdRemain": 0.0,
+      "costMp": 10,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 15.0,
+      "durationTime": 3.0,
+      "attackInterval": 0.10000000149011612,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "FireBall",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill2"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 0,
+      "selectorType": 1,
+      "skillIndicator": "Fireball",
+      "skillIconName": "FireBall",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 1
+    },
+    {
+      "skillId": 3,
+      "name": "Rotating",
+      "description": "身边生成一圈的剑阵",
+      "skillCd": 5.0,
+      "cdRemain": 0.0,
+      "costMp": 25,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 20.0,
+      "durationTime": 3.0,
+      "attackInterval": 0.5,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "Rotating",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill2"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 1,
+      "selectorType": 1,
+      "skillIndicator": "",
+      "skillIconName": "Rotating",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 0
+    },
+    {
+      "skillId": 4,
+      "name": "RecoverMP",
+      "description": "恢复MP",
+      "skillCd": 5.0,
+      "cdRemain": 0.0,
+      "costMp": -100,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 20.0,
+      "durationTime": 10.0,
+      "attackInterval": 0.5,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "RecoverMP",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill2"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 1,
+      "selectorType": 1,
+      "skillIndicator": "",
+      "skillIconName": "RecoverMP",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 0
+    },
+    {
+      "skillId": 5,
+      "name": "Dragon",
+      "description": "向前方召唤一条龙",
+      "skillCd": 3.0,
+      "cdRemain": 0.0,
+      "costMp": 10,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 15.0,
+      "durationTime": 8.0,
+      "attackInterval": 0.10000000149011612,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "Dragon",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill2"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 0,
+      "selectorType": 1,
+      "skillIndicator": "Frost Nova",
+      "skillIconName": "Dragon",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 1
+    },
+    {
+      "skillId": 6,
+      "name": "RemoteBall",
+      "description": "直接向前发射火球",
+      "skillCd": 1.0,
+      "cdRemain": 0.0,
+      "costMp": 10,
+      "attackDistance": 1.0,
+      "attackAngle": 360.0,
+      "attackTargetTags": [
+        "Enemy"
+      ],
+      "attackTargets": [],
+      "impactType": [
+        "CostMp",
+        "Damage"
+      ],
+      "nextBatterld": 0,
+      "attackNum": 50.0,
+      "durationTime": 3.0,
+      "attackInterval": 0.10000000149011612,
+      "owner": {
+        "instanceID": -5200
+      },
+      "prefabName": "FireBall",
+      "skillPrefab": {
+        "instanceID": 0
+      },
+      "animationName": [
+        "Skill2"
+      ],
+      "hitFxName": "",
+      "hitFxPrefab": {
+        "instanceID": 0
+      },
+      "level": 0,
+      "attackType": 1,
+      "selectorType": 1,
+      "skillIndicator": "",
+      "skillIconName": "RemoteBall",
+      "skillIcon": {
+        "instanceID": 0
+      },
+      "disappearType": 1
+    }
+  ]
+}
