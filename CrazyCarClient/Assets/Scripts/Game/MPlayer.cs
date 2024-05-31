@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MOBASkill;
 using UnityEngine;
 using Utils;
 using QFramework;
@@ -71,6 +72,8 @@ public class MPlayer : MonoBehaviour, IController {
     private float smoothSpeed = 4f;
     private Vector3 currentVelocity = Vector3.zero;
     
+    ///// 技能系统 /////
+    private CharacterSkillSystem skillSystem;
     // MP 玩家的蓝量
     private float mp = 100;
     private float maxMp = 100;
@@ -88,11 +91,13 @@ public class MPlayer : MonoBehaviour, IController {
             }
         }
     }
+    ///// 技能系统 ////
 
     private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
         forceDirHorizontal = transform.forward;
         rotationStream = rig.rotation;
+        skillSystem = GetComponent<CharacterSkillSystem>();
 
         StopDrift();
     }
@@ -409,6 +414,10 @@ public class MPlayer : MonoBehaviour, IController {
         if (currentForce < 0) {
             currentForce = 0;
         }
+    }
+
+    public void Attack() {
+        skillSystem.OnSkillChoose(0);
     }
 
     public IArchitecture GetArchitecture() {

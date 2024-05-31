@@ -96,12 +96,10 @@ namespace MOBASkill
     
         public void OnSkillChoose(int id) {
             currentSkillnum = skillManager.Skills[id].skillId;
-            if (!OpenSkillIndicator(currentSkillnum))
-            {
+            if (!OpenSkillIndicator(currentSkillnum)) {
                 ReleaseSkill(currentSkillnum);
             }
-            else
-            {
+            else {
                 isSkillChooseTime = true;
             }
         }
