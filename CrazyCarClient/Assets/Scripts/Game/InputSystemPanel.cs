@@ -10,6 +10,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
     public GameCtrBtn leftBtn;
     public GameCtrBtn rightBtn;
     public GameCtrBtn spaceBtn;
+    public GameCtrBtn attackBtn;
     public GameObject xboxConnect;
     public GameObject xboxDisconnect;
 
@@ -58,7 +59,9 @@ public class InputSystemPanel : MonoBehaviour, IController {
         }, () => {
             this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
         });
-
+        attackBtn.SetClick(() => {
+            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Attack, 0));
+        });
     }
 
     [Obsolete]

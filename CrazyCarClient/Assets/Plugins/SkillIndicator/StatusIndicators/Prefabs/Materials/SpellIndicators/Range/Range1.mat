@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Range1
+  m_Shader: {fileID: 4800000, guid: 2f3a255de5843884e8ccb4c66cb6ddca, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DistortTex:
+        m_Texture: {fileID: 2800000, guid: 1c91947eef53424488df8ee5c8918c18, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ff53dbaf48a59bd469379228ca319bc3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 5688d9df8fe3e32408318bd4dc29ca2e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ProjectTex:
+        m_Texture: {fileID: 2800000, guid: b0a4797216e7d2a4c913eac72670dfa8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShapeTex:
+        m_Texture: {fileID: 2800000, guid: b0a4797216e7d2a4c913eac72670dfa8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Blur: 0.01
+    - _BlurAmount: 0.02
+    - _BlurX: 0
+    - _BlurX1: 0.01
+    - _BlurX2: 0
+    - _BlurY: -0.03
+    - _BlurY1: 0.01
+    - _BlurY2: 0.01
+    - _ChargeAmount: 1
+    - _Cutoff: 0
+    - _DistortX: 0.01
+    - _DistortY: 0.01
+    - _ExpandAmount: 0.351
+    - _Fill: 0
+    - _FillAmount: -0.0016666667
+    - _Offset: 0.2713545
+    - _OffsetX: 0
+    - _OffsetY: 0
+    - _Proportion: 0.448
+    m_Colors:
+    - _ChargeColor: {r: 0.11724138, g: 1, b: 0, a: 1}
+    - _FillColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 1, g: 0.51724136, b: 0, a: 1}
+    - _SecondaryColor: {r: 0, g: 0, b: 0, a: 0.95000017}

@@ -215,3 +215,12 @@
    * 每个**Guidance**都需要新建一个**Material**(复制一份现有的**AvatarGuidanceMat**重命名就可以)
    
    *注：完成标识符为**UserModel**中的**IsCompleteGuidance**，完成条件为点击**计时赛按钮***
+   
+   ## 添加新技能
+   
+   整体设计方案参考：[在Unity中制作完整的技能系统（介绍篇） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/513705768)
+   
+   1. 在**CrazyCarClient\Assets\AB\Skill\SkillData.json**下添加对应技能配置，参数意义可以参考**SkillData.cs**
+   2. 在**CrazyCarClient\Assets\AB\Skill\SkillIcon**和**CrazyCarClient\Assets\AB\Skill\SkillPrefab**下添加对应资源
+   3. 技能指示器插件虽然已经集成，但是不建议在赛车游戏中加入，**SkillData.skillIndicator**为空就行
+   4. 需要在**InputSystemPanel.prefab**和**InputSystemPanel.cs**添加新的技能按钮，操作的数值**value**就是技能**id**

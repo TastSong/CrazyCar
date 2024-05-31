@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using MOBASkill;
 using UnityEngine;
 using Utils;
 using QFramework;
@@ -8,39 +9,52 @@ using PathCreation;
 
 public class MPlayer : MonoBehaviour, IController {
     public UserInfo userInfo;
+
     public Rigidbody rig;
+
     //输入相关
     public float vInput;
     public float hInput;
     public float sInput;
+
     public bool isLockSpeed = false;
+
     //力的大小
     public float currentForce;
     public float normalForce = 20;
     public float boostForce = 40;
     public float jumpForce = 10;
+
     public float gravity = 20;
+
     //力的方向
-    private Vector3 forceDir_Horizontal;
-    private float verticalModified;         //前后修正系数
+    private Vector3 forceDirHorizontal;
+
+    private float verticalModified; //前后修正系数
+
     //转弯相关 
     public bool isDrifting;
+
     public DriftDirection driftDirection = DriftDirection.None;
+
     //由h_Input以及漂移影响
-    public Quaternion rotationStream;   //用于最终旋转
+    public Quaternion rotationStream; //用于最终旋转
     public float turnSpeed = 60;
 
     Quaternion m_DriftOffset = Quaternion.identity;
+
     public DriftLevel driftLevel;
+
     //地面检测
     public LayerMask groundMask = 0;
     public Transform frontHitTrans;
     public Transform rearHitTrans;
     public bool isGround;
-    public float groundDistance = 0.7f;//根据车模型自行调节
+    public float groundDistance = 0.7f; //根据车模型自行调节
     public float driftPower = 0;
 
     public long lastRecvStatusStamp = 0;
+
     // 出界 翻车判断
     private PathCreator pathCreator;
     private float playerHigh = 2f;
@@ -52,22 +66,43 @@ public class MPlayer : MonoBehaviour, IController {
     // 记录通过拱门的次数
     public int passEndSignTimes = 0;
     private bool isCanCalculatePassEndSignTimes = true;
-    
+
     // 消除移动时的顿挫感
     private Coroutine moveNetCarCor = null;
     private float smoothSpeed = 4f;
     private Vector3 currentVelocity = Vector3.zero;
+    
+    ///// 技能系统 /////
+    private CharacterSkillSystem skillSystem;
+    // MP 玩家的蓝量
+    private float mp = 100;
+    private float maxMp = 100;
+
+    public float Mp {
+        get {
+            return mp;
+        }
+        set {
+            mp = value;
+            if (mp > maxMp) {
+                mp = maxMp;
+            } else if (mp < 0) {
+                mp = 0;
+            }
+        }
+    }
+    ///// 技能系统 ////
 
     private void Start() {
         pathCreator = this.GetModel<IMapControllerModel>().PathCreator;
-        forceDir_Horizontal = transform.forward;
+        forceDirHorizontal = transform.forward;
         rotationStream = rig.rotation;
+        skillSystem = GetComponent<CharacterSkillSystem>();
 
         StopDrift();
     }
 
     public void ConfirmStatus(PlayerStateMsg playerStateMsg) {
-
     }
 
     private void FixedUpdate() {
@@ -76,14 +111,14 @@ public class MPlayer : MonoBehaviour, IController {
             return;
         }
 
-        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial && 
+        if (this.GetModel<IGameModel>().CurGameType == GameType.TimeTrial &&
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this) {
             // 为AI终止
             return;
         }
 
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {     
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer != this && lastRecvStatusStamp != 0) {
             if (Util.GetTime() - lastRecvStatusStamp > this.GetModel<IGameModel>().MaxSyncDelay) {
                 this.GetSystem<IPlayerManagerSystem>().RemovePlayer(userInfo.uid);
             }
@@ -100,6 +135,7 @@ public class MPlayer : MonoBehaviour, IController {
             CalculateDriftingLevel();
             //ChangeDriftColor();
         }
+
         //根据上述情况，进行最终的旋转和加力
         rig.MoveRotation(rotationStream);
         CalculateForceDir();
@@ -112,6 +148,7 @@ public class MPlayer : MonoBehaviour, IController {
                 Debug.Log("++++++ IsOutside ");
                 ResetSelfCar();
             }
+
             if (IsTurnover) {
                 Debug.Log("++++++ IsTurnover ");
                 ResetSelfCar();
@@ -123,12 +160,15 @@ public class MPlayer : MonoBehaviour, IController {
         if (this == null) {
             return;
         }
+
         if (isLockSpeed) {
             return;
         }
+
         if (moveNetCarCor != null) {
             StopCoroutine(moveNetCarCor);
         }
+
         moveNetCarCor = StartCoroutine(MoveNetCar(pos, speed));
         lastRecvStatusStamp = Util.GetTime();
     }
@@ -153,13 +193,13 @@ public class MPlayer : MonoBehaviour, IController {
             verticalModified = -1;
         }
 
-        forceDir_Horizontal = m_DriftOffset * transform.forward;
+        forceDirHorizontal = m_DriftOffset * transform.forward;
     }
 
     //加力移动
     private void AddForceToMove() {
         //计算合力
-        Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
+        Vector3 tempForce = verticalModified * currentForce * forceDirHorizontal;
 
         if (this.GetSystem<IPlayerManagerSystem>().SelfPlayer == this && !isGround) {
             tempForce = tempForce + gravity * Vector3.down;
@@ -191,8 +231,9 @@ public class MPlayer : MonoBehaviour, IController {
     private void ResetPeerCar() {
         transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-        transform.rotation = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
-                 Util.pathRotateOffset);
+        transform.rotation = Quaternion.Euler(
+            pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
+            Util.pathRotateOffset);
     }
 
     private void ResetSelfCar() {
@@ -201,8 +242,9 @@ public class MPlayer : MonoBehaviour, IController {
         rig.velocity = Vector3.zero;
         transform.position = pathCreator.path.GetClosestPointOnPath(transform.position) + new Vector3(0, playerHigh, 0);
         float distanceTravelled = pathCreator.path.GetClosestDistanceAlongPath(transform.position);
-        rotationStream = Quaternion.Euler(pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
-                 Util.pathRotateOffset);
+        rotationStream = Quaternion.Euler(
+            pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Loop).eulerAngles +
+            Util.pathRotateOffset);
     }
 
 
@@ -210,13 +252,15 @@ public class MPlayer : MonoBehaviour, IController {
     private void CheckGroundNormal() {
         //从车头中心附近往下打射线,长度比发射点到车底的距离长一点
         RaycastHit frontHit;
-        bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, groundMask);
+        bool hasFrontHit =
+            Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, groundMask);
         if (hasFrontHit) {
             Debug.DrawLine(frontHitTrans.position, frontHitTrans.position - transform.up * groundDistance, Color.red);
         }
 
         RaycastHit rearHit;
-        bool hasRearHit = Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance, groundMask);
+        bool hasRearHit =
+            Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance, groundMask);
         if (hasRearHit) {
             Debug.DrawLine(rearHitTrans.position, rearHitTrans.position - transform.up * groundDistance, Color.red);
         }
@@ -242,14 +286,14 @@ public class MPlayer : MonoBehaviour, IController {
             targetForce = normalForce;
         }
 
-        currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime);//每秒60递减，可调
+        currentForce = Mathf.MoveTowards(currentForce, targetForce, 30 * Time.fixedDeltaTime); //每秒60递减，可调
     }
 
     //力递增
     private void IncreaseForce() {
         float targetForce = currentForce;
         if (vInput != 0 && currentForce < normalForce) {
-            currentForce = Mathf.MoveTowards(currentForce, normalForce, 80 * Time.fixedDeltaTime);//每秒80递增
+            currentForce = Mathf.MoveTowards(currentForce, normalForce, 80 * Time.fixedDeltaTime); //每秒80递增
         }
     }
 
@@ -360,6 +404,20 @@ public class MPlayer : MonoBehaviour, IController {
 
     public void DestroySelf() {
         Destroy(gameObject);
+    }
+
+    public void BeHit(float slowAmount, bool isCrit) {
+        // 减少当前的速度
+        currentForce -= slowAmount;
+
+        // 确保速度不会低于0
+        if (currentForce < 0) {
+            currentForce = 0;
+        }
+    }
+
+    public void Attack(int id) {
+        skillSystem.OnSkillChoose(id);
     }
 
     public IArchitecture GetArchitecture() {

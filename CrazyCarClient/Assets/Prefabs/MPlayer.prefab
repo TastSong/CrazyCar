@@ -201,9 +201,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3226108444913310419}
   - component: {fileID: 3226108444913594260}
+  - component: {fileID: 3689182319341951788}
+  - component: {fileID: 8390523684488764196}
+  - component: {fileID: 6459917460403924338}
   - component: {fileID: 9136838119040640985}
   - component: {fileID: 3226108444913594261}
   - component: {fileID: 3226108444913594266}
+  - component: {fileID: 5104937176741747465}
   m_Layer: 8
   m_Name: MPlayer
   m_TagString: Player
@@ -255,15 +259,14 @@ MonoBehaviour:
     travelTimes: 0
     avatarNum: 0
     mapNum: 0
-    isNewbie: 0
     equipInfo:
       eid: 0
       rid: 
       equipName: 
       star: 0
       mass: 0
-      speed: 0
-      maxSpeed: 0
+      power: 0
+      maxPower: 0
       isHas: 0
       canWade: 0
       isShow: 0
@@ -292,6 +295,85 @@ MonoBehaviour:
   driftPower: 0
   lastRecvStatusStamp: 0
   passEndSignTimes: 0
+--- !u!114 &3689182319341951788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226108444913594267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9852ace2a4bfff548bad6074d5c2b8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Skills: []
+--- !u!114 &8390523684488764196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226108444913594267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a91de6b0c7d654c4abfbd693622119ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sm: {fileID: 0}
+  skill:
+    skillId: 0
+    name: 
+    description: 
+    skillCd: 0
+    cdRemain: 0
+    costMp: 0
+    attackDistance: 0
+    attackAngle: 0
+    attackTargetTags:
+    - Enemy
+    attackTargets: []
+    impactType:
+    - CostMP
+    - Damage
+    nextBatterld: 0
+    attackNum: 0
+    durationTime: 0
+    attackInterval: 0
+    owner: {fileID: 0}
+    prefabName: 
+    skillPrefab: {fileID: 0}
+    animationName: []
+    hitFxName: 
+    hitFxPrefab: {fileID: 0}
+    level: 0
+    attackType: 0
+    selectorType: 0
+    skillIndicator: 
+    skillIconName: 
+    skillIcon: {fileID: 0}
+    disappearType: 0
+--- !u!114 &6459917460403924338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226108444913594267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1373bdd3443dd9942bd50ebd9c08d6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HideCursor: 0
+  ProjectorIgnore:
+    serializedVersion: 2
+    m_Bits: 0
+  MouseRaycast:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  indicatorRange: 5
+  heightOffset: 1
 --- !u!114 &9136838119040640985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +432,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 32
   m_CollisionDetection: 0
+--- !u!95 &5104937176741747465
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226108444913594267}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 703e652989779ff45809b190c677f988, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0daaddc81d6d08446b62d8bf7af0add4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3723843056423102375
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +801,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theIcon: {fileID: 21300000, guid: 8e5f5e12bfe3b44e39a1b95d2bf11409, type: 3}
-  animation: {fileID: 0}
   rid: R_Car_F1_Blue
 --- !u!33 &5136146292348006274
 MeshFilter:

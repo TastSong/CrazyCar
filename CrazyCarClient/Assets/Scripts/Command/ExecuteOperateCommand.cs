@@ -7,7 +7,8 @@ using QFramework;
 public enum ControllerType {
     Horizontal = 0,
     Vertical,
-    Speed
+    Speed,
+    Attack
 }
 
 
@@ -55,6 +56,8 @@ public class ExecuteOperateCommand : AbstractCommand {
                     mPlayer.StopDrift();
                 }
             }
+        } else if (controllerType == ControllerType.Attack) {
+            mPlayer.Attack(value);
         }
     }
 }

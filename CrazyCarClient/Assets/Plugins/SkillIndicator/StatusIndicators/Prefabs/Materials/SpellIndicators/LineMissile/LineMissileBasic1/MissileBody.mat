@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MissileBody
+  m_Shader: {fileID: 4800000, guid: 2ea0d066a0188b34f90b461a8e3282a7, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DistortTex:
+        m_Texture: {fileID: 2800000, guid: 67df11e656e080948be3ca7e9b530fe4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 8b08cc7f6cbed5e429dd5836876975c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 5688d9df8fe3e32408318bd4dc29ca2e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ProjectTex:
+        m_Texture: {fileID: 2800000, guid: 8b08cc7f6cbed5e429dd5836876975c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShapeTex:
+        m_Texture: {fileID: 2800000, guid: b0a4797216e7d2a4c913eac72670dfa8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Blur: 0.01
+    - _BlurAmount: 0.02
+    - _BlurX: 0
+    - _BlurX1: 0.01
+    - _BlurX2: 0
+    - _BlurY: -0.03
+    - _BlurY1: 0.01
+    - _BlurY2: 0.01
+    - _ChargeAmount: 1
+    - _Cutoff: 0
+    - _DistortX: 0.05
+    - _DistortY: 0.1
+    - _ExpandAmount: 0.351
+    - _Fill: 0
+    - _FillAmount: -0.0016666667
+    - _Offset: 0.24422462
+    - _OffsetX: 0
+    - _OffsetY: 0.2520802
+    - _Proportion: 0.448
+    m_Colors:
+    - _ChargeColor: {r: 0.11724138, g: 1, b: 0, a: 1}
+    - _FillColor: {r: 0, g: 0, b: 0, a: 0.95000017}
+    - _MainColor: {r: 0.6267748, g: 0.41176468, b: 1, a: 1}
+    - _SecondaryColor: {r: 1, g: 0.55862063, b: 0, a: 1}
