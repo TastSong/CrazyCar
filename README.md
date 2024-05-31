@@ -187,6 +187,7 @@ QQ群：577016553
 10. [Customizable skybox | 2D 天空 | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/customizable-skybox-174576)
 10. [Plugins for mobile platforms to enable file downloads in background (github.com)](https://github.com/Unity-Technologies/BackgroundDownload/tree/master)
 10. [focus-creative-games/hybridclr: HybridCLR是一个特性完整、零成本、高性能、低内存的Unity全平台原生c#热更方案](https://github.com/focus-creative-games/hybridclr)
+10. [在Unity中制作完整的技能系统（介绍篇） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/513705768)
 
 ------
 
