@@ -31,10 +31,10 @@ namespace MOBASkill
         {
             if (data.prefabName != null)
             {
-                Addressables.LoadAssetAsync<GameObject>("Assets/AB/SkillPrefab/" + data.prefabName + ".prefab").Completed += (go) => {
+                Addressables.LoadAssetAsync<GameObject>("Assets/AB/Skill/SkillPrefab/" + data.prefabName + ".prefab").Completed += (go) => {
                     data.skillPrefab = go.Result;
                 };
-                Addressables.LoadAssetAsync<Sprite>("Assets/AB/SkillIcon/" + data.skillIconName + ".png").Completed += (sprite) => {
+                Addressables.LoadAssetAsync<Sprite>("Assets/AB/Skill/SkillIcon/" + data.skillIconName + ".png").Completed += (sprite) => {
                     data.skillIcon = sprite.Result;
                 };
                 data.owner = this.gameObject;
