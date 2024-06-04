@@ -41,6 +41,9 @@ namespace Utils {
         public static string standAloneLogin = "Login.json";
         public static string standAloneTimeTrialDetail = "TimeTrialDetail.json";
         public static string standAloneAI = "AI.json";
+        
+        public static string basePageUrl = "Assets/Prefabs/UIPage/";
+        public static string pageSuffix = ".prefab";
 
         private static int Port (ServerType serverType)
         {
