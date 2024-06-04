@@ -146,6 +146,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public void SendMsgToServer(string msg) {
+        if (msg == null || msg == "") {
+            Debug.LogError("SendMsgToServer msg is null or empty");
+            return;
+        }
         curSocketSystem.SendMsgToServer(msg);
     }
 
