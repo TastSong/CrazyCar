@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class InitDllCommand : AbstractCommand {
+    // HotUpdate等字段不能放入其他非热更代码中，否则会导致热更代码无法正常运行
     protected override void OnExecute() {
         this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>("HotUpdate", (obj) => {
             if (obj.Status == AsyncOperationStatus.Succeeded) {
