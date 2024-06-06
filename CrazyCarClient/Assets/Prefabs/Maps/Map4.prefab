@@ -348,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2066224825330622202
 Transform:
   m_ObjectHideFlags: 0
@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 8473441879052883578}
   - component: {fileID: 8473441879052883581}
   - component: {fileID: 8473441879052883579}
+  - component: {fileID: 8410394203581711896}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1015,7 +1016,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 65536
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: ce6c70f909ab6af42a72b49020f2564d, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1025,6 +1026,39 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &8410394203581711896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473441879052883577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &8473441879990189878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,6 +1350,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2066224825330622202}
     m_Modifications:
+    - target: {fileID: 6862703192551804868, guid: c4d250c479c6bf241bb889365dee5eec,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 96f5fcd16ae6a8d45a778df267d8197b, type: 2}
     - target: {fileID: 6862703194547788296, guid: c4d250c479c6bf241bb889365dee5eec,
         type: 3}
       propertyPath: m_RootOrder
