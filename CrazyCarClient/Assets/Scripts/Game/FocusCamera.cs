@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using Utils;
 
 public class FocusCamera : MonoBehaviour, IController {
 	public new Camera camera;
@@ -9,7 +11,13 @@ public class FocusCamera : MonoBehaviour, IController {
 
 	// Use this for initialization
 	void Start () {
-		
+		this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath, (obj) => {
+			if (obj.Status == AsyncOperationStatus.Succeeded) {
+				camera.targetTexture = obj.Result;
+			} else {
+				Debug.LogError($"Load minimap Failed");
+			}
+		}).Forget();
 	}
 	
 	// Update is called once per frame
