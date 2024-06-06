@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Utils;
 
 public class CommonGameUI : MonoBehaviour, IController {
     public Button exitBtn;
     public Button angleViewBtn;
-    public GameObject miniMap;
+    public RawImage miniMap;
     public Text cylinderNumText;
 
     private AngleView curAngleView = AngleView.ThirdAngle;
@@ -27,6 +28,14 @@ public class CommonGameUI : MonoBehaviour, IController {
                 curAngleView = AngleView.FirstAngle;
             }
         });
+        
+        this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath, (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                miniMap.texture = obj.Result;
+            } else {
+                Debug.LogError($"CommonGameUI Load minimap Failed");
+            }
+        }).Forget();
 
         UpdateCylinderNum(new UpdateCylinderNumEvent());
         this.RegisterEvent<UpdateCylinderNumEvent>(UpdateCylinderNum).UnRegisterWhenGameObjectDestroyed(gameObject);

@@ -44,6 +44,8 @@ namespace Utils {
         
         public static string basePageUrl = "Assets/Prefabs/UIPage/";
         public static string pageSuffix = ".prefab";
+        
+        public static string miniMapPath = "Assets/RenderTextures/MiniMapRenderTexture.renderTexture";
 
         private static int Port (ServerType serverType)
         {
