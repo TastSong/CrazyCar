@@ -83,6 +83,10 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 - Players can customize tracks and vehicles and share them with the community.
 
+:repeat: **Replay System**
+
+- Implement game replay function, allowing players to replay their own games or watch other players' game recordings.
+
 :handshake: **Friends System**
 
 - Add friends, private chat, and team up features to enhance social interaction among players.
