@@ -83,6 +83,10 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 - Players can customize tracks and vehicles and share them with the community.
 
+:building_construction: **Reconstructing the game server based on Actor's ECS architecture** 
+
+- Reconstruct the current server-side game part using the Actor-based ECS architecture. This architecture can improve the performance and maintainability of the game server, make the system more flexible and efficient, and adapt to more expansion needs in the future.
+
 :repeat: **Replay System**
 
 - Implement game replay function, allowing players to replay their own games or watch other players' game recordings.
