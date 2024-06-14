@@ -189,7 +189,7 @@ You can submit questions in the  [pull requests](https://github.com/TastSong/Cra
 
 ## Sponsor
 
-<a href="https://hellogithub.com/repository/045fda14a27a44c8bb0c06395c93ad7b" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=045fda14a27a44c8bb0c06395c93ad7b&claim_uid=undefined" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+<a href="https://hellogithub.com/repository/045fda14a27a44c8bb0c06395c93ad7b" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=045fda14a27a44c8bb0c06395c93ad7b&claim_uid=zYZJtDj1XTcwveM" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 ## License
 
