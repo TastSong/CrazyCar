@@ -91,6 +91,10 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 - Implement game replay function, allowing players to replay their own games or watch other players' game recordings.
 
+#### :film_strip: Add Unity's post-processing effects
+
+* Introduce Unity's post-processing effects into the game, such as bloom effect, depth of field, anti-aliasing and color correction, etc. These effects will greatly improve the visual quality of the game screen, making the game look more vivid and realistic, thereby enhancing the player's immersion and overall gaming experience.
+
 :handshake: **Friends System**
 
 - Add friends, private chat, and team up features to enhance social interaction among players.
