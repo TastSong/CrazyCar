@@ -86,7 +86,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 :hammer_and_wrench: **创意工坊**
 
-- 玩家可以自定义赛道和车辆，并分享给社区使用。
+- 玩家可以自定义赛道和车辆，例如添加贴花等。
 
 :building_construction: **基于Actor的ECS架构重构游戏服务器**
 
