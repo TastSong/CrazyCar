@@ -81,7 +81,7 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :hammer_and_wrench: **Creative Workshop**
 
-- Players can customize tracks and vehicles and share them with the community.
+- Players can customize tracks and vehicles, such as adding decals, etc..
 
 :building_construction: **Reconstructing the game server based on Actor's ECS architecture** 
 
