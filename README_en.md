@@ -114,7 +114,7 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 ## Connection
 :email: ： TastSong@163.com
 
-QQ Group ：577016553
+QQ群：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
 
 ## Sample screenshots
 <div  align="center">  
