@@ -121,7 +121,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 ## 联系
 :email: ： TastSong@163.com
 
-QQ群：577016553
+QQ群：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
 
 ------
 
