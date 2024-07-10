@@ -114,7 +114,9 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 ## Connection
 :email: ： TastSong@163.com
 
-QQ群：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
+**QQ**：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
+
+**Video Classroom：**[![image-20240710170059182](./SamplePictures/image-20240710170059182.png)](https://learn.u3d.cn/tutorial/online-racing-game-dev)
 
 ## Sample screenshots
 <div  align="center">  

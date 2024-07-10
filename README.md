@@ -121,7 +121,9 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 ## 联系
 :email: ： TastSong@163.com
 
-QQ群：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
+**QQ群**：577016553 <img src="./SamplePictures/qrcode_1719998390405.jpg" style="zoom:80%;" />
+
+**视频课堂：**[![image-20240710170059182](./SamplePictures/image-20240710170059182.png)](https://learn.u3d.cn/tutorial/online-racing-game-dev)
 
 ------
 
