@@ -27,7 +27,7 @@ public class TimeTrialRecordService {
         return Convert.toInt(timeTrialRecordMapper.selectCount(queryWrapper));
     }
 
-    // »ñÈ¡ÅÅĞĞ°ñ
+    // è·å–æ’è¡Œæ¦œ
     public List<RespTimeTrialRank> getTimeTrialRankListByCid(int cid){
         QueryWrapper<TimeTrialRecordModel> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(TimeTrialRecordModel::getCid, cid);
