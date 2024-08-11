@@ -73,9 +73,9 @@ namespace Utils {
                 case ServerType.Local:
                     return "localhost";
                 case ServerType.Remote:
-                    return "tastsong.top";
+                    return "crazycar.tastsong.top";
                 case ServerType.TestServer:
-                    return "tastsong.top";
+                    return "crazycar.tastsong.top";
                 default:
                     return "localhost";
             }

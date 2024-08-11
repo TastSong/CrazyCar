@@ -6,6 +6,7 @@ import com.tastsong.crazycar.dto.req.ReqUpdateRole;
 import com.tastsong.crazycar.dto.req.ReqUpdateUser;
 import com.tastsong.crazycar.dto.resp.RespCommonList;
 import com.tastsong.crazycar.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,13 @@ import com.tastsong.crazycar.service.BackgroundUserService;
 import com.tastsong.crazycar.utils.Util;
 
 import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 
 import javax.validation.Valid;
 
 @RestController
 @Scope("prototype")
+@Slf4j
 @RequestMapping(value = "/v2/Background")
 public class BackgroundUser {
     @Autowired
@@ -93,5 +96,17 @@ public class BackgroundUser {
         String routes = req.getRoutes();
         backgroundUserService.updateUserRoute(uid, routes);
         return backgroundUserService.getUserByUid(uid);
+    }
+
+    // 看似没有用到的接口 但是前端还在用
+    @GetMapping(value = "/userInfo")
+    public JSONObject userInfo() throws Exception {
+        JSONObject data = new JSONObject();
+        data.putOpt("roles", "admin");
+        data.putOpt("introduction", "I am a super administrator");
+        data.putOpt("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        data.putOpt("name", "Super Admin");
+        log.info(data.toString());
+        return data;
     }
 }
