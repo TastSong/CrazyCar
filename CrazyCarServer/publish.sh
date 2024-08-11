@@ -6,7 +6,7 @@ mv ./target/crazy_car.jar crazy_car.jar
 
 zip crazy_car.zip crazy_car.jar
 
-scp crazy_car.zip huawei:/game/crazy_car/
+scp crazy_car.zip tast_server:/game/crazy_car/
 
 mv crazy_car.jar ./target/crazy_car.jar
 rm -rf crazy_car.zip
@@ -20,11 +20,11 @@ rm -rf crazy_car.zip
 # stderr_logfile=/var/log/crazy_car.err.log
 # stdout_logfile=/var/log/crazy_car.out.log
 
-ssh -t huawei "sudo supervisorctl stop crazy_car"
-#ssh -t huawei "ps -ax | grep crazy_car | cut -c 1-5  | xargs kill -9"
-ssh -t huawei "rm -rf /game/crazy_car/crazy_car.jar"
-ssh -t huawei "unzip /game/crazy_car/crazy_car.zip -d /game/crazy_car/"
-ssh -t huawei "sudo supervisorctl start crazy_car"
+ssh -t tast_server "sudo supervisorctl stop crazy_car"
+#ssh -t tast_server "ps -ax | grep crazy_car | cut -c 1-5  | xargs kill -9"
+ssh -t tast_server "rm -rf /game/crazy_car/crazy_car.jar"
+ssh -t tast_server "unzip /game/crazy_car/crazy_car.zip -d /game/crazy_car/"
+ssh -t tast_server "sudo supervisorctl start crazy_car"
 
 
 echo "Finish!!!"
