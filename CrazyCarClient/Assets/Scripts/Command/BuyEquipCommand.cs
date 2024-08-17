@@ -24,7 +24,7 @@ public class BuyEquipCommand : AbstractCommand {
             InfoConfirmInfo info = new InfoConfirmInfo(content: string.Format(this.GetSystem<II18NSystem>().GetText("Whether to spend {0} star on this equip"),
                     mEquipInfo.star),
                 success: () => {
-                    CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                    CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                         RequestUrl.buyEquipUrl,
                         data: bytes,
                         token: this.GetModel<IGameModel>().Token.Value,

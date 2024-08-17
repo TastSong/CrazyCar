@@ -17,7 +17,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         progressSlider.value = 0;
         progressText.text = "0%";
-        CoroutineController.manager.StartCoroutine(LoadScene());
+        CoroutineController.Instance.StartCoroutine(LoadScene());
     }
 
     private void Update() {

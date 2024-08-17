@@ -20,7 +20,7 @@ public class ChangePasswordCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             data: bytes, token: this.GetModel<IGameModel>().Token.Value,
             succData: (data) => {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Modify Successfully");

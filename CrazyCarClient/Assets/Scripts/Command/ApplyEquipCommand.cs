@@ -20,7 +20,7 @@ public class ApplyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                     RequestUrl.changeEquipUrl,
                 data: bytes, token: this.GetModel<IGameModel>().Token.Value,
                 succData: (data) => {

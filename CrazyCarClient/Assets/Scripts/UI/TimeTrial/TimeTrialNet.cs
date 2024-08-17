@@ -16,7 +16,7 @@ public class TimeTrialNet : MonoBehaviour, IController {
         //     this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
         //         Debug.Log("Connect succ");
         //         this.SendCommand<PostCreatePlayerMsgCommand>();
-        //         timeTrialNetCor = CoroutineController.manager.StartCoroutine(SendMsg());
+        //         timeTrialNetCor = CoroutineController.Instance.StartCoroutine(SendMsg());
         //     };
         // }
         //
@@ -27,7 +27,7 @@ public class TimeTrialNet : MonoBehaviour, IController {
     {
         if (timeTrialNetCor != null)
         {
-            CoroutineController.manager.StopCoroutine(timeTrialNetCor);
+            CoroutineController.Instance.StopCoroutine(timeTrialNetCor);
         }
     }
 

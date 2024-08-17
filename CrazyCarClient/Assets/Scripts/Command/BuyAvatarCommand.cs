@@ -20,7 +20,7 @@ public class BuyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP
             (url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
         data: bytes,
         token: this.GetModel<IGameModel>().Token.Value,

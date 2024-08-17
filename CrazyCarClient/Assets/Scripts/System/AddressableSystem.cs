@@ -42,7 +42,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     public void GetDownloadAssets() {
-        CoroutineController.manager.StartCoroutine(GetTotalDonwloadKeys());
+        CoroutineController.Instance.StartCoroutine(GetTotalDonwloadKeys());
     }
 
     private IEnumerator GetTotalDonwloadKeys() { 
@@ -96,7 +96,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     public void DownloadAsset() {
-        CoroutineController.manager.StartCoroutine(DownloadAssets());
+        CoroutineController.Instance.StartCoroutine(DownloadAssets());
     }
 
     private IEnumerator DownloadAssets() {
@@ -130,7 +130,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     public void SetUpdateInfo(Action finish) {
-       CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl,
+       CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl,
                 succData: (data) => { 
                     if ((bool)data["is_on"]) {
                         AddressableInfo.BaseUrl = (string)data["url"];
