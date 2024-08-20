@@ -69,38 +69,43 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         pagesDict[pageType].SetActiveFast(false);
     }
 
+    public void ShowPage(ShowPageInfo info) {
+        ShowPageAsync(info).Forget();
+    }
+
     // 根据对应页面类型显示页面 如果没有页面则创建 如果有页面则调取并active为true 第二个参数是是否关闭其他开启界面
-    public void ShowPage(ShowPageInfo e) {
-        if (e.closeOther) {
+    public async UniTask<bool> ShowPageAsync(ShowPageInfo info) {
+        if (info.closeOther) {
             foreach (var kv in pagesDict) {
                 kv.Value.SetActiveFast(false);
             }
         }
 
-        if (pagesDict.ContainsKey(e.pageType) && pagesGroup[e.levelType].Contains(e.pageType)) {
+        if (pagesDict.ContainsKey(info.pageType) && pagesGroup[info.levelType].Contains(info.pageType)) {
             // 当前页面还在原来分组
-            pagesDict[e.pageType].SetActiveFast(true);
-            SetPageInfo(e);
-        } else if (pagesDict.ContainsKey(e.pageType) && !pagesGroup[e.levelType].Contains(e.pageType)) {
+            pagesDict[info.pageType].SetActiveFast(true);
+            SetPageInfo(info);
+        } else if (pagesDict.ContainsKey(info.pageType) && !pagesGroup[info.levelType].Contains(info.pageType)) {
             // 当前页面还在不在原来分组
-            pagesDict[e.pageType].transform.SetParent(levles[(int)e.levelType], false);
-            pagesGroup[GetGroupByPageType(e.pageType)].Remove(e.pageType);
-            pagesGroup[e.levelType].AddLast(e.pageType);
-            SetPageInfo(e);
+            pagesDict[info.pageType].transform.SetParent(levles[(int)info.levelType], false);
+            pagesGroup[GetGroupByPageType(info.pageType)].Remove(info.pageType);
+            pagesGroup[info.levelType].AddLast(info.pageType);
+            SetPageInfo(info);
         } else {
-            string pageUrl = GetPageUrlByType(e.pageType);
-            this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl, (obj) => {
-                if (obj.Status == AsyncOperationStatus.Succeeded) {
-                    GameObject page = Instantiate(obj.Result);
-                    page.transform.SetParent(levles[(int)e.levelType], false);
-                    pagesDict[e.pageType] = page;
-                    pagesGroup[e.levelType].AddLast(e.pageType);
-                    SetPageInfo(e);
-                } else {
-                    Debug.LogError($"Load {e.pageType} Page Failed");
-                }
-            }).Forget();
+            string pageUrl = GetPageUrlByType(info.pageType);
+            GameObject result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl);
+            if (result == null) {
+                Debug.LogError($"Load {info.pageType} Page Failed");
+                return false;
+            }
+            GameObject page = Instantiate(result);
+            page.transform.SetParent(levles[(int)info.levelType], false);
+            pagesDict[info.pageType] = page;
+            pagesGroup[info.levelType].AddLast(info.pageType);
+            SetPageInfo(info);
+            return true;
         }
+        return true;
     }
 
     private void SetPageInfo(ShowPageInfo e) {
