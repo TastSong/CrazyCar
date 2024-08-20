@@ -116,7 +116,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 string s = Encoding.UTF8.GetString(results);
                 Debug.Log(url + " : " + s);
                 JsonData d = JsonMapper.ToObject(s);
-                this.SendEvent(new HidePageEvent(UIPageType.LoadingUI));
+                UIController.Instance.HidePage(new  HidePageEvent(UIPageType.LoadingUI));
 
                 code?.Invoke((int)d["code"]);
                 if ((int)d["code"] == 200) {
@@ -278,10 +278,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (code == 423) {
                 if (gameType == GameType.Match) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Do not own this course");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }
         }));

@@ -6,8 +6,8 @@ public class EnterGameState: AbstractState<LaunchStates, Launch>, IController {
     }
 
     public override void OnEnter() {
-        this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
-        this.SendCommand(new HidePageCommand(UIPageType.DownloadResUI));
+        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.LoginUI));
+        UIController.Instance.HidePage(new HidePageEvent(UIPageType.DownloadResUI));
     }
 
     public IArchitecture GetArchitecture() {

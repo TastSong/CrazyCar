@@ -36,16 +36,16 @@ public class RegisterCommand : AbstractCommand {
                         this.SendCommand<RecodeLoginCommand>();
                         this.SendCommand(new LoadSceneCommand(SceneID.Index));
                     });
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else if (code == 423) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("User registered");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else if (code == 425) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Incorrect information format");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Unknown Error");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }));
     }

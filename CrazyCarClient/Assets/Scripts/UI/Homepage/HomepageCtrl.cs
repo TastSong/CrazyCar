@@ -10,6 +10,6 @@ public class HomepageCtrl : MonoBehaviour, IController{
     }
 
     private void Start() {
-        this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
+        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.HomepageUI));
     }
 }

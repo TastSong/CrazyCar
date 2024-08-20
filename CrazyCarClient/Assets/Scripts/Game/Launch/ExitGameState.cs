@@ -10,7 +10,7 @@ public class ExitGameState: AbstractState<LaunchStates, Launch>, IController {
             success: () => {
                 Application.Quit();
             }, type: ConfirmAlertType.Double);
-        this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
        
     }
 

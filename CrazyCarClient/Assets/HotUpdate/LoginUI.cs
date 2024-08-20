@@ -33,7 +33,7 @@ public class LoginUI : MonoBehaviour, IController {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (userNameInput.text == "" || passwordInput.text == "") {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter the content");
-                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 return;
             }
 
@@ -42,7 +42,7 @@ public class LoginUI : MonoBehaviour, IController {
 
         registerBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
-            this.SendCommand(new ShowPageCommand(UIPageType.RegisterUI));
+            UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.RegisterUI));
             gameObject.SetActiveFast(false);
         });
     }

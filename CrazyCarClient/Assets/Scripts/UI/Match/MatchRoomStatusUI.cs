@@ -46,11 +46,11 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
                     this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");
-                    this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Other players are not in position");
-                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }  
         });
 

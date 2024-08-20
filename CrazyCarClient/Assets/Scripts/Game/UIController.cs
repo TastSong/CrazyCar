@@ -43,18 +43,14 @@ public enum UILevelType {
     Debug
 }
 
-public class UIController : MonoBehaviour, IController {
+public class UIController : PersistentMonoSingleton<UIController>, IController {
     public Transform[] levles;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
     private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
 
     private void Awake() {
-        this.RegisterEvent<HidePageEvent>(OnHidePage).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<ShowPageEvent>(OnShowPage).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<HidePageByLevelEvent>(OnHidePageByLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
+        base.Awake();
         this.RegisterEvent<PrepareUIEvent>(OnPrepareUI).UnRegisterWhenGameObjectDestroyed(gameObject);
-        
-        DontDestroyOnLoad(gameObject);
     }
 
     private void OnPrepareUI(PrepareUIEvent obj) {
@@ -64,7 +60,7 @@ public class UIController : MonoBehaviour, IController {
         }
     }
 
-    private void OnHidePage(HidePageEvent e) {
+    public void HidePage(HidePageEvent e) {
         if (!pagesDict.ContainsKey(e.pageType)) {
             Debug.Log("Not Exist Page " + e.pageType);
             return;
@@ -74,7 +70,7 @@ public class UIController : MonoBehaviour, IController {
     }
 
     // 根据对应页面类型显示页面 如果没有页面则创建 如果有页面则调取并active为true 第二个参数是是否关闭其他开启界面
-    private void OnShowPage(ShowPageEvent e) {
+    public void ShowPage(ShowPageEvent e) {
         if (e.closeOther) {
             foreach (var kv in pagesDict) {
                 kv.Value.SetActiveFast(false);
@@ -125,7 +121,7 @@ public class UIController : MonoBehaviour, IController {
         return UILevelType.Main;
     }
     
-    private void OnHidePageByLevel(HidePageByLevelEvent e) {
+    public void HidePageByLevel(HidePageByLevelEvent e) {
         foreach (var kv in pagesGroup[e.mLevelType]) {
             if (pagesDict.ContainsKey(kv)) {
                 pagesDict[kv].SetActiveFast(false);
@@ -133,7 +129,7 @@ public class UIController : MonoBehaviour, IController {
         }
     }
 
-    private void DestoryPageByLevel(UILevelType levelType) {
+    public void DestoryPageByLevel(UILevelType levelType) {
         foreach (var kv in pagesGroup[levelType]) {
             if (pagesDict.ContainsKey(kv)) {
                 Destroy(pagesDict[kv]);

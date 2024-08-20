@@ -25,12 +25,12 @@ public class ApplyAvatarCommand : AbstractCommand {
                 this.GetModel<IUserModel>().Aid.Value = (int)data["aid"];
                 this.SendEvent(new UpdataAvatarUIEvent(this.GetModel<IUserModel>().Aid));
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Successfully Set");
-                this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             },
             code: (code) => {
                 if (code == 423) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Did not have");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }));
     }
