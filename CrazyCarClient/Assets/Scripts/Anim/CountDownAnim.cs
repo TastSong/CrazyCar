@@ -15,7 +15,7 @@ public class CountDownAnim : MonoBehaviour, IController {
     }
 
     public void PlayAnim(int time, Action succ = null) {
-        CoroutineController.manager.StartCoroutine(CountDown(time));
+        CoroutineController.Instance.StartCoroutine(CountDown(time));
         Sequence sequence = DOTween.Sequence();
         for (int i = 0; i < time; i++) {
             sequence.Append(countDownText.transform.DOScale(1, 0.5f));

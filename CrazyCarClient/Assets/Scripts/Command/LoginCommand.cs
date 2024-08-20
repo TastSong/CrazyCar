@@ -26,7 +26,7 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
             data: bytes, succData: (data) => {
                 this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
                 this.GetModel<IUserModel>().Password.Value = mPassword;
@@ -38,16 +38,16 @@ public class LoginCommand : AbstractCommand {
                         this.SendCommand<RecodeLoginCommand>();
                         this.SendCommand(new LoadSceneCommand(SceneID.Index));
                     });
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
                 } else if (code == 423) {
                     WarningAlertInfo info = new WarningAlertInfo("Password Error");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, info));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
                 } else if (code == 404) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("User not registered");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Unknown Error");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }));
     }

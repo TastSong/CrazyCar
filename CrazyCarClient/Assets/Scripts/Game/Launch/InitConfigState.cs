@@ -8,7 +8,7 @@ public class InitConfigState : AbstractState<LaunchStates, Launch>, IController 
     }
 
     public override void OnEnter() {
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.configUrl,
             succData: (data) => {
                 this.GetSystem<IDataParseSystem>().ParseAvatarRes(data);

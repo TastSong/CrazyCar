@@ -26,7 +26,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private bool isFirstTime = true;
 
     private void OnEnable() {
-        this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Alart));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
             RequestUrl.equipUrl,
         token: this.GetModel<IGameModel>().Token.Value,
@@ -34,9 +34,9 @@ public class ChangeCarUI : MonoBehaviour, IController {
             // Addressable第一次加载资源会慢
             if (isFirstTime) {
                 isFirstTime = false;
-                this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Alart));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
                 Util.DelayExecuteWithSecond(1.4f, () => {
-                    this.SendCommand(new HidePageCommand(UIPageType.LoadingUI));
+                    UIController.Instance.HidePage(UIPageType.LoadingUI);
                 });
             }
 
@@ -74,8 +74,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
-            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
-            this.SendCommand(new HidePageCommand(UIPageType.ChangeCarUI));           
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.HomepageUI));
+            UIController.Instance.HidePage(UIPageType.ChangeCarUI);           
         });
 
         this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent).UnRegisterWhenGameObjectDestroyed(gameObject);

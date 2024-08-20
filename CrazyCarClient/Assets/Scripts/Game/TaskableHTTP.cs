@@ -98,38 +98,41 @@ public class TaskableHTTP {
     public static async UniTask<TaskableAccessResult> Req(string url, string method, string token, byte[] body,
         CancellationToken cancelToken) {
         try {
-            var request = new UnityWebRequest(url, method);
-            request.timeout = 30;
+            using (var request = new UnityWebRequest(url, method)) {
+                request.timeout = 30;
 
-            if (method == "POST") {
-                UploadHandler handler = new UploadHandlerRaw(body);
-                handler.contentType = "application/json";
-                request.useHttpContinue = false;
-                request.uploadHandler = handler;
+                if (method == "POST") {
+                    UploadHandler handler = new UploadHandlerRaw(body);
+                    handler.contentType = "application/json";
+                    request.useHttpContinue = false;
+                    request.uploadHandler = handler;
+                }
+
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+                request.disposeUploadHandlerOnDispose = true;
+                request.disposeDownloadHandlerOnDispose = true;
+                request.disposeCertificateHandlerOnDispose = true;
+                if (!string.IsNullOrEmpty(token)) {
+                    request.SetRequestHeader("Authorization", token);
+                }
+
+                request.downloadHandler = new DownloadHandlerBuffer();
+                Debug.Log("request--->" + request.url);
+
+
+                var response = await request.SendWebRequest().WithCancellation(cancelToken);
+                //var response = request;
+                //await UniTask.WaitUntil(() => request.isDone);
+
+                if (response.isNetworkError || response.responseCode != 200) {
+                    return new TaskableAccessResult(null, response.responseCode,
+                        new Exception("Http Access Error Code Return"));
+                }
+
+                byte[] results = request.downloadHandler.data; string s = Encoding.UTF8.GetString(results);
+                return new TaskableAccessResult(s, response.responseCode, null);
             }
-
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Accept", "application/json");
-            if (!string.IsNullOrEmpty(token)) {
-                request.SetRequestHeader("Authorization", token);
-            }
-
-            request.downloadHandler = new DownloadHandlerBuffer();
-            Debug.Log("request--->" + request.url);
-
-
-            var response = await request.SendWebRequest().WithCancellation(cancelToken);
-            //var response = request;
-            //await UniTask.WaitUntil(() => request.isDone);
-
-            if (response.isNetworkError || response.responseCode != 200) {
-                return new TaskableAccessResult(null, response.responseCode,
-                    new Exception("Http Access Error Code Return"));
-            }
-
-            byte[] results = request.downloadHandler.data;
-            string s = Encoding.UTF8.GetString(results);
-            return new TaskableAccessResult(s, response.responseCode, null);
         } catch (Exception e) {
             Debug.LogError("http" + e);
             if (e is UnityWebRequestException) {

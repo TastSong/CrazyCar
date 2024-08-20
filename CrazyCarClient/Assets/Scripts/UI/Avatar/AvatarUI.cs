@@ -21,7 +21,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
     private void OnEnable() {
         avatarModel = this.GetModel<IAvatarModel>();
-        this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Alart));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
         token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
@@ -54,7 +54,7 @@ public class AvatarUI : MonoBehaviour, IController {
 
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
-            this.SendCommand(new HidePageCommand(UIPageType.AvatarUI));
+            UIController.Instance.HidePage(UIPageType.AvatarUI);
             this.SendCommand<UpdateHomepageUICommand>();
         });
 

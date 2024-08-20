@@ -116,7 +116,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 string s = Encoding.UTF8.GetString(results);
                 Debug.Log(url + " : " + s);
                 JsonData d = JsonMapper.ToObject(s);
-                this.SendEvent(new HidePageEvent(UIPageType.LoadingUI));
+                UIController.Instance.HidePage(UIPageType.LoadingUI);
 
                 code?.Invoke((int)d["code"]);
                 if ((int)d["code"] == 200) {
@@ -261,7 +261,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
         data: bytes,
         token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
@@ -278,10 +278,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             if (code == 423) {
                 if (gameType == GameType.Match) {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("Do not own this course");
-                    this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }
         }));
@@ -303,7 +303,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
             data: bytes, token: this.GetModel<IGameModel>().Token.Value, succData: (data) => {
                 succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
             }, code: (code) => {

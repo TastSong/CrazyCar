@@ -16,7 +16,7 @@ public class MatchNet : MonoBehaviour, IController {
             this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
                 Debug.Log("MatchNet Connect Succ");
                 this.SendCommand<PostCreatePlayerMsgCommand>();
-                matchNerCor = CoroutineController.manager.StartCoroutine(SendMsg());
+                matchNerCor = CoroutineController.Instance.StartCoroutine(SendMsg());
             };
         }
 
@@ -27,7 +27,7 @@ public class MatchNet : MonoBehaviour, IController {
     {
         if (matchNerCor != null)
         {
-            CoroutineController.manager.StopCoroutine(matchNerCor);
+            CoroutineController.Instance.StopCoroutine(matchNerCor);
         }
     }
 

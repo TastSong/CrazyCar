@@ -43,7 +43,7 @@ public class DownloadResUI : MonoBehaviour, IController {
                         Application.Quit();
                     },
                     confirmText: "Download");
-                this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             } else {
                 DownloadRes();
             }

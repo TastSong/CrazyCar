@@ -49,12 +49,12 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         this.GetSystem<IPlayerManagerSystem>().SelfPlayer.isLockSpeed = true;
         if (this.GetModel<IGameModel>().StandAlone) {
             WarningAlertInfo alertInfo = new WarningAlertInfo("Game Over");
-            this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             Util.DelayExecuteWithSecond(2.0f, () => {
                 this.SendCommand(new LoadSceneCommand(SceneID.Index));
             });           
         } else {
-            this.SendCommand(new ShowPageCommand(UIPageType.GameResultUI, UILevelType.UIPage));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameResultUI, UILevelType.UIPage));
         }
     }
 

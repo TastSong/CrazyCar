@@ -20,7 +20,7 @@ public class RegisterUI : MonoBehaviour, IController {
     private void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
-            this.SendCommand(new ShowPageCommand(UIPageType.LoginUI));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoginUI));
             gameObject.SetActiveFast(false);
         });
 
@@ -28,13 +28,13 @@ public class RegisterUI : MonoBehaviour, IController {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (userNameInput.text == "" || passwordInput.text == "") {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter the content");
-                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 return;
             }
 
             if (passwordInput.text.Length < 6) {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("The password must contain more than six characters");
-                this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 return;
             }
 

@@ -24,7 +24,7 @@ public class BuyEquipCommand : AbstractCommand {
             InfoConfirmInfo info = new InfoConfirmInfo(content: string.Format(this.GetSystem<II18NSystem>().GetText("Whether to spend {0} star on this equip"),
                     mEquipInfo.star),
                 success: () => {
-                    CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                    CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                         RequestUrl.buyEquipUrl,
                         data: bytes,
                         token: this.GetModel<IGameModel>().Token.Value,
@@ -37,11 +37,11 @@ public class BuyEquipCommand : AbstractCommand {
                 fail: () => {
                     Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
                 });
-            this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         } else {
             WarningAlertInfo alertInfo = new WarningAlertInfo(string.Format(this.GetSystem<II18NSystem>().GetText("This equip requires {0} star"),
                 mEquipInfo.star));
-            this.SendEvent(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
         }
     }
 }

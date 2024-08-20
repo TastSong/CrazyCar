@@ -144,7 +144,7 @@ public class KCPManager : KcpClient, IController {
         }
         KCPState = KCPState.Connecting;
         Debug.Log("host " + host + " port " + port + " url " + url);
-        CoroutineController.manager.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
+        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
             token: this.GetModel<IGameModel>().Token.Value,
             succData : (d) => {

@@ -7,8 +7,8 @@ public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
     public PrepareUIState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
     
-    public override void OnEnter() {
-       this.SendCommand(new PrepareUICommand());
+    public override async void OnEnter() {
+       await UIController.Instance.PrepareUI();
        ChangeState();
     }
 
@@ -18,7 +18,7 @@ public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
     
     public override void OnExit() {
         // loading 的特殊性，可能还未准备好，就会被关闭，所以提前准备
-        this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Prepare));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Prepare));
     }
 
     public IArchitecture GetArchitecture() {

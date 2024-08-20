@@ -110,9 +110,9 @@ public class UserModel : AbstractModel, IUserModel {
         IsSuperuser.Register(v => {
             storage.SaveInt(PrefKeys.isSuperuser, v ? 1 : 0);
             if (IsSuperuser) {
-                this.SendEvent(new ShowPageEvent(UIPageType.GameHelper, UILevelType.Debug));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameHelper, UILevelType.Debug));
             } else {
-                this.SendEvent(new HidePageEvent(UIPageType.GameHelper));
+                UIController.Instance.HidePage(UIPageType.GameHelper);
             }
         });
     }

@@ -17,7 +17,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
             JsonData data = JsonMapper.ToObject(ta.text);
             this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data, UpdateUI);
         } else {
-            this.SendCommand(new ShowPageCommand(UIPageType.LoadingUI, UILevelType.Alart));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
             StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
                token: this.GetModel<IGameModel>().Token.Value,
                succData: (data) => {
@@ -38,7 +38,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
     private void Start() {
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
-            this.SendCommand(new ShowPageCommand(UIPageType.HomepageUI));
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.HomepageUI));
             gameObject.SetActiveFast(false);
         });
     }

@@ -29,7 +29,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         });
                     } else {
                         WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires wading vehicles");
-                        this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                     }
                 } else {
                     this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid, () => {
@@ -45,10 +45,10 @@ public class TimeTrialItem : MonoBehaviour, IController {
                         fail: () => {
                             Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
                         });
-                    this.SendCommand(new ShowPageCommand(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("This course requires {0} star");
-                    this.SendCommand(new ShowPageCommand(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 }
             }
         });

@@ -110,7 +110,7 @@ namespace Utils {
         }
 
         public static Coroutine DelayExecute(Action f, Func<bool> pre) {
-            return CoroutineController.manager.StartCoroutine(DelayExecuting(f, pre));
+            return CoroutineController.Instance.StartCoroutine(DelayExecuting(f, pre));
         }
 
         private static IEnumerator DelayExecuting(Action f, Func<bool> pre) {
@@ -122,7 +122,7 @@ namespace Utils {
         }
 
         public static void DelayExecuteWithSecond(float sec, Action func) {
-            CoroutineController.manager.StartCoroutine(DelayExecutingWithSecond(sec, func));
+            CoroutineController.Instance.StartCoroutine(DelayExecutingWithSecond(sec, func));
         }
 
         private static IEnumerator DelayExecutingWithSecond(float sec, Action func) {
