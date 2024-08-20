@@ -35,7 +35,7 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetSystem<IMatchRoomSystem>().MatchRoomCreate();
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter a 4-digit room number");
-                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 ResetUI();
             }
         });
@@ -47,7 +47,7 @@ public class MatchRoomUI : MonoBehaviour, IController {
                 this.GetSystem<IMatchRoomSystem>().MatchRoomJoin();
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Please enter a 4-digit room number");
-                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                 ResetUI();
             }
         });

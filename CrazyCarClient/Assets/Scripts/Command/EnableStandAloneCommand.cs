@@ -17,7 +17,7 @@ public class EnableStandAloneCommand : AbstractCommand {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Login Success", () => {
                     this.SendCommand(new LoadSceneCommand(SceneID.Index));
                 });
-                UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }
         });
         

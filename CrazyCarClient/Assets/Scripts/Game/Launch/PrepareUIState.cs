@@ -18,7 +18,7 @@ public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
     
     public override void OnExit() {
         // loading 的特殊性，可能还未准备好，就会被关闭，所以提前准备
-        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.LoadingUI, UILevelType.Prepare));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Prepare));
     }
 
     public IArchitecture GetArchitecture() {

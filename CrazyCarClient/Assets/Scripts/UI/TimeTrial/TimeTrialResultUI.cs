@@ -36,7 +36,7 @@ public class TimeTrialResultUI : MonoBehaviour, IController {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.LoadingUI, UILevelType.Alart));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
         StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialResultUrl,
             data : bytes,
             token: this.GetModel<IGameModel>().Token.Value,

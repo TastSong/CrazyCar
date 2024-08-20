@@ -60,17 +60,17 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         }
     }
 
-    public void HidePage(HidePageEvent e) {
-        if (!pagesDict.ContainsKey(e.pageType)) {
-            Debug.Log("Not Exist Page " + e.pageType);
+    public void HidePage(UIPageType pageType) {
+        if (!pagesDict.ContainsKey(pageType)) {
+            Debug.Log("Not Exist Page " + pageType);
             return;
         }
 
-        pagesDict[e.pageType].SetActiveFast(false);
+        pagesDict[pageType].SetActiveFast(false);
     }
 
     // 根据对应页面类型显示页面 如果没有页面则创建 如果有页面则调取并active为true 第二个参数是是否关闭其他开启界面
-    public void ShowPage(ShowPageEvent e) {
+    public void ShowPage(ShowPageInfo e) {
         if (e.closeOther) {
             foreach (var kv in pagesDict) {
                 kv.Value.SetActiveFast(false);
@@ -103,7 +103,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         }
     }
 
-    private void SetPageInfo(ShowPageEvent e) {
+    private void SetPageInfo(ShowPageInfo e) {
         UIPenal penal = pagesDict[e.pageType].GetComponent<UIPenal>();
         if (e.data != null && penal != null) {
             penal.InitData(e.data);
@@ -121,8 +121,8 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         return UILevelType.Main;
     }
     
-    public void HidePageByLevel(HidePageByLevelEvent e) {
-        foreach (var kv in pagesGroup[e.mLevelType]) {
+    public void HidePageByLevel(UILevelType levelType) {
+        foreach (var kv in pagesGroup[levelType]) {
             if (pagesDict.ContainsKey(kv)) {
                 pagesDict[kv].SetActiveFast(false);
             }

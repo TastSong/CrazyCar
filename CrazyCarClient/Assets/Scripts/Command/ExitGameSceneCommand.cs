@@ -19,6 +19,6 @@ public class ExitGameSceneCommand : AbstractCommand
             fail: () => {
                 Time.timeScale = 1;
             });
-        UIController.Instance.ShowPage(new ShowPageEvent(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
     }
 }
