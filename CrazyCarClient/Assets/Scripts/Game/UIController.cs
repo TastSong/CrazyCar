@@ -50,14 +50,16 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
 
     private void Awake() {
         base.Awake();
-        this.RegisterEvent<PrepareUIEvent>(OnPrepareUI).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private void OnPrepareUI(PrepareUIEvent obj) {
+    public async UniTask PrepareUI() {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
             pagesGroup[value] = new LinkedList<UIPageType>();
         }
+
+        await ShowPageAsync(new ShowPageInfo(UIPageType.LoginUI, UILevelType.Prepare));
+        await ShowPageAsync(new ShowPageInfo(UIPageType.HomepageUI, UILevelType.Prepare));
     }
 
     public void HidePage(UIPageType pageType) {

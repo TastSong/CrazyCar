@@ -56,7 +56,9 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
         this.GetModel<IGameModel>().SceneLoaded.Value = true;
         this.GetModel<IGameModel>().SceneLoading.Value = false;
         
-        if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Game) {
+        if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Index) {
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.HomepageUI, UILevelType.Main));
+        } else if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Game) {
             SelectGameUI();
         }
         

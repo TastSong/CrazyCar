@@ -7,8 +7,8 @@ public class PrepareUIState : AbstractState<LaunchStates, Launch>, IController {
     public PrepareUIState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
     
-    public override void OnEnter() {
-       this.SendCommand(new PrepareUICommand());
+    public override async void OnEnter() {
+       await UIController.Instance.PrepareUI();
        ChangeState();
     }
 
