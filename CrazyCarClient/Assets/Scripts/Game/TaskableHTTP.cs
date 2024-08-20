@@ -110,6 +110,9 @@ public class TaskableHTTP {
 
             request.SetRequestHeader("Content-Type", "application/json");
             request.SetRequestHeader("Accept", "application/json");
+            request.disposeUploadHandlerOnDispose = true;
+            request.disposeDownloadHandlerOnDispose = true;
+            request.disposeCertificateHandlerOnDispose = true;
             if (!string.IsNullOrEmpty(token)) {
                 request.SetRequestHeader("Authorization", token);
             }
