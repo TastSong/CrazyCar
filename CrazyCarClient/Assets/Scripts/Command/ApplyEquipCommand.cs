@@ -11,7 +11,7 @@ public class ApplyEquipCommand : AbstractCommand {
         mEquipInfo = equipInfo;
     }
 
-    protected override void OnExecute() {
+    protected override async void OnExecute() {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -20,20 +20,16 @@ public class ApplyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                    RequestUrl.changeEquipUrl,
-                data: bytes, token: this.GetModel<IGameModel>().Token.Value,
-                succData: (data) => {
-                    this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)data["eid"]];
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("Successfully Set");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                    this.SendEvent<ApplyEquipEvent>();
-                },
-                code: (code) => {
-                    if (code == 423) {
-                        WarningAlertInfo alertInfo = new WarningAlertInfo("Did not have");
-                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                    }
-                }));
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                      RequestUrl.changeEquipUrl,token: this.GetModel<IGameModel>().Token.Value, bytes);
+        if (result.serverCode == 200) {
+            this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)result.serverData["eid"]];
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Successfully Set");
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+            this.SendEvent<ApplyEquipEvent>();
+        } else if (result.serverCode == 423) {
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Did not have");
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+        }
     }
 }
