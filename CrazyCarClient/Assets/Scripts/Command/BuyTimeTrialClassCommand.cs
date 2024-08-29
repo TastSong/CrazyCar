@@ -11,7 +11,7 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         mTimeTrialInfo = timeTrialInfo;
     }
 
-    protected override void OnExecute() {
+    protected override async void OnExecute() {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -20,15 +20,14 @@ public class BuyTimeTrialClassCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
-        data: bytes,
-        token: this.GetModel<IGameModel>().Token.Value,
-        succData: (data) => {
-            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyTimeTrialClassUrl,
+        token: this.GetModel<IGameModel>().Token.Value, bytes);
+        if (result.serverCode == 200) {
+            this.GetModel<IUserModel>().Star.Value = (int)result.serverData["star"];
             mTimeTrialInfo.isHas = true;
             this.GetModel<IUserModel>().MapNum.Value++;
             this.SendEvent<UnlockTimeTrialEvent>();
             this.SendEvent<UpdateHomepageUIEvent>();
-        }));
+        }
     }
 }
