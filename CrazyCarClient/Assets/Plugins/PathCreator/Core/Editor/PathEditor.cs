@@ -601,6 +601,9 @@ namespace PathCreationEditor {
         }
 
         void OnEnable () {
+            if (target == null) {
+                return;
+            }
             creator = (PathCreator) target;
             bool in2DEditorMode = EditorSettings.defaultBehaviorMode == EditorBehaviorMode.Mode2D;
             creator.InitializeEditorData (in2DEditorMode);

@@ -99,31 +99,29 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
         }
     }
 
-    private void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
+    private async void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
         MPlayer peer = null;
         
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
-            this.GetSystem<INetworkSystem>().GetUserInfo(playerStateMsg.uid, (userInfo) => {
-                if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
-                {
-                    PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
-                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
-                }
-            });
+            var userInfo = await this.GetSystem<INetworkSystem>().GetUserInfo(playerStateMsg.uid);
+            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
+            {
+                PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
+                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+            }
         } else {
             peer.AdjustPosition(playerStateMsg.pos, playerStateMsg.speed);
         }
     }
 
-    private void AdjustPeerPlayer(PlayerOperatMsg playerOperatMsg) {
+    private async void AdjustPeerPlayer(PlayerOperatMsg playerOperatMsg) {
         MPlayer peer = null;
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerOperatMsg.uid, out peer)) {
-            this.GetSystem<INetworkSystem>().GetUserInfo(playerOperatMsg.uid, (userInfo) => {
-                if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerOperatMsg.uid, out peer)) {
-                    PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerOperatMsg, userInfo);
-                    this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
-                }
-            });
+            var userInfo = await this.GetSystem<INetworkSystem>().GetUserInfo(playerOperatMsg.uid);
+            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerOperatMsg.uid, out peer)) {
+                PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerOperatMsg, userInfo);
+                this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
+            }
         } else {
             this.SendEvent(new PeerControllerEvent(playerOperatMsg));
         }

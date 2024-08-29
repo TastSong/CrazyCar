@@ -284,10 +284,10 @@ CREATE TABLE `version` (
 
 LOCK TABLES `version` WRITE;
 /*!40000 ALTER TABLE `version` DISABLE KEYS */;
-INSERT INTO `version` VALUES (1,'Android','9.4.0',10000,1633519472,'https://www.pgyer.com/xlbk'),
-                                     (2,'ios','9.4.0',10000,1633519472,'https://www.pgyer.com/rRut'),
-                                     (3,'WebGL','9.4.0',10000,1633519472,'https://www.pgyer.com/rRut'),
-                                     (4,'PC','9.4.0',9999,1633519472,'https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
+INSERT INTO `version` VALUES (1,'Android','9.5.0',10000,1633519472,'https://www.pgyer.com/xlbk'),
+                                     (2,'ios','9.5.0',10000,1633519472,'https://www.pgyer.com/rRut'),
+                                     (3,'WebGL','9.5.0',10000,1633519472,'https://www.pgyer.com/rRut'),
+                                     (4,'PC','9.5.0',9999,1633519472,'https://github.com/TastSong/CrazyCar/releases/latest'),(12,'Defeat','0.0.0',10000,'1633519472121','https://github.com/TastSong/CrazyCar/releases/latest');
 /*!40000 ALTER TABLE `version` ENABLE KEYS */;
 UNLOCK TABLES;
 

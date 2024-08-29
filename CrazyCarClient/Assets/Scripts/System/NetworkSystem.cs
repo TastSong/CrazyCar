@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System;
 using LitJson;
 using System.Text;
+using Cysharp.Threading.Tasks;
 
 public interface ISocketSystem {
     public void Connect(string url, int port = 0);
@@ -39,8 +40,12 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomStartMsg { get; set; }
     // http
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
+    public UniTask<TaskableAccessResult> Get(string url, string server_token);
+    public UniTask<TaskableAccessResult> Get(string url);
+    public UniTask<TaskableAccessResult> Post(string url, string server_token, byte[] body);
+    public UniTask<TaskableAccessResult> Post(string url, byte[] body);
     public void EnterRoom(GameType gameType, int cid, Action succ = null);
-    public void GetUserInfo(int uid, Action<UserInfo> succ);
+    public UniTask<UserInfo> GetUserInfo(int uid);
 }
 
 public class NetworkSystem : AbstractSystem, INetworkSystem {
@@ -89,6 +94,70 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
     private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
     private PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
+    
+    public async UniTask<TaskableAccessResult> Get(string url, string server_token) {
+        return await Req(url, "GET", server_token, null);
+    }
+
+    public async UniTask<TaskableAccessResult> Get(string url) {
+        return await Req(url, "GET", "", null);
+    }
+
+    public async UniTask<TaskableAccessResult> Post(string url, string server_token, byte[] body) {
+        return await Req(url, "POST", server_token, body);
+    }
+
+    public async UniTask<TaskableAccessResult> Post(string url, byte[] body) {
+        return await Req(url, "POST", "", body);
+    }
+
+    private async UniTask<TaskableAccessResult> Req(string url, string method, string token, byte[] body) {
+        try {
+            using (var request = new UnityWebRequest(url, method)) {
+                request.timeout = 30;
+
+                if (method == "POST") {
+                    UploadHandler handler = new UploadHandlerRaw(body);
+                    handler.contentType = "application/json";
+                    request.useHttpContinue = false;
+                    request.uploadHandler = handler;
+                }
+
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+                request.disposeUploadHandlerOnDispose = true;
+                request.disposeDownloadHandlerOnDispose = true;
+                request.disposeCertificateHandlerOnDispose = true;
+                if (!string.IsNullOrEmpty(token)) {
+                    request.SetRequestHeader("Authorization", token);
+                }
+
+                request.downloadHandler = new DownloadHandlerBuffer();
+                Debug.Log("request--->" + request.url);
+
+
+                var response = await request.SendWebRequest().WithCancellation(default);
+                //var response = request;
+                //await UniTask.WaitUntil(() => request.isDone);
+
+                if (response.isNetworkError || response.responseCode != 200) {
+                    return new TaskableAccessResult(null, response.responseCode,
+                        new Exception("Http Access Error Code Return"));
+                }
+
+                byte[] results = request.downloadHandler.data; string s = Encoding.UTF8.GetString(results);
+                return new TaskableAccessResult(s, response.responseCode, null);
+            }
+        } catch (Exception e) {
+            Debug.LogError("http" + e);
+            if (e is UnityWebRequestException) {
+                UnityWebRequestException ex = e as UnityWebRequestException;
+                return new TaskableAccessResult(null, ex.ResponseCode, e);
+            }
+
+            return new TaskableAccessResult(null, -1, e);
+        }
+    }
 
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
@@ -133,7 +202,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     public void Connect(string wsURL = "", string kcpURL = "", int port = 0) {
         string url = "";
         if (netType == NetType.WebSocket) {
-            url = "ws" + this.GetSystem<INetworkSystem>().HttpBaseUrl.Substring(4) + wsURL;
+            url = "ws" + HttpBaseUrl.Substring(4) + wsURL;
         } else if (netType == NetType.KCP) {
             url = kcpURL;
         }
@@ -261,7 +330,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.enterRoomUrl,
+        CoroutineController.Instance.StartCoroutine(POSTHTTP(url: HttpBaseUrl + RequestUrl.enterRoomUrl,
         data: bytes,
         token: this.GetModel<IGameModel>().Token.Value,
         succData: (data) => {
@@ -287,13 +356,11 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }));
     }
 
-    public void GetUserInfo(int uid, Action<UserInfo> succ) {
+    public async UniTask<UserInfo> GetUserInfo(int uid) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            this.GetSystem<IAddressableSystem>().LoadAsset<TextAsset>(Util.baseStandAlone + Util.standAloneAI, (asset) => {
-                JsonData data = JsonMapper.ToObject(asset.Result.text);
-                succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
-            });
-            return;
+            var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
+            JsonData data = JsonMapper.ToObject(result.text);
+            return this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
         }
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
@@ -303,15 +370,15 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.getUserInfo,
-            data: bytes, token: this.GetModel<IGameModel>().Token.Value, succData: (data) => {
-                succ.Invoke(this.GetSystem<IDataParseSystem>().ParseUserInfo(data));
-            }, code: (code) => {
-                if (code != 200)
-                {
-                    Debug.Log("get user info error code = " + code);
-                }
-            }));
+        var resultData =
+            await Post(HttpBaseUrl + RequestUrl.getUserInfo, this.GetModel<IGameModel>().Token.Value, bytes);
+       
+        if (resultData.serverCode == 200) {
+            return this.GetSystem<IDataParseSystem>().ParseUserInfo(resultData.serverData);
+        } else {
+            Debug.Log("get user info error code = " + resultData.serverCode);
+            return null;
+        }
     }
 
     protected override void OnInit() {

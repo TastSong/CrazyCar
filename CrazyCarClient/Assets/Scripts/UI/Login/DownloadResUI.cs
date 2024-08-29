@@ -34,7 +34,7 @@ public class DownloadResUI : MonoBehaviour, IController {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         // Unity 2021 不能开启游戏就发送HTTP会有报错
         var result =
-            await TaskableHTTP.Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
+            await this.GetSystem<INetworkSystem>().Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
         if (result.serverCode == 200) {
             if ((bool)result.serverData["is_forced_updating"]) {
                 InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
