@@ -47,28 +47,27 @@ public class AIController : MonoBehaviour, IController {
         playerFinishTimeTrial = true;
     }
 
-    private void OnMakeAIPlayer(MakeAIPlayerEvent e)
+    private async void OnMakeAIPlayer(MakeAIPlayerEvent e)
     {
         AIInfo aiInfo = new AIInfo();
         aiInfo.id = id++;
-        this.GetSystem<INetworkSystem>().GetUserInfo(4, (userInfo) => {
-            aiInfo.userInfo = userInfo;
-            aiInfo.startMoveTime = e.aiInfo.startMoveTime;
-            aiInfo.needPassTimes = e.aiInfo.needPassTimes;
-            aiInfo.isStartGame = e.aiInfo.isStartGame;
-            aiInfo.startPos = e.aiInfo.startPos;
-            aiInfo.pathCreator = e.aiInfo.pathCreator;
-            aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
-            aiInfo.mPlayer.transform.SetParent(transform, false);
-            aiInfo.mPlayer.userInfo = aiInfo.userInfo;
-            aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
-                aiInfo.userInfo.equipInfo.rid);
-            aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);
-            aiInfoDic.Add(aiInfo.id, aiInfo);
+        var userInfo = await this.GetSystem<INetworkSystem>().GetUserInfo(4);
+        aiInfo.userInfo = userInfo;
+        aiInfo.startMoveTime = e.aiInfo.startMoveTime;
+        aiInfo.needPassTimes = e.aiInfo.needPassTimes;
+        aiInfo.isStartGame = e.aiInfo.isStartGame;
+        aiInfo.startPos = e.aiInfo.startPos;
+        aiInfo.pathCreator = e.aiInfo.pathCreator;
+        aiInfo.mPlayer = Instantiate(mPlayerPrefab, aiInfo.startPos, Quaternion.identity);
+        aiInfo.mPlayer.transform.SetParent(transform, false);
+        aiInfo.mPlayer.userInfo = aiInfo.userInfo;
+        aiInfo.mPlayer.GetComponent<MPlayerStyle>().ChangeEquip(aiInfo.userInfo.equipInfo.eid,
+            aiInfo.userInfo.equipInfo.rid);
+        aiInfo.mPlayer.GetComponent<MPlayerStyle>().SetNameText(aiInfo.userInfo.name, aiInfo.userInfo.isVIP);
+        aiInfoDic.Add(aiInfo.id, aiInfo);
 
-            Util.DelayExecuteWithSecond(aiInfo.startMoveTime, () => {
-                aiInfoDic[aiInfo.id].isStartGame = true;
-            });
+        Util.DelayExecuteWithSecond(aiInfo.startMoveTime, () => {
+            aiInfoDic[aiInfo.id].isStartGame = true;
         });
     }
 

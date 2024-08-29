@@ -26,25 +26,24 @@ public class ProfileUI : MonoBehaviour, IController {
         return CrazyCar.Interface;
     }
 
-    private void OnEnable() {
+    private async void OnEnable() {
         var userModel = this.GetModel<IUserModel>();
-        this.GetSystem<INetworkSystem>().GetUserInfo(userModel.Uid, (data) => {
-            userModel.SetUserInfoPart(data);
+        var data = await this.GetSystem<INetworkSystem>().GetUserInfo(userModel.Uid);
+        userModel.SetUserInfoPart(data);
 
-            vipImage.gameObject.SetActiveFast(userModel.IsVIP);
-            userNameInput.text = userModel.Name;
-            starText.text = userModel.Star.ToString();
-            travelTimesText.text = userModel.TravelTimes.ToString();
-            avatarText.text = userModel.AvatarNum.ToString();
-            mapsText.text = userModel.MapNum.ToString();
+        vipImage.gameObject.SetActiveFast(userModel.IsVIP);
+        userNameInput.text = userModel.Name;
+        starText.text = userModel.Star.ToString();
+        travelTimesText.text = userModel.TravelTimes.ToString();
+        avatarText.text = userModel.AvatarNum.ToString();
+        mapsText.text = userModel.MapNum.ToString();
 
-            this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
-                if (obj.Status == AsyncOperationStatus.Succeeded) {
-                    avatarImage.sprite = Instantiate(obj.Result, transform, false);
-                }
-            });
-            passwordInput.text = userModel.Password.Value;
+        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                avatarImage.sprite = Instantiate(obj.Result, transform, false);
+            }
         });
+        passwordInput.text = userModel.Password.Value;
     }
 
     private void Start() {
