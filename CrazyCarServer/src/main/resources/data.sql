@@ -1,3 +1,6 @@
+-- 禁用这个模式（但这可能会导致数据不一致问题）
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
 DROP DATABASE IF EXISTS crazy_car;
 create database crazy_car charset=utf8mb4 collate=utf8mb4_general_ci;
 use crazy_car;
