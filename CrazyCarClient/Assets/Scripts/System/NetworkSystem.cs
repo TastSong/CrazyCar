@@ -40,10 +40,10 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomStartMsg { get; set; }
     // http
     public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
-    public UniTask<TaskableAccessResult> Get(string url, string server_token);
+    public UniTask<TaskableAccessResult> Get(string url, string token);
     public UniTask<TaskableAccessResult> Get(string url);
-    public UniTask<TaskableAccessResult> Post(string url, string server_token, byte[] body);
-    public UniTask<TaskableAccessResult> Post(string url, byte[] body);
+    public UniTask<TaskableAccessResult> Post(string url, string token, byte[] body = null);
+    public UniTask<TaskableAccessResult> Post(string url, byte[] body = null);
     public void EnterRoom(GameType gameType, int cid, Action succ = null);
     public UniTask<UserInfo> GetUserInfo(int uid);
 }
@@ -95,19 +95,19 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
     private PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
     
-    public async UniTask<TaskableAccessResult> Get(string url, string server_token) {
-        return await Req(url, "GET", server_token, null);
+    public async UniTask<TaskableAccessResult> Get(string url, string token) {
+        return await Req(url, "GET", token, null);
     }
 
     public async UniTask<TaskableAccessResult> Get(string url) {
         return await Req(url, "GET", "", null);
     }
 
-    public async UniTask<TaskableAccessResult> Post(string url, string server_token, byte[] body) {
-        return await Req(url, "POST", server_token, body);
+    public async UniTask<TaskableAccessResult> Post(string url, string token, byte[] body = null) {
+        return await Req(url, "POST", token, body);
     }
 
-    public async UniTask<TaskableAccessResult> Post(string url, byte[] body) {
+    public async UniTask<TaskableAccessResult> Post(string url, byte[] body = null) {
         return await Req(url, "POST", "", body);
     }
 
@@ -116,7 +116,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             using (var request = new UnityWebRequest(url, method)) {
                 request.timeout = 30;
 
-                if (method == "POST") {
+                if (method == "POST" && body != null) {
                     UploadHandler handler = new UploadHandlerRaw(body);
                     handler.contentType = "application/json";
                     request.useHttpContinue = false;

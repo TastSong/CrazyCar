@@ -19,15 +19,14 @@ public class AvatarUI : MonoBehaviour, IController {
     private IAvatarModel avatarModel;
     private int curAid = 0;
 
-    private void OnEnable() {
+    private async void OnEnable() {
         avatarModel = this.GetModel<IAvatarModel>();
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
-        token: this.GetModel<IGameModel>().Token.Value,
-        succData: (data) => {
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl, this.GetModel<IGameModel>().Token.Value);
+        if (result.serverCode == 200) {
             curAid = this.GetModel<IUserModel>().Aid.Value;
-            this.GetSystem<IDataParseSystem>().ParseAvatarRes(data, UpdataUI);
-        }));
+            this.GetSystem<IDataParseSystem>().ParseAvatarRes(result.serverData, UpdataUI);
+        }
     }
 
     private void UpdataUI() {
