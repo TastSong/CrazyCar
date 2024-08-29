@@ -313,7 +313,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public void EnterRoom(GameType gameType, int cid, Action succ = null) {
+    public async void EnterRoom(GameType gameType, int cid, Action succ = null) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
             this.GetModel<IRoomMsgModel>().Num = 0;
             succ?.Invoke();
@@ -331,30 +331,26 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(POSTHTTP(url: HttpBaseUrl + RequestUrl.enterRoomUrl,
-        data: bytes,
-        token: this.GetModel<IGameModel>().Token.Value,
-        succData: (data) => {
+        var result = await this.GetSystem<INetworkSystem>().Post(url: HttpBaseUrl + RequestUrl.enterRoomUrl,
+            token: this.GetModel<IGameModel>().Token.Value, bytes);
+        if (result.serverCode == 200) {
             if (gameType == GameType.Match) {
                 this.GetModel<IRoomMsgModel>().Num = this.GetModel<IMatchModel>().
-                  MemberInfoDic[this.GetModel<IUserModel>().Uid].index;
+                    MemberInfoDic[this.GetModel<IUserModel>().Uid].index;
             } else {
-                this.GetModel<IRoomMsgModel>().Num = (int)data["num"];
+                this.GetModel<IRoomMsgModel>().Num = (int)result.serverData["num"];
             }
             
             succ?.Invoke();
-        },
-        code: (code) => {
-            if (code == 423) {
-                if (gameType == GameType.Match) {
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                } else {
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("Do not own this course");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                }
+        } else if (result.serverCode == 423) {
+            if (gameType == GameType.Match) {
+                WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+            } else {
+                WarningAlertInfo alertInfo = new WarningAlertInfo("Do not own this course");
+                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }
-        }));
+        }
     }
 
     public async UniTask<UserInfo> GetUserInfo(int uid) {
