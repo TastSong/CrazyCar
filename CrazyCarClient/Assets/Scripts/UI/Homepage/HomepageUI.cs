@@ -45,26 +45,25 @@ public class HomepageUI : MonoBehaviour, IController {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.TimeTrialDetailUI));
         });
-        matchBtn.onClick.AddListener(() => {
+        matchBtn.onClick.AddListener(async () => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (this.GetModel<IGameModel>().StandAlone.Value) {
                 ShowStandAlone();
                 return;
             }
 
-            StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                  RequestUrl.matchMapUrl,
-                token: this.GetModel<IGameModel>().Token.Value,
-                succData: (data) => {
-                    this.GetSystem<IDataParseSystem>().ParseMatchMapData(data, () => {
-                        if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
-                            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.MatchRoomUI));
-                        } else {
-                            WarningAlertInfo alertInfo = new WarningAlertInfo("No game");
-                            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                        }
-                    });
-                }));
+            var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                                                                          RequestUrl.matchMapUrl, token: this.GetModel<IGameModel>().Token.Value);
+            if (result.serverCode == 200) {
+                this.GetSystem<IDataParseSystem>().ParseMatchMapData(result.serverData, () => {
+                    if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
+                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.MatchRoomUI));
+                    } else {
+                        WarningAlertInfo alertInfo = new WarningAlertInfo("No game");
+                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    }
+                });
+            }
         });
 
         //--------- option ---------

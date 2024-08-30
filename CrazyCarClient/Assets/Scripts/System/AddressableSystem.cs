@@ -129,17 +129,16 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         }
     }
 
-    public void SetUpdateInfo(Action finish) {
-       CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl,
-                succData: (data) => { 
-                    if ((bool)data["is_on"]) {
-                        AddressableInfo.BaseUrl = (string)data["url"];
-                    } else {
-                        AddressableInfo.BaseUrl = Application.streamingAssetsPath;
-                    }
-                }, code: (code) => {
-                    finish.Invoke();
-                }));
+    public async void SetUpdateInfo(Action finish) {
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl);
+        if (result.serverCode == 200) {
+            if ((bool)result.serverData["is_on"]) {
+                AddressableInfo.BaseUrl = (string)result.serverData["url"];
+            } else {
+                AddressableInfo.BaseUrl = Application.streamingAssetsPath;
+            }
+        } 
+        finish.Invoke();
     }
     
     public void LoadAsset<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded) {

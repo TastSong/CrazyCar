@@ -15,7 +15,7 @@ public class LoginCommand : AbstractCommand {
         mIsRemember = isRemember;
     }
 
-    protected override void OnExecute() {
+    protected override async void OnExecute() {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -26,29 +26,26 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl,
-            data: bytes, succData: (data) => {
-                this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
-                this.GetModel<IUserModel>().Password.Value = mPassword;
-            }, code: (code) => {
-                if (code == 200) {
-                    WarningAlertInfo info = new WarningAlertInfo("Login Success", () => {
-                        this.GetSystem<IVibrationSystem>().Haptic();
-                        this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
-                        this.SendCommand<RecodeLoginCommand>();
-                        this.SendCommand(new LoadSceneCommand(SceneID.Index));
-                    });
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
-                } else if (code == 423) {
-                    WarningAlertInfo info = new WarningAlertInfo("Password Error");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
-                } else if (code == 404) {
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("User not registered");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                } else {
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("Unknown Error");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-                }
-            }));
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl, bytes);
+        if (result.serverCode == 200) {
+            this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(result.serverData);
+            this.GetModel<IUserModel>().Password.Value = mPassword;
+            WarningAlertInfo info = new WarningAlertInfo("Login Success", () => {
+                this.GetSystem<IVibrationSystem>().Haptic();
+                this.GetModel<IUserModel>().RememberPassword.Value = mIsRemember ? 1 : 0;
+                this.SendCommand<RecodeLoginCommand>();
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
+            });
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
+        } else if (result.serverCode == 423) {
+            WarningAlertInfo info = new WarningAlertInfo("Password Error");
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, info));
+        } else if (result.serverCode == 404) {
+            WarningAlertInfo alertInfo = new WarningAlertInfo("User not registered");
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+        } else {
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Unknown Error");
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace KcpCSharp {
                 if (serverAddr != null) {
                     this.client.Connect(serverAddr);
                 }
-                //UnityEngine.Debug.LogError("Connect = " + host);
+                Debug.Log("Connect = " + host);
                 client.BeginReceive(Received, client);
             } catch (Exception ex) {
                 this.HandleException(ex);

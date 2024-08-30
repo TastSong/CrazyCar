@@ -10,14 +10,14 @@ public class RankUI : MonoBehaviour, IController {
     public Transform itemParent;
     public Button closeBtn;
 
-    private void OnEnable() {
+    private async void OnEnable() {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-            RequestUrl.timeTrialDetailUrl,
-           token: this.GetModel<IGameModel>().Token.Value,
-           succData: (data) => {
-               this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data, UpdateUI);
-           }));
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                                                                      RequestUrl.timeTrialDetailUrl,
+           token: this.GetModel<IGameModel>().Token.Value);
+        if (result.serverCode == 200) {
+            this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(result.serverData, UpdateUI);
+        } 
     }
 
     private void UpdateUI() {

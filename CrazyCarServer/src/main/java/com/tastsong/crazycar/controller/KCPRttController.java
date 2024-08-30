@@ -49,6 +49,7 @@ public class KCPRttController extends HttpServlet implements KcpListener {
         JSONObject data = new JSONObject();
         if (!isInit) {
             initKCP();
+            log.info("KCPRttController KCP initKCP");
             isInit = true;
         }
         data.putOpt("KCP", "KCP");

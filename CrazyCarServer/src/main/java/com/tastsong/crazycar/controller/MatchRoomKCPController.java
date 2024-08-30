@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping(value = "/v2/KCP")
 public class MatchRoomKCPController extends HttpServlet implements KcpListener {
-    private boolean isInit = false;
+    private static boolean isInit = false;
     private static final ConcurrentHashMap<String, Ukcp> kcpSet = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>> roomMap = new ConcurrentHashMap<String, ArrayList<RespMatchRoomPlayer>>();
     private static int onlineCount = 0;
@@ -59,6 +59,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
         JSONObject data = new JSONObject();
         if (!isInit) {
             initKCP();
+            log.info("MatchRoom KCP initKCP");
             isInit = true;
         }
         data.putOpt("KCP", "KCP");
@@ -201,6 +202,7 @@ public class MatchRoomKCPController extends HttpServlet implements KcpListener {
                 }
             }
             data.setPlayers(jsonArray);
+            resp.setData(data);
             resp.setCode(ResultCode.RC200.getCode());
         }
         log.info("onExitRoom : " + JSONUtil.toJsonStr(resp));

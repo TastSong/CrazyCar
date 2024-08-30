@@ -25,12 +25,12 @@ public class ChangeCarUI : MonoBehaviour, IController {
     private List<ChangeCarItem> changeCarItems = new List<ChangeCarItem>();
     private bool isFirstTime = true;
 
-    private void OnEnable() {
+    private async void OnEnable() {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-            RequestUrl.equipUrl,
-        token: this.GetModel<IGameModel>().Token.Value,
-        succData: (data) => {
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                                                                      RequestUrl.equipUrl, token: this.GetModel<IGameModel>().Token.Value);
+        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
+        if (result.serverCode == 200) {
             // Addressable第一次加载资源会慢
             if (isFirstTime) {
                 isFirstTime = false;
@@ -40,8 +40,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
                 });
             }
 
-            this.GetSystem<IDataParseSystem>().ParseEquipRes(data, SetItemContent);       
-        }));
+            this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData, SetItemContent);       
+        }
     }
 
     private void SetItemContent() {

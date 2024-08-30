@@ -90,6 +90,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         } else if (pagesDict.ContainsKey(info.pageType) && !pagesGroup[info.levelType].Contains(info.pageType)) {
             // 当前页面还在不在原来分组
             pagesDict[info.pageType].transform.SetParent(levles[(int)info.levelType], false);
+            pagesDict[info.pageType].SetActiveFast(true);
             pagesGroup[GetGroupByPageType(info.pageType)].Remove(info.pageType);
             pagesGroup[info.levelType].AddLast(info.pageType);
             SetPageInfo(info);

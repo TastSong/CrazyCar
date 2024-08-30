@@ -11,7 +11,7 @@ public class BuyEquipCommand : AbstractCommand {
         mEquipInfo = equipInfo;
     }
 
-    protected override void OnExecute() {
+    private async void Buy() {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -20,20 +20,20 @@ public class BuyEquipCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
+                           RequestUrl.buyEquipUrl, token: this.GetModel<IGameModel>().Token.Value, bytes);
+        if (result.serverCode == 200) {
+            this.GetModel<IUserModel>().Star.Value = (int)result.serverData["star"];
+            this.SendEvent<BuyEquipEvent>();
+            this.SendEvent<UpdateHomepageUIEvent>();
+        }
+    }
+
+    protected override void OnExecute() {
         if (this.GetModel<IUserModel>().Star.Value > mEquipInfo.star) {
             InfoConfirmInfo info = new InfoConfirmInfo(content: string.Format(this.GetSystem<II18NSystem>().GetText("Whether to spend {0} star on this equip"),
                     mEquipInfo.star),
-                success: () => {
-                    CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                        RequestUrl.buyEquipUrl,
-                        data: bytes,
-                        token: this.GetModel<IGameModel>().Token.Value,
-                        succData: (data) => {
-                            this.GetModel<IUserModel>().Star.Value = (int)data["star"];
-                            this.SendEvent<BuyEquipEvent>();
-                            this.SendEvent<UpdateHomepageUIEvent>();
-                        }));
-                },
+                success: Buy,
                 fail: () => {
                     Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
                 });

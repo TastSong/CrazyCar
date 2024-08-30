@@ -11,7 +11,7 @@ public class RecodeLoginCommand : AbstractCommand {
         }));
     }
 
-    private void RecodeLogin(string place) {
+    private async void RecodeLogin(string place) {
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -24,10 +24,7 @@ public class RecodeLoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.recodeLogin,
-            data: bytes, token: this.GetModel<IGameModel>().Token.Value, succData: (data) => {
-            }, code: (code) => {
-       
-            }));
+        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.recodeLogin,
+            token: this.GetModel<IGameModel>().Token.Value, bytes);
     }
 }
