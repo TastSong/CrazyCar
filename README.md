@@ -152,7 +152,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 欢迎任何形式的贡献，你可以用 [pull requests](https://github.com/TastSong/CrazyCar/pulls) 或 [issues](https://github.com/TastSong/CrazyCar/issues) 的方式提交任何想法。
 
-:seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前:running:
+:seedling: 当然 **Crazy Car** 还很年轻，有很多不足，但请相信，它会不停向前​ :running:
 
 ------
 
