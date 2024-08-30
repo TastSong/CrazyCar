@@ -39,7 +39,6 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomStatusMsg { get; set; }
     public JsonData OnMatchRoomStartMsg { get; set; }
     // http
-    public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null);
     public UniTask<TaskableAccessResult> Get(string url, string token);
     public UniTask<TaskableAccessResult> Get(string url);
     public UniTask<TaskableAccessResult> Post(string url, string token, byte[] body = null);
@@ -157,46 +156,6 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
 
             return new TaskableAccessResult(null, -1, e);
-        }
-    }
-
-    public IEnumerator POSTHTTP(string url, byte[] data = null, string token = null, Action<JsonData> succData = null, Action<int> code = null) {
-        if (this.GetModel<IGameModel>().StandAlone.Value) {
-            yield break;
-        }
-
-        using (UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST)) {
-            if (data != null) {
-                request.uploadHandler = new UploadHandlerRaw(data);
-            }
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Accept", "application/json");
-            if (!string.IsNullOrEmpty(token)) {
-                request.SetRequestHeader("Authorization", token);
-            }
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
-                Debug.LogError("Is Network Error url = " + url);
-                code?.Invoke(500);
-            } else {
-                byte[] results = request.downloadHandler.data;
-                string s = Encoding.UTF8.GetString(results);
-                Debug.Log(url + " : " + s);
-                JsonData d = JsonMapper.ToObject(s);
-                UIController.Instance.HidePage(UIPageType.LoadingUI);
-
-                code?.Invoke((int)d["code"]);
-                if ((int)d["code"] == 200) {
-                    if (d["data"] == null) {
-                        d["data"] = new JsonData();
-                    }
-                    Debug.Log("url： " + url + "---succData = " + d["data"].ToJson());
-                    succData?.Invoke(d["data"]);
-                }
-            }
         }
     }
 
