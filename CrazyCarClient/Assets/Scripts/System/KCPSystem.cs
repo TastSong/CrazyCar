@@ -138,28 +138,28 @@ public class KCPManager : KcpClient, IController {
         KCPState = KCPState.Closed;
     }
 
-    public void ConnectKCP(string host, int port, string url) {
+    public async void ConnectKCP(string host, int port, string url) {
         if (client != null && client.IsRunning()) {
             return;
         }
         KCPState = KCPState.Connecting;
         Debug.Log("host " + host + " port " + port + " url " + url);
-        CoroutineController.Instance.StartCoroutine(this.GetSystem<INetworkSystem>().POSTHTTP(
+        var result = await this.GetSystem<INetworkSystem>().Post(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
-            token: this.GetModel<IGameModel>().Token.Value,
-            succData : (d) => {
-                client = new KCPManager();
-                client.NoDelay(1, 10, 2, 1);
-                client.WndSize(64, 64);
-                client.Timeout(10 * 1000);
-                client.SetMtu(512);
-                client.SetMinRto(10);
-                client.Connect(host, port);
-                client.Start();
-                KCPState = KCPState.Open;
-                NeedReconnect = false;
-                ConnectSuccAction?.Invoke();
-            }));     
+            token: this.GetModel<IGameModel>().Token.Value);    
+        if (result.serverCode == 200) {
+            client = new KCPManager();
+            client.NoDelay(1, 10, 2, 1);
+            client.WndSize(64, 64);
+            client.Timeout(10 * 1000);
+            client.SetMtu(512);
+            client.SetMinRto(10);
+            client.Connect(host, port);
+            client.Start();
+            KCPState = KCPState.Open;
+            NeedReconnect = false;
+            ConnectSuccAction?.Invoke();
+        } 
     }
 
     public void Send(string content) {
