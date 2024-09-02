@@ -18,7 +18,7 @@ public interface IDataParseSystem : ISystem {
     public void ParseMatchRank(JsonData data);
     public void ParseEquipRes(JsonData jsonData);
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData);
-    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData);
     public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
     public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
 }
@@ -228,7 +228,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         return playerCreateMsg;
     }
 
-    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
@@ -237,7 +237,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerStateMsg.timestamp = (long)jsonData["timestamp"];
         playerStateMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerStateMsg;
     }
 
