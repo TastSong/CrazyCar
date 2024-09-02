@@ -14,8 +14,8 @@ public interface IDataParseSystem : ISystem {
     public void ParseTimeTrialRank(JsonData jsonData);
     public void ParseTimeTrialResult(JsonData jsonData);
     public void ParseMatchMapData(JsonData jsonData);
-    public void ParseSelectMatch(JsonData jsonData, Action success = null);
-    public void ParseMatchRank(JsonData data, Action success = null);
+    public void ParseSelectMatch(JsonData jsonData);
+    public void ParseMatchRank(JsonData data);
     public void ParseEquipRes(JsonData jsonData);
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
@@ -159,7 +159,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         }
     }
 
-    public void ParseSelectMatch(JsonData jsonData, Action success = null) {
+    public void ParseSelectMatch(JsonData jsonData) {
         MatchInfo info = new MatchInfo();
         info.cid = (int)jsonData["cid"];
         info.name = (string)jsonData["class_name"];
@@ -170,10 +170,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.startTime = (long)jsonData["start_time"];
         info.enrollTime = (long)jsonData["enroll_time"];
         this.GetModel<IMatchModel>().SelectInfo.Value = info;
-        success?.Invoke();
     }
 
-    public void ParseMatchRank(JsonData data, Action success = null) {
+    public void ParseMatchRank(JsonData data) {
         var matchModel = this.GetModel<IMatchModel>();
         matchModel.MatchRankList.Clear();
         JsonData jsonData = data["rank"];
@@ -185,7 +184,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.rank = (int)jsonData[i]["rank_num"];
             matchModel.MatchRankList.Add(info);
         }
-        success?.Invoke();
     }
 
     public void ParseEquipRes(JsonData jsonData) {
