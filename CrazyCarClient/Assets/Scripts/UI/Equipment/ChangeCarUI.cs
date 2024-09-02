@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -23,39 +24,36 @@ public class ChangeCarUI : MonoBehaviour, IController {
 
     private EquipInfo curEquipInfo;
     private List<ChangeCarItem> changeCarItems = new List<ChangeCarItem>();
-    private bool isFirstTime = true;
 
     private async void OnEnable() {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                                                                      RequestUrl.equipUrl, token: this.GetModel<IGameModel>().Token.Value);
-        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
+        string url = this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.equipUrl;
+        var result = await this.GetSystem<INetworkSystem>().Post(url, token: this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
-            // Addressable第一次加载资源会慢
-            if (isFirstTime) {
-                isFirstTime = false;
-                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-                Util.DelayExecuteWithSecond(1.4f, () => {
-                    UIController.Instance.HidePage(UIPageType.LoadingUI);
-                });
-            }
-
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
             this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData);      
-            SetItemContent();
+            await SetItemContent();
+            UIController.Instance.HidePage(UIPageType.LoadingUI);
         }
     }
 
-    private void SetItemContent() {
+    private async UniTask SetItemContent() {
         Util.DeleteChildren(itemParent);
         changeCarItems.Clear();
+        // 创建一个任务列表来保存所有的异步任务
+        List<UniTask> tasks = new List<UniTask>();
         foreach (var kvp in this.GetModel<IEquipModel>().EquipDic) {
             if (kvp.Value.isShow) {
                 ChangeCarItem item = Instantiate(changeCarItem);
                 item.transform.SetParent(itemParent, false);
-                item.SetContent(kvp.Value);
+                // 添加异步设置内容的任务到任务列表
+                tasks.Add(item.SetContent(kvp.Value));
                 changeCarItems.Add(item);
             }
         }
+        
+        // 并行执行所有任务并等待它们全部完成
+        await UniTask.WhenAll(tasks);
 
         curEquipInfo = this.GetModel<IEquipModel>().EquipDic[this.GetModel<IUserModel>().EquipInfo.Value.eid];
         OnChangeCarEvent(new ChangeCarEvent(curEquipInfo));
