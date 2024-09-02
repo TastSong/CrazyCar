@@ -20,6 +20,7 @@ public interface IAddressableSystem : ISystem {
     public void LoadAsset<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded);
     public UniTaskVoid LoadAssetAsync<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded);
     public UniTask<T> LoadAssetAsync<T>(string path);
+    public UniTask<AsyncOperationHandle<T>> LoadAssetResultAsync<T>(string path);
     public void SetUpdateInfo(Action finish);
 }
 
@@ -146,15 +147,21 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
     
     public async UniTaskVoid LoadAssetAsync<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded) {
-        var obj = Addressables.LoadAssetAsync<T>(path);
+        AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
         await obj;
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             OnLoaded(obj);
         }
     }
     
-    public async UniTask<T> LoadAssetAsync<T>(string path)  {
+    public async UniTask<T> LoadAssetAsync<T>(string path) {
         var obj = await Addressables.LoadAssetAsync<T>(path);
+        return obj;
+    }
+    
+    public async UniTask<AsyncOperationHandle<T>> LoadAssetResultAsync<T>(string path){
+        AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
+        await obj;
         return obj;
     }
 
