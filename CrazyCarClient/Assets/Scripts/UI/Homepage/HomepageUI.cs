@@ -141,12 +141,11 @@ public class HomepageUI : MonoBehaviour, IController {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
     }
 
-    private void OnUpdataUI(UpdateHomepageUIEvent e) {
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
+    private async void OnUpdataUI(UpdateHomepageUIEvent e) {
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            avatarImage.sprite = Instantiate(obj.Result, transform, false);
+        }
         starText.text = this.GetModel<IUserModel>().Star.Value.ToString();
         vipImage.gameObject.SetActiveFast(this.GetModel<IUserModel>().IsVIP.Value);
     }

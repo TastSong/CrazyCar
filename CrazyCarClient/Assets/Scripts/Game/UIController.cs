@@ -96,17 +96,18 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
             SetPageInfo(info);
         } else {
             string pageUrl = GetPageUrlByType(info.pageType);
-            GameObject result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl);
-            if (result == null) {
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl);
+            if (obj.Status == AsyncOperationStatus.Succeeded) {
+                GameObject page = Instantiate(obj.Result);
+                page.transform.SetParent(levles[(int)info.levelType], false);
+                pagesDict[info.pageType] = page;
+                pagesGroup[info.levelType].AddLast(info.pageType);
+                SetPageInfo(info);
+                return true;
+            } else {
                 Debug.LogError($"Load {info.pageType} Page Failed");
                 return false;
             }
-            GameObject page = Instantiate(result);
-            page.transform.SetParent(levles[(int)info.levelType], false);
-            pagesDict[info.pageType] = page;
-            pagesGroup[info.levelType].AddLast(info.pageType);
-            SetPageInfo(info);
-            return true;
         }
         return true;
     }

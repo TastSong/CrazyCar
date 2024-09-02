@@ -19,22 +19,24 @@ public class TimeTrialItem : MonoBehaviour, IController {
     private TimeTrialInfo timeTrialInfo;
 
     private void Start() {
-        selfBtn.onClick.AddListener(() => {
+        selfBtn.onClick.AddListener(async () => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             if (timeTrialInfo.isHas) {
                 if (timeTrialInfo.hasWater) {
                     if (this.GetModel<IUserModel>().EquipInfo.Value.canWade) {
-                        this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid, () => {
+                        bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
+                        if (result) {
                             this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
-                        });
+                        }
                     } else {
                         WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires wading vehicles");
                         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
                     }
                 } else {
-                    this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid, () => {
+                    bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
+                    if (result) {
                         this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
-                    });
+                    }
                 }
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {

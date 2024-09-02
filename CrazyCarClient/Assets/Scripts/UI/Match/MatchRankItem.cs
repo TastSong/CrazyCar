@@ -16,13 +16,12 @@ public class MatchRankItem : MonoBehaviour, IController {
         return CrazyCar.Interface;
     }
 
-    public void SetContent(MatchRankInfo info) {
+    public async void SetContent(MatchRankInfo info) {
         nameText.text = info.name;
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(info.aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(info.aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            avatarImage.sprite = Instantiate(obj.Result, transform, false);
+        }
         
         completeTimeText.text = info.completeTime.ToString();
         rankText.text = info.rank.ToString();

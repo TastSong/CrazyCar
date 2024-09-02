@@ -14,7 +14,7 @@ public class CommonGameUI : MonoBehaviour, IController {
 
     private AngleView curAngleView = AngleView.ThirdAngle;
 
-    private void Start() {
+    private async void Start() {
         exitBtn.onClick.AddListener(() => {
             this.SendCommand<ExitGameSceneCommand>();
         });
@@ -29,13 +29,12 @@ public class CommonGameUI : MonoBehaviour, IController {
             }
         });
         
-        this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath, (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                miniMap.texture = obj.Result;
-            } else {
-                Debug.LogError($"CommonGameUI Load minimap Failed");
-            }
-        }).Forget();
+         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath);
+         if (obj.Status == AsyncOperationStatus.Succeeded) {
+             miniMap.texture = obj.Result;
+         } else {
+             Debug.LogError($"CommonGameUI Load minimap Failed");
+         }
 
         UpdateCylinderNum(new UpdateCylinderNumEvent());
         this.RegisterEvent<UpdateCylinderNumEvent>(UpdateCylinderNum).UnRegisterWhenGameObjectDestroyed(gameObject);
