@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using QFramework;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class TimeTrialDetailUI : MonoBehaviour, IController {
     public TimeTrialItem timeTrialItem;
@@ -13,8 +14,12 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private async void OnEnable() {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            TextAsset ta = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
-            JsonData data = JsonMapper.ToObject(ta.text);
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
+            if (obj.Status != AsyncOperationStatus.Succeeded) {
+                Debug.LogError("Load TimeTrialDetail failed");
+                return;
+            }
+            JsonData data = JsonMapper.ToObject(obj.Result.text);
             this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data);
             UpdateUI();
         } else {
