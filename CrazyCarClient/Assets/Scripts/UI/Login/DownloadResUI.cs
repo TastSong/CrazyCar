@@ -54,8 +54,6 @@ public class DownloadResUI : MonoBehaviour, IController {
     }
 
     private void DownloadRes() {
-        this.GetSystem<IAddressableSystem>().GetDownloadAssets();
-
         this.GetSystem<IAddressableSystem>().SetCallBack(
             OnCheckCompleteNeedUpdate: (size) => {
                 Debug.Log("需要更新");
@@ -74,6 +72,8 @@ public class DownloadResUI : MonoBehaviour, IController {
                     UpdateProgress(percent, tatalSize);
                 } catch { }
             });
+        
+        this.GetSystem<IAddressableSystem>().GetDownloadAssets();
     }
 
     private void FinishDownloadRes(bool isFinish) {
