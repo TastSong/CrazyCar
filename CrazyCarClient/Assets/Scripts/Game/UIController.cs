@@ -52,7 +52,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
         base.Awake();
     }
 
-    public async UniTask PrepareUI() {
+    public async UniTask InitUI() {
         this.GetSystem<IGuidanceSystem>().UIControllerCanvas = GetComponent<Canvas>();
         foreach (UILevelType value in Enum.GetValues(typeof(UILevelType))) {
             pagesGroup[value] = new LinkedList<UIPageType>();
