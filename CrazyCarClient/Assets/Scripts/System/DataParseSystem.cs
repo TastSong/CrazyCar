@@ -4,9 +4,10 @@ using UnityEngine;
 using QFramework;
 using LitJson;
 using System;
+using Cysharp.Threading.Tasks;
 
 public interface IDataParseSystem : ISystem {
-    public void ParseAvatarRes(JsonData jsonData, Action success = null);
+    public UniTask ParseAvatarRes(JsonData jsonData);
     public void ParseSelfUserInfo(JsonData jsonData);
     public UserInfo ParseUserInfo(JsonData jsonData);
     public void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
@@ -23,7 +24,7 @@ public interface IDataParseSystem : ISystem {
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {
-    public void ParseAvatarRes(JsonData jsonData, Action success = null) {
+    public async UniTask ParseAvatarRes(JsonData jsonData) {
         var avatarModel = this.GetModel<IAvatarModel>();
         avatarModel.AvatarDic.Clear();
         JsonData data = jsonData["avatars"];
@@ -40,7 +41,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
         }
-        success?.Invoke();
     }
 
     public void ParseSelfUserInfo(JsonData jsonData) {

@@ -25,7 +25,8 @@ public class AvatarUI : MonoBehaviour, IController {
         var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl, this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
             curAid = this.GetModel<IUserModel>().Aid.Value;
-            this.GetSystem<IDataParseSystem>().ParseAvatarRes(result.serverData, UpdataUI);
+            await this.GetSystem<IDataParseSystem>().ParseAvatarRes(result.serverData);
+            UpdataUI();
         }
     }
 
