@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -41,7 +42,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 
-    public async void SetContent(AvatarInfo info) {
+    public async UniTask SetContent(AvatarInfo info) {
         avatarInfo = info;
         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(avatarInfo.aid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {
