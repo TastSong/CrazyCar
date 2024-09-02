@@ -60,21 +60,20 @@ public class MPlayerStyle : MonoBehaviour, IController {
         }
     }
 
-    public void ChangeEquip(int eid, string rid) {
-        this.GetSystem<IAddressableSystem>().LoadAsset<GameObject>(Util.GetEquipUrl(rid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                if (car != null) {
-                    car.transform.SetParent(null);
-                    Destroy(car);
-                }
-                if (obj.Result == null || carPos == null) {
-                    return;
-                }
-                car = Instantiate(obj.Result);
-                car.transform.SetParent(carPos.transform, false);
-                car.transform.localPosition = carPos.localPosition;
+    public async void ChangeEquip(int eid, string rid) {
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(Util.GetEquipUrl(rid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            if (car != null) {
+                car.transform.SetParent(null);
+                Destroy(car);
             }
-        });
+            if (obj.Result == null || carPos == null) {
+                return;
+            }
+            car = Instantiate(obj.Result);
+            car.transform.SetParent(carPos.transform, false);
+            car.transform.localPosition = carPos.localPosition;
+        }
     }
 
     public void SetNameText(string name, bool isVIP = false) {
