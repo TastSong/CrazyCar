@@ -26,7 +26,8 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
         var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialRankUrl,
             token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
-            this.GetSystem<IDataParseSystem>().ParseTimeTrialRank(result.serverData, UpdateUI);
+            this.GetSystem<IDataParseSystem>().ParseTimeTrialRank(result.serverData);
+            UpdateUI();
         }
     }
 
