@@ -20,7 +20,7 @@ public interface IDataParseSystem : ISystem {
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData);
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData);
     public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData);
-    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData);
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {
@@ -251,13 +251,12 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         return playerOperatMsg;
     }
 
-    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null) {
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
         playerCompleteMsg.cid = (int)jsonData["cid"];
         playerCompleteMsg.completeTime = (int)jsonData["complete_time"];
         playerCompleteMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerCompleteMsg;
     }
 
