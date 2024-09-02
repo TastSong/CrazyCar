@@ -41,13 +41,12 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
     }
 
-    public void SetContent(AvatarInfo info) {
+    public async void SetContent(AvatarInfo info) {
         avatarInfo = info;
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(avatarInfo.aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(avatarInfo.aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            avatarImage.sprite = Instantiate(obj.Result, transform, false);
+        }
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
         this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
