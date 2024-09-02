@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image selectIamge;
     public EquipInfo equipInfo;
     public Color normalColor;
-    public async void SetContent(EquipInfo info) {
+    public async UniTask SetContent(EquipInfo info) {
         equipInfo = info;
         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(Util.GetEquipUrl(equipInfo.rid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {

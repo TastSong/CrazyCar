@@ -14,7 +14,6 @@ public class InitGameConfigState : AbstractState<LaunchStates, Launch>, IControl
         if (this.GetUtility<IPlayerPrefsStorage>().LoadInt(PrefKeys.isSuperuser) == 1) {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameHelper, UILevelType.Debug));
         }
-        await this.GetSystem<II18NSystem>().InitTranslation();
         ChangeState();
     }
     
