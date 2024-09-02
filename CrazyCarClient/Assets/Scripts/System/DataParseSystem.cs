@@ -16,7 +16,7 @@ public interface IDataParseSystem : ISystem {
     public void ParseMatchMapData(JsonData jsonData);
     public void ParseSelectMatch(JsonData jsonData, Action success = null);
     public void ParseMatchRank(JsonData data, Action success = null);
-    public void ParseEquipRes(JsonData jsonData, Action success = null);
+    public void ParseEquipRes(JsonData jsonData);
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
     public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
@@ -188,7 +188,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         success?.Invoke();
     }
 
-    public void ParseEquipRes(JsonData jsonData, Action success = null) {
+    public void ParseEquipRes(JsonData jsonData) {
         var equipModel = this.GetModel<IEquipModel>();
         equipModel.EquipDic.Clear();
         JsonData data = jsonData["equips"];
@@ -207,7 +207,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
 
             equipModel.EquipDic[info.eid] = info;
         }
-        success?.Invoke();
     }
 
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {

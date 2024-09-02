@@ -40,7 +40,8 @@ public class ChangeCarUI : MonoBehaviour, IController {
                 });
             }
 
-            this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData, SetItemContent);       
+            this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData);      
+            SetItemContent();
         }
     }
 
