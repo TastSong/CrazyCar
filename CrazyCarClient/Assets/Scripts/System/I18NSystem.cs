@@ -34,7 +34,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     private string defaultLang = "zh-cn";
 
     public async UniTask InitTranslation() {
-        var result = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseLanguagePath + "url.json");
+        var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
         if (result.Status != AsyncOperationStatus.Succeeded) {
             Debug.LogError("Load url.json failed");
             return;
@@ -43,7 +43,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
         string[] names = ((string)fileNames["FileName"]).Split(',');
         
         for (int i = 0; i < names.Length; i++) {
-            var lanObj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseLanguagePath + names[i]);
+            var lanObj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             if (lanObj.Status != AsyncOperationStatus.Succeeded) {
                 continue;
             }
@@ -51,7 +51,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
             LangMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;
             string flagIconUrl = Util.baseFlagPath + (string)d["flagName"] + ".png";
-            var flagObj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<Sprite>(flagIconUrl);
+            var flagObj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(flagIconUrl);
             if (flagObj.Status == AsyncOperationStatus.Succeeded) {
                 FlagsDic[(string)d["languageName"]] = flagObj.Result;
             }

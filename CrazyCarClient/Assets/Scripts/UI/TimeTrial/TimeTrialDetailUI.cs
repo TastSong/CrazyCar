@@ -14,7 +14,7 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private async void OnEnable() {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
             if (obj.Status != AsyncOperationStatus.Succeeded) {
                 Debug.LogError("Load TimeTrialDetail failed");
                 return;

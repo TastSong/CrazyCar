@@ -29,7 +29,7 @@ public class CommonGameUI : MonoBehaviour, IController {
             }
         });
         
-         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<RenderTexture>(Util.miniMapPath);
+         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath);
          if (obj.Status == AsyncOperationStatus.Succeeded) {
              miniMap.texture = obj.Result;
          } else {

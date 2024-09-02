@@ -315,7 +315,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public async UniTask<UserInfo> GetUserInfo(int uid) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
             if (obj.Status != AsyncOperationStatus.Succeeded) {
                 Debug.LogError("Load stand alone ai failed");
                 return null;

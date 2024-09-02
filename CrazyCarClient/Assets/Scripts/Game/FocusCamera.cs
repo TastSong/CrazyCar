@@ -10,7 +10,7 @@ public class FocusCamera : MonoBehaviour, IController {
 	public Vector3 cameraDelta = new Vector3(0f, 1300f, 0f);
 
 	private async void Start () {
-		var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<RenderTexture>(Util.miniMapPath);
+		var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<RenderTexture>(Util.miniMapPath);
 		if (obj.Status == AsyncOperationStatus.Succeeded) {
 			camera.targetTexture = obj.Result;
 		} else {

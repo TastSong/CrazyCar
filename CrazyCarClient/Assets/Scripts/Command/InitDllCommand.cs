@@ -14,7 +14,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class InitDllCommand : AbstractCommand {
     // HotUpdate等字段不能放入其他非热更代码中，否则会导致热更代码无法正常运行
     protected override async void OnExecute() {
-        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>("HotUpdate");
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>("HotUpdate");
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             Assembly hotUpdateAss = Assembly.Load(obj.Result.bytes);
             Type type = hotUpdateAss.GetType("Hello");

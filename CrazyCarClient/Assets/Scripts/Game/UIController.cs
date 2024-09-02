@@ -96,7 +96,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
             SetPageInfo(info);
         } else {
             string pageUrl = GetPageUrlByType(info.pageType);
-            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<GameObject>(pageUrl);
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(pageUrl);
             if (obj.Status == AsyncOperationStatus.Succeeded) {
                 GameObject page = Instantiate(obj.Result);
                 page.transform.SetParent(levles[(int)info.levelType], false);
