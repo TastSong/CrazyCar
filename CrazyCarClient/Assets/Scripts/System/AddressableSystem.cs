@@ -17,7 +17,6 @@ public interface IAddressableSystem : ISystem {
     public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
     public void GetDownloadAssets();
     public void DownloadAsset();
-    public void LoadAsset<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded);
     public UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path);
     public void SetUpdateInfo(Action finish);
 }
@@ -138,10 +137,6 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
             }
         } 
         finish.Invoke();
-    }
-    
-    public void LoadAsset<T>(string path, Action<AsyncOperationHandle<T>> OnLoaded) {
-        Addressables.LoadAssetAsync<T>(path).Completed += OnLoaded;
     }
     
     public async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path){
