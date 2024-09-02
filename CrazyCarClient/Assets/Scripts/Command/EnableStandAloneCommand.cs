@@ -6,20 +6,18 @@ using QFramework;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class EnableStandAloneCommand : AbstractCommand {
-    protected override void OnExecute() {
+    protected override async void OnExecute() {
         this.GetModel<IGameModel>().StandAlone.Value = true;
-        this.GetSystem<IAddressableSystem>().LoadAsset<TextAsset>(Util.baseStandAlone + Util.standAloneLogin, (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                JsonData data = JsonMapper.ToObject(obj.Result.text);
-                this.GetModel<IGameModel>().Token.Value = (string)data["token"];
-                this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseStandAlone + Util.standAloneLogin);
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            JsonData data = JsonMapper.ToObject(obj.Result.text);
+            this.GetModel<IGameModel>().Token.Value = (string)data["token"];
+            this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(data);
 
-                WarningAlertInfo alertInfo = new WarningAlertInfo("Login Success", () => {
-                    this.SendCommand(new LoadSceneCommand(SceneID.Index));
-                });
-                UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-            }
-        });
-        
+            WarningAlertInfo alertInfo = new WarningAlertInfo("Login Success", () => {
+                this.SendCommand(new LoadSceneCommand(SceneID.Index));
+            });
+            UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+        }
     }
 }
