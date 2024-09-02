@@ -8,6 +8,7 @@ using System;
 using LitJson;
 using System.Text;
 using Cysharp.Threading.Tasks;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public interface ISocketSystem {
     public void Connect(string url, int port = 0);
@@ -314,8 +315,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
 
     public async UniTask<UserInfo> GetUserInfo(int uid) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
-            JsonData data = JsonMapper.ToObject(result.text);
+            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetResultAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
+            if (obj.Status != AsyncOperationStatus.Succeeded) {
+                Debug.LogError("Load stand alone ai failed");
+                return null;
+            }
+            JsonData data = JsonMapper.ToObject(obj.Result.text);
             return this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
         }
         StringBuilder sb = new StringBuilder();
