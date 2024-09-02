@@ -30,12 +30,11 @@ public class AvatarUI : MonoBehaviour, IController {
         }
     }
 
-    private void UpdataUI() {
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(curAid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                curAvatar.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
+    private async void UpdataUI() {
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(curAid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            curAvatar.sprite = Instantiate(obj.Result, transform, false);
+        }
         curAvatarName.text = avatarModel.AvatarDic[curAid].name;
         Util.DeleteChildren(avatarItemParent);
         foreach (var kvp in avatarModel.AvatarDic) {
@@ -61,19 +60,18 @@ public class AvatarUI : MonoBehaviour, IController {
         this.RegisterEvent<UpdataAvatarUIEvent>(OnUpdataAvatarUIEvent).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
+    private async void OnUpdataAvatarUIEvent(UpdataAvatarUIEvent e) {
         if (e.aid == this.GetModel<IUserModel>().Aid) {
             applyBtn.interactable = false;
         } else {
             applyBtn.interactable = true;
         }
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(e.aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                curAvatar.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
         curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(e.aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            curAvatar.sprite = Instantiate(obj.Result, transform, false);
+        }
     }
 
     public IArchitecture GetArchitecture() {
