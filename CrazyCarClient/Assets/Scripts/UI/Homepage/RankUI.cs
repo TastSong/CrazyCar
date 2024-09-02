@@ -16,7 +16,8 @@ public class RankUI : MonoBehaviour, IController {
                                                                       RequestUrl.timeTrialDetailUrl,
            token: this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
-            this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(result.serverData, UpdateUI);
+            this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(result.serverData);
+            UpdateUI();
         } 
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System;
+using Cysharp.Threading.Tasks;
 using QFramework;
 
 public class TimeTrialGameUI : MonoBehaviour, IController {
@@ -36,7 +37,8 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private void MakeAI(){
+    private async UniTaskVoid MakeAI(){
+        await UniTask.WaitForFixedUpdate();
         AIInfo aiInfo = new AIInfo();
         aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, 
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), 

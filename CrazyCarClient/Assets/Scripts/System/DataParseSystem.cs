@@ -4,26 +4,27 @@ using UnityEngine;
 using QFramework;
 using LitJson;
 using System;
+using Cysharp.Threading.Tasks;
 
 public interface IDataParseSystem : ISystem {
-    public void ParseAvatarRes(JsonData jsonData, Action success = null);
+    public UniTask ParseAvatarRes(JsonData jsonData);
     public void ParseSelfUserInfo(JsonData jsonData);
     public UserInfo ParseUserInfo(JsonData jsonData);
-    public void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
-    public void ParseTimeTrialRank(JsonData jsonData, Action success = null);
-    public void ParseTimeTrialResult(JsonData jsonData, Action success = null);
-    public void ParseMatchMapData(JsonData jsonData, Action success = null);
-    public void ParseSelectMatch(JsonData jsonData, Action success = null);
-    public void ParseMatchRank(JsonData data, Action success = null);
-    public void ParseEquipRes(JsonData jsonData, Action success = null);
-    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
-    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
-    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
-    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
+    public void ParseTimeTrialClassData(JsonData jsonData);
+    public void ParseTimeTrialRank(JsonData jsonData);
+    public void ParseTimeTrialResult(JsonData jsonData);
+    public void ParseMatchMapData(JsonData jsonData);
+    public void ParseSelectMatch(JsonData jsonData);
+    public void ParseMatchRank(JsonData data);
+    public void ParseEquipRes(JsonData jsonData);
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData);
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData);
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData);
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData);
 }
 
 public class DataParseSystem : AbstractSystem, IDataParseSystem {
-    public void ParseAvatarRes(JsonData jsonData, Action success = null) {
+    public async UniTask ParseAvatarRes(JsonData jsonData) {
         var avatarModel = this.GetModel<IAvatarModel>();
         avatarModel.AvatarDic.Clear();
         JsonData data = jsonData["avatars"];
@@ -40,7 +41,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
         }
-        success?.Invoke();
     }
 
     public void ParseSelfUserInfo(JsonData jsonData) {
@@ -99,7 +99,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         return userInfo;
     }
 
-    public void ParseTimeTrialClassData(JsonData jsonData, Action success = null) {
+    public void ParseTimeTrialClassData(JsonData jsonData) {
         var timeTrialModel = this.GetModel<ITimeTrialModel>();
         timeTrialModel.TimeTrialDic.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
@@ -114,10 +114,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.times = (int)jsonData[i]["times"];
             timeTrialModel.TimeTrialDic[info.cid] = info;
         }
-        success?.Invoke();
     }
 
-    public void ParseTimeTrialRank(JsonData jsonData, Action success = null) {
+    public void ParseTimeTrialRank(JsonData jsonData) {
         var timeTrialModel = this.GetModel<ITimeTrialModel>();
         timeTrialModel.TimeTrialRankList.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
@@ -128,20 +127,18 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.rank = (int)jsonData[i]["rank_num"];
             timeTrialModel.TimeTrialRankList.Add(info);
         }
-        success?.Invoke();
     }
 
-    public void ParseTimeTrialResult(JsonData jsonData, Action success = null) {
+    public void ParseTimeTrialResult(JsonData jsonData) {
         var timeTrialModel = this.GetModel<ITimeTrialModel>();
         timeTrialModel.IsWin.Value = (bool)jsonData["is_win"];
         timeTrialModel.CompleteTime.Value = (int)jsonData["complete_time"];
         timeTrialModel.Rank.Value = (int)jsonData["rank"];
         timeTrialModel.IsBreakRecord.Value = (bool)jsonData["is_break_record"];
         timeTrialModel.RewardStar.Value = (int)jsonData["reward"];
-        success?.Invoke();
     }
 
-    public void ParseMatchMapData(JsonData jsonData, Action success = null) {
+    public void ParseMatchMapData(JsonData jsonData) {
         var matchModel = this.GetModel<IMatchModel>();
         matchModel.MatchDic.Clear();
         int defaultSelect = 0;
@@ -160,10 +157,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
                 matchModel.SelectInfo.Value = info;
             }
         }
-        success?.Invoke();
     }
 
-    public void ParseSelectMatch(JsonData jsonData, Action success = null) {
+    public void ParseSelectMatch(JsonData jsonData) {
         MatchInfo info = new MatchInfo();
         info.cid = (int)jsonData["cid"];
         info.name = (string)jsonData["class_name"];
@@ -174,10 +170,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         info.startTime = (long)jsonData["start_time"];
         info.enrollTime = (long)jsonData["enroll_time"];
         this.GetModel<IMatchModel>().SelectInfo.Value = info;
-        success?.Invoke();
     }
 
-    public void ParseMatchRank(JsonData data, Action success = null) {
+    public void ParseMatchRank(JsonData data) {
         var matchModel = this.GetModel<IMatchModel>();
         matchModel.MatchRankList.Clear();
         JsonData jsonData = data["rank"];
@@ -189,10 +184,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.rank = (int)jsonData[i]["rank_num"];
             matchModel.MatchRankList.Add(info);
         }
-        success?.Invoke();
     }
 
-    public void ParseEquipRes(JsonData jsonData, Action success = null) {
+    public void ParseEquipRes(JsonData jsonData) {
         var equipModel = this.GetModel<IEquipModel>();
         equipModel.EquipDic.Clear();
         JsonData data = jsonData["equips"];
@@ -211,10 +205,9 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
 
             equipModel.EquipDic[info.eid] = info;
         }
-        success?.Invoke();
     }
 
-    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
         playerCreateMsg.cid = (int)jsonData["cid"];
@@ -232,11 +225,10 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerCreateMsg.userInfo.equipInfo.mass = (int)jsonData["user_info"]["equip_info"]["mass"];
         playerCreateMsg.userInfo.equipInfo.power = (int)jsonData["user_info"]["equip_info"]["power"];
         playerCreateMsg.userInfo.equipInfo.maxPower = (int)jsonData["user_info"]["equip_info"]["max_power"];
-        success?.Invoke();
         return playerCreateMsg;
     }
 
-    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null) {
+    public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
@@ -245,11 +237,10 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerStateMsg.timestamp = (long)jsonData["timestamp"];
         playerStateMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerStateMsg;
     }
 
-    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null) {
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
         playerOperatMsg.cid = (int)jsonData["cid"];
@@ -257,17 +248,15 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerOperatMsg.value = (int)jsonData["value"];
         playerOperatMsg.timestamp = (long)jsonData["timestamp"];
         playerOperatMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerOperatMsg;
     }
 
-    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null) {
+    public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
         playerCompleteMsg.cid = (int)jsonData["cid"];
         playerCompleteMsg.completeTime = (int)jsonData["complete_time"];
         playerCompleteMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerCompleteMsg;
     }
 

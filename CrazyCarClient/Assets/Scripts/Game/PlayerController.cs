@@ -13,11 +13,14 @@ public class PlayerController : MonoBehaviour, IController {
 
     private float widthUnit = 4.4f;
 
-    private void Start() {
+    private void Awake() {
         this.RegisterEvent<MakeNewPlayerEvent>(OnMakeNewPlayer).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<ChangeAngleViewEvent>(OnChangeAngleView).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PeerControllerEvent>(OnPeerController).UnRegisterWhenGameObjectDestroyed(gameObject);
-        MakeSelfPlayer();       
+    }
+
+    private void OnEnable() {
+        MakeSelfPlayer();     
     }
 
     private void MakeSelfPlayer() {       
