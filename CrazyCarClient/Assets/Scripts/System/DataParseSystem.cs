@@ -19,7 +19,7 @@ public interface IDataParseSystem : ISystem {
     public void ParseEquipRes(JsonData jsonData);
     public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData);
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData);
-    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData);
     public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
 }
 
@@ -240,7 +240,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         return playerStateMsg;
     }
 
-    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null) {
+    public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
         playerOperatMsg.cid = (int)jsonData["cid"];
@@ -248,7 +248,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerOperatMsg.value = (int)jsonData["value"];
         playerOperatMsg.timestamp = (long)jsonData["timestamp"];
         playerOperatMsg.uid = (int)jsonData["uid"];
-        success?.Invoke();
         return playerOperatMsg;
     }
 
