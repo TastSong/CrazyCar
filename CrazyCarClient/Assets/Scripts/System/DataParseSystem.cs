@@ -17,7 +17,7 @@ public interface IDataParseSystem : ISystem {
     public void ParseSelectMatch(JsonData jsonData);
     public void ParseMatchRank(JsonData data);
     public void ParseEquipRes(JsonData jsonData);
-    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null);
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData);
     public PlayerStateMsg ParsePlayerStateMsg(JsonData jsonData, Action success = null);
     public PlayerOperatMsg ParsePlayerOperatMsg(JsonData jsonData, Action success = null);
     public PlayerCompleteMsg ParsePlayerCompleteMsg(JsonData jsonData, Action success = null);
@@ -207,7 +207,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         }
     }
 
-    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData, Action success = null) {
+    public PlayerCreateMsg ParsePlayerCreateMsg(JsonData jsonData) {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
         playerCreateMsg.cid = (int)jsonData["cid"];
@@ -225,7 +225,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         playerCreateMsg.userInfo.equipInfo.mass = (int)jsonData["user_info"]["equip_info"]["mass"];
         playerCreateMsg.userInfo.equipInfo.power = (int)jsonData["user_info"]["equip_info"]["power"];
         playerCreateMsg.userInfo.equipInfo.maxPower = (int)jsonData["user_info"]["equip_info"]["max_power"];
-        success?.Invoke();
         return playerCreateMsg;
     }
 
