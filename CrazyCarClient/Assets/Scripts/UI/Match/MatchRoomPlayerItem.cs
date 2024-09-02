@@ -11,16 +11,15 @@ public class MatchRoomPlayerItem : MonoBehaviour, IController {
     public GameObject defaultImage;
     public Image avatarImage;
 
-    public void SetContent(MatchRoomMemberInfo info) {
+    public async void SetContent(MatchRoomMemberInfo info) {
         nickName.text = info.memberName;
         defaultImage.gameObject.SetActiveFast(false);
         avatarImage.gameObject.SetActiveFast(true);
         
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(info.aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(info.aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            avatarImage.sprite = Instantiate(obj.Result, transform, false);
+        }
     }
 
     public void CleanItem() {
