@@ -10,7 +10,7 @@ public interface IDataParseSystem : ISystem {
     public UniTask ParseAvatarRes(JsonData jsonData);
     public void ParseSelfUserInfo(JsonData jsonData);
     public UserInfo ParseUserInfo(JsonData jsonData);
-    public void ParseTimeTrialClassData(JsonData jsonData, Action success = null);
+    public void ParseTimeTrialClassData(JsonData jsonData);
     public void ParseTimeTrialRank(JsonData jsonData, Action success = null);
     public void ParseTimeTrialResult(JsonData jsonData, Action success = null);
     public void ParseMatchMapData(JsonData jsonData, Action success = null);
@@ -99,7 +99,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         return userInfo;
     }
 
-    public void ParseTimeTrialClassData(JsonData jsonData, Action success = null) {
+    public void ParseTimeTrialClassData(JsonData jsonData) {
         var timeTrialModel = this.GetModel<ITimeTrialModel>();
         timeTrialModel.TimeTrialDic.Clear();
         for (int i = 0; i < jsonData.Count; i++) {
@@ -114,7 +114,6 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             info.times = (int)jsonData[i]["times"];
             timeTrialModel.TimeTrialDic[info.cid] = info;
         }
-        success?.Invoke();
     }
 
     public void ParseTimeTrialRank(JsonData jsonData, Action success = null) {
