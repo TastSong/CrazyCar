@@ -12,7 +12,7 @@ public interface IDataParseSystem : ISystem {
     public UserInfo ParseUserInfo(JsonData jsonData);
     public void ParseTimeTrialClassData(JsonData jsonData);
     public void ParseTimeTrialRank(JsonData jsonData);
-    public void ParseTimeTrialResult(JsonData jsonData, Action success = null);
+    public void ParseTimeTrialResult(JsonData jsonData);
     public void ParseMatchMapData(JsonData jsonData, Action success = null);
     public void ParseSelectMatch(JsonData jsonData, Action success = null);
     public void ParseMatchRank(JsonData data, Action success = null);
@@ -129,14 +129,13 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         }
     }
 
-    public void ParseTimeTrialResult(JsonData jsonData, Action success = null) {
+    public void ParseTimeTrialResult(JsonData jsonData) {
         var timeTrialModel = this.GetModel<ITimeTrialModel>();
         timeTrialModel.IsWin.Value = (bool)jsonData["is_win"];
         timeTrialModel.CompleteTime.Value = (int)jsonData["complete_time"];
         timeTrialModel.Rank.Value = (int)jsonData["rank"];
         timeTrialModel.IsBreakRecord.Value = (bool)jsonData["is_break_record"];
         timeTrialModel.RewardStar.Value = (int)jsonData["reward"];
-        success?.Invoke();
     }
 
     public void ParseMatchMapData(JsonData jsonData, Action success = null) {
