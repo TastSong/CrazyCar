@@ -43,7 +43,7 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public UniTask<TaskableAccessResult> Get(string url);
     public UniTask<TaskableAccessResult> Post(string url, string token, byte[] body = null);
     public UniTask<TaskableAccessResult> Post(string url, byte[] body = null);
-    public void EnterRoom(GameType gameType, int cid, Action succ = null);
+    public UniTask<bool> EnterRoom(GameType gameType, int cid);
     public UniTask<UserInfo> GetUserInfo(int uid);
 }
 
@@ -272,11 +272,10 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         }
     }
 
-    public async void EnterRoom(GameType gameType, int cid, Action succ = null) {
+    public async UniTask<bool> EnterRoom(GameType gameType, int cid) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
             this.GetModel<IRoomMsgModel>().Num = 0;
-            succ?.Invoke();
-            return;
+            return true;
         }
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
@@ -300,7 +299,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 this.GetModel<IRoomMsgModel>().Num = (int)result.serverData["num"];
             }
             
-            succ?.Invoke();
+            return true;
         } else if (result.serverCode == 423) {
             if (gameType == GameType.Match) {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("The match is currently open only to VIP users");
@@ -310,6 +309,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }
         }
+        return false;
     }
 
     public async UniTask<UserInfo> GetUserInfo(int uid) {

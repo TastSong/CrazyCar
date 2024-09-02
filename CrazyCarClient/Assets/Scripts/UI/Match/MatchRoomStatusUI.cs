@@ -95,15 +95,16 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         gameObject.SetActiveFast(false);
     }
 
-    private void OnMatchRoomStart(MatchRoomStartEvent e) {
+    private async void OnMatchRoomStart(MatchRoomStartEvent e) {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
-        this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid, () => {
+        bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid);
+        if (result) {
             this.GetSystem<IMatchRoomSystem>().MatchRoomClose();
             this.SendCommand(new EnterMatchCommand(matchInfo));
-        });
+        }
     }
 
     public IArchitecture GetArchitecture() {
