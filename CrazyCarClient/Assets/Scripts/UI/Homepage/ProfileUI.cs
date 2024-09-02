@@ -37,13 +37,12 @@ public class ProfileUI : MonoBehaviour, IController {
         travelTimesText.text = userModel.TravelTimes.ToString();
         avatarText.text = userModel.AvatarNum.ToString();
         mapsText.text = userModel.MapNum.ToString();
-
-        this.GetSystem<IAddressableSystem>().LoadAsset<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid), (obj) => {
-            if (obj.Status == AsyncOperationStatus.Succeeded) {
-                avatarImage.sprite = Instantiate(obj.Result, transform, false);
-            }
-        });
         passwordInput.text = userModel.Password.Value;
+
+        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
+        if (obj.Status == AsyncOperationStatus.Succeeded) {
+            avatarImage.sprite = Instantiate(obj.Result, transform, false);
+        }
     }
 
     private void Start() {
