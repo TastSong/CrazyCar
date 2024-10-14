@@ -53,8 +53,7 @@ namespace Utils {
                 case ServerType.Local:
                     return DefaultPort;
                 case ServerType.Remote:
-                    //return 80;
-                    return 8081;
+                    return 80;
                 case ServerType.TestServer:
                     return 80;
                 default:
@@ -74,8 +73,8 @@ namespace Utils {
                 case ServerType.Local:
                     return "localhost";
                 case ServerType.Remote:
-                    //return "crazycar.tastsong.top";
-                    return "110.40.185.84"; 
+                    return "crazycar.tastsong.top";
+                    //return "110.40.185.84"; 
                 case ServerType.TestServer:
                     return "crazycar.tastsong.top";
                 default:
