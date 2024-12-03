@@ -126,3 +126,4 @@ WeTest
 Adreno Profiler
 Unity Profiler
 Unity FrameDebugger
+Unity MemoryProfiler
