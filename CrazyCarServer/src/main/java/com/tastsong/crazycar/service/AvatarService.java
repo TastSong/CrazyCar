@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.AvatarMapper;
 import com.tastsong.crazycar.model.AvatarModel;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -80,6 +81,7 @@ public class AvatarService {
 		return hasStar >= needStar;
 	}
 
+    @Transactional
     public boolean buyAvatar(int uid, int aid){
         int curStar = userService.getUserStar(uid) - getNeedStar(aid);
         userService.updateUserStar(uid, curStar);
