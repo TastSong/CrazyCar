@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.tastsong.crazycar.mapper.EquipMapper;
 import com.tastsong.crazycar.model.EquipModel;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EquipService {
@@ -63,6 +64,7 @@ public class EquipService {
         return userService.getUserStar(uid) >= getEquipNeedStar(eid);
     }
 
+    @Transactional
     public void bugEquip(int uid, int eid){
         int curStar = userService.getUserStar(uid) - getEquipNeedStar(eid);
         userService.updateUserStar(uid, curStar);
