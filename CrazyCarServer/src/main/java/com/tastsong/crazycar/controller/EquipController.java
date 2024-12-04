@@ -43,7 +43,7 @@ public class EquipController {
         if (equipService.hasEquip(uid, eid)) {
             return userService.getUserByUid(uid);
         } else if (equipService.canBuyEquip(uid, eid)) {
-            equipService.bugEquip(uid, eid);
+            equipService.buyEquip(uid, eid);
             return userService.getUserByUid(uid);
         } else {
             return Result.failure(ResultCode.RC423, "购买失败");
