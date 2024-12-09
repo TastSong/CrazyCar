@@ -21,9 +21,11 @@ public class ApplyEquipCommand : AbstractCommand {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                      RequestUrl.changeEquipUrl,token: this.GetModel<IGameModel>().Token.Value, bytes);
+                                                                      RequestUrl.changeEquipUrl,
+            token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
-            this.GetModel<IUserModel>().EquipInfo.Value = this.GetModel<IEquipModel>().EquipDic[(int)result.serverData["eid"]];
+            this.GetModel<IUserModel>().EquipInfo.Value =
+                this.GetModel<IEquipModel>().EquipDic[(int)result.serverData["eid"]];
             WarningAlertInfo alertInfo = new WarningAlertInfo("Successfully Set");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             this.SendEvent<ApplyEquipEvent>();

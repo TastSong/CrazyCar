@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CoustmSwitch : MonoBehaviour{
+public class CoustmSwitch : MonoBehaviour {
     public Slider slider;
     public Color enabledColor;
     public Color disabledColor;
@@ -17,9 +17,7 @@ public class CoustmSwitch : MonoBehaviour{
         slider.minValue = 0;
         slider.wholeNumbers = true;
 
-        slider.onValueChanged.AddListener((value) => {
-            UpdateUI((int)value);
-        });
+        slider.onValueChanged.AddListener((value) => { UpdateUI((int)value); });
 
         UpdateUI((int)slider.value);
     }

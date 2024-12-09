@@ -8,7 +8,8 @@ public class InitConfigState : AbstractState<LaunchStates, Launch>, IController 
     }
 
     public override async void OnEnter() {
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.configUrl);
+        var result = await this.GetSystem<INetworkSystem>()
+            .Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.configUrl);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseAvatarRes(result.serverData);
             ChangeState(LaunchStates.InitGameConfig);
@@ -16,11 +17,11 @@ public class InitConfigState : AbstractState<LaunchStates, Launch>, IController 
             ChangeState(LaunchStates.ExitGameState);
         }
     }
-    
+
     private void ChangeState(LaunchStates state) {
         mFSM.ChangeState(state);
     }
-    
+
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
     }

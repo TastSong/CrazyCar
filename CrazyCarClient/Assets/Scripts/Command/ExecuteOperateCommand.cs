@@ -27,7 +27,7 @@ public class ExecuteOperateCommand : AbstractCommand {
     }
 
     protected override void OnExecute() {
-        if (this.GetModel<IGameModel>().CurGameType == GameType.Match && 
+        if (this.GetModel<IGameModel>().CurGameType == GameType.Match &&
             uid == this.GetSystem<IPlayerManagerSystem>().SelfPlayer.userInfo.uid) {
             this.SendCommand(new PostPlayerOperatMsgCommand(controllerType, value));
         }
@@ -38,12 +38,12 @@ public class ExecuteOperateCommand : AbstractCommand {
         } else {
             mPlayer = this.GetSystem<IPlayerManagerSystem>().peers[uid];
         }
-        
+
         if (controllerType == ControllerType.Horizontal) {
             mPlayer.hInput = value;
         } else if (controllerType == ControllerType.Vertical) {
             mPlayer.vInput = value;
-        } else if (controllerType == ControllerType.Speed){
+        } else if (controllerType == ControllerType.Speed) {
             if (value > 0) {
                 if (mPlayer.currentForce > 0 && mPlayer.isGround && !mPlayer.isDrifting &&
                     mPlayer.rig.velocity.sqrMagnitude > 10) {

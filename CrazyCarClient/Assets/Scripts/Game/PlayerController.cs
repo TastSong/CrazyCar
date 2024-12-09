@@ -20,11 +20,12 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnEnable() {
-        MakeSelfPlayer();     
+        MakeSelfPlayer();
     }
 
-    private void MakeSelfPlayer() {       
-        this.GetSystem<IPlayerManagerSystem>().SelfPlayer = Instantiate(mPlayerPrefab, GetStartPosition(), Quaternion.identity);
+    private void MakeSelfPlayer() {
+        this.GetSystem<IPlayerManagerSystem>().SelfPlayer =
+            Instantiate(mPlayerPrefab, GetStartPosition(), Quaternion.identity);
         MPlayer selfPlayer = this.GetSystem<IPlayerManagerSystem>().SelfPlayer;
         selfPlayer.transform.SetParent(transform, false);
         selfPlayer.userInfo = this.SendQuery(new UserInfoQuery());
@@ -34,7 +35,8 @@ public class PlayerController : MonoBehaviour, IController {
         cinemachineTF.SetParent(selfPlayer.transform, false);
         firstAngle.SetParent(selfPlayer.transform, false);
         thirdAngle.SetParent(selfPlayer.transform, false);
-        selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value, this.GetModel<IUserModel>().IsVIP.Value);
+        selfPlayer.GetComponent<MPlayerStyle>().SetNameText(this.GetModel<IUserModel>().Name.Value,
+            this.GetModel<IUserModel>().IsVIP.Value);
 
         // 遮挡透视功能
         Camera.main.GetComponent<EasyObjectsFade>().playerTransform = selfPlayer.GetComponent<Transform>();
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour, IController {
         if (this.GetSystem<IPlayerManagerSystem>().peers.ContainsKey(e.playerCreateMsg.userInfo.uid)) {
             return;
         }
+
         UserInfo userInfo = e.playerCreateMsg.userInfo;
         MPlayer mPlayer = Instantiate(mPlayerPrefab, e.playerCreateMsg.pos, Quaternion.identity);
         mPlayer.transform.SetParent(transform, false);
@@ -64,7 +67,8 @@ public class PlayerController : MonoBehaviour, IController {
     }
 
     private void OnPeerController(PeerControllerEvent e) {
-        this.SendCommand(new ExecuteOperateCommand(e.playerOperatMsg.uid, e.playerOperatMsg.controllerType, e.playerOperatMsg.value));
+        this.SendCommand(new ExecuteOperateCommand(e.playerOperatMsg.uid, e.playerOperatMsg.controllerType,
+            e.playerOperatMsg.value));
     }
 
     private Vector3 GetStartPosition() {
@@ -73,10 +77,11 @@ public class PlayerController : MonoBehaviour, IController {
         if (num % 2 == 0) {
             pos += new Vector3((int)(num / 2 * widthUnit), 0, 0);
         } else {
-            
             pos -= new Vector3((int)(Math.Ceiling(num / 2) * widthUnit), 0, 0);
         }
-        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 + " startPos.position = " + pos +  "  position = " + pos);
+
+        Debug.Log("+++ num = " + num + "  num/2 = " + (int)(Math.Ceiling(num / 2)) + "  num%2 = " + num % 2 +
+                  " startPos.position = " + pos + "  position = " + pos);
         return pos;
     }
 

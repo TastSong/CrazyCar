@@ -21,7 +21,7 @@ public class Launch : MonoBehaviour, IController {
     private void Awake() {
         DontDestroyOnLoad(gameObject);
     }
-    
+
     private void Start() {
         // 其他模块需要在Awake中注册事件
         FSM.AddState(LaunchStates.InitNetwork, new InitNetworkState(FSM, this));
@@ -31,7 +31,7 @@ public class Launch : MonoBehaviour, IController {
         FSM.AddState(LaunchStates.InitGameConfig, new InitGameConfigState(FSM, this));
         FSM.AddState(LaunchStates.EnterGame, new EnterGameState(FSM, this));
         FSM.AddState(LaunchStates.ExitGameState, new ExitGameState(FSM, this));
-        
+
         FSM.StartState(LaunchStates.InitNetwork);
     }
 

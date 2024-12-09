@@ -17,7 +17,8 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     private Coroutine getRoomStatusCor;
 
     private void Awake() {
-        this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomUpdateStatusEvent>(OnMatchRoomUpdateStatus)
+            .UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<MatchRoomStartEvent>(OnMatchRoomStart).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<MatchRoomExitEvent>(OnMatchRoomExit).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
@@ -29,6 +30,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
+
         StartCoroutine(GetRoomStatus());
     }
 
@@ -45,22 +47,20 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
                 if (IsLegalMap()) {
                     this.GetSystem<IMatchRoomSystem>().MatchRoomStart();
                 } else {
-                    WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    WarningAlertInfo alertInfo =
+                        new WarningAlertInfo("This map requires all player vehicles to be able to wade");
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart,
+                        alertInfo));
                 }
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Other players are not in position");
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-            }  
+            }
         });
 
-        closeBtn.onClick.AddListener(() => {
-            this.GetSystem<IMatchRoomSystem>().MatchRoomEixt();
-        });
+        closeBtn.onClick.AddListener(() => { this.GetSystem<IMatchRoomSystem>().MatchRoomEixt(); });
 
-        mapBtn.onClick.AddListener(() => {
-            mapUI.gameObject.SetActiveFast(true);
-        });
+        mapBtn.onClick.AddListener(() => { mapUI.gameObject.SetActiveFast(true); });
     }
 
     private bool IsLegalMap() {
@@ -70,6 +70,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
                     return false;
                 }
             }
+
             return true;
         } else {
             return true;
@@ -77,7 +78,8 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
     }
 
     private void OnMatchRoomUpdateStatus(MatchRoomUpdateStatusEvent e) {
-        List<MatchRoomMemberInfo> infos = new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
+        List<MatchRoomMemberInfo> infos =
+            new List<MatchRoomMemberInfo>(this.GetModel<IMatchModel>().MemberInfoDic.Values);
         for (int i = 0; i < playerItems.Length; i++) {
             if (i < infos.Count) {
                 playerItems[i].SetContent(infos[i]);
@@ -91,6 +93,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
+
         this.GetSystem<IMatchRoomSystem>().MatchRoomClose();
         gameObject.SetActiveFast(false);
     }
@@ -99,6 +102,7 @@ public class MatchRoomStatusUI : MonoBehaviour, IController {
         if (getRoomStatusCor != null) {
             StopCoroutine(getRoomStatusCor);
         }
+
         var matchInfo = this.GetModel<IMatchModel>().SelectInfo;
         bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.Match, matchInfo.Value.cid);
         if (result) {

@@ -4,10 +4,8 @@ using UnityEngine;
 using QFramework;
 using Utils;
 
-public class ExitGameSceneCommand : AbstractCommand
-{
-    protected override void OnExecute()
-    {
+public class ExitGameSceneCommand : AbstractCommand {
+    protected override void OnExecute() {
         Time.timeScale = 0;
         InfoConfirmInfo info = new InfoConfirmInfo(content: "Quit the game?",
             success: () => {
@@ -16,9 +14,7 @@ public class ExitGameSceneCommand : AbstractCommand
                 Time.timeScale = 1;
                 this.SendCommand(new LoadSceneCommand(SceneID.Index));
             },
-            fail: () => {
-                Time.timeScale = 1;
-            });
+            fail: () => { Time.timeScale = 1; });
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
     }
 }

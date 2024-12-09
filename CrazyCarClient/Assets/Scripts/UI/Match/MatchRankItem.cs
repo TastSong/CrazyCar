@@ -22,7 +22,7 @@ public class MatchRankItem : MonoBehaviour, IController {
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             avatarImage.sprite = Instantiate(obj.Result, transform, false);
         }
-        
+
         completeTimeText.text = info.completeTime.ToString();
         rankText.text = info.rank.ToString();
     }

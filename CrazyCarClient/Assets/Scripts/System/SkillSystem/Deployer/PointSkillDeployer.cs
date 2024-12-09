@@ -4,13 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using StatusIndicators.Components;
 
-namespace MOBASkill 
-{
+namespace MOBASkill {
     //近战技能释放例子
-    public class PointSkillDeployer : SkillDeployer
-    {
-        public override void DeploySkill()
-        {
+    public class PointSkillDeployer : SkillDeployer {
+        public override void DeploySkill() {
             //执行选区算法
             CalculateTargets();
             //执行影响算法

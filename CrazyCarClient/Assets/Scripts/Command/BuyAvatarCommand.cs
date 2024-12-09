@@ -20,13 +20,14 @@ public class BuyAvatarCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
-        this.GetModel<IGameModel>().Token.Value,bytes);
+        var result = await this.GetSystem<INetworkSystem>().Post(
+            url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.buyAvatarUrl,
+            this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
             this.GetModel<IUserModel>().Star.Value = (int)result.serverData["star"];
             mAvatarInfo.isHas = true;
             this.GetModel<IUserModel>().AvatarNum.Value++;
             this.SendEvent<UnlockAvatarEvent>();
-        } 
+        }
     }
 }

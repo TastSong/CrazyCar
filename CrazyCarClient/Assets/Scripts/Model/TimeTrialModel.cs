@@ -71,10 +71,17 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
 
     public BindableProperty<bool> IsArriveLimitTime { get; } = new BindableProperty<bool>();
 
-    public bool IsStartGame { get {return isInit ? (StartTime * 1000 < Util.GetTime()) : false; } }
+    public bool IsStartGame {
+        get { return isInit ? (StartTime * 1000 < Util.GetTime()) : false; }
+    }
 
-    public bool IsEndGame { get { return IsComplete || IsArriveLimitTime; } }
-    public bool InGame { get { return IsStartGame && !IsEndGame; } }
+    public bool IsEndGame {
+        get { return IsComplete || IsArriveLimitTime; }
+    }
+
+    public bool InGame {
+        get { return IsStartGame && !IsEndGame; }
+    }
 
     private bool isInit = false;
 
@@ -95,9 +102,7 @@ public class TimeTrialModel : AbstractModel, ITimeTrialModel {
     }
 
     protected override void OnInit() {
-        StartTime.Register((v) => {
-            isInit = true;
-        });
+        StartTime.Register((v) => { isInit = true; });
         EndTime.Register((v) => {
             IsComplete.Value = true;
             this.SendEvent(new EndTimeTrialEvent());

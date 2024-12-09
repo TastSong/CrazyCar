@@ -18,10 +18,8 @@ public interface IAvatarModel : IModel {
 }
 
 public class AvatarModel : AbstractModel, IAvatarModel {
-
     public Dictionary<int, AvatarInfo> AvatarDic { get; set; } = new Dictionary<int, AvatarInfo>();
 
     protected override void OnInit() {
-
     }
 }

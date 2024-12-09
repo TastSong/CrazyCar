@@ -17,9 +17,11 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
     public Image selectIamge;
     public EquipInfo equipInfo;
     public Color normalColor;
+
     public async UniTask SetContent(EquipInfo info) {
         equipInfo = info;
-        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<GameObject>(Util.GetEquipUrl(equipInfo.rid));
+        var obj = await this.GetSystem<IAddressableSystem>()
+            .LoadAssetAsync<GameObject>(Util.GetEquipUrl(equipInfo.rid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             showImage.sprite = obj.Result.GetComponent<EquipResource>().theIcon;
             lockGO.SetActiveFast(!equipInfo.isHas);
@@ -35,8 +37,8 @@ public class ChangeCarItem : MonoBehaviour, IPointerClickHandler, IController {
         selectIamge.gameObject.SetActiveFast(isSelect);
     }
 
-    public void OnPointerClick(PointerEventData eventData) {        
-        this.SendCommand(new ChangeCarCommand(equipInfo));      
+    public void OnPointerClick(PointerEventData eventData) {
+        this.SendCommand(new ChangeCarCommand(equipInfo));
     }
 
     public IArchitecture GetArchitecture() {

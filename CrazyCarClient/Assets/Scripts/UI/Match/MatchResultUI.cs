@@ -41,7 +41,8 @@ public class MatchResultUI : MonoBehaviour, IController {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
         var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                          RequestUrl.matchResultUrl,  token: this.GetModel<IGameModel>().Token.Value,bytes);
+                                                                      RequestUrl.matchResultUrl,
+            token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseMatchRank(result.serverData);
             UpdateUI();
@@ -49,13 +50,9 @@ public class MatchResultUI : MonoBehaviour, IController {
     }
 
     private void Start() {
-        closeBtn.onClick.AddListener(() => {
-            this.SendCommand(new LoadSceneCommand(SceneID.Index));
-        });
+        closeBtn.onClick.AddListener(() => { this.SendCommand(new LoadSceneCommand(SceneID.Index)); });
 
-        refreshBtn.onClick.AddListener(() => {
-            FetchData();
-        });
+        refreshBtn.onClick.AddListener(() => { FetchData(); });
 
         this.RegisterEvent<UpdateMatchResultUIEvent>(UpdateUI).UnRegisterWhenGameObjectDestroyed(gameObject);
     }

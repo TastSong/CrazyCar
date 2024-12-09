@@ -20,7 +20,7 @@ public class RankDetailItem : MonoBehaviour, IController {
         selfBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             this.GetModel<ITimeTrialModel>().SelectInfo.Value = timeTrialInfo;
-            
+
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.TimeTrialRankUI));
         });
     }

@@ -11,7 +11,7 @@ public class MatchRoomMapUI : MonoBehaviour, IController {
     public Transform itemParent;
 
     private List<MatchMapItem> matchMapItems = new List<MatchMapItem>();
-    
+
     private void OnEnable() {
         Util.DeleteChildren(itemParent);
         matchMapItems.Clear();
@@ -28,9 +28,7 @@ public class MatchRoomMapUI : MonoBehaviour, IController {
 
 
     private void Start() {
-        closeBtn.onClick.AddListener(() => {
-            gameObject.SetActiveFast(false);
-        });
+        closeBtn.onClick.AddListener(() => { gameObject.SetActiveFast(false); });
 
         this.RegisterEvent<ChangeMatchMapEvent>(OnChangeMatchMap).UnRegisterWhenGameObjectDestroyed(gameObject);
     }

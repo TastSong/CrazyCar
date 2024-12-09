@@ -42,6 +42,7 @@ public class HomepageUI : MonoBehaviour, IController {
             if (!this.GetModel<IUserModel>().IsCompleteGuidance) {
                 this.GetModel<IUserModel>().IsCompleteGuidance.Value = true;
             }
+
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Button_Low);
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.TimeTrialDetailUI));
         });
@@ -53,14 +54,16 @@ public class HomepageUI : MonoBehaviour, IController {
             }
 
             var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
-                                                                          RequestUrl.matchMapUrl, token: this.GetModel<IGameModel>().Token.Value);
+                                                                          RequestUrl.matchMapUrl,
+                token: this.GetModel<IGameModel>().Token.Value);
             if (result.serverCode == 200) {
                 this.GetSystem<IDataParseSystem>().ParseMatchMapData(result.serverData);
                 if (this.GetModel<IMatchModel>().MatchDic.Count > 0) {
                     UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.MatchRoomUI));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("No game");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart,
+                        alertInfo));
                 }
             }
         });
@@ -119,6 +122,7 @@ public class HomepageUI : MonoBehaviour, IController {
                 ShowStandAlone();
                 return;
             }
+
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.RankUI));
         });
         changeCarBtn.onClick.AddListener(() => {
@@ -127,6 +131,7 @@ public class HomepageUI : MonoBehaviour, IController {
                 ShowStandAlone();
                 return;
             }
+
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.ChangeCarUI));
             UIController.Instance.HidePage(UIPageType.HomepageUI);
         });
@@ -142,10 +147,12 @@ public class HomepageUI : MonoBehaviour, IController {
     }
 
     private async void OnUpdataUI(UpdateHomepageUIEvent e) {
-        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
+        var obj = await this.GetSystem<IAddressableSystem>()
+            .LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             avatarImage.sprite = Instantiate(obj.Result, transform, false);
         }
+
         starText.text = this.GetModel<IUserModel>().Star.Value.ToString();
         vipImage.gameObject.SetActiveFast(this.GetModel<IUserModel>().IsVIP.Value);
     }
@@ -154,4 +161,3 @@ public class HomepageUI : MonoBehaviour, IController {
         return CrazyCar.Interface;
     }
 }
-

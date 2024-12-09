@@ -39,6 +39,6 @@ public class RegisterUI : MonoBehaviour, IController {
             }
 
             this.SendCommand(new RegisterCommand(userNameInput.text, passwordInput.text));
-        });     
+        });
     }
 }

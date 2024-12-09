@@ -73,22 +73,28 @@ public class MatchModel : AbstractModel, IMatchModel {
 
     public BindableProperty<bool> IsArriveLimitTime { get; } = new BindableProperty<bool>();
 
-    public bool IsStartGame { get { return StartTime * 1000 < Util.GetTime(); }}
-    public bool IsEndGame { get { return IsComplete || IsArriveLimitTime;}}
-    public bool InGame { get { return IsStartGame && !IsEndGame; } }
+    public bool IsStartGame {
+        get { return StartTime * 1000 < Util.GetTime(); }
+    }
+
+    public bool IsEndGame {
+        get { return IsComplete || IsArriveLimitTime; }
+    }
+
+    public bool InGame {
+        get { return IsStartGame && !IsEndGame; }
+    }
 
     public BindableProperty<string> RoomId { get; } = new BindableProperty<string>();
 
-    public Dictionary<int, MatchRoomMemberInfo> MemberInfoDic { get; set; } = new Dictionary<int, MatchRoomMemberInfo>();
+    public Dictionary<int, MatchRoomMemberInfo> MemberInfoDic { get; set; } =
+        new Dictionary<int, MatchRoomMemberInfo>();
 
     private bool isHouseOwner = false;
+
     public bool IsHouseOwner {
-        get {
-            return isHouseOwner;
-        }
-        set {
-            isHouseOwner = value;
-        } 
+        get { return isHouseOwner; }
+        set { isHouseOwner = value; }
     }
 
     public void CleanData() {
@@ -109,11 +115,7 @@ public class MatchModel : AbstractModel, IMatchModel {
             IsComplete.Value = true;
             this.SendEvent(new CompleteMatchEvent());
         });
-        IsArriveLimitTime.Register((v) => {
-            this.SendEvent(new CompleteMatchEvent());
-        });
-        SelectInfo.Register((v) => {
-            StartTime.Value = SelectInfo.Value.startTime;
-        });
+        IsArriveLimitTime.Register((v) => { this.SendEvent(new CompleteMatchEvent()); });
+        SelectInfo.Register((v) => { StartTime.Value = SelectInfo.Value.startTime; });
     }
 }

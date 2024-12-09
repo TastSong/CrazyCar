@@ -31,7 +31,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
         var result = await this.GetSystem<INetworkSystem>().Post(url, token: this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-            this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData);      
+            this.GetSystem<IDataParseSystem>().ParseEquipRes(result.serverData);
             await SetItemContent();
             UIController.Instance.HidePage(UIPageType.LoadingUI);
         }
@@ -51,7 +51,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
                 changeCarItems.Add(item);
             }
         }
-        
+
         // 并行执行所有任务并等待它们全部完成
         await UniTask.WhenAll(tasks);
 
@@ -68,13 +68,13 @@ public class ChangeCarUI : MonoBehaviour, IController {
                 this.SendCommand(new ApplyEquipCommand(curEquipInfo));
             } else {
                 this.SendCommand(new BuyEquipCommand(curEquipInfo));
-            }  
+            }
         });
 
         closeBtn.onClick.AddListener(() => {
             this.GetSystem<ISoundSystem>().PlaySound(SoundType.Close);
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.HomepageUI));
-            UIController.Instance.HidePage(UIPageType.ChangeCarUI);           
+            UIController.Instance.HidePage(UIPageType.ChangeCarUI);
         });
 
         this.RegisterEvent<ChangeCarEvent>(OnChangeCarEvent).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -99,6 +99,7 @@ public class ChangeCarUI : MonoBehaviour, IController {
         } else {
             applyBtn.interactable = true;
         }
+
         if (curEquipInfo.isHas) {
             applyBtnText.text = this.GetSystem<II18NSystem>().GetText("Apply");
         } else {

@@ -23,7 +23,9 @@ public class AvatarUI : MonoBehaviour, IController {
     private async void OnEnable() {
         avatarModel = this.GetModel<IAvatarModel>();
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl, this.GetModel<IGameModel>().Token.Value);
+        var result = await this.GetSystem<INetworkSystem>()
+            .Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.avatarUrl,
+                this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
             curAid = this.GetModel<IUserModel>().Aid.Value;
@@ -38,6 +40,7 @@ public class AvatarUI : MonoBehaviour, IController {
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             curAvatar.sprite = Instantiate(obj.Result, transform, false);
         }
+
         curAvatarName.text = avatarModel.AvatarDic[curAid].name;
         Util.DeleteChildren(avatarItemParent);
         // 创建一个任务列表来保存所有的异步任务
@@ -47,6 +50,7 @@ public class AvatarUI : MonoBehaviour, IController {
             item.transform.SetParent(avatarItemParent, false);
             tasks.Add(item.SetContent(kvp.Value));
         }
+
         // 并行执行所有任务并等待它们全部完成
         await UniTask.WhenAll(tasks);
     }
@@ -73,6 +77,7 @@ public class AvatarUI : MonoBehaviour, IController {
         } else {
             applyBtn.interactable = true;
         }
+
         curAvatarName.text = avatarModel.AvatarDic[e.aid].name;
         curAid = e.aid;
         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(e.aid));

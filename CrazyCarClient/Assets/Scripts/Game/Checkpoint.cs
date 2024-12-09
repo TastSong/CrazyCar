@@ -23,7 +23,7 @@ public class Checkpoint : MonoBehaviour, IController {
 
     private void OnTriggerEnter(Collider other) {
         var checkpointSystem = this.GetSystem<ICheckpointSystem>();
-        if (other.tag == TagName.player && 
+        if (other.tag == TagName.player &&
             this.GetSystem<IPlayerManagerSystem>().SelfPlayer == other.GetComponent<MPlayer>()) {
             if (isEndSign) {
                 if (checkpointSystem.CheckpointCount * (checkpointSystem.PassTimes + 1) ==
@@ -34,10 +34,8 @@ public class Checkpoint : MonoBehaviour, IController {
             } else {
                 checkpointSystem.CheckedCount.Value += 1;
                 Sequence sequence = DOTween.Sequence();
-                sequence.Join( DOTween.To(() => amount, x => amount = x, 4, 1.4f).SetEase(Ease.InCubic));
-                sequence.OnComplete(() => {
-                    gameObject.SetActiveFast(false);
-                });
+                sequence.Join(DOTween.To(() => amount, x => amount = x, 4, 1.4f).SetEase(Ease.InCubic));
+                sequence.OnComplete(() => { gameObject.SetActiveFast(false); });
             }
         }
     }

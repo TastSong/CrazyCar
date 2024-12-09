@@ -13,6 +13,5 @@ public class IndexCarSystem : AbstractSystem, IIndexCarSystem {
     public MPlayerStyle MPlayerStyle { get; set; }
 
     protected override void OnInit() {
-        
     }
 }

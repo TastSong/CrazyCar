@@ -23,9 +23,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
     public bool NeedReconnect { get; set; }
 
     public bool IsConnected {
-        get {
-            return socket != null && socket.ReadyState == WebSocketState.Open;
-        }
+        get { return socket != null && socket.ReadyState == WebSocketState.Open; }
     }
 
 
@@ -69,6 +67,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
             recJD = JsonMapper.ToObject(e.Data);
             this.GetSystem<INetworkSystem>().RespondAction(recJD);
         }
+
         receiveCount += 1;
     }
 
@@ -80,6 +79,7 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
         } else {
             NeedReconnect = false;
         }
+
         CloseSuccAction?.Invoke();
     }
 
@@ -89,5 +89,5 @@ public class WebSocketSystem : AbstractSystem, IWebSocketSystem {
 
     protected override void OnInit() {
         NeedReconnect = false;
-    }   
+    }
 }

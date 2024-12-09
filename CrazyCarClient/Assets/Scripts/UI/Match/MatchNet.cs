@@ -11,8 +11,9 @@ public class MatchNet : MonoBehaviour, IController {
 
     private void Start() {
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
-            this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchWSUrl,RequestUrl.kcpServerUrl, RequestUrl.matchKCPPort);
-            
+            this.GetSystem<INetworkSystem>()
+                .Connect(RequestUrl.matchWSUrl, RequestUrl.kcpServerUrl, RequestUrl.matchKCPPort);
+
             this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
                 Debug.Log("MatchNet Connect Succ");
                 this.SendCommand<PostCreatePlayerMsgCommand>();
@@ -23,10 +24,8 @@ public class MatchNet : MonoBehaviour, IController {
         this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private void OnExitGameScene(ExitGameSceneEvent e)
-    {
-        if (matchNerCor != null)
-        {
+    private void OnExitGameScene(ExitGameSceneEvent e) {
+        if (matchNerCor != null) {
             CoroutineController.Instance.StopCoroutine(matchNerCor);
         }
     }

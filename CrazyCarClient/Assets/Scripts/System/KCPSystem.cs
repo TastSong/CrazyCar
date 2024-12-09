@@ -26,46 +26,28 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
     private string url;
 
     public Action CloseSuccAction {
-        get {
-            return kcpManager.CloseSuccAction;
-        }
-        set {
-            kcpManager.CloseSuccAction = value;
-        }
+        get { return kcpManager.CloseSuccAction; }
+        set { kcpManager.CloseSuccAction = value; }
     }
 
     public Action BreakLineAction {
-        get {
-            return kcpManager.BreakLineAction;
-        }
-        set {
-            kcpManager.BreakLineAction = value;
-        }
+        get { return kcpManager.BreakLineAction; }
+        set { kcpManager.BreakLineAction = value; }
     }
 
     public Action ConnectSuccAction {
-        get {
-            return kcpManager.ConnectSuccAction;
-        }
-        set {
-            kcpManager.ConnectSuccAction = value;
-        }
+        get { return kcpManager.ConnectSuccAction; }
+        set { kcpManager.ConnectSuccAction = value; }
     }
 
     public bool IsConnected {
-        get {
-            return kcpManager.IsRunning;
-        }
+        get { return kcpManager.IsRunning; }
     }
 
     public bool NeedReconnect {
-        get {
-            return kcpManager.NeedReconnect;
-        }
+        get { return kcpManager.NeedReconnect; }
 
-        set {
-            kcpManager.NeedReconnect = value;
-        }
+        set { kcpManager.NeedReconnect = value; }
     }
 
     public void Reconnect() {
@@ -88,7 +70,7 @@ public class KCPSystem : AbstractSystem, IKCPSystem {
             kcpManager.Send(msg);
         } else {
             kcpManager.ConnectKCP(host, port, url);
-        }      
+        }
     }
 
     protected override void OnInit() {
@@ -101,17 +83,15 @@ public class KCPManager : KcpClient, IController {
     public Action ConnectSuccAction { get; set; }
     public Action BreakLineAction { get; set; }
     public bool NeedReconnect { get; set; }
-    
+
     private new KcpClient client;
     private string recStr;
     private JsonData recJD = new JsonData();
     private KCPState mKCPState = KCPState.Closed;
 
-    public KCPState KCPState{
-        get {
-            return mKCPState;
-        }
-        
+    public KCPState KCPState {
+        get { return mKCPState; }
+
         set {
             Debug.Log("change KCPState to " + value);
             mKCPState = value;
@@ -142,11 +122,12 @@ public class KCPManager : KcpClient, IController {
         if (client != null && client.IsRunning()) {
             return;
         }
+
         KCPState = KCPState.Connecting;
         Debug.Log("host " + host + " port " + port + " url " + url);
         var result = await this.GetSystem<INetworkSystem>().Post(
             url: this.GetSystem<INetworkSystem>().HttpBaseUrl + url,
-            token: this.GetModel<IGameModel>().Token.Value);    
+            token: this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
             client = new KCPManager();
             client.NoDelay(1, 10, 2, 1);
@@ -159,7 +140,7 @@ public class KCPManager : KcpClient, IController {
             KCPState = KCPState.Open;
             NeedReconnect = false;
             ConnectSuccAction?.Invoke();
-        } 
+        }
     }
 
     public void Send(string content) {
@@ -180,12 +161,10 @@ public class KCPManager : KcpClient, IController {
     }
 
     public new bool IsRunning {
-        get {
-            return client != null && client.IsRunning();
-        }
+        get { return client != null && client.IsRunning(); }
     }
 
     public IArchitecture GetArchitecture() {
         return CrazyCar.Interface;
-    } 
+    }
 }

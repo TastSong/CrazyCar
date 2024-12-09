@@ -7,48 +7,43 @@ public enum DriftDirection {
     Left,
     Right,
 }
+
 public enum DriftLevel {
     One,
     Two,
     Three
 }
 
-public class TestPlayerCtr : MonoBehaviour
-{
+public class TestPlayerCtr : MonoBehaviour {
     public Rigidbody rig;
 
-    [Header("输入相关")]
-    private float v_Input;
+    [Header("输入相关")] private float v_Input;
     private float h_Input;
 
-    [Header("力的大小")]
-    public float currentForce;
-    public float normalForce = 80;  //通常状态力
-    public float boostForce = 130;  //加速时力大小
-    public float jumpForce = 10;    //跳时添加的力    
-    public float gravity = 40;      //在空中时往下加的力
+    [Header("力的大小")] public float currentForce;
+    public float normalForce = 80; //通常状态力
+    public float boostForce = 130; //加速时力大小
+    public float jumpForce = 10; //跳时添加的力    
+    public float gravity = 40; //在空中时往下加的力
 
     //力的方向
     private Vector3 forceDir_Horizontal;
-    private float verticalModified;         //前后修正系数
+    private float verticalModified; //前后修正系数
 
-    [Header("转弯相关")]
-    public bool isDrifting;
+    [Header("转弯相关")] public bool isDrifting;
     public DriftDirection driftDirection = DriftDirection.None;
-    [Tooltip("由h_Input以及漂移影响")]
-    public Quaternion rotationStream;   //用于最终旋转
+    [Tooltip("由h_Input以及漂移影响")] public Quaternion rotationStream; //用于最终旋转
     public float turnSpeed = 60;
 
     //Drift()
     Quaternion m_DriftOffset = Quaternion.identity;
     public DriftLevel driftLevel;
 
-    [Header("地面检测")]
-    public Transform frontHitTrans;
+    [Header("地面检测")] public Transform frontHitTrans;
     public Transform rearHitTrans;
     public bool isGround;
     public bool isGroundLastFrame;
-    public float groundDistance = 0.7f;//根据车模型自行调节
+    public float groundDistance = 0.7f; //根据车模型自行调节
 
     //[Header("特效")]
     //public Transform wheelsParticeleTrans;
@@ -71,12 +66,12 @@ public class TestPlayerCtr : MonoBehaviour
 
     void Update() {
         //输入相关
-        v_Input = Input.GetAxisRaw("Vertical");     //竖直输入
-        h_Input = Input.GetAxisRaw("Horizontal");   //水平输入
+        v_Input = Input.GetAxisRaw("Vertical"); //竖直输入
+        h_Input = Input.GetAxisRaw("Horizontal"); //水平输入
 
         //按下空格起跳
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if (isGround)   //如果在地上
+            if (isGround) //如果在地上
             {
                 Jump();
             }
@@ -86,23 +81,23 @@ public class TestPlayerCtr : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && h_Input != 0) {
             //落地瞬间、不在漂移并且速度大于一定值时开始漂移
             if (isGround && !isGroundLastFrame && !isDrifting && rig.velocity.sqrMagnitude > 10) {
-                StartDrift();   //开始漂移
+                StartDrift(); //开始漂移
             }
         }
 
         //放开空格：漂移结束
         if (Input.GetKeyUp(KeyCode.Space)) {
             if (isDrifting) {
-                Boost(boostForce);//加速
-                StopDrift();//停止漂移
+                Boost(boostForce); //加速
+                StopDrift(); //停止漂移
             }
         }
     }
 
     private void FixedUpdate() {
         //车转向
-        CheckGroundNormal();        //检测是否在地面上，并且使车与地面保持水平
-        Turn();                     //输入控制左右转向
+        CheckGroundNormal(); //检测是否在地面上，并且使车与地面保持水平
+        Turn(); //输入控制左右转向
 
         //起步时力大小递增
         IncreaseForce();
@@ -112,7 +107,7 @@ public class TestPlayerCtr : MonoBehaviour
 
         //如果在漂移
         if (isDrifting) {
-            CalculateDriftingLevel();   //计算漂移等级
+            CalculateDriftingLevel(); //计算漂移等级
             //ChangeDriftColor();         //根据漂移等级改变颜色
         }
 
@@ -129,8 +124,8 @@ public class TestPlayerCtr : MonoBehaviour
         //往前加力
         if (v_Input > 0) {
             verticalModified = 1;
-        } else if (v_Input < 0)//往后加力
-          {
+        } else if (v_Input < 0) //往后加力
+        {
             verticalModified = -1;
         }
 
@@ -142,7 +137,7 @@ public class TestPlayerCtr : MonoBehaviour
         //计算合力
         Vector3 tempForce = verticalModified * currentForce * forceDir_Horizontal;
 
-        if (!isGround)  //如不在地上，则加重力
+        if (!isGround) //如不在地上，则加重力
         {
             tempForce = tempForce + gravity * Vector3.down;
         }
@@ -154,18 +149,22 @@ public class TestPlayerCtr : MonoBehaviour
     public void CheckGroundNormal() {
         //从车头中心附近往下打射线,长度比发射点到车底的距离长一点
         RaycastHit frontHit;
-        bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance, LayerMask.GetMask("Ground"));
+        bool hasFrontHit = Physics.Raycast(frontHitTrans.position, -transform.up, out frontHit, groundDistance,
+            LayerMask.GetMask("Ground"));
         if (hasFrontHit) {
             Debug.DrawLine(frontHitTrans.position, frontHitTrans.position - transform.up * groundDistance, Color.red);
         }
+
         //从车尾中心附近往下打射线
         RaycastHit rearHit;
-        bool hasRearHit = Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance, LayerMask.GetMask("Ground"));
+        bool hasRearHit = Physics.Raycast(rearHitTrans.position, -transform.up, out rearHit, groundDistance,
+            LayerMask.GetMask("Ground"));
         if (hasRearHit) {
             Debug.DrawLine(rearHitTrans.position, rearHitTrans.position - transform.up * groundDistance, Color.red);
         }
+
         isGroundLastFrame = isGround;
-        if (hasFrontHit || hasRearHit)//判断是否在地面
+        if (hasFrontHit || hasRearHit) //判断是否在地面
         {
             isGround = true;
         } else {
@@ -183,22 +182,22 @@ public class TestPlayerCtr : MonoBehaviour
         float targetForce = currentForce;
         if (isGround && v_Input == 0) {
             targetForce = 0;
-        } else if (currentForce > normalForce)    //用于加速后回到普通状态
-          {
+        } else if (currentForce > normalForce) //用于加速后回到普通状态
+        {
             targetForce = normalForce;
         }
 
         //if (currentForce <= normalForce) {
         //    DisableTrail();
         //}
-        currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime);//每秒60递减，可调
+        currentForce = Mathf.MoveTowards(currentForce, targetForce, 60 * Time.fixedDeltaTime); //每秒60递减，可调
     }
 
     //力递增
     public void IncreaseForce() {
         float targetForce = currentForce;
         if (v_Input != 0 && currentForce < normalForce) {
-            currentForce = Mathf.MoveTowards(currentForce, normalForce, 80 * Time.fixedDeltaTime);//每秒80递增
+            currentForce = Mathf.MoveTowards(currentForce, normalForce, 80 * Time.fixedDeltaTime); //每秒80递增
         }
     }
 
@@ -223,7 +222,7 @@ public class TestPlayerCtr : MonoBehaviour
         float turnAngle = modifiedSteering * turnSpeed * Time.fixedDeltaTime;
         Quaternion deltaRotation = Quaternion.Euler(0, turnAngle, 0);
 
-        rotationStream = rotationStream * deltaRotation;//局部坐标下旋转,这里有空换一个简单的写法
+        rotationStream = rotationStream * deltaRotation; //局部坐标下旋转,这里有空换一个简单的写法
     }
 
     public void Jump() {

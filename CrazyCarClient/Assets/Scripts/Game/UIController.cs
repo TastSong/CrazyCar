@@ -36,7 +36,7 @@ public enum UIPageType {
 
 public enum UILevelType {
     Prepare = 0,
-    Main ,
+    Main,
     UIPage,
     Popup,
     Alart,
@@ -46,7 +46,9 @@ public enum UILevelType {
 public class UIController : PersistentMonoSingleton<UIController>, IController {
     public Transform[] levles;
     private Dictionary<UIPageType, GameObject> pagesDict = new Dictionary<UIPageType, GameObject>();
-    private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup = new Dictionary<UILevelType, LinkedList<UIPageType>>();
+
+    private Dictionary<UILevelType, LinkedList<UIPageType>> pagesGroup =
+        new Dictionary<UILevelType, LinkedList<UIPageType>>();
 
     private void Awake() {
         base.Awake();
@@ -106,6 +108,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -124,9 +127,10 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
                 return kv.Key;
             }
         }
+
         return UILevelType.Main;
     }
-    
+
     public void HidePageByLevel(UILevelType levelType) {
         foreach (var kv in pagesGroup[levelType]) {
             if (pagesDict.ContainsKey(kv)) {
@@ -168,7 +172,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
     // 判断当前页面是否是主页
     private bool IsHomePage() {
         bool isHomePage = true;
-        pagesDict.ToList().ForEach(delegate (KeyValuePair<UIPageType, GameObject> pair) {
+        pagesDict.ToList().ForEach(delegate(KeyValuePair<UIPageType, GameObject> pair) {
             if (pair.Value != null && pair.Key != UIPageType.HomepageUI && pair.Value.activeSelf) {
                 isHomePage = false;
             }
@@ -187,6 +191,7 @@ public class UIController : PersistentMonoSingleton<UIController>, IController {
                 Destroy(kv.Value);
             }
         }
+
         pagesDict.Clear();
     }
 

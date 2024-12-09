@@ -41,6 +41,7 @@ public class SettingsUI : MonoBehaviour, IController {
         foreach (var kv in lanMap) {
             languageOptionsList.Add(kv.Key);
         }
+
         languageDropdown.ClearOptions();
         languageOptions.Clear();
         for (int i = 0; i < languageOptionsList.Count; i++) {
@@ -50,6 +51,7 @@ public class SettingsUI : MonoBehaviour, IController {
 
             languageOptions.Add(optionData);
         }
+
         languageDropdown.AddOptions(languageOptions);
         isInit = true;
         UpdateUI();
@@ -67,6 +69,7 @@ public class SettingsUI : MonoBehaviour, IController {
                 break;
             }
         }
+
         musicSlider.value = Convert.ToInt32(info.IsOnMusic);
         soundSlider.value = Convert.ToInt32(info.IsOnSound);
         vibrationSlider.value = Convert.ToInt32(info.IsOnVibration);
@@ -93,5 +96,3 @@ public class SettingsUI : MonoBehaviour, IController {
         return CrazyCar.Interface;
     }
 }
-
-

@@ -1,3 +1,2 @@
-﻿public class UpdateHomepageUIEvent { 
-
+﻿public class UpdateHomepageUIEvent {
 }

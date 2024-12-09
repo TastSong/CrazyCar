@@ -14,22 +14,25 @@ public class TimeTrialDetailUI : MonoBehaviour, IController {
 
     private async void OnEnable() {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
+            var obj = await this.GetSystem<IAddressableSystem>()
+                .LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneTimeTrialDetail);
             if (obj.Status != AsyncOperationStatus.Succeeded) {
                 Debug.LogError("Load TimeTrialDetail failed");
                 return;
             }
+
             JsonData data = JsonMapper.ToObject(obj.Result.text);
             this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(data);
             UpdateUI();
         } else {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-            var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
-               token: this.GetModel<IGameModel>().Token.Value);
+            var result = await this.GetSystem<INetworkSystem>().Post(
+                url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialDetailUrl,
+                token: this.GetModel<IGameModel>().Token.Value);
             if (result.serverCode == 200) {
                 this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(result.serverData);
                 UpdateUI();
-            } 
+            }
         }
     }
 

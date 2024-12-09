@@ -13,7 +13,7 @@ public class MeltEffect : MonoBehaviour {
         material = mr.material;
     }
 
-    private void Update() {        
+    private void Update() {
         amount = Mathf.Repeat(Time.time * speed, 1.0f);
         material.SetFloat("_DissolveThreshold", amount);
         material.SetFloat("_OffsetThreshold", amount);

@@ -19,12 +19,14 @@ public class PostPlayerCompleteGameMsgCommand : AbstractCommand {
         } else {
             w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
         }
+
         w.WritePropertyName("complete_time");
         if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
             w.Write(this.GetModel<IMatchModel>().GetCompleteTime());
         } else {
             w.Write(Util.GetTime());
         }
+
         w.WritePropertyName("uid");
         w.Write(this.GetModel<IUserModel>().Uid.Value);
         w.WriteObjectEnd();

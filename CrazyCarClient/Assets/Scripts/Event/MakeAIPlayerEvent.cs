@@ -1,9 +1,7 @@
-public class MakeAIPlayerEvent
-{
+public class MakeAIPlayerEvent {
     public AIInfo aiInfo;
 
-    public MakeAIPlayerEvent(AIInfo info)
-    {
+    public MakeAIPlayerEvent(AIInfo info) {
         aiInfo = info;
     }
 }

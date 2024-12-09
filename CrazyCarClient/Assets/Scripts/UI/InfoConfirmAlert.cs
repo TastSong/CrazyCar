@@ -43,7 +43,7 @@ public class InfoConfirmAlert : UIPenal {
 
     private Action success;
     private Action fail;
-    
+
     private Queue<InfoConfirmInfo> queue = new Queue<InfoConfirmInfo>();
 
     public override void InitData(object data) {
@@ -51,6 +51,7 @@ public class InfoConfirmAlert : UIPenal {
         if (info == null) {
             return;
         }
+
         ShowWithText(info.title, info.content, info.succ, info.fail, info.confirmText, info.cancelText, info.type);
     }
 
@@ -77,8 +78,9 @@ public class InfoConfirmAlert : UIPenal {
     }
 
     private void ShowWithText(string title = "Tips", string content = "", Action success = null, Action fail = null,
-        string confirmText ="Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
-        InfoConfirmInfo info = new InfoConfirmInfo(title: title, content: content, success: success, fail: fail, confirmText: confirmText, cancelText: cancelText, type: type);
+        string confirmText = "Confirm", string cancelText = "Cancel", ConfirmAlertType type = ConfirmAlertType.Double) {
+        InfoConfirmInfo info = new InfoConfirmInfo(title: title, content: content, success: success, fail: fail,
+            confirmText: confirmText, cancelText: cancelText, type: type);
         queue.Enqueue(info);
         UpdateUI(queue.Dequeue());
         return;

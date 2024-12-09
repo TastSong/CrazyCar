@@ -7,306 +7,316 @@ using Utils;
 using QFramework;
 
 public class GameHelper : MonoBehaviour, IController {
-	#region Log
-	public KeyCode toggleKey = KeyCode.BackQuote;
-	public bool openOnStart = false;
-	public bool shakeToOpen = true;
-	public float shakeAcceleration = 3f;
-	public bool clampLogCount = false;
-	public int maxLogCount = 1000;
+    #region Log
 
-	private readonly GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
-	private readonly GUIContent HideLabel = new GUIContent("Hide", "Hide the contents");
-	private readonly GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
+    public KeyCode toggleKey = KeyCode.BackQuote;
+    public bool openOnStart = false;
+    public bool shakeToOpen = true;
+    public float shakeAcceleration = 3f;
+    public bool clampLogCount = false;
+    public int maxLogCount = 1000;
 
-	private bool isCollapsed;
-	private bool isLogPanelVisible;
-	private Vector2 scrollPosition;
+    private readonly GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
+    private readonly GUIContent HideLabel = new GUIContent("Hide", "Hide the contents");
+    private readonly GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
 
-	private Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color>
-	{
-		{ LogType.Assert, Color.white },
-		{ LogType.Error, Color.red },
-		{ LogType.Exception, Color.red },
-		{ LogType.Log, Color.white },
-		{ LogType.Warning, Color.yellow },
-	};
-	private Dictionary<LogType, bool> logTypeFilters = new Dictionary<LogType, bool>
-	{
-		{ LogType.Assert, true },
-		{ LogType.Error, true },
-		{ LogType.Exception, true },
-		{ LogType.Log, true },
-		{ LogType.Warning, true },
-	};
+    private bool isCollapsed;
+    private bool isLogPanelVisible;
+    private Vector2 scrollPosition;
 
-	private List<LogInfo> logs = new List<LogInfo>();
-	private ConcurrentQueue<LogInfo> queuedLogs = new ConcurrentQueue<LogInfo>();
-	#endregion
+    private Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color> {
+        { LogType.Assert, Color.white },
+        { LogType.Error, Color.red },
+        { LogType.Exception, Color.red },
+        { LogType.Log, Color.white },
+        { LogType.Warning, Color.yellow },
+    };
 
-	#region Road
-	private string roadId = "1";
-	private bool roadDir;
-	#endregion
+    private Dictionary<LogType, bool> logTypeFilters = new Dictionary<LogType, bool> {
+        { LogType.Assert, true },
+        { LogType.Error, true },
+        { LogType.Exception, true },
+        { LogType.Log, true },
+        { LogType.Warning, true },
+    };
 
-	#region Normal
-	private const int margin = 50;
-	private const string windowTitle = "GameHelper";
-	private float windowHeight = 150;
-	private bool showAllBtn = false;
-	private Rect windowRect = new Rect(margin, margin, Screen.width - (margin * 2), Screen.height - (margin * 2));
-	#endregion
+    private List<LogInfo> logs = new List<LogInfo>();
+    private ConcurrentQueue<LogInfo> queuedLogs = new ConcurrentQueue<LogInfo>();
 
-	void OnDisable() {
-		Application.logMessageReceivedThreaded -= HandleLogThreaded;
-	}
+    #endregion
 
-	void OnEnable() {
-		Application.logMessageReceivedThreaded += HandleLogThreaded;
-	}
+    #region Road
 
-	void Start() {
-		isLogPanelVisible = openOnStart;
-	}
+    private string roadId = "1";
+    private bool roadDir;
 
-	public void SetLogPanelStatus(bool show) {
-		isLogPanelVisible = show;
-	}
+    #endregion
 
-	void OnGUI() {
-		if (!isLogPanelVisible) {
-			// 不显示log
-			float width = 300.0f;
-			float btnHeight = 45.0f;
-			GUILayout.Window(0, new Rect(Screen.width / 2 - width, 0, width, windowHeight), (int windowID) => {
-				if (showAllBtn) {
-					if (GUILayout.Button("Show", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
-						SetLogPanelStatus(true);
-					}
+    #region Normal
 
-					if (GUILayout.Button("上传本次记录", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
-						// SetLogPanelStatus(true);
-						var targetDir = Path.Combine(Application.persistentDataPath, this.GetModel<IUserModel>().Uid.ToString());
-						if (!Directory.Exists(targetDir)) {
-							Directory.CreateDirectory(targetDir);
-						}
+    private const int margin = 50;
+    private const string windowTitle = "GameHelper";
+    private float windowHeight = 150;
+    private bool showAllBtn = false;
+    private Rect windowRect = new Rect(margin, margin, Screen.width - (margin * 2), Screen.height - (margin * 2));
 
-						var d = DateTime.Now;
-						var fileName = "MATCH_LOG_FILE"
-							+ this.GetModel<IUserModel>().Uid + "-"
-							+ this.GetModel<IUserModel>().Name + "-"
-							+ d.ToString("yyyy-MM-dd-HH-mm-ss") + ".txt";
-						var FullName = Path.Combine(targetDir, fileName);
+    #endregion
 
-						using (StreamWriter f = new StreamWriter(FullName)) {
-							foreach (var l in logs) {
-								f.WriteLine(l.type);
-								f.WriteLine(l.message);
-								f.WriteLine(l.stackTrace);
-							}
-						}
+    void OnDisable() {
+        Application.logMessageReceivedThreaded -= HandleLogThreaded;
+    }
 
-						NativeShare s = new NativeShare();
-						s.AddFile(FullName);
-						s.Share();
+    void OnEnable() {
+        Application.logMessageReceivedThreaded += HandleLogThreaded;
+    }
 
-					}
-				}
-				showAllBtn = GUILayout.Toggle(showAllBtn, "    Show All Btn");
-				windowHeight = showAllBtn ? 140.0f : 30.0f;
-			}, windowTitle);
-		} else {
-			// 显示log
-			windowRect = GUILayout.Window(1, windowRect, DrawWindow, windowTitle);
-		}
-	}
+    void Start() {
+        isLogPanelVisible = openOnStart;
+    }
 
-	void Update() {
-		UpdateQueuedLogs();
-		if (Input.GetKeyDown(toggleKey)) {
-			isLogPanelVisible = !isLogPanelVisible;
-		}
-		if (shakeToOpen && Input.acceleration.sqrMagnitude > shakeAcceleration) {
-			isLogPanelVisible = !isLogPanelVisible;
-		}
-	}
+    public void SetLogPanelStatus(bool show) {
+        isLogPanelVisible = show;
+    }
 
-	/************************************* Log ****************************************/
-	void UpdateQueuedLogs() {
-		LogInfo log;
-		while (queuedLogs.TryDequeue(out log)) {
-			ShowLogItem(log);
-		}
-	}
+    void OnGUI() {
+        if (!isLogPanelVisible) {
+            // 不显示log
+            float width = 300.0f;
+            float btnHeight = 45.0f;
+            GUILayout.Window(0, new Rect(Screen.width / 2 - width, 0, width, windowHeight), (int windowID) => {
+                if (showAllBtn) {
+                    if (GUILayout.Button("Show", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
+                        SetLogPanelStatus(true);
+                    }
 
-	void ShowLogItem(LogInfo log) {
-		var lastLog = logs.Count == 0 ? null : logs.Last();
-		bool isDuplicateOfLastLog = log != null ? log.EqualsTo(lastLog) : false;
+                    if (GUILayout.Button("上传本次记录", GUILayout.Width(width), GUILayout.Height(btnHeight))) {
+                        // SetLogPanelStatus(true);
+                        var targetDir = Path.Combine(Application.persistentDataPath,
+                            this.GetModel<IUserModel>().Uid.ToString());
+                        if (!Directory.Exists(targetDir)) {
+                            Directory.CreateDirectory(targetDir);
+                        }
 
-		if (isDuplicateOfLastLog) {
-			log.count = lastLog.count + 1;
-			logs[logs.Count - 1] = log;
-		} else {
-			logs.Add(log);
-			if (clampLogCount) {
-				RemoveUnnecessaryLogs();
-			}
-		}
-	}
+                        var d = DateTime.Now;
+                        var fileName = "MATCH_LOG_FILE"
+                                       + this.GetModel<IUserModel>().Uid + "-"
+                                       + this.GetModel<IUserModel>().Name + "-"
+                                       + d.ToString("yyyy-MM-dd-HH-mm-ss") + ".txt";
+                        var FullName = Path.Combine(targetDir, fileName);
 
-	void DrawWindow(int windowID) {
-		DrawLogList();
-		DrawToolbar();
-	}
+                        using (StreamWriter f = new StreamWriter(FullName)) {
+                            foreach (var l in logs) {
+                                f.WriteLine(l.type);
+                                f.WriteLine(l.message);
+                                f.WriteLine(l.stackTrace);
+                            }
+                        }
 
-	void DrawLogList() {
-		scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-		GUILayout.BeginVertical();
-		// filter logs
-		var visibleLogs = logs.Where((LogInfo log) => { return logTypeFilters[log.type]; });
-		foreach (LogInfo log in visibleLogs) {
-			DrawLog(log);
-		}
-		GUILayout.EndVertical();
-		var innerScrollRect = GUILayoutUtility.GetLastRect();
-		GUILayout.EndScrollView();
+                        NativeShare s = new NativeShare();
+                        s.AddFile(FullName);
+                        s.Share();
+                    }
+                }
+
+                showAllBtn = GUILayout.Toggle(showAllBtn, "    Show All Btn");
+                windowHeight = showAllBtn ? 140.0f : 30.0f;
+            }, windowTitle);
+        } else {
+            // 显示log
+            windowRect = GUILayout.Window(1, windowRect, DrawWindow, windowTitle);
+        }
+    }
+
+    void Update() {
+        UpdateQueuedLogs();
+        if (Input.GetKeyDown(toggleKey)) {
+            isLogPanelVisible = !isLogPanelVisible;
+        }
+
+        if (shakeToOpen && Input.acceleration.sqrMagnitude > shakeAcceleration) {
+            isLogPanelVisible = !isLogPanelVisible;
+        }
+    }
+
+    /************************************* Log ****************************************/
+    void UpdateQueuedLogs() {
+        LogInfo log;
+        while (queuedLogs.TryDequeue(out log)) {
+            ShowLogItem(log);
+        }
+    }
+
+    void ShowLogItem(LogInfo log) {
+        var lastLog = logs.Count == 0 ? null : logs.Last();
+        bool isDuplicateOfLastLog = log != null ? log.EqualsTo(lastLog) : false;
+
+        if (isDuplicateOfLastLog) {
+            log.count = lastLog.count + 1;
+            logs[logs.Count - 1] = log;
+        } else {
+            logs.Add(log);
+            if (clampLogCount) {
+                RemoveUnnecessaryLogs();
+            }
+        }
+    }
+
+    void DrawWindow(int windowID) {
+        DrawLogList();
+        DrawToolbar();
+    }
+
+    void DrawLogList() {
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+        GUILayout.BeginVertical();
+        // filter logs
+        var visibleLogs = logs.Where((LogInfo log) => { return logTypeFilters[log.type]; });
+        foreach (LogInfo log in visibleLogs) {
+            DrawLog(log);
+        }
+
+        GUILayout.EndVertical();
+        var innerScrollRect = GUILayoutUtility.GetLastRect();
+        GUILayout.EndScrollView();
 
 
-		var outerScrollRect = GUILayoutUtility.GetLastRect();
-		if (Event.current.type == EventType.Repaint && IsScrolledToBottom(innerScrollRect, outerScrollRect)) {
-			ScrollToBottom();
-		}
+        var outerScrollRect = GUILayoutUtility.GetLastRect();
+        if (Event.current.type == EventType.Repaint && IsScrolledToBottom(innerScrollRect, outerScrollRect)) {
+            ScrollToBottom();
+        }
 
-		GUI.contentColor = Color.white;
-	}
+        GUI.contentColor = Color.white;
+    }
 
-	void DrawLog(LogInfo log) {
-		GUI.contentColor = logTypeColors[log.type];
-		if (isCollapsed) {
-			DrawCollapsedLog(log);
-		} else {
-			DrawExpandedLog(log);
-		}
-	}
+    void DrawLog(LogInfo log) {
+        GUI.contentColor = logTypeColors[log.type];
+        if (isCollapsed) {
+            DrawCollapsedLog(log);
+        } else {
+            DrawExpandedLog(log);
+        }
+    }
 
-	void DrawCollapsedLog(LogInfo log) {
-		GUILayout.BeginHorizontal();
+    void DrawCollapsedLog(LogInfo log) {
+        GUILayout.BeginHorizontal();
 
-		GUILayout.Label(log.GetFinalMessage());
-		GUILayout.FlexibleSpace();
-		GUILayout.Label(log.count.ToString(), GUI.skin.box);
+        GUILayout.Label(log.GetFinalMessage());
+        GUILayout.FlexibleSpace();
+        GUILayout.Label(log.count.ToString(), GUI.skin.box);
 
-		GUILayout.EndHorizontal();
-	}
+        GUILayout.EndHorizontal();
+    }
 
-	void DrawExpandedLog(LogInfo log) {
-		for (var i = 0; i < log.count; i += 1) {
-			GUILayout.Label(log.GetFinalMessage());
-		}
-	}
+    void DrawExpandedLog(LogInfo log) {
+        for (var i = 0; i < log.count; i += 1) {
+            GUILayout.Label(log.GetFinalMessage());
+        }
+    }
 
-	void DrawToolbar() {
-		GUILayout.BeginHorizontal();
+    void DrawToolbar() {
+        GUILayout.BeginHorizontal();
 
-		if (GUILayout.Button(clearLabel)) {
-			logs.Clear();
-		}
-		if (GUILayout.Button(HideLabel)) {
-			SetLogPanelStatus(false);
-		}
+        if (GUILayout.Button(clearLabel)) {
+            logs.Clear();
+        }
 
-		foreach (LogType logType in Enum.GetValues(typeof(LogType))) {
-			var currentState = logTypeFilters[logType];
-			var label = logType.ToString();
-			logTypeFilters[logType] = GUILayout.Toggle(currentState, label, GUILayout.ExpandWidth(false));
-			GUILayout.Space(20);
-		}
+        if (GUILayout.Button(HideLabel)) {
+            SetLogPanelStatus(false);
+        }
 
-		isCollapsed = GUILayout.Toggle(isCollapsed, collapseLabel, GUILayout.ExpandWidth(false));
+        foreach (LogType logType in Enum.GetValues(typeof(LogType))) {
+            var currentState = logTypeFilters[logType];
+            var label = logType.ToString();
+            logTypeFilters[logType] = GUILayout.Toggle(currentState, label, GUILayout.ExpandWidth(false));
+            GUILayout.Space(20);
+        }
 
-		GUILayout.EndHorizontal();
-	}
+        isCollapsed = GUILayout.Toggle(isCollapsed, collapseLabel, GUILayout.ExpandWidth(false));
 
-	bool IsScrolledToBottom(Rect innerScrollRect, Rect outerScrollRect) {
-		var innerScrollHeight = innerScrollRect.height;
+        GUILayout.EndHorizontal();
+    }
 
-		var outerScrollHeight = outerScrollRect.height - GUI.skin.box.padding.vertical;
+    bool IsScrolledToBottom(Rect innerScrollRect, Rect outerScrollRect) {
+        var innerScrollHeight = innerScrollRect.height;
 
-		if (outerScrollHeight > innerScrollHeight) {
-			return true;
-		}
+        var outerScrollHeight = outerScrollRect.height - GUI.skin.box.padding.vertical;
 
-		return Mathf.Approximately(innerScrollHeight, scrollPosition.y + outerScrollHeight);
-	}
+        if (outerScrollHeight > innerScrollHeight) {
+            return true;
+        }
 
-	void ScrollToBottom() {
-		scrollPosition = new Vector2(0, Int32.MaxValue);
-	}
+        return Mathf.Approximately(innerScrollHeight, scrollPosition.y + outerScrollHeight);
+    }
 
-	void RemoveUnnecessaryLogs() {
-		var amountToRemove = logs.Count - maxLogCount;
-		if (amountToRemove <= 0) {
-			return;
-		}
-		logs.RemoveRange(0, amountToRemove);
-	}
+    void ScrollToBottom() {
+        scrollPosition = new Vector2(0, Int32.MaxValue);
+    }
 
-	void HandleLogThreaded(string message, string stackTrace, LogType type) {
-		var log = new LogInfo {
-			count = 1,
-			message = message,
-			stackTrace = stackTrace,
-			type = type,
-		};
-		queuedLogs.Enqueue(log);
-	}
+    void RemoveUnnecessaryLogs() {
+        var amountToRemove = logs.Count - maxLogCount;
+        if (amountToRemove <= 0) {
+            return;
+        }
+
+        logs.RemoveRange(0, amountToRemove);
+    }
+
+    void HandleLogThreaded(string message, string stackTrace, LogType type) {
+        var log = new LogInfo {
+            count = 1,
+            message = message,
+            stackTrace = stackTrace,
+            type = type,
+        };
+        queuedLogs.Enqueue(log);
+    }
 
     public IArchitecture GetArchitecture() {
-		return CrazyCar.Interface;
+        return CrazyCar.Interface;
     }
     /************************************* Log ****************************************/
 }
 
 public class LogInfo {
-	public int count;
-	public string message;
-	public string stackTrace;
-	public LogType type;
+    public int count;
+    public string message;
+    public string stackTrace;
+    public LogType type;
 
-	private const int MaxMessageLength = 16382;
+    private const int MaxMessageLength = 16382;
 
-	public bool EqualsTo(LogInfo log) {
-		if (log == null)
-			return false;
-		return message == log.message && stackTrace == log.stackTrace && type == log.type;
-	}
+    public bool EqualsTo(LogInfo log) {
+        if (log == null)
+            return false;
+        return message == log.message && stackTrace == log.stackTrace && type == log.type;
+    }
 
-	public string GetFinalMessage() {
-		if (string.IsNullOrEmpty(message))
-			return "";
-		return message.Length <= MaxMessageLength ? message : message.Substring(0, MaxMessageLength);
-	}
+    public string GetFinalMessage() {
+        if (string.IsNullOrEmpty(message))
+            return "";
+        return message.Length <= MaxMessageLength ? message : message.Substring(0, MaxMessageLength);
+    }
 }
 
 public class ConcurrentQueue<T> {
-	private readonly System.Object queueLock = new System.Object();
-	private readonly Queue<T> queue = new Queue<T>();
+    private readonly System.Object queueLock = new System.Object();
+    private readonly Queue<T> queue = new Queue<T>();
 
-	public void Enqueue(T item) {
-		lock (queueLock) {
-			queue.Enqueue(item);
-		}
-	}
+    public void Enqueue(T item) {
+        lock (queueLock) {
+            queue.Enqueue(item);
+        }
+    }
 
-	public bool TryDequeue(out T result) {
-		lock (queueLock) {
-			if (queue.Count == 0) {
-				result = default(T);
-				return false;
-			}
+    public bool TryDequeue(out T result) {
+        lock (queueLock) {
+            if (queue.Count == 0) {
+                result = default(T);
+                return false;
+            }
 
-			result = queue.Dequeue();
-			return true;
-		}
-	}
+            result = queue.Dequeue();
+            return true;
+        }
+    }
 }

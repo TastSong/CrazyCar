@@ -38,6 +38,7 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
             } catch {
                 info.isHas = false;
             }
+
             info.star = (int)data[i]["star"];
             avatarModel.AvatarDic[info.aid] = info;
         }
@@ -211,7 +212,8 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg();
         playerCreateMsg.cid = (int)jsonData["cid"];
-        playerCreateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
+        playerCreateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2),
+            (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
         string[] speed = ((string)jsonData["speed"]).Split(',');
         playerCreateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerCreateMsg.timestamp = (long)jsonData["timestamp"];
@@ -232,7 +234,8 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
         Debug.LogWarning("Rec = " + jsonData.ToJson());
         PlayerStateMsg playerStateMsg = new PlayerStateMsg();
         playerStateMsg.cid = (int)jsonData["cid"];
-        playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2), (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
+        playerStateMsg.pos = new Vector3((float)Math.Round((float)jsonData["pos_x"], 2),
+            (float)Math.Round((float)jsonData["pos_y"], 2), (float)Math.Round((float)jsonData["pos_z"], 2));
         string[] speed = ((string)jsonData["speed"]).Split(',');
         playerStateMsg.speed = new Vector3(float.Parse(speed[0]), float.Parse(speed[1]), float.Parse(speed[2]));
         playerStateMsg.timestamp = (long)jsonData["timestamp"];
@@ -261,6 +264,5 @@ public class DataParseSystem : AbstractSystem, IDataParseSystem {
     }
 
     protected override void OnInit() {
-
     }
 }

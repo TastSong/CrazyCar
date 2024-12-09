@@ -23,7 +23,8 @@ public interface IMatchRoomSystem : ISystem {
 
 public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
     private void MatchRoomConnect(Action succ) {
-        this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchRoomWSUrl, RequestUrl.kcpMatchRoomUrl, RequestUrl.matchRoomKCPPort);
+        this.GetSystem<INetworkSystem>().Connect(RequestUrl.matchRoomWSUrl, RequestUrl.kcpMatchRoomUrl,
+            RequestUrl.matchRoomKCPPort);
         this.GetSystem<INetworkSystem>().ConnectSuccAction = () => {
             Debug.Log("MatchRoom Connect Succ");
             succ?.Invoke();
@@ -147,6 +148,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         if (this.GetModel<IUserModel>().Uid != (int)recJD["uid"]) {
             return;
         }
+
         Debug.Log("OnCreateMsg = " + code);
         if (code == 200) {
             this.SendEvent<MatchRoomCreateOrJoinSuccEvent>();
@@ -169,9 +171,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
         int code = (int)recJD["code"];
         Debug.Log("OnExitMsg = " + recJD.ToJson());
         if (code == 404) {
-            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room", success: () => {
-                this.SendEvent<MatchRoomExitEvent>();
-            }, type: ConfirmAlertType.Single);
+            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room",
+                success: () => { this.SendEvent<MatchRoomExitEvent>(); }, type: ConfirmAlertType.Single);
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         } else if (code == 200) {
             JsonData data = recJD["data"];
@@ -179,10 +180,8 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             if (exitUid == this.GetModel<IUserModel>().Uid) {
                 this.SendEvent<MatchRoomExitEvent>();
             } else if (this.GetModel<IMatchModel>().MemberInfoDic[exitUid].isHouseOwner) {
-                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves", 
-                    success: () => {
-                        this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single);
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves",
+                    success: () => { this.SendEvent<MatchRoomExitEvent>(); }, type: ConfirmAlertType.Single);
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             } else {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Members of the exit");
@@ -200,6 +199,7 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                     info.index = i;
                     infos.Add(info.uid, info);
                 }
+
                 this.SendEvent<MatchRoomUpdateStatusEvent>();
             }
         }
@@ -240,26 +240,24 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
                 if (info.isHouseOwner) {
                     hasHouseOwner = true;
                 }
+
                 info.aid = (int)players[i]["aid"];
                 info.uid = (int)players[i]["uid"];
                 info.canWade = (bool)players[i]["can_wade"];
                 info.index = i;
                 infos.Add(info.uid, info);
             }
+
             if (hasHouseOwner) {
                 this.SendEvent<MatchRoomUpdateStatusEvent>();
             } else {
-                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves", 
-                    success: () => {
-                        this.SendEvent<MatchRoomExitEvent>();
-                    }, type: ConfirmAlertType.Single);
+                InfoConfirmInfo info = new InfoConfirmInfo(content: "The owner quits and the room dissolves",
+                    success: () => { this.SendEvent<MatchRoomExitEvent>(); }, type: ConfirmAlertType.Single);
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
-            }  
+            }
         } else if (code == 404) {
-            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room", 
-                success: () => {
-                    this.SendEvent<MatchRoomExitEvent>();
-                }, type: ConfirmAlertType.Single);
+            InfoConfirmInfo info = new InfoConfirmInfo(content: "Without this room",
+                success: () => { this.SendEvent<MatchRoomExitEvent>(); }, type: ConfirmAlertType.Single);
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
         }
     }
@@ -271,12 +269,12 @@ public class MatchRoomSystem : AbstractSystem, IMatchRoomSystem {
             this.GetSystem<IDataParseSystem>().ParseSelectMatch(recJD["data"]);
             this.SendEvent<MatchRoomStartEvent>();
         } else {
-            WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires all player vehicles to be able to wade");
+            WarningAlertInfo alertInfo =
+                new WarningAlertInfo("This map requires all player vehicles to be able to wade");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
         }
     }
 
     protected override void OnInit() {
-
     }
 }

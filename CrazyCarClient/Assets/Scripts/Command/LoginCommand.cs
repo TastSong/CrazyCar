@@ -26,7 +26,8 @@ public class LoginCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl, bytes);
+        var result = await this.GetSystem<INetworkSystem>()
+            .Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.loginUrl, bytes);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(result.serverData);
             this.GetModel<IUserModel>().Password.Value = mPassword;

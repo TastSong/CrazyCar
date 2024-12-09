@@ -6,7 +6,7 @@
  * https://qframework.cn
  * https://github.com/liangxiegame/QFramework
  * https://gitee.com/liangxiegame/QFramework
- * 
+ *
  * Author:
  *  liangxie        https://github.com/liangxie
  *  soso            https://github.com/so-sos-so
@@ -14,7 +14,7 @@
  * Contributor
  *  TastSong        https://github.com/TastSong
  *  京产肠饭         https://gitee.com/JingChanChangFan/hk_-unity-tools
- * 
+ *
  * Community
  *  QQ Group: 623597263
  * Latest Update: 2021.3.16 5:26 Add IBindableProperty

@@ -32,4 +32,3 @@ public class CrazyCar : Architecture<CrazyCar> {
         RegisterUtility<IPlayerPrefsStorage>(new PlayerPrefsStorage());
     }
 }
-

@@ -19,17 +19,15 @@ public class MatchGameUI : MonoBehaviour, IController {
         }
 
         int offTime = (int)(this.GetModel<IMatchModel>().StartTime * 1000 - Util.GetTime()) / 1000;
-        if (offTime > 3){
+        if (offTime > 3) {
             StartCoroutine(Util.CountdownCor(offTime,
-                    () => {
-                        countDownAnim.gameObject.SetActiveFast(false);
-                        StartGame();
-                    }, offStartTimeText));
-        } else if(offTime < 3 && offTime > 0) {
-            countDownAnim.PlayAnim(offTime, () => {
-                StartGame();
-            });
-        } else if (offTime > -this.GetModel<IMatchModel>().SelectInfo.Value.limitTime){
+                () => {
+                    countDownAnim.gameObject.SetActiveFast(false);
+                    StartGame();
+                }, offStartTimeText));
+        } else if (offTime < 3 && offTime > 0) {
+            countDownAnim.PlayAnim(offTime, () => { StartGame(); });
+        } else if (offTime > -this.GetModel<IMatchModel>().SelectInfo.Value.limitTime) {
             countDownAnim.gameObject.SetActiveFast(false);
             StartGame();
         } else {
@@ -62,9 +60,7 @@ public class MatchGameUI : MonoBehaviour, IController {
         if (this.GetModel<IGameModel>().StandAlone) {
             WarningAlertInfo alertInfo = new WarningAlertInfo("Game Over");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-            Util.DelayExecuteWithSecond(2.0f, () => {
-                this.SendCommand(new LoadSceneCommand(SceneID.Index));
-            });           
+            Util.DelayExecuteWithSecond(2.0f, () => { this.SendCommand(new LoadSceneCommand(SceneID.Index)); });
         } else {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameResultUI, UILevelType.UIPage));
         }
