@@ -18,6 +18,7 @@ public interface IAddressableSystem : ISystem {
     public void GetDownloadAssets();
     public void DownloadAsset();
     public UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path);
+    public AsyncOperationHandle<T> LoadAsset<T>(string path);
     public void SetUpdateInfo(Action finish);
 }
 
@@ -142,6 +143,12 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     public async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path){
         AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
         await obj;
+        return obj;
+    }
+    
+    public AsyncOperationHandle<T> LoadAsset<T>(string path) {
+        AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
+        obj.WaitForCompletion();
         return obj;
     }
 
