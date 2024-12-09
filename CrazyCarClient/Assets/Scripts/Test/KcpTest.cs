@@ -25,17 +25,11 @@ public class KcpTest : MonoBehaviour {
         hostText.text = host;
         portText.text = port.ToString();
 
-        connectBtn.onClick.AddListener(() => {
-            kcpManager.ConnectKCP(host, port);
-        });
+        connectBtn.onClick.AddListener(() => { kcpManager.ConnectKCP(host, port); });
 
-        closeBtn.onClick.AddListener(() => {
-            kcpManager.Close();
-        });
+        closeBtn.onClick.AddListener(() => { kcpManager.Close(); });
 
-        sendBtn.onClick.AddListener(() => {
-            kcpManager.Send(inputField.text);
-        });
+        sendBtn.onClick.AddListener(() => { kcpManager.Send(inputField.text); });
     }
 
     private void Update() {
@@ -49,7 +43,6 @@ public class KcpTest : MonoBehaviour {
 }
 
 public class KCPTestManager : KcpClient {
-
     private new KcpClient client;
 
     protected override void HandleReceive(ByteBuf bb) {
@@ -72,6 +65,7 @@ public class KCPTestManager : KcpClient {
         if (client != null && client.IsRunning()) {
             return;
         }
+
         client = new KCPTestManager();
         client.NoDelay(1, 10, 2, 1);
         client.WndSize(64, 64);

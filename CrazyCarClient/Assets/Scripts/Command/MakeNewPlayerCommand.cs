@@ -4,7 +4,6 @@ using UnityEngine;
 using QFramework;
 
 public class MakeNewPlayerCommand : AbstractCommand {
-
     private PlayerCreateMsg playerCreateMsg;
 
     public MakeNewPlayerCommand(PlayerCreateMsg playerCreateMsg) {

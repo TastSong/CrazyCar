@@ -24,33 +24,37 @@ public class TimeTrialItem : MonoBehaviour, IController {
             if (timeTrialInfo.isHas) {
                 if (timeTrialInfo.hasWater) {
                     if (this.GetModel<IUserModel>().EquipInfo.Value.canWade) {
-                        bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
+                        bool result = await this.GetSystem<INetworkSystem>()
+                            .EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
                         if (result) {
                             this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
                         }
                     } else {
                         WarningAlertInfo alertInfo = new WarningAlertInfo("This map requires wading vehicles");
-                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                        UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart,
+                            alertInfo));
                     }
                 } else {
-                    bool result = await this.GetSystem<INetworkSystem>().EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
+                    bool result = await this.GetSystem<INetworkSystem>()
+                        .EnterRoom(GameType.TimeTrial, timeTrialInfo.cid);
                     if (result) {
                         this.SendCommand(new EnterTimeTrialCommand(timeTrialInfo));
                     }
                 }
             } else {
                 if (this.GetModel<IUserModel>().Star.Value > timeTrialInfo.star) {
-                    InfoConfirmInfo info = new InfoConfirmInfo(content: string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} stars to purchase this course"), timeTrialInfo.star),
-                        success: () => {
-                            this.SendCommand(new BuyTimeTrialClassCommand(timeTrialInfo));
-                        },
-                        fail: () => {
-                            Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy"));
-                        });
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
+                    InfoConfirmInfo info = new InfoConfirmInfo(
+                        content: string.Format(
+                            this.GetSystem<II18NSystem>().GetText("Does it cost {0} stars to purchase this course"),
+                            timeTrialInfo.star),
+                        success: () => { this.SendCommand(new BuyTimeTrialClassCommand(timeTrialInfo)); },
+                        fail: () => { Debug.Log(this.GetSystem<II18NSystem>().GetText("Give up to buy")); });
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart,
+                        info));
                 } else {
                     WarningAlertInfo alertInfo = new WarningAlertInfo("This course requires {0} star");
-                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
+                    UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart,
+                        alertInfo));
                 }
             }
         });
@@ -74,6 +78,7 @@ public class TimeTrialItem : MonoBehaviour, IController {
                 difficultyImages[i].sprite = difficultySprites[1];
             }
         }
+
         lockImage.gameObject.SetActiveFast(!timeTrialInfo.isHas);
     }
 

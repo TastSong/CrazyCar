@@ -14,11 +14,11 @@ public class RankUI : MonoBehaviour, IController {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
         var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl +
                                                                       RequestUrl.timeTrialDetailUrl,
-           token: this.GetModel<IGameModel>().Token.Value);
+            token: this.GetModel<IGameModel>().Token.Value);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseTimeTrialClassData(result.serverData);
             UpdateUI();
-        } 
+        }
     }
 
     private void UpdateUI() {

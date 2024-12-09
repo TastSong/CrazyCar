@@ -21,15 +21,13 @@ public class IndexCameraController : MonoBehaviour {
 
 
 #elif UNITY_ANDROID||UNITY_IOS
-
-
-
         if (Input.touchCount == 1)
         {
             switch (Input.GetTouch(0).phase)
             {
                 case TouchPhase.Moved:
-                    x = Mathf.Lerp(x, Mathf.Clamp(Input.GetTouch(0).deltaPosition.x, -2, 2) * cameraRotateSpeed, Time.deltaTime*3.0f);
+                    x =
+ Mathf.Lerp(x, Mathf.Clamp(Input.GetTouch(0).deltaPosition.x, -2, 2) * cameraRotateSpeed, Time.deltaTime*3.0f);
                     Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, 50, 60);
                     Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50, Time.deltaTime);
                     break;

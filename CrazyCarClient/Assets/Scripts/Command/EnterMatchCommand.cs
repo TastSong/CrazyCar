@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine;
 using Utils;
 using QFramework;
+
 public class EnterMatchCommand : AbstractCommand {
     private MatchInfo mMatchInfo;
 

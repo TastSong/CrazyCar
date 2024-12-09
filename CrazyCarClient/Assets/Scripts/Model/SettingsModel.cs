@@ -14,6 +14,7 @@ public class SystemSettingsInfo : ISerializable {
     public bool isOnSound;
     public bool isOnVibration;
     private static string fileName = "settings.stf";
+
     public SystemSettingsInfo() {
     }
 
@@ -68,14 +69,14 @@ public class SystemSettingsInfo : ISerializable {
 
     public bool EqualTo(SystemSettingsInfo info) {
         return info.language == language &&
-            info.isOnMusic == isOnMusic &&
-            info.isOnSound == isOnSound && 
-            info.isOnVibration == isOnVibration;
+               info.isOnMusic == isOnMusic &&
+               info.isOnSound == isOnSound &&
+               info.isOnVibration == isOnVibration;
     }
 }
 
 public interface ISettingsModel : IModel {
-    public BindableProperty <string> Language { get; }
+    public BindableProperty<string> Language { get; }
     public BindableProperty<bool> IsOnMusic { get; }
     public BindableProperty<bool> IsOnSound { get; }
     public BindableProperty<bool> IsOnVibration { get; }

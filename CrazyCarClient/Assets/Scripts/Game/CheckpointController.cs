@@ -4,7 +4,6 @@ using UnityEngine;
 using QFramework;
 
 public class CheckpointController : MonoBehaviour, IController {
-
     private void OnEnable() {
         var checkpointSystem = this.GetSystem<ICheckpointSystem>();
         checkpointSystem.ClearData();
@@ -13,7 +12,7 @@ public class CheckpointController : MonoBehaviour, IController {
         for (int i = 0; i < checkpointSystem.CheckpointCount; i++) {
             checkpointSystem.CheckpointsList.Add(checkpoints[i].gameObject);
             checkpointSystem.CheckpointPos.Add(checkpoints[i].gameObject.transform.position);
-        }       
+        }
     }
 
     public IArchitecture GetArchitecture() {

@@ -22,9 +22,9 @@ public interface ISoundSystem : ISystem {
 
 public class SoundSystem : AbstractSystem, ISoundSystem {
     private string path = "Assets/Sounds/";
-    
+
     public void PlaySound(SoundType soundType) {
-        AudioKit.PlaySound(path + soundType.ToString()+ ".wav");
+        AudioKit.PlaySound(path + soundType.ToString() + ".wav");
     }
 
     public void PlayBackgroundMusic() {

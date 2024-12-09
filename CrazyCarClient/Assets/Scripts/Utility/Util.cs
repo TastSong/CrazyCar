@@ -41,14 +41,13 @@ namespace Utils {
         public static string standAloneLogin = "Login.json";
         public static string standAloneTimeTrialDetail = "TimeTrialDetail.json";
         public static string standAloneAI = "AI.json";
-        
+
         public static string basePageUrl = "Assets/Prefabs/UIPage/";
         public static string pageSuffix = ".prefab";
-        
+
         public static string miniMapPath = "Assets/RenderTextures/MiniMapRenderTexture.renderTexture";
 
-        private static int Port (ServerType serverType)
-        {
+        private static int Port(ServerType serverType) {
             switch (serverType) {
                 case ServerType.Local:
                     return DefaultPort;
@@ -74,14 +73,14 @@ namespace Utils {
                     return "localhost";
                 case ServerType.Remote:
                     return "crazycar.tastsong.top";
-                    //return "110.40.185.84"; 
+                //return "110.40.185.84"; 
                 case ServerType.TestServer:
                     return "crazycar.tastsong.top";
                 default:
                     return "localhost";
             }
         }
-        
+
         public static string GetServerHostIP(ServerType serverType) {
             switch (serverType) {
                 case ServerType.Local:
@@ -101,6 +100,7 @@ namespace Utils {
                 // 将 16进制字符串 中的每两个字符转换成 byte，并加入到新申请的 byte数组 中
                 buf1[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             }
+
             return Encoding.UTF8.GetString(buf1);
         }
 
@@ -186,7 +186,7 @@ namespace Utils {
             return str;
         }
 
-        public static string GetDateTime(long timeStamp, string format){
+        public static string GetDateTime(long timeStamp, string format) {
             DateTime dtStart = TimeZoneInfo.ConvertTimeToUtc(new DateTime(1970, 1, 1));
             long lTime = (timeStamp * 10000000);
             TimeSpan toNow = new TimeSpan(lTime);
@@ -205,6 +205,7 @@ namespace Utils {
                 if (img != null) {
                     img.sprite = cachedImageDic[url];
                 }
+
                 func?.Invoke();
                 yield break;
             }
@@ -240,6 +241,7 @@ namespace Utils {
                 if (image != null) {
                     image.sprite = cachedImageDic[url];
                 }
+
                 func?.Invoke();
                 yield break;
             }
@@ -258,11 +260,10 @@ namespace Utils {
                     texture.LoadImage(bytes);
                     var pngData = texture.EncodeToPNG();
                     cachedImageDic[url] = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
-                            new Vector2(0.5f, 0.5f));
+                        new Vector2(0.5f, 0.5f));
                     if (image != null) {
                         image.sprite = cachedImageDic[url];
                     }
-
                 } catch (Exception e) {
                     Debug.Log(e);
                 }
@@ -274,6 +275,7 @@ namespace Utils {
                 if (image != null) {
                     image.sprite = cachedImageDic[path];
                 }
+
                 finishCallback?.Invoke();
                 yield break;
             }
@@ -289,9 +291,11 @@ namespace Utils {
             DownloadHandlerTexture dHT = new DownloadHandlerTexture(true);
             uWR.downloadHandler = dHT;
             yield return uWR.SendWebRequest();
-            if (uWR.result == UnityWebRequest.Result.ConnectionError || uWR.result == UnityWebRequest.Result.ProtocolError) {
+            if (uWR.result == UnityWebRequest.Result.ConnectionError ||
+                uWR.result == UnityWebRequest.Result.ProtocolError) {
                 yield break;
             }
+
             Texture2D tex2d = dHT.texture;
             byte[] pngData = tex2d.EncodeToPNG();
             cachedImageDic[path] = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height),
@@ -299,6 +303,7 @@ namespace Utils {
             if (image != null) {
                 image.sprite = cachedImageDic[path];
             }
+
             finishCallback?.Invoke();
         }
 
@@ -326,16 +331,14 @@ namespace Utils {
         }
 
 #if UNITY_IOS || UNITY_ANDROID
-        public static string GetFileMD5(string filepath)
-        {
+        public static string GetFileMD5(string filepath) {
             FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
             int bufferSize = 1048576;
             byte[] buff = new byte[bufferSize];
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             md5.Initialize();
             long offset = 0;
-            while (offset < fs.Length)
-            {
+            while (offset < fs.Length) {
                 long readSize = bufferSize;
                 if (offset + readSize > fs.Length)
                     readSize = fs.Length - offset;
@@ -347,8 +350,7 @@ namespace Utils {
                 offset += bufferSize;
             }
 
-            if (offset >= fs.Length)
-            {
+            if (offset >= fs.Length) {
                 fs.Close();
                 byte[] result = md5.Hash;
                 md5.Clear();
@@ -356,9 +358,7 @@ namespace Utils {
                 for (int i = 0; i < result.Length; i++)
                     sb.Append(result[i].ToString("X2"));
                 return sb.ToString();
-            }
-            else
-            {
+            } else {
                 fs.Close();
                 return null;
             }
@@ -366,6 +366,7 @@ namespace Utils {
 #endif
 
         private static DateTime JanFirst1970 = new DateTime(1970, 1, 1);
+
         public static long GetTime() {
             // 毫秒级
             return (long)((DateTime.Now.ToUniversalTime() - JanFirst1970).TotalMilliseconds + 0.5);
@@ -399,6 +400,7 @@ namespace Utils {
 
         private static Dictionary<int, Dictionary<string, Color>> alphaColorDict =
             new Dictionary<int, Dictionary<string, Color>>();
+
         public static Color GetColorFromString(string s) {
             if (colorDict.ContainsKey(s)) {
                 return colorDict[s];
@@ -444,7 +446,8 @@ namespace Utils {
             return col;
         }
 
-        public static IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null, string str = null) {
+        public static IEnumerator CountdownCor(int time, Action succ = null, Text targetText = null,
+            string str = null) {
             while (true) {
                 if (targetText != null) {
                     if (str != null) {
@@ -493,13 +496,15 @@ namespace Utils {
         }
 
         public static IEnumerator GetPlace(Action<string> finishAction) {
-            using (UnityWebRequest request = new UnityWebRequest("http://ip-api.com/json/?lang=zh-CN", UnityWebRequest.kHttpVerbPOST)) {
+            using (UnityWebRequest request =
+                   new UnityWebRequest("http://ip-api.com/json/?lang=zh-CN", UnityWebRequest.kHttpVerbPOST)) {
                 request.downloadHandler = new DownloadHandlerBuffer();
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
                 yield return request.SendWebRequest();
 
-                if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
+                if (request.result == UnityWebRequest.Result.ConnectionError ||
+                    request.result == UnityWebRequest.Result.ProtocolError) {
                     finishAction.Invoke("Unknown");
                 } else {
                     byte[] results = request.downloadHandler.data;
@@ -511,12 +516,14 @@ namespace Utils {
                     } catch {
                         regionName = "";
                     }
+
                     string city;
                     try {
                         city = (string)d["city"];
                     } catch {
                         city = "";
                     }
+
                     finishAction.Invoke(regionName + "," + city);
                 }
             }
@@ -527,7 +534,7 @@ namespace Utils {
             byte[] bytes = ue.GetBytes(strToEncrypt);
 
             // encrypt bytes
-            MD5CryptoServiceProvider md5 =  new MD5CryptoServiceProvider();
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] hashBytes = md5.ComputeHash(bytes);
 
             // Convert the encrypted bytes back to a string (base 16)
@@ -539,12 +546,12 @@ namespace Utils {
 
             return hashString.PadLeft(32, '0');
         }
-        
-        
+
+
         public static string GetAvatarUrl(int avatarId) {
             return "Assets/AB/Avatar/" + avatarId + ".png";
         }
-    
+
         public static string GetEquipUrl(string equipRid) {
             return "Assets/AB/Equip/Items/" + equipRid + ".prefab";
         }

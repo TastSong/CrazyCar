@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneCommand : AbstractCommand {
     private SceneID mSceneID;
+
     public LoadSceneCommand(SceneID sceneID) {
         mSceneID = sceneID;
     }
@@ -15,6 +16,7 @@ public class LoadSceneCommand : AbstractCommand {
         if (this.GetModel<IGameModel>().SceneLoading) {
             return;
         }
+
         this.GetModel<IGameModel>().LoadingTargetSceneID.Value = mSceneID;
         SceneManager.LoadScene((int)SceneID.Loading);
     }

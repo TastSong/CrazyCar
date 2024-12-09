@@ -31,6 +31,7 @@ public class MapController : MonoBehaviour, IController {
         for (int i = 0; i < mapsGO.Length; i++) {
             mapsGO[i].SetActiveFast(i == selectMapId);
         }
+
         mapId = selectMapId;
         this.GetModel<IMapControllerModel>().PathCreator = mapsGO[mapId].GetComponentInChildren<PathCreator>();
     }

@@ -10,13 +10,14 @@ public class InitGameConfigState : AbstractState<LaunchStates, Launch>, IControl
     public override async void OnEnter() {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         InitSettingsInfo();
-        
+
         if (this.GetUtility<IPlayerPrefsStorage>().LoadInt(PrefKeys.isSuperuser) == 1) {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameHelper, UILevelType.Debug));
         }
+
         ChangeState();
     }
-    
+
     private void ChangeState() {
         mFSM.ChangeState(LaunchStates.EnterGame);
     }

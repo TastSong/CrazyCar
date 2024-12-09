@@ -34,7 +34,8 @@ public class DownloadResUI : MonoBehaviour, IController {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         // Unity 2021 不能开启游戏就发送HTTP会有报错
         var result =
-            await this.GetSystem<INetworkSystem>().Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
+            await this.GetSystem<INetworkSystem>()
+                .Post(this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.forcedUpdatingUrl, bytes);
         if (result.serverCode == 200) {
             if ((bool)result.serverData["is_forced_updating"]) {
                 InfoConfirmInfo info = new InfoConfirmInfo(content: "Version is too low",
@@ -70,9 +71,10 @@ public class DownloadResUI : MonoBehaviour, IController {
             OnUpdate: (percent, tatalSize) => {
                 try {
                     UpdateProgress(percent, tatalSize);
-                } catch { }
+                } catch {
+                }
             });
-        
+
         this.GetSystem<IAddressableSystem>().GetDownloadAssets();
     }
 
@@ -82,6 +84,7 @@ public class DownloadResUI : MonoBehaviour, IController {
 
     private float lastProgress = 0;
     private float lastTime = -1;
+
     private void UpdateProgress(float value, float totalBytes) {
         if (value < 0.01f) {
             return;

@@ -24,7 +24,9 @@ public interface ISocketSystem {
 
 public interface INetworkSystem : ISystem, ISocketSystem {
     public ServerType ServerType { get; set; }
+
     public string HttpBaseUrl { get; set; }
+
     // socket
     public NetType NetType { get; set; }
     public void Connect(string wsURL, string kcpURL, int port);
@@ -38,7 +40,9 @@ public interface INetworkSystem : ISystem, ISocketSystem {
     public JsonData OnMatchRoomJoinMsg { get; set; }
     public JsonData OnMatchRoomExitMsg { get; set; }
     public JsonData OnMatchRoomStatusMsg { get; set; }
+
     public JsonData OnMatchRoomStartMsg { get; set; }
+
     // http
     public UniTask<TaskableAccessResult> Get(string url, string token);
     public UniTask<TaskableAccessResult> Get(string url);
@@ -53,18 +57,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private NetType netType;
 
     public ServerType ServerType {
-        get {
-            return serverType;
-        }
-        set {
-            serverType = value;
-        }
+        get { return serverType; }
+        set { serverType = value; }
     }
 
     public NetType NetType {
-        get {
-            return netType;
-        }
+        get { return netType; }
         set {
             netType = value;
             if (value == NetType.WebSocket) {
@@ -76,9 +74,9 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             }
         }
     }
-    
+
     public string HttpBaseUrl { get; set; }
-    
+
     private ISocketSystem curSocketSystem;
     public object MsgLock { get; set; } = new object();
     public Queue<PlayerCreateMsg> PlayerCreateMsgs { get; set; } = new Queue<PlayerCreateMsg>();
@@ -94,7 +92,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     private PlayerStateMsg playerStateMsg = new PlayerStateMsg();
     private PlayerOperatMsg playerOperatMsg = new PlayerOperatMsg();
     private PlayerCompleteMsg playerCompleteMsg = new PlayerCompleteMsg();
-    
+
     public async UniTask<TaskableAccessResult> Get(string url, string token) {
         return await Req(url, "GET", token, null);
     }
@@ -145,7 +143,8 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                         new Exception("Http Access Error Code Return"));
                 }
 
-                byte[] results = request.downloadHandler.data; string s = Encoding.UTF8.GetString(results);
+                byte[] results = request.downloadHandler.data;
+                string s = Encoding.UTF8.GetString(results);
                 return new TaskableAccessResult(s, response.responseCode, null);
             }
         } catch (Exception e) {
@@ -167,6 +166,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         } else if (netType == NetType.KCP) {
             url = kcpURL;
         }
+
         Debug.Log("url = " + url);
         this.Connect(url, port);
     }
@@ -180,14 +180,14 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             Debug.LogError("SendMsgToServer msg is null or empty");
             return;
         }
+
         curSocketSystem.SendMsgToServer(msg);
     }
 
-    public void RespondAction(JsonData recJD){
+    public void RespondAction(JsonData recJD) {
         MsgType msgType = (MsgType)(int)recJD["msg_type"];
         lock (MsgLock) {
-            switch (msgType)
-            {
+            switch (msgType) {
                 case MsgType.CreatePlayer:
                     playerCreateMsg = this.GetSystem<IDataParseSystem>().ParsePlayerCreateMsg(recJD);
                     PlayerCreateMsgs.Enqueue(playerCreateMsg);
@@ -232,45 +232,27 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     public Action ConnectSuccAction {
-        get {
-            return curSocketSystem.ConnectSuccAction;
-        }
-        set {
-            curSocketSystem.ConnectSuccAction = value;
-        }
+        get { return curSocketSystem.ConnectSuccAction; }
+        set { curSocketSystem.ConnectSuccAction = value; }
     }
 
-    public Action CloseSuccAction { 
-        get {
-            return curSocketSystem.CloseSuccAction;
-        }
-        set {
-            curSocketSystem.CloseSuccAction = value;
-        } 
+    public Action CloseSuccAction {
+        get { return curSocketSystem.CloseSuccAction; }
+        set { curSocketSystem.CloseSuccAction = value; }
     }
 
     public Action BreakLineAction {
-        get {
-            return curSocketSystem.BreakLineAction;
-        }
-        set {
-            curSocketSystem.BreakLineAction = value;
-        }
+        get { return curSocketSystem.BreakLineAction; }
+        set { curSocketSystem.BreakLineAction = value; }
     }
 
     public bool IsConnected {
-        get {
-            return curSocketSystem.IsConnected;
-        }
+        get { return curSocketSystem.IsConnected; }
     }
 
     public bool NeedReconnect {
-        get {
-            return curSocketSystem.NeedReconnect;
-        }
-        set {
-            curSocketSystem.NeedReconnect = value;
-        }
+        get { return curSocketSystem.NeedReconnect; }
+        set { curSocketSystem.NeedReconnect = value; }
     }
 
     public async UniTask<bool> EnterRoom(GameType gameType, int cid) {
@@ -278,6 +260,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             this.GetModel<IRoomMsgModel>().Num = 0;
             return true;
         }
+
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -294,12 +277,12 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
             token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
             if (gameType == GameType.Match) {
-                this.GetModel<IRoomMsgModel>().Num = this.GetModel<IMatchModel>().
-                    MemberInfoDic[this.GetModel<IUserModel>().Uid].index;
+                this.GetModel<IRoomMsgModel>().Num =
+                    this.GetModel<IMatchModel>().MemberInfoDic[this.GetModel<IUserModel>().Uid].index;
             } else {
                 this.GetModel<IRoomMsgModel>().Num = (int)result.serverData["num"];
             }
-            
+
             return true;
         } else if (result.serverCode == 423) {
             if (gameType == GameType.Match) {
@@ -310,19 +293,23 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }
         }
+
         return false;
     }
 
     public async UniTask<UserInfo> GetUserInfo(int uid) {
         if (this.GetModel<IGameModel>().StandAlone.Value) {
-            var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
+            var obj = await this.GetSystem<IAddressableSystem>()
+                .LoadAssetAsync<TextAsset>(Util.baseStandAlone + Util.standAloneAI);
             if (obj.Status != AsyncOperationStatus.Succeeded) {
                 Debug.LogError("Load stand alone ai failed");
                 return null;
             }
+
             JsonData data = JsonMapper.ToObject(obj.Result.text);
             return this.GetSystem<IDataParseSystem>().ParseUserInfo(data);
         }
+
         StringBuilder sb = new StringBuilder();
         JsonWriter w = new JsonWriter(sb);
         w.WriteObjectStart();
@@ -333,7 +320,7 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         var resultData =
             await Post(HttpBaseUrl + RequestUrl.getUserInfo, this.GetModel<IGameModel>().Token.Value, bytes);
-       
+
         if (resultData.serverCode == 200) {
             return this.GetSystem<IDataParseSystem>().ParseUserInfo(resultData.serverData);
         } else {
@@ -343,6 +330,5 @@ public class NetworkSystem : AbstractSystem, INetworkSystem {
     }
 
     protected override void OnInit() {
-
-    }   
+    }
 }

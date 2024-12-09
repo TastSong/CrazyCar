@@ -16,13 +16,13 @@ public class WarningAlertInfo {
         time = t;
         callback = action;
     }
-    
+
     public WarningAlertInfo(string content) {
         text = content;
         time = 1;
         callback = null;
     }
-    
+
     public WarningAlertInfo(string content, Action action) {
         text = content;
         time = 1;
@@ -34,12 +34,13 @@ public class WarningAlert : UIPenal {
     public Text warningText;
     private Queue<WarningAlertInfo> queue = new Queue<WarningAlertInfo>();
     private Coroutine warningCor;
-    
+
     public override void InitData(object data) {
         WarningAlertInfo info = data as WarningAlertInfo;
         if (info == null) {
             return;
         }
+
         ShowWithText(info.text, info.time, info.callback);
     }
 
@@ -49,7 +50,7 @@ public class WarningAlert : UIPenal {
         gameObject.SetActiveFast(true);
         if (warningCor == null) {
             warningCor = StartCoroutine(HideWarningAlert());
-        }       
+        }
     }
 
     private IEnumerator HideWarningAlert() {
@@ -59,10 +60,12 @@ public class WarningAlert : UIPenal {
             if (content == "") {
                 content = info.text;
             }
+
             warningText.text = content;
-            yield return new WaitForSeconds(info.time);           
+            yield return new WaitForSeconds(info.time);
             info.callback?.Invoke();
         }
+
         warningCor = null;
         gameObject.SetActiveFast(false);
     }

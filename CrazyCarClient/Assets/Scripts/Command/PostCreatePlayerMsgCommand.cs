@@ -18,6 +18,7 @@ public class PostCreatePlayerMsgCommand : AbstractCommand {
         } else {
             w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
         }
+
         w.WritePropertyName("pos_x");
         w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.x);
         w.WritePropertyName("pos_y");
@@ -26,8 +27,8 @@ public class PostCreatePlayerMsgCommand : AbstractCommand {
         w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.transform.position.z);
         w.WritePropertyName("speed");
         w.Write(this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.x.ToString("f2") + "," +
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.y.ToString("f2") + "," +
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.z.ToString("f2"));
+                this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.y.ToString("f2") + "," +
+                this.GetSystem<IPlayerManagerSystem>().SelfPlayer.rig.velocity.z.ToString("f2"));
         w.WritePropertyName("timestamp");
         w.Write(Util.GetTime());
         w.WritePropertyName("user_info");

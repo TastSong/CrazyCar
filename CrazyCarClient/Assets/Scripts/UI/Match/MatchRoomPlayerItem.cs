@@ -15,7 +15,7 @@ public class MatchRoomPlayerItem : MonoBehaviour, IController {
         nickName.text = info.memberName;
         defaultImage.gameObject.SetActiveFast(false);
         avatarImage.gameObject.SetActiveFast(true);
-        
+
         var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(info.aid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             avatarImage.sprite = Instantiate(obj.Result, transform, false);

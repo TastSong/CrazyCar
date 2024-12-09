@@ -6,12 +6,10 @@ using UnityEngine;
 public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController {
     public InitNetworkState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
-    
+
     public override void OnEnter() {
-       this.SendCommand(new InitNetworkCommand());
-       this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => {
-           ChangeState();
-       });
+        this.SendCommand(new InitNetworkCommand());
+        this.GetSystem<IAddressableSystem>().SetUpdateInfo(() => { ChangeState(); });
     }
 
     private void ChangeState() {
@@ -19,7 +17,6 @@ public class InitNetworkState : AbstractState<LaunchStates, Launch>, IController
     }
 
     public override void OnExit() {
-        
     }
 
     public IArchitecture GetArchitecture() {

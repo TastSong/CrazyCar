@@ -23,7 +23,8 @@ public class TimeTrialRankUI : MonoBehaviour, IController {
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.LoadingUI, UILevelType.Alart));
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialRankUrl,
+        var result = await this.GetSystem<INetworkSystem>().Post(
+            url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.timeTrialRankUrl,
             token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseTimeTrialRank(result.serverData);

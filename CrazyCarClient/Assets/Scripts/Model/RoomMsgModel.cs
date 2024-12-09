@@ -11,6 +11,5 @@ public class RoomMsgModel : AbstractModel, IRoomMsgModel {
     public int Num { get; set; }
 
     protected override void OnInit() {
-        
     }
 }

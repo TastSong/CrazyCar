@@ -39,7 +39,8 @@ public class ProfileUI : MonoBehaviour, IController {
         mapsText.text = userModel.MapNum.ToString();
         passwordInput.text = userModel.Password.Value;
 
-        var obj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
+        var obj = await this.GetSystem<IAddressableSystem>()
+            .LoadAssetAsync<Sprite>(Util.GetAvatarUrl(this.GetModel<IUserModel>().Aid));
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             avatarImage.sprite = Instantiate(obj.Result, transform, false);
         }
@@ -55,7 +56,6 @@ public class ProfileUI : MonoBehaviour, IController {
                 WarningAlertInfo alertInfo = new WarningAlertInfo("Consistent with the original nickname");
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             } else {
-
             }
         });
         passwordBtn.onClick.AddListener(() => {

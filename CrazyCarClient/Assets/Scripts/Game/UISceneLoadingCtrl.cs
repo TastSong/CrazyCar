@@ -27,7 +27,7 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
     private IEnumerator LoadScene() {
         this.GetModel<IGameModel>().SceneLoaded.Value = false;
         this.GetModel<IGameModel>().SceneLoading.Value = true;
-        
+
         UIController.Instance.HidePageByLevel(UILevelType.Main);
         UIController.Instance.HidePageByLevel(UILevelType.UIPage);
         progressSlider.value = 0;
@@ -51,20 +51,21 @@ public class UISceneLoadingCtrl : MonoBehaviour, IController {
             progressText.text = (int)(progressSlider.value * 100) + "%";
             yield return null;
         }
+
         progressSlider.value = 100;
         progressText.text = "100%";
         this.GetModel<IGameModel>().SceneLoaded.Value = true;
         this.GetModel<IGameModel>().SceneLoading.Value = false;
-        
+
         if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Index) {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.HomepageUI, UILevelType.Main));
         } else if (this.GetModel<IGameModel>().LoadingTargetSceneID == SceneID.Game) {
             SelectGameUI();
         }
-        
+
         async.allowSceneActivation = true;
     }
-    
+
     private void SelectGameUI() {
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.CommonGameUI, UILevelType.Main));
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InputSystemPanel, UILevelType.Main));

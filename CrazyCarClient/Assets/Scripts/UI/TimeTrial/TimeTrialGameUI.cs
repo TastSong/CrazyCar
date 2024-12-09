@@ -27,21 +27,21 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
                     this.GetModel<ITimeTrialModel>().IsArriveLimitTime.Value = true;
                     Debug.Log("++++++ arrive limit time ");
                 }, limitTimeText));
-        });       
+        });
     }
 
-    private void Start() {       
+    private void Start() {
         MakeAI();
         limitTimeText.text = this.GetModel<ITimeTrialModel>().SelectInfo.Value.limitTime.ToString();
 
         this.RegisterEvent<EndTimeTrialEvent>(OnEndTimeTrial).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private async UniTaskVoid MakeAI(){
+    private async UniTaskVoid MakeAI() {
         await UniTask.WaitForFixedUpdate();
         AIInfo aiInfo = new AIInfo();
-        aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times, 
-            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0), 
+        aiInfo.InitAI(3, this.GetModel<ITimeTrialModel>().SelectInfo.Value.times,
+            this.GetSystem<IPlayerManagerSystem>().SelfPlayer.GetComponent<Transform>().position + new Vector3(4, 0, 0),
             this.GetModel<IMapControllerModel>().PathCreator);
         this.SendCommand(new MakeAIPlayerCommand(aiInfo));
     }
@@ -52,9 +52,7 @@ public class TimeTrialGameUI : MonoBehaviour, IController {
         if (this.GetModel<IGameModel>().StandAlone) {
             WarningAlertInfo alertInfo = new WarningAlertInfo("Game Over");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-            Util.DelayExecuteWithSecond(2.0f, () => {
-                this.SendCommand(new LoadSceneCommand(SceneID.Index));
-            });           
+            Util.DelayExecuteWithSecond(2.0f, () => { this.SendCommand(new LoadSceneCommand(SceneID.Index)); });
         } else {
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.GameResultUI, UILevelType.UIPage));
         }

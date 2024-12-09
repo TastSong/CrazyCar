@@ -1,3 +1,2 @@
-public class ChangeMatchMapEvent  {
-    
+public class ChangeMatchMapEvent {
 }

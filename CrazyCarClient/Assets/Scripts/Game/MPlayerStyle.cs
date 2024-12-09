@@ -8,12 +8,16 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class MPlayerStyle : MonoBehaviour, IController {
     public TextMesh nameText;
     public Transform carPos;
+
     public GameObject car;
+
     //特效
     public ParticleSystem[] wheelsParticeles;
     public TrailRenderer leftTrail;
     public TrailRenderer rightTrail;
+
     public GameObject waterWaveParticle;
+
     //漂移颜色有关
     public Color[] driftColors;
     public float driftPower = 0;
@@ -29,6 +33,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
         if (GetComponent<MPlayer>() != null) {
             mPlayer = GetComponent<MPlayer>();
         }
+
         this.RegisterEvent<StartDriftEvent>(OnStartDrift).UnRegisterWhenGameObjectDestroyed(gameObject);
         EndDrift();
         waterWaveParticle.gameObject.SetActiveFast(false);
@@ -67,9 +72,11 @@ public class MPlayerStyle : MonoBehaviour, IController {
                 car.transform.SetParent(null);
                 Destroy(car);
             }
+
             if (obj.Result == null || carPos == null) {
                 return;
             }
+
             car = Instantiate(obj.Result);
             car.transform.SetParent(carPos.transform, false);
             car.transform.localPosition = carPos.localPosition;
@@ -94,6 +101,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
                 tempParticle.Play();
             }
         }
+
         plexusVFX.gameObject.SetActiveFast(true);
     }
 
@@ -103,6 +111,7 @@ public class MPlayerStyle : MonoBehaviour, IController {
                 tempParticle.Stop();
             }
         }
+
         plexusVFX.gameObject.SetActiveFast(false);
     }
 

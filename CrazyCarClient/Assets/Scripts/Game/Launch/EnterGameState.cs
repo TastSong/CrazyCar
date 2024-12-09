@@ -1,7 +1,7 @@
 ﻿using QFramework;
 using UnityEngine;
 
-public class EnterGameState: AbstractState<LaunchStates, Launch>, IController {
+public class EnterGameState : AbstractState<LaunchStates, Launch>, IController {
     public EnterGameState(FSM<LaunchStates> fsm, Launch target) : base(fsm, target) {
     }
 

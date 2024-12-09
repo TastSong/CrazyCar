@@ -12,12 +12,12 @@ public class AssetsUpdateState : AbstractState<LaunchStates, Launch>, IControlle
         this.RegisterEvent<FinishDownloadResEvent>(OnFinishDownloadRes);
         UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.DownloadResUI, UILevelType.UIPage));
     }
-    
+
     private async void OnFinishDownloadRes(FinishDownloadResEvent e) {
         if (e.isFinish) {
             await this.GetSystem<II18NSystem>().InitTranslation();
             await UIController.Instance.ShowPageAsync(new ShowPageInfo(UIPageType.LoginUI, UILevelType.Prepare));
-            await  UIController.Instance.ShowPageAsync(new ShowPageInfo(UIPageType.HomepageUI, UILevelType.Prepare));
+            await UIController.Instance.ShowPageAsync(new ShowPageInfo(UIPageType.HomepageUI, UILevelType.Prepare));
             mFSM.ChangeState(LaunchStates.InitConfig);
         } else {
             mFSM.ChangeState(LaunchStates.ExitGameState);

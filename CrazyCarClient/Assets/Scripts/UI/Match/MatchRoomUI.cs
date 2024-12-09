@@ -24,9 +24,7 @@ public class MatchRoomUI : MonoBehaviour, IController {
     }
 
     private void Start() {
-        closeBtn.onClick.AddListener(() => {
-            gameObject.SetActiveFast(false);
-        });
+        closeBtn.onClick.AddListener(() => { gameObject.SetActiveFast(false); });
 
         createBtn.onClick.AddListener(() => {
             if (inputField.text.Length == 4) {
@@ -52,8 +50,10 @@ public class MatchRoomUI : MonoBehaviour, IController {
             }
         });
 
-        this.RegisterEvent<MatchRoomCreateOrJoinSuccEvent>(OnMatchRoomCreateOrJoinSucc).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<MatchRoomCreateOrJoinFailEvent>(OnMatchRoomCreateOrJoinFail).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomCreateOrJoinSuccEvent>(OnMatchRoomCreateOrJoinSucc)
+            .UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<MatchRoomCreateOrJoinFailEvent>(OnMatchRoomCreateOrJoinFail)
+            .UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
     private void OnMatchRoomCreateOrJoinSucc(MatchRoomCreateOrJoinSuccEvent e) {

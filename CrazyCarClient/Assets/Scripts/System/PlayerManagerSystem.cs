@@ -13,8 +13,7 @@ public class PlayerCreateMsg {
     public Vector3 speed;
     public long timestamp;
 
-    public PlayerCreateMsg(PlayerStateMsg playerStateMsg, UserInfo userInfo)
-    {
+    public PlayerCreateMsg(PlayerStateMsg playerStateMsg, UserInfo userInfo) {
         this.cid = playerStateMsg.cid;
         this.userInfo = userInfo;
         this.pos = playerStateMsg.pos;
@@ -30,7 +29,7 @@ public class PlayerCreateMsg {
         this.timestamp = playerOperatMsg.timestamp;
     }
 
-    public PlayerCreateMsg(){
+    public PlayerCreateMsg() {
     }
 }
 
@@ -93,7 +92,6 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
 
     public void RespondOperatAction(PlayerOperatMsg playerOperatMsg) {
         if (playerOperatMsg.uid == this.GetModel<IUserModel>().Uid.Value) {
-            
         } else {
             AdjustPeerPlayer(playerOperatMsg);
         }
@@ -101,11 +99,10 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
 
     private async void AdjustPeerPlayer(PlayerStateMsg playerStateMsg) {
         MPlayer peer = null;
-        
+
         if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
             var userInfo = await this.GetSystem<INetworkSystem>().GetUserInfo(playerStateMsg.uid);
-            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer))
-            {
+            if (!this.GetSystem<IPlayerManagerSystem>().peers.TryGetValue(playerStateMsg.uid, out peer)) {
                 PlayerCreateMsg playerCreateMsg = new PlayerCreateMsg(playerStateMsg, userInfo);
                 this.SendEvent(new MakeNewPlayerEvent(playerCreateMsg));
             }
@@ -142,6 +139,5 @@ public class PlayerManagerSystem : AbstractSystem, IPlayerManagerSystem {
     }
 
     protected override void OnInit() {
-        
     }
 }

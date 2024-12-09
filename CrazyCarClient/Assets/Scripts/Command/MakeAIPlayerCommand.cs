@@ -14,4 +14,3 @@ public class MakeAIPlayerCommand : AbstractCommand {
         this.SendEvent(new MakeAIPlayerEvent(mAIInfo));
     }
 }
-   

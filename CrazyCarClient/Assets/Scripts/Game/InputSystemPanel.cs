@@ -32,36 +32,22 @@ public class InputSystemPanel : MonoBehaviour, IController {
             } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
                 return this.GetModel<IMatchModel>().IsStartGame;
             }
+
             return false;
         }
     }
 
     private void Start() {
         uid = this.GetModel<IUserModel>().Uid;
-        frontBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
-        });
-        backBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
-        });
-        leftBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
-        }, () => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
-        });
-        rightBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
-        }, () => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
-        });
-        spaceBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1));
-        }, () => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
-        });
-        attackBtn.SetClick(() => {
-            this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Attack, 0));
-        });
+        frontBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1)); });
+        backBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1)); });
+        leftBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1)); },
+            () => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0)); });
+        rightBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1)); },
+            () => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0)); });
+        spaceBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1)); },
+            () => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1)); });
+        attackBtn.SetClick(() => { this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Attack, 0)); });
     }
 
     [Obsolete]
@@ -74,20 +60,20 @@ public class InputSystemPanel : MonoBehaviour, IController {
         if (isUseKeyboard && IsStartGame) {
             if (Input.GetKeyDown(KeyCode.W)) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
-            } 
-            
+            }
+
             if (Input.GetKeyDown(KeyCode.S)) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
-            } 
+            }
 
             if (Input.GetKeyDown(KeyCode.A)) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, -1));
-            } 
-            
+            }
+
             if (Input.GetKeyDown(KeyCode.D)) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
-            } 
-            
+            }
+
             if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 0));
             }
@@ -119,7 +105,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, 1));
             } else if (Input.GetAxis("XBOX_Vertical_Left") < 0) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Vertical, -1));
-            } 
+            }
 
             if (Input.GetAxis("XBOX_Horizontal_Right") > 0) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Horizontal, 1));
@@ -133,7 +119,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, 1));
             } else if (Input.GetAxis("XBOX_LRT") < 0) {
                 this.SendCommand(new ExecuteOperateCommand(uid, ControllerType.Speed, -1));
-            } 
+            }
         }
     }
 
@@ -142,9 +128,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
         if (xboxConnect != null) {
             xboxConnect.gameObject.SetActiveFast(true);
             float time = 1;
-            Util.DelayExecuteWithSecond(time, () => {
-                xboxConnect.gameObject.SetActiveFast(false);
-            });
+            Util.DelayExecuteWithSecond(time, () => { xboxConnect.gameObject.SetActiveFast(false); });
         }
     }
 
@@ -153,9 +137,7 @@ public class InputSystemPanel : MonoBehaviour, IController {
         if (xboxDisconnect != null) {
             xboxDisconnect.gameObject.SetActiveFast(true);
             float time = 1;
-            Util.DelayExecuteWithSecond(time, () => {
-                xboxDisconnect.gameObject.SetActiveFast(false);
-            });
+            Util.DelayExecuteWithSecond(time, () => { xboxDisconnect.gameObject.SetActiveFast(false); });
         }
     }
 

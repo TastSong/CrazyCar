@@ -5,7 +5,7 @@ using QFramework;
 using Utils;
 
 public interface ICheckpointSystem : ISystem {
-    public BindableProperty<int> CheckpointCount { get; }   
+    public BindableProperty<int> CheckpointCount { get; }
     public BindableProperty<int> CheckedCount { get; }
     public BindableProperty<int> PassTimes { get; }
     public List<Vector3> CheckpointPos { get; set; }
@@ -40,13 +40,13 @@ public class CheckpointSystem : AbstractSystem, ICheckpointSystem {
                 if (passTimes >= this.GetModel<ITimeTrialModel>().SelectInfo.Value.times) {
                     this.GetModel<ITimeTrialModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++TimeTrial EndTime = " + this.GetModel<ITimeTrialModel>().EndTime +
-                         "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
+                              "  CompleteTime =  " + this.GetModel<ITimeTrialModel>().GetCompleteTime());
                 }
             } else if (this.GetModel<IGameModel>().CurGameType == GameType.Match) {
                 if (passTimes >= this.GetModel<IMatchModel>().SelectInfo.Value.times) {
                     this.GetModel<IMatchModel>().EndTime.Value = Util.GetTime() / 1000;
                     Debug.Log("++++++Match EndTime = " + this.GetModel<IMatchModel>().EndTime +
-                        "  CompleteTime =  " + this.GetModel<IMatchModel>().GetCompleteTime());
+                              "  CompleteTime =  " + this.GetModel<IMatchModel>().GetCompleteTime());
                 }
             }
         });

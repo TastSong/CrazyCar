@@ -24,7 +24,8 @@ public class RegisterCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl, bytes);
+        var result = await this.GetSystem<INetworkSystem>()
+            .Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.registerUrl, bytes);
         if (result.serverCode == 200) {
             this.GetSystem<IDataParseSystem>().ParseSelfUserInfo(result.serverData);
 

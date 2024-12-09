@@ -5,4 +5,3 @@ public class SavaSettingsCommand : AbstractCommand {
         this.SendEvent<ChangeSettingEvent>();
     }
 }
-

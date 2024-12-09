@@ -1,5 +1,6 @@
 ﻿using QFramework;
-public class ChangeCarCommand : AbstractCommand{
+
+public class ChangeCarCommand : AbstractCommand {
     private readonly EquipInfo mEquipInfo;
 
     public ChangeCarCommand(EquipInfo equipInfo) {

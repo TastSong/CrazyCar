@@ -16,7 +16,7 @@ public enum NetType {
     KCP
 }
 
-public enum MsgType{
+public enum MsgType {
     CreatePlayer = 0,
     PlayerState = 1,
     DelPlayer = 2,
@@ -25,7 +25,7 @@ public enum MsgType{
     MatchRoomStatus = 5,
     MatchRoomExit = 6,
     MatchRoomStart = 7,
-    PlayerOperat = 8,    // 用户操作
+    PlayerOperat = 8, // 用户操作
     PlayerCompleteGame = 9
 }
 
@@ -33,8 +33,7 @@ public enum MsgType{
 public class NetworkController : MonoBehaviour, IController {
     public ServerType serverType;
     public NetType netType;
-    [SerializeField] 
-    public string host;
+    [SerializeField] public string host;
 
     private void Awake() {
         this.RegisterEvent<InitNetworkEvent>(OnInitNetwork).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -46,7 +45,7 @@ public class NetworkController : MonoBehaviour, IController {
         this.GetSystem<INetworkSystem>().NetType = netType;
         this.GetSystem<INetworkSystem>().HttpBaseUrl = Util.GetServerBaseUrl(serverType);
         host = this.GetSystem<INetworkSystem>().HttpBaseUrl;
-        
+
         this.GetSystem<INetworkSystem>().BreakLineAction = () => {
             StopCoroutine(Reconnect());
             StartCoroutine(Reconnect());
@@ -86,7 +85,8 @@ public class NetworkController : MonoBehaviour, IController {
             }
 
             if (this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Count > 0) {
-                this.SendCommand(new UpdateMatchResultUICommand(this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Peek()));
+                this.SendCommand(
+                    new UpdateMatchResultUICommand(this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Peek()));
                 this.GetSystem<INetworkSystem>().PlayerCompleteMsgs.Dequeue();
             }
 
@@ -114,7 +114,7 @@ public class NetworkController : MonoBehaviour, IController {
                 this.GetSystem<IMatchRoomSystem>().OnStatusMsg(this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg);
                 this.GetSystem<INetworkSystem>().OnMatchRoomStatusMsg = null;
             }
-        }           
+        }
     }
 
     public IArchitecture GetArchitecture() {

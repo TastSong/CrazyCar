@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class TestCinemachineImpulse : MonoBehaviour{
+public class TestCinemachineImpulse : MonoBehaviour {
     private CinemachineImpulseSource MyInpulse;
 
     private void Start() {

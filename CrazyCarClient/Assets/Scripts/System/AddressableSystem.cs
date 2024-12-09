@@ -14,10 +14,13 @@ public class AddressableInfo {
 }
 
 public interface IAddressableSystem : ISystem {
-    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
+    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null,
+        Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null);
+
     public void GetDownloadAssets();
     public void DownloadAsset();
     public UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path);
+    public AsyncOperationHandle<T> LoadAsset<T>(string path);
     public void SetUpdateInfo(Action finish);
 }
 
@@ -32,7 +35,8 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     private AsyncOperationHandle downloadHandle;
     private AsyncOperationHandle<IResourceLocator> initHandle;
 
-    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null, Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null) {
+    public void SetCallBack(Action<long> OnCheckCompleteNeedUpdate = null, Action OnCompleteDownload = null,
+        Action OnCheckCompleteNoUpdate = null, Action<float, float> OnUpdate = null) {
         this.OnCheckCompleteUpdate = OnCheckCompleteNeedUpdate ?? OnCheckCompleteUpdate;
         this.OnCompleteDownload = OnCompleteDownload ?? this.OnCompleteDownload;
         this.OnCheckCompleteNoUpdate = OnCheckCompleteNoUpdate;
@@ -43,7 +47,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
         CoroutineController.Instance.StartCoroutine(GetTotalDonwloadKeys());
     }
 
-    private IEnumerator GetTotalDonwloadKeys() { 
+    private IEnumerator GetTotalDonwloadKeys() {
         initHandle = Addressables.InitializeAsync();
         initHandle.Completed += OnInitAA;
         yield return initHandle;
@@ -72,6 +76,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
             Debug.Log("对比Catalog GetDownloadSizeAsync");
             Addressables.GetDownloadSizeAsync(downloadKeys).Completed += OnCheckDownload;
         }
+
         Addressables.Release(handle);
     }
 
@@ -103,6 +108,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
             str += "    ";
             str += item.ToString();
         }
+
         Debug.Log("DownloadAssets " + str);
         downloadHandle = Addressables.DownloadDependenciesAsync(downloadKeys, Addressables.MergeMode.Union);
         downloadHandle.Completed += OnDonloadComplete;
@@ -112,6 +118,7 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
                 OnUpdate?.Invoke(percent, totalDownloadSize);
                 yield return null;
             }
+
             Addressables.Release(downloadHandle);
         }
     }
@@ -128,24 +135,31 @@ public class AddressableSystem : AbstractSystem, IAddressableSystem {
     }
 
     public async void SetUpdateInfo(Action finish) {
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl);
+        var result = await this.GetSystem<INetworkSystem>()
+            .Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.addressableUrl);
         if (result.serverCode == 200) {
             if ((bool)result.serverData["is_on"]) {
                 AddressableInfo.BaseUrl = (string)result.serverData["url"];
             } else {
                 AddressableInfo.BaseUrl = Application.streamingAssetsPath;
             }
-        } 
+        }
+
         finish.Invoke();
     }
-    
-    public async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path){
+
+    public async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(string path) {
         AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
         await obj;
         return obj;
     }
 
+    public AsyncOperationHandle<T> LoadAsset<T>(string path) {
+        AsyncOperationHandle<T> obj = Addressables.LoadAssetAsync<T>(path);
+        obj.WaitForCompletion();
+        return obj;
+    }
+
     protected override void OnInit() {
-        
     }
 }

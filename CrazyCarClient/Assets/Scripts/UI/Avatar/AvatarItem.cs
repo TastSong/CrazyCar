@@ -23,16 +23,14 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
         } else {
             if (this.GetModel<IUserModel>().Star.Value > avatarInfo.star) {
                 InfoConfirmInfo info = new InfoConfirmInfo(content:
-                    string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} star to buy this avatar"), avatarInfo.star),
-                    success: () => {
-                        this.SendCommand(new BuyAvatarCommand(avatarInfo));
-                    },
-                    fail: () => {
-                        Debug.Log("放弃购买");
-                    });
+                    string.Format(this.GetSystem<II18NSystem>().GetText("Does it cost {0} star to buy this avatar"),
+                        avatarInfo.star),
+                    success: () => { this.SendCommand(new BuyAvatarCommand(avatarInfo)); },
+                    fail: () => { Debug.Log("放弃购买"); });
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.InfoConfirmAlert, UILevelType.Alart, info));
             } else {
-                WarningAlertInfo alertInfo = new WarningAlertInfo(string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star));
+                WarningAlertInfo alertInfo = new WarningAlertInfo(
+                    string.Format(this.GetSystem<II18NSystem>().GetText("This head needs {0} star"), avatarInfo.star));
                 UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
             }
         }
@@ -48,6 +46,7 @@ public class AvatarItem : MonoBehaviour, IPointerClickHandler, IController {
         if (obj.Status == AsyncOperationStatus.Succeeded) {
             avatarImage.sprite = Instantiate(obj.Result, transform, false);
         }
+
         lockImage.gameObject.SetActiveFast(!avatarInfo.isHas);
         this.RegisterEvent<UnlockAvatarEvent>(OnUnlockAvatar).UnRegisterWhenGameObjectDestroyed(gameObject);
     }

@@ -27,6 +27,7 @@ public class PostPlayerOperatMsgCommand : AbstractCommand {
         } else {
             w.Write(this.GetModel<ITimeTrialModel>().SelectInfo.Value.cid);
         }
+
         w.WritePropertyName("controller_type");
         w.Write((int)controllerType);
         w.WritePropertyName("value");

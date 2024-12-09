@@ -9,6 +9,7 @@ using QFramework;
 public class CarControl : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IController {
     private Transform targetTransform;
     public bool isTouch;
+
     private void Start() {
         targetTransform = this.GetSystem<IIndexCarSystem>().CarGO.transform;
     }

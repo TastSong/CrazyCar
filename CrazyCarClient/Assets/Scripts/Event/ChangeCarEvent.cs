@@ -1,5 +1,4 @@
-﻿
-public class ChangeCarEvent {
+﻿public class ChangeCarEvent {
     public EquipInfo mEquipInfo;
 
     public ChangeCarEvent(EquipInfo equipInfo) {

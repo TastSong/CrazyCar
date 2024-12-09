@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouteManger
-{
+public class RouteManger {
     public List<Vector3> centerPoints = new List<Vector3>();
     public List<Vector3> leftPoints = new List<Vector3>();
     public List<Vector3> rightPoints = new List<Vector3>();
-    public int baseCount = 50;  //两个基础点之间的取点数量   值越大曲线就越平滑  但同时计算量也也越大
+    public int baseCount = 50; //两个基础点之间的取点数量   值越大曲线就越平滑  但同时计算量也也越大
 
     //初始化算出所有的点的信息
     public void InitPoint(Vector3[] basePoint) {
@@ -19,6 +18,7 @@ public class RouteManger
             pointPos[i].y = basePoint[i].y;
             pointPos[i].z = basePoint[i].z;
         }
+
         GetTrackPoint(pointPos);
     }
 
@@ -54,8 +54,10 @@ public class RouteManger
         if (vector3s.Length > 3) {
             vector3s[0] = vector3s[1] + (vector3s[1] - vector3s[2]);
         }
+
         if ((vector3s.Length - 2) > 0) {
-            vector3s[vector3s.Length - 1] = vector3s[vector3s.Length - 2] + (vector3s[vector3s.Length - 2] - vector3s[vector3s.Length - 3]);
+            vector3s[vector3s.Length - 1] = vector3s[vector3s.Length - 2] +
+                                            (vector3s[vector3s.Length - 2] - vector3s[vector3s.Length - 3]);
             if (vector3s[1] == vector3s[vector3s.Length - 2]) {
                 Vector3[] tmpLoopSpline = new Vector3[vector3s.Length];
                 Array.Copy(vector3s, tmpLoopSpline, vector3s.Length);
@@ -85,10 +87,10 @@ public class RouteManger
         Vector3 c = pos[currPt + 2];
         Vector3 d = pos[currPt + 3];
         return .5f * (
-           (-a + 3f * b - 3f * c + d) * (u * u * u)
-           + (2f * a - 5f * b + 4f * c - d) * (u * u)
-           + (-a + c) * u
-           + 2f * b
-       );
+            (-a + 3f * b - 3f * c + d) * (u * u * u)
+            + (2f * a - 5f * b + 4f * c - d) * (u * u)
+            + (-a + c) * u
+            + 2f * b
+        );
     }
 }

@@ -21,17 +21,19 @@ public class CountDownAnim : MonoBehaviour, IController {
             sequence.Append(countDownText.transform.DOScale(1, 0.5f));
             sequence.Append(countDownText.transform.DOScale(0, 0.5f));
         }
+
         sequence.OnComplete(() => {
-            succ?.Invoke();          
+            succ?.Invoke();
             gameObject.SetActiveFast(false);
-        });       
+        });
     }
 
     private IEnumerator CountDown(int time) {
-        while(time > 0) {
+        while (time > 0) {
             if (countDownText != null) {
                 countDownText.text = time.ToString();
             }
+
             yield return new WaitForSecondsRealtime(1.0f);
             time--;
         }

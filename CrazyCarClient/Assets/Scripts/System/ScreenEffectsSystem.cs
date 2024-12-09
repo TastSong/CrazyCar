@@ -7,7 +7,7 @@ using Cinemachine;
 public interface IScreenEffectsSystem : ISystem {
     public CinemachineImpulseSource CinemachineImpulseSource { get; set; }
     public MotionBlurEffects MotionBlurEffects { get; set; }
-    public void ShakeCamera(); 
+    public void ShakeCamera();
     public void SetMotionBlur(float intensity);
 }
 
@@ -28,6 +28,5 @@ public class ScreenEffectsSystem : AbstractSystem, IScreenEffectsSystem {
     }
 
     protected override void OnInit() {
-
     }
 }

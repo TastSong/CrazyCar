@@ -81,10 +81,10 @@ public class UserModel : AbstractModel, IUserModel {
     }
 
     protected override void OnInit() {
-        var storage = this.GetUtility <IPlayerPrefsStorage>();
+        var storage = this.GetUtility<IPlayerPrefsStorage>();
         Name.Value = storage.LoadString(PrefKeys.userName);
-        Name.Register((v) => { 
-            if(storage.LoadInt(PrefKeys.rememberPassword) == 1) {
+        Name.Register((v) => {
+            if (storage.LoadInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.userName, v);
             }
         });
@@ -93,7 +93,7 @@ public class UserModel : AbstractModel, IUserModel {
         Password.Register((v) => {
             if (storage.LoadInt(PrefKeys.rememberPassword) == 1) {
                 storage.SaveString(PrefKeys.password, v);
-            }           
+            }
         });
 
         RememberPassword.Value = storage.LoadInt(PrefKeys.rememberPassword);

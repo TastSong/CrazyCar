@@ -1,4 +1,2 @@
-﻿
-public class EndTimeTrialEvent {
-    
+﻿public class EndTimeTrialEvent {
 }

@@ -20,12 +20,13 @@ public class ChangePasswordCommand : AbstractCommand {
         w.WriteObjectEnd();
         Debug.Log("++++++ " + sb.ToString());
         byte[] bytes = Encoding.UTF8.GetBytes(sb.ToString());
-        var result = await this.GetSystem<INetworkSystem>().Post(url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
+        var result = await this.GetSystem<INetworkSystem>().Post(
+            url: this.GetSystem<INetworkSystem>().HttpBaseUrl + RequestUrl.modifyPersonalInfoUrl,
             token: this.GetModel<IGameModel>().Token.Value, bytes);
         if (result.serverCode == 200) {
             WarningAlertInfo alertInfo = new WarningAlertInfo("Modify Successfully");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));
-            this.GetModel<IUserModel>().Password.Value = mPassword; 
+            this.GetModel<IUserModel>().Password.Value = mPassword;
         } else if (result.serverCode == 423) {
             WarningAlertInfo alertInfo = new WarningAlertInfo("Fail To Modify");
             UIController.Instance.ShowPage(new ShowPageInfo(UIPageType.WarningAlert, UILevelType.Alart, alertInfo));

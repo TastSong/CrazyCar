@@ -23,10 +23,8 @@ public class TimeTrialNet : MonoBehaviour, IController {
         // this.RegisterEvent<ExitGameSceneEvent>(OnExitGameScene).UnRegisterWhenGameObjectDestroyed(gameObject);
     }
 
-    private void OnExitGameScene(ExitGameSceneEvent e)
-    {
-        if (timeTrialNetCor != null)
-        {
+    private void OnExitGameScene(ExitGameSceneEvent e) {
+        if (timeTrialNetCor != null) {
             CoroutineController.Instance.StopCoroutine(timeTrialNetCor);
         }
     }
@@ -36,6 +34,7 @@ public class TimeTrialNet : MonoBehaviour, IController {
             if (this.GetModel<ITimeTrialModel>().IsStartGame) {
                 this.SendCommand<PostPlayerStateMsgCommand>();
             }
+
             yield return new WaitForSeconds(this.GetModel<IGameModel>().SendMsgOffTime.Value);
         }
     }

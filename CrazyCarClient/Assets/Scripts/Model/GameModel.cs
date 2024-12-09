@@ -16,7 +16,7 @@ public interface IGameModel : IModel {
     public BindableProperty<string> Token { get; }
     public GameType CurGameType { get; set; }
     public BindableProperty<float> SendMsgOffTime { get; }
-    public BindableProperty<int> ReconnectionTimeout { get; }  // 重连超时
+    public BindableProperty<int> ReconnectionTimeout { get; } // 重连超时
     public BindableProperty<bool> StandAlone { get; }
     public BindableProperty<int> MaxSyncDelay { get; }
     public BindableProperty<int> MatchStartGameTime { get; }

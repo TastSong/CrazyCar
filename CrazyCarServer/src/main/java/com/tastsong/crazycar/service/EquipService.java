@@ -65,7 +65,7 @@ public class EquipService {
     }
 
     @Transactional
-    public void bugEquip(int uid, int eid){
+    public void buyEquip(int uid, int eid){
         int curStar = userService.getUserStar(uid) - getEquipNeedStar(eid);
         userService.updateUserStar(uid, curStar);
         addEquipForUser(uid, eid);

@@ -14,31 +14,29 @@ public class TaskableAccessResult {
     public long serverCode; // 服务器代码
     public string error; // 错误提示
     public long httpCode;
+
     public long code {
         get {
             if (serverCode > 0) {
                 return serverCode;
             }
+
             return httpCode;
         }
     }
 
     public Exception exception;
+
     public bool hasError {
-        get {
-            return exception != null;
-        }
+        get { return exception != null; }
     }
+
     public bool parseError {
-        get {
-            return httpCode > 0 && serverCode < 0;
-        }
+        get { return httpCode > 0 && serverCode < 0; }
     }
 
     public bool httpError {
-        get {
-            return httpCode <= 0;
-        }
+        get { return httpCode <= 0; }
     }
 
     public TaskableAccessResult(string result, long httpCode, Exception ex) {

@@ -34,19 +34,23 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     private string defaultLang = "zh-cn";
 
     public async UniTask InitTranslation() {
-        var result = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
+        var result = await this.GetSystem<IAddressableSystem>()
+            .LoadAssetAsync<TextAsset>(Util.baseLanguagePath + "url.json");
         if (result.Status != AsyncOperationStatus.Succeeded) {
             Debug.LogError("Load url.json failed");
             return;
         }
+
         JsonData fileNames = JsonMapper.ToObject(result.Result.text);
         string[] names = ((string)fileNames["FileName"]).Split(',');
-        
+
         for (int i = 0; i < names.Length; i++) {
-            var lanObj = await this.GetSystem<IAddressableSystem>().LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
+            var lanObj = await this.GetSystem<IAddressableSystem>()
+                .LoadAssetAsync<TextAsset>(Util.baseLanguagePath + names[i]);
             if (lanObj.Status != AsyncOperationStatus.Succeeded) {
                 continue;
             }
+
             JsonData d = JsonMapper.ToObject(lanObj.Result.text);
             LangMap[(string)d["languageName"]] = (string)d["id"];
             trans[(string)d["id"]] = d;
@@ -56,11 +60,13 @@ public class I18NSystem : AbstractSystem, II18NSystem {
                 FlagsDic[(string)d["languageName"]] = flagObj.Result;
             }
         }
+
         InitFinish = true;
 
         try {
             ChangeLang(string.IsNullOrEmpty(this.GetModel<ISettingsModel>().Language)
-                ? defaultLang : this.GetModel<ISettingsModel>().Language);
+                ? defaultLang
+                : this.GetModel<ISettingsModel>().Language);
         } catch (Exception e) {
             Console.WriteLine(e);
             ChangeLang(defaultLang);
@@ -91,6 +97,7 @@ public class I18NSystem : AbstractSystem, II18NSystem {
         if (!InitFinish) {
             return;
         }
+
         current_dict = trans[id];
         CurrentLang = id;
         RefreshAllText();
@@ -108,8 +115,6 @@ public class I18NSystem : AbstractSystem, II18NSystem {
     }
 
     protected override void OnInit() {
-        this.RegisterEvent<ChangeSettingEvent>((e) => {
-            ChangeLang(this.GetModel<ISettingsModel>().Language);
-        });
+        this.RegisterEvent<ChangeSettingEvent>((e) => { ChangeLang(this.GetModel<ISettingsModel>().Language); });
     }
 }

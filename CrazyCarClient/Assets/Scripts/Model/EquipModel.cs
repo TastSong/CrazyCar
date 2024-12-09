@@ -31,6 +31,5 @@ public class EquipModel : AbstractModel, IEquipModel {
     public Dictionary<string, EquipResource> EquipResource { get; set; } = new Dictionary<string, EquipResource>();
 
     protected override void OnInit() {
-        
     }
 }
