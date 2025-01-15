@@ -63,7 +63,7 @@ ID：*(VIP ID：**Tast**；Password：**111111** )*
 
 :car: You can buy and wear avatars and racing cars
 
- :iphone:You can use this client on **Windows**、 **Android** and** IOS** devices
+ :iphone:You can use this client on  **Android** and** IOS** devices
 
 :earth_asia: Support for multiple languag,Multiple languages can be created in one click with **translateeditor. cs**
 
