@@ -68,7 +68,7 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 :car: 可以进行头像和赛车的购买和穿戴 
 
-:iphone:你可以在 **Windows** 、**Android**和**IOS** 设备上使用此客户端 
+:iphone:你可以在 **Android**和**IOS** 设备上使用此客户端 
 
 :earth_asia: 支持多语言，通过**TranslateEditor.cs**可以一键创建多国语言
 
