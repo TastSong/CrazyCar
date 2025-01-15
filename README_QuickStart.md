@@ -23,27 +23,27 @@
 
 1. 用**Unity**(2021.3.9及以上)打开**CrazyCar -> CrazyCarClient**项目；
 
-1. 由于项目使用了**HybridCLR**，所以先配置项目的**IL2CPP**：打开菜单**HybridCLR/Installer**， 点击`安装`按钮进行安装，具体操作可以查看[HybridCLR (code-philosophy.com)](https://hybridclr.doc.code-philosophy.com/docs/intro)；**Assets->HotUpdate**文件夹为热更文件夹，热更的DLL打包好会放入**Assets->HotUpdateDll**，这些打包的时候都已经封装好了，直接执行菜单`Build/Remote`
+2. 由于项目使用了**HybridCLR**，所以先配置项目的**IL2CPP**：打开菜单**HybridCLR/Installer**， 点击`安装`按钮进行安装，具体操作可以查看[HybridCLR (code-philosophy.com)](https://hybridclr.doc.code-philosophy.com/docs/intro)；**Assets->HotUpdate**文件夹为热更文件夹，热更的DLL打包好会放入**Assets->HotUpdateDll**，这些打包的时候都已经封装好了，直接执行菜单`Build/Remote`。*由于**HybridCLR**存在一些问题，导致PC平台打包**DLL**失败，所以需要切换至**安卓**或者**IOS**平台打包才行*。
 
-2. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
+3. 在**Unity**中设置**Login**场景中的**NetworkController**，设置成**Local**(当然你不愿意部署服务器，也可以使用**Remote**，那就可以跳过下面所有的步骤)；
 
-3. 启动**Mysql**，并运行**CrazyCar -> CrazyCarServer -> src -> main -> resources**中的**data.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
+4. 启动**Mysql**，并运行**CrazyCar -> CrazyCarServer -> src -> main -> resources**中的**data.sql**脚本，部署数据库，注意Mysql账号和密码需要和[配置文件](./CrazyCarServer/src/main/resources/application-prod.properties)保持一致
 
-4. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg**不要**下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
+5. 配置Java环境(JDK17)：[官网下载JDK17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) *(win10请下载exe,Mac下载dmg**不要**下载zip自己配置)*-->配置系统环境变量  [详细教程](https://www.runoob.com/java/java-environment-setup.html)
 
-5. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
+6. 配置Maven环境：[官网下载](https://maven.apache.org/download.cgi) --> 配置环境变量  [详细教程](https://www.runoob.com/maven/maven-setup.html)
 
-6. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)、Lombok
+7. VScode安装Spring Boot开发插件：Extension Pack for Java、Spring Initializr Java Support、Maven for Java、Community Server Connectors(原Tomcat)、Lombok
 
-7. VS code配置Java和Maven路径*(此路径为在Editor运行时的加载路径，打包时需要本地环境变量配置好maven与jdk相关路径)*，Mac 和Windows示例如下：
+8. VS code配置Java和Maven路径*(此路径为在Editor运行时的加载路径，打包时需要本地环境变量配置好maven与jdk相关路径)*，Mac 和Windows示例如下：
 
    ![](./SamplePictures/VSCODE1.png)
 
    ![](./SamplePictures/VSCODE2.png)
 
-8. 使用VScode打开文件夹：CrazyCarServer，F5启动项目
+9. 使用VScode打开文件夹：CrazyCarServer，F5启动项目
 
-9. 服务端运行成功后，即可运行**Unity**客户端；
+10. 服务端运行成功后，即可运行**Unity**客户端；
 
 > 1. 如果你是第一次部署服务器，可能会出现Mysql运行脚本、VScode配置Java、Maven环境加载失败等问题，请自行Google！
 > 2. 游戏支持单机模式，如果你没有服务器，也可以进行打版测试(直接Build出版本就行)
@@ -113,6 +113,8 @@
 4. 将**Project->StreamingAssets**中的对应的资源放入**CDN**或者**热更服务器**中即可
 
 *点击**HotFix**，首先会自动的执行**HybridCLR**资源整理，然后替换**Project-->HotUpdateDll**下的**HotUpdate.dll.bytes**，然后再进行**Addressable**资源打包，这一切都是自动化的，无需手动修改，至于为什么要替换**HotUpdate.dll.bytes**，需要自己去看一下**HybridCLR**的文档。*
+
+*由于**HybridCLR**存在一些问题，导致PC平台打包**DLL**失败，所以需要切换至**安卓**或者**IOS**平台打包才行*。
 
 ## 添加头像
 
