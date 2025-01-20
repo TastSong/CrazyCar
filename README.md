@@ -216,8 +216,6 @@ ID：*(VIP账号 ：**Tast**；密码：**111111** )*
 
 <a href="https://hellogithub.com/repository/045fda14a27a44c8bb0c06395c93ad7b" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=045fda14a27a44c8bb0c06395c93ad7b&claim_uid=zYZJtDj1XTcwveM" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-[<img src="https://api.gitsponsors.com/api/badge/img?id=416555156" height="40">](https://api.gitsponsors.com/api/badge/link?p=xZIDlDdlc8FqJcJ12HoxLy6Z6l1KKSPuBDOLWbGPWDLr1O5e7Iky6R+gL2oij574wUei11JqD6uzTY9HX0b1ANHUo3wQ9NV3ElVDYztbeG/tHgx/bEEGQYcZbPsRKzr6eZ5ewry7cl9/EpeqU1xddg==)
-
 
 ## 证书
 
